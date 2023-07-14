@@ -1,7 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
-
+import {
+    CompatibilityFilter,
+    IAfm,
+    IAttribute as IBearAttribute,
+    IMeasure as IBearMeasure,
+    IDimension,
+    IExecution,
+    INativeTotalItem,
+    IResultSpec,
+    ITotalItem,
+    SortItem,
+} from "@gooddata/api-model-bear";
 import { convertFilters } from "./FilterConverter.js";
 import { convertMeasure } from "./MeasureConverter.js";
 import {
@@ -19,7 +29,7 @@ import {
 import { invariant } from "ts-invariant";
 import { toBearRef } from "../ObjRefConverter.js";
 
-function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
+function convertAttribute(attribute: IAttribute, idx: number): IBearAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
     return {
@@ -29,14 +39,14 @@ function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAt
     };
 }
 
-function convertAFM(def: IExecutionDefinition): GdcExecuteAFM.IAfm {
-    const attributes: GdcExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
+function convertAFM(def: IExecutionDefinition): IAfm {
+    const attributes: IBearAttribute[] = def.attributes.map(convertAttribute);
     const attrProp = attributes.length ? { attributes } : {};
 
-    const measures: GdcExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
+    const measures: IBearMeasure[] = def.measures.map(convertMeasure);
     const measuresProp = measures.length ? { measures } : {};
 
-    const filters: GdcExecuteAFM.CompatibilityFilter[] = convertFilters(def.filters);
+    const filters: CompatibilityFilter[] = convertFilters(def.filters);
     const filtersProp = filters.length ? { filters } : {};
 
     const nativeTotals = convertNativeTotals(def);
@@ -50,7 +60,7 @@ function convertAFM(def: IExecutionDefinition): GdcExecuteAFM.IAfm {
     };
 }
 
-function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTotalItem[] {
+function convertNativeTotals(def: IExecutionDefinition): INativeTotalItem[] {
     // first find all native totals defined across dimensions
     const nativeTotals = def.dimensions
         .map(dimensionTotals)
@@ -98,7 +108,7 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
     });
 }
 
-function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
+function convertTotals(totals: ITotal[] = []): ITotalItem[] {
     return totals.map((t) => {
         return {
             type: t.type,
@@ -108,7 +118,7 @@ function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
     });
 }
 
-function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[] {
+function convertDimensions(def: IExecutionDefinition): IDimension[] {
     return def.dimensions.map((dim) => {
         const totals = convertTotals(dim.totals);
         const totalsProp = !isEmpty(totals) ? { totals } : {};
@@ -135,10 +145,10 @@ function assertNoNullsInSortBy(sortBy: ISortItem[]): void {
     });
 }
 
-export function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
+export function convertResultSpec(def: IExecutionDefinition): IResultSpec {
     assertNoNullsInSortBy(def.sortBy ?? []);
     const sortsProp = !isEmpty(def.sortBy)
-        ? { sorts: def.sortBy as GdcExecuteAFM.SortItem[] } // checked above, the cast is safe
+        ? { sorts: def.sortBy as SortItem[] } // checked above, the cast is safe
         : {};
     const dims = convertDimensions(def);
     const dimsProp = !isEmpty(dims) ? { dimensions: dims } : {};
@@ -158,7 +168,7 @@ export function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IRes
  *
  * @internal
  */
-export const toAfmExecution = (def: IExecutionDefinition): GdcExecuteAFM.IExecution => {
+export const toAfmExecution = (def: IExecutionDefinition): IExecution => {
     return {
         execution: {
             afm: convertAFM(def),

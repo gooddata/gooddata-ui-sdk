@@ -1,5 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import { GdcExecution } from "@gooddata/api-model-bear";
+import {
+    isAttributeHeader,
+    IExecutionResult as IBearExecutionResult,
+    IResultDimension,
+    IExecutionResponse,
+} from "@gooddata/api-model-bear";
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -57,7 +62,6 @@ import {
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
-import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 const defaultConfig = { hostname: "test" };
 
@@ -251,7 +255,7 @@ function recordedDataView(
     result: IExecutionResult,
     recording: LegacyExecutionRecording,
 ): IDataView {
-    const afmResult = recording.result.executionResult as GdcExecution.IExecutionResult;
+    const afmResult = recording.result.executionResult as IBearExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {
@@ -272,7 +276,7 @@ function recordedDataView(
     };
 }
 
-function convertDimensions(dims: GdcExecution.IResultDimension[]): IDimensionDescriptor[] {
+function convertDimensions(dims: IResultDimension[]): IDimensionDescriptor[] {
     return dims.map((dim) => {
         return {
             headers: dim.headers.map((header) => {
@@ -315,7 +319,7 @@ function recordedExecutionResult(
     recording: LegacyExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
-    const afmResponse = recording.response.executionResponse as GdcExecution.IExecutionResponse;
+    const afmResponse = recording.response.executionResponse as IExecutionResponse;
 
     const result: IExecutionResult = {
         definition,

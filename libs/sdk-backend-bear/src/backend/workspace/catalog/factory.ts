@@ -13,9 +13,6 @@ import {
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcDateDataSets from "@gooddata/api-model-bear/GdcDateDataSets";
-import * as GdcCatalog from "@gooddata/api-model-bear/GdcCatalog";
 
 import {
     convertAttribute,
@@ -30,17 +27,26 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IAttributeByKey, IDisplayFormByKey, IFactByKey, IMeasureByKey } from "../../../types/catalog.js";
 import { BearWorkspaceCatalog } from "./catalog.js";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js";
-import IDateDataSet = GdcDateDataSets.IDateDataSet;
-import IDateDataSetAttribute = GdcDateDataSets.IDateDataSetAttribute;
+import {
+    IWrappedAttribute,
+    IWrappedAttributeDisplayForm,
+    IDateDataSet,
+    IDateDataSetAttribute,
+    CatalogItem as BearCatalogItem,
+    isCatalogAttribute,
+    isCatalogMetric,
+    isWrappedAttribute,
+    ILoadCatalogItemsParams,
+} from "@gooddata/api-model-bear";
 
-type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
+type BearDisplayFormOrAttribute = IWrappedAttributeDisplayForm | IWrappedAttribute;
 
 const bearCatalogItemToCatalogItem =
     (displayForms: IDisplayFormByKey, attributes: IAttributeByKey) =>
-    (item: GdcCatalog.CatalogItem): CatalogItem => {
-        if (GdcCatalog.isCatalogAttribute(item)) {
+    (item: BearCatalogItem): CatalogItem => {
+        if (isCatalogAttribute(item)) {
             return convertAttribute(item, displayForms, attributes);
-        } else if (GdcCatalog.isCatalogMetric(item)) {
+        } else if (isCatalogMetric(item)) {
             return convertMeasure(item);
         }
         return convertFact(item);
@@ -54,7 +60,7 @@ const createLookups = (
     displayFormByUri: IDisplayFormByKey;
     attributeByDisplayFormUri: IAttributeByKey;
 } => {
-    const [attributes, displayForms] = partition(displayFormsAndAttributes, GdcMetadata.isWrappedAttribute);
+    const [attributes, displayForms] = partition(displayFormsAndAttributes, isWrappedAttribute);
     const unwrappedDisplayForms = displayForms.map((df) => df.attributeDisplayForm);
 
     const attributeByUri: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.uri!);
@@ -84,7 +90,7 @@ const createLookups = (
 const getProductionFlag = ({
     production,
     dataset,
-}: IWorkspaceCatalogFactoryOptions): GdcCatalog.ILoadCatalogItemsParams["production"] => {
+}: IWorkspaceCatalogFactoryOptions): ILoadCatalogItemsParams["production"] => {
     // if production is undefined, leave it as is - it has meaning
     if (production === undefined) {
         return production;
@@ -248,7 +254,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return result.dateDataSets;
     };
 
-    private loadBearCatalogItems = async (): Promise<GdcCatalog.CatalogItem[]> => {
+    private loadBearCatalogItems = async (): Promise<BearCatalogItem[]> => {
         const { types, dataset } = this.options;
 
         const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
@@ -271,22 +277,22 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadBearAttributes = async (
-        bearCatalogItems: GdcCatalog.CatalogItem[],
+        bearCatalogItems: BearCatalogItem[],
         dateDatasetAttributes: IDateDataSetAttribute[],
-    ): Promise<GdcMetadata.IWrappedAttribute[]> => {
+    ): Promise<IWrappedAttribute[]> => {
         const { types } = this.options;
         const shouldLoadAttributes = types.some((type) => type === "attribute" || type === "dateDataset");
         if (!shouldLoadAttributes) {
             return [];
         }
 
-        const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
+        const bearCatalogAttributes = bearCatalogItems.filter(isCatalogAttribute);
         const attributeUris = bearCatalogAttributes.map((attr) => attr.links.self);
 
         const dateAttributeUris = dateDatasetAttributes.map((attr) => attr.attributeMeta.uri!);
 
         return this.authCall((sdk) =>
-            sdk.md.getObjects<GdcMetadata.IWrappedAttribute>(
+            sdk.md.getObjects<IWrappedAttribute>(
                 this.workspace,
                 uniq([...attributeUris, ...dateAttributeUris]),
             ),
@@ -336,12 +342,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 }
 
 function extractDisplayFormsFromBearAttributes(
-    attributes: GdcMetadata.IWrappedAttribute[],
+    attributes: IWrappedAttribute[],
 ): BearDisplayFormOrAttribute[] {
     return flatMap(attributes, (attribute) => [
         attribute,
         ...attribute.attribute.content.displayForms.map(
-            (df): GdcMetadata.IWrappedAttributeDisplayForm => ({ attributeDisplayForm: df }),
+            (df): IWrappedAttributeDisplayForm => ({ attributeDisplayForm: df }),
         ),
     ]);
 }

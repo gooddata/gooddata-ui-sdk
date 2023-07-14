@@ -2,9 +2,19 @@
 import qs from "qs";
 import { XhrModule, ApiResponse } from "./xhr.js";
 import { ProjectModule } from "./project.js";
-import { GdcUser, GdcOrganization } from "@gooddata/api-model-bear";
+import {
+    IAccountInfo,
+    IAccountInfoResponse,
+    IAccountSetting,
+    IBootstrapResource,
+    ISeparators,
+    ISeparatorsResponse,
+    IWrappedAccountSetting,
+    IFeatureFlags,
+    IUserFeatureFlags,
+    IOrganization,
+} from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util.js";
-import { IFeatureFlags } from "./interfaces.js";
 
 export interface IUserConfigsSettingItem {
     settingItem: {
@@ -116,9 +126,9 @@ export class UserModule {
      * Gets current user's profile
      * @returns Resolves with account setting object
      */
-    public getCurrentProfile(): Promise<GdcUser.IAccountSetting> {
+    public getCurrentProfile(): Promise<IAccountSetting> {
         return this.xhr
-            .getParsed<GdcUser.IWrappedAccountSetting>("/gdc/account/profile/current")
+            .getParsed<IWrappedAccountSetting>("/gdc/account/profile/current")
             .then((r) => r.accountSetting);
     }
 
@@ -127,11 +137,11 @@ export class UserModule {
      * @param userId - loginMD5
      * @returns Resolves with separators setting object
      */
-    public getUserRegionalNumberFormatting(userId: string): Promise<GdcUser.ISeparators> {
+    public getUserRegionalNumberFormatting(userId: string): Promise<ISeparators> {
         return this.xhr
-            .getParsed<GdcUser.ISeparatorsResponse>(`/gdc/account/profile/${userId}/settings/separators`)
+            .getParsed<ISeparatorsResponse>(`/gdc/account/profile/${userId}/settings/separators`)
             .then(
-                (res): GdcUser.ISeparators => ({
+                (res): ISeparators => ({
                     decimal: res.separators.decimal,
                     thousand: res.separators.thousand,
                 }),
@@ -153,8 +163,8 @@ export class UserModule {
     /**
      * Returns info about currently logged in user from bootstrap resource
      */
-    public async getAccountInfo(): Promise<GdcUser.IAccountInfo> {
-        const { accountInfo } = await this.xhr.getParsed<GdcUser.IAccountInfoResponse>(
+    public async getAccountInfo(): Promise<IAccountInfo> {
+        const { accountInfo } = await this.xhr.getParsed<IAccountInfoResponse>(
             "/gdc/app/account/bootstrap/account",
         );
         return accountInfo;
@@ -200,15 +210,15 @@ export class UserModule {
     /**
      * Returns the feature flags valid for the currently logged in user.
      */
-    public async getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
-        const { featureFlags } = await this.xhr.getParsed<GdcUser.IUserFeatureFlags>(
+    public async getFeatureFlags(): Promise<IFeatureFlags> {
+        const { featureFlags } = await this.xhr.getParsed<IUserFeatureFlags>(
             "/gdc/app/account/bootstrap/featureFlags",
         );
         return featureFlags;
     }
 
-    public async getCurrentOrganization(): Promise<GdcOrganization.IOrganization> {
-        return this.xhr.getParsed<GdcOrganization.IOrganization>("/gdc/app/organization/current");
+    public async getCurrentOrganization(): Promise<IOrganization> {
+        return this.xhr.getParsed<IOrganization>("/gdc/app/organization/current");
     }
 
     /**
@@ -221,7 +231,7 @@ export class UserModule {
             clientId?: string;
             loadAnalyticalDashboards?: boolean;
         } = {},
-    ): Promise<GdcUser.IBootstrapResource> {
+    ): Promise<IBootstrapResource> {
         const { projectId, productId, clientId, loadAnalyticalDashboards = true } = options;
         let uri = `/gdc/app/account/bootstrap?loadAnalyticalDashboards=${loadAnalyticalDashboards}`;
 
@@ -232,7 +242,7 @@ export class UserModule {
             uri = `${uri}&projectUri=/gdc/projects/client:${productId}:${clientId}`;
         }
 
-        return this.xhr.getParsed<GdcUser.IBootstrapResource>(uri);
+        return this.xhr.getParsed<IBootstrapResource>(uri);
     }
 
     /**

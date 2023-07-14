@@ -19,8 +19,30 @@ import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import omit from "lodash/omit.js";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IBucket as IBearBucket,
+    BucketItem,
+    IObjectLink,
+    IVisualizationObjectAttribute,
+    IVisualizationObjectMeasure,
+    IVisualizationObjectMeasureValueFilter,
+    IVisualizationObjectRankingFilter,
+    VisualizationObjectExtendedFilter,
+    VisualizationObjectFilter,
+    VisualizationObjectMeasureDefinitionType,
+    isVisualizationObjectAbsoluteDateFilter,
+    isVisualizationObjectArithmeticMeasureDefinition,
+    isVisualizationObjectAttributeFilter,
+    isVisualizationObjectMeasure,
+    isVisualizationObjectMeasureValueFilter,
+    isVisualizationObjectPoPMeasureDefinition,
+    isVisualizationObjectPositiveAttributeFilter,
+    isVisualizationObjectPreviousPeriodMeasureDefinition,
+    isVisualizationObjectRankingFilter,
+    IVisualizationObject,
+    IVisualizationObjectContent,
+    IVisualization,
+} from "@gooddata/api-model-bear";
 import { convertReferencesToUris } from "./ReferenceConverter.js";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter.js";
 import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter.js";
@@ -39,9 +61,7 @@ const convertAttributeElements = (items: string[]): IAttributeElements => {
     return isUriLike(first) ? { uris: items } : { values: items };
 };
 
-const convertMeasureValueFilter = (
-    filter: GdcVisualizationObject.IMeasureValueFilter,
-): IMeasureValueFilter => {
+const convertMeasureValueFilter = (filter: IVisualizationObjectMeasureValueFilter): IMeasureValueFilter => {
     return {
         measureValueFilter: {
             condition: filter.measureValueFilter.condition,
@@ -50,7 +70,7 @@ const convertMeasureValueFilter = (
     };
 };
 
-const convertRankingFilter = (filter: GdcVisualizationObject.IRankingFilter): IRankingFilter => {
+const convertRankingFilter = (filter: IVisualizationObjectRankingFilter): IRankingFilter => {
     const { measures, operator, value, attributes } = filter.rankingFilter;
     return {
         rankingFilter: {
@@ -62,19 +82,19 @@ const convertRankingFilter = (filter: GdcVisualizationObject.IRankingFilter): IR
     };
 };
 
-const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter => {
-    if (GdcVisualizationObject.isMeasureValueFilter(filter)) {
+const convertFilter = (filter: VisualizationObjectExtendedFilter): IFilter => {
+    if (isVisualizationObjectMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
-    } else if (GdcVisualizationObject.isRankingFilter(filter)) {
+    } else if (isVisualizationObjectRankingFilter(filter)) {
         return convertRankingFilter(filter);
     } else {
         return convertMeasureFilter(filter);
     }
 };
 
-const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter => {
-    if (GdcVisualizationObject.isAttributeFilter(filter)) {
-        if (GdcVisualizationObject.isPositiveAttributeFilter(filter)) {
+const convertMeasureFilter = (filter: VisualizationObjectFilter): IMeasureFilter => {
+    if (isVisualizationObjectAttributeFilter(filter)) {
+        if (isVisualizationObjectPositiveAttributeFilter(filter)) {
             return {
                 positiveAttributeFilter: {
                     displayForm: fromBearRef(filter.positiveAttributeFilter.displayForm, "displayForm"),
@@ -89,7 +109,7 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
             },
         };
     } else {
-        if (GdcVisualizationObject.isAbsoluteDateFilter(filter)) {
+        if (isVisualizationObjectAbsoluteDateFilter(filter)) {
             return {
                 absoluteDateFilter: {
                     dataSet: fromBearRef(filter.absoluteDateFilter.dataSet, "dataSet"),
@@ -121,15 +141,15 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
 };
 
 const convertMeasureDefinition = (
-    definition: GdcVisualizationObject.IMeasureDefinitionType,
+    definition: VisualizationObjectMeasureDefinitionType,
 ): IMeasureDefinitionType => {
-    if (GdcVisualizationObject.isArithmeticMeasureDefinition(definition)) {
+    if (isVisualizationObjectArithmeticMeasureDefinition(definition)) {
         return definition;
     }
-    if (GdcVisualizationObject.isPopMeasureDefinition(definition)) {
+    if (isVisualizationObjectPoPMeasureDefinition(definition)) {
         return definition;
     }
-    if (GdcVisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
+    if (isVisualizationObjectPreviousPeriodMeasureDefinition(definition)) {
         return definition;
     }
     const { filters } = definition.measureDefinition;
@@ -141,7 +161,7 @@ const convertMeasureDefinition = (
     };
 };
 
-const convertMeasure = (measure: GdcVisualizationObject.IMeasure): IMeasure => {
+const convertMeasure = (measure: IVisualizationObjectMeasure): IMeasure => {
     const { definition } = measure.measure;
 
     return {
@@ -152,7 +172,7 @@ const convertMeasure = (measure: GdcVisualizationObject.IMeasure): IMeasure => {
     };
 };
 
-const convertAttribute = (attribute: GdcVisualizationObject.IAttribute): IAttribute => {
+const convertAttribute = (attribute: IVisualizationObjectAttribute): IAttribute => {
     return {
         attribute: {
             ...attribute.visualizationAttribute,
@@ -161,8 +181,8 @@ const convertAttribute = (attribute: GdcVisualizationObject.IAttribute): IAttrib
     };
 };
 
-const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttributeOrMeasure => {
-    return GdcVisualizationObject.isMeasure(bucketItem)
+const convertBucketItem = (bucketItem: BucketItem): IAttributeOrMeasure => {
+    return isVisualizationObjectMeasure(bucketItem)
         ? convertMeasure(bucketItem)
         : convertAttribute(bucketItem);
 };
@@ -170,7 +190,7 @@ const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttr
 /**
  * @internal
  */
-export const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
+export const convertBucket = (bucket: IBearBucket): IBucket => {
     return {
         items: bucket.items.map(convertBucketItem),
         localIdentifier: bucket.localIdentifier,
@@ -178,9 +198,7 @@ export const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket =
     };
 };
 
-const resolveReferences = (
-    mdObject: GdcVisualizationObject.IVisualizationObject,
-): GdcVisualizationObject.IVisualizationObject => {
+const resolveReferences = (mdObject: IVisualizationObject): IVisualizationObject => {
     const { content } = mdObject;
     if (!content) {
         return mdObject;
@@ -202,7 +220,7 @@ const resolveReferences = (
     return {
         ...mdObject,
         content: {
-            ...(omit(mdObject.content, "references") as GdcVisualizationObject.IVisualizationObjectContent),
+            ...(omit(mdObject.content, "references") as IVisualizationObjectContent),
             properties: serializeProperties(convertedProperties),
             ...referencesProp,
         },
@@ -214,7 +232,7 @@ const resolveReferences = (
  * @internal
  */
 export const convertVisualization = (
-    visualization: GdcVisualizationObject.IVisualization,
+    visualization: IVisualization,
     visualizationClassUri: string,
     userMap?: Map<string, IUser>,
 ): IInsight => {
@@ -245,7 +263,7 @@ export const convertVisualization = (
     };
 };
 
-export const convertListedVisualization = (visualizationLink: GdcMetadata.IObjectLink): IInsight => {
+export const convertListedVisualization = (visualizationLink: IObjectLink): IInsight => {
     const ref = uriRef(visualizationLink.link);
 
     return {

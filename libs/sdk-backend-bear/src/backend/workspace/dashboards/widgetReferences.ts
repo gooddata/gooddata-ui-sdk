@@ -3,18 +3,22 @@
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IWidgetReferences, SupportedWidgetReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, IWidget, widgetUri } from "@gooddata/sdk-model";
-
-import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-
 import { getObjectIdFromUri } from "../../../utils/api.js";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter.js";
 import isEmpty from "lodash/isEmpty.js";
 import keyBy from "lodash/keyBy.js";
 
 import { convertMetric } from "../../../convertors/fromBackend/CatalogConverter.js";
+import {
+    IMetric,
+    IObject,
+    IObjectXrefEntry,
+    ObjectCategory,
+    WrappedObject,
+    unwrapMetadataObject,
+} from "@gooddata/api-model-bear";
 
-const objectTypeToObjectCategory = (type: SupportedWidgetReferenceTypes): GdcMetadata.ObjectCategory => {
+const objectTypeToObjectCategory = (type: SupportedWidgetReferenceTypes): ObjectCategory => {
     if (type === "measure") {
         return "metric";
     }
@@ -43,7 +47,7 @@ export class WidgetReferencesQuery {
             return {};
         }
 
-        const xrefs: GdcMetadata.IObjectXrefEntry[] = await this.findReferencedObjects();
+        const xrefs: IObjectXrefEntry[] = await this.findReferencedObjects();
 
         /*
          * Xrefs do not contain all the necessary information. Load the referenced objects.
@@ -60,10 +64,10 @@ export class WidgetReferencesQuery {
     /**
      * Uses the query resource to obtain all objects of the desired types which are used by the insight.
      */
-    private findReferencedObjects = async (): Promise<GdcMetadata.IObjectXrefEntry[]> => {
+    private findReferencedObjects = async (): Promise<IObjectXrefEntry[]> => {
         const categories = this.typesForXref.map(objectTypeToObjectCategory);
         const { entries: allDirectObjects } = await this.authCall((sdk) =>
-            sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+            sdk.xhr.getParsed<{ entries: IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/using2/${this.objectId}?types=${categories.join(",")}`,
             ),
         );
@@ -74,12 +78,10 @@ export class WidgetReferencesQuery {
     /**
      * Give the discovered references, bulk load data for objects of those types that the caller is interested in.
      */
-    private loadObjects = async (
-        xrefs: GdcMetadata.IObjectXrefEntry[],
-    ): Promise<GdcMetadataObject.WrappedObject[]> => {
+    private loadObjects = async (xrefs: IObjectXrefEntry[]): Promise<WrappedObject[]> => {
         const categories = this.typesForLoad.map(objectTypeToObjectCategory);
         const objectUrisToObtain = xrefs
-            .filter((i) => categories.includes(i.category as GdcMetadata.ObjectCategory))
+            .filter((i) => categories.includes(i.category as ObjectCategory))
             .map((meta) => meta.link);
 
         return this.authCall((sdk) => sdk.md.getObjects(this.workspace, objectUrisToObtain));
@@ -89,10 +91,8 @@ export class WidgetReferencesQuery {
     //
     //
 
-    private createResult(objects: GdcMetadataObject.WrappedObject[]): IWidgetReferences {
-        const unwrappedObjects: GdcMetadataObject.IObject[] = objects.map(
-            GdcMetadataObject.unwrapMetadataObject,
-        );
+    private createResult(objects: WrappedObject[]): IWidgetReferences {
+        const unwrappedObjects: IObject[] = objects.map(unwrapMetadataObject);
         const convertedObjects = unwrappedObjects.map(convertMetadataObject);
 
         const objectsByUri = keyBy(unwrappedObjects, (obj) => (obj as any).meta.uri);
@@ -102,7 +102,7 @@ export class WidgetReferencesQuery {
             const fullObject = objectsByUri[obj.uri];
 
             if (obj.type === "measure") {
-                catalogItems.push(convertMetric({ metric: fullObject as GdcMetadata.IMetric }));
+                catalogItems.push(convertMetric({ metric: fullObject as IMetric }));
             }
         });
 

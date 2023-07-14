@@ -2,6 +2,19 @@
 import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 
+import {
+    Identifier,
+    SortDirection,
+    MeasureAggregation,
+    TotalType,
+    ArithmeticMeasureOperator,
+    ObjQualifier,
+    MeasureValueFilterCondition,
+    RankingFilterOperator,
+    Qualifier,
+    IPreviousPeriodDateDataSet,
+} from "../base/GdcTypes.js";
+
 /**
  * @public
  */
@@ -89,22 +102,12 @@ export interface IPreviousPeriodMeasureDefinition {
 /**
  * @public
  */
-export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
-
-/**
- * @public
- */
 export interface ISimpleMeasure {
     item: ObjQualifier;
-    aggregation?: SimpleMeasureAggregation;
+    aggregation?: MeasureAggregation;
     filters?: FilterItem[];
     computeRatio?: boolean;
 }
-
-/**
- * @public
- */
-export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
 /**
  * @public
@@ -128,38 +131,6 @@ export interface IPopMeasure {
 export interface IPreviousPeriodMeasure {
     measureIdentifier: Identifier;
     dateDataSets: IPreviousPeriodDateDataSet[];
-}
-
-/**
- * @public
- */
-export interface IPreviousPeriodDateDataSet {
-    dataSet: ObjQualifier;
-    periodsAgo: number;
-}
-
-/**
- * @public
- */
-export type Identifier = string;
-
-/**
- * @public
- */
-export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
-
-/**
- * @public
- */
-export interface IObjIdentifierQualifier {
-    identifier: string;
-}
-
-/**
- * @public
- */
-export interface IObjUriQualifier {
-    uri: string;
 }
 
 /**
@@ -252,73 +223,12 @@ export interface IRelativeDateFilter {
 /**
  * @public
  */
-export type ComparisonConditionOperator =
-    | "GREATER_THAN"
-    | "GREATER_THAN_OR_EQUAL_TO"
-    | "LESS_THAN"
-    | "LESS_THAN_OR_EQUAL_TO"
-    | "EQUAL_TO"
-    | "NOT_EQUAL_TO";
-
-/**
- * @public
- */
-export interface IComparisonCondition {
-    comparison: {
-        operator: ComparisonConditionOperator;
-        value: number;
-        treatNullValuesAs?: number;
-    };
-}
-
-/**
- * @public
- */
-export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-
-/**
- * @public
- */
-export interface IRangeCondition {
-    range: {
-        operator: RangeConditionOperator;
-        from: number;
-        to: number;
-        treatNullValuesAs?: number;
-    };
-}
-
-/**
- * @public
- */
-export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
-
-/**
- * @public
- */
-export interface ILocalIdentifierQualifier {
-    localIdentifier: string;
-}
-
-/**
- * @public
- */
-export type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
-
-/**
- * @public
- */
 export interface IMeasureValueFilter {
     measureValueFilter: {
         measure: Qualifier;
         condition?: MeasureValueFilterCondition;
     };
 }
-
-/**
- * @public
- */
-export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 /**
  * @public
@@ -354,11 +264,6 @@ export interface ITotalItem {
 /**
  * @public
  */
-export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-
-/**
- * @public
- */
 export interface INativeTotalItem {
     measureIdentifier: Identifier;
     attributeIdentifiers: Identifier[];
@@ -376,11 +281,6 @@ export interface IDimension {
  * @public
  */
 export type SortItem = IAttributeSortItem | IMeasureSortItem;
-
-/**
- * @public
- */
-export type SortDirection = "asc" | "desc";
 
 /**
  * @public
@@ -447,27 +347,6 @@ export interface IMeasureLocatorItem {
     measureLocatorItem: {
         measureIdentifier: Identifier;
     };
-}
-
-/**
- * @public
- */
-export function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
-}
-
-/**
- * @public
- */
-export function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjIdentifierQualifier).identifier !== undefined;
-}
-
-/**
- * @public
- */
-export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as ILocalIdentifierQualifier).localIdentifier !== undefined;
 }
 
 /**

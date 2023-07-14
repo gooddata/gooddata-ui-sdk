@@ -11,10 +11,9 @@ import {
     getEventType,
     IDrillableItemsCommandBody,
 } from "./common.js";
-import * as EmbeddedGdc from "./EmbeddedGdc.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import * as GdcExport from "@gooddata/api-model-bear/GdcExport";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import { IBaseExportConfig, IVisualization } from "@gooddata/api-model-bear";
+import { IFilterContextContent, IRemoveFilterContextContent } from "./EmbeddedGdc.js";
 
 /**
  * Insight Export configuration
@@ -23,7 +22,7 @@ import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizati
  *
  * @public
  */
-export interface IInsightExportConfig extends GdcExport.IBaseExportConfig {
+export interface IInsightExportConfig extends IBaseExportConfig {
     /**
      * Include applied filters
      */
@@ -241,7 +240,7 @@ export type AdCommandFailed = CommandFailed<GdcProductName.ANALYTICAL_DESIGNER>;
 export type AdCommandFailedData = CommandFailedData<GdcProductName.ANALYTICAL_DESIGNER>;
 
 /**
- * Type-guard checking whether an object is an instance of AdCommandFailedData
+ * Type-guard checking whether an object is an instance of {@link AdCommandFailedData}
  *
  * @param obj - object to test
  *
@@ -260,7 +259,7 @@ export function isAdCommandFailedData(obj: unknown): obj is AdCommandFailedData 
  *
  * @public
  */
-export type DrillableItemsCommand = IGdcAdMessageEvent<
+export type AdDrillableItemsCommand = IGdcAdMessageEvent<
     GdcAdCommandType.DrillableItems,
     IDrillableItemsCommandBody
 >;
@@ -274,19 +273,19 @@ export type DrillableItemsCommand = IGdcAdMessageEvent<
  *
  * @public
  */
-export type DrillableItemsCommandData = IGdcAdMessageEnvelope<
+export type AdDrillableItemsCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.DrillableItems,
     IDrillableItemsCommandBody
 >;
 
 /**
- * Type-guard checking whether an object is an instance of DrillableItemsCommandData
+ * Type-guard checking whether an object is an instance of {@link AdDrillableItemsCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData {
+export function isAdDrillableItemsCommandData(obj: unknown): obj is AdDrillableItemsCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.DrillableItems;
 }
 
@@ -299,7 +298,7 @@ export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItems
  *
  * @public
  */
-export interface IOpenInsightCommandBody {
+export interface IAdOpenInsightCommandBody {
     /**
      * Dataset identifier - A dataset consists of attributes and facts,
      * which correspond to data you want to measure and the data
@@ -356,36 +355,39 @@ export interface IOpenInsightCommandBody {
  * Contract:
  *
  * - if the insight could not found, then CommandFailed event will be posted
- * - after the insight is opened, then InsightOpened event will be posted
+ * - after the insight is opened, then {@link AdInsightOpened} event will be posted
  *
  * Note: if insightId isn't provided, the empty insight editor will be opened
  *
  * @public
  */
-export type OpenInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.OpenInsight, IOpenInsightCommandBody>;
+export type AdOpenInsightCommand = IGdcAdMessageEvent<
+    GdcAdCommandType.OpenInsight,
+    IAdOpenInsightCommandBody
+>;
 
 /**
  * Data type of open insight command
  *
  * Note: The main event data was wrapped to application and product data structure
  *
- * @remarks See IOpenInsightCommandBody
+ * @remarks See {@link IAdOpenInsightCommandBody}
  *
  * @public
  */
-export type OpenInsightCommandData = IGdcAdMessageEnvelope<
+export type AdOpenInsightCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.OpenInsight,
-    IOpenInsightCommandBody
+    IAdOpenInsightCommandBody
 >;
 
 /**
- * Type-guard checking whether an object is an instance of OpenInsightCommandData
+ * Type-guard checking whether an object is an instance of {@link AdOpenInsightCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isOpenInsightCommandData(obj: unknown): obj is OpenInsightCommandData {
+export function isAdOpenInsightCommandData(obj: unknown): obj is AdOpenInsightCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.OpenInsight;
 }
 
@@ -398,7 +400,7 @@ export function isOpenInsightCommandData(obj: unknown): obj is OpenInsightComman
  *
  * @public
  */
-export type ClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>;
+export type AdClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>;
 
 /**
  * Data type of clear command
@@ -407,16 +409,16 @@ export type ClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>
  *
  * @public
  */
-export type ClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
+export type AdClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of ClearCommandData
+ * Type-guard checking whether an object is an instance of  {@link AdClearCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isClearCommandData(obj: unknown): obj is ClearCommandData {
+export function isAdClearCommandData(obj: unknown): obj is AdClearCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.Clear;
 }
 
@@ -429,7 +431,7 @@ export function isClearCommandData(obj: unknown): obj is ClearCommandData {
  *
  * @public
  */
-export type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
+export type AdClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
 
 /**
  * Data type of clearInsight command
@@ -438,16 +440,16 @@ export type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsig
  *
  * @public
  */
-export type ClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
+export type AdClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of ClearInsightCommandData
+ * Type-guard checking whether an object is an instance of {@link AdClearInsightCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isClearInsightCommandData(obj: unknown): obj is ClearInsightCommandData {
+export function isAdClearInsightCommandData(obj: unknown): obj is AdClearInsightCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.ClearInsight;
 }
 
@@ -460,28 +462,31 @@ export function isClearInsightCommandData(obj: unknown): obj is ClearInsightComm
  *
  * @public
  */
-export type RequestCancellationCommand = IGdcAdMessageEvent<GdcAdCommandType.RequestCancellation, undefined>;
-
-/**
- * Data type of RequestCancellation command
- *
- * Note: it has empty content and just wrapped to application and product data structure
- *
- * @public
- */
-export type RequestCancellationCommandData = IGdcAdMessageEnvelope<
+export type AdRequestCancellationCommand = IGdcAdMessageEvent<
     GdcAdCommandType.RequestCancellation,
     undefined
 >;
 
 /**
- * Type-guard checking whether an object is an instance of RequestCancellationCommandData
+ * Data type of {@link AdRequestCancellationCommand} command
+ *
+ * Note: it has empty content and just wrapped to application and product data structure
+ *
+ * @public
+ */
+export type AdRequestCancellationCommandData = IGdcAdMessageEnvelope<
+    GdcAdCommandType.RequestCancellation,
+    undefined
+>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link AdRequestCancellationCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData {
+export function isAdRequestCancellationCommandData(obj: unknown): obj is AdRequestCancellationCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.RequestCancellation;
 }
 
@@ -494,7 +499,7 @@ export function isRequestCancellationCommandData(obj: unknown): obj is RequestCa
  *
  * @public
  */
-export interface ISaveCommandBody {
+export interface IAdSaveCommandBody {
     /**
      * Insight title - use as title of new insight or rename of saved insight
      */
@@ -515,30 +520,30 @@ export interface ISaveCommandBody {
  * -  the InsightSaved event will be posted even when saving insights that have not changed but are eligible
  *    for saving (not empty, not in-error)
  *
- * Note: sending SaveInsightCommand with different title means insight will be saved with that new title.
+ * Note: sending AdSaveInsightCommand with different title means insight will be saved with that new title.
  *
  * @public
  */
-export type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISaveCommandBody>;
+export type AdSaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, IAdSaveCommandBody>;
 
 /**
  * Data type of save insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See ISaveCommandBody
+ * @remarks See  {@link IAdSaveCommandBody}
  *
  * @public
  */
-export type SaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, ISaveCommandBody>;
+export type AdSaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, IAdSaveCommandBody>;
 
 /**
- * Type-guard checking whether an object is an instance of SaveInsightCommandData
+ * Type-guard checking whether an object is an instance of {@link AdSaveInsightCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData {
+export function isAdSaveInsightCommandData(obj: unknown): obj is AdSaveInsightCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.Save;
 }
 
@@ -551,7 +556,7 @@ export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightComman
  *
  * @public
  */
-export interface ISaveAsInsightCommandBody {
+export interface IAdSaveAsInsightCommandBody {
     /**
      * Insight title - use as title of new insight
      */
@@ -561,33 +566,33 @@ export interface ISaveAsInsightCommandBody {
 /**
  * Saves current insight as a new object, with a different title. The title is specified
  *
- * Contract is same as SaveInsightCommand.
+ * Contract is same as {@link AdSaveInsightCommand}.
  *
  * @public
  */
-export type SaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
+export type AdSaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, IAdSaveAsInsightCommandBody>;
 
 /**
  * Data type of save as insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See ISaveAsInsightCommandBody
+ * @remarks See {@link IAdSaveAsInsightCommandBody}
  *
  * @public
  */
-export type SaveAsInsightCommandData = IGdcAdMessageEnvelope<
+export type AdSaveAsInsightCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.SaveAs,
-    ISaveAsInsightCommandBody
+    IAdSaveAsInsightCommandBody
 >;
 
 /**
- * Type-guard checking whether an object is an instance of SaveAsInsightCommandData
+ * Type-guard checking whether an object is an instance of {@link AdSaveAsInsightCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData {
+export function isAdSaveAsInsightCommandData(obj: unknown): obj is AdSaveAsInsightCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.SaveAs;
 }
 
@@ -600,7 +605,7 @@ export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCo
  *
  * @public
  */
-export interface IExportInsightCommandBody {
+export interface IAdExportInsightCommandBody {
     /**
      * Configuration for exported file.
      *
@@ -613,43 +618,43 @@ export interface IExportInsightCommandBody {
 
 /**
  * Exports current insight into CSV or XLSX. The export configuration matches that of the exportResult
- * function already available in `api-model-bear`. Please consult {@link @gooddata/api-model-bear#GdcExport.IBaseExportConfig} for more
+ * function already available in `api-model-bear`. Please consult {@link @gooddata/api-model-bear#IBaseExportConfig} for more
  * detail about possible export configuration options.
  *
  * Contract:
  *
  * -  if the currently edited insight IS eligible for export then it is done and the ExportFinished event will be
  *    posted with `link` to the result.
- * -  if the currently edited insight IS NOT eligible for export (empty, in-error), then CommandFailed event
+ * -  if the currently edited insight IS NOT eligible for export (empty, in-error), then {@link AdCommandFailed} event
  *    will be posted.
- * -  if the specified export config is invalid / does not match validation rules, then CommandFailed event
+ * -  if the specified export config is invalid / does not match validation rules, then {@link AdCommandFailed} event
  *    will be posted
  *
  * @public
  */
-export type ExportInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Export, IExportInsightCommandBody>;
+export type AdExportInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Export, IAdExportInsightCommandBody>;
 
 /**
  * Data type of export insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See IExportInsightCommandBody
+ * @remarks See {@link IAdExportInsightCommandBody}
  *
  * @public
  */
-export type ExportInsightCommandData = IGdcAdMessageEnvelope<
+export type AdExportInsightCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.Export,
-    IExportInsightCommandBody
+    IAdExportInsightCommandBody
 >;
 
 /**
- * Type-guard checking whether an object is an instance of ExportInsightCommandData
+ * Type-guard checking whether an object is an instance of {@link AdExportInsightCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData {
+export function isAdExportInsightCommandData(obj: unknown): obj is AdExportInsightCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.Export;
 }
 
@@ -662,14 +667,14 @@ export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCo
  *
  * Contract:
  *
- * -  if it is valid to perform Undo operation, AD will do it and the UndoFinished will be posted once the
+ * -  if it is valid to perform Undo operation, AD will do it and the {@link AdUndoFinished} will be posted once the
  *    undo completes
  *
- * -  if the Undo operation is not available in current state of AD, then CommandFailed will be posted
+ * -  if the Undo operation is not available in current state of AD, then {@link AdCommandFailed} will be posted
  *
  * @public
  */
-export type UndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
+export type AdUndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
 
 /**
  * Data type of undo command
@@ -678,16 +683,16 @@ export type UndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
  *
  * @public
  */
-export type UndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, undefined>;
+export type AdUndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of UndoCommandData
+ * Type-guard checking whether an object is an instance of {@link AdCommandFailed}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isUndoCommandData(obj: unknown): obj is UndoCommandData {
+export function isAdUndoCommandData(obj: unknown): obj is AdUndoCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.Undo;
 }
 
@@ -700,14 +705,14 @@ export function isUndoCommandData(obj: unknown): obj is UndoCommandData {
  *
  * Contract:
  *
- * -  if it is valid to perform Redo operation, AD will do it and the RedoFinished will be posted once the
+ * -  if it is valid to perform Redo operation, AD will do it and the {@link AdRedoFinished}  will be posted once the
  *    redo completes
  *
- * -  if the Redo operation is not available in current state of AD, then CommandFailed will be posted
+ * -  if the Redo operation is not available in current state of AD, then {@link AdCommandFailed} will be posted
  *
  * @public
  */
-export type RedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
+export type AdRedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
 
 /**
  * Data type of redo command
@@ -716,27 +721,27 @@ export type RedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
  *
  * @public
  */
-export type RedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, undefined>;
+export type AdRedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of RedoCommandData
+ * Type-guard checking whether an object is an instance of {@link AdRedoCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isRedoCommandData(obj: unknown): obj is RedoCommandData {
+export function isAdRedoCommandData(obj: unknown): obj is AdRedoCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.Redo;
 }
 
 /**
- * Data type of SetFilterContext command
+ * Data type of {@link AdSetFilterContextCommand} command
  *
  * @public
  */
-export type SetFilterContextCommandData = IGdcAdMessageEnvelope<
+export type AdSetFilterContextCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.SetFilterContext,
-    EmbeddedGdc.IFilterContextContent
+    IFilterContextContent
 >;
 
 /**
@@ -753,19 +758,19 @@ export type SetFilterContextCommandData = IGdcAdMessageEnvelope<
  *
  * @public
  */
-export type SetFilterContextCommand = IGdcAdMessageEvent<
+export type AdSetFilterContextCommand = IGdcAdMessageEvent<
     GdcAdCommandType.SetFilterContext,
-    EmbeddedGdc.IFilterContextContent
+    IFilterContextContent
 >;
 
 /**
- * Type-guard checking whether an object is an instance of SetFilterContextCommand
+ * Type-guard checking whether an object is an instance of {@link AdSetFilterContextCommand}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData {
+export function isAdSetFilterContextCommandData(obj: unknown): obj is AdSetFilterContextCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetFilterContext;
 }
 
@@ -774,9 +779,9 @@ export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterCon
  *
  * @public
  */
-export type RemoveFilterContextCommandData = IGdcAdMessageEnvelope<
+export type AdRemoveFilterContextCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.RemoveFilterContext,
-    EmbeddedGdc.IRemoveFilterContextContent
+    IRemoveFilterContextContent
 >;
 
 /**
@@ -787,19 +792,19 @@ export type RemoveFilterContextCommandData = IGdcAdMessageEnvelope<
  *
  * @public
  */
-export type RemoveFilterContextCommand = IGdcAdMessageEvent<
+export type AdRemoveFilterContextCommand = IGdcAdMessageEvent<
     GdcAdCommandType.RemoveFilterContext,
-    EmbeddedGdc.IRemoveFilterContextContent
+    IRemoveFilterContextContent
 >;
 
 /**
- * Type-guard checking whether an object is an instance of RemoveFilterContextCommand
+ * Type-guard checking whether an object is an instance of {@link AdRemoveFilterContextCommand}  RemoveFilterContextCommand
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData {
+export function isAdRemoveFilterContextCommandData(obj: unknown): obj is AdRemoveFilterContextCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.RemoveFilterContext;
 }
 
@@ -812,7 +817,7 @@ export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFil
  *
  * @public
  */
-export interface IAvailableCommands {
+export interface IAdAvailableCommands {
     /**
      * Array of available commands types
      */
@@ -828,16 +833,16 @@ export interface IAvailableCommands {
  *
  * @public
  */
-export type NewInsightInitializedBody = IAvailableCommands;
+export type AdNewInsightInitializedBody = IAdAvailableCommands;
 
 /**
  * This event is emitted when AD initializes edit session for a new insight.
  *
  * @public
  */
-export type NewInsightInitialized = IGdcAdMessageEvent<
+export type AdNewInsightInitialized = IGdcAdMessageEvent<
     GdcAdEventType.NewInsightInitialized,
-    NewInsightInitializedBody
+    AdNewInsightInitializedBody
 >;
 
 /**
@@ -847,19 +852,19 @@ export type NewInsightInitialized = IGdcAdMessageEvent<
  *
  * @public
  */
-export type NewInsightInitializedData = IGdcAdMessageEnvelope<
+export type AdNewInsightInitializedData = IGdcAdMessageEnvelope<
     GdcAdEventType.NewInsightInitialized,
     undefined
 >;
 
 /**
- * Type-guard checking whether an object is an instance of NewInsightInitializedData
+ * Type-guard checking whether an object is an instance of {@link AdNewInsightInitializedData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isNewInsightInitializedData(obj: unknown): obj is NewInsightInitializedData {
+export function isAdNewInsightInitializedData(obj: unknown): obj is AdNewInsightInitializedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.NewInsightInitialized;
 }
 
@@ -872,7 +877,7 @@ export function isNewInsightInitializedData(obj: unknown): obj is NewInsightInit
  *
  * @public
  */
-export type InsightOpenedBody = IAvailableCommands & {
+export type AdInsightOpenedBody = IAdAvailableCommands & {
     /**
      * The minimal opened insight information
      */
@@ -890,26 +895,26 @@ export type InsightOpenedBody = IAvailableCommands & {
  *
  * @public
  */
-export type InsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, InsightOpenedBody>;
+export type AdInsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, AdInsightOpenedBody>;
 
 /**
  * Data type of event that was emitted when an insight is opened
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See InsightOpenedBody
+ * @remarks See {@link AdInsightOpenedBody}
  *
  * @public
  */
-export type InsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, InsightOpenedBody>;
+export type AdInsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, AdInsightOpenedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of InsightOpenedData
+ * Type-guard checking whether an object is an instance of {@link AdInsightOpenedData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData {
+export function isAdInsightOpenedData(obj: unknown): obj is AdInsightOpenedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightOpened;
 }
 
@@ -918,11 +923,11 @@ export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData {
 //
 
 /**
- * Main data of InsightRendered event
+ * Main data of {@link AdInsightRendered} event
  *
  * @public
  */
-export type InsightRenderedBody = IAvailableCommands & {
+export type AdInsightRenderedBody = IAdAvailableCommands & {
     /**
      * The minimal rendered insight information
      */
@@ -940,26 +945,29 @@ export type InsightRenderedBody = IAvailableCommands & {
  *
  * @public
  */
-export type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, InsightRenderedBody>;
+export type AdInsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, AdInsightRenderedBody>;
 
 /**
  * Data type of event that was emitted when an insight is rendered
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See InsightRenderedBody
+ * @remarks See  {@link AdInsightRenderedBody}
  *
  * @public
  */
-export type InsightRenderedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightRendered, InsightRenderedBody>;
+export type AdInsightRenderedData = IGdcAdMessageEnvelope<
+    GdcAdEventType.InsightRendered,
+    AdInsightRenderedBody
+>;
 
 /**
- * Type-guard checking whether an object is an instance of InsightRenderedData
+ * Type-guard checking whether an object is an instance of {@link AdInsightRenderedData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isInsightRenderedData(obj: unknown): obj is InsightRenderedData {
+export function isAdInsightRenderedData(obj: unknown): obj is AdInsightRenderedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightRendered;
 }
 
@@ -972,7 +980,7 @@ export function isInsightRenderedData(obj: unknown): obj is InsightRenderedData 
  *
  * @public
  */
-export type ClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAvailableCommands>;
+export type AdClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAdAvailableCommands>;
 
 /**
  * Data type of event that was emitted after finish clear action
@@ -981,16 +989,16 @@ export type ClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAv
  *
  * @public
  */
-export type ClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAvailableCommands>;
+export type AdClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAdAvailableCommands>;
 
 /**
- * Type-guard checking whether an object is an instance of ClearFinishedData
+ * Type-guard checking whether an object is an instance of {@link AdClearFinishedData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isClearFinishedData(obj: unknown): obj is ClearFinishedData {
+export function isAdClearFinishedData(obj: unknown): obj is AdClearFinishedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearFinished;
 }
 
@@ -1003,9 +1011,9 @@ export function isClearFinishedData(obj: unknown): obj is ClearFinishedData {
  *
  * @public
  */
-export type ClearInsightFinished = IGdcAdMessageEvent<
+export type AdClearInsightFinished = IGdcAdMessageEvent<
     GdcAdEventType.ClearInsightFinished,
-    IAvailableCommands
+    IAdAvailableCommands
 >;
 
 /**
@@ -1015,19 +1023,19 @@ export type ClearInsightFinished = IGdcAdMessageEvent<
  *
  * @public
  */
-export type ClearInsightFinishedData = IGdcAdMessageEnvelope<
+export type AdClearInsightFinishedData = IGdcAdMessageEnvelope<
     GdcAdEventType.ClearInsightFinished,
-    IAvailableCommands
+    IAdAvailableCommands
 >;
 
 /**
- * Type-guard checking whether an object is an instance of ClearInsightFinishedData
+ * Type-guard checking whether an object is an instance of {@link AdClearInsightFinishedData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFinishedData {
+export function isAdClearInsightFinishedData(obj: unknown): obj is AdClearInsightFinishedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearInsightFinished;
 }
 
@@ -1036,14 +1044,14 @@ export function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFin
 //
 
 /**
- * Main data of InsightSaved event
+ * Main data of  {@link AdInsightSaved}  event
  *
  * Note: `visualizationObject` is kept because of backward compatibility
  *
  * @public
  */
-export type InsightSavedBody = IAvailableCommands &
-    GdcVisualizationObject.IVisualization & {
+export type AdInsightSavedBody = IAdAvailableCommands &
+    IVisualization & {
         /**
          * The minimal saved insight information
          */
@@ -1055,24 +1063,24 @@ export type InsightSavedBody = IAvailableCommands &
  *
  * @public
  */
-export type InsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, InsightSavedBody>;
+export type AdInsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, AdInsightSavedBody>;
 
 /**
  * Data type of event that was emitted when an insight is saved
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See InsightSavedBody
+ * @remarks See {@link AdInsightSavedBody}
  * @public
  */
-export type InsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSaved, InsightSavedBody>;
+export type AdInsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSaved, AdInsightSavedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of InsightSavedData
+ * Type-guard checking whether an object is an instance of {@link AdInsightSavedData}
  *
  * @param obj - object to test
  * @public
  */
-export function isInsightSavedData(obj: unknown): obj is InsightSavedData {
+export function isAdInsightSavedData(obj: unknown): obj is AdInsightSavedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightSaved;
 }
 
@@ -1081,10 +1089,10 @@ export function isInsightSavedData(obj: unknown): obj is InsightSavedData {
 //
 
 /**
- * Main data of ExportFinished event
+ * Main data of {@link AdExportFinished} event
  * @public
  */
-export type ExportFinishedBody = IAvailableCommands & {
+export type AdExportFinishedBody = IAdAvailableCommands & {
     /**
      * Link to the file containing exported data.
      */
@@ -1095,24 +1103,24 @@ export type ExportFinishedBody = IAvailableCommands & {
  * This event is emitted when AD successfully exports data visualized by the currently edited insight.
  * @public
  */
-export type ExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, ExportFinishedBody>;
+export type AdExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, AdExportFinishedBody>;
 
 /**
  * Data type of event that was emitted after an insight was exported
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See ExportFinishedBody
+ * @remarks See {@link AdExportFinishedBody}
  * @public
  */
-export type ExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFinished, ExportFinishedBody>;
+export type AdExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFinished, AdExportFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of ExportFinishedData
+ * Type-guard checking whether an object is an instance of {@link AdExportFinishedData}
  *
  * @param obj - object to test
  * @public
  */
-export function isExportFinishedData(obj: unknown): obj is ExportFinishedData {
+export function isAdExportFinishedData(obj: unknown): obj is AdExportFinishedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.ExportFinished;
 }
 
@@ -1124,30 +1132,30 @@ export function isExportFinishedData(obj: unknown): obj is ExportFinishedData {
  * It's main content is empty.
  * @public
  */
-export type UndoFinishedBody = IAvailableCommands;
+export type AdUndoFinishedBody = IAdAvailableCommands;
 
 /**
  * This event is emitted when AD successfully performs Undo operation.
  * @public
  */
-export type UndoFinished = IGdcAdMessageEvent<GdcAdEventType.UndoFinished, UndoFinishedBody>;
+export type AdUndoFinished = IGdcAdMessageEvent<GdcAdEventType.UndoFinished, AdUndoFinishedBody>;
 
 /**
  * Data type of event that was emitted after finish undo action
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See UndoFinishedBody
+ * @remarks See {@link AdUndoFinishedBody}
  * @public
  */
-export type UndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinished, UndoFinishedBody>;
+export type AdUndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinished, AdUndoFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of UndoFinishedData
+ * Type-guard checking whether an object is an instance of {@link AdUndoFinishedData}
  *
  * @param obj - object to test
  * @public
  */
-export function isUndoFinishedData(obj: unknown): obj is UndoFinishedData {
+export function isAdUndoFinishedData(obj: unknown): obj is AdUndoFinishedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.UndoFinished;
 }
 
@@ -1159,31 +1167,31 @@ export function isUndoFinishedData(obj: unknown): obj is UndoFinishedData {
  * It's main content is empty.
  * @public
  */
-export type RedoFinishedBody = IAvailableCommands;
+export type AdRedoFinishedBody = IAdAvailableCommands;
 
 /**
  * This event is emitted when AD successfully performs Undo operation.
  *
  * @public
  */
-export type RedoFinished = IGdcAdMessageEvent<GdcAdEventType.RedoFinished, RedoFinishedBody>;
+export type AdRedoFinished = IGdcAdMessageEvent<GdcAdEventType.RedoFinished, AdRedoFinishedBody>;
 
 /**
  * Data type of event that was emitted after finish redo action
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See RedoFinishedBody
+ * @remarks See {@link AdRedoFinishedBody}
  * @public
  */
-export type RedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinished, RedoFinishedBody>;
+export type AdRedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinished, AdRedoFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of RedoFinishedData
+ * Type-guard checking whether an object is an instance of  {@link AdRedoFinishedData}
  *
  * @param obj - object to test
  * @public
  */
-export function isRedoFinishedData(obj: unknown): obj is RedoFinishedData {
+export function isAdRedoFinishedData(obj: unknown): obj is AdRedoFinishedData {
     return isObject(obj) && getEventType(obj) === GdcAdEventType.RedoFinished;
 }
 
@@ -1197,9 +1205,9 @@ export function isRedoFinishedData(obj: unknown): obj is RedoFinishedData {
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type SetFilterContextFinishedData = IGdcAdMessageEnvelope<
+export type AdSetFilterContextFinishedData = IGdcAdMessageEnvelope<
     GdcAdEventType.SetFilterContextFinished,
-    IAvailableCommands
+    IAdAvailableCommands
 >;
 
 //
@@ -1212,9 +1220,9 @@ export type SetFilterContextFinishedData = IGdcAdMessageEnvelope<
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type RemoveFilterContextFinishedData = IGdcAdMessageEnvelope<
+export type AdRemoveFilterContextFinishedData = IGdcAdMessageEnvelope<
     GdcAdEventType.RemoveFilterContextFinished,
-    IAvailableCommands
+    IAdAvailableCommands
 >;
 
 //
@@ -1225,7 +1233,7 @@ export type RemoveFilterContextFinishedData = IGdcAdMessageEnvelope<
  * Main data of Filter context changed event
  * @public
  */
-export type FilterContextChangedBody = IAvailableCommands & EmbeddedGdc.IFilterContextContent;
+export type AdFilterContextChangedBody = IAdAvailableCommands & IFilterContextContent;
 
 /**
  * Data type of event that was emitted after finishing change filter context
@@ -1233,22 +1241,22 @@ export type FilterContextChangedBody = IAvailableCommands & EmbeddedGdc.IFilterC
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type FilterContextChangedData = IGdcAdMessageEnvelope<
+export type AdFilterContextChangedData = IGdcAdMessageEnvelope<
     GdcAdEventType.FilterContextChanged,
-    FilterContextChangedBody
+    AdFilterContextChangedBody
 >;
 
 /**
  * @public
  */
-export type InsightChangedBody = IAvailableCommands & {
+export type AdInsightChangedBody = IAdAvailableCommands & {
     definition: IInsightDefinition;
 };
 
 /**
  * @public
  */
-export type InsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, InsightChangedBody>;
+export type AdInsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, AdInsightChangedBody>;
 
 //
 // Set API token command
@@ -1259,7 +1267,7 @@ export type InsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightCha
  *
  * @public
  */
-export interface ISetApiTokenBody {
+export interface IAdSetApiTokenBody {
     /**
      * API token value - used to set up SDK backend instance
      */
@@ -1286,25 +1294,28 @@ export interface ISetApiTokenBody {
  *
  * @public
  */
-export type SetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
+export type AdSetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken, IAdSetApiTokenBody>;
 
 /**
  * Data type of set API token command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See ISetApiTokenBody
+ * @remarks See {@link IAdSetApiTokenBody}
  *
  * @public
  */
-export type SetApiTokenCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
+export type AdSetApiTokenCommandData = IGdcAdMessageEnvelope<
+    GdcAdCommandType.SetApiToken,
+    IAdSetApiTokenBody
+>;
 
 /**
- * Type-guard checking whether an object is an instance of SetApiTokenCommandData
+ * Type-guard checking whether an object is an instance of {@link AdSetApiTokenCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData {
+export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetApiToken;
 }

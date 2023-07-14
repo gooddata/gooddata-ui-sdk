@@ -2,7 +2,18 @@
 import { invariant } from "ts-invariant";
 import qs from "qs";
 import range from "lodash/range.js";
-import { GdcExecution, GdcExecuteAFM } from "@gooddata/api-model-bear";
+import {
+    CompatibilityFilter,
+    DataValue,
+    IExecution,
+    IExecutionResponse,
+    IExecutionResponseWrapper,
+    IExecutionResponses,
+    IExecutionResult,
+    IExecutionResultWrapper,
+    IResultHeaderItem,
+    IResultSpec,
+} from "@gooddata/api-model-bear";
 
 import { XhrModule, ApiResponseError } from "../xhr.js";
 import { convertExecutionToJson } from "./execute-afm.convert.js";
@@ -22,8 +33,8 @@ export const DEFAULT_LIMIT = 1000;
 export interface IVisualizationExecution {
     visualizationExecution: {
         reference: string;
-        resultSpec?: GdcExecuteAFM.IResultSpec;
-        filters?: GdcExecuteAFM.CompatibilityFilter[];
+        resultSpec?: IResultSpec;
+        filters?: CompatibilityFilter[];
     };
 }
 
@@ -35,7 +46,7 @@ export interface IVisualizationExecution {
  * @internal
  */
 export class ApiExecutionResponseError extends ApiResponseError {
-    constructor(error: ApiResponseError, public executionResponse: GdcExecution.IExecutionResponse) {
+    constructor(error: ApiResponseError, public executionResponse: IExecutionResponse) {
         super(error.message, error.response, error.responseBody);
     }
 }
@@ -51,15 +62,12 @@ export class ExecuteAfmModule {
      *
      * @returns Structure with `executionResponse` and `executionResult`
      */
-    public executeAfm(
-        projectId: string,
-        execution: GdcExecuteAFM.IExecution,
-    ): Promise<GdcExecution.IExecutionResponses> {
+    public executeAfm(projectId: string, execution: IExecution): Promise<IExecutionResponses> {
         validateNumOfDimensions(execution.execution.resultSpec?.dimensions?.length ?? 0);
         return this.getExecutionResponse(projectId, execution).then(
-            (executionResponse: GdcExecution.IExecutionResponse) => {
+            (executionResponse: IExecutionResponse) => {
                 return this.getExecutionResult(executionResponse.links.executionResult)
-                    .then((executionResult: GdcExecution.IExecutionResult | null) => {
+                    .then((executionResult: IExecutionResult | null) => {
                         return { executionResponse, executionResult };
                     })
                     .catch((error) => {
@@ -78,10 +86,7 @@ export class ExecuteAfmModule {
      *
      * @returns Promise with `executionResponse`
      */
-    public getExecutionResponse(
-        projectId: string,
-        execution: GdcExecuteAFM.IExecution,
-    ): Promise<GdcExecution.IExecutionResponse> {
+    public getExecutionResponse(projectId: string, execution: IExecution): Promise<IExecutionResponse> {
         validateNumOfDimensions(execution.execution.resultSpec?.dimensions?.length ?? 0);
         return this.xhr
             .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
@@ -104,13 +109,13 @@ export class ExecuteAfmModule {
     public _executeVisualization(
         projectId: string,
         visExecution: IVisualizationExecution,
-    ): Promise<GdcExecution.IExecutionResponses> {
+    ): Promise<IExecutionResponses> {
         // We have ONE-3961 as followup to take this out of experimental mode
 
         return this._getVisExecutionResponse(projectId, visExecution).then(
-            (executionResponse: GdcExecution.IExecutionResponse) => {
+            (executionResponse: IExecutionResponse) => {
                 return this.getExecutionResult(executionResponse.links.executionResult).then(
-                    (executionResult: GdcExecution.IExecutionResult | null) => {
+                    (executionResult: IExecutionResult | null) => {
                         return { executionResponse, executionResult };
                     },
                 );
@@ -135,7 +140,7 @@ export class ExecuteAfmModule {
     public _getVisExecutionResponse(
         projectId: string,
         visExecution: IVisualizationExecution,
-    ): Promise<GdcExecution.IExecutionResponse> {
+    ): Promise<IExecutionResponse> {
         // We have ONE-3961 as followup to take this out of experimental mode
 
         const body = createExecuteVisualizationBody(visExecution);
@@ -163,7 +168,7 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<GdcExecution.IExecutionResult | null> {
+    ): Promise<IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -178,7 +183,7 @@ export class ExecuteAfmModule {
      *
      * @returns Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      */
-    public getExecutionResult(executionResultUri: string): Promise<GdcExecution.IExecutionResult | null> {
+    public getExecutionResult(executionResultUri: string): Promise<IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -193,9 +198,9 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<GdcExecution.IExecutionResult | null> {
+    ): Promise<IExecutionResult | null> {
         return this.fetchExecutionResult(executionResultUri, limit, offset).then(
-            (executionResultWrapper: GdcExecution.IExecutionResultWrapper | null) => {
+            (executionResultWrapper: IExecutionResultWrapper | null) => {
                 return executionResultWrapper ? unwrapExecutionResult(executionResultWrapper) : null;
             },
         );
@@ -205,10 +210,10 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-        prevExecutionResult?: GdcExecution.IExecutionResult,
-    ): Promise<GdcExecution.IExecutionResult | null> {
+        prevExecutionResult?: IExecutionResult,
+    ): Promise<IExecutionResult | null> {
         return this.fetchExecutionResult(executionResultUri, limit, offset).then(
-            (executionResultWrapper: GdcExecution.IExecutionResultWrapper | null) => {
+            (executionResultWrapper: IExecutionResultWrapper | null) => {
                 if (!executionResultWrapper) {
                     return null;
                 }
@@ -234,7 +239,7 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<GdcExecution.IExecutionResultWrapper | null> {
+    ): Promise<IExecutionResultWrapper | null> {
         const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
 
         return this.xhr
@@ -247,15 +252,11 @@ function getExecutionResultUriQueryPart(executionResultUri: string): string {
     return executionResultUri.split(/\?(.+)/)[1];
 }
 
-function unwrapExecutionResponse(
-    executionResponseWrapper: GdcExecution.IExecutionResponseWrapper,
-): GdcExecution.IExecutionResponse {
+function unwrapExecutionResponse(executionResponseWrapper: IExecutionResponseWrapper): IExecutionResponse {
     return executionResponseWrapper.executionResponse;
 }
 
-function unwrapExecutionResult(
-    executionResultWrapper: GdcExecution.IExecutionResultWrapper,
-): GdcExecution.IExecutionResult {
+function unwrapExecutionResult(executionResultWrapper: IExecutionResultWrapper): IExecutionResult {
     return executionResultWrapper.executionResult;
 }
 
@@ -339,8 +340,8 @@ export function nextPageExists(nextOffset: number[], total: number[]): boolean {
 
 function mergeHeaderItemsForEachAttribute(
     dimension: number,
-    headerItems: GdcExecution.IResultHeaderItem[][][] | undefined,
-    result: GdcExecution.IExecutionResult,
+    headerItems: IResultHeaderItem[][][] | undefined,
+    result: IExecutionResult,
 ) {
     if (headerItems && result.headerItems) {
         for (let attrIdx = 0; attrIdx < headerItems[dimension].length; attrIdx += 1) {
@@ -351,9 +352,9 @@ function mergeHeaderItemsForEachAttribute(
 
 // works only for one or two dimensions
 export function mergePage(
-    prevExecutionResult: GdcExecution.IExecutionResult,
-    executionResult: GdcExecution.IExecutionResult,
-): GdcExecution.IExecutionResult {
+    prevExecutionResult: IExecutionResult,
+    executionResult: IExecutionResult,
+): IExecutionResult {
     const result = prevExecutionResult;
     const { headerItems, data, paging } = executionResult;
 
@@ -371,14 +372,14 @@ export function mergePage(
     if (result.data[rowOffset]) {
         // appending columns to existing rows
         for (let i = 0; i < data.length; i += 1) {
-            const columns = data[i] as GdcExecution.DataValue[];
-            const resultData = result.data[i + rowOffset] as GdcExecution.DataValue[];
+            const columns = data[i] as DataValue[];
+            const resultData = result.data[i + rowOffset] as DataValue[];
             resultData.push(...columns);
         }
     } else {
         // appending new rows
-        const resultData = result.data as GdcExecution.DataValue[];
-        const currentPageData = data as GdcExecution.DataValue[];
+        const resultData = result.data as DataValue[];
+        const currentPageData = data as DataValue[];
         resultData.push(...currentPageData);
     }
 

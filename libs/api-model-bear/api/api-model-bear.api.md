@@ -5,712 +5,91 @@
 ```ts
 
 // @public (undocumented)
-type AbsoluteType = "absolute";
+export type AbsoluteType = "absolute";
 
 // @public (undocumented)
-type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
 // @public (undocumented)
-type ArithmeticMeasureOperator_2 = "sum" | "difference" | "multiplication" | "ratio" | "change";
+export type AttributeElements = string[] | IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public (undocumented)
-type AttributeElements = string[] | IAttributeElementsByRef | IAttributeElementsByValue;
+export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @public (undocumented)
-type AttributeFilter = IPositiveAttributeFilter_2 | INegativeAttributeFilter_2;
-
-// @public (undocumented)
-type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
-
-// @public (undocumented)
-type AttributeFilterSelectionMode = "single" | "multi";
+export type AttributeFilterSelectionMode = "single" | "multi";
 
 // @public (undocumented)
 export type BooleanAsString = "1" | "0";
 
 // @public (undocumented)
-type BucketItem = IMeasure_2 | IAttribute_2;
+export type BucketItem = IVisualizationObjectMeasure | IVisualizationObjectAttribute;
 
 // @public (undocumented)
-type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
+export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
 
 // @public (undocumented)
-type CatalogItemType = "attribute" | "metric" | "fact";
+export type CatalogItemType = "attribute" | "metric" | "fact";
 
 // @public (undocumented)
-type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
 
 // @public (undocumented)
-type ComparisonConditionOperator_2 = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
 
 // @public (undocumented)
-type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
-
-// @public (undocumented)
-type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 // @public
-type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
-type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @public (undocumented)
-type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
+export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
 
 // @public (undocumented)
-type DataValue = null | string | number;
+export type DataValue = null | string | number;
 
 // @public (undocumented)
-type DateFilter = IRelativeDateFilter_2 | IAbsoluteDateFilter_2;
+export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @public (undocumented)
-type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 
 // @public (undocumented)
-type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
-
-// @public (undocumented)
-type DateFilterType = RelativeType | AbsoluteType;
+export type DateFilterType = RelativeType | AbsoluteType;
 
 // @public (undocumented)
 export type DateString = string;
 
-// @public
-type DateString_2 = string;
-
 // @public (undocumented)
-type DrillFromType = IDrillFromMeasure | IDrillFromAttribute;
+export type DrillFromType = IDrillFromMeasure | IDrillFromAttribute;
 
 // @public (undocumented)
 export type Email = string;
 
 // @public (undocumented)
-type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
+export type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
 
 // @public (undocumented)
-type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
+export type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
 
 // @public (undocumented)
-type ExtendedFilter_2 = Filter | IMeasureValueFilter_2 | IRankingFilter_2;
+export type FilterContextItem = IFilterContextAttributeFilter | IFilterContextDateFilter;
 
 // @public (undocumented)
-type Filter = DateFilter | AttributeFilter;
-
-// @public (undocumented)
-type FilterContextItem = IAttributeFilter | IDateFilter;
-
-// @public (undocumented)
-type FilterItem = DateFilterItem | AttributeFilterItem;
-
-declare namespace GdcAccessControl {
-    export {
-        Permission,
-        IGranteeUserInfo,
-        IGranteeUserGroupInfo,
-        IGranteeEntry,
-        IGetGranteesParams,
-        IGetGranteesResponse
-    }
-}
-export { GdcAccessControl }
-
-declare namespace GdcCatalog {
-    export {
-        isCatalogAttribute,
-        isCatalogMetric,
-        isCatalogFact,
-        CatalogItemType,
-        ICatalogGroup,
-        ICatalogItemBase,
-        ICatalogAttribute,
-        ICatalogMetric,
-        ICatalogFact,
-        CatalogItem,
-        ItemDescription,
-        IColumnsAndDefinitions,
-        ILoadCatalogItemsParams,
-        ILoadCatalogItemsResponse,
-        ILoadCatalogGroupsParams,
-        ILoadCatalogGroupsResponse,
-        ILoadAvailableCatalogItemsParams,
-        ILoadAvailableCatalogItemsResponse,
-        ILoadDateDataSetsParams
-    }
-}
-export { GdcCatalog }
-
-declare namespace GdcDashboard {
-    export {
-        IWrappedAnalyticalDashboard,
-        IAnalyticalDashboard,
-        DashboardDateFilterConfigMode,
-        IDashboardPluginLink,
-        IDashboardDateFilterAddedPresets,
-        IDashboardDateFilterConfig,
-        IAnalyticalDashboardContent
-    }
-}
-export { GdcDashboard }
-
-declare namespace GdcDashboardLayout {
-    export {
-        isFluidLayout,
-        isLayoutWidget,
-        Layout,
-        Widget,
-        LayoutContent,
-        IPersistedWidget,
-        IFluidLayout,
-        IFluidLayoutRow,
-        IFluidLayoutColumn,
-        IFluidLayoutColSize,
-        IFluidLayoutSize,
-        SectionHeader,
-        ISectionHeader,
-        ISectionDescription
-    }
-}
-export { GdcDashboardLayout }
-
-declare namespace GdcDashboardPlugin {
-    export {
-        isDashboardPlugin,
-        IWrappedDashboardPlugin,
-        IDashboardPlugin,
-        IDashboardPluginContent
-    }
-}
-export { GdcDashboardPlugin }
-
-declare namespace GdcDataSets {
-    export {
-        IDataSetContent,
-        IDataSet_2 as IDataSet,
-        IWrappedDataSet_2 as IWrappedDataSet
-    }
-}
-export { GdcDataSets }
-
-declare namespace GdcDataSetsCsv {
-    export {
-        DatasetLoadStatus,
-        IDatasetUser,
-        IDatasetLoadInfo,
-        DataColumnType,
-        IDataColumn,
-        IDataHeader,
-        IDataset,
-        IDatasetsResponse
-    }
-}
-export { GdcDataSetsCsv }
-
-declare namespace GdcDateDataSets {
-    export {
-        IDateDataSetAttributeGranularity,
-        IDateDataSetAttribute,
-        IDateDataSet,
-        IDateDataSetResponse
-    }
-}
-export { GdcDateDataSets }
-
-declare namespace GdcExecuteAFM {
-    export {
-        isObjectUriQualifier,
-        isObjIdentifierQualifier,
-        isLocalIdentifierQualifier,
-        isSimpleMeasureDefinition,
-        isArithmeticMeasureDefinition,
-        isPopMeasureDefinition,
-        isPreviousPeriodMeasureDefinition,
-        isAttributeSortItem,
-        isMeasureSortItem,
-        isAttributeLocatorItem,
-        isMeasureLocatorItem,
-        isDateFilter,
-        isRelativeDateFilter,
-        isAbsoluteDateFilter,
-        isAttributeFilter,
-        isPositiveAttributeFilter,
-        isNegativeAttributeFilter,
-        isMeasureValueFilter,
-        isRankingFilter,
-        isExpressionFilter,
-        isAttributeElementsArray,
-        isAttributeElementsByRef,
-        isAttributeElementsByValue,
-        IExecution,
-        IAfm,
-        IResultSpec,
-        IAttribute,
-        IMeasure,
-        MeasureDefinition,
-        ISimpleMeasureDefinition,
-        IArithmeticMeasureDefinition,
-        IPopMeasureDefinition,
-        IPreviousPeriodMeasureDefinition,
-        SimpleMeasureAggregation,
-        ISimpleMeasure,
-        ArithmeticMeasureOperator,
-        IArithmeticMeasure,
-        IPopMeasure,
-        IPreviousPeriodMeasure,
-        IPreviousPeriodDateDataSet,
-        Identifier_2 as Identifier,
-        ObjQualifier,
-        IObjIdentifierQualifier,
-        IObjUriQualifier,
-        ExtendedFilter,
-        CompatibilityFilter,
-        FilterItem,
-        AttributeFilterItem,
-        DateFilterItem,
-        IAttributeElementsByRef,
-        IAttributeElementsByValue,
-        AttributeElements,
-        IPositiveAttributeFilter,
-        INegativeAttributeFilter,
-        IAbsoluteDateFilter,
-        IRelativeDateFilter,
-        ComparisonConditionOperator,
-        IComparisonCondition,
-        RangeConditionOperator,
-        IRangeCondition,
-        MeasureValueFilterCondition,
-        ILocalIdentifierQualifier,
-        Qualifier,
-        IMeasureValueFilter,
-        RankingFilterOperator,
-        IRankingFilter,
-        IExpressionFilter,
-        ITotalItem,
-        TotalType,
-        INativeTotalItem,
-        IDimension,
-        SortItem,
-        SortDirection,
-        IAttributeSortItem,
-        VisualizationStyleType,
-        IVisualizationStyle,
-        IMeasureSortItem,
-        LocatorItem,
-        IAttributeLocatorItem,
-        IMeasureLocatorItem
-    }
-}
-export { GdcExecuteAFM }
-
-declare namespace GdcExecution {
-    export {
-        isAttributeHeaderItem,
-        isMeasureHeaderItem,
-        isTotalHeaderItem,
-        isAttributeHeader,
-        isMeasureGroupHeader,
-        IMeasureHeaderItem,
-        ITotalHeaderItem,
-        IMeasureGroupHeader,
-        IAttributeHeader,
-        IHeader,
-        IResultAttributeHeaderItem,
-        IResultMeasureHeaderItem,
-        IResultTotalHeaderItem,
-        IResultHeaderItem,
-        IResultDimension,
-        IExecutionResponse,
-        IExecutionResponseWrapper,
-        DataValue,
-        Warning,
-        IExecutionResult,
-        IExecutionResultWrapper,
-        IError,
-        IExecutionResponses
-    }
-}
-export { GdcExecution }
-
-declare namespace GdcExport {
-    export {
-        IBaseExportConfig,
-        IExportConfig,
-        IExportResponse,
-        IExportBlobResponse
-    }
-}
-export { GdcExport }
-
-declare namespace GdcExtendedDateFilters {
-    export {
-        GUID,
-        DateString_2 as DateString,
-        RelativeGranularityOffset,
-        DateFilterGranularity,
-        IDateFilterBase,
-        IDateFilterAllTime,
-        IDateFilterAbsoluteForm,
-        IDateFilterRelativeForm,
-        IDateFilterAbsolutePreset,
-        IDateFilterRelativePreset,
-        IDateFilterConfigContent,
-        IDateFilterConfig,
-        IWrappedDateFilterConfig,
-        IDateFilterReference,
-        isDateFilterReference,
-        IAttributeFilterReference,
-        isAttributeFilterReference
-    }
-}
-export { GdcExtendedDateFilters }
-
-declare namespace GdcFilterContext {
-    export {
-        isDateFilter_3 as isDateFilter,
-        isAttributeFilter_3 as isAttributeFilter,
-        isFilterContext,
-        isWrappedFilterContext,
-        isTempFilterContext,
-        isWrappedTempFilterContext,
-        RelativeType,
-        AbsoluteType,
-        DateFilterType,
-        AttributeFilterSelectionMode,
-        IFilterContext,
-        IWrappedFilterContext,
-        ITempFilterContext,
-        IWrappedTempFilterContext,
-        IAttributeFilter,
-        IDateFilter,
-        FilterContextItem
-    }
-}
-export { GdcFilterContext }
-
-declare namespace GdcKpi {
-    export {
-        isKpiContentWithoutComparison,
-        isKpi,
-        isWrappedKpi,
-        IKPI,
-        IWrappedKPI,
-        IKpiContentBase,
-        IKpiConfiguration,
-        IKpiDescriptionConfiguration,
-        KpiDescriptionSourceType,
-        IKpiContentWithComparison,
-        IKpiContentWithoutComparison,
-        IKpiProjectDashboardLink,
-        IKpiComparisonTypeNoComparison,
-        IKpiComparisonTypeComparison,
-        IKpiComparisonDirection
-    }
-}
-export { GdcKpi }
-
-declare namespace GdcMetadata {
-    export {
-        isAttribute_2 as isAttribute,
-        isWrappedAttribute,
-        isWrappedAttributeDisplayForm,
-        isAttributeDisplayForm,
-        isWrappedMetric,
-        isMetric,
-        isWrappedFact,
-        isFact,
-        isKpiAlert,
-        isWrappedKpiAlert,
-        isDataSet,
-        isWrappedDataSet,
-        isPrompt,
-        isWrappedPrompt,
-        isTheme,
-        isWrappedTheme,
-        ObjectCategory,
-        IObjectMeta,
-        IMetadataObject,
-        IAttribute_3 as IAttribute,
-        IMaqlAstPosition,
-        IMaqlTree,
-        IMetric,
-        IFact,
-        IPrompt,
-        IAttributeDisplayForm,
-        IKpiAlert,
-        IThemeColorFamily,
-        IThemeComplementaryPalette,
-        IThemePalette,
-        ITheme,
-        IDataSet,
-        IWrappedAttribute,
-        IWrappedMetric,
-        IWrappedFact,
-        IWrappedPrompt,
-        IWrappedAttributeDisplayForm,
-        IWrappedKpiAlert,
-        IWrappedDataSet,
-        IWrappedAttributeElement,
-        IAttributeElement,
-        IWrappedAttributeElements,
-        IWrappedTheme,
-        IObjectXrefEntry,
-        SortDirection_3 as SortDirection,
-        IValidElementsParams,
-        IValidElementsResponse,
-        IObjectLink,
-        IGetObjectUsing,
-        IGetObjectUsedBy,
-        IGetObjectUsingManyEntry,
-        IGetObjectsUsedByManyEntry
-    }
-}
-export { GdcMetadata }
-
-declare namespace GdcMetadataObject {
-    export {
-        unwrapMetadataObject,
-        IObject,
-        WrappedObject
-    }
-}
-export { GdcMetadataObject }
-
-declare namespace GdcOrganization {
-    export {
-        IOrganization
-    }
-}
-export { GdcOrganization }
-
-declare namespace GdcPaging {
-    export {
-        IBearPaging,
-        IBearPagingWithTotalCount
-    }
-}
-export { GdcPaging }
-
-declare namespace GdcProject {
-    export {
-        UserProjectState,
-        IUserProject,
-        IUserProjectsParams,
-        IUserProjectsResponse,
-        IProjectLcmIdentifiers,
-        IProjectId,
-        ITimezone
-    }
-}
-export { GdcProject }
-
-declare namespace GdcProjectDashboard {
-    export {
-        IProjectDashboard,
-        IWrappedProjectDashboard
-    }
-}
-export { GdcProjectDashboard }
-
-declare namespace GdcReport {
-    export {
-        IReportContent,
-        IReport,
-        ReportFormat,
-        IReportFilter,
-        IGridContentMetrics,
-        IGridContentRowAttribute,
-        IGridContentRow,
-        IGridContent,
-        IReportDefinitionContent,
-        IReportDefinitionLinks,
-        IReportDefinition,
-        IWrappedReport,
-        IWrappedReportDefinition
-    }
-}
-export { GdcReport }
-
-declare namespace GdcScheduledMail {
-    export {
-        isKpiDashboardAttachment,
-        isVisualizationWidgetAttachment,
-        IScheduledMailWhen,
-        IScheduledMailContent,
-        IScheduledMail,
-        IWrappedScheduledMail,
-        ScheduledMailAttachment,
-        ExportFormat,
-        IReportExportOptions,
-        IReportAttachment,
-        IDashboardAttachment,
-        IKpiDashboardAttachment,
-        IVisualizationWidgetAttachment
-    }
-}
-export { GdcScheduledMail }
-
-declare namespace GdcUser {
-    export {
-        IAccountSetting,
-        IWrappedAccountSetting,
-        IProfileSetting,
-        IUISettings,
-        ProjectPermission,
-        ISeparators,
-        IFeatureFlags,
-        IUserFeatureFlags,
-        IProjectPermissions,
-        IAssociatedProjectPermissions,
-        IProject,
-        IStatus,
-        ITemplateInfo,
-        IProjectIcons,
-        DataUploadStatus,
-        IDataUploadInfo,
-        IProcessBody,
-        IZendesk4Integration,
-        IIntegration,
-        IStyleSettingsType,
-        ITimezoneInfo,
-        IProjectLcm,
-        IBootstrapResource,
-        UserListItemState,
-        IUserListItem,
-        IGetUserListParams,
-        IGetUserListResponse,
-        ISeparatorsResponse,
-        UsersItemStatus,
-        IUsersItem,
-        IAccountInfoResponse,
-        IAccountInfo
-    }
-}
-export { GdcUser }
-
-declare namespace GdcUserGroup {
-    export {
-        IUserGroupItem,
-        IWrappedUserGroupItem,
-        IGetUserGroupsParams,
-        IGetUserGroupsResponse
-    }
-}
-export { GdcUserGroup }
-
-declare namespace GdcVisualizationClass {
-    export {
-        IVisualizationClassContent,
-        IVisualizationClass,
-        IVisualizationClassWrapped
-    }
-}
-export { GdcVisualizationClass }
-
-declare namespace GdcVisualizationObject {
-    export {
-        isObjUriQualifier,
-        isObjIdentifierQualifier_2 as isObjIdentifierQualifier,
-        isVisualization,
-        isMeasure,
-        isAttribute,
-        isMeasureDefinition,
-        isArithmeticMeasureDefinition_2 as isArithmeticMeasureDefinition,
-        isPopMeasureDefinition_2 as isPopMeasureDefinition,
-        isPreviousPeriodMeasureDefinition_2 as isPreviousPeriodMeasureDefinition,
-        isAttributeFilter_2 as isAttributeFilter,
-        isDateFilter_2 as isDateFilter,
-        isPositiveAttributeFilter_2 as isPositiveAttributeFilter,
-        isNegativeAttributeFilter_2 as isNegativeAttributeFilter,
-        isMeasureValueFilter_2 as isMeasureValueFilter,
-        isRankingFilter_2 as isRankingFilter,
-        isAbsoluteDateFilter_2 as isAbsoluteDateFilter,
-        isRelativeDateFilter_2 as isRelativeDateFilter,
-        isLocalIdentifierQualifier_2 as isLocalIdentifierQualifier,
-        isComparisonCondition,
-        isRangeCondition,
-        SortDirection_2 as SortDirection,
-        Identifier_3 as Identifier,
-        MeasureAggregation,
-        TotalType_2 as TotalType,
-        VisualizationType,
-        ArithmeticMeasureOperator_2 as ArithmeticMeasureOperator,
-        BucketItem,
-        ExtendedFilter_2 as ExtendedFilter,
-        Filter,
-        DateFilter,
-        AttributeFilter,
-        IObjUriQualifier_2 as IObjUriQualifier,
-        IObjIdentifierQualifier_2 as IObjIdentifierQualifier,
-        ObjQualifier_2 as ObjQualifier,
-        IPositiveAttributeFilter_2 as IPositiveAttributeFilter,
-        INegativeAttributeFilter_2 as INegativeAttributeFilter,
-        IAbsoluteDateFilter_2 as IAbsoluteDateFilter,
-        IRelativeDateFilter_2 as IRelativeDateFilter,
-        ComparisonConditionOperator_2 as ComparisonConditionOperator,
-        IComparisonCondition_2 as IComparisonCondition,
-        RangeConditionOperator_2 as RangeConditionOperator,
-        IRangeCondition_2 as IRangeCondition,
-        MeasureValueFilterCondition_2 as MeasureValueFilterCondition,
-        ILocalIdentifierQualifier_2 as ILocalIdentifierQualifier,
-        IMeasureValueFilter_2 as IMeasureValueFilter,
-        RankingFilterOperator_2 as RankingFilterOperator,
-        IRankingFilter_2 as IRankingFilter,
-        IVisualizationObjectContent,
-        IReferenceItems,
-        IBucket,
-        ITotal,
-        IMeasureDefinitionType,
-        IMeasure_2 as IMeasure,
-        IMeasureContent,
-        IAttribute_2 as IAttribute,
-        IVisualizationAttributeContent,
-        IMeasureDefinition,
-        IArithmeticMeasureDefinition_2 as IArithmeticMeasureDefinition,
-        IPoPMeasureDefinition,
-        IPreviousPeriodMeasureDefinition_2 as IPreviousPeriodMeasureDefinition,
-        IPreviousPeriodDateDataSet_2 as IPreviousPeriodDateDataSet,
-        IVisualizationObject,
-        IVisualization,
-        IVisualizationObjectResponse
-    }
-}
-export { GdcVisualizationObject }
-
-declare namespace GdcVisualizationWidget {
-    export {
-        isDrillToVisualization,
-        isDrillToDashboard,
-        isDrillToCustomUrl,
-        isDrillToAttributeUrl,
-        isDrillFromMeasure,
-        isDrillFromAttribute,
-        isVisualizationWidget,
-        isWrappedVisualizationWidget,
-        IVisualizationWidget,
-        IWrappedVisualizationWidget,
-        IDrillDefinition,
-        DrillFromType,
-        IDrillFromMeasure,
-        IDrillFromAttribute,
-        IDrillToVisualization,
-        IDrillToDashboard,
-        IDrillToCustomUrl,
-        IDrillToAttributeUrl,
-        IVisualizationWidgetConfiguration,
-        IVisualizationWidgetDescriptionConfiguration,
-        VisualizatioWidgetDescriptionSourceType
-    }
-}
-export { GdcVisualizationWidget }
+export type FilterItem = DateFilterItem | AttributeFilterItem;
 
 // @public (undocumented)
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
 
 // @public
-type GUID = string;
+export type GUID = string;
 
 // @public (undocumented)
-interface IAbsoluteDateFilter {
+export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: {
         dataSet: ObjQualifier;
@@ -720,17 +99,7 @@ interface IAbsoluteDateFilter {
 }
 
 // @public (undocumented)
-interface IAbsoluteDateFilter_2 {
-    // (undocumented)
-    absoluteDateFilter: {
-        dataSet: ObjQualifier_2;
-        from?: string;
-        to?: string;
-    };
-}
-
-// @public (undocumented)
-interface IAccountInfo {
+export interface IAccountInfo {
     // (undocumented)
     firstName: string;
     // (undocumented)
@@ -748,13 +117,13 @@ interface IAccountInfo {
 }
 
 // @public (undocumented)
-interface IAccountInfoResponse {
+export interface IAccountInfoResponse {
     // (undocumented)
     accountInfo: IAccountInfo;
 }
 
 // @public (undocumented)
-interface IAccountSetting {
+export interface IAccountSetting {
     // (undocumented)
     authenticationModes?: Array<"SSO" | "PASSWORD">;
     // (undocumented)
@@ -807,7 +176,13 @@ interface IAccountSetting {
 }
 
 // @public (undocumented)
-interface IAfm {
+export interface IAdHocItemDescription {
+    // (undocumented)
+    expression: string;
+}
+
+// @public (undocumented)
+export interface IAfm {
     // (undocumented)
     attributes?: IAttribute[];
     // (undocumented)
@@ -819,7 +194,7 @@ interface IAfm {
 }
 
 // @public (undocumented)
-interface IAnalyticalDashboard {
+export interface IAnalyticalDashboard {
     // (undocumented)
     content: IAnalyticalDashboardContent;
     // (undocumented)
@@ -827,7 +202,7 @@ interface IAnalyticalDashboard {
 }
 
 // @public (undocumented)
-interface IAnalyticalDashboardContent {
+export interface IAnalyticalDashboardContent {
     // (undocumented)
     dateFilterConfig?: IDashboardDateFilterConfig;
     // (undocumented)
@@ -841,64 +216,37 @@ interface IAnalyticalDashboardContent {
 }
 
 // @public (undocumented)
-interface IArithmeticMeasure {
+export interface IArithmeticMeasure {
     // (undocumented)
-    measureIdentifiers: Identifier_2[];
+    measureIdentifiers: Identifier[];
     // (undocumented)
     operator: ArithmeticMeasureOperator;
 }
 
 // @public (undocumented)
-interface IArithmeticMeasureDefinition {
+export interface IArithmeticMeasureDefinition {
     // (undocumented)
     arithmeticMeasure: IArithmeticMeasure;
 }
 
 // @public (undocumented)
-interface IArithmeticMeasureDefinition_2 {
-    // (undocumented)
-    arithmeticMeasure: {
-        measureIdentifiers: Identifier_3[];
-        operator: ArithmeticMeasureOperator_2;
-    };
-}
-
-// @public (undocumented)
-interface IAssociatedProjectPermissions {
+export interface IAssociatedProjectPermissions {
     // (undocumented)
     associatedPermissions: IProjectPermissions;
 }
 
 // @public (undocumented)
-interface IAttribute {
+export interface IAttribute {
     // (undocumented)
     alias?: string;
     // (undocumented)
     displayForm: ObjQualifier;
     // (undocumented)
-    localIdentifier: Identifier_2;
+    localIdentifier: Identifier;
 }
 
 // @public (undocumented)
-interface IAttribute_2 {
-    // (undocumented)
-    visualizationAttribute: IVisualizationAttributeContent;
-}
-
-// @public (undocumented)
-interface IAttribute_3 extends IMetadataObject {
-    // (undocumented)
-    content: {
-        dimension?: string;
-        displayForms: IAttributeDisplayForm[];
-        type?: string;
-        drillDownStepAttributeDF?: Uri;
-        linkAttributeDF?: Uri;
-    };
-}
-
-// @public (undocumented)
-interface IAttributeDisplayForm extends IMetadataObject {
+export interface IAttributeDisplayForm extends IMetadataObject {
     // (undocumented)
     content: {
         expression: MaqlExpression;
@@ -915,7 +263,7 @@ interface IAttributeDisplayForm extends IMetadataObject {
 }
 
 // @public (undocumented)
-interface IAttributeElement {
+export interface IAttributeElement {
     // (undocumented)
     title: string;
     // (undocumented)
@@ -923,38 +271,19 @@ interface IAttributeElement {
 }
 
 // @public (undocumented)
-interface IAttributeElementsByRef {
+export interface IAttributeElementsByRef {
     // (undocumented)
     uris: string[];
 }
 
 // @public (undocumented)
-interface IAttributeElementsByValue {
+export interface IAttributeElementsByValue {
     // (undocumented)
     values: string[];
 }
 
 // @public (undocumented)
-interface IAttributeFilter {
-    // (undocumented)
-    attributeFilter: {
-        displayForm: string;
-        negativeSelection: boolean;
-        attributeElements: string[];
-        localIdentifier?: string;
-        title?: string;
-        filterElementsBy?: Array<{
-            filterLocalIdentifier: string;
-            over: {
-                attributes: Array<string>;
-            };
-        }>;
-        selectionMode?: AttributeFilterSelectionMode;
-    };
-}
-
-// @public (undocumented)
-interface IAttributeFilterReference {
+export interface IAttributeFilterReference {
     // (undocumented)
     attributeFilterReference: {
         displayForm: string;
@@ -962,7 +291,7 @@ interface IAttributeFilterReference {
 }
 
 // @public (undocumented)
-interface IAttributeHeader {
+export interface IAttributeHeader {
     // (undocumented)
     attributeHeader: {
         uri: string;
@@ -979,33 +308,33 @@ interface IAttributeHeader {
 }
 
 // @public (undocumented)
-interface IAttributeLocatorItem {
+export interface IAttributeLocatorItem {
     // (undocumented)
     attributeLocatorItem: {
-        attributeIdentifier: Identifier_2;
+        attributeIdentifier: Identifier;
         element: string;
     };
 }
 
 // @public (undocumented)
-interface IAttributeSortItem {
+export interface IAttributeSortItem {
     // (undocumented)
     attributeSortItem: {
         direction: SortDirection;
-        attributeIdentifier: Identifier_2;
+        attributeIdentifier: Identifier;
         aggregation?: "sum";
     };
 }
 
 // @public (undocumented)
-interface IBaseExportConfig {
+export interface IBaseExportConfig {
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
     title?: string;
 }
 
 // @public (undocumented)
-interface IBearPaging {
+export interface IBearPaging {
     // (undocumented)
     count: number;
     // (undocumented)
@@ -1015,13 +344,13 @@ interface IBearPaging {
 }
 
 // @public (undocumented)
-interface IBearPagingWithTotalCount extends IBearPaging {
+export interface IBearPagingWithTotalCount extends IBearPaging {
     // (undocumented)
     totalCount: number;
 }
 
 // @public (undocumented)
-interface IBootstrapResource {
+export interface IBootstrapResource {
     // (undocumented)
     bootstrapResource: {
         accountSetting: IAccountSetting;
@@ -1056,17 +385,17 @@ interface IBootstrapResource {
 }
 
 // @public (undocumented)
-interface IBucket {
+export interface IBucket {
     // (undocumented)
     items: BucketItem[];
     // (undocumented)
-    localIdentifier?: Identifier_3;
+    localIdentifier?: Identifier;
     // (undocumented)
     totals?: ITotal[];
 }
 
 // @public (undocumented)
-interface ICatalogAttribute extends ICatalogItemBase {
+export interface ICatalogAttribute extends ICatalogItemBase {
     // (undocumented)
     readonly links: {
         readonly self: string;
@@ -1078,13 +407,13 @@ interface ICatalogAttribute extends ICatalogItemBase {
 }
 
 // @public (undocumented)
-interface ICatalogFact extends ICatalogItemBase {
+export interface ICatalogFact extends ICatalogItemBase {
     // (undocumented)
     readonly type: "fact";
 }
 
 // @public (undocumented)
-interface ICatalogGroup {
+export interface ICatalogGroup {
     // (undocumented)
     readonly identifier: string;
     // (undocumented)
@@ -1092,7 +421,7 @@ interface ICatalogGroup {
 }
 
 // @public (undocumented)
-interface ICatalogItemBase {
+export interface ICatalogItemBase {
     // (undocumented)
     readonly groups?: string[];
     // (undocumented)
@@ -1112,7 +441,7 @@ interface ICatalogItemBase {
 }
 
 // @public (undocumented)
-interface ICatalogMetric extends ICatalogItemBase {
+export interface ICatalogMetric extends ICatalogItemBase {
     // (undocumented)
     readonly expression: string;
     // (undocumented)
@@ -1122,7 +451,7 @@ interface ICatalogMetric extends ICatalogItemBase {
 }
 
 // @public (undocumented)
-interface IColumnsAndDefinitions {
+export interface IColumnsAndDefinitions {
     // (undocumented)
     columns: string[];
     // (undocumented)
@@ -1135,7 +464,7 @@ interface IColumnsAndDefinitions {
 }
 
 // @public (undocumented)
-interface IComparisonCondition {
+export interface IComparisonCondition {
     // (undocumented)
     comparison: {
         operator: ComparisonConditionOperator;
@@ -1145,17 +474,7 @@ interface IComparisonCondition {
 }
 
 // @public (undocumented)
-interface IComparisonCondition_2 {
-    // (undocumented)
-    comparison: {
-        operator: ComparisonConditionOperator_2;
-        value: number;
-        treatNullValuesAs?: number;
-    };
-}
-
-// @public (undocumented)
-interface IDashboardAttachment {
+export interface IDashboardAttachment {
     // (undocumented)
     dashboardAttachment: {
         uri: Uri;
@@ -1166,7 +485,7 @@ interface IDashboardAttachment {
 }
 
 // @public (undocumented)
-interface IDashboardDateFilterAddedPresets {
+export interface IDashboardDateFilterAddedPresets {
     // (undocumented)
     absolutePresets?: IDateFilterAbsolutePreset[];
     // (undocumented)
@@ -1174,7 +493,7 @@ interface IDashboardDateFilterAddedPresets {
 }
 
 // @public (undocumented)
-interface IDashboardDateFilterConfig {
+export interface IDashboardDateFilterConfig {
     // (undocumented)
     addPresets?: IDashboardDateFilterAddedPresets;
     // (undocumented)
@@ -1188,7 +507,7 @@ interface IDashboardDateFilterConfig {
 }
 
 // @public (undocumented)
-interface IDashboardPlugin {
+export interface IDashboardPlugin {
     // (undocumented)
     content: IDashboardPluginContent;
     // (undocumented)
@@ -1196,13 +515,13 @@ interface IDashboardPlugin {
 }
 
 // @public (undocumented)
-interface IDashboardPluginContent {
+export interface IDashboardPluginContent {
     // (undocumented)
     url: string;
 }
 
 // @public (undocumented)
-interface IDashboardPluginLink {
+export interface IDashboardPluginLink {
     // (undocumented)
     parameters?: string;
     // (undocumented)
@@ -1210,7 +529,7 @@ interface IDashboardPluginLink {
 }
 
 // @public
-interface IDataColumn {
+export interface IDataColumn {
     // (undocumented)
     column: {
         name: string;
@@ -1221,7 +540,7 @@ interface IDataColumn {
 }
 
 // @public
-interface IDataHeader {
+export interface IDataHeader {
     // (undocumented)
     columns: IDataColumn[];
     // (undocumented)
@@ -1229,19 +548,20 @@ interface IDataHeader {
 }
 
 // @public (undocumented)
-interface IDataSet extends IMetadataObject {
+export interface IDataSet {
     // (undocumented)
-    attributes: Uri[];
+    content: IDataSetContent;
     // (undocumented)
-    dataLoadingColumns: Uri[];
+    links?: {
+        dataUploads: Uri | null;
+        uploadConfiguration?: Uri;
+    };
     // (undocumented)
-    facts: Uri[];
-    // (undocumented)
-    mode: string;
+    meta: IObjectMeta;
 }
 
 // @public
-interface IDataset {
+export interface IDataset {
     // (undocumented)
     dataset: {
         name: string;
@@ -1256,20 +576,7 @@ interface IDataset {
 }
 
 // @public (undocumented)
-interface IDataSet_2 {
-    // (undocumented)
-    content: IDataSetContent;
-    // (undocumented)
-    links?: {
-        dataUploads: Uri | null;
-        uploadConfiguration?: Uri;
-    };
-    // (undocumented)
-    meta: IObjectMeta;
-}
-
-// @public (undocumented)
-interface IDataSetContent {
+export interface IDataSetContent {
     // (undocumented)
     attributes: Uri[];
     // (undocumented)
@@ -1297,7 +604,7 @@ interface IDataSetContent {
 }
 
 // @public
-interface IDatasetLoadInfo {
+export interface IDatasetLoadInfo {
     // (undocumented)
     created: string;
     // (undocumented)
@@ -1307,7 +614,7 @@ interface IDatasetLoadInfo {
 }
 
 // @public (undocumented)
-interface IDatasetsResponse {
+export interface IDatasetsResponse {
     // (undocumented)
     datasets: {
         items: IDataset[];
@@ -1315,7 +622,7 @@ interface IDatasetsResponse {
 }
 
 // @public
-interface IDatasetUser {
+export interface IDatasetUser {
     // (undocumented)
     fullName: string;
     // (undocumented)
@@ -1325,7 +632,7 @@ interface IDatasetUser {
 }
 
 // @public (undocumented)
-interface IDataUploadInfo {
+export interface IDataUploadInfo {
     // (undocumented)
     statusesCount: {
         [status in DataUploadStatus]?: number;
@@ -1333,7 +640,7 @@ interface IDataUploadInfo {
 }
 
 // @public
-interface IDateDataSet {
+export interface IDateDataSet {
     // (undocumented)
     availableDateAttributes?: IDateDataSetAttribute[];
     // (undocumented)
@@ -1343,7 +650,7 @@ interface IDateDataSet {
 }
 
 // @public
-interface IDateDataSetAttribute {
+export interface IDateDataSetAttribute {
     // (undocumented)
     attributeMeta: IObjectMeta;
     // (undocumented)
@@ -1353,10 +660,10 @@ interface IDateDataSetAttribute {
 }
 
 // @public (undocumented)
-type IDateDataSetAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
+export type IDateDataSetAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
 
 // @public
-interface IDateDataSetResponse {
+export interface IDateDataSetResponse {
     // (undocumented)
     dateDataSetsResponse: {
         dateDataSets: IDateDataSet[];
@@ -1365,34 +672,21 @@ interface IDateDataSetResponse {
 }
 
 // @public (undocumented)
-interface IDateFilter {
+export type IDateFilterAbsoluteForm = IDateFilterBase;
+
+// @public (undocumented)
+export interface IDateFilterAbsolutePreset extends IDateFilterBase {
     // (undocumented)
-    dateFilter: {
-        type: DateFilterType;
-        granularity: DateFilterGranularity;
-        from?: DateString_2 | NumberAsString;
-        to?: DateString_2 | NumberAsString;
-        dataSet?: string;
-        attribute?: string;
-    };
+    from: DateString;
+    // (undocumented)
+    to: DateString;
 }
 
 // @public (undocumented)
-type IDateFilterAbsoluteForm = IDateFilterBase;
+export type IDateFilterAllTime = IDateFilterBase;
 
 // @public (undocumented)
-interface IDateFilterAbsolutePreset extends IDateFilterBase {
-    // (undocumented)
-    from: DateString_2;
-    // (undocumented)
-    to: DateString_2;
-}
-
-// @public (undocumented)
-type IDateFilterAllTime = IDateFilterBase;
-
-// @public (undocumented)
-interface IDateFilterBase {
+export interface IDateFilterBase {
     // (undocumented)
     localIdentifier: GUID;
     // (undocumented)
@@ -1402,7 +696,7 @@ interface IDateFilterBase {
 }
 
 // @public (undocumented)
-interface IDateFilterConfig {
+export interface IDateFilterConfig {
     // (undocumented)
     content: IDateFilterConfigContent;
     // (undocumented)
@@ -1410,7 +704,7 @@ interface IDateFilterConfig {
 }
 
 // @public (undocumented)
-interface IDateFilterConfigContent {
+export interface IDateFilterConfigContent {
     // (undocumented)
     absoluteForm?: IDateFilterAbsoluteForm;
     // (undocumented)
@@ -1426,7 +720,7 @@ interface IDateFilterConfigContent {
 }
 
 // @public (undocumented)
-interface IDateFilterReference {
+export interface IDateFilterReference {
     // (undocumented)
     dateFilterReference: {
         dataSet: string;
@@ -1434,13 +728,13 @@ interface IDateFilterReference {
 }
 
 // @public (undocumented)
-interface IDateFilterRelativeForm extends IDateFilterBase {
+export interface IDateFilterRelativeForm extends IDateFilterBase {
     // (undocumented)
     granularities: DateFilterGranularity[];
 }
 
 // @public (undocumented)
-interface IDateFilterRelativePreset extends IDateFilterBase {
+export interface IDateFilterRelativePreset extends IDateFilterBase {
     // (undocumented)
     from: number;
     // (undocumented)
@@ -1453,47 +747,41 @@ interface IDateFilterRelativePreset extends IDateFilterBase {
 export type Identifier = string;
 
 // @public (undocumented)
-type Identifier_2 = string;
-
-// @public (undocumented)
-type Identifier_3 = string;
-
-// @public (undocumented)
-interface IDimension {
+export interface IDimension {
     // (undocumented)
-    itemIdentifiers: Identifier_2[];
+    itemIdentifiers: Identifier[];
     // (undocumented)
     totals?: ITotalItem[];
 }
 
 // @public (undocumented)
-type IDrillDefinition = IDrillToVisualization | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @public (undocumented)
-interface IDrillFromAttribute {
+export interface IDrillFromAttribute {
     // (undocumented)
-    drillFromAttribute: ILocalIdentifierQualifier_2;
+    drillFromAttribute: ILocalIdentifierQualifier;
 }
 
 // @public (undocumented)
-interface IDrillFromMeasure {
+export interface IDrillFromMeasure {
     // (undocumented)
-    drillFromMeasure: ILocalIdentifierQualifier_2;
+    drillFromMeasure: ILocalIdentifierQualifier;
 }
 
 // @public (undocumented)
-interface IDrillToAttributeUrl {
+export interface IDrillToAttributeUrl {
     // (undocumented)
     drillToAttributeUrl: {
         target: "new-window";
         from: DrillFromType;
-        insightAttributeDisplayForm: IObjUriQualifier_2;
-        drillToAttributeDisplayForm: IObjUriQualifier_2;
+        insightAttributeDisplayForm: IObjUriQualifier;
+        drillToAttributeDisplayForm: IObjUriQualifier;
     };
 }
 
 // @public (undocumented)
-interface IDrillToCustomUrl {
+export interface IDrillToCustomUrl {
     // (undocumented)
     drillToCustomUrl: {
         target: "new-window";
@@ -1503,7 +791,7 @@ interface IDrillToCustomUrl {
 }
 
 // @public (undocumented)
-interface IDrillToDashboard {
+export interface IDrillToDashboard {
     // (undocumented)
     drillToDashboard: {
         target: "in-place";
@@ -1513,23 +801,23 @@ interface IDrillToDashboard {
 }
 
 // @public (undocumented)
-interface IDrillToVisualization {
+export interface IDrillToVisualization {
     // (undocumented)
     drillToVisualization: {
         target: "pop-up";
         from: DrillFromType;
-        toVisualization: IObjUriQualifier_2;
+        toVisualization: IObjUriQualifier;
     };
 }
 
 // @public (undocumented)
-interface IError extends Error {
+export interface IError extends Error {
     // (undocumented)
     response: Response;
 }
 
 // @public (undocumented)
-interface IExecution {
+export interface IExecution {
     // (undocumented)
     execution: {
         afm: IAfm;
@@ -1538,7 +826,7 @@ interface IExecution {
 }
 
 // @public (undocumented)
-interface IExecutionResponse {
+export interface IExecutionResponse {
     // (undocumented)
     dimensions: IResultDimension[];
     // (undocumented)
@@ -1548,7 +836,7 @@ interface IExecutionResponse {
 }
 
 // @public
-interface IExecutionResponses {
+export interface IExecutionResponses {
     // (undocumented)
     executionResponse: IExecutionResponse;
     // (undocumented)
@@ -1556,13 +844,13 @@ interface IExecutionResponses {
 }
 
 // @public (undocumented)
-interface IExecutionResponseWrapper {
+export interface IExecutionResponseWrapper {
     // (undocumented)
     executionResponse: IExecutionResponse;
 }
 
 // @public (undocumented)
-interface IExecutionResult {
+export interface IExecutionResult {
     // (undocumented)
     data: DataValue[][] | DataValue[];
     // (undocumented)
@@ -1582,32 +870,32 @@ interface IExecutionResult {
 }
 
 // @public (undocumented)
-interface IExecutionResultWrapper {
+export interface IExecutionResultWrapper {
     // (undocumented)
     executionResult: IExecutionResult;
 }
 
 // @public
-interface IExportBlobResponse {
+export interface IExportBlobResponse {
     fileName?: string;
     objectUrl: string;
     uri: string;
 }
 
 // @public (undocumented)
-interface IExportConfig extends IBaseExportConfig {
+export interface IExportConfig extends IBaseExportConfig {
     afm?: IAfm;
     showFilters?: boolean;
 }
 
 // @public (undocumented)
-interface IExportResponse {
+export interface IExportResponse {
     // (undocumented)
     uri: string;
 }
 
 // @public @deprecated (undocumented)
-interface IExpressionFilter {
+export interface IExpressionFilter {
     // (undocumented)
     expression: {
         value: string;
@@ -1615,19 +903,19 @@ interface IExpressionFilter {
 }
 
 // @public (undocumented)
-interface IFact extends IMetadataObject {
+export interface IFact extends IMetadataObject {
     // (undocumented)
     content: any;
 }
 
 // @public (undocumented)
-interface IFeatureFlags {
+export interface IFeatureFlags {
     // (undocumented)
     [key: string]: number | boolean | string;
 }
 
 // @public (undocumented)
-interface IFilterContext {
+export interface IFilterContext {
     // (undocumented)
     content: {
         filters: FilterContextItem[];
@@ -1637,7 +925,39 @@ interface IFilterContext {
 }
 
 // @public (undocumented)
-interface IFluidLayout {
+export interface IFilterContextAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        attributeElements: string[];
+        localIdentifier?: string;
+        title?: string;
+        filterElementsBy?: Array<{
+            filterLocalIdentifier: string;
+            over: {
+                attributes: Array<string>;
+            };
+        }>;
+        selectionMode?: AttributeFilterSelectionMode;
+    };
+}
+
+// @public (undocumented)
+export interface IFilterContextDateFilter {
+    // (undocumented)
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString | NumberAsString;
+        to?: DateString | NumberAsString;
+        dataSet?: string;
+        attribute?: string;
+    };
+}
+
+// @public (undocumented)
+export interface IFluidLayout {
     // (undocumented)
     fluidLayout: {
         rows: IFluidLayoutRow[];
@@ -1647,7 +967,7 @@ interface IFluidLayout {
 }
 
 // @public (undocumented)
-interface IFluidLayoutColSize {
+export interface IFluidLayoutColSize {
     // (undocumented)
     lg?: IFluidLayoutSize;
     // (undocumented)
@@ -1661,7 +981,7 @@ interface IFluidLayoutColSize {
 }
 
 // @public (undocumented)
-interface IFluidLayoutColumn {
+export interface IFluidLayoutColumn {
     // (undocumented)
     content?: LayoutContent;
     // (undocumented)
@@ -1671,7 +991,7 @@ interface IFluidLayoutColumn {
 }
 
 // @public (undocumented)
-interface IFluidLayoutRow {
+export interface IFluidLayoutRow {
     // (undocumented)
     columns: IFluidLayoutColumn[];
     // (undocumented)
@@ -1681,7 +1001,7 @@ interface IFluidLayoutRow {
 }
 
 // @public (undocumented)
-interface IFluidLayoutSize {
+export interface IFluidLayoutSize {
     // (undocumented)
     height?: number;
     // (undocumented)
@@ -1691,13 +1011,13 @@ interface IFluidLayoutSize {
 }
 
 // @alpha
-interface IGetGranteesParams {
+export interface IGetGranteesParams {
     // (undocumented)
     permission?: Permission;
 }
 
 // @alpha
-interface IGetGranteesResponse {
+export interface IGetGranteesResponse {
     // (undocumented)
     grantees: {
         items: IGranteeEntry[];
@@ -1705,7 +1025,7 @@ interface IGetGranteesResponse {
 }
 
 // @public (undocumented)
-interface IGetObjectsUsedByManyEntry {
+export interface IGetObjectsUsedByManyEntry {
     // (undocumented)
     entries: IObjectLink[];
     // (undocumented)
@@ -1713,19 +1033,19 @@ interface IGetObjectsUsedByManyEntry {
 }
 
 // @public (undocumented)
-interface IGetObjectUsedBy {
+export interface IGetObjectUsedBy {
     // (undocumented)
     entries: IObjectLink[];
 }
 
 // @public (undocumented)
-interface IGetObjectUsing {
+export interface IGetObjectUsing {
     // (undocumented)
     entries: IObjectLink[];
 }
 
 // @public (undocumented)
-interface IGetObjectUsingManyEntry {
+export interface IGetObjectUsingManyEntry {
     // (undocumented)
     entries: IObjectLink[];
     // (undocumented)
@@ -1733,13 +1053,13 @@ interface IGetObjectUsingManyEntry {
 }
 
 // @alpha
-interface IGetUserGroupsParams {
+export interface IGetUserGroupsParams {
     limit?: number;
     offset?: string;
 }
 
 // @alpha
-interface IGetUserGroupsResponse {
+export interface IGetUserGroupsResponse {
     // (undocumented)
     userGroups: {
         paging: {
@@ -1752,7 +1072,7 @@ interface IGetUserGroupsResponse {
 }
 
 // @public
-interface IGetUserListParams {
+export interface IGetUserListParams {
     groupId?: string;
     indicatePermission?: string;
     limit?: number;
@@ -1762,7 +1082,7 @@ interface IGetUserListParams {
 }
 
 // @public
-interface IGetUserListResponse {
+export interface IGetUserListResponse {
     // (undocumented)
     userList: {
         paging: {
@@ -1777,7 +1097,7 @@ interface IGetUserListResponse {
 }
 
 // @alpha (undocumented)
-interface IGranteeEntry {
+export interface IGranteeEntry {
     // (undocumented)
     aclEntry: {
         permission: Permission;
@@ -1786,19 +1106,19 @@ interface IGranteeEntry {
 }
 
 // @alpha (undocumented)
-interface IGranteeUserGroupInfo {
+export interface IGranteeUserGroupInfo {
     // (undocumented)
     userGroup: IUserGroupItem;
 }
 
 // @alpha (undocumented)
-interface IGranteeUserInfo {
+export interface IGranteeUserInfo {
     // (undocumented)
     user: IUsersItem;
 }
 
 // @public (undocumented)
-interface IGridContent {
+export interface IGridContent {
     // (undocumented)
     columns: string[];
     // (undocumented)
@@ -1812,7 +1132,7 @@ interface IGridContent {
 }
 
 // @public (undocumented)
-interface IGridContentMetrics {
+export interface IGridContentMetrics {
     // (undocumented)
     alias: string;
     // (undocumented)
@@ -1820,13 +1140,13 @@ interface IGridContentMetrics {
 }
 
 // @public (undocumented)
-interface IGridContentRow {
+export interface IGridContentRow {
     // (undocumented)
     attribute: IGridContentRowAttribute;
 }
 
 // @public (undocumented)
-interface IGridContentRowAttribute {
+export interface IGridContentRowAttribute {
     // (undocumented)
     alias: string;
     // (undocumented)
@@ -1836,10 +1156,10 @@ interface IGridContentRowAttribute {
 }
 
 // @public (undocumented)
-type IHeader = IMeasureGroupHeader | IAttributeHeader;
+export type IHeader = IMeasureGroupHeader | IAttributeHeader;
 
 // @public (undocumented)
-interface IIntegration {
+export interface IIntegration {
     // (undocumented)
     active: boolean;
     // (undocumented)
@@ -1847,7 +1167,7 @@ interface IIntegration {
 }
 
 // @public (undocumented)
-interface IKPI {
+export interface IKPI {
     // (undocumented)
     content: IKpiContentWithoutComparison | IKpiContentWithComparison;
     // (undocumented)
@@ -1855,7 +1175,7 @@ interface IKPI {
 }
 
 // @public (undocumented)
-interface IKpiAlert extends IMetadataObject {
+export interface IKpiAlert extends IMetadataObject {
     // (undocumented)
     content: {
         kpi: Uri;
@@ -1868,22 +1188,22 @@ interface IKpiAlert extends IMetadataObject {
 }
 
 // @public (undocumented)
-type IKpiComparisonDirection = "growIsGood" | "growIsBad";
+export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
 
 // @public (undocumented)
-type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+export type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
 
 // @public (undocumented)
-type IKpiComparisonTypeNoComparison = "none";
+export type IKpiComparisonTypeNoComparison = "none";
 
 // @public (undocumented)
-interface IKpiConfiguration {
+export interface IKpiConfiguration {
     // (undocumented)
     description?: IKpiDescriptionConfiguration;
 }
 
 // @public (undocumented)
-interface IKpiContentBase {
+export interface IKpiContentBase {
     // (undocumented)
     configuration?: IKpiConfiguration;
     // (undocumented)
@@ -1899,7 +1219,7 @@ interface IKpiContentBase {
 }
 
 // @public (undocumented)
-interface IKpiContentWithComparison extends IKpiContentBase {
+export interface IKpiContentWithComparison extends IKpiContentBase {
     // (undocumented)
     comparisonDirection: IKpiComparisonDirection;
     // (undocumented)
@@ -1907,13 +1227,13 @@ interface IKpiContentWithComparison extends IKpiContentBase {
 }
 
 // @public (undocumented)
-interface IKpiContentWithoutComparison extends IKpiContentBase {
+export interface IKpiContentWithoutComparison extends IKpiContentBase {
     // (undocumented)
     comparisonType: IKpiComparisonTypeNoComparison;
 }
 
 // @public (undocumented)
-interface IKpiDashboardAttachment {
+export interface IKpiDashboardAttachment {
     // (undocumented)
     kpiDashboardAttachment: {
         uri: Uri;
@@ -1923,13 +1243,13 @@ interface IKpiDashboardAttachment {
 }
 
 // @public (undocumented)
-interface IKpiDescriptionConfiguration {
+export interface IKpiDescriptionConfiguration {
     source: KpiDescriptionSourceType;
     visible: boolean;
 }
 
 // @public (undocumented)
-interface IKpiProjectDashboardLink {
+export interface IKpiProjectDashboardLink {
     // (undocumented)
     projectDashboard: string;
     // (undocumented)
@@ -1937,7 +1257,7 @@ interface IKpiProjectDashboardLink {
 }
 
 // @public
-interface ILoadAvailableCatalogItemsParams {
+export interface ILoadAvailableCatalogItemsParams {
     // (undocumented)
     catalogQueryRequest: {
         bucketItems: ItemDescription[];
@@ -1946,7 +1266,7 @@ interface ILoadAvailableCatalogItemsParams {
 }
 
 // @public
-interface ILoadAvailableCatalogItemsResponse {
+export interface ILoadAvailableCatalogItemsResponse {
     // (undocumented)
     catalogAvailableItems: {
         items: string[];
@@ -1954,7 +1274,7 @@ interface ILoadAvailableCatalogItemsResponse {
 }
 
 // @public
-interface ILoadCatalogGroupsParams {
+export interface ILoadCatalogGroupsParams {
     // (undocumented)
     readonly csvDataSets?: string[];
     // (undocumented)
@@ -1966,13 +1286,13 @@ interface ILoadCatalogGroupsParams {
 }
 
 // @public
-interface ILoadCatalogGroupsResponse {
+export interface ILoadCatalogGroupsResponse {
     // (undocumented)
     catalogGroups: ICatalogGroup[];
 }
 
 // @public
-interface ILoadCatalogItemsParams {
+export interface ILoadCatalogItemsParams {
     // (undocumented)
     readonly csvDataSets?: string[];
     // (undocumented)
@@ -1990,7 +1310,7 @@ interface ILoadCatalogItemsParams {
 }
 
 // @public
-interface ILoadCatalogItemsResponse {
+export interface ILoadCatalogItemsResponse {
     // (undocumented)
     catalogItems: {
         items: CatalogItem[];
@@ -2002,7 +1322,7 @@ interface ILoadCatalogItemsResponse {
 }
 
 // @public (undocumented)
-interface ILoadDateDataSetsParams {
+export interface ILoadDateDataSetsParams {
     // (undocumented)
     attributesMap?: Record<string, unknown>;
     // (undocumented)
@@ -2026,19 +1346,13 @@ interface ILoadDateDataSetsParams {
 }
 
 // @public (undocumented)
-interface ILocalIdentifierQualifier {
+export interface ILocalIdentifierQualifier {
     // (undocumented)
     localIdentifier: string;
 }
 
 // @public (undocumented)
-interface ILocalIdentifierQualifier_2 {
-    // (undocumented)
-    localIdentifier: string;
-}
-
-// @public (undocumented)
-interface IMaqlAstPosition {
+export interface IMaqlAstPosition {
     // (undocumented)
     column: number;
     // (undocumented)
@@ -2046,7 +1360,7 @@ interface IMaqlAstPosition {
 }
 
 // @public (undocumented)
-interface IMaqlTree {
+export interface IMaqlTree {
     // (undocumented)
     content?: IMaqlTree;
     // (undocumented)
@@ -2058,7 +1372,7 @@ interface IMaqlTree {
 }
 
 // @public (undocumented)
-interface IMeasure {
+export interface IMeasure {
     // (undocumented)
     alias?: string;
     // (undocumented)
@@ -2066,45 +1380,25 @@ interface IMeasure {
     // (undocumented)
     format?: string;
     // (undocumented)
-    localIdentifier: Identifier_2;
+    localIdentifier: Identifier;
 }
 
 // @public (undocumented)
-interface IMeasure_2 {
-    // (undocumented)
-    measure: IMeasureContent;
-}
-
-// @public (undocumented)
-interface IMeasureContent {
+export interface IMeasureContent {
     // (undocumented)
     alias?: string;
     // (undocumented)
-    definition: IMeasureDefinitionType;
+    definition: VisualizationObjectMeasureDefinitionType;
     // (undocumented)
     format?: string;
     // (undocumented)
-    localIdentifier: Identifier_3;
+    localIdentifier: Identifier;
     // (undocumented)
     title?: string;
 }
 
 // @public (undocumented)
-interface IMeasureDefinition {
-    // (undocumented)
-    measureDefinition: {
-        item: ObjQualifier_2;
-        aggregation?: MeasureAggregation;
-        filters?: Filter[];
-        computeRatio?: boolean;
-    };
-}
-
-// @public (undocumented)
-type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition_2 | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition_2;
-
-// @public (undocumented)
-interface IMeasureGroupHeader {
+export interface IMeasureGroupHeader {
     // (undocumented)
     measureGroupHeader: {
         items: IMeasureHeaderItem[];
@@ -2113,7 +1407,7 @@ interface IMeasureGroupHeader {
 }
 
 // @public (undocumented)
-interface IMeasureHeaderItem {
+export interface IMeasureHeaderItem {
     // (undocumented)
     measureHeaderItem: {
         uri?: string;
@@ -2125,15 +1419,15 @@ interface IMeasureHeaderItem {
 }
 
 // @public (undocumented)
-interface IMeasureLocatorItem {
+export interface IMeasureLocatorItem {
     // (undocumented)
     measureLocatorItem: {
-        measureIdentifier: Identifier_2;
+        measureIdentifier: Identifier;
     };
 }
 
 // @public (undocumented)
-interface IMeasureSortItem {
+export interface IMeasureSortItem {
     // (undocumented)
     measureSortItem: {
         direction: SortDirection;
@@ -2142,7 +1436,7 @@ interface IMeasureSortItem {
 }
 
 // @public (undocumented)
-interface IMeasureValueFilter {
+export interface IMeasureValueFilter {
     // (undocumented)
     measureValueFilter: {
         measure: Qualifier;
@@ -2151,22 +1445,43 @@ interface IMeasureValueFilter {
 }
 
 // @public (undocumented)
-interface IMeasureValueFilter_2 {
-    // (undocumented)
-    measureValueFilter: {
-        measure: IObjUriQualifier_2 | ILocalIdentifierQualifier_2;
-        condition?: MeasureValueFilterCondition_2;
-    };
-}
-
-// @public (undocumented)
-interface IMetadataObject {
+export interface IMetadataObject {
     // (undocumented)
     meta: IObjectMeta;
 }
 
 // @public (undocumented)
-interface IMetric extends IMetadataObject {
+export interface IMetadataObjectAttribute extends IMetadataObject {
+    // (undocumented)
+    content: {
+        dimension?: string;
+        displayForms: IAttributeDisplayForm[];
+        type?: string;
+        drillDownStepAttributeDF?: Uri;
+        linkAttributeDF?: Uri;
+    };
+}
+
+// @public (undocumented)
+export interface IMetadataObjectDataSet extends IMetadataObject {
+    // (undocumented)
+    attributes: Uri[];
+    // (undocumented)
+    dataLoadingColumns: Uri[];
+    // (undocumented)
+    facts: Uri[];
+    // (undocumented)
+    mode: string;
+}
+
+// @public (undocumented)
+export interface IMetadataObjectWrappedDataSet {
+    // (undocumented)
+    dataSet: IMetadataObjectDataSet;
+}
+
+// @public (undocumented)
+export interface IMetric extends IMetadataObject {
     // (undocumented)
     content: {
         expression: MaqlExpression;
@@ -2177,15 +1492,15 @@ interface IMetric extends IMetadataObject {
 }
 
 // @public (undocumented)
-interface INativeTotalItem {
+export interface INativeTotalItem {
     // (undocumented)
-    attributeIdentifiers: Identifier_2[];
+    attributeIdentifiers: Identifier[];
     // (undocumented)
-    measureIdentifier: Identifier_2;
+    measureIdentifier: Identifier;
 }
 
 // @public (undocumented)
-interface INegativeAttributeFilter {
+export interface INegativeAttributeFilter {
     // (undocumented)
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
@@ -2194,19 +1509,10 @@ interface INegativeAttributeFilter {
 }
 
 // @public (undocumented)
-interface INegativeAttributeFilter_2 {
-    // (undocumented)
-    negativeAttributeFilter: {
-        displayForm: ObjQualifier_2;
-        notIn: string[];
-    };
-}
+export type IObject = IMetadataObjectAttribute | IMetric | IFact | IAttributeDisplayForm | IKpiAlert | IMetadataObjectDataSet | IPrompt | ITheme | IAnalyticalDashboard | IFilterContext | ITempFilterContext | IKPI | IScheduledMail | IProjectDashboard | IDateFilterConfig | IVisualizationWidget | IVisualizationObject | IVisualizationClass | IDataSet | IReport | IReportDefinition | IDashboardPlugin;
 
 // @public (undocumented)
-type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition | GdcDashboardPlugin.IDashboardPlugin;
-
-// @public (undocumented)
-interface IObjectLink {
+export interface IObjectLink {
     // (undocumented)
     author?: Uri;
     // (undocumented)
@@ -2246,7 +1552,7 @@ interface IObjectLink {
 }
 
 // @public (undocumented)
-interface IObjectMeta {
+export interface IObjectMeta {
     // (undocumented)
     author?: string;
     // (undocumented)
@@ -2284,7 +1590,7 @@ interface IObjectMeta {
 }
 
 // @public
-interface IObjectXrefEntry {
+export interface IObjectXrefEntry {
     author: string;
     // (undocumented)
     category: string;
@@ -2301,31 +1607,19 @@ interface IObjectXrefEntry {
 }
 
 // @public (undocumented)
-interface IObjIdentifierQualifier {
+export interface IObjIdentifierQualifier {
     // (undocumented)
     identifier: string;
 }
 
 // @public (undocumented)
-interface IObjIdentifierQualifier_2 {
-    // (undocumented)
-    identifier: string;
-}
-
-// @public (undocumented)
-interface IObjUriQualifier {
+export interface IObjUriQualifier {
     // (undocumented)
     uri: string;
 }
 
 // @public (undocumented)
-interface IObjUriQualifier_2 {
-    // (undocumented)
-    uri: string;
-}
-
-// @public (undocumented)
-interface IOrganization {
+export interface IOrganization {
     // (undocumented)
     organization: {
         id: string;
@@ -2334,38 +1628,29 @@ interface IOrganization {
 }
 
 // @public (undocumented)
-interface IPersistedWidget {
+export interface IPersistedWidget {
     // (undocumented)
     widget: {
-        qualifier: GdcVisualizationObject.ObjQualifier;
+        qualifier: ObjQualifier;
     };
 }
 
 // @public (undocumented)
-interface IPopMeasure {
+export interface IPopMeasure {
     // (undocumented)
-    measureIdentifier: Identifier_2;
+    measureIdentifier: Identifier;
     // (undocumented)
     popAttribute: ObjQualifier;
 }
 
 // @public (undocumented)
-interface IPoPMeasureDefinition {
-    // (undocumented)
-    popMeasureDefinition: {
-        measureIdentifier: Identifier_3;
-        popAttribute: ObjQualifier_2;
-    };
-}
-
-// @public (undocumented)
-interface IPopMeasureDefinition {
+export interface IPopMeasureDefinition {
     // (undocumented)
     popMeasure: IPopMeasure;
 }
 
 // @public (undocumented)
-interface IPositiveAttributeFilter {
+export interface IPositiveAttributeFilter {
     // (undocumented)
     positiveAttributeFilter: {
         displayForm: ObjQualifier;
@@ -2374,16 +1659,7 @@ interface IPositiveAttributeFilter {
 }
 
 // @public (undocumented)
-interface IPositiveAttributeFilter_2 {
-    // (undocumented)
-    positiveAttributeFilter: {
-        displayForm: ObjQualifier_2;
-        in: string[];
-    };
-}
-
-// @public (undocumented)
-interface IPreviousPeriodDateDataSet {
+export interface IPreviousPeriodDateDataSet {
     // (undocumented)
     dataSet: ObjQualifier;
     // (undocumented)
@@ -2391,38 +1667,21 @@ interface IPreviousPeriodDateDataSet {
 }
 
 // @public (undocumented)
-interface IPreviousPeriodDateDataSet_2 {
-    // (undocumented)
-    dataSet: ObjQualifier_2;
-    // (undocumented)
-    periodsAgo: number;
-}
-
-// @public (undocumented)
-interface IPreviousPeriodMeasure {
+export interface IPreviousPeriodMeasure {
     // (undocumented)
     dateDataSets: IPreviousPeriodDateDataSet[];
     // (undocumented)
-    measureIdentifier: Identifier_2;
+    measureIdentifier: Identifier;
 }
 
 // @public (undocumented)
-interface IPreviousPeriodMeasureDefinition {
+export interface IPreviousPeriodMeasureDefinition {
     // (undocumented)
     previousPeriodMeasure: IPreviousPeriodMeasure;
 }
 
 // @public (undocumented)
-interface IPreviousPeriodMeasureDefinition_2 {
-    // (undocumented)
-    previousPeriodMeasure: {
-        measureIdentifier: Identifier_3;
-        dateDataSets: IPreviousPeriodDateDataSet_2[];
-    };
-}
-
-// @public (undocumented)
-interface IProcessBody {
+export interface IProcessBody {
     // (undocumented)
     finished: TimeIso8601;
     // (undocumented)
@@ -2436,7 +1695,7 @@ interface IProcessBody {
 }
 
 // @public (undocumented)
-interface IProfileSetting {
+export interface IProfileSetting {
     // (undocumented)
     currentProjectUri: Uri | null;
     // (undocumented)
@@ -2482,7 +1741,7 @@ interface IProfileSetting {
 }
 
 // @public (undocumented)
-interface IProject {
+export interface IProject {
     // (undocumented)
     content: {
         guidedNavigation: BooleanAsString;
@@ -2520,7 +1779,7 @@ interface IProject {
 }
 
 // @public (undocumented)
-interface IProjectDashboard {
+export interface IProjectDashboard {
     // (undocumented)
     content: {
         tabs: Array<{
@@ -2533,7 +1792,7 @@ interface IProjectDashboard {
 }
 
 // @public (undocumented)
-interface IProjectIcons {
+export interface IProjectIcons {
     // (undocumented)
     icon: string;
     // (undocumented)
@@ -2541,13 +1800,13 @@ interface IProjectIcons {
 }
 
 // @public (undocumented)
-interface IProjectId {
+export interface IProjectId {
     // (undocumented)
     projectId: string;
 }
 
 // @public (undocumented)
-interface IProjectLcm {
+export interface IProjectLcm {
     // (undocumented)
     clientId?: string;
     // (undocumented)
@@ -2557,7 +1816,7 @@ interface IProjectLcm {
 }
 
 // @public (undocumented)
-interface IProjectLcmIdentifiers {
+export interface IProjectLcmIdentifiers {
     // (undocumented)
     projectLcm: {
         projectId?: string;
@@ -2568,7 +1827,7 @@ interface IProjectLcmIdentifiers {
 }
 
 // @public (undocumented)
-interface IProjectPermissions {
+export interface IProjectPermissions {
     // (undocumented)
     links?: {
         project: Uri;
@@ -2581,7 +1840,7 @@ interface IProjectPermissions {
 }
 
 // @public (undocumented)
-interface IPrompt extends IMetadataObject {
+export interface IPrompt extends IMetadataObject {
     // (undocumented)
     content: {
         type: "scalar";
@@ -2592,7 +1851,7 @@ interface IPrompt extends IMetadataObject {
 }
 
 // @public (undocumented)
-interface IRangeCondition {
+export interface IRangeCondition {
     // (undocumented)
     range: {
         operator: RangeConditionOperator;
@@ -2603,18 +1862,7 @@ interface IRangeCondition {
 }
 
 // @public (undocumented)
-interface IRangeCondition_2 {
-    // (undocumented)
-    range: {
-        operator: RangeConditionOperator_2;
-        from: number;
-        to: number;
-        treatNullValuesAs?: number;
-    };
-}
-
-// @public (undocumented)
-interface IRankingFilter {
+export interface IRankingFilter {
     // (undocumented)
     rankingFilter: {
         measures: Qualifier[];
@@ -2625,24 +1873,13 @@ interface IRankingFilter {
 }
 
 // @public (undocumented)
-interface IRankingFilter_2 {
-    // (undocumented)
-    rankingFilter: {
-        measures: (IObjUriQualifier_2 | ILocalIdentifierQualifier_2)[];
-        attributes?: (IObjUriQualifier_2 | ILocalIdentifierQualifier_2)[];
-        operator: RankingFilterOperator_2;
-        value: number;
-    };
-}
-
-// @public (undocumented)
-interface IReferenceItems {
+export interface IReferenceItems {
     // (undocumented)
     [identifier: string]: string;
 }
 
 // @public (undocumented)
-interface IRelativeDateFilter {
+export interface IRelativeDateFilter {
     // (undocumented)
     relativeDateFilter: {
         dataSet: ObjQualifier;
@@ -2653,18 +1890,7 @@ interface IRelativeDateFilter {
 }
 
 // @public (undocumented)
-interface IRelativeDateFilter_2 {
-    // (undocumented)
-    relativeDateFilter: {
-        dataSet: ObjQualifier_2;
-        granularity: string;
-        from?: number;
-        to?: number;
-    };
-}
-
-// @public (undocumented)
-interface IReport {
+export interface IReport {
     // (undocumented)
     content: IReportContent;
     // (undocumented)
@@ -2672,7 +1898,7 @@ interface IReport {
 }
 
 // @public (undocumented)
-interface IReportAttachment {
+export interface IReportAttachment {
     // (undocumented)
     reportAttachment: {
         uri?: Uri;
@@ -2682,7 +1908,7 @@ interface IReportAttachment {
 }
 
 // @public (undocumented)
-interface IReportContent {
+export interface IReportContent {
     // (undocumented)
     definitions: Uri[];
     // (undocumented)
@@ -2690,7 +1916,7 @@ interface IReportContent {
 }
 
 // @public (undocumented)
-interface IReportDefinition {
+export interface IReportDefinition {
     // (undocumented)
     content: IReportDefinitionContent;
     // (undocumented)
@@ -2700,7 +1926,7 @@ interface IReportDefinition {
 }
 
 // @public (undocumented)
-interface IReportDefinitionContent {
+export interface IReportDefinitionContent {
     // (undocumented)
     chart?: any;
     // (undocumented)
@@ -2716,13 +1942,13 @@ interface IReportDefinitionContent {
 }
 
 // @public (undocumented)
-interface IReportDefinitionLinks {
+export interface IReportDefinitionLinks {
     // (undocumented)
     explain2?: string;
 }
 
 // @public (undocumented)
-interface IReportExportOptions {
+export interface IReportExportOptions {
     // (undocumented)
     includeFilterContext?: "no" | "yes";
     // (undocumented)
@@ -2746,7 +1972,7 @@ interface IReportExportOptions {
 }
 
 // @public (undocumented)
-interface IReportFilter {
+export interface IReportFilter {
     // (undocumented)
     expression: any;
     // (undocumented)
@@ -2754,7 +1980,7 @@ interface IReportFilter {
 }
 
 // @public (undocumented)
-interface IResultAttributeHeaderItem {
+export interface IResultAttributeHeaderItem {
     // (undocumented)
     attributeHeaderItem: {
         uri: string;
@@ -2763,16 +1989,16 @@ interface IResultAttributeHeaderItem {
 }
 
 // @public (undocumented)
-interface IResultDimension {
+export interface IResultDimension {
     // (undocumented)
     headers: IHeader[];
 }
 
 // @public (undocumented)
-type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
 
 // @public (undocumented)
-interface IResultMeasureHeaderItem {
+export interface IResultMeasureHeaderItem {
     // (undocumented)
     measureHeaderItem: {
         name: string;
@@ -2781,7 +2007,7 @@ interface IResultMeasureHeaderItem {
 }
 
 // @public (undocumented)
-interface IResultSpec {
+export interface IResultSpec {
     // (undocumented)
     dimensions?: IDimension[];
     // (undocumented)
@@ -2789,7 +2015,7 @@ interface IResultSpec {
 }
 
 // @public (undocumented)
-interface IResultTotalHeaderItem {
+export interface IResultTotalHeaderItem {
     // (undocumented)
     totalHeaderItem: {
         name: string;
@@ -2798,70 +2024,52 @@ interface IResultTotalHeaderItem {
 }
 
 // @public (undocumented)
-function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter;
+export function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter;
 
 // @public (undocumented)
-function isAbsoluteDateFilter_2(filter: DateFilter): filter is IAbsoluteDateFilter_2;
+export function isArithmeticMeasureDefinition(definition: MeasureDefinition): definition is IArithmeticMeasureDefinition;
 
 // @public (undocumented)
-function isArithmeticMeasureDefinition(definition: MeasureDefinition): definition is IArithmeticMeasureDefinition;
+export function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm;
 
 // @public (undocumented)
-function isArithmeticMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IArithmeticMeasureDefinition_2;
+export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[];
 
 // @public (undocumented)
-function isAttribute(bucketItem: IMeasure_2 | IAttribute_2): bucketItem is IAttribute_2;
+export function isAttributeElementsByRef(attributeElements: AttributeElements): attributeElements is IAttributeElementsByRef;
 
 // @public (undocumented)
-function isAttribute_2(obj: unknown): obj is IAttribute_3;
+export function isAttributeElementsByValue(attributeElements: AttributeElements): attributeElements is IAttributeElementsByValue;
 
 // @public (undocumented)
-function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm;
+export function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem;
 
 // @public (undocumented)
-function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[];
+export const isAttributeFilterReference: (obj: unknown) => obj is IAttributeFilterReference;
 
 // @public (undocumented)
-function isAttributeElementsByRef(attributeElements: AttributeElements): attributeElements is IAttributeElementsByRef;
+export function isAttributeHeader(header: IHeader): header is IAttributeHeader;
 
 // @public (undocumented)
-function isAttributeElementsByValue(attributeElements: AttributeElements): attributeElements is IAttributeElementsByValue;
+export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem;
 
 // @public (undocumented)
-function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem;
+export function isAttributeLocatorItem(locator: LocatorItem): locator is IAttributeLocatorItem;
 
 // @public (undocumented)
-function isAttributeFilter_2(filter: ExtendedFilter_2): filter is AttributeFilter;
+export function isAttributeSortItem(sortItem: SortItem): sortItem is IAttributeSortItem;
 
 // @public (undocumented)
-function isAttributeFilter_3(filter: FilterContextItem): filter is IAttributeFilter;
+export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 
 // @public (undocumented)
-const isAttributeFilterReference: (obj: unknown) => obj is IAttributeFilterReference;
+export function isCatalogFact(obj: unknown): obj is ICatalogFact;
 
 // @public (undocumented)
-function isAttributeHeader(header: IHeader): header is IAttributeHeader;
+export function isCatalogMetric(obj: unknown): obj is ICatalogMetric;
 
 // @public (undocumented)
-function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem;
-
-// @public (undocumented)
-function isAttributeLocatorItem(locator: LocatorItem): locator is IAttributeLocatorItem;
-
-// @public (undocumented)
-function isAttributeSortItem(sortItem: SortItem): sortItem is IAttributeSortItem;
-
-// @public (undocumented)
-function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
-
-// @public (undocumented)
-function isCatalogFact(obj: unknown): obj is ICatalogFact;
-
-// @public (undocumented)
-function isCatalogMetric(obj: unknown): obj is ICatalogMetric;
-
-// @public (undocumented)
-interface IScheduledMail {
+export interface IScheduledMail {
     // (undocumented)
     content: IScheduledMailContent;
     // (undocumented)
@@ -2869,7 +2077,7 @@ interface IScheduledMail {
 }
 
 // @public (undocumented)
-interface IScheduledMailContent {
+export interface IScheduledMailContent {
     // (undocumented)
     attachments: ScheduledMailAttachment[];
     // (undocumented)
@@ -2889,7 +2097,7 @@ interface IScheduledMailContent {
 }
 
 // @public (undocumented)
-interface IScheduledMailWhen {
+export interface IScheduledMailWhen {
     // (undocumented)
     endDate?: DateString;
     // (undocumented)
@@ -2901,52 +2109,43 @@ interface IScheduledMailWhen {
 }
 
 // @public (undocumented)
-function isComparisonCondition(condition: MeasureValueFilterCondition_2): condition is IComparisonCondition_2;
+export function isComparisonCondition(condition: MeasureValueFilterCondition): condition is IComparisonCondition;
 
 // @public (undocumented)
-function isDashboardPlugin(obj: unknown): obj is IWrappedDashboardPlugin;
+export function isDashboardPlugin(obj: unknown): obj is IWrappedDashboardPlugin;
 
 // @public (undocumented)
-function isDataSet(obj: unknown): obj is IDataSet;
+export function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem;
 
 // @public (undocumented)
-function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem;
+export const isDateFilterReference: (obj: unknown) => obj is IDateFilterReference;
 
 // @public (undocumented)
-function isDateFilter_2(filter: ExtendedFilter_2): filter is DateFilter;
+export function isDrillFromAttribute(obj: DrillFromType): obj is IDrillFromAttribute;
 
 // @public (undocumented)
-function isDateFilter_3(filter: FilterContextItem): filter is IDateFilter;
+export function isDrillFromMeasure(obj: DrillFromType): obj is IDrillFromMeasure;
 
 // @public (undocumented)
-const isDateFilterReference: (obj: unknown) => obj is IDateFilterReference;
+export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
 
 // @public (undocumented)
-function isDrillFromAttribute(obj: DrillFromType): obj is IDrillFromAttribute;
+export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
 
 // @public (undocumented)
-function isDrillFromMeasure(obj: DrillFromType): obj is IDrillFromMeasure;
+export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
 
 // @public (undocumented)
-function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
+export function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization;
 
 // @public (undocumented)
-function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
-
-// @public (undocumented)
-function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
-
-// @public (undocumented)
-function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization;
-
-// @public (undocumented)
-interface ISectionDescription {
+export interface ISectionDescription {
     // (undocumented)
     description: string;
 }
 
 // @public (undocumented)
-interface ISectionHeader {
+export interface ISectionHeader {
     // (undocumented)
     description?: string;
     // (undocumented)
@@ -2954,7 +2153,7 @@ interface ISectionHeader {
 }
 
 // @public (undocumented)
-interface ISeparators {
+export interface ISeparators {
     // (undocumented)
     decimal: string;
     // (undocumented)
@@ -2962,7 +2161,7 @@ interface ISeparators {
 }
 
 // @public
-interface ISeparatorsResponse {
+export interface ISeparatorsResponse {
     // (undocumented)
     separators: {
         decimal: string;
@@ -2974,21 +2173,27 @@ interface ISeparatorsResponse {
 }
 
 // @public (undocumented)
-function isExpressionFilter(filter: CompatibilityFilter): filter is IExpressionFilter;
+export function isExpressionFilter(filter: CompatibilityFilter): filter is IExpressionFilter;
 
 // @public (undocumented)
-function isFact(obj: unknown): obj is IFact;
+export function isFact(obj: unknown): obj is IFact;
 
 // @public (undocumented)
-function isFilterContext(obj: unknown): obj is IFilterContext;
+export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @public (undocumented)
-function isFluidLayout(obj: unknown): obj is IFluidLayout;
+export function isFilterContextAttributeFilter(filter: FilterContextItem): filter is IFilterContextAttributeFilter;
 
 // @public (undocumented)
-interface ISimpleMeasure {
+export function isFilterContextDateFilter(filter: FilterContextItem): filter is IFilterContextDateFilter;
+
+// @public (undocumented)
+export function isFluidLayout(obj: unknown): obj is IFluidLayout;
+
+// @public (undocumented)
+export interface ISimpleMeasure {
     // (undocumented)
-    aggregation?: SimpleMeasureAggregation;
+    aggregation?: MeasureAggregation;
     // (undocumented)
     computeRatio?: boolean;
     // (undocumented)
@@ -2998,118 +2203,91 @@ interface ISimpleMeasure {
 }
 
 // @public (undocumented)
-interface ISimpleMeasureDefinition {
+export interface ISimpleMeasureDefinition {
     // (undocumented)
     measure: ISimpleMeasure;
 }
 
 // @public (undocumented)
-function isKpi(obj: unknown): obj is IKPI;
+export function isKpi(obj: unknown): obj is IKPI;
 
 // @public (undocumented)
-function isKpiAlert(obj: unknown): obj is IKpiAlert;
+export function isKpiAlert(obj: unknown): obj is IKpiAlert;
 
 // @public (undocumented)
-function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison;
+export function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison;
 
 // @public (undocumented)
-function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
+export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
 
 // @public (undocumented)
-function isLayoutWidget(obj: unknown): obj is IPersistedWidget;
+export function isLayoutWidget(obj: unknown): obj is IPersistedWidget;
 
 // @public (undocumented)
-function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
+export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
 
 // @public (undocumented)
-function isLocalIdentifierQualifier_2(objectQualifier: unknown): objectQualifier is ILocalIdentifierQualifier_2;
+export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
 
 // @public (undocumented)
-function isMeasure(bucketItem: IMeasure_2 | IAttribute_2): bucketItem is IMeasure_2;
+export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem;
 
 // @public (undocumented)
-function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition;
+export function isMeasureLocatorItem(locator: LocatorItem): locator is IMeasureLocatorItem;
 
 // @public (undocumented)
-function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
+export function isMeasureSortItem(sortItem: SortItem): sortItem is IMeasureSortItem;
 
 // @public (undocumented)
-function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem;
+export function isMeasureValueFilter(filter: CompatibilityFilter): filter is IMeasureValueFilter;
 
 // @public (undocumented)
-function isMeasureLocatorItem(locator: LocatorItem): locator is IMeasureLocatorItem;
+export function isMetadataObjectAttribute(obj: unknown): obj is IMetadataObjectAttribute;
 
 // @public (undocumented)
-function isMeasureSortItem(sortItem: SortItem): sortItem is IMeasureSortItem;
+export function isMetadataObjectDataSet(obj: unknown): obj is IMetadataObjectDataSet;
 
 // @public (undocumented)
-function isMeasureValueFilter(filter: CompatibilityFilter): filter is IMeasureValueFilter;
+export function isMetadataObjectWrappedDataSet(obj: unknown): obj is IMetadataObjectWrappedDataSet;
 
 // @public (undocumented)
-function isMeasureValueFilter_2(filter: ExtendedFilter_2): filter is IMeasureValueFilter_2;
+export function isMetric(obj: unknown): obj is IMetric;
 
 // @public (undocumented)
-function isMetric(obj: unknown): obj is IMetric;
+export function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter;
 
 // @public (undocumented)
-function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter;
+export function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier;
 
 // @public (undocumented)
-function isNegativeAttributeFilter_2(filter: AttributeFilter): filter is INegativeAttributeFilter_2;
+export function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier;
 
 // @public (undocumented)
-function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier;
+export function isPopMeasureDefinition(definition: MeasureDefinition): definition is IPopMeasureDefinition;
 
 // @public (undocumented)
-function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier;
+export function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter;
 
 // @public (undocumented)
-function isObjIdentifierQualifier_2(objQualifier: ObjQualifier_2): objQualifier is IObjIdentifierQualifier_2;
+export function isPreviousPeriodMeasureDefinition(definition: MeasureDefinition): definition is IPreviousPeriodMeasureDefinition;
 
 // @public (undocumented)
-function isObjUriQualifier(objQualifier: ObjQualifier_2): objQualifier is IObjUriQualifier_2;
+export function isPrompt(obj: unknown): obj is IPrompt;
 
 // @public (undocumented)
-function isPopMeasureDefinition(definition: MeasureDefinition): definition is IPopMeasureDefinition;
+export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition;
 
 // @public (undocumented)
-function isPopMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IPoPMeasureDefinition;
+export function isRankingFilter(filter: CompatibilityFilter): filter is IRankingFilter;
 
 // @public (undocumented)
-function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter;
+export function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter;
 
 // @public (undocumented)
-function isPositiveAttributeFilter_2(filter: AttributeFilter): filter is IPositiveAttributeFilter_2;
+export function isSimpleMeasureDefinition(definition: MeasureDefinition): definition is ISimpleMeasureDefinition;
 
 // @public (undocumented)
-function isPreviousPeriodMeasureDefinition(definition: MeasureDefinition): definition is IPreviousPeriodMeasureDefinition;
-
-// @public (undocumented)
-function isPreviousPeriodMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition_2;
-
-// @public (undocumented)
-function isPrompt(obj: unknown): obj is IPrompt;
-
-// @public (undocumented)
-function isRangeCondition(condition: MeasureValueFilterCondition_2): condition is IRangeCondition_2;
-
-// @public (undocumented)
-function isRankingFilter(filter: CompatibilityFilter): filter is IRankingFilter;
-
-// @public (undocumented)
-function isRankingFilter_2(filter: ExtendedFilter_2): filter is IRankingFilter_2;
-
-// @public (undocumented)
-function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter;
-
-// @public (undocumented)
-function isRelativeDateFilter_2(filter: DateFilter): filter is IRelativeDateFilter_2;
-
-// @public (undocumented)
-function isSimpleMeasureDefinition(definition: MeasureDefinition): definition is ISimpleMeasureDefinition;
-
-// @public (undocumented)
-interface IStatus {
+export interface IStatus {
     // (undocumented)
     code: "NEW" | "SCHEDULED" | "DOWNLOADING" | "DOWNLOADED" | "TRANSFORMING" | "TRANSFORMED" | "UPLOADING" | "UPLOADED" | "SYNCHRONIZED" | "ERROR" | "USER_ERROR";
     // (undocumented)
@@ -3119,16 +2297,22 @@ interface IStatus {
 }
 
 // @public (undocumented)
-function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public (undocumented)
-function isTheme(obj: unknown): obj is ITheme;
+export function isTheme(obj: unknown): obj is ITheme;
 
 // @public (undocumented)
-function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem;
+export interface IStoredItemDescription {
+    // (undocumented)
+    uri: string;
+}
 
 // @public (undocumented)
-interface IStyleSettingsType {
+export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem;
+
+// @public (undocumented)
+export interface IStyleSettingsType {
     // (undocumented)
     chartFont?: {
         family: string;
@@ -3145,59 +2329,94 @@ interface IStyleSettingsType {
 }
 
 // @public (undocumented)
-function isVisualization(obj: unknown): obj is IVisualization;
+export function isVisualization(obj: unknown): obj is IVisualization;
 
 // @public (undocumented)
-function isVisualizationWidget(obj: unknown): obj is IVisualizationWidget;
+export function isVisualizationObjectAbsoluteDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectAbsoluteDateFilter;
 
 // @public (undocumented)
-function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment;
+export function isVisualizationObjectArithmeticMeasureDefinition(definition: VisualizationObjectMeasureDefinitionType): definition is IVisualizationObjectArithmeticMeasureDefinition;
 
 // @public (undocumented)
-function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
+export function isVisualizationObjectAttribute(bucketItem: IVisualizationObjectMeasure | IVisualizationObjectAttribute): bucketItem is IVisualizationObjectAttribute;
 
 // @public (undocumented)
-function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
+export function isVisualizationObjectAttributeFilter(filter: VisualizationObjectExtendedFilter): filter is VisualizationObjectAttributeFilter;
 
 // @public (undocumented)
-function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet;
+export function isVisualizationObjectDateFilter(filter: VisualizationObjectExtendedFilter): filter is VisualizationObjectDateFilter;
 
 // @public (undocumented)
-function isWrappedFact(obj: unknown): obj is IWrappedFact;
+export function isVisualizationObjectMeasure(bucketItem: IVisualizationObjectMeasure | IVisualizationObjectAttribute): bucketItem is IVisualizationObjectMeasure;
 
 // @public (undocumented)
-function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext;
+export function isVisualizationObjectMeasureDefinition(definition: VisualizationObjectMeasureDefinitionType): definition is IVisualizationObjectMeasureDefinition;
 
 // @public (undocumented)
-function isWrappedKpi(obj: unknown): obj is IWrappedKPI;
+export function isVisualizationObjectMeasureValueFilter(filter: VisualizationObjectExtendedFilter): filter is IVisualizationObjectMeasureValueFilter;
 
 // @public (undocumented)
-function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert;
+export function isVisualizationObjectNegativeAttributeFilter(filter: VisualizationObjectAttributeFilter): filter is IVisualizationObjectNegativeAttributeFilter;
 
 // @public (undocumented)
-function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
+export function isVisualizationObjectPoPMeasureDefinition(definition: VisualizationObjectMeasureDefinitionType): definition is IVisualizationObjectPoPMeasureDefinition;
 
 // @public (undocumented)
-function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
+export function isVisualizationObjectPositiveAttributeFilter(filter: VisualizationObjectAttributeFilter): filter is IVisualizationObjectPositiveAttributeFilter;
 
 // @public (undocumented)
-function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext;
+export function isVisualizationObjectPreviousPeriodMeasureDefinition(definition: VisualizationObjectMeasureDefinitionType): definition is IVisualizationObjectPreviousPeriodMeasureDefinition;
 
 // @public (undocumented)
-function isWrappedTheme(obj: unknown): obj is IWrappedTheme;
+export function isVisualizationObjectRankingFilter(filter: VisualizationObjectExtendedFilter): filter is IVisualizationObjectRankingFilter;
 
 // @public (undocumented)
-function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget;
+export function isVisualizationObjectRelativeDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectRelativeDateFilter;
 
 // @public (undocumented)
-type ItemDescription = {
-    uri: string;
-} | {
-    expression: string;
-};
+export function isVisualizationWidget(obj: unknown): obj is IVisualizationWidget;
+
+// @public (undocumented)
+export function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment;
+
+// @public (undocumented)
+export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
+
+// @public (undocumented)
+export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
+
+// @public (undocumented)
+export function isWrappedFact(obj: unknown): obj is IWrappedFact;
+
+// @public (undocumented)
+export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext;
+
+// @public (undocumented)
+export function isWrappedKpi(obj: unknown): obj is IWrappedKPI;
+
+// @public (undocumented)
+export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert;
+
+// @public (undocumented)
+export function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
+
+// @public (undocumented)
+export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
+
+// @public (undocumented)
+export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext;
+
+// @public (undocumented)
+export function isWrappedTheme(obj: unknown): obj is IWrappedTheme;
+
+// @public (undocumented)
+export function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget;
+
+// @public (undocumented)
+export type ItemDescription = IStoredItemDescription | IAdHocItemDescription;
 
 // @public
-interface ITempFilterContext {
+export interface ITempFilterContext {
     // (undocumented)
     created: Timestamp;
     // (undocumented)
@@ -3207,7 +2426,7 @@ interface ITempFilterContext {
 }
 
 // @public (undocumented)
-interface ITemplateInfo {
+export interface ITemplateInfo {
     // (undocumented)
     connectorId?: string;
     // (undocumented)
@@ -3221,7 +2440,7 @@ interface ITemplateInfo {
 }
 
 // @public (undocumented)
-interface ITheme extends IMetadataObject {
+export interface ITheme extends IMetadataObject {
     // (undocumented)
     content: {
         typography?: {
@@ -3331,7 +2550,7 @@ interface ITheme extends IMetadataObject {
 }
 
 // @public (undocumented)
-interface IThemeColorFamily {
+export interface IThemeColorFamily {
     // (undocumented)
     base: ThemeColor;
     // (undocumented)
@@ -3343,7 +2562,7 @@ interface IThemeColorFamily {
 }
 
 // @public (undocumented)
-interface IThemeComplementaryPalette {
+export interface IThemeComplementaryPalette {
     // (undocumented)
     c0: ThemeColor;
     // (undocumented)
@@ -3367,7 +2586,7 @@ interface IThemeComplementaryPalette {
 }
 
 // @public (undocumented)
-interface IThemePalette {
+export interface IThemePalette {
     // (undocumented)
     complementary?: IThemeComplementaryPalette;
     // (undocumented)
@@ -3383,7 +2602,7 @@ interface IThemePalette {
 }
 
 // @public (undocumented)
-interface ITimezone {
+export interface ITimezone {
     // (undocumented)
     timezone: {
         id: string;
@@ -3394,7 +2613,7 @@ interface ITimezone {
 }
 
 // @public (undocumented)
-interface ITimezoneInfo {
+export interface ITimezoneInfo {
     // (undocumented)
     currentOffsetMs: number;
     // (undocumented)
@@ -3406,7 +2625,7 @@ interface ITimezoneInfo {
 }
 
 // @public (undocumented)
-interface ITotal {
+export interface ITotal {
     // (undocumented)
     alias?: string;
     // (undocumented)
@@ -3414,11 +2633,11 @@ interface ITotal {
     // (undocumented)
     measureIdentifier: string;
     // (undocumented)
-    type: TotalType_2;
+    type: TotalType;
 }
 
 // @public (undocumented)
-interface ITotalHeaderItem {
+export interface ITotalHeaderItem {
     // (undocumented)
     totalHeaderItem: {
         name: string;
@@ -3426,17 +2645,17 @@ interface ITotalHeaderItem {
 }
 
 // @public (undocumented)
-interface ITotalItem {
+export interface ITotalItem {
     // (undocumented)
-    attributeIdentifier: Identifier_2;
+    attributeIdentifier: Identifier;
     // (undocumented)
-    measureIdentifier: Identifier_2;
+    measureIdentifier: Identifier;
     // (undocumented)
     type: TotalType;
 }
 
 // @public (undocumented)
-interface IUISettings {
+export interface IUISettings {
     // (undocumented)
     activeColor?: string;
     // (undocumented)
@@ -3512,13 +2731,13 @@ interface IUISettings {
 }
 
 // @public (undocumented)
-interface IUserFeatureFlags {
+export interface IUserFeatureFlags {
     // (undocumented)
     featureFlags: IFeatureFlags;
 }
 
 // @alpha (undocumented)
-interface IUserGroupItem {
+export interface IUserGroupItem {
     // (undocumented)
     content: {
         name: string;
@@ -3541,7 +2760,7 @@ interface IUserGroupItem {
 }
 
 // @public (undocumented)
-interface IUserListItem {
+export interface IUserListItem {
     // (undocumented)
     email: Email;
     // (undocumented)
@@ -3561,7 +2780,7 @@ interface IUserListItem {
 }
 
 // @public (undocumented)
-interface IUserProject {
+export interface IUserProject {
     // (undocumented)
     userProject: {
         projectState: UserProjectState;
@@ -3576,7 +2795,7 @@ interface IUserProject {
 }
 
 // @public (undocumented)
-interface IUserProjectsParams {
+export interface IUserProjectsParams {
     // (undocumented)
     limit: number;
     // (undocumented)
@@ -3592,7 +2811,7 @@ interface IUserProjectsParams {
 }
 
 // @public (undocumented)
-interface IUserProjectsResponse {
+export interface IUserProjectsResponse {
     // (undocumented)
     userProjects: {
         items: IUserProject[];
@@ -3601,7 +2820,7 @@ interface IUserProjectsResponse {
 }
 
 // @public (undocumented)
-interface IUsersItem {
+export interface IUsersItem {
     // (undocumented)
     content: {
         status?: UsersItemStatus;
@@ -3621,7 +2840,7 @@ interface IUsersItem {
 }
 
 // @public
-interface IValidElementsParams {
+export interface IValidElementsParams {
     // (undocumented)
     afm?: IAfm;
     // (undocumented)
@@ -3635,7 +2854,7 @@ interface IValidElementsParams {
     // (undocumented)
     offset?: number;
     // (undocumented)
-    order?: SortDirection_3;
+    order?: SortDirection;
     // (undocumented)
     prompt?: string;
     // (undocumented)
@@ -3647,7 +2866,7 @@ interface IValidElementsParams {
 }
 
 // @public
-interface IValidElementsResponse {
+export interface IValidElementsResponse {
     // (undocumented)
     validElements: {
         items: IWrappedAttributeElement[];
@@ -3661,31 +2880,31 @@ interface IValidElementsResponse {
             attribute: Uri;
             attributeDisplayForm: Uri;
             filter: string;
-            order: SortDirection_3;
+            order: SortDirection;
         };
     };
 }
 
 // @public (undocumented)
-interface IVisualization {
+export interface IVisualization {
     // (undocumented)
     visualizationObject: IVisualizationObject;
 }
 
 // @public (undocumented)
-interface IVisualizationAttributeContent {
+export interface IVisualizationAttributeContent {
     // (undocumented)
     alias?: string;
     // (undocumented)
-    displayForm: ObjQualifier_2;
+    displayForm: ObjQualifier;
     // (undocumented)
-    localIdentifier: Identifier_3;
+    localIdentifier: Identifier;
     // (undocumented)
     showAllValues?: boolean;
 }
 
 // @public (undocumented)
-interface IVisualizationClass {
+export interface IVisualizationClass {
     // (undocumented)
     content: IVisualizationClassContent;
     // (undocumented)
@@ -3693,7 +2912,7 @@ interface IVisualizationClass {
 }
 
 // @public (undocumented)
-interface IVisualizationClassContent {
+export interface IVisualizationClassContent {
     // (undocumented)
     checksum: string;
     // (undocumented)
@@ -3707,13 +2926,13 @@ interface IVisualizationClassContent {
 }
 
 // @public (undocumented)
-interface IVisualizationClassWrapped {
+export interface IVisualizationClassWrapped {
     // (undocumented)
     visualizationClass: IVisualizationClass;
 }
 
 // @public (undocumented)
-interface IVisualizationObject {
+export interface IVisualizationObject {
     // (undocumented)
     content: IVisualizationObjectContent;
     // (undocumented)
@@ -3721,27 +2940,136 @@ interface IVisualizationObject {
 }
 
 // @public (undocumented)
-interface IVisualizationObjectContent {
+export interface IVisualizationObjectAbsoluteDateFilter {
+    // (undocumented)
+    absoluteDateFilter: {
+        dataSet: ObjQualifier;
+        from?: string;
+        to?: string;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectArithmeticMeasureDefinition {
+    // (undocumented)
+    arithmeticMeasure: {
+        measureIdentifiers: Identifier[];
+        operator: ArithmeticMeasureOperator;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectAttribute {
+    // (undocumented)
+    visualizationAttribute: IVisualizationAttributeContent;
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectContent {
     // (undocumented)
     buckets: IBucket[];
     // (undocumented)
-    filters?: ExtendedFilter_2[];
+    filters?: VisualizationObjectExtendedFilter[];
     // (undocumented)
     properties?: string;
     // (undocumented)
     references?: IReferenceItems;
     // (undocumented)
-    visualizationClass: IObjUriQualifier_2;
+    visualizationClass: IObjUriQualifier;
 }
 
 // @public (undocumented)
-interface IVisualizationObjectResponse {
+export interface IVisualizationObjectMeasure {
+    // (undocumented)
+    measure: IMeasureContent;
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectMeasureDefinition {
+    // (undocumented)
+    measureDefinition: {
+        item: ObjQualifier;
+        aggregation?: MeasureAggregation;
+        filters?: VisualizationObjectFilter[];
+        computeRatio?: boolean;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectMeasureValueFilter {
+    // (undocumented)
+    measureValueFilter: {
+        measure: IObjUriQualifier | ILocalIdentifierQualifier;
+        condition?: MeasureValueFilterCondition;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectNegativeAttributeFilter {
+    // (undocumented)
+    negativeAttributeFilter: {
+        displayForm: ObjQualifier;
+        notIn: string[];
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectPoPMeasureDefinition {
+    // (undocumented)
+    popMeasureDefinition: {
+        measureIdentifier: Identifier;
+        popAttribute: ObjQualifier;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectPositiveAttributeFilter {
+    // (undocumented)
+    positiveAttributeFilter: {
+        displayForm: ObjQualifier;
+        in: string[];
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectPreviousPeriodMeasureDefinition {
+    // (undocumented)
+    previousPeriodMeasure: {
+        measureIdentifier: Identifier;
+        dateDataSets: IPreviousPeriodDateDataSet[];
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectRankingFilter {
+    // (undocumented)
+    rankingFilter: {
+        measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+        attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+        operator: RankingFilterOperator;
+        value: number;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectRelativeDateFilter {
+    // (undocumented)
+    relativeDateFilter: {
+        dataSet: ObjQualifier;
+        granularity: string;
+        from?: number;
+        to?: number;
+    };
+}
+
+// @public (undocumented)
+export interface IVisualizationObjectResponse {
     // (undocumented)
     visualizationObject: IVisualizationObject;
 }
 
 // @public (undocumented)
-interface IVisualizationStyle {
+export interface IVisualizationStyle {
     // (undocumented)
     visualizationStyle: {
         type: VisualizationStyleType;
@@ -3756,7 +3084,7 @@ interface IVisualizationStyle {
 }
 
 // @public (undocumented)
-interface IVisualizationWidget {
+export interface IVisualizationWidget {
     // (undocumented)
     content: {
         visualization: string;
@@ -3772,7 +3100,7 @@ interface IVisualizationWidget {
 }
 
 // @public (undocumented)
-interface IVisualizationWidgetAttachment {
+export interface IVisualizationWidgetAttachment {
     // (undocumented)
     visualizationWidgetAttachment: {
         uri: Uri;
@@ -3787,7 +3115,7 @@ interface IVisualizationWidgetAttachment {
 }
 
 // @public (undocumented)
-interface IVisualizationWidgetConfiguration {
+export interface IVisualizationWidgetConfiguration {
     // (undocumented)
     description?: IVisualizationWidgetDescriptionConfiguration;
     // (undocumented)
@@ -3795,7 +3123,7 @@ interface IVisualizationWidgetConfiguration {
 }
 
 // @public (undocumented)
-interface IVisualizationWidgetDescriptionConfiguration {
+export interface IVisualizationWidgetDescriptionConfiguration {
     // (undocumented)
     includeMetrics: boolean;
     // (undocumented)
@@ -3805,37 +3133,37 @@ interface IVisualizationWidgetDescriptionConfiguration {
 }
 
 // @public (undocumented)
-interface IWrappedAccountSetting {
+export interface IWrappedAccountSetting {
     // (undocumented)
     accountSetting: IAccountSetting;
 }
 
 // @public (undocumented)
-interface IWrappedAnalyticalDashboard {
+export interface IWrappedAnalyticalDashboard {
     // (undocumented)
     analyticalDashboard: IAnalyticalDashboard;
 }
 
 // @public (undocumented)
-interface IWrappedAttribute {
+export interface IWrappedAttribute {
     // (undocumented)
-    attribute: IAttribute_3;
+    attribute: IMetadataObjectAttribute;
 }
 
 // @public (undocumented)
-interface IWrappedAttributeDisplayForm {
+export interface IWrappedAttributeDisplayForm {
     // (undocumented)
     attributeDisplayForm: IAttributeDisplayForm;
 }
 
 // @public (undocumented)
-interface IWrappedAttributeElement {
+export interface IWrappedAttributeElement {
     // (undocumented)
     element: IAttributeElement;
 }
 
 // @public (undocumented)
-interface IWrappedAttributeElements {
+export interface IWrappedAttributeElements {
     // (undocumented)
     attributeElements: {
         elementsMeta: {
@@ -3860,115 +3188,109 @@ interface IWrappedAttributeElements {
 }
 
 // @public (undocumented)
-interface IWrappedDashboardPlugin {
+export interface IWrappedDashboardPlugin {
     // (undocumented)
     dashboardPlugin: IDashboardPlugin;
 }
 
 // @public (undocumented)
-interface IWrappedDataSet {
+export interface IWrappedDataSet {
     // (undocumented)
     dataSet: IDataSet;
 }
 
 // @public (undocumented)
-interface IWrappedDataSet_2 {
-    // (undocumented)
-    dataSet: IDataSet_2;
-}
-
-// @public (undocumented)
-interface IWrappedDateFilterConfig {
+export interface IWrappedDateFilterConfig {
     // (undocumented)
     dateFilterConfig: IDateFilterConfig;
 }
 
 // @public (undocumented)
-interface IWrappedFact {
+export interface IWrappedFact {
     // (undocumented)
     fact: IFact;
 }
 
 // @public (undocumented)
-interface IWrappedFilterContext {
+export interface IWrappedFilterContext {
     // (undocumented)
     filterContext: IFilterContext;
 }
 
 // @public (undocumented)
-interface IWrappedKPI {
+export interface IWrappedKPI {
     // (undocumented)
     kpi: IKPI;
 }
 
 // @public (undocumented)
-interface IWrappedKpiAlert {
+export interface IWrappedKpiAlert {
     // (undocumented)
     kpiAlert: IKpiAlert;
 }
 
 // @public (undocumented)
-interface IWrappedMetric {
+export interface IWrappedMetric {
     // (undocumented)
     metric: IMetric;
 }
 
 // @public (undocumented)
-interface IWrappedProjectDashboard {
+export interface IWrappedProjectDashboard {
     // (undocumented)
     projectDashboard: IProjectDashboard;
 }
 
 // @public (undocumented)
-interface IWrappedPrompt {
+export interface IWrappedPrompt {
     // (undocumented)
     prompt: IPrompt;
 }
 
 // @public (undocumented)
-interface IWrappedReport {
+export interface IWrappedReport {
     // (undocumented)
     report: IReport;
 }
 
 // @public (undocumented)
-interface IWrappedReportDefinition {
+export interface IWrappedReportDefinition {
     // (undocumented)
     reportDefinition: IReportDefinition;
 }
 
 // @public (undocumented)
-interface IWrappedScheduledMail {
+export interface IWrappedScheduledMail {
     // (undocumented)
     scheduledMail: IScheduledMail;
 }
 
 // @public (undocumented)
-interface IWrappedTempFilterContext {
+export interface IWrappedTempFilterContext {
     // (undocumented)
     tempFilterContext: ITempFilterContext;
 }
 
 // @public (undocumented)
-interface IWrappedTheme {
+export interface IWrappedTheme {
     // (undocumented)
     theme: ITheme;
 }
 
 // @alpha (undocumented)
-interface IWrappedUserGroupItem {
+export interface IWrappedUserGroupItem {
     // (undocumented)
     userGroup: IUserGroupItem;
 }
 
 // @public (undocumented)
-interface IWrappedVisualizationWidget {
+export interface IWrappedVisualizationWidget {
     // (undocumented)
     visualizationWidget: IVisualizationWidget;
 }
 
 // @public (undocumented)
-interface IZendesk4Integration {
+export interface IZendesk4Integration {
     // (undocumented)
     active: boolean;
     // (undocumented)
@@ -3990,97 +3312,76 @@ interface IZendesk4Integration {
 }
 
 // @public (undocumented)
-type KpiDescriptionSourceType = "kpi" | "metric";
+export type KpiDescriptionSourceType = "kpi" | "metric";
 
 // @public (undocumented)
-type Layout = IFluidLayout;
+export type Layout = IFluidLayout;
 
 // @public (undocumented)
-type LayoutContent = Widget | Layout;
+export type LayoutContent = Widget | Layout;
 
 // @public (undocumented)
-type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public (undocumented)
 export type MaqlExpression = string;
 
 // @public (undocumented)
-type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public (undocumented)
-type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
+export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
 
 // @public (undocumented)
-type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
-
-// @public (undocumented)
-type MeasureValueFilterCondition_2 = IComparisonCondition_2 | IRangeCondition_2;
+export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
 
 // @public (undocumented)
 export type NumberAsString = string;
 
 // @public (undocumented)
-type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette";
+export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette";
 
 // @public (undocumented)
-type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
-
-// @public (undocumented)
-type ObjQualifier_2 = IObjUriQualifier_2 | IObjIdentifierQualifier_2;
+export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
 
 // @alpha (undocumented)
-type Permission = "read";
+export type Permission = "read";
 
 // @public (undocumented)
-type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
+export type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
 
 // @public (undocumented)
-type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
+export type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
 
 // @public (undocumented)
-type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
 // @public (undocumented)
-type RangeConditionOperator_2 = "BETWEEN" | "NOT_BETWEEN";
+export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 // @public (undocumented)
-type RankingFilterOperator = "TOP" | "BOTTOM";
+export type RelativeGranularityOffset = number;
 
 // @public (undocumented)
-type RankingFilterOperator_2 = "TOP" | "BOTTOM";
+export type RelativeType = "relative";
 
 // @public (undocumented)
-type RelativeGranularityOffset = number;
+export type ReportFormat = "grid" | "chart" | "oneNumber";
 
 // @public (undocumented)
-type RelativeType = "relative";
+export function sanitizeFiltersForExport(filters: FilterContextItem[]): FilterContextItem[];
 
 // @public (undocumented)
-type ReportFormat = "grid" | "chart" | "oneNumber";
+export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment | IVisualizationWidgetAttachment;
 
 // @public (undocumented)
-export function sanitizeFiltersForExport(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
+export type SectionHeader = ISectionHeader | ISectionDescription;
 
 // @public (undocumented)
-type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment | IVisualizationWidgetAttachment;
+export type SortDirection = "asc" | "desc";
 
 // @public (undocumented)
-type SectionHeader = ISectionHeader | ISectionDescription;
-
-// @public (undocumented)
-type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
-
-// @public (undocumented)
-type SortDirection = "asc" | "desc";
-
-// @public (undocumented)
-type SortDirection_2 = "asc" | "desc";
-
-// @public (undocumented)
-type SortDirection_3 = "asc" | "desc";
-
-// @public (undocumented)
-type SortItem = IAttributeSortItem | IMeasureSortItem;
+export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
 export type ThemeColor = string;
@@ -4095,37 +3396,49 @@ export type TimeIso8601 = string;
 export type Timestamp = string;
 
 // @public (undocumented)
-type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
 // @public (undocumented)
-type TotalType_2 = "sum" | "avg" | "max" | "min" | "nat" | "med";
-
-// @public (undocumented)
-function unwrapMetadataObject(object: WrappedObject): IObject;
+export function unwrapMetadataObject(object: WrappedObject): IObject;
 
 // @public (undocumented)
 export type Uri = string;
 
 // @public (undocumented)
-type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
+export type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
 
 // @public (undocumented)
-type UserProjectState = "ENABLED" | "DISABLED";
+export type UserProjectState = "ENABLED" | "DISABLED";
 
 // @public (undocumented)
-type UsersItemStatus = "ENABLED" | "DISABLED";
+export type UsersItemStatus = "ENABLED" | "DISABLED";
 
 // @public (undocumented)
-type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
+export type VisualizationObjectAttributeFilter = IVisualizationObjectPositiveAttributeFilter | IVisualizationObjectNegativeAttributeFilter;
 
 // @public (undocumented)
-type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
+export type VisualizationObjectDateFilter = IVisualizationObjectRelativeDateFilter | IVisualizationObjectAbsoluteDateFilter;
 
 // @public (undocumented)
-type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
+export type VisualizationObjectExtendedFilter = VisualizationObjectFilter | IVisualizationObjectMeasureValueFilter | IVisualizationObjectRankingFilter;
 
 // @public (undocumented)
-interface Warning {
+export type VisualizationObjectFilter = VisualizationObjectDateFilter | VisualizationObjectAttributeFilter;
+
+// @public (undocumented)
+export type VisualizationObjectMeasureDefinitionType = IVisualizationObjectMeasureDefinition | IVisualizationObjectArithmeticMeasureDefinition | IVisualizationObjectPoPMeasureDefinition | IVisualizationObjectPreviousPeriodMeasureDefinition;
+
+// @public (undocumented)
+export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
+
+// @public (undocumented)
+export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
+
+// @public (undocumented)
+export type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
+
+// @public (undocumented)
+export interface Warning {
     // (undocumented)
     message: string;
     // (undocumented)
@@ -4135,9 +3448,9 @@ interface Warning {
 }
 
 // @public (undocumented)
-type Widget = IPersistedWidget;
+export type Widget = IPersistedWidget;
 
 // @public (undocumented)
-type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition | GdcDashboardPlugin.IWrappedDashboardPlugin;
+export type WrappedObject = IWrappedAttribute | IWrappedMetric | IWrappedFact | IWrappedAttributeDisplayForm | IWrappedKpiAlert | IMetadataObjectWrappedDataSet | IWrappedPrompt | IWrappedTheme | IWrappedAnalyticalDashboard | IWrappedFilterContext | IWrappedTempFilterContext | IWrappedKPI | IWrappedScheduledMail | IWrappedProjectDashboard | IWrappedDateFilterConfig | IWrappedVisualizationWidget | IVisualization | IVisualizationClassWrapped | IWrappedDataSet | IWrappedReport | IWrappedReportDefinition | IWrappedDashboardPlugin;
 
 ```

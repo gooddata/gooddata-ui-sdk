@@ -1,10 +1,10 @@
 // (C) 2019-2021 GoodData Corporation
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
-import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { convertDateFilterConfig } from "../../../convertors/fromBackend/DateFilterConfigConverter.js";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { IWrappedDateFilterConfig } from "@gooddata/api-model-bear";
 
 export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQuery {
     private limit: number | undefined;
@@ -33,15 +33,12 @@ export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQu
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const data = await this.authCall((sdk) =>
-                    sdk.md.getObjectsByQueryWithPaging<GdcExtendedDateFilters.IWrappedDateFilterConfig>(
-                        this.workspace,
-                        {
-                            offset,
-                            limit,
-                            category: "dateFilterConfig",
-                            getTotalCount: true,
-                        },
-                    ),
+                    sdk.md.getObjectsByQueryWithPaging<IWrappedDateFilterConfig>(this.workspace, {
+                        offset,
+                        limit,
+                        category: "dateFilterConfig",
+                        getTotalCount: true,
+                    }),
                 );
 
                 const {

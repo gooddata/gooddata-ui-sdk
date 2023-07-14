@@ -1,5 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
+import {
+    ScheduledMailAttachment as BearScheduledMailAttachment,
+    IWrappedScheduledMail,
+    isKpiDashboardAttachment,
+    isVisualizationWidgetAttachment,
+} from "@gooddata/api-model-bear";
 import {
     IUser,
     uriRef,
@@ -10,9 +15,9 @@ import {
 import compact from "lodash/compact.js";
 
 export const convertScheduledMailAttachment = (
-    scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,
+    scheduledMailAttachment: BearScheduledMailAttachment,
 ): ScheduledMailAttachment | undefined => {
-    if (GdcScheduledMail.isKpiDashboardAttachment(scheduledMailAttachment)) {
+    if (isKpiDashboardAttachment(scheduledMailAttachment)) {
         const {
             kpiDashboardAttachment: { format, uri, filterContext },
         } = scheduledMailAttachment;
@@ -22,7 +27,7 @@ export const convertScheduledMailAttachment = (
             format,
             filterContext: filterContext ? uriRef(filterContext) : undefined,
         };
-    } else if (GdcScheduledMail.isVisualizationWidgetAttachment(scheduledMailAttachment)) {
+    } else if (isVisualizationWidgetAttachment(scheduledMailAttachment)) {
         const {
             visualizationWidgetAttachment: { uri, dashboardUri, formats, filterContext, exportOptions },
         } = scheduledMailAttachment;
@@ -50,7 +55,7 @@ export const convertScheduledMailAttachment = (
  * @internal
  */
 export const convertScheduledMail = (
-    scheduledMail: GdcScheduledMail.IWrappedScheduledMail,
+    scheduledMail: IWrappedScheduledMail,
     userMap?: Map<string, IUser>,
 ): IScheduledMail | IScheduledMailDefinition => {
     const {

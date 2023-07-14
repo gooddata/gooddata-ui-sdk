@@ -1,5 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import {
+    FilterContextItem as BearFilterContextItem,
+    IWrappedFilterContext,
+    IWrappedTempFilterContext,
+    isFilterContextAttributeFilter,
+} from "@gooddata/api-model-bear";
 
 import {
     uriRef,
@@ -33,10 +38,8 @@ export const sanitizeExportFilterContext = (
 /**
  * @internal
  */
-export const convertFilterContextItem = (
-    filterContextItem: GdcFilterContext.FilterContextItem,
-): FilterContextItem => {
-    if (GdcFilterContext.isAttributeFilter(filterContextItem)) {
+export const convertFilterContextItem = (filterContextItem: BearFilterContextItem): FilterContextItem => {
+    if (isFilterContextAttributeFilter(filterContextItem)) {
         const {
             attributeFilter: {
                 attributeElements,
@@ -97,7 +100,7 @@ export const convertFilterContextItem = (
  * @internal
  */
 export const convertFilterContext = (
-    filterContext: GdcFilterContext.IWrappedFilterContext,
+    filterContext: IWrappedFilterContext,
 ): IFilterContext | IFilterContextDefinition => {
     const {
         filterContext: {
@@ -120,9 +123,7 @@ export const convertFilterContext = (
     };
 };
 
-export const convertTempFilterContext = (
-    filterContext: GdcFilterContext.IWrappedTempFilterContext,
-): ITempFilterContext => {
+export const convertTempFilterContext = (filterContext: IWrappedTempFilterContext): ITempFilterContext => {
     const {
         tempFilterContext: { created, filters, uri },
     } = filterContext;

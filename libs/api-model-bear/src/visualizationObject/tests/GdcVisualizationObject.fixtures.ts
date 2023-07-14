@@ -1,15 +1,15 @@
 // (C) 2019 GoodData Corporation
 import {
-    DateFilter,
-    Filter,
-    IArithmeticMeasureDefinition,
-    IAttribute,
-    IMeasure,
-    IMeasureDefinitionType,
-    IMeasureValueFilter,
+    VisualizationObjectDateFilter,
+    VisualizationObjectFilter,
+    IVisualizationObjectArithmeticMeasureDefinition,
+    IVisualizationObjectAttribute,
+    IVisualizationObjectMeasure,
+    VisualizationObjectMeasureDefinitionType,
+    IVisualizationObjectMeasureValueFilter,
 } from "../GdcVisualizationObject.js";
 
-export const attribute: IAttribute = {
+export const attribute: IVisualizationObjectAttribute = {
     visualizationAttribute: {
         localIdentifier: "m1",
         displayForm: {
@@ -17,7 +17,7 @@ export const attribute: IAttribute = {
         },
     },
 };
-export const simpleMeasure: IMeasure = {
+export const simpleMeasure: IVisualizationObjectMeasure = {
     measure: {
         localIdentifier: "m1",
         definition: {
@@ -29,20 +29,20 @@ export const simpleMeasure: IMeasure = {
         },
     },
 };
-export const simpleMeasureDefinition: IMeasureDefinitionType = {
+export const simpleMeasureDefinition: VisualizationObjectMeasureDefinitionType = {
     measureDefinition: {
         item: {
             uri: "/gdc/mock/measure",
         },
     },
 };
-export const arithmeticMeasureDefinition: IArithmeticMeasureDefinition = {
+export const arithmeticMeasureDefinition: IVisualizationObjectArithmeticMeasureDefinition = {
     arithmeticMeasure: {
         measureIdentifiers: ["/gdc/mock/measure"],
         operator: "sum",
     },
 };
-export const popMeasureDefinition: IMeasureDefinitionType = {
+export const popMeasureDefinition: VisualizationObjectMeasureDefinitionType = {
     popMeasureDefinition: {
         measureIdentifier: "m1",
         popAttribute: {
@@ -50,7 +50,7 @@ export const popMeasureDefinition: IMeasureDefinitionType = {
         },
     },
 };
-export const previousPeriodMeasureDefinition: IMeasureDefinitionType = {
+export const previousPeriodMeasureDefinition: VisualizationObjectMeasureDefinitionType = {
     previousPeriodMeasure: {
         measureIdentifier: "m1",
         dateDataSets: [
@@ -63,7 +63,7 @@ export const previousPeriodMeasureDefinition: IMeasureDefinitionType = {
         ],
     },
 };
-export const positiveAttributeFilter: Filter = {
+export const positiveAttributeFilter: VisualizationObjectFilter = {
     positiveAttributeFilter: {
         displayForm: {
             uri: "/gdc/mock/attribute",
@@ -71,7 +71,7 @@ export const positiveAttributeFilter: Filter = {
         in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
     },
 };
-export const negativeAttributeFilter: Filter = {
+export const negativeAttributeFilter: VisualizationObjectFilter = {
     negativeAttributeFilter: {
         displayForm: {
             uri: "/gdc/mock/date",
@@ -79,7 +79,7 @@ export const negativeAttributeFilter: Filter = {
         notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
     },
 };
-export const relativeDateFilter: Filter = {
+export const relativeDateFilter: VisualizationObjectFilter = {
     relativeDateFilter: {
         dataSet: {
             uri: "/gdc/mock/date",
@@ -89,7 +89,7 @@ export const relativeDateFilter: Filter = {
         to: -1,
     },
 };
-export const absoluteDateFilter: DateFilter = {
+export const absoluteDateFilter: VisualizationObjectDateFilter = {
     absoluteDateFilter: {
         dataSet: {
             uri: "/gdc/mock/date",
@@ -98,7 +98,7 @@ export const absoluteDateFilter: DateFilter = {
         to: "2018-07-11",
     },
 };
-export const measureValueFilter: IMeasureValueFilter = {
+export const measureValueFilter: IVisualizationObjectMeasureValueFilter = {
     measureValueFilter: {
         measure: {
             uri: "/gdc/mock/date",

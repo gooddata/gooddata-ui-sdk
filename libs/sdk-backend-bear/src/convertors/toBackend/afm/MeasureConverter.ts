@@ -12,13 +12,22 @@ import {
     isPreviousPeriodMeasureDefinition,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+import {
+    IMeasure as IBearMeasure,
+    MeasureAggregation as BearMeasureAggregation,
+    MeasureDefinition,
+    ISimpleMeasureDefinition,
+    FilterItem,
+    IPopMeasureDefinition as IBearPopMeasureDefinition,
+    IPreviousPeriodMeasureDefinition as IBearPreviousPeriodMeasureDefinition,
+    IArithmeticMeasureDefinition as IBearArithmeticMeasureDefinition,
+} from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter.js";
 import { toBearRef } from "../ObjRefConverter.js";
 import compact from "lodash/compact.js";
 import { DEFAULT_INTEGER_FORMAT, DEFAULT_PERCENTAGE_FORMAT } from "./constants.js";
 
-export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
+export function convertMeasure(measure: IMeasure): IBearMeasure {
     const {
         measure: { definition },
     } = measure;
@@ -39,9 +48,7 @@ export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     };
 }
 
-export function convertAggregation(
-    aggregation?: MeasureAggregation,
-): GdcExecuteAFM.SimpleMeasureAggregation | undefined {
+export function convertAggregation(aggregation?: MeasureAggregation): BearMeasureAggregation | undefined {
     if (aggregation === "approximate_count") {
         // Bear doesn't support approximate_count so transparently fallback to exact count.
         return "count";
@@ -49,7 +56,7 @@ export function convertAggregation(
     return aggregation;
 }
 
-function convertMeasureDefinition(definition: IMeasureDefinitionType): GdcExecuteAFM.MeasureDefinition {
+function convertMeasureDefinition(definition: IMeasureDefinitionType): MeasureDefinition {
     if (isMeasureDefinition(definition)) {
         return convertSimpleMeasureDefinition(definition);
     } else if (isPoPMeasureDefinition(definition)) {
@@ -63,12 +70,10 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): GdcExecut
     }
 }
 
-function convertSimpleMeasureDefinition(
-    definition: IMeasureDefinition,
-): GdcExecuteAFM.ISimpleMeasureDefinition {
+function convertSimpleMeasureDefinition(definition: IMeasureDefinition): ISimpleMeasureDefinition {
     const { measureDefinition } = definition;
 
-    const filters: GdcExecuteAFM.FilterItem[] = measureDefinition.filters
+    const filters: FilterItem[] = measureDefinition.filters
         ? compact(measureDefinition.filters.map(convertMeasureFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
@@ -89,7 +94,7 @@ function convertSimpleMeasureDefinition(
     };
 }
 
-function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExecuteAFM.IPopMeasureDefinition {
+function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): IBearPopMeasureDefinition {
     const { popMeasureDefinition } = definition;
     return {
         popMeasure: {
@@ -101,7 +106,7 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExec
 
 function convertPreviousPeriodMeasureDefinition(
     definition: IPreviousPeriodMeasureDefinition,
-): GdcExecuteAFM.IPreviousPeriodMeasureDefinition {
+): IBearPreviousPeriodMeasureDefinition {
     const { previousPeriodMeasure } = definition;
     return {
         previousPeriodMeasure: {
@@ -116,7 +121,7 @@ function convertPreviousPeriodMeasureDefinition(
 
 function convertArithmeticMeasureDefinition(
     definition: IArithmeticMeasureDefinition,
-): GdcExecuteAFM.IArithmeticMeasureDefinition {
+): IBearArithmeticMeasureDefinition {
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {

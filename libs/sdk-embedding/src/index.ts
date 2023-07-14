@@ -8,25 +8,4 @@
  *
  * @packageDocumentation
  */
-export {
-    EmbeddedGdc,
-    EmbeddedAnalyticalDesigner,
-    EmbeddedKpiDashboard,
-    IObjectMeta,
-    IPostMessageContextPayload,
-    GdcErrorType,
-    GdcEventType,
-    GdcMessageEventListener,
-    GdcProductName,
-    IGdcMessage,
-    IGdcMessageEnvelope,
-    IGdcMessageEvent,
-    IGdcMessageEventListenerConfig,
-    CommandFailed,
-    CommandFailedData,
-    ICommandFailedBody,
-    IDrillableItemsCommandBody,
-    ISimpleDrillableItemsCommandBody,
-    isCommandFailedData,
-    getEventType,
-} from "./iframe/index.js";
+export * from "./iframe/index.js";

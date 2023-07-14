@@ -1,20 +1,24 @@
 // (C) 2007-2022 GoodData Corporation
-import { GdcVisualizationObject } from "./index.js";
-import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
-import IBucket = GdcVisualizationObject.IBucket;
-import BucketItem = GdcVisualizationObject.BucketItem;
-import IVisualizationAttributeContent = GdcVisualizationObject.IVisualizationAttributeContent;
-import IMeasureContent = GdcVisualizationObject.IMeasureContent;
-import IMeasureDefinition = GdcVisualizationObject.IMeasureDefinition;
-import Filter = GdcVisualizationObject.Filter;
-import AttributeFilter = GdcVisualizationObject.AttributeFilter;
-import isAttribute = GdcVisualizationObject.isAttribute;
-import isMeasure = GdcVisualizationObject.isMeasure;
-import isAttributeFilter = GdcVisualizationObject.isAttributeFilter;
+import {
+    IVisualizationObjectContent,
+    IBucket,
+    BucketItem,
+    IVisualizationAttributeContent,
+    IMeasureContent,
+    IVisualizationObjectMeasureDefinition,
+    isVisualizationObjectMeasureDefinition,
+    VisualizationObjectFilter,
+    VisualizationObjectAttributeFilter,
+    isVisualizationObjectAttribute,
+    isVisualizationObjectMeasure,
+    isVisualizationObjectAttributeFilter,
+    isVisualizationObjectPositiveAttributeFilter,
+} from "./GdcVisualizationObject.js";
+import { IObjUriQualifier } from "../base/GdcTypes.js";
 
 function getAttributesInBucket(bucket: IBucket): IVisualizationAttributeContent[] {
     return bucket.items.reduce((list: IVisualizationAttributeContent[], bucketItem: BucketItem) => {
-        if (isAttribute(bucketItem)) {
+        if (isVisualizationObjectAttribute(bucketItem)) {
             list.push(bucketItem.visualizationAttribute);
         }
         return list;
@@ -31,15 +35,17 @@ function getAttributes(mdObject: IVisualizationObjectContent): IVisualizationAtt
 
 function getMeasuresInBucket(bucket: IBucket): IMeasureContent[] {
     return bucket.items.reduce((list: IMeasureContent[], bucketItem: BucketItem) => {
-        if (isMeasure(bucketItem)) {
+        if (isVisualizationObjectMeasure(bucketItem)) {
             list.push(bucketItem.measure);
         }
         return list;
     }, []);
 }
 
-function getDefinition(measure: IMeasureContent): IMeasureDefinition["measureDefinition"] | undefined {
-    return GdcVisualizationObject.isMeasureDefinition(measure.definition)
+function getDefinition(
+    measure: IMeasureContent,
+): IVisualizationObjectMeasureDefinition["measureDefinition"] | undefined {
+    return isVisualizationObjectMeasureDefinition(measure.definition)
         ? measure.definition.measureDefinition
         : undefined;
 }
@@ -52,25 +58,28 @@ function getMeasures(mdObject: IVisualizationObjectContent): IMeasureContent[] {
     }, []);
 }
 
-function getMeasureFilters(measure: IMeasureContent): Filter[] {
+function getMeasureFilters(measure: IMeasureContent): VisualizationObjectFilter[] {
     return getDefinition(measure)?.filters ?? [];
 }
 
-function getMeasureAttributeFilters(measure: IMeasureContent): AttributeFilter[] {
-    return getMeasureFilters(measure).filter(isAttributeFilter);
+function getMeasureAttributeFilters(measure: IMeasureContent): VisualizationObjectAttributeFilter[] {
+    return getMeasureFilters(measure).filter(isVisualizationObjectAttributeFilter);
 }
 
-function getAttributeFilters(mdObject: IVisualizationObjectContent): AttributeFilter[] {
-    return getMeasures(mdObject).reduce((filters: AttributeFilter[], measure: IMeasureContent) => {
-        filters.push(...getMeasureAttributeFilters(measure));
-        return filters;
-    }, []);
+function getAttributeFilters(mdObject: IVisualizationObjectContent): VisualizationObjectAttributeFilter[] {
+    return getMeasures(mdObject).reduce(
+        (filters: VisualizationObjectAttributeFilter[], measure: IMeasureContent) => {
+            filters.push(...getMeasureAttributeFilters(measure));
+            return filters;
+        },
+        [],
+    );
 }
 
-function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string {
-    return GdcVisualizationObject.isPositiveAttributeFilter(measureFilter)
-        ? (measureFilter.positiveAttributeFilter.displayForm as GdcVisualizationObject.IObjUriQualifier).uri
-        : (measureFilter.negativeAttributeFilter.displayForm as GdcVisualizationObject.IObjUriQualifier).uri;
+function getAttributeFilterDisplayForm(measureFilter: VisualizationObjectAttributeFilter): string {
+    return isVisualizationObjectPositiveAttributeFilter(measureFilter)
+        ? (measureFilter.positiveAttributeFilter.displayForm as IObjUriQualifier).uri
+        : (measureFilter.negativeAttributeFilter.displayForm as IObjUriQualifier).uri;
 }
 
 /**
@@ -78,8 +87,7 @@ function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string {
  */
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[] {
     const attributesDfs = getAttributes(mdObject).map(
-        (attribute: IVisualizationAttributeContent) =>
-            (attribute.displayForm as GdcVisualizationObject.IObjUriQualifier).uri,
+        (attribute: IVisualizationAttributeContent) => (attribute.displayForm as IObjUriQualifier).uri,
     );
     const attrMeasureFilters = getAttributeFilters(mdObject);
     const attrMeasureFiltersDfs = attrMeasureFilters.map(getAttributeFilterDisplayForm);

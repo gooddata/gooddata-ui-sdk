@@ -39,12 +39,12 @@ import {
     isCompatibleCatalogItemType,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter.js";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { IUriMappings } from "../../../types/catalog.js";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
 import { InvariantError } from "ts-invariant";
+import { IVisualizationObject } from "@gooddata/api-model-bear";
 
 const catalogItemUri = (catalogItem: CatalogItem): string => {
     if (isCatalogAttribute(catalogItem)) {
@@ -137,7 +137,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     }
 
     private loadAvailableCatalogItems = async (
-        sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
+        sanitizedVisualizationObject: IVisualizationObject,
     ): Promise<CatalogItem[]> => {
         const { types } = this.options;
 
@@ -168,7 +168,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     };
 
     private loadAvailableDateDatasets = async (
-        sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
+        sanitizedVisualizationObject: IVisualizationObject,
     ): Promise<ICatalogDateDataset[]> => {
         const { types, includeTags, excludeTags, dataset, production, includeDateGranularities } =
             this.options;

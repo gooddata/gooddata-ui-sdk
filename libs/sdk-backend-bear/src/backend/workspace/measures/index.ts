@@ -1,6 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+import {
+    IAttributeElement,
+    IObject,
+    WrappedObject,
+    isWrappedMetric,
+    unwrapMetadataObject,
+} from "@gooddata/api-model-bear";
+
 import {
     IMeasureExpressionToken,
     IMeasureReferencing,
@@ -31,11 +37,9 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        const metricMetadata = await this.authCall((sdk) =>
-            sdk.xhr.getParsed<GdcMetadataObject.WrappedObject>(uri),
-        );
+        const metricMetadata = await this.authCall((sdk) => sdk.xhr.getParsed<WrappedObject>(uri));
 
-        if (!GdcMetadata.isWrappedMetric(metricMetadata)) {
+        if (!isWrappedMetric(metricMetadata)) {
             throw new Error(
                 "To get measure expression tokens, provide the correct measure identifier. Did you provide a measure identifier?",
             );
@@ -62,7 +66,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             sdk.md.getObjects<SupportedWrappedMetadataObject>(this.workspace, allExpressionUris),
         );
         const allExpressionObjects = allExpressionWrappedObjects.map(
-            GdcMetadataObject.unwrapMetadataObject,
+            unwrapMetadataObject,
         ) as SupportedMetadataObject[];
 
         const allExpressionAttributeElements = await Promise.all(
@@ -71,24 +75,18 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             ),
         );
 
-        const objectsByUri = allExpressionObjects.reduce(
-            (acc: Record<string, GdcMetadataObject.IObject>, el) => {
-                acc[el.meta.uri!] = el;
-                return acc;
-            },
-            {},
-        );
+        const objectsByUri = allExpressionObjects.reduce((acc: Record<string, IObject>, el) => {
+            acc[el.meta.uri!] = el;
+            return acc;
+        }, {});
 
-        const objectsByIdentifier = allExpressionObjects.reduce(
-            (acc: Record<string, GdcMetadataObject.IObject>, el) => {
-                acc[el.meta.identifier!] = el;
-                return acc;
-            },
-            {},
-        );
+        const objectsByIdentifier = allExpressionObjects.reduce((acc: Record<string, IObject>, el) => {
+            acc[el.meta.identifier!] = el;
+            return acc;
+        }, {});
 
         const attributeElementsByUri = allExpressionAttributeElements.reduce(
-            (acc: Record<string, GdcMetadata.IAttributeElement>, el) => {
+            (acc: Record<string, IAttributeElement>, el) => {
                 if (el) {
                     acc[el.uri] = el;
                 }
@@ -162,7 +160,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
 }
 
 function createAttribute(
-    attributeElementsByUri: { [p: string]: GdcMetadata.IAttributeElement },
+    attributeElementsByUri: { [p: string]: IAttributeElement },
     token: IExpressionToken,
 ): IMeasureExpressionToken {
     const element = attributeElementsByUri[token.value];
@@ -181,8 +179,8 @@ function createAttribute(
 
 function createIdentifier(
     token: IExpressionToken,
-    objectsByUri: { [p: string]: GdcMetadataObject.IObject },
-    objectsByIdentifier: { [p: string]: GdcMetadataObject.IObject },
+    objectsByUri: { [p: string]: IObject },
+    objectsByIdentifier: { [p: string]: IObject },
 ): IMeasureExpressionToken {
     const meta =
         token.type === "uri"

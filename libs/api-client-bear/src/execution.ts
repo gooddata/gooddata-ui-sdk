@@ -4,7 +4,7 @@ import { AttributesMapLoaderModule } from "./utils/attributesMapLoader.js";
 import { ExecuteAfmModule } from "./execution/execute-afm.js";
 import { XhrModule } from "./xhr.js";
 import { MetadataModule } from "./metadata.js";
-import { GdcVisualizationObject, GdcCatalog } from "@gooddata/api-model-bear";
+import { IColumnsAndDefinitions, IVisualizationObjectContent } from "@gooddata/api-model-bear";
 
 /**
  * Execution endpoints
@@ -56,9 +56,9 @@ export class ExecutionModule {
 
     public mdToExecutionDefinitionsAndColumns(
         projectId: string,
-        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        mdObj: IVisualizationObjectContent,
         options: { attributesMap?: Record<string, unknown>; removeDateItems?: boolean } = {},
-    ): Promise<GdcCatalog.IColumnsAndDefinitions> {
+    ): Promise<IColumnsAndDefinitions> {
         return this.getExperimentalExecutionsModule().mdToExecutionDefinitionsAndColumns(
             projectId,
             mdObj,

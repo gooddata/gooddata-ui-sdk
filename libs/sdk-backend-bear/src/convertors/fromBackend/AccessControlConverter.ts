@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import * as GdcAccessControl from "@gooddata/api-model-bear/GdcAccessControl";
+import { IGranteeEntry, IGranteeUserGroupInfo, IGranteeUserInfo } from "@gooddata/api-model-bear";
 
 import { convertWorkspaceUserGroup } from "./UserGroupsConverter.js";
 import { convertUsersItem } from "./UsersConverter.js";
@@ -15,13 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
-function isGranteeUserInfo(
-    grantee: GdcAccessControl.IGranteeUserInfo | GdcAccessControl.IGranteeUserGroupInfo,
-): grantee is GdcAccessControl.IGranteeUserInfo {
-    return !isEmpty(grantee) && (grantee as GdcAccessControl.IGranteeUserInfo).user !== undefined;
+function isGranteeUserInfo(grantee: IGranteeUserInfo | IGranteeUserGroupInfo): grantee is IGranteeUserInfo {
+    return !isEmpty(grantee) && (grantee as IGranteeUserInfo).user !== undefined;
 }
 
-export const convertGranteeEntry = (item: GdcAccessControl.IGranteeEntry): AccessGranteeDetail => {
+export const convertGranteeEntry = (item: IGranteeEntry): AccessGranteeDetail => {
     if (isGranteeUserInfo(item.aclEntry.grantee)) {
         return {
             type: "user",

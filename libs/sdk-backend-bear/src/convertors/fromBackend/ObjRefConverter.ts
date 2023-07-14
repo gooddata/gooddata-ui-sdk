@@ -1,7 +1,10 @@
 // (C) 2007-2023 GoodData Corporation
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
-
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    ObjQualifier,
+    Qualifier,
+    isLocalIdentifierQualifier,
+    isObjectUriQualifier,
+} from "@gooddata/api-model-bear";
 import { ObjectType, ObjRef, ObjRefInScope, idRef, uriRef, localIdRef } from "@gooddata/sdk-model";
 
 /**
@@ -12,8 +15,8 @@ import { ObjectType, ObjRef, ObjRefInScope, idRef, uriRef, localIdRef } from "@g
  * @param defaultType - type to use it the ref has none specified
  * @internal
  */
-export function fromBearRef(ref: GdcVisualizationObject.ObjQualifier, defaultType: ObjectType): ObjRef {
-    if (GdcExecuteAFM.isObjectUriQualifier(ref)) {
+export function fromBearRef(ref: ObjQualifier, defaultType: ObjectType): ObjRef {
+    if (isObjectUriQualifier(ref)) {
         return uriRef(ref.uri);
     }
 
@@ -28,8 +31,8 @@ export function fromBearRef(ref: GdcVisualizationObject.ObjQualifier, defaultTyp
  * @param defaultType - type to use it the ref has none specified
  * @internal
  */
-export function fromScopedBearRef(ref: GdcExecuteAFM.Qualifier, defaultType: ObjectType): ObjRefInScope {
-    if (GdcExecuteAFM.isLocalIdentifierQualifier(ref)) {
+export function fromScopedBearRef(ref: Qualifier, defaultType: ObjectType): ObjRefInScope {
+    if (isLocalIdentifierQualifier(ref)) {
         return localIdRef(ref.localIdentifier);
     }
 

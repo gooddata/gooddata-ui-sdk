@@ -1,9 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { Uri, Identifier } from "@gooddata/api-model-bear";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
-
+import { Uri, Identifier, IWrappedAttributeDisplayForm, IAfm } from "@gooddata/api-model-bear";
 import {
     ObjRef,
     IAttributeFilter,
@@ -41,7 +37,7 @@ export class LimitingAfmFactory {
         filters: IElementsQueryAttributeFilter[] | undefined,
         measures: IMeasure[] | undefined,
         relativeDateFilters: IRelativeDateFilter[] | undefined,
-    ): Promise<GdcExecuteAFM.IAfm | undefined> => {
+    ): Promise<IAfm | undefined> => {
         if (!filters?.length && !measures?.length && !relativeDateFilters?.length) {
             return undefined;
         }
@@ -158,7 +154,7 @@ export class LimitingAfmFactory {
     private getDisplayFormAttributeUriMapping = async (displayForms: ObjRef[]): Promise<[ObjRef, Uri][]> => {
         const displayFormUris = await objRefsToUris(displayForms, this.workspace, this.authCall);
         return this.authCall(async (sdk) => {
-            const response = await sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(
+            const response = await sdk.md.getObjects<IWrappedAttributeDisplayForm>(
                 this.workspace,
                 displayFormUris,
             );

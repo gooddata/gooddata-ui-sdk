@@ -1,11 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcProject from "@gooddata/api-model-bear/GdcProject";
-import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
+import { IProjectPermissions, IUserProject, ProjectPermission } from "@gooddata/api-model-bear";
 
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
-export const convertUserProject = ({ userProject }: GdcProject.IUserProject): IWorkspaceDescriptor => {
+export const convertUserProject = ({ userProject }: IUserProject): IWorkspaceDescriptor => {
     const workspace: IWorkspaceDescriptor = {
         description: userProject.projectDescription,
         title: userProject.projectTitle,
@@ -19,10 +18,10 @@ export const convertUserProject = ({ userProject }: GdcProject.IUserProject): IW
     return workspace;
 };
 
-export const convertPermissions = ({ permissions }: GdcUser.IProjectPermissions): IWorkspacePermissions => {
+export const convertPermissions = ({ permissions }: IProjectPermissions): IWorkspacePermissions => {
     const workspacePermissions = Object.keys(permissions).reduce(
         (acc: Partial<IWorkspacePermissions>, permission) => {
-            const hasPermission = permissions[permission as GdcUser.ProjectPermission];
+            const hasPermission = permissions[permission as ProjectPermission];
             // the cast is necessary here, otherwise the indexing does not work
             (acc as any)[permission] = hasPermission === "1";
             return acc;

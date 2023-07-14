@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
-import { GdcVisualizationObject } from "../visualizationObject/index.js";
 import isEmpty from "lodash/isEmpty.js";
+import { ObjQualifier } from "../base/GdcTypes.js";
 
 /**
  * @public
@@ -22,7 +22,7 @@ export type LayoutContent = Widget | Layout;
  */
 export interface IPersistedWidget {
     widget: {
-        qualifier: GdcVisualizationObject.ObjQualifier;
+        qualifier: ObjQualifier;
     };
 }
 

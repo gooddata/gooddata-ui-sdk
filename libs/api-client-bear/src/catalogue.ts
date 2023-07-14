@@ -6,12 +6,24 @@ import isEmpty from "lodash/isEmpty.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { XhrModule } from "./xhr.js";
 import { ExecutionModule } from "./execution.js";
-import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces.js";
 import {
-    GdcCatalog,
-    GdcDataSetsCsv,
-    GdcDateDataSets,
-    GdcVisualizationObject,
+    CatalogItem,
+    ICatalogGroup,
+    ILoadAvailableCatalogItemsParams,
+    ILoadAvailableCatalogItemsResponse,
+    ILoadCatalogGroupsParams,
+    ILoadCatalogGroupsResponse,
+    ILoadCatalogItemsParams,
+    ILoadCatalogItemsResponse,
+    ILoadDateDataSetsParams,
+    ItemDescription,
+    IAdHocItemDescription,
+    IStoredItemDescription,
+    IDateDataSet,
+    IVisualizationObjectContent,
+    IDataset,
+    IDatasetsResponse,
+    IDateDataSetResponse,
 } from "@gooddata/api-model-bear";
 import { omitEmpty } from "./util.js";
 
@@ -40,7 +52,7 @@ const LOAD_DATE_DATASET_DEFAULTS = {
  * </ul>
  * @returns "requiredDataSets" object hash.
  */
-const getRequiredDataSets = (options: GdcCatalog.ILoadDateDataSetsParams = {}) => {
+const getRequiredDataSets = (options: ILoadDateDataSetsParams = {}) => {
     if (options.returnAllRelatedDateDataSets) {
         return {};
     }
@@ -119,19 +131,19 @@ export class CatalogueModule {
     /**
      * Load all catalog items
      * @param projectId - string
-     * @param options - GdcCatalog.ILoadCatalogItemsParams
+     * @param options - ILoadCatalogItemsParams
      */
     public async loadAllItems(
         projectId: string,
-        options: GdcCatalog.ILoadCatalogItemsParams = {},
-    ): Promise<GdcCatalog.CatalogItem[]> {
+        options: ILoadCatalogItemsParams = {},
+    ): Promise<CatalogItem[]> {
         const sanitizedOptions = omitEmpty(options);
 
         const loadAll = async (
-            requestOptions: GdcCatalog.ILoadCatalogItemsParams,
-            items: GdcCatalog.CatalogItem[] = [],
-        ): Promise<GdcCatalog.CatalogItem[]> => {
-            const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogItemsResponse>(
+            requestOptions: ILoadCatalogItemsParams,
+            items: CatalogItem[] = [],
+        ): Promise<CatalogItem[]> => {
+            const result = await this.xhr.getParsed<ILoadCatalogItemsResponse>(
                 `/gdc/internal/projects/${projectId}/catalog/items`,
                 {
                     data: requestOptions,
@@ -141,7 +153,7 @@ export class CatalogueModule {
             const resultItems = result.catalogItems.items;
             const updatedItems = [...items, ...resultItems];
             if (resultItems.length === requestOptions.limit) {
-                const updatedRequestOptions: GdcCatalog.ILoadCatalogItemsParams = {
+                const updatedRequestOptions: ILoadCatalogItemsParams = {
                     ...requestOptions,
                     offset: result.catalogItems.paging.offset + requestOptions.limit,
                 };
@@ -162,13 +174,13 @@ export class CatalogueModule {
     /**
      * Load catalog groups
      * @param projectId - string
-     * @param options - GdcCatalog.ILoadCatalogGroupsParams
+     * @param options - ILoadCatalogGroupsParams
      */
     public async loadGroups(
         projectId: string,
-        options: GdcCatalog.ILoadCatalogGroupsParams = {},
-    ): Promise<GdcCatalog.ICatalogGroup[]> {
-        const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogGroupsResponse>(
+        options: ILoadCatalogGroupsParams = {},
+    ): Promise<ICatalogGroup[]> {
+        const result = await this.xhr.getParsed<ILoadCatalogGroupsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/groups`,
             {
                 data: omitEmpty(options),
@@ -181,14 +193,14 @@ export class CatalogueModule {
     /**
      * Load available item uris by already used uris and expressions
      * @param projectId - string
-     * @param options - GdcCatalog.ILoadAvailableCatalogItemsParams
+     * @param options - ILoadAvailableCatalogItemsParams
      */
     public async loadAvailableItemUris(
         projectId: string,
-        options: GdcCatalog.ILoadAvailableCatalogItemsParams,
+        options: ILoadAvailableCatalogItemsParams,
     ): Promise<string[]> {
         const sanitizedCatalogQueryRequest = omitBy(options.catalogQueryRequest, isEmpty);
-        const result = await this.xhr.postParsed<GdcCatalog.ILoadAvailableCatalogItemsResponse>(
+        const result = await this.xhr.postParsed<ILoadAvailableCatalogItemsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/query`,
             {
                 data: {
@@ -228,9 +240,9 @@ export class CatalogueModule {
 
     public async loadDateDataSets(
         projectId: string,
-        options: GdcCatalog.ILoadDateDataSetsParams,
+        options: ILoadDateDataSetsParams,
     ): Promise<{
-        dateDataSets: GdcDateDataSets.IDateDataSet[];
+        dateDataSets: IDateDataSet[];
         unavailableDateDataSetsCount?: number | undefined;
     }> {
         const mdObj = cloneDeep(options).bucketItems;
@@ -282,10 +294,10 @@ export class CatalogueModule {
      */
     public async loadItemDescriptionObjects(
         projectId: string,
-        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        mdObj: IVisualizationObjectContent,
         attributesMap: any = {},
         removeDateItems = false,
-    ): Promise<GdcCatalog.ItemDescription[]> {
+    ): Promise<ItemDescription[]> {
         const definitionsAndColumns = await this.execution.mdToExecutionDefinitionsAndColumns(
             projectId,
             mdObj,
@@ -299,9 +311,9 @@ export class CatalogueModule {
      * Loads all available data sets.
      * @param projectId - id of the project to load from
      */
-    public async loadDataSets(projectId: string): Promise<GdcDataSetsCsv.IDataset[]> {
+    public async loadDataSets(projectId: string): Promise<IDataset[]> {
         const uri = `/gdc/dataload/internal/projects/${projectId}/csv/datasets`;
-        const response = await this.xhr.getParsed<GdcDataSetsCsv.IDatasetsResponse>(uri);
+        const response = await this.xhr.getParsed<IDatasetsResponse>(uri);
         return response.datasets.items;
     }
 
@@ -309,7 +321,7 @@ export class CatalogueModule {
         const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
 
         return this.xhr
-            .postParsed<GdcDateDataSets.IDateDataSetResponse>(uri, { data: { dateDataSetsRequest } })
+            .postParsed<IDateDataSetResponse>(uri, { data: { dateDataSetsRequest } })
             .then((data) => data.dateDataSetsResponse);
     }
 

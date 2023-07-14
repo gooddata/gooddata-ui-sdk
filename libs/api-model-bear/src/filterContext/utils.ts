@@ -1,11 +1,15 @@
 // (C) 2019-2023 GoodData Corporation
 import omitBy from "lodash/omitBy.js";
 import isUndefined from "lodash/isUndefined.js";
-import * as GdcFilterContext from "./GdcFilterContext.js";
-import isDateFilter = GdcFilterContext.isDateFilter;
-import isAttributeFilter = GdcFilterContext.isAttributeFilter;
+import {
+    FilterContextItem,
+    IFilterContextAttributeFilter,
+    IFilterContextDateFilter,
+    isFilterContextAttributeFilter,
+    isFilterContextDateFilter,
+} from "./GdcFilterContext.js";
 
-function sanitizeDateFilter(filter: GdcFilterContext.IDateFilter): GdcFilterContext.IDateFilter {
+function sanitizeDateFilter(filter: IFilterContextDateFilter): IFilterContextDateFilter {
     const {
         dateFilter: { from, to, type, granularity },
         dateFilter,
@@ -23,9 +27,7 @@ function sanitizeDateFilter(filter: GdcFilterContext.IDateFilter): GdcFilterCont
     };
 }
 
-function sanitizeAttributeFilter(
-    filter: GdcFilterContext.IAttributeFilter,
-): GdcFilterContext.IAttributeFilter {
+function sanitizeAttributeFilter(filter: IFilterContextAttributeFilter): IFilterContextAttributeFilter {
     const {
         attributeFilter: { displayForm, negativeSelection, attributeElements },
     } = filter;
@@ -42,14 +44,12 @@ function sanitizeAttributeFilter(
 /**
  * @public
  */
-export function sanitizeFiltersForExport(
-    filters: GdcFilterContext.FilterContextItem[],
-): GdcFilterContext.FilterContextItem[] {
-    return filters.map((filter: GdcFilterContext.FilterContextItem): GdcFilterContext.FilterContextItem => {
-        if (isDateFilter(filter)) {
+export function sanitizeFiltersForExport(filters: FilterContextItem[]): FilterContextItem[] {
+    return filters.map((filter: FilterContextItem): FilterContextItem => {
+        if (isFilterContextDateFilter(filter)) {
             return sanitizeDateFilter(filter);
         }
-        if (isAttributeFilter(filter)) {
+        if (isFilterContextAttributeFilter(filter)) {
             return sanitizeAttributeFilter(filter);
         }
         return filter;

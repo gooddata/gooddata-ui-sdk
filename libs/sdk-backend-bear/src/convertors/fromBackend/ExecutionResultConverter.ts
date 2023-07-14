@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 
-import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
+import { IResultDimension, Warning, isAttributeHeader } from "@gooddata/api-model-bear";
 import { isUri } from "@gooddata/api-client-bear";
 import {
     uriRef,
@@ -9,9 +9,8 @@ import {
     IMeasureGroupDescriptor,
     IResultWarning,
 } from "@gooddata/sdk-model";
-import isAttributeHeader = GdcExecution.isAttributeHeader;
 
-export function convertWarning(warning: GdcExecution.Warning): IResultWarning {
+export function convertWarning(warning: Warning): IResultWarning {
     return {
         warningCode: warning.warningCode,
         message: warning.message,
@@ -25,7 +24,7 @@ export function convertWarning(warning: GdcExecution.Warning): IResultWarning {
  *
  * @param dims - result dimensions.
  */
-export function convertDimensions(dims: GdcExecution.IResultDimension[]): IDimensionDescriptor[] {
+export function convertDimensions(dims: IResultDimension[]): IDimensionDescriptor[] {
     return dims.map((dim) => {
         return {
             headers: dim.headers.map((header) => {

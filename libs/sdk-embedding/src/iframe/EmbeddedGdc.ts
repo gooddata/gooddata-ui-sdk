@@ -1,5 +1,10 @@
 // (C) 2020-2023 GoodData Corporation
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+import {
+    ILocalIdentifierQualifier as IBearLocalIdentifierQualifier,
+    ObjQualifier as BearObjQualifier,
+    isObjIdentifierQualifier as isBearObjIdentifierQualifier,
+    isObjectUriQualifier as isBearObjectUriQualifier,
+} from "@gooddata/api-model-bear";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -88,12 +93,12 @@ export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
 /**
  * @public
  */
-export type ILocalIdentifierQualifier = GdcExecuteAFM.ILocalIdentifierQualifier;
+export type ILocalIdentifierQualifier = IBearLocalIdentifierQualifier;
 
 /**
  * @public
  */
-export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
+export type ObjQualifier = BearObjQualifier;
 
 /**
  * @public
@@ -171,12 +176,12 @@ export function isNegativeAttributeFilter(filter: unknown): filter is INegativeA
 /**
  * @public
  */
-export const isObjIdentifierQualifier = GdcExecuteAFM.isObjIdentifierQualifier;
+export const isObjIdentifierQualifier = isBearObjIdentifierQualifier;
 
 /**
  * @public
  */
-export const isObjectUriQualifier = GdcExecuteAFM.isObjectUriQualifier;
+export const isObjectUriQualifier = isBearObjectUriQualifier;
 
 /**
  * @public

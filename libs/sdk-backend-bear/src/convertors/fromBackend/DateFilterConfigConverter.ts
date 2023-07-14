@@ -1,5 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
+import {
+    IDateFilterAbsoluteForm,
+    IDateFilterAbsolutePreset,
+    IDateFilterAllTime,
+    IDateFilterRelativeForm,
+    IDateFilterRelativePreset,
+    IWrappedDateFilterConfig,
+} from "@gooddata/api-model-bear";
 import {
     uriRef,
     IAbsoluteDateFilterPreset,
@@ -10,25 +17,21 @@ import {
     IDateFilterConfig,
 } from "@gooddata/sdk-model";
 
-const convertAllTime = (allTime: GdcExtendedDateFilters.IDateFilterAllTime): IAllTimeDateFilterOption => {
+const convertAllTime = (allTime: IDateFilterAllTime): IAllTimeDateFilterOption => {
     return {
         type: "allTime",
         ...allTime,
     };
 };
 
-const convertAbsoluteForm = (
-    absoluteForm: GdcExtendedDateFilters.IDateFilterAbsoluteForm,
-): IAbsoluteDateFilterForm => {
+const convertAbsoluteForm = (absoluteForm: IDateFilterAbsoluteForm): IAbsoluteDateFilterForm => {
     return {
         type: "absoluteForm",
         ...absoluteForm,
     };
 };
 
-const convertRelativeForm = (
-    relativeForm: GdcExtendedDateFilters.IDateFilterRelativeForm,
-): IRelativeDateFilterForm => {
+const convertRelativeForm = (relativeForm: IDateFilterRelativeForm): IRelativeDateFilterForm => {
     const { granularities: availableGranularities, ...other } = relativeForm;
     return {
         type: "relativeForm",
@@ -37,27 +40,21 @@ const convertRelativeForm = (
     };
 };
 
-const convertAbsolutePreset = (
-    absolutePreset: GdcExtendedDateFilters.IDateFilterAbsolutePreset,
-): IAbsoluteDateFilterPreset => {
+const convertAbsolutePreset = (absolutePreset: IDateFilterAbsolutePreset): IAbsoluteDateFilterPreset => {
     return {
         type: "absolutePreset",
         ...absolutePreset,
     };
 };
 
-const convertRelativePreset = (
-    relativePreset: GdcExtendedDateFilters.IDateFilterRelativePreset,
-): IRelativeDateFilterPreset => {
+const convertRelativePreset = (relativePreset: IDateFilterRelativePreset): IRelativeDateFilterPreset => {
     return {
         type: "relativePreset",
         ...relativePreset,
     };
 };
 
-export const convertDateFilterConfig = (
-    dateFilterConfig: GdcExtendedDateFilters.IWrappedDateFilterConfig,
-): IDateFilterConfig => {
+export const convertDateFilterConfig = (dateFilterConfig: IWrappedDateFilterConfig): IDateFilterConfig => {
     const {
         dateFilterConfig: {
             content: {

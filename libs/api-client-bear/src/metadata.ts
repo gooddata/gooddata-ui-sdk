@@ -5,10 +5,22 @@ import flatten from "lodash/flatten.js";
 import pick from "lodash/pick.js";
 import pickBy from "lodash/pickBy.js";
 import {
-    GdcVisualizationObject,
-    GdcMetadata,
-    GdcMetadataObject,
-    GdcProjectDashboard,
+    IAttributeElement,
+    IWrappedAttributeElements,
+    IAttributeDisplayForm,
+    WrappedObject,
+    isWrappedAttribute,
+    IObjectLink,
+    IGetObjectUsingManyEntry,
+    ObjectCategory,
+    IGetObjectUsedBy,
+    IGetObjectsUsedByManyEntry,
+    IValidElementsParams,
+    IValidElementsResponse,
+    IVisualization,
+    IVisualizationObjectResponse,
+    IVisualizationObject,
+    IWrappedProjectDashboard,
 } from "@gooddata/api-model-bear";
 import { getQueryEntries, handlePolling, queryString } from "./util.js";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr.js";
@@ -45,7 +57,7 @@ export class MetadataModule {
      */
     public async getAttributeElementDefaultDisplayFormValue(
         attributeElementUri: string,
-    ): Promise<GdcMetadata.IAttributeElement | undefined> {
+    ): Promise<IAttributeElement | undefined> {
         const uriChunks = attributeElementUri.match(/(.+)\/elements\?id=(.*)/);
         if (!uriChunks) {
             throw new Error("Provide valid attribute element uri");
@@ -57,10 +69,9 @@ export class MetadataModule {
             throw new Error("Attribute of the provided element has no default display form!");
         }
         const defaultDisplayFormUri = defaultDisplayForm.meta.uri;
-        const defaultDisplayFormElementValue =
-            await this.xhr.getParsed<GdcMetadata.IWrappedAttributeElements>(
-                `${defaultDisplayFormUri}/elements?id=${elementId}`,
-            );
+        const defaultDisplayFormElementValue = await this.xhr.getParsed<IWrappedAttributeElements>(
+            `${defaultDisplayFormUri}/elements?id=${elementId}`,
+        );
 
         return defaultDisplayFormElementValue.attributeElements.elements[0];
     }
@@ -69,11 +80,9 @@ export class MetadataModule {
      * Get default display form of provided attribute uri
      * @param attributeUri - string
      */
-    public async getAttributeDefaultDisplayForm(
-        attributeUri: string,
-    ): Promise<GdcMetadata.IAttributeDisplayForm> {
-        const object = await this.xhr.getParsed<GdcMetadataObject.WrappedObject>(attributeUri);
-        if (!GdcMetadata.isWrappedAttribute(object)) {
+    public async getAttributeDefaultDisplayForm(attributeUri: string): Promise<IAttributeDisplayForm> {
+        const object = await this.xhr.getParsed<WrappedObject>(attributeUri);
+        if (!isWrappedAttribute(object)) {
             throw new Error("Provided uri is not attribute uri!");
         }
 
@@ -88,9 +97,10 @@ export class MetadataModule {
      * @param projectId - string
      * @param identifier - string
      */
-    public async getObjectByIdentifier<
-        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
-    >(projectId: string, identifier: string): Promise<T> {
+    public async getObjectByIdentifier<T extends WrappedObject = WrappedObject>(
+        projectId: string,
+        identifier: string,
+    ): Promise<T> {
         const uri = await this.getObjectUri(projectId, identifier);
         return this.xhr.getParsed<T>(uri);
     }
@@ -100,9 +110,10 @@ export class MetadataModule {
      * @param projectId - string
      * @param identifiers - string[]
      */
-    public async getObjectsByIdentifiers<
-        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
-    >(projectId: string, identifiers: string[]): Promise<T[]> {
+    public async getObjectsByIdentifiers<T extends WrappedObject = WrappedObject>(
+        projectId: string,
+        identifiers: string[],
+    ): Promise<T[]> {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map((pair) => pair.uri);
         return this.getObjects(projectId, uris);
@@ -116,7 +127,7 @@ export class MetadataModule {
      * @param objectUris - array of uris for objects to be loaded
      * @returns array of loaded elements
      */
-    public getObjects<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
+    public getObjects<T extends WrappedObject = WrappedObject>(
         projectId: string,
         objectUris: string[],
     ): Promise<T[]> {
@@ -168,7 +179,7 @@ export class MetadataModule {
      *        - deprecated - show also deprecated objects
      * @returns array of returned objects
      */
-    public getObjectsByQuery<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
+    public getObjectsByQuery<T extends WrappedObject = WrappedObject>(
         projectId: string,
         options: IGetObjectsByQueryOptions,
     ): Promise<T[]> {
@@ -237,7 +248,7 @@ export class MetadataModule {
         projectId: string,
         uri: string,
         options: IGetObjectUsingOptions = {},
-    ): Promise<GdcMetadata.IObjectLink[]> {
+    ): Promise<IObjectLink[]> {
         const { types = [], nearest = false } = options;
         const resourceUri = `/gdc/md/${projectId}/using2`;
 
@@ -271,7 +282,7 @@ export class MetadataModule {
         projectId: string,
         uris: string[],
         options: IGetObjectUsingOptions = {},
-    ): Promise<GdcMetadata.IGetObjectUsingManyEntry[]> {
+    ): Promise<IGetObjectUsingManyEntry[]> {
         const { types = [], nearest = false } = options;
         const resourceUri = `/gdc/md/${projectId}/using2`;
 
@@ -305,10 +316,10 @@ export class MetadataModule {
         projectId: string,
         uri: string,
         options: {
-            types: GdcMetadata.ObjectCategory[];
+            types: ObjectCategory[];
             nearest: boolean;
         },
-    ): Promise<GdcMetadata.IObjectLink[]> {
+    ): Promise<IObjectLink[]> {
         const { nearest = false, types = [] } = options;
         const body = {
             inUse: {
@@ -319,7 +330,7 @@ export class MetadataModule {
         };
 
         return this.xhr
-            .postParsed<GdcMetadata.IGetObjectUsedBy>(`/gdc/md/${projectId}/usedby2`, { body })
+            .postParsed<IGetObjectUsedBy>(`/gdc/md/${projectId}/usedby2`, { body })
             .then((result) => result.entries);
     }
 
@@ -339,10 +350,10 @@ export class MetadataModule {
         projectId: string,
         uris: string[],
         options: {
-            types: GdcMetadata.ObjectCategory[];
+            types: ObjectCategory[];
             nearest: boolean;
         },
-    ): Promise<GdcMetadata.IGetObjectsUsedByManyEntry[]> {
+    ): Promise<IGetObjectsUsedByManyEntry[]> {
         const uri = `/gdc/md/${projectId}/usedby2`;
         const { nearest = false, types = [] } = options;
         const body = {
@@ -355,7 +366,7 @@ export class MetadataModule {
 
         return this.xhr
             .postParsed<{
-                useMany: GdcMetadata.IGetObjectsUsedByManyEntry[];
+                useMany: IGetObjectsUsedByManyEntry[];
             }>(uri, { body })
             .then((result) => result.useMany);
     }
@@ -478,17 +489,12 @@ export class MetadataModule {
      * @param projectId - Project identifier
      * @returns An array of project dashboard objects
      */
-    public getProjectDashboards(projectId: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]> {
+    public getProjectDashboards(projectId: string): Promise<IWrappedProjectDashboard[]> {
         return this.xhr
-            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
-                `/gdc/md/${projectId}/query/projectdashboards`,
-            )
+            .getParsed<{ query: { entries: IObjectLink[] } }>(`/gdc/md/${projectId}/query/projectdashboards`)
             .then((dashboardsQuery) => {
                 const dashboardLinks = dashboardsQuery.query.entries.map((dashboard) => dashboard.link);
-                return this.getObjects<GdcProjectDashboard.IWrappedProjectDashboard>(
-                    projectId,
-                    dashboardLinks,
-                );
+                return this.getObjects<IWrappedProjectDashboard>(projectId, dashboardLinks);
             });
     }
 
@@ -507,9 +513,9 @@ export class MetadataModule {
     public getAnalyticalDashboards(
         projectId: string,
         fetchAllListedDashboards?: boolean,
-    ): Promise<GdcMetadata.IObjectLink[]> {
+    ): Promise<IObjectLink[]> {
         return this.xhr
-            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+            .getParsed<{ query: { entries: IObjectLink[] } }>(
                 `/gdc/md/${projectId}/query/analyticaldashboard?showAll=${fetchAllListedDashboards ? 1 : 0}`,
             )
             .then((dashboardsQuery) => {
@@ -523,11 +529,9 @@ export class MetadataModule {
      * @param projectId - Project identifier
      * @returns An array of links to dashboard plugin objects
      */
-    public getDashboardPlugins(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
+    public getDashboardPlugins(projectId: string): Promise<IObjectLink[]> {
         return this.xhr
-            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
-                `/gdc/md/${projectId}/query/dashboardplugins`,
-            )
+            .getParsed<{ query: { entries: IObjectLink[] } }>(`/gdc/md/${projectId}/query/dashboardplugins`)
             .then((dashboardsQuery) => {
                 return dashboardsQuery.query.entries;
             });
@@ -893,8 +897,8 @@ export class MetadataModule {
     public getValidElements(
         projectId: string,
         id: string,
-        options: GdcMetadata.IValidElementsParams = {},
-    ): Promise<GdcMetadata.IValidElementsResponse> {
+        options: IValidElementsParams = {},
+    ): Promise<IValidElementsResponse> {
         const query = pickBy(
             pick(options, ["limit", "offset", "order", "filter", "prompt"]),
             (val) => val !== undefined,
@@ -927,7 +931,7 @@ export class MetadataModule {
         const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
 
         return getOptions().then((requestBody) =>
-            this.xhr.postParsed<GdcMetadata.IValidElementsResponse>(
+            this.xhr.postParsed<IValidElementsResponse>(
                 `/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ""),
                 {
                     body: {
@@ -943,15 +947,13 @@ export class MetadataModule {
      *
      * @param uri - visualization URI
      */
-    public getVisualization(uri: string): Promise<GdcVisualizationObject.IVisualization> {
-        return this.getObjectDetails(uri).then(
-            (visualizationObject: GdcVisualizationObject.IVisualizationObjectResponse) => {
-                const mdObject = visualizationObject.visualizationObject;
-                return {
-                    visualizationObject: mdObject,
-                };
-            },
-        );
+    public getVisualization(uri: string): Promise<IVisualization> {
+        return this.getObjectDetails(uri).then((visualizationObject: IVisualizationObjectResponse) => {
+            const mdObject = visualizationObject.visualizationObject;
+            return {
+                visualizationObject: mdObject,
+            };
+        });
     }
 
     /**
@@ -962,9 +964,9 @@ export class MetadataModule {
      */
     public saveVisualization(
         projectId: string,
-        visualization: GdcVisualizationObject.IVisualization,
+        visualization: IVisualization,
     ): Promise<{
-        visualizationObject: GdcVisualizationObject.IVisualizationObject;
+        visualizationObject: IVisualizationObject;
     }> {
         return this.createObject(projectId, { visualizationObject: visualization.visualizationObject });
     }
@@ -978,7 +980,7 @@ export class MetadataModule {
     public updateVisualization(
         projectId: string,
         visualizationUri: string,
-        visualization: GdcVisualizationObject.IVisualization,
+        visualization: IVisualization,
     ): Promise<{ uri: string }> {
         const objectId = visualizationUri.split("/").slice(-1)[0];
         return this.updateObject(projectId, objectId, {
@@ -1031,10 +1033,7 @@ export class MetadataModule {
      * @param projectId - id of the project to create the object in
      * @param obj - object definition
      */
-    public createObject<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
-        projectId: string,
-        obj: T,
-    ): Promise<T> {
+    public createObject<T extends WrappedObject = WrappedObject>(projectId: string, obj: T): Promise<T> {
         return this.xhr.postParsed<T>(`/gdc/md/${projectId}/obj?createAndGet=true`, {
             body: obj,
         });
@@ -1063,10 +1062,7 @@ export class MetadataModule {
      * @param mdObject - visualization object to convert
      * @returns uri to the converted report
      */
-    public openVisualizationAsReport(
-        projectId: string,
-        mdObject: GdcVisualizationObject.IVisualization,
-    ): Promise<string> {
+    public openVisualizationAsReport(projectId: string, mdObject: IVisualization): Promise<string> {
         return this.xhr
             .post(`/gdc/internal/projects/${projectId}/convertVisualizationObject`, {
                 body: mdObject,

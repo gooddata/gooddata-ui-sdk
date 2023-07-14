@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
+import { IWrappedAccountSetting } from "@gooddata/api-model-bear";
 import { IAuthenticatedPrincipal, UnexpectedError, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
 import last from "lodash/last.js";
@@ -232,7 +232,7 @@ export const updateUserMap = async (
         uniqueUsersToLoad.map((uri) => {
             return authCall(async (sdk): Promise<IUser | undefined> => {
                 try {
-                    const result = await sdk.xhr.getParsed<GdcUser.IWrappedAccountSetting>(uri);
+                    const result = await sdk.xhr.getParsed<IWrappedAccountSetting>(uri);
                     return convertUser(result.accountSetting);
                 } catch (ex) {
                     // for inactive users, non-admins will get Forbidden from the server

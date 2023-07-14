@@ -1,7 +1,16 @@
 // (C) 2019-2023 GoodData Corporation
 
-import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
-import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+import {
+    DrillFromType,
+    IDrillDefinition,
+    IWrappedKPI,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    isDrillToAttributeUrl,
+    isDrillToCustomUrl,
+    isDrillToDashboard,
+    isDrillToVisualization,
+} from "@gooddata/api-model-bear";
 
 import {
     uriRef,
@@ -15,7 +24,7 @@ import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 /**
  * @internal
  */
-export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboard => {
+export const convertKpiDrill = (kpi: IWrappedKPI): IDrillToLegacyDashboard => {
     const { drillTo: { projectDashboard, projectDashboardTab } = {}, metric } = kpi.kpi.content;
 
     return {
@@ -33,13 +42,13 @@ export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboar
 /**
  * @internal
  */
-export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): DrillOrigin => {
-    if (GdcVisualizationWidget.isDrillFromMeasure(from)) {
+export const convertDrillOrigin = (from: DrillFromType): DrillOrigin => {
+    if (isDrillFromMeasure(from)) {
         return {
             type: "drillFromMeasure",
             measure: from.drillFromMeasure,
         };
-    } else if (GdcVisualizationWidget.isDrillFromAttribute(from)) {
+    } else if (isDrillFromAttribute(from)) {
         return {
             type: "drillFromAttribute",
             attribute: from.drillFromAttribute,
@@ -52,10 +61,8 @@ export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): 
 /**
  * @internal
  */
-export const convertVisualizationWidgetDrill = (
-    drill: GdcVisualizationWidget.IDrillDefinition,
-): InsightDrillDefinition => {
-    if (GdcVisualizationWidget.isDrillToDashboard(drill)) {
+export const convertVisualizationWidgetDrill = (drill: IDrillDefinition): InsightDrillDefinition => {
+    if (isDrillToDashboard(drill)) {
         const {
             drillToDashboard: { toDashboard, target, from },
         } = drill;
@@ -65,7 +72,7 @@ export const convertVisualizationWidgetDrill = (
             target: toDashboard !== undefined ? idRef(toDashboard) : undefined,
             transition: target,
         };
-    } else if (GdcVisualizationWidget.isDrillToVisualization(drill)) {
+    } else if (isDrillToVisualization(drill)) {
         const {
             drillToVisualization: { toVisualization, target, from },
         } = drill;
@@ -75,7 +82,7 @@ export const convertVisualizationWidgetDrill = (
             target: uriRef(toVisualization.uri),
             transition: target,
         };
-    } else if (GdcVisualizationWidget.isDrillToCustomUrl(drill)) {
+    } else if (isDrillToCustomUrl(drill)) {
         const {
             drillToCustomUrl: { target, customUrl, from },
         } = drill;
@@ -87,7 +94,7 @@ export const convertVisualizationWidgetDrill = (
             },
             transition: target,
         };
-    } else if (GdcVisualizationWidget.isDrillToAttributeUrl(drill)) {
+    } else if (isDrillToAttributeUrl(drill)) {
         const {
             drillToAttributeUrl: { drillToAttributeDisplayForm, insightAttributeDisplayForm, target, from },
         } = drill;

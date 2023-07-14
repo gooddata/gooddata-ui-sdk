@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import { IReferenceItems } from "@gooddata/api-model-bear";
 import { isUri } from "@gooddata/api-client-bear";
 import isArray from "lodash/isArray.js";
 import isObject from "lodash/isObject.js";
@@ -10,8 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 /*
  * Helpers
  */
-const getReferenceValue = (id: string, references: GdcVisualizationObject.IReferenceItems) => references[id];
-const getReferenceId = (value: string, references: GdcVisualizationObject.IReferenceItems) =>
+const getReferenceValue = (id: string, references: IReferenceItems) => references[id];
+const getReferenceId = (value: string, references: IReferenceItems) =>
     Object.keys(references).find((id) => references[id] === value);
 
 /**
@@ -46,7 +46,7 @@ const traverse = (obj: any, convert: StringTransformation): any => {
  */
 export interface IConversionData {
     properties: VisualizationProperties;
-    references: GdcVisualizationObject.IReferenceItems;
+    references: IReferenceItems;
 }
 
 type ConversionFunction = (conversionData: IConversionData, idGenerator: IdGenerator) => IConversionData;
@@ -69,7 +69,7 @@ const createConverter =
  * Conversion from References to URIs
  */
 const convertReferenceToUri =
-    (references: GdcVisualizationObject.IReferenceItems): StringTransformation =>
+    (references: IReferenceItems): StringTransformation =>
     (value) =>
         getReferenceValue(value, references) || value;
 
@@ -91,11 +91,8 @@ export const convertReferencesToUris = createConverter(({ references, properties
 /*
  * Conversion from URIs to References
  */
-const createUriToReferenceConverter = (
-    originalReferences: GdcVisualizationObject.IReferenceItems,
-    idGenerator: IdGenerator,
-) => {
-    const convertedReferences: GdcVisualizationObject.IReferenceItems = {};
+const createUriToReferenceConverter = (originalReferences: IReferenceItems, idGenerator: IdGenerator) => {
+    const convertedReferences: IReferenceItems = {};
 
     return {
         convertedReferences,

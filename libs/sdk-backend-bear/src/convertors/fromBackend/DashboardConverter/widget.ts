@@ -1,8 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
-
-import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
-import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
-import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
+import {
+    IAttributeFilterReference,
+    IDateFilterReference,
+    IWrappedKPI,
+    IWrappedVisualizationWidget,
+    isDateFilterReference,
+    isKpiContentWithoutComparison,
+    isWrappedKpi,
+} from "@gooddata/api-model-bear";
 
 import { uriRef, IDashboardFilterReference, IWidget } from "@gooddata/sdk-model";
 import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills.js";
@@ -13,11 +18,9 @@ import { deserializeProperties } from "../PropertiesConverter.js";
  * @internal
  */
 export const convertFilterReference = (
-    filterReference:
-        | GdcExtendedDateFilters.IDateFilterReference
-        | GdcExtendedDateFilters.IAttributeFilterReference,
+    filterReference: IDateFilterReference | IAttributeFilterReference,
 ): IDashboardFilterReference => {
-    if (GdcExtendedDateFilters.isDateFilterReference(filterReference)) {
+    if (isDateFilterReference(filterReference)) {
         return {
             type: "dateFilterReference",
             dataSet: uriRef(filterReference.dateFilterReference.dataSet),
@@ -30,9 +33,7 @@ export const convertFilterReference = (
     };
 };
 
-export const convertVisualizationWidget = (
-    visualizationWidget: GdcVisualizationWidget.IWrappedVisualizationWidget,
-): IWidget => {
+export const convertVisualizationWidget = (visualizationWidget: IWrappedVisualizationWidget): IWidget => {
     const {
         visualizationWidget: {
             content: {
@@ -71,7 +72,7 @@ export const convertVisualizationWidget = (
     };
 };
 
-export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
+export const convertKpi = (kpi: IWrappedKPI): IWidget => {
     const {
         kpi: {
             content,
@@ -93,7 +94,7 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
             : [],
         drills: drillTo ? [convertKpiDrill(kpi)] : [],
         ...(configuration ? { configuration } : {}),
-        kpi: GdcKpi.isKpiContentWithoutComparison(content)
+        kpi: isKpiContentWithoutComparison(content)
             ? {
                   comparisonType: content.comparisonType,
                   metric: uriRef(content.metric),
@@ -106,10 +107,8 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
     };
 };
 
-export const convertWidget = (
-    widget: GdcKpi.IWrappedKPI | GdcVisualizationWidget.IWrappedVisualizationWidget,
-): IWidget => {
-    if (GdcKpi.isWrappedKpi(widget)) {
+export const convertWidget = (widget: IWrappedKPI | IWrappedVisualizationWidget): IWidget => {
+    if (isWrappedKpi(widget)) {
         return convertKpi(widget);
     }
     return convertVisualizationWidget(widget);

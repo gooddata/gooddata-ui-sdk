@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import { IObjectXrefEntry } from "@gooddata/api-model-bear";
 import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import { IMetadataObject, IDataset } from "@gooddata/sdk-model";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
@@ -15,11 +15,11 @@ export class BearWorkspaceDataSets implements IWorkspaceDatasetsService {
     }
 
     public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
-        const datasetsResult: GdcMetadata.IObjectXrefEntry[] = await this.authCall((sdk) =>
+        const datasetsResult: IObjectXrefEntry[] = await this.authCall((sdk) =>
             sdk.project.getDatasets(this.workspace),
         );
 
-        return datasetsResult.map((dataset: GdcMetadata.IObjectXrefEntry) =>
+        return datasetsResult.map((dataset: IObjectXrefEntry) =>
             convertMetadataObjectXrefEntry("dataSet", dataset),
         );
     }

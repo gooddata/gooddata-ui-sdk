@@ -1,5 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import { GdcExport, GdcFilterContext, sanitizeFiltersForExport } from "@gooddata/api-model-bear";
+import {
+    FilterContextItem,
+    IExportBlobResponse,
+    IExportResponse,
+    sanitizeFiltersForExport,
+} from "@gooddata/api-model-bear";
 import { ApiResponse, XhrModule } from "../xhr.js";
 import { handleHeadPolling, IPollingOptions } from "../util.js";
 import { isExportFinished } from "../utils/export.js";
@@ -7,7 +12,7 @@ import { isExportFinished } from "../utils/export.js";
 interface IDashboardExportPayload {
     dashboardExport: {
         dashboardUri: string;
-        filters?: GdcFilterContext.FilterContextItem[];
+        filters?: FilterContextItem[];
     };
 }
 
@@ -17,9 +22,9 @@ export class DashboardModule {
     public async exportToPdf(
         projectId: string,
         dashboardUri: string,
-        filters: GdcFilterContext.FilterContextItem[] = [],
+        filters: FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
-    ): Promise<GdcExport.IExportResponse> {
+    ): Promise<IExportResponse> {
         return this.exportToPdfBlob(projectId, dashboardUri, filters, pollingOptions).then((result) => {
             URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
             return {
@@ -31,9 +36,9 @@ export class DashboardModule {
     public async exportToPdfBlob(
         projectId: string,
         dashboardUri: string,
-        filters: GdcFilterContext.FilterContextItem[] = [],
+        filters: FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
-    ): Promise<GdcExport.IExportBlobResponse> {
+    ): Promise<IExportBlobResponse> {
         const sanitizedFilters = sanitizeFiltersForExport(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
@@ -48,8 +53,8 @@ export class DashboardModule {
     private async pollPdfFile(
         response: ApiResponse,
         pollingOptions: IPollingOptions,
-    ): Promise<GdcExport.IExportBlobResponse> {
-        const data: GdcExport.IExportResponse = response.getData();
+    ): Promise<IExportBlobResponse> {
+        const data: IExportResponse = response.getData();
         return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, {
             ...pollingOptions,
             blobContentType: "application/pdf",
@@ -58,7 +63,7 @@ export class DashboardModule {
 
     private getDashboardExportPayload(
         dashboardUri: string,
-        filters: GdcFilterContext.FilterContextItem[],
+        filters: FilterContextItem[],
     ): IDashboardExportPayload {
         if (filters.length) {
             return {

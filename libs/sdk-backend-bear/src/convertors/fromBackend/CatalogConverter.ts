@@ -13,9 +13,22 @@ import {
     ICatalogDateAttribute,
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
-import * as GdcCatalog from "@gooddata/api-model-bear/GdcCatalog";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcDateDataSets from "@gooddata/api-model-bear/GdcDateDataSets";
+
+import {
+    CatalogItemType as BearCatalogItemType,
+    CatalogItem as BearCatalogItem,
+    ICatalogAttribute as IBearCatalogAttribute,
+    ICatalogMetric as IBearCatalogMetric,
+    ICatalogFact as IBearCatalogFact,
+    ICatalogGroup as IBearCatalogGroup,
+    IObjectMeta,
+    IAttributeDisplayForm,
+    IWrappedFact,
+    IWrappedAttribute,
+    IWrappedMetric,
+    IDateDataSetAttribute,
+    IDateDataSet,
+} from "@gooddata/api-model-bear";
 
 import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog.js";
 import {
@@ -36,19 +49,19 @@ export const isCompatibleCatalogItemType = (type: CatalogItemType): type is Comp
     type !== "dateDataset";
 
 const bearItemTypeByCatalogItemType: {
-    [catalogItemType in CompatibleCatalogItemType]: GdcCatalog.CatalogItemType;
+    [catalogItemType in CompatibleCatalogItemType]: BearCatalogItemType;
 } = {
     attribute: "attribute",
     fact: "fact",
     measure: "metric",
 };
 
-export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType =>
+export const convertItemType = (type: CompatibleCatalogItemType): BearCatalogItemType =>
     bearItemTypeByCatalogItemType[type];
 
-const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri!);
+const bearObjectMetaToBearRef = (obj: IObjectMeta): ObjRef => uriRef(obj.uri!);
 
-const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem): ObjRef => uriRef(obj.links.self);
+const bearCatalogItemToBearRef = (obj: BearCatalogItem): ObjRef => uriRef(obj.links.self);
 
 const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[] => {
     const { groups = [] } = item;
@@ -56,7 +69,7 @@ const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[
 };
 
 const commonMetadataModifications =
-    <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) =>
+    <T extends IMetadataObjectBuilder>(item: IObjectMeta) =>
     (builder: T) => {
         return builder
             .id(item.identifier!)
@@ -69,7 +82,7 @@ const commonMetadataModifications =
     };
 
 const commonCatalogItemModifications =
-    <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) =>
+    <T extends IMetadataObjectBuilder>(item: BearCatalogItem) =>
     (builder: T) =>
         builder
             .id(item.identifier)
@@ -81,7 +94,7 @@ const commonCatalogItemModifications =
             .deprecated(false);
 
 const convertDisplayForm = (
-    df: GdcMetadata.IAttributeDisplayForm,
+    df: IAttributeDisplayForm,
     attrRef: ObjRef,
 ): IAttributeDisplayFormMetadataObject => {
     const ref = bearObjectMetaToBearRef(df.meta);
@@ -95,7 +108,7 @@ const convertDisplayForm = (
 };
 
 export const convertAttribute = (
-    attribute: GdcCatalog.ICatalogAttribute,
+    attribute: IBearCatalogAttribute,
     displayForms: IDisplayFormByKey,
     attributes: IAttributeByKey,
 ): ICatalogAttribute => {
@@ -131,7 +144,7 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasure => {
+export const convertMeasure = (metric: IBearCatalogMetric): ICatalogMeasure => {
     const measureRef = bearCatalogItemToBearRef(metric);
     const groups = bearGroupableCatalogItemToTagRefs(metric);
 
@@ -147,7 +160,7 @@ export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasu
     );
 };
 
-export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
+export const convertFact = (fact: IBearCatalogFact): ICatalogFact => {
     const factRef = bearCatalogItemToBearRef(fact);
     const groups = bearGroupableCatalogItemToTagRefs(fact);
 
@@ -157,7 +170,7 @@ export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
 };
 
 const convertDateDataSetAttribute = (
-    dateDatasetAttribute: GdcDateDataSets.IDateDataSetAttribute,
+    dateDatasetAttribute: IDateDataSetAttribute,
     attributeById: IAttributeByKey,
 ): ICatalogDateAttribute => {
     const { attributeMeta, defaultDisplayFormMeta } = dateDatasetAttribute;
@@ -187,7 +200,7 @@ const convertDateDataSetAttribute = (
 };
 
 export const convertDateDataset = (
-    dateDataset: GdcDateDataSets.IDateDataSet,
+    dateDataset: IDateDataSet,
     attributeById: IAttributeByKey,
 ): ICatalogDateDataset => {
     const { availableDateAttributes = [] } = dateDataset;
@@ -204,7 +217,7 @@ export const convertDateDataset = (
     );
 };
 
-export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact => {
+export const convertWrappedFact = (fact: IWrappedFact): ICatalogFact => {
     const { meta } = fact.fact;
     const factRef = uriRef(meta.uri!);
 
@@ -213,7 +226,7 @@ export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact
     );
 };
 
-export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute): ICatalogAttribute => {
+export const convertWrappedAttribute = (attribute: IWrappedAttribute): ICatalogAttribute => {
     const { content, meta } = attribute.attribute;
     const attrRef = uriRef(meta.uri!);
 
@@ -258,7 +271,7 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
     });
 };
 
-export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasure => {
+export const convertMetric = (metric: IWrappedMetric): ICatalogMeasure => {
     const { content, meta } = metric.metric;
     const measureRef = uriRef(meta.uri!);
 
@@ -272,6 +285,6 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
     );
 };
 
-export const convertGroup = (group: GdcCatalog.ICatalogGroup): ICatalogGroup => {
+export const convertGroup = (group: IBearCatalogGroup): ICatalogGroup => {
     return newCatalogGroup((catalogG) => catalogG.title(group.title).tag(idRef(group.identifier)));
 };

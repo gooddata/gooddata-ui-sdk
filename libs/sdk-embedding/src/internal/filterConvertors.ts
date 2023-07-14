@@ -2,8 +2,26 @@
 import isEmpty from "lodash/isEmpty.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
-import { EmbeddedGdc } from "../iframe/index.js";
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+
+import { ObjQualifier, isLocalIdentifierQualifier } from "@gooddata/api-model-bear";
+import {
+    AttributeFilterItem,
+    DateFilterItem,
+    FilterItem,
+    ILocalIdentifierQualifier,
+    IRankingFilter,
+    RankingFilterOperator,
+    isAbsoluteDateFilter,
+    isAttributeFilter,
+    isDateFilter,
+    isObjIdentifierQualifier,
+    isObjectUriQualifier,
+    isPositiveAttributeFilter,
+    isRankingFilter,
+    isRemoveAttributeFilter,
+    isRemoveDateFilter,
+    isRemoveRankingFilter,
+} from "../iframe/EmbeddedGdc.js";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
@@ -16,7 +34,7 @@ export interface IExternalFiltersObject {
 export interface ITransformedRankingFilter {
     measureLocalIdentifier: string;
     attributeLocalIdentifiers?: string[];
-    operator: EmbeddedGdc.RankingFilterOperator;
+    operator: RankingFilterOperator;
     value: number;
 }
 
@@ -41,7 +59,7 @@ export const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 export type ITransformedFilterItem = ITransformedDateFilterItem | ITransformedAttributeFilterItem;
 
-function validateDataSet(dataSet: EmbeddedGdc.ObjQualifier | undefined): boolean {
+function validateDataSet(dataSet: ObjQualifier | undefined): boolean {
     if (!dataSet) {
         return false;
     }
@@ -51,11 +69,11 @@ function validateDataSet(dataSet: EmbeddedGdc.ObjQualifier | undefined): boolean
 }
 
 export function isValidDateFilterFormat(
-    filterItem: EmbeddedGdc.DateFilterItem,
+    filterItem: DateFilterItem,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
 ): boolean {
-    if (EmbeddedGdc.isAbsoluteDateFilter(filterItem)) {
+    if (isAbsoluteDateFilter(filterItem)) {
         const {
             absoluteDateFilter: { from, to, dataSet },
         } = filterItem;
@@ -80,11 +98,11 @@ export function isValidDateFilterFormat(
 }
 
 function isValidAttributeFilterFormat(filterItem: unknown): boolean {
-    if (!EmbeddedGdc.isAttributeFilter(filterItem)) {
+    if (!isAttributeFilter(filterItem)) {
         return false;
     }
 
-    if (EmbeddedGdc.isPositiveAttributeFilter(filterItem)) {
+    if (isPositiveAttributeFilter(filterItem)) {
         const {
             positiveAttributeFilter: { displayForm, in: attributeElements, selectionMode = "multi" },
         } = filterItem;
@@ -127,20 +145,17 @@ function isValidRankingFilterValue(value: unknown): boolean {
 }
 
 function isValidLocalIdentifier(localIdentifier: unknown): boolean {
-    return (
-        GdcExecuteAFM.isLocalIdentifierQualifier(localIdentifier) &&
-        typeof localIdentifier.localIdentifier === "string"
-    );
+    return isLocalIdentifierQualifier(localIdentifier) && typeof localIdentifier.localIdentifier === "string";
 }
 
-function isValidRankingFilterAttributes(attributes?: EmbeddedGdc.ILocalIdentifierQualifier[]): boolean {
+function isValidRankingFilterAttributes(attributes?: ILocalIdentifierQualifier[]): boolean {
     return (
         !attributes ||
         (Array.isArray(attributes) && attributes.length > 0 && attributes.every(isValidLocalIdentifier))
     );
 }
 
-function isValidRankingFilterFormat(rankingFilterItem: EmbeddedGdc.IRankingFilter): boolean {
+function isValidRankingFilterFormat(rankingFilterItem: IRankingFilter): boolean {
     const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
     return (
         isValidLocalIdentifier(measure) &&
@@ -158,26 +173,26 @@ export function isValidFilterItemFormat(
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
 ): boolean {
-    if (EmbeddedGdc.isDateFilter(filterItem)) {
+    if (isDateFilter(filterItem)) {
         return isValidDateFilterFormat(filterItem, shouldValidateDataSet, isTimeSupported);
-    } else if (EmbeddedGdc.isAttributeFilter(filterItem)) {
+    } else if (isAttributeFilter(filterItem)) {
         return isValidAttributeFilterFormat(filterItem);
-    } else if (EmbeddedGdc.isRankingFilter(filterItem)) {
+    } else if (isRankingFilter(filterItem)) {
         return isValidRankingFilterFormat(filterItem);
     }
     return false;
 }
 
 export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
-    if (EmbeddedGdc.isRemoveDateFilter(filterItem)) {
+    if (isRemoveDateFilter(filterItem)) {
         const { dataSet } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(dataSet);
         return isString(uri) || isString(identifier);
-    } else if (EmbeddedGdc.isRemoveAttributeFilter(filterItem)) {
+    } else if (isRemoveAttributeFilter(filterItem)) {
         const { displayForm } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
         return isString(uri) || isString(identifier);
-    } else if (EmbeddedGdc.isRemoveRankingFilter(filterItem)) {
+    } else if (isRemoveRankingFilter(filterItem)) {
         return true;
     }
 
@@ -199,7 +214,7 @@ export function isValidFiltersFormat(
     );
 }
 
-export function getObjectUriIdentifier(obj: EmbeddedGdc.ObjQualifier | undefined): {
+export function getObjectUriIdentifier(obj: ObjQualifier | undefined): {
     uri?: string;
     identifier?: string;
 } {
@@ -208,13 +223,13 @@ export function getObjectUriIdentifier(obj: EmbeddedGdc.ObjQualifier | undefined
     }
 
     return {
-        uri: EmbeddedGdc.isObjectUriQualifier(obj) ? obj.uri : undefined,
-        identifier: EmbeddedGdc.isObjIdentifierQualifier(obj) ? obj.identifier : undefined,
+        uri: isObjectUriQualifier(obj) ? obj.uri : undefined,
+        identifier: isObjIdentifierQualifier(obj) ? obj.identifier : undefined,
     };
 }
 
-function transformDateFilterItem(dateFilterItem: EmbeddedGdc.DateFilterItem): ITransformedDateFilterItem {
-    if (EmbeddedGdc.isAbsoluteDateFilter(dateFilterItem)) {
+function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDateFilterItem {
+    if (isAbsoluteDateFilter(dateFilterItem)) {
         const {
             absoluteDateFilter: { dataSet, from, to },
         } = dateFilterItem;
@@ -241,9 +256,9 @@ function transformDateFilterItem(dateFilterItem: EmbeddedGdc.DateFilterItem): IT
 }
 
 function transformAttributeFilterItem(
-    attributeFilterItem: EmbeddedGdc.AttributeFilterItem,
+    attributeFilterItem: AttributeFilterItem,
 ): ITransformedAttributeFilterItem {
-    if (EmbeddedGdc.isPositiveAttributeFilter(attributeFilterItem)) {
+    if (isPositiveAttributeFilter(attributeFilterItem)) {
         const {
             positiveAttributeFilter: { in: attributeElements, displayForm },
         } = attributeFilterItem;
@@ -268,9 +283,7 @@ function transformAttributeFilterItem(
     }
 }
 
-function transformRankingFilterItem(
-    rankingFilterItem: EmbeddedGdc.IRankingFilter,
-): ITransformedRankingFilter {
+function transformRankingFilterItem(rankingFilterItem: IRankingFilter): ITransformedRankingFilter {
     const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
     const attributesProp = attributes
         ? { attributeLocalIdentifiers: attributes.map((attribute) => attribute.localIdentifier) }
@@ -284,7 +297,7 @@ function transformRankingFilterItem(
     };
 }
 
-export function transformFilterContext(filters: EmbeddedGdc.FilterItem[]): IExternalFiltersObject {
+export function transformFilterContext(filters: FilterItem[]): IExternalFiltersObject {
     const defaultFiltersObject: IExternalFiltersObject = {
         attributeFilters: [],
         dateFilters: [],
@@ -294,17 +307,14 @@ export function transformFilterContext(filters: EmbeddedGdc.FilterItem[]): IExte
     }
 
     return filters.reduce(
-        (
-            externalFilters: IExternalFiltersObject,
-            filterItem: EmbeddedGdc.FilterItem,
-        ): IExternalFiltersObject => {
-            if (EmbeddedGdc.isDateFilter(filterItem)) {
+        (externalFilters: IExternalFiltersObject, filterItem: FilterItem): IExternalFiltersObject => {
+            if (isDateFilter(filterItem)) {
                 const dateFilter = transformDateFilterItem(filterItem);
                 externalFilters.dateFilters.push(dateFilter);
-            } else if (EmbeddedGdc.isAttributeFilter(filterItem)) {
+            } else if (isAttributeFilter(filterItem)) {
                 const attributeFilter = transformAttributeFilterItem(filterItem);
                 externalFilters.attributeFilters.push(attributeFilter);
-            } else if (EmbeddedGdc.isRankingFilter(filterItem)) {
+            } else if (isRankingFilter(filterItem)) {
                 const rankingFilter = transformRankingFilterItem(filterItem);
                 externalFilters.rankingFilter = rankingFilter;
             }

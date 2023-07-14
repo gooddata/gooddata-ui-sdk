@@ -1,5 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    BucketItem,
+    IVisualizationObjectAttribute,
+    IBucket as IBearBucket,
+    IVisualizationObjectContent,
+    IVisualizationObject,
+} from "@gooddata/api-model-bear";
 import {
     IInsightDefinition,
     insightBuckets,
@@ -30,7 +36,7 @@ import { serializeProperties } from "../fromBackend/PropertiesConverter.js";
 import { convertExtendedFilter } from "./FilterConverter.js";
 import { convertMeasure } from "./MeasureConverter.js";
 
-const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttribute => {
+const convertAttribute = (attribute: IAttribute): IVisualizationObjectAttribute => {
     const alias = attributeAlias(attribute);
 
     return {
@@ -42,11 +48,11 @@ const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttrib
     };
 };
 
-const convertBucketItem = (bucketItem: IAttributeOrMeasure): GdcVisualizationObject.BucketItem => {
+const convertBucketItem = (bucketItem: IAttributeOrMeasure): BucketItem => {
     return isMeasure(bucketItem) ? convertMeasure(bucketItem) : convertAttribute(bucketItem);
 };
 
-const convertBucket = (bucket: IBucket): GdcVisualizationObject.IBucket => {
+const convertBucket = (bucket: IBucket): IBearBucket => {
     const { totals } = bucket;
     return {
         items: bucket.items.map(convertBucketItem),
@@ -58,9 +64,7 @@ const convertBucket = (bucket: IBucket): GdcVisualizationObject.IBucket => {
 /**
  * @internal
  */
-export const convertInsightContent = (
-    insight: IInsightDefinition,
-): GdcVisualizationObject.IVisualizationObjectContent => {
+export const convertInsightContent = (insight: IInsightDefinition): IVisualizationObjectContent => {
     const { properties, references } = convertUrisToReferences({
         properties: insightProperties(insight),
         references: {},
@@ -84,9 +88,7 @@ export const convertInsightContent = (
 /**
  * @internal
  */
-export const convertInsightDefinition = (
-    insight: IInsightDefinition,
-): GdcVisualizationObject.IVisualizationObject => {
+export const convertInsightDefinition = (insight: IInsightDefinition): IVisualizationObject => {
     return {
         content: convertInsightContent(insight),
         meta: {
@@ -94,13 +96,13 @@ export const convertInsightDefinition = (
             category: "visualizationObject",
             summary: insightSummary(insight),
         },
-    } as GdcVisualizationObject.IVisualizationObject;
+    } as IVisualizationObject;
 };
 
 /**
  * @internal
  */
-export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {
+export const convertInsight = (insight: IInsight): IVisualizationObject => {
     const convertedDefinition = convertInsightDefinition(insight);
     const locked = insightIsLocked(insight);
 

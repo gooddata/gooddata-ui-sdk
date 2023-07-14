@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
-import { GdcDataSets } from "@gooddata/api-model-bear";
+import { IWrappedDataSet } from "@gooddata/api-model-bear";
 import { Attribute, DateDataSet, DisplayForm } from "../../base/types.js";
 
 /**
@@ -14,7 +14,7 @@ export async function loadDateDataSets(workspaceId: string): Promise<DateDataSet
     const dateDataSets: DateDataSet[] = [];
     const attributeUriToDs: { [uri: string]: DateDataSet } = {};
 
-    const dataSets = await gooddata.md.getObjectsByQuery<GdcDataSets.IWrappedDataSet>(workspaceId, {
+    const dataSets = await gooddata.md.getObjectsByQuery<IWrappedDataSet>(workspaceId, {
         category: "dataSet",
     });
 

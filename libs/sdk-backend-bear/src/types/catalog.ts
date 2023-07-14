@@ -1,19 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import { IAttributeDisplayForm, IWrappedAttribute } from "@gooddata/api-model-bear";
 import { ICatalogDateAttribute, IFactMetadataObject, IMeasureMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
 export interface IAttributeByKey {
-    [key: string]: GdcMetadata.IWrappedAttribute;
+    [key: string]: IWrappedAttribute;
 }
 
 /**
  * @internal
  */
 export interface IDisplayFormByKey {
-    [key: string]: GdcMetadata.IAttributeDisplayForm;
+    [key: string]: IAttributeDisplayForm;
 }
 
 /**

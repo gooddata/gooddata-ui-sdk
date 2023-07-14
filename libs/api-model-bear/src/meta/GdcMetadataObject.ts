@@ -2,72 +2,105 @@
 import values from "lodash/fp/values.js";
 import first from "lodash/first.js";
 import flow from "lodash/flow.js";
-import * as GdcMetadata from "./GdcMetadata.js";
-import { GdcDashboard } from "../dashboard/index.js";
-import { GdcFilterContext } from "../filterContext/index.js";
-import { GdcScheduledMail } from "../scheduledMail/index.js";
-import { GdcProjectDashboard } from "../projectDashboard/index.js";
-import { GdcExtendedDateFilters } from "../extendedDateFilters/index.js";
-import { GdcVisualizationWidget } from "../visualizationWidget/index.js";
-import { GdcVisualizationObject, GdcVisualizationClass } from "../visualizationObject/index.js";
-import { GdcKpi } from "../kpi/index.js";
-import { GdcDataSets } from "../dataSets/index.js";
-import { GdcReport } from "../report/index.js";
-import { GdcDashboardPlugin } from "../dashboardPlugin/index.js";
+
+import { IAnalyticalDashboard, IWrappedAnalyticalDashboard } from "../dashboard/GdcDashboard.js";
+import { IDashboardPlugin, IWrappedDashboardPlugin } from "../dashboardPlugin/GdcDashboardPlugin.js";
+import {
+    IFilterContext,
+    ITempFilterContext,
+    IWrappedFilterContext,
+    IWrappedTempFilterContext,
+} from "../filterContext/GdcFilterContext.js";
+import {
+    IAttributeDisplayForm,
+    IFact,
+    IKpiAlert,
+    IMetadataObjectAttribute,
+    IMetadataObjectDataSet,
+    IMetadataObjectWrappedDataSet,
+    IMetric,
+    IPrompt,
+    ITheme,
+    IWrappedAttribute,
+    IWrappedAttributeDisplayForm,
+    IWrappedFact,
+    IWrappedKpiAlert,
+    IWrappedMetric,
+    IWrappedPrompt,
+    IWrappedTheme,
+} from "./GdcMetadata.js";
+import { IScheduledMail, IWrappedScheduledMail } from "../scheduledMail/GdcScheduledMail.js";
+import { IProjectDashboard, IWrappedProjectDashboard } from "../projectDashboard/GdcProjectDashboard.js";
+import { IReport, IReportDefinition, IWrappedReport, IWrappedReportDefinition } from "../report/GdcReport.js";
+import { IDataSet, IWrappedDataSet } from "../dataSets/GdcDataSets.js";
+import {
+    IDateFilterConfig,
+    IWrappedDateFilterConfig,
+} from "../extendedDateFilters/GdcExtendedDateFilters.js";
+import {
+    IVisualizationWidget,
+    IWrappedVisualizationWidget,
+} from "../visualizationWidget/GdcVisualizationWidget.js";
+import { IVisualization, IVisualizationObject } from "../visualizationObject/GdcVisualizationObject.js";
+import {
+    IVisualizationClass,
+    IVisualizationClassWrapped,
+} from "../visualizationObject/GdcVisualizationClass.js";
+import { IKPI, IWrappedKPI } from "../kpi/GdcKpi.js";
 
 /**
  * @public
  */
 export type IObject =
-    | GdcMetadata.IAttribute
-    | GdcMetadata.IMetric
-    | GdcMetadata.IFact
-    | GdcMetadata.IAttributeDisplayForm
-    | GdcMetadata.IKpiAlert
-    | GdcMetadata.IDataSet
-    | GdcMetadata.IPrompt
-    | GdcMetadata.ITheme
-    | GdcDashboard.IAnalyticalDashboard
-    | GdcFilterContext.IFilterContext
-    | GdcFilterContext.ITempFilterContext
-    | GdcKpi.IKPI
-    | GdcScheduledMail.IScheduledMail
-    | GdcProjectDashboard.IProjectDashboard
-    | GdcExtendedDateFilters.IDateFilterConfig
-    | GdcVisualizationWidget.IVisualizationWidget
-    | GdcVisualizationObject.IVisualizationObject
-    | GdcVisualizationClass.IVisualizationClass
-    | GdcDataSets.IDataSet
-    | GdcReport.IReport
-    | GdcReport.IReportDefinition
-    | GdcDashboardPlugin.IDashboardPlugin;
+    | IMetadataObjectAttribute
+    | IMetric
+    | IFact
+    | IAttributeDisplayForm
+    | IKpiAlert
+    | IMetadataObjectDataSet
+    | IPrompt
+    | ITheme
+    | IAnalyticalDashboard
+    | IFilterContext
+    | ITempFilterContext
+    | IKPI
+    | IScheduledMail
+    | IProjectDashboard
+    | IDateFilterConfig
+    | IVisualizationWidget
+    | IVisualizationObject
+    | IVisualizationClass
+    | IDataSet
+    | IReport
+    | IReportDefinition
+    | IDashboardPlugin;
 
 /**
  * @public
  */
 export type WrappedObject =
-    | GdcMetadata.IWrappedAttribute
-    | GdcMetadata.IWrappedMetric
-    | GdcMetadata.IWrappedFact
-    | GdcMetadata.IWrappedAttributeDisplayForm
-    | GdcMetadata.IWrappedKpiAlert
-    | GdcMetadata.IWrappedDataSet
-    | GdcMetadata.IWrappedPrompt
-    | GdcMetadata.IWrappedTheme
-    | GdcDashboard.IWrappedAnalyticalDashboard
-    | GdcFilterContext.IWrappedFilterContext
-    | GdcFilterContext.IWrappedTempFilterContext
-    | GdcKpi.IWrappedKPI
-    | GdcScheduledMail.IWrappedScheduledMail
-    | GdcProjectDashboard.IWrappedProjectDashboard
-    | GdcExtendedDateFilters.IWrappedDateFilterConfig
-    | GdcVisualizationWidget.IWrappedVisualizationWidget
-    | GdcVisualizationObject.IVisualization
-    | GdcVisualizationClass.IVisualizationClassWrapped
-    | GdcDataSets.IWrappedDataSet
-    | GdcReport.IWrappedReport
-    | GdcReport.IWrappedReportDefinition
-    | GdcDashboardPlugin.IWrappedDashboardPlugin;
+    | IWrappedAttribute
+    | IWrappedMetric
+    | IWrappedFact
+    | IWrappedAttributeDisplayForm
+    | IWrappedKpiAlert
+    | IMetadataObjectWrappedDataSet
+    | IWrappedPrompt
+    | IWrappedTheme
+    | IWrappedAnalyticalDashboard
+    | IWrappedFilterContext
+    | IWrappedTempFilterContext
+    | IWrappedKPI
+    | IWrappedScheduledMail
+    | IWrappedProjectDashboard
+    | IWrappedDateFilterConfig
+    | IWrappedVisualizationWidget
+    | IVisualization
+    | IVisualizationClassWrapped
+    | IWrappedDataSet
+    | IWrappedReport
+    | IWrappedReportDefinition
+    | IWrappedDashboardPlugin;
 
 /**
  * @public
