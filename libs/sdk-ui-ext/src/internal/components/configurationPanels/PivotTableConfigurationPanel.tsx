@@ -2,6 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { insightMeasures } from "@gooddata/sdk-model";
 import cx from "classnames";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
@@ -44,6 +45,9 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
 
     private isPositionControlDisabled() {
         const { insight, isError, isLoading } = this.props;
-        return !insight || isError || isLoading;
+
+        const measures = insightMeasures(insight);
+
+        return !measures || isError || isLoading;
     }
 }
