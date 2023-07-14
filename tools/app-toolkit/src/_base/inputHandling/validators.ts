@@ -1,5 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
+import validateNpmPackageName from "validate-npm-package-name";
 import isEmpty from "lodash/isEmpty.js";
+import capitalize from "lodash/capitalize.js";
 import { InputValidationError } from "../types.js";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
@@ -17,13 +19,14 @@ export function applicationNameValidator(value: string): boolean | string {
         return "Please enter non-empty application name.";
     }
 
-    // pattern used by VS code:
-    if (!value.match(/^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/)) {
-        return "Invalid application name. Application name must be a valid package name.";
-    }
+    const result = validateNpmPackageName(value);
 
-    if (value.length > 214) {
-        return "Invalid application name. Name is too long.";
+    if (result.errors?.length) {
+        return `Invalid application name. ${result.errors
+            .map((e: string) => {
+                return `${capitalize(e)}.`;
+            })
+            .join(" ")}`;
     }
 
     return true;

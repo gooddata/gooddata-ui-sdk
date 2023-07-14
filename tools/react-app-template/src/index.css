@@ -83,6 +83,7 @@ body {
     margin: 2em 0 0;
     padding: 0 1em;
     background: var(--white);
+    overflow: auto;
 }
 
 .app footer {

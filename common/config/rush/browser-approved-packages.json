@@ -455,6 +455,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/validate-npm-package-name",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/webpack-env",
       "allowedCategories": [ "examples" ]
     },
@@ -1065,6 +1069,10 @@
     {
       "name": "uuid",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "validate-npm-package-name",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "vitest",
