@@ -38,6 +38,8 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    RenderFunction,
+    UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
@@ -54,7 +56,6 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { getValidProperties } from "../../../utils/colors.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
@@ -93,7 +94,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected environment: string;
-    protected readonly renderFun: (component: any, target: Element) => void;
+    protected readonly renderFun: RenderFunction;
+    protected readonly unmountFun: UnmountFunction;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -106,11 +108,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.defaultControlsProperties = {};
         this.setCustomControlsProperties({});
         this.renderFun = props.renderFun;
+        this.unmountFun = props.unmountFun;
         this.supportedPropertiesList = this.getSupportedPropertiesList();
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()].filter(Boolean));
+        this.unmountFun([this.getElement(), this.getConfigPanelElement()].filter(Boolean));
     }
 
     public getUiConfig(): IUiConfig {

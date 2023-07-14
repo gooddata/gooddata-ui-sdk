@@ -21,6 +21,7 @@ import {
     IVisProps,
     IVisualizationOptions,
     RenderFunction,
+    UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import {
     removeAllArithmeticMeasuresFromDerived,
@@ -29,7 +30,6 @@ import {
 } from "../../../utils/bucketHelper.js";
 
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
@@ -73,16 +73,18 @@ import cloneDeep from "lodash/cloneDeep.js";
 export class PluggableXirr extends AbstractPluggableVisualization {
     private settings?: ISettings;
     private renderFun: RenderFunction;
+    private unmountFun: UnmountFunction;
 
     constructor(props: IVisConstruct) {
         super(props);
 
         this.settings = props.featureFlags;
         this.renderFun = props.renderFun;
+        this.unmountFun = props.unmountFun;
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint = async (

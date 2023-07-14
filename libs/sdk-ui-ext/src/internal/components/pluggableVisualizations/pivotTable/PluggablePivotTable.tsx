@@ -54,6 +54,7 @@ import {
     IVisProps,
     IVisualizationProperties,
     RenderFunction,
+    UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
@@ -65,7 +66,6 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getColumnWidthsFromProperties,
     getReferencePointWithSupportedProperties,
@@ -158,6 +158,7 @@ const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
 export class PluggablePivotTable extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
+    private unmountFun: UnmountFunction;
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
 
@@ -166,6 +167,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         this.environment = props.environment;
         this.renderFun = props.renderFun;
+        this.unmountFun = props.unmountFun;
         this.settings = props.featureFlags ?? {};
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
@@ -176,7 +178,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint(

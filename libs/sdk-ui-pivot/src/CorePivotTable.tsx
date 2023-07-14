@@ -815,6 +815,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const didResize = await this.internal.table?.autoresizeColumns(this.getResizingConfig(), force);
 
+        if (didResize) {
+            // after column resizing, horizontal scroolbar may change and table height may need resizing
+            this.updateDesiredHeight();
+        }
+
         if (didResize && !this.state.resized) {
             this.setState({
                 resized: true,

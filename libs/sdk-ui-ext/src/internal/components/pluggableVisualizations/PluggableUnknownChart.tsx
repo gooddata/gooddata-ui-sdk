@@ -12,6 +12,7 @@ import {
     IReferencePoint,
     IVisProps,
     RenderFunction,
+    UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps;
@@ -38,9 +39,12 @@ export const IntlLocalizedUnknownVisualizationClass = injectIntl<
 
 export class PluggableUnknownChart extends AbstractPluggableVisualization {
     private renderFun: RenderFunction;
+    private unmountFun: UnmountFunction;
+
     constructor(props: IVisConstruct) {
         super(props);
         this.renderFun = props.renderFun;
+        this.unmountFun = props.unmountFun;
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -72,5 +76,7 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
         this.onLoadingChanged?.({ isLoading: false });
     }
 
-    public unmount(): void {}
+    public unmount(): void {
+        this.unmountFun([this.getElement()]);
+    }
 }

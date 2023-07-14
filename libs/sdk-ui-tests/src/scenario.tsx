@@ -10,6 +10,11 @@ import { IInsight, ISettings } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps, IGeoPushpinChartLatitudeLongitudeProps } from "@gooddata/sdk-ui-geo";
 import { DataViewRequests } from "@gooddata/mock-handling";
+import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
+import { createRoot } from "react-dom/client";
+
+// provide React18 root API for visualization rendering
+provideCreateRoot(createRoot);
 
 export type VisProps =
     | IPivotTableProps

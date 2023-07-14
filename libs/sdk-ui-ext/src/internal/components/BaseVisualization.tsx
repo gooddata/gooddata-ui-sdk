@@ -40,6 +40,8 @@ import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
 import { ISortConfig } from "../interfaces/SortConfig.js";
+import { unmountComponentsAtNodes } from "../utils/domHelper.js";
+import { _createRoot, Root } from "../createRootProvider.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
@@ -72,6 +74,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onNewDerivedBucketItemsPlaced?(): void;
 
     renderer?(component: any, target: Element): void;
+    unmount?(): void;
 }
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
@@ -85,7 +88,6 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         | "isMdObjectValid"
         | "configPanelClassName"
         | "featureFlags"
-        | "renderer"
     > = {
         visualizationCatalog: FullVisualizationCatalog,
         newDerivedBucketItems: [],
@@ -95,13 +97,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         isMdObjectValid: true,
         configPanelClassName: ConfigPanelClassName,
         featureFlags: {},
-        renderer: render,
     };
 
     private visElementId: string;
     private visualization: IVisualization;
     private executionFactory: IExecutionFactory;
     private containerRef: React.RefObject<HTMLDivElement>;
+
+    /**
+     * The component may render both visualization and config panel. In React18 we therefore need two
+     * roots with their respective render methods. This Map holds the roots for both and provides
+     * render and unmount methods whenever needed.
+     */
+    private reactRootsMap: Map<HTMLElement, Root> = new Map();
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
@@ -113,6 +121,12 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     public componentWillUnmount(): void {
         if (this.visualization) {
             this.visualization.unmount();
+        }
+        if (_createRoot) {
+            // In order to avoid race conditions when mounting and unmounting synchronously,
+            // we use timeout for React18.
+            // https://github.com/facebook/react/issues/25675
+            this.reactRootsMap.forEach((root: Root) => setTimeout(() => root.unmount(), 0));
         }
     }
 
@@ -203,6 +217,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             projectId,
             configPanelClassName,
             renderer,
+            unmount,
         } = props;
 
         if (this.visualization) {
@@ -246,12 +261,35 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 },
                 featureFlags,
                 visualizationProperties: insightProperties(props.insight),
-                renderFun: renderer,
+                renderFun: renderer ?? this.getReactRenderFunction(),
+                unmountFun: unmount ?? this.getReactUnmountFunction(),
             };
 
             this.visualization = visFactory(constructorParams);
         }
     }
+
+    private getReactRenderFunction = () => {
+        if (_createRoot) {
+            return (children: any, element: HTMLElement) => {
+                if (!this.reactRootsMap.get(element)) {
+                    this.reactRootsMap.set(element, _createRoot(element));
+                }
+                this.reactRootsMap.get(element).render(children);
+            };
+        } else {
+            return render;
+        }
+    };
+
+    private getReactUnmountFunction = () => {
+        if (_createRoot) {
+            return () => this.reactRootsMap.forEach((root) => root.render(null));
+        } else {
+            return (elementsOrSelectors: (string | HTMLElement)[]) =>
+                unmountComponentsAtNodes(elementsOrSelectors);
+        }
+    };
 
     private updateVisualization() {
         if (!this.visualization) {

@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import "@babel/polyfill";
 import App from "./App";
 import { AppProviders } from "./contexts";
+import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
 
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -12,6 +13,9 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+
+// provide React18 root API for visualization rendering
+provideCreateRoot(createRoot);
 
 const rootDOMNode = document.getElementById("root");
 const root = createRoot(rootDOMNode!);
