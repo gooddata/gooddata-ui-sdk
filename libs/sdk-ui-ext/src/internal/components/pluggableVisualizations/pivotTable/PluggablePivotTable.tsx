@@ -313,11 +313,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
-        const { dateFormat, executionConfig } = options;
+        const { dateFormat, executionConfig, customVisualizationConfig } = options;
 
         return executionFactory
             .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight))
+            .withDimensions(...this.getDimensions(insight, customVisualizationConfig))
             .withSorting(...(getPivotTableSortItems(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
@@ -490,8 +490,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(insight: IInsightDefinition): IDimension[] {
-        return generateDimensions(insight, VisualizationTypes.TABLE);
+    protected getDimensions(insight: IInsightDefinition, customVisualizationConfig?: any): IDimension[] {
+        return generateDimensions(insight, VisualizationTypes.TABLE, customVisualizationConfig);
     }
 
     private adaptPropertiesToInsight(

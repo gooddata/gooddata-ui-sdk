@@ -21,21 +21,28 @@ import {
     getPivotTableDimensions as getPivotTableDimensionsShared,
 } from "@gooddata/sdk-ui-pivot";
 
+const COLUMNS = "columns";
+const ROWS = "rows";
+
 function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | BucketPredicate): IAttribute[] {
     const matchingBucket = insightBucket(insight, idOrFun);
     return matchingBucket ? bucketAttributes(matchingBucket) : [];
 }
 
-function isTransposed(insight: IInsightDefinition) {
+function isTransposed(insight: IInsightDefinition, customVisualizationConfig?: any) {
     const measureGroupDimension: MeasureGroupDimension =
-        getMeasureGroupDimensionFromProperties(insightProperties(insight)) ?? "columns";
-    return measureGroupDimension === "rows";
+        getMeasureGroupDimensionFromProperties(insightProperties(insight)) ?? COLUMNS;
+
+    return measureGroupDimension === ROWS || customVisualizationConfig?.measureGroupDimension === ROWS;
 }
 
-export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
+export function getPivotTableDimensions(
+    insight: IInsightDefinition,
+    customVisualizationConfig?: any,
+): IDimension[] {
     const buckets = insightBuckets(insight);
 
-    const transposed = isTransposed(insight);
+    const transposed = isTransposed(insight, customVisualizationConfig);
 
     return getPivotTableDimensionsShared(buckets, transposed);
 }
@@ -121,10 +128,14 @@ function getSankeyDimensions(insight: IInsightDefinition): IDimension[] {
  * @param type - visualization type string
  * @internal
  */
-export function generateDimensions(insight: IInsightDefinition, type: VisType): IDimension[] {
+export function generateDimensions(
+    insight: IInsightDefinition,
+    type: VisType,
+    customVisualizationConfig?: any,
+): IDimension[] {
     switch (type) {
         case VisualizationTypes.TABLE:
-            return getPivotTableDimensions(insight);
+            return getPivotTableDimensions(insight, customVisualizationConfig);
 
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
