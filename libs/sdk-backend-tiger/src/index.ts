@@ -103,6 +103,7 @@ export {
     ICSPDirective,
     ICustomApplicationSetting,
     ScanSqlResult,
+    WorkspaceEntitiesDatasets,
 } from "./backend/tigerSpecificFunctions.js";
 
 export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
