@@ -394,7 +394,6 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
-    exportToBlob(options: IExportConfig): Promise<IExportBlobResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
@@ -422,13 +421,6 @@ export type IExplainResult = {
 };
 
 // @public
-export interface IExportBlobResult {
-    fileName?: string;
-    objectUrl: string;
-    uri: string;
-}
-
-// @public
 export interface IExportConfig {
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
@@ -438,7 +430,8 @@ export interface IExportConfig {
 
 // @public
 export interface IExportResult {
-    // (undocumented)
+    fileName?: string;
+    objectUrl: string;
     uri: string;
 }
 
@@ -798,8 +791,7 @@ export interface IWorkspaceDashboardsService {
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
-    exportDashboardToPdfBlob(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportBlobResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;

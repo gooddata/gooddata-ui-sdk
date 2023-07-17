@@ -177,7 +177,7 @@ import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
-import { IExportBlobResult } from '@gooddata/sdk-backend-spi';
+import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
@@ -1614,7 +1614,7 @@ export interface DashboardExportToPdfResolved extends IDashboardEvent {
 
 // @beta
 export interface DashboardExportToPdfResolvedPayload {
-    readonly result: IExportBlobResult;
+    readonly result: IExportResult;
     readonly resultUri: string;
 }
 
@@ -1739,7 +1739,7 @@ export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
 
 // @beta
 export interface DashboardInsightWidgetExportResolvedPayload {
-    result: IExportBlobResult;
+    result: IExportResult;
     resultUri: string;
 }
 

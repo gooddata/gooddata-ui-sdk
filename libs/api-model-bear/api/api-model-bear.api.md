@@ -875,22 +875,16 @@ export interface IExecutionResultWrapper {
     executionResult: IExecutionResult;
 }
 
-// @public
-export interface IExportBlobResponse {
-    fileName?: string;
-    objectUrl: string;
-    uri: string;
-}
-
 // @public (undocumented)
 export interface IExportConfig extends IBaseExportConfig {
     afm?: IAfm;
     showFilters?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface IExportResponse {
-    // (undocumented)
+    fileName?: string;
+    objectUrl: string;
     uri: string;
 }
 

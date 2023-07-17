@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import { IDataView, IExportConfig, IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import {
     IColor,
     IColorPalette,
@@ -38,7 +38,7 @@ export interface IExtendedExportConfig extends IExportConfig {
 /**
  * @public
  */
-export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportBlobResult>;
+export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResult>;
 
 /**
  * @public

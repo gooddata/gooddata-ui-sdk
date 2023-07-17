@@ -20,7 +20,7 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
 } from "@gooddata/sdk-model";
-import { IExportBlobResult } from "../execution/export.js";
+import { IExportResult } from "../execution/export.js";
 
 /**
  * Dashboard referenced objects
@@ -236,23 +236,13 @@ export interface IWorkspaceDashboardsService {
      * Export dashboard to pdf. You can override dashboard filters with custom filters.
      * When no custom filters are set, the persisted dashboard filters will be used.
      *
-     * @param ref - dashboard reference
-     * @param filters - Override stored dashboard filters with custom filters
-     * @returns promise with link to download the exported dashboard
-     */
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
-
-    /**
-     * Export dashboard to pdf. You can override dashboard filters with custom filters.
-     * When no custom filters are set, the persisted dashboard filters will be used.
-     *
      * PDF file is downloaded and attached as Blob data to the current window instance.
      *
      * @param ref - dashboard reference
      * @param filters - Override stored dashboard filters with custom filters
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
-    exportDashboardToPdfBlob(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportBlobResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
 
     /**
      * Create scheduled mail for the dashboard

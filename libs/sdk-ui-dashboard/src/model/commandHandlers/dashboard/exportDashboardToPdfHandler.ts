@@ -15,15 +15,15 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 
 function exportDashboardToPdf(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     filters: FilterContextItem[] | undefined,
-): Promise<IExportBlobResult> {
+): Promise<IExportResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToPdfBlob(dashboardRef, filters);
+    return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters);
 }
 
 export function* exportDashboardToPdfHandler(
@@ -55,7 +55,7 @@ export function* exportDashboardToPdfHandler(
         ? new URL(result.uri, ctx.backend.config.hostname).href
         : result.uri;
 
-    const sanitizedResult: IExportBlobResult = {
+    const sanitizedResult: IExportResult = {
         ...result,
         uri: fullUri,
     };
