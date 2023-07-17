@@ -69,7 +69,7 @@ export function convertToPluginDirectory(name: string): string {
  * Converts plugin identifier to entry point file name
  */
 export function convertToPluginEntrypoint(pluginIdentifier: string): string {
-    return `${pluginIdentifier}.js`;
+    return `${pluginIdentifier}.mjs`;
 }
 
 /**
