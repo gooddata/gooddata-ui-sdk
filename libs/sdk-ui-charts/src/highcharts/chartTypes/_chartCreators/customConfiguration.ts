@@ -165,11 +165,15 @@ export function formatOverlapping(): string {
     );
 }
 
-function hideOverlappedLabels(chartOptions: IChartOptions): HighchartsOptions {
+function hideOverlappedLabels(
+    chartOptions: IChartOptions,
+    _config: HighchartsOptions,
+    chartConfig?: IChartConfig,
+): HighchartsOptions {
     const rotation = Number(chartOptions?.xAxisProps?.rotation ?? "0");
 
-    // rotate labels for charts that are horizontal (bar, bullet)
-    const isInvertedChart = isInvertedChartType(chartOptions.type);
+    // rotate labels for charts that are horizontal (bar, bullet, waterfall with vertical orientation config)
+    const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
 
     if (isInvertedChart && isRotationInRange(rotation, 75, 105)) {
         const { xAxes = [], isViewByTwoAttributes } = chartOptions;
@@ -1246,7 +1250,7 @@ const getXAxisConfiguration = (
         const minProp = min ? { min: Number(min) } : {};
 
         const isViewByTwoAttributes = chartOptions.isViewByTwoAttributes ?? false;
-        const isInvertedChart = isInvertedChartType(chartOptions.type);
+        const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
         const visible = chartOptions[axisPropsKey]?.visible ?? true;
         const rotation = chartOptions[axisPropsKey]?.rotation ?? "auto";
         const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
