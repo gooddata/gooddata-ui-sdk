@@ -12,6 +12,10 @@ fi
 # export variables for ci/cd
 export NO_COLOR=1
 
+# Recording
+npm run refresh-md
+npm run refresh-recordings
+
 # run the tests
 npm run integrated-test-live-backend
 
