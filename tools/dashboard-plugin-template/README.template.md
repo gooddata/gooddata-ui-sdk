@@ -62,13 +62,13 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
 3.  Build the plugin: `{{packageManager}} run build-plugin`
 
-    This will build plugin artifacts under `dist/dashboardPlugin`.
+    This will build plugin artifacts under `esm/dashboardPlugin`.
 
 4.  Upload plugin artifacts to your hosting
 
-    It is paramount that you upload all files from the `dist/dashboardPlugin`.
+    It is paramount that you upload all files from the `esm/dashboardPlugin`.
 
-    _IMPORTANT_: your hosting must support https and your GoodData domain must include the hosting location in the list
+    _IMPORTANT_: your hosting must support https, allow CORS to your GoodData domain and your GoodData domain must include the hosting location in the list
     of allowed hosts from where GoodData will load plugins. You should create a [support ticket](https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387) to explicitly allow the hosting
     location before we will load any plugins from it. You may host multiple plugins in separate directories within
     the allowed hosting location.

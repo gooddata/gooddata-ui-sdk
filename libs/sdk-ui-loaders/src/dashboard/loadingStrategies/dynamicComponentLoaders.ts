@@ -126,7 +126,7 @@ export async function dynamicDashboardBeforeLoad(
 }
 
 function moduleNameFromUrl(url: string): string {
-    const moduleName = /.*\/([^/]+)\.js$/.exec(url)?.[1];
+    const moduleName = /.*\/([^/]+)\.(?:js|mjs)$/.exec(url)?.[1];
     invariant(moduleName, "Invalid plugin URL provided, it must point to the root .js file");
     return moduleName;
 }
@@ -138,6 +138,9 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
         element.src = url;
         element.type = "text/javascript";
         element.async = true;
+        if (url.match(/.mjs$/)) {
+            element.type = "module";
+        }
 
         element.onload = () => {
             // eslint-disable-next-line no-console
