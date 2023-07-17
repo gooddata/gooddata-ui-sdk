@@ -24,6 +24,7 @@ export interface IInputControlProps {
     hasWarning?: boolean;
     pushData?(data: any): void;
     validateAndPushDataCallback?(value: string): void;
+    maxLength?: number;
 }
 
 export interface IInputControlState {
@@ -76,7 +77,7 @@ export class InputControl extends React.Component<
     }
 
     public render() {
-        const { disabled, labelText, placeholder, showDisabledMessage, intl, type } = this.props;
+        const { disabled, labelText, placeholder, showDisabledMessage, intl, type, maxLength } = this.props;
 
         return (
             <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
@@ -91,7 +92,7 @@ export class InputControl extends React.Component<
                         onKeyPress={this.onKeyPress}
                         onBlur={this.onBlur}
                         onChange={this.onValueChanged}
-                        maxLength={type === "number" ? MAX_NUMBER_LENGTH : null}
+                        maxLength={type === "number" ? MAX_NUMBER_LENGTH : maxLength}
                     />
                 </label>
             </DisabledBubbleMessage>
