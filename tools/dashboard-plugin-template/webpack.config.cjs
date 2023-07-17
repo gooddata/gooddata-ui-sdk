@@ -64,8 +64,7 @@ module.exports = (_env, argv) => {
         },
         output: {
             path: path.resolve("./esm"),
-            // Force .js extension instead of .mjs
-            filename: "[name].js",
+            filename: "[name].mjs",
             library: {
                 type: "module",
             },
@@ -189,6 +188,7 @@ module.exports = (_env, argv) => {
             plugins: [
                 ...commonConfig.plugins,
                 new ModuleFederationPlugin({
+                    library: { type: "window", name: MODULE_FEDERATION_NAME },
                     name: MODULE_FEDERATION_NAME, // this is used to put the plugin on the target window scope by default
                     exposes: {
                         /**
