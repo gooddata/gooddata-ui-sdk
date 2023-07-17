@@ -35,15 +35,6 @@ export interface IExportConfig {
 }
 
 /**
- * Result of export is a link to prepared file that can be downloaded.
- *
- * @public
- */
-export interface IExportResult {
-    uri: string;
-}
-
-/**
  * Result of export is an object URL pointing to a Blob of downloaded data attached to the current
  * window instance. The result also contains name of the downloaded file provided by the backend export
  * service.
@@ -53,7 +44,7 @@ export interface IExportResult {
  *
  * @public
  */
-export interface IExportBlobResult {
+export interface IExportResult {
     /** URI from which can the export be fetched again */
     uri: string;
     /** Object URL pointing to the downloaded blob of exported data */

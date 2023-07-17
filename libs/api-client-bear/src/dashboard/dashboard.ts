@@ -1,10 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import {
-    FilterContextItem,
-    IExportBlobResponse,
-    IExportResponse,
-    sanitizeFiltersForExport,
-} from "@gooddata/api-model-bear";
+import { FilterContextItem, IExportResponse, sanitizeFiltersForExport } from "@gooddata/api-model-bear";
 import { ApiResponse, XhrModule } from "../xhr.js";
 import { handleHeadPolling, IPollingOptions } from "../util.js";
 import { isExportFinished } from "../utils/export.js";
@@ -25,20 +20,6 @@ export class DashboardModule {
         filters: FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
     ): Promise<IExportResponse> {
-        return this.exportToPdfBlob(projectId, dashboardUri, filters, pollingOptions).then((result) => {
-            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
-            return {
-                uri: result.uri,
-            };
-        });
-    }
-
-    public async exportToPdfBlob(
-        projectId: string,
-        dashboardUri: string,
-        filters: FilterContextItem[] = [],
-        pollingOptions: IPollingOptions = {},
-    ): Promise<IExportBlobResponse> {
         const sanitizedFilters = sanitizeFiltersForExport(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
@@ -53,7 +34,7 @@ export class DashboardModule {
     private async pollPdfFile(
         response: ApiResponse,
         pollingOptions: IPollingOptions,
-    ): Promise<IExportBlobResponse> {
+    ): Promise<IExportResponse> {
         const data: IExportResponse = response.getData();
         return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, {
             ...pollingOptions,

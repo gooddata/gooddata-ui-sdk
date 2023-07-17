@@ -18,7 +18,6 @@ import {
     NoDataError,
     UnexpectedError,
     TimeoutError,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -108,15 +107,6 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        return this.exportToBlob(options).then((result) => {
-            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
-            return {
-                uri: result.uri,
-            };
-        });
-    }
-
-    public async exportToBlob(options: IExportConfig): Promise<IExportBlobResult> {
         const isXlsx = options.format?.toUpperCase() === "XLSX";
         const format = isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV;
         const payload: TabularExportRequest = {
@@ -180,7 +170,7 @@ export class TigerExecutionResult implements IExecutionResult {
         client: ITigerClient,
         payload: ActionsApiGetTabularExportRequest,
         format: TabularExportRequestFormatEnum,
-    ): Promise<IExportBlobResult> {
+    ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getTabularExport(payload, {
                 transformResponse: (x) => x,

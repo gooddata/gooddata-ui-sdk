@@ -11,7 +11,6 @@ import {
     NotSupported,
     isNoDataError,
     NoDataError,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -130,12 +129,6 @@ class DenormalizingExecutionResult implements IExecutionResult {
         const originalResult = await this.originalExecution.execute();
 
         return originalResult.export(options);
-    };
-
-    public exportToBlob = async (options: IExportConfig): Promise<IExportBlobResult> => {
-        const originalResult = await this.originalExecution.execute();
-
-        return originalResult.exportToBlob(options);
     };
 
     public readAll = (): Promise<IDataView> => {

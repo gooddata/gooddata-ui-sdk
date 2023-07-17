@@ -27,8 +27,8 @@ import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IDimensionItemDescriptor } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
-import { IExportBlobResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
+import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
@@ -924,7 +924,7 @@ export interface IExecutionDefinitionMethods {
 }
 
 // @public (undocumented)
-export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportBlobResult>;
+export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResult>;
 
 // @public (undocumented)
 export interface IExtendedExportConfig extends IExportConfig {
