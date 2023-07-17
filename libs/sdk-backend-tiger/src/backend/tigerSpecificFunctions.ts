@@ -40,6 +40,7 @@ import {
     HierarchyObjectIdentification,
     IdentifierDuplications,
     JsonApiCustomApplicationSettingOut,
+    JsonApiDatasetOutList,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -307,6 +308,11 @@ export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 export type ScanSqlResult = ScanSqlResponse;
 
 /**
+ * @internal
+ */
+export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -343,6 +349,7 @@ export type TigerSpecificFunctions = {
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
     getWorkspaceLogicalModel?: (id: string, includeParents?: boolean) => Promise<DeclarativeLogicalModel>;
+    getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
@@ -867,6 +874,16 @@ export const buildTigerSpecificFunctions = (
         try {
             return await authApiCall(async (sdk) => {
                 const result = await sdk.declarativeLayout.getLogicalModel({ workspaceId, includeParents });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    getWorkspaceEntitiesDatasets: async (workspaceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getAllEntitiesDatasets({ workspaceId });
                 return result.data;
             });
         } catch (error: any) {

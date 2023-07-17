@@ -29,6 +29,7 @@ import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
+import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -364,6 +365,7 @@ export type TigerSpecificFunctions = {
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
     getWorkspaceLogicalModel?: (id: string, includeParents?: boolean) => Promise<DeclarativeLogicalModel>;
+    getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
@@ -415,5 +417,8 @@ export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
 // @internal (undocumented)
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
+
+// @internal (undocumented)
+export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
 
 ```
