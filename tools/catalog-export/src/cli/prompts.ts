@@ -89,3 +89,14 @@ export async function requestFilePath(): Promise<string> {
 
     return filePath;
 }
+
+export async function promptHostname(): Promise<string> {
+    const hostnameQuestion: DistinctQuestion = {
+        type: "input",
+        name: "hostname",
+        message: "Enter hostname:",
+    };
+    const response = await prompt(hostnameQuestion);
+
+    return response.hostname;
+}

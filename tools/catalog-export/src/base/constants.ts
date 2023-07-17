@@ -1,7 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import { CatalogExportConfig } from "./types.js";
 
-export const DEFAULT_HOSTNAME = "https://secure.gooddata.com";
 export const DEFAULT_CONFIG_FILE_NAME = ".gdcatalogrc";
 export const DEFAULT_OUTPUT_FILE_NAME = "catalog.ts";
 
