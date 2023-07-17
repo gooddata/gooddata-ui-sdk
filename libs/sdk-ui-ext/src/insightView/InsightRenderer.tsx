@@ -6,7 +6,7 @@ import noop from "lodash/noop.js";
 import isEqual from "lodash/isEqual.js";
 import compose from "lodash/flowRight.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IExecutionFactory, IExportBlobResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
     insightProperties,
@@ -182,7 +182,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             return;
         }
 
-        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportBlobResult> => {
+        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
             if (exportConfig.title || !this.props.insight) {
                 return exportFunction(exportConfig);
             }

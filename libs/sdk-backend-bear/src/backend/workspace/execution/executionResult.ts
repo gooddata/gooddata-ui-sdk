@@ -12,7 +12,6 @@ import {
     IPreparedExecution,
     NoDataError,
     UnexpectedError,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
@@ -97,17 +96,6 @@ export class BearExecutionResult implements IExecutionResult {
         const optionsForBackend = this.buildExportOptions(options);
         return this.authApiCall((sdk) =>
             sdk.report.exportResult(
-                this.definition.workspace,
-                this.execResponse.links.executionResult,
-                optionsForBackend,
-            ),
-        );
-    }
-
-    public async exportToBlob(options: IExportConfig): Promise<IExportBlobResult> {
-        const optionsForBackend = this.buildExportOptions(options);
-        return this.authApiCall((sdk) =>
-            sdk.report.exportResultToBlob(
                 this.definition.workspace,
                 this.execResponse.links.executionResult,
                 optionsForBackend,

@@ -335,8 +335,7 @@ declare namespace GdcExport {
     export {
         IBaseExportConfig,
         IExportConfig,
-        IExportResponse,
-        IExportBlobResponse
+        IExportResponse
     }
 }
 export { GdcExport }
@@ -1587,22 +1586,16 @@ interface IExecutionResultWrapper {
     executionResult: IExecutionResult;
 }
 
-// @public
-interface IExportBlobResponse {
-    fileName?: string;
-    objectUrl: string;
-    uri: string;
-}
-
 // @public (undocumented)
 interface IExportConfig extends IBaseExportConfig {
     afm?: IAfm;
     showFilters?: boolean;
 }
 
-// @public (undocumented)
+// @public
 interface IExportResponse {
-    // (undocumented)
+    fileName?: string;
+    objectUrl: string;
     uri: string;
 }
 

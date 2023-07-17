@@ -1,13 +1,13 @@
 // (C) 2020-2023 GoodData Corporation
 import { useCallback, useRef } from "react";
-import { isProtectedDataError, IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { isProtectedDataError, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { messages } from "../../../locales.js";
 
 type ExportHandler = (
-    exportFunction: (config: IExtendedExportConfig) => Promise<IExportBlobResult>,
+    exportFunction: (config: IExtendedExportConfig) => Promise<IExportResult>,
     exportConfig: IExtendedExportConfig,
 ) => Promise<void>;
 

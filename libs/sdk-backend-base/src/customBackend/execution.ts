@@ -25,7 +25,6 @@ import {
     NotImplemented,
     IExplainProvider,
     ExplainType,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -189,10 +188,6 @@ class CustomExecutionResult implements IExecutionResult {
     };
 
     public export = (_options: IExportConfig): Promise<IExportResult> => {
-        throw new NotSupported("exports from custom backend are not supported");
-    };
-
-    public exportToBlob = (_options: IExportConfig): Promise<IExportBlobResult> => {
         throw new NotSupported("exports from custom backend are not supported");
     };
 }

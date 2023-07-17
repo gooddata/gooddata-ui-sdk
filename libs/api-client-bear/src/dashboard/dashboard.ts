@@ -20,20 +20,6 @@ export class DashboardModule {
         filters: GdcFilterContext.FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
     ): Promise<GdcExport.IExportResponse> {
-        return this.exportToPdfBlob(projectId, dashboardUri, filters, pollingOptions).then((result) => {
-            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
-            return {
-                uri: result.uri,
-            };
-        });
-    }
-
-    public async exportToPdfBlob(
-        projectId: string,
-        dashboardUri: string,
-        filters: GdcFilterContext.FilterContextItem[] = [],
-        pollingOptions: IPollingOptions = {},
-    ): Promise<GdcExport.IExportBlobResponse> {
         const sanitizedFilters = sanitizeFiltersForExport(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
@@ -48,7 +34,7 @@ export class DashboardModule {
     private async pollPdfFile(
         response: ApiResponse,
         pollingOptions: IPollingOptions,
-    ): Promise<GdcExport.IExportBlobResponse> {
+    ): Promise<GdcExport.IExportResponse> {
         const data: GdcExport.IExportResponse = response.getData();
         return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, {
             ...pollingOptions,

@@ -11,7 +11,6 @@ import {
     NotSupported,
     IExplainProvider,
     ExplainType,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -257,10 +256,6 @@ class RecordedExecutionResult implements IExecutionResult {
     }
 
     public export = (_options: IExportConfig): Promise<IExportResult> => {
-        throw new NotSupported("recorded backend does not support exports");
-    };
-
-    public exportToBlob = (_options: IExportConfig): Promise<IExportBlobResult> => {
         throw new NotSupported("recorded backend does not support exports");
     };
 
