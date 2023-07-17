@@ -3,6 +3,8 @@ import { transformToTypescript } from "../transform/toTypescript.js";
 import pkg from "prettier";
 const { format } = pkg;
 
+import { transform } from "@babel/core";
+
 import * as fs from "fs";
 import { WorkspaceMetadata } from "../base/types.js";
 
@@ -26,10 +28,9 @@ export async function exportMetadataToJavascript(
     const generatedTypescript = output.sourceFile.getFullText();
     const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const javascript = require("@babel/core").transform(formattedTypescript, {
+    const javascript = transform(formattedTypescript, {
         plugins: ["@babel/plugin-transform-typescript"],
     });
 
-    fs.writeFileSync(outputFile, javascript.code, { encoding: "utf-8" });
+    fs.writeFileSync(outputFile, javascript?.code ?? "", { encoding: "utf-8" });
 }

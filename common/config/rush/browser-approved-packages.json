@@ -279,6 +279,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/babel__core",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/blessed",
       "allowedCategories": [ "tools" ]
     },
