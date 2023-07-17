@@ -6,7 +6,6 @@ import {
     getConfiguredWorkspaceId,
     WorkspaceMetadata,
 } from "../../base/types.js";
-import { DEFAULT_HOSTNAME } from "../../base/constants.js";
 import pkg from "../../../package.json" assert { type: "json" };
 import ora from "ora";
 import { log, logError } from "../../cli/loggers.js";
@@ -45,7 +44,7 @@ export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig)
     const { hostname } = config;
     let { username, password } = config;
 
-    gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
+    gooddata.config.setCustomDomain(hostname!);
     gooddata.config.setJsPackage(pkg.name, pkg.version);
 
     const logInSpinner = ora();

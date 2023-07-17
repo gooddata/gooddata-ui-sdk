@@ -6,9 +6,9 @@ import * as path from "path";
 import fs from "fs";
 import * as dotenv from "dotenv";
 import pkg from "../package.json" assert { type: "json" };
-import { logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
+import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
 import { clearTerminal } from "./cli/clear.js";
-import { requestFilePath } from "./cli/prompts.js";
+import { promptHostname, requestFilePath } from "./cli/prompts.js";
 import {
     getConfigFromConfigFile,
     getConfigFromEnv,
@@ -16,12 +16,7 @@ import {
     getConfigFromPackage,
     mergeConfigs,
 } from "./base/config.js";
-import {
-    DEFAULT_CONFIG,
-    DEFAULT_CONFIG_FILE_NAME,
-    DEFAULT_HOSTNAME,
-    DEFAULT_OUTPUT_FILE_NAME,
-} from "./base/constants.js";
+import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants.js";
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types.js";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript.js";
@@ -38,7 +33,7 @@ program
         "--catalog-output <value>",
         `Output file (defaults to ${DEFAULT_OUTPUT_FILE_NAME}). The output file will be created in current working directory`,
     )
-    .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
+    .option("--hostname <url>", `Instance of GoodData platform.`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option(
         "--backend <backend>",
@@ -83,9 +78,16 @@ async function run() {
                 getConfigFromOptions(options),
             ])),
         );
-        const { catalogOutput, backend } = mergedConfig;
+        const { catalogOutput, backend, hostname } = mergedConfig;
 
         const filePath = path.resolve(catalogOutput || (await requestFilePath()));
+
+        if (hostname) {
+            log("Hostname", hostname);
+        } else {
+            mergedConfig.hostname = await promptHostname();
+        }
+
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
         await checkFolderExists(filePath);
