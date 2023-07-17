@@ -48,6 +48,6 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
 
         const measures = insightMeasures(insight);
 
-        return !measures || isError || isLoading;
+        return measures.length === 0 || isError || isLoading;
     }
 }
