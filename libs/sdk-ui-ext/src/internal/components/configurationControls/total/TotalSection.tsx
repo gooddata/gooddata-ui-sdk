@@ -18,6 +18,8 @@ export interface ITotalSectionProps {
     pushData: (data: any) => any;
 }
 
+const MAX_BUCKET_ITEM_NAME = 50;
+
 const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     props: ITotalSectionProps & WrappedComponentProps,
 ) => {
@@ -66,6 +68,7 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
                 placeholder={messages.totalTitle.id}
                 pushData={pushData}
                 value={totalColumnName}
+                maxLength={MAX_BUCKET_ITEM_NAME}
             />
         </ConfigSection>
     );

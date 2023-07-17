@@ -124,12 +124,14 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
             featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
         return axes.map((axis: IAxisProperties) => {
+            const isPrimaryAxis =
+                controls?.orientation?.position === "horizontal" ? axis.primary : axis.name === "xaxis";
             const isPrimaryAxisWithMoreThanOneItem: boolean =
-                (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
+                (isPrimaryAxis || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;
             const { name, title, subtitle, visible } = axis;
 
-            const showFormat = axis.primary && isAxisLabelsFormatEnabled;
+            const showFormat = isPrimaryAxis && isAxisLabelsFormatEnabled;
 
             return (
                 <ConfigSection
@@ -162,7 +164,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                         pushData={pushData}
                         showFormat={showFormat}
                     />
-                    {axis.primary ? this.renderMinMax(axis.name) : null}
+                    {isPrimaryAxis ? this.renderMinMax(axis.name) : null}
                 </ConfigSection>
             );
         });
