@@ -15,6 +15,7 @@ TIGER_DATASOURCES_NAME=$TIGER_DATASOURCES_NAME
 IS_AIO=$IS_AIO
 AIO_VERSION=$AIO_VERSION
 EXTRA_PARAMS=""
+IMAGE_ID=gooddata-cn-ce-aio-${EXECUTOR_NUMBER}
 
 $_RUSH install
 $_RUSH build -t sdk-backend-tiger
@@ -38,6 +39,8 @@ health_check() {
 }
 
 function shutdownAIO() {
+  log "Extracting logs from container $IMAGE_ID"
+  docker logs $IMAGE_ID > AIO-logs.txt 2>&1
   log "Shutting down AIO! Stop docker ! Remove network"
   docker stop $IMAGE_ID
   docker rm -f $IMAGE_ID
@@ -46,7 +49,6 @@ function shutdownAIO() {
 
 if [[ "$IS_AIO" == true ]]; then
   DATA_LOADER_IMAGE='registry.gitlab.com/gooddata/gdc-nas/data-loader:master'
-  IMAGE_ID=gooddata-cn-ce-aio-${EXECUTOR_NUMBER}
   PORT_NUMBER=300${EXECUTOR_NUMBER}
   HOST=http://localhost:$PORT_NUMBER
   TEST_HOST=http://$IMAGE_ID:$PORT_NUMBER
