@@ -51,7 +51,7 @@ async function doAsyncValidations(config: AddCmdActionConfig) {
  * @param url - the URL of the plugin being added
  */
 function pluginUrlToPluginName(url: string): string {
-    const match = /dp_([^/]+).js$/i.exec(url);
+    const match = /dp_([^/]+).mjs$/i.exec(url);
     return match?.[1] ?? "";
 }
 
