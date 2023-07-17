@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
-import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 
 import { DateFilterValidationResult, ISharingProperties } from "../../types.js";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes.js";
@@ -524,7 +524,7 @@ export interface DashboardExportToPdfResolvedPayload {
     /**
      * Collection of information used to download the resulting file.
      */
-    readonly result: IExportBlobResult;
+    readonly result: IExportResult;
 }
 
 /**
@@ -540,7 +540,7 @@ export interface DashboardExportToPdfResolved extends IDashboardEvent {
 
 export function dashboardExportToPdfResolved(
     ctx: DashboardContext,
-    result: IExportBlobResult,
+    result: IExportResult,
     correlationId?: string,
 ): DashboardExportToPdfResolved {
     return {

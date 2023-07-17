@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 
-import { IExecutionResult, IExportConfig, IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExportFunction, IExtendedExportConfig } from "./Events.js";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
 
@@ -33,9 +33,9 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
  * @internal
  */
 export function createExportFunction(result: IExecutionResult, exportTitle?: string): IExportFunction {
-    return (exportConfig: IExtendedExportConfig): Promise<IExportBlobResult> => {
+    return (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
         const exportRequestConfig = buildExportRequestConfig(exportConfig, exportTitle);
-        return result.exportToBlob(exportRequestConfig);
+        return result.export(exportRequestConfig);
     };
 }
 
@@ -47,7 +47,7 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
  * @internal
  */
 export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction {
-    return (_exportConfig: IExtendedExportConfig): Promise<IExportBlobResult> => {
+    return (_exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
         return Promise.reject(error);
     };
 }

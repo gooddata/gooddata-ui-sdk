@@ -3,7 +3,6 @@ import {
     CompatibilityFilter,
     IAfm,
     IBaseExportConfig,
-    IExportBlobResponse,
     IExportConfig,
     IExportResponse,
 } from "@gooddata/api-model-bear";
@@ -39,6 +38,8 @@ export class ReportModule {
      * request new result export
      * request new export of existing AFM execution
      *
+     * Export file is downloaded and attached as Blob data to the current window instance.
+     *
      * @experimental
      * @param projectId - GoodData projectId
      * @param executionResult - report which should be exported
@@ -53,37 +54,6 @@ export class ReportModule {
         exportConfig: IExportConfig = {},
         pollingOptions: IPollingOptions = {},
     ): Promise<IExportResponse> {
-        return this.exportResultToBlob(projectId, executionResult, exportConfig, pollingOptions).then(
-            (result) => {
-                URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
-                return {
-                    uri: result.uri,
-                };
-            },
-        );
-    }
-
-    /**
-     * exportResult
-     * request new result export
-     * request new export of existing AFM execution
-     *
-     * Export file is downloaded and attached as Blob data to the current window instance.
-     *
-     * @experimental
-     * @param projectId - GoodData projectId
-     * @param executionResult - report which should be exported
-     * @param exportConfig - requested export options
-     * @param pollingOptions - for polling (maxAttempts, pollStep)
-     * @returns Resolves if export successfully,
-     *                   Reject if export has error (network error, api error)
-     */
-    public exportResultToBlob(
-        projectId: string,
-        executionResult: string,
-        exportConfig: IExportConfig = {},
-        pollingOptions: IPollingOptions = {},
-    ): Promise<IExportBlobResponse> {
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
