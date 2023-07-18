@@ -237,6 +237,7 @@ export function getStackMeasuresConfiguration(
 export function getParentAttributeConfiguration(
     chartOptions: IChartOptions,
     config: HighchartsOptions,
+    chartConfig?: IChartConfig,
 ): {
     xAxis: XAxisOptions[];
 } {
@@ -258,7 +259,7 @@ export function getParentAttributeConfiguration(
         fontWeight: "bold",
     });
 
-    if (isInvertedChartType(type)) {
+    if (isInvertedChartType(type, chartConfig?.orientation?.position)) {
         // distance more 5px for two groups of attributes for bar chart
         set(parentAttributeOptions, "x", -5);
     }
@@ -365,7 +366,7 @@ export default function getOptionalStackingConfiguration(
         ? merge(
               {},
               setDrillConfigToXAxis(drillConfig),
-              getParentAttributeConfiguration(chartOptions, config),
+              getParentAttributeConfiguration(chartOptions, config, chartConfig),
               getStackMeasuresConfiguration(chartOptions, config, chartConfig),
               getShowInPercentConfiguration(chartOptions, chartConfig, config),
               convertMinMaxFromPercentToNumber(chartOptions, config, chartConfig),

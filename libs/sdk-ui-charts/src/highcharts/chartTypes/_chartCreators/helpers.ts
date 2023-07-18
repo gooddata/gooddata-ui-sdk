@@ -81,7 +81,7 @@ export const isStacked = (chart: Highcharts.Chart): boolean => {
 };
 
 export function getChartProperties(config: IChartConfig, type: VisType): any {
-    const isInvertedType = isInvertedChartType(type);
+    const isInvertedType = isInvertedChartType(type, config?.orientation?.position);
     const chartProps: any = {
         xAxisProps: isInvertedType ? { ...config.yaxis } : { ...config.xaxis },
         yAxisProps: isInvertedType ? { ...config.xaxis } : { ...config.yaxis },

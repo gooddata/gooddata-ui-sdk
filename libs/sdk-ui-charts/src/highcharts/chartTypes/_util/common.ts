@@ -9,7 +9,7 @@ import isEqual from "lodash/fp/isEqual.js";
 import unescape from "lodash/unescape.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { ChartOrientationType, IChartConfig } from "../../../interfaces/index.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
 
 export function parseValue(value: string): number | null {
@@ -141,7 +141,8 @@ export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
 /**
  * @internal
  */
-export const isInvertedChartType = (type: string): boolean => isBarChart(type) || isBulletChart(type);
+export const isInvertedChartType = (type: string, orientationPosition?: ChartOrientationType): boolean =>
+    isBarChart(type) || isBulletChart(type) || (isWaterfall(type) && orientationPosition === "vertical");
 export const isChartSupported = (type: string): boolean => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]): boolean => includes(types, type);
 export const stringifyChartTypes = (): string =>
