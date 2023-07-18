@@ -3382,6 +3382,7 @@ importers:
       '@gooddata/api-model-bear': workspace:*
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/sdk-model': workspace:*
+      '@types/babel__core': ^7.20.1
       '@types/inquirer': ^8.2.6
       '@types/lodash': ^4.14.158
       '@types/node': ^16.18.23
@@ -3436,6 +3437,7 @@ importers:
       tslib: 2.5.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
+      '@types/babel__core': 7.20.1
       '@types/inquirer': 8.2.6
       '@types/lodash': 4.14.194
       '@types/node': 16.18.23
@@ -8725,7 +8727,7 @@ packages:
     resolution: {integrity: sha512-v9piuwp8FvTiHXIOOi5lEyTEJKhnbcbhVxgJ3VFhhXYFd0DTz6Bst0XIIgkgs21ITb3xhkfPbCRUueMcbXO1MA==}
     dependencies:
       '@storybook/channels': 7.0.7
-      '@types/babel__core': 7.20.0
+      '@types/babel__core': 7.20.1
       '@types/express': 4.17.17
       file-system-cache: 2.1.1
     dev: false
@@ -8875,34 +8877,30 @@ packages:
     resolution: {integrity: sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==}
     dev: true
 
-  /@types/babel__core/7.20.0:
-    resolution: {integrity: sha512-+n8dL/9GWblDO0iU6eZAwEIJVr5DWigtle+Q6HLOrh/pdbXOhOtqzq8VPPE2zvNJzSKY4vH/z3iT3tn0A3ypiQ==}
+  /@types/babel__core/7.20.1:
+    resolution: {integrity: sha512-aACu/U/omhdk15O4Nfb+fHgH/z3QsfQzpnvRZhYhThms83ZnAOZz7zZAWO7mn2yyNQaA4xTO8GLK3uqFU4bYYw==}
     dependencies:
       '@babel/parser': 7.21.4
       '@babel/types': 7.21.4
       '@types/babel__generator': 7.6.4
       '@types/babel__template': 7.4.1
       '@types/babel__traverse': 7.18.3
-    dev: false
 
   /@types/babel__generator/7.6.4:
     resolution: {integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==}
     dependencies:
       '@babel/types': 7.21.4
-    dev: false
 
   /@types/babel__template/7.4.1:
     resolution: {integrity: sha512-azBFKemX6kMg5Io+/rdGT0dkGreboUVR0Cdm3fz9QJWpaQGJRQXl7C+6hOTCZcMll7KFyEQpgbYI2lHdsS4U7g==}
     dependencies:
       '@babel/parser': 7.21.4
       '@babel/types': 7.21.4
-    dev: false
 
   /@types/babel__traverse/7.18.3:
     resolution: {integrity: sha512-1kbcJ40lLB7MHsj39U4Sh1uTd2E7rLEa79kmDpI6cy+XiXsteB3POdQomoq4FxszMrO3ZYchkhYJw7A2862b3w==}
     dependencies:
       '@babel/types': 7.21.4
-    dev: false
 
   /@types/blessed/0.1.21:
     resolution: {integrity: sha512-nlJHCM/wDUtvhDF7FBW2fWTP1JIPMm16xKXTdaAgOaqXiT4VkB/GIc7LAX5BxhTR09BVeNF2JzxszHC9Tres2w==}

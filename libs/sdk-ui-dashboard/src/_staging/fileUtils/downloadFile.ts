@@ -1,9 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
-import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 
 export const DOWNLOADER_ID = "downloader";
 
-export function downloadFile({ objectUrl, fileName }: IExportBlobResult): void {
+export function downloadFile({ objectUrl, fileName }: IExportResult): void {
     const anchor = document.createElement("a");
     anchor.id = DOWNLOADER_ID;
     anchor.href = objectUrl;

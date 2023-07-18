@@ -2,7 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { IExecutionResult, IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 
 import { ExportInsightWidget } from "../../commands/index.js";
@@ -25,7 +25,7 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 async function performExport(
     executionResult: IExecutionResult,
     config: IExtendedExportConfig,
-): Promise<IExportBlobResult> {
+): Promise<IExportResult> {
     const exporter = createExportFunction(executionResult);
     return exporter(config);
 }
@@ -102,7 +102,7 @@ export function* exportInsightWidgetHandler(
         ? new URL(result.uri, ctx.backend.config.hostname).href
         : result.uri;
 
-    const sanitizedResult: IExportBlobResult = {
+    const sanitizedResult: IExportResult = {
         ...result,
         uri: fullUri,
     };

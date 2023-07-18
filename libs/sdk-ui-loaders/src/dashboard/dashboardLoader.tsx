@@ -241,6 +241,7 @@ export class DashboardLoader implements IDashboardLoader {
                 plugins = resolvedPlugins;
             }
         } catch (err) {
+            console.error(err);
             console.error(
                 "Dashboard plugins load failed. Loader is falling back to the statically linked dashboard without any external plugins.",
             );

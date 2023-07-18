@@ -3,6 +3,7 @@
 import {
     IDashboardReferences,
     IDashboardWithReferences,
+    IExportResult,
     IGetDashboardOptions,
     IGetScheduledMailOptions,
     IWidgetAlertCount,
@@ -14,7 +15,6 @@ import {
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
     walkLayout,
-    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -322,14 +322,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
-    public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {
-        return Promise.resolve("/example/export.pdf");
-    }
-
-    public exportDashboardToPdfBlob(
-        _ref: ObjRef,
-        _filters?: FilterContextItem[],
-    ): Promise<IExportBlobResult> {
+    public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<IExportResult> {
         return Promise.resolve({
             uri: "/example/export.pdf",
             objectUrl: "blob:/01345454545454",

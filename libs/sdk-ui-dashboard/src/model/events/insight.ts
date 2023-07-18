@@ -16,7 +16,7 @@ import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
 import { IExportConfig } from "../types/exportTypes.js";
-import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 
 /**
  * Payload of the {@link DashboardInsightWidgetHeaderChanged} event.
@@ -645,7 +645,7 @@ export interface DashboardInsightWidgetExportResolvedPayload {
     /**
      * Collection of information used to download the resulting file.
      */
-    result: IExportBlobResult;
+    result: IExportResult;
 }
 
 /**
@@ -663,7 +663,7 @@ export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
  */
 export function insightWidgetExportResolved(
     ctx: DashboardContext,
-    result: IExportBlobResult,
+    result: IExportResult,
     correlationId?: string,
 ): DashboardInsightWidgetExportResolved {
     return {

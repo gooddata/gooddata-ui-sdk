@@ -48,7 +48,6 @@ import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExplainProvider } from '@gooddata/sdk-backend-spi';
-import { IExportBlobResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
@@ -390,8 +389,6 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     export(options: IExportConfig): Promise<IExportResult>;
     // (undocumented)
-    exportToBlob(options: IExportConfig): Promise<IExportBlobResult>;
-    // (undocumented)
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
@@ -507,9 +504,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
-    // (undocumented)
-    exportDashboardToPdfBlob(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportBlobResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)

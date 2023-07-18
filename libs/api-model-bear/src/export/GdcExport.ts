@@ -39,13 +39,6 @@ export interface IExportConfig extends IBaseExportConfig {
 }
 
 /**
- * @public
- */
-export interface IExportResponse {
-    uri: string;
-}
-
-/**
  * Result of export is an object URL pointing to a Blob of downloaded data attached to the current
  * window instance. The result also contains name of the downloaded file provided by the backend export
  * service.
@@ -55,7 +48,7 @@ export interface IExportResponse {
  *
  * @public
  */
-export interface IExportBlobResponse {
+export interface IExportResponse {
     /** URI from which can the export be fetched again */
     uri: string;
     /** Object URL pointing to the downloaded blob of exported data */

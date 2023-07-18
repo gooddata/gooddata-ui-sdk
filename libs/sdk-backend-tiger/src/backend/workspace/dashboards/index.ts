@@ -21,7 +21,7 @@ import {
     SupportedDashboardReferenceTypes,
     UnexpectedError,
     TimeoutError,
-    IExportBlobResult,
+    IExportResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -347,17 +347,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToPdf = async (
         dashboardRef: ObjRef,
         filters?: FilterContextItem[],
-    ): Promise<string> => {
-        return this.exportDashboardToPdfBlob(dashboardRef, filters).then((result) => {
-            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
-            return result.uri;
-        });
-    };
-
-    public exportDashboardToPdfBlob = async (
-        dashboardRef: ObjRef,
-        filters?: FilterContextItem[],
-    ): Promise<IExportBlobResult> => {
+    ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
         // skip all time date filter from stored filters, when missing, it's correctly
@@ -396,7 +386,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportResultPolling(
         client: ITigerClient,
         payload: { exportId: string; workspaceId: string },
-    ): Promise<IExportBlobResult> {
+    ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
                 transformResponse: (x) => x,
