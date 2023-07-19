@@ -125,7 +125,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
 
         return axes.map((axis: IAxisProperties) => {
             const isPrimaryAxis =
-                controls?.orientation?.position === "horizontal" ? axis.primary : axis.name === "xaxis";
+                controls?.orientation?.position === "vertical" ? axis.name === "xaxis" : axis.primary;
             const isPrimaryAxisWithMoreThanOneItem: boolean =
                 (isPrimaryAxis || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;
