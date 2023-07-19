@@ -68,6 +68,7 @@ import {
 import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnWidthsFromProperties,
+    getMeasureGroupDimensionFromProperties,
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
 } from "../../../utils/propertiesHelper.js";
@@ -310,16 +311,32 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
+    private getSanitizedConfig(insight: IInsightDefinition, customVisualizationConfig: any) {
+        if (
+            !tableTranspositionEnabled(this.settings) &&
+            (customVisualizationConfig?.measureGroupDimension === "rows" ||
+                getMeasureGroupDimensionFromProperties(insightProperties(insight)) === "rows")
+        ) {
+            // override custom position to default when FF disabled in meantime
+            return {
+                ...(customVisualizationConfig || {}),
+                measureGroupDimension: "columns",
+            };
+        }
+        return customVisualizationConfig;
+    }
+
     public getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         const { dateFormat, executionConfig, customVisualizationConfig } = options;
+        const sanitizedConfig = this.getSanitizedConfig(insight, customVisualizationConfig);
 
         return executionFactory
             .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight, customVisualizationConfig))
+            .withDimensions(...this.getDimensions(insight, sanitizedConfig))
             .withSorting(...(getPivotTableSortItems(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
