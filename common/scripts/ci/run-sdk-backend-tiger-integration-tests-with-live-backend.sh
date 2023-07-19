@@ -15,6 +15,7 @@ TIGER_DATASOURCES_NAME=$TIGER_DATASOURCES_NAME
 IS_AIO=$IS_AIO
 AIO_VERSION=$AIO_VERSION
 EXTRA_PARAMS=""
+CONTAINER_ID=gooddata-cn-ce-aio-${EXECUTOR_NUMBER}
 
 $_RUSH install
 $_RUSH build -t sdk-backend-tiger
@@ -28,7 +29,7 @@ log() {
 health_check() {
   for ((i = 1; i <= 200; i++)); do
     log "Check AIO is up, try $i"
-    if curl -f -s -H "Authorization: Bearer $TIGER_API_TOKEN" -H "Host: $IMAGE_ID" "$HOST/api/v1/entities/admin/organizations/default" ; then
+    if curl -f -s -H "Authorization: Bearer $TIGER_API_TOKEN" -H "Host: $CONTAINER_ID" "$HOST/api/v1/entities/admin/organizations/default" ; then
       return 0
     else
       sleep 3
@@ -38,19 +39,20 @@ health_check() {
 }
 
 function shutdownAIO() {
+  log "Extracting logs from container $CONTAINER_ID"
+  docker logs $CONTAINER_ID > AIO-logs.txt 2>&1
   log "Shutting down AIO! Stop docker ! Remove network"
-  docker stop $IMAGE_ID
-  docker rm -f $IMAGE_ID
+  docker stop $CONTAINER_ID
+  docker rm -f $CONTAINER_ID
   docker network rm $NETWORK_ID
 }
 
 if [[ "$IS_AIO" == true ]]; then
   DATA_LOADER_IMAGE='registry.gitlab.com/gooddata/gdc-nas/data-loader:master'
-  IMAGE_ID=gooddata-cn-ce-aio-${EXECUTOR_NUMBER}
   PORT_NUMBER=300${EXECUTOR_NUMBER}
   HOST=http://localhost:$PORT_NUMBER
-  TEST_HOST=http://$IMAGE_ID:$PORT_NUMBER
-  CYPRESS_HOST=http://$IMAGE_ID:3000
+  TEST_HOST=http://$CONTAINER_ID:$PORT_NUMBER
+  CYPRESS_HOST=http://$CONTAINER_ID:3000
   TIGER_API_TOKEN=YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz
   TIGER_DATASOURCES_NAME=pg_staging-goodsales
   EXTRA_PARAMS=" --net=$NETWORK_ID "
@@ -64,7 +66,7 @@ if [[ "$IS_AIO" == true ]]; then
   trap shutdownAIO EXIT
   docker network create $NETWORK_ID
 
-  docker run --name $IMAGE_ID -e APP_LOGLEVEL=INFO -e LICENSE_AND_PRIVACY_POLICY_ACCEPTED=YES \
+  docker run --name $CONTAINER_ID -e APP_LOGLEVEL=INFO -e LICENSE_AND_PRIVACY_POLICY_ACCEPTED=YES \
       -e BUNDLE_TYPE=gdc -e GDCN_PUBLIC_URL=$TEST_HOST -p $PORT_NUMBER:3000 --net=$NETWORK_ID -d $AIO_IMAGE
 
   if ! health_check; then
@@ -73,7 +75,7 @@ if [[ "$IS_AIO" == true ]]; then
   fi
 
   docker run --rm \
-  -e DB_HOST=$IMAGE_ID \
+  -e DB_HOST=$CONTAINER_ID \
   -e DB_PORT=5432 \
   -e DB_USER=demouser \
   -e DB_NAME=demo \
@@ -86,7 +88,7 @@ if [[ "$IS_AIO" == true ]]; then
     -H "Content-Type: application/vnd.gooddata.api+json" \
     -H "Accept: application/vnd.gooddata.api+json" \
     -H "Authorization: Bearer $TIGER_API_TOKEN" \
-    -H "Host: $IMAGE_ID" \
+    -H "Host: $CONTAINER_ID" \
     -X POST \
     -d '{
         "data": {
