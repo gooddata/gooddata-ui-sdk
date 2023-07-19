@@ -3693,6 +3693,11 @@
         "scenarioName": "two measures and multiple column grand totals for each",
         "visName": "PivotTable"
     },
+    "PivotTable.e37c66a41401a51cc8fbdbee889adb2e": {
+        "comment": "Auto-generated insight for test scenario PivotTable - multiple measures and row attributes with metrics in rows, with drilling.",
+        "scenarioName": "multiple measures and row attributes with metrics in rows, with drilling",
+        "visName": "PivotTable"
+    },
     "PivotTable.e3a00f8e310439639b8e0963742c6f32": {
         "comment": "Auto-generated insight for test scenario PivotTable - single attribute.",
         "scenarioName": "single attribute",

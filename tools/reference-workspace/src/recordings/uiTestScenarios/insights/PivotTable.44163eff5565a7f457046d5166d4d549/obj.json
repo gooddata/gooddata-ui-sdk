@@ -105,6 +105,12 @@
                             "attributeIdentifier": "a_label.owner.region",
                             "width": { "value": 120 }
                         }
+                    },
+                    {
+                        "attributeColumnWidthItem": {
+                            "attributeIdentifier": "a_label.owner.department",
+                            "width": { "value": 120 }
+                        }
                     }
                 ],
                 "measureGroupDimension": "rows"

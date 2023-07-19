@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import { action } from "@storybook/addon-actions";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
@@ -10,6 +11,12 @@ import {
     PivotTableWithMeasuresAndRowsOnly,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
+import {
+    DepartmentPredicate,
+    AmountMeasurePredicate,
+    WonMeasurePredicate,
+    ProductPredicate,
+} from "../_infra/predicates.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("transposition")
@@ -59,4 +66,12 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             ...getCommonPivotTableSizingConfig([ReferenceMd.Region, ReferenceMd.Department]),
             measureGroupDimension: "rows",
         },
+    })
+    .addScenario("multiple measures and row attributes with metrics in rows, with drilling", {
+        ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+        config: {
+            measureGroupDimension: "rows",
+        },
+        drillableItems: [ProductPredicate, DepartmentPredicate, AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
     });
