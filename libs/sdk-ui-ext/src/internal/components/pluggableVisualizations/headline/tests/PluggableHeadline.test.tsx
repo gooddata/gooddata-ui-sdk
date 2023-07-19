@@ -30,6 +30,7 @@ describe("PluggableHeadline", () => {
         configPanelElement: () => mockConfigElement,
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
         callbacks: {
             afterRender: vi.fn(),
             pushData: vi.fn(),

@@ -22,6 +22,10 @@ exports[`Headline > with drilling on single measure > should create expected exe
       ],
       "localIdentifier": "measures",
     },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
   ],
   "dimensions": [
     {
@@ -58,6 +62,7 @@ exports[`Headline > with drilling on single measure > should create expected pro
     [Function],
   ],
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -83,6 +88,10 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
         },
       ],
       "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -123,6 +132,7 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
     [Function],
   ],
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -146,6 +156,11 @@ exports[`Headline > with drilling on two measures > should create expected execu
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
         {
           "measure": {
             "definition": {
@@ -160,7 +175,7 @@ exports[`Headline > with drilling on two measures > should create expected execu
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -212,6 +227,7 @@ exports[`Headline > with drilling on two measures > should create expected props
     [Function],
   ],
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -235,6 +251,11 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
         {
           "measure": {
             "definition": {
@@ -249,7 +270,7 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -304,6 +325,7 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
     [Function],
   ],
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -329,6 +351,10 @@ exports[`Headline > with single measure > should create expected execution defin
         },
       ],
       "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -363,6 +389,7 @@ exports[`Headline > with single measure > should create expected execution defin
 exports[`Headline > with single measure > should create expected props for core chart 1`] = `
 {
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -386,6 +413,11 @@ exports[`Headline > with two measures > should create expected execution definit
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
         {
           "measure": {
             "definition": {
@@ -400,7 +432,7 @@ exports[`Headline > with two measures > should create expected execution definit
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -448,6 +480,7 @@ exports[`Headline > with two measures > should create expected execution definit
 exports[`Headline > with two measures > should create expected props for core chart 1`] = `
 {
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -471,6 +504,11 @@ exports[`Headline > with two measures one PoP > should create expected execution
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
         {
           "measure": {
             "alias": "Won Last Year",
@@ -487,7 +525,7 @@ exports[`Headline > with two measures one PoP > should create expected execution
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -537,6 +575,7 @@ exports[`Headline > with two measures one PoP > should create expected execution
 exports[`Headline > with two measures one PoP > should create expected props for core chart 1`] = `
 {
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;
@@ -560,6 +599,11 @@ exports[`Headline > with two measures with german separators > should create exp
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
         {
           "measure": {
             "definition": {
@@ -574,7 +618,7 @@ exports[`Headline > with two measures with german separators > should create exp
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "secondary_measures",
     },
   ],
   "dimensions": [
@@ -628,6 +672,7 @@ exports[`Headline > with two measures with german separators > should create exp
     },
   },
   "exportTitle": "Headline",
+  "headlineTransformation": [Function],
   "workspace": "reference-workspace",
 }
 `;

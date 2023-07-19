@@ -31,6 +31,14 @@ export {
     ILegendItem,
 } from "./chartProps.js";
 
+export {
+    ComparisonPositionType,
+    CalculationType,
+    ILabelConfig,
+    IComparison,
+    IColorConfig,
+} from "./comparison.js";
+
 export { ViewByAttributesLimit } from "./limits.js";
 
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";

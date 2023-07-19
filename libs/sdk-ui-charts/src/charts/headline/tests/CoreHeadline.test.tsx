@@ -1,17 +1,17 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { CoreHeadline } from "../CoreHeadline.js";
-import HeadlineTransformation from "../internal/HeadlineTransformation.js";
 import { ICoreChartProps } from "../../../interfaces/chartProps.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { CoreHeadline, ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
+import LegacyHeadlineTransformation from "../internal/transformations/LegacyHeadlineTransformation.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-vi.mock("../internal/HeadlineTransformation", () => ({
+vi.mock("../internal/transformations/LegacyHeadlineTransformation.js", () => ({
     __esModule: true,
     default: vi.fn(() => null),
 }));
@@ -23,7 +23,7 @@ describe("CoreHeadline", () => {
 
     const afterRender = vi.fn();
 
-    function createComponent(props: ICoreChartProps) {
+    function createComponent(props: ICoreChartProps & ICoreHeadlineExtendedProps) {
         return render(<CoreHeadline {...props} afterRender={afterRender} drillableItems={[]} />);
     }
 
@@ -37,33 +37,62 @@ describe("CoreHeadline", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", async () => {
             const drillEventCallback = vi.fn();
             createComponent({
+                headlineTransformation: LegacyHeadlineTransformation,
                 execution: singleMeasureExec,
                 onDrill: drillEventCallback,
-            }),
-                await waitFor(() => {
-                    expect(HeadlineTransformation).toHaveBeenCalledWith(
-                        expect.objectContaining({
-                            dataView: expect.objectContaining({
-                                definition: singleMeasureExec.definition,
-                            }),
-                            onAfterRender: afterRender,
-                            drillableItems: [],
-                            onDrill: drillEventCallback,
+            });
+
+            await waitFor(() => {
+                expect(LegacyHeadlineTransformation).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        dataView: expect.objectContaining({
+                            definition: singleMeasureExec.definition,
                         }),
-                        {},
-                    );
-                });
+                        onAfterRender: afterRender,
+                        drillableItems: [],
+                        onDrill: drillEventCallback,
+                    }),
+                    {},
+                );
+            });
         });
     });
 
     describe("two measures", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", async () => {
             createComponent({
+                headlineTransformation: LegacyHeadlineTransformation,
                 execution: twoMeasureExec,
             });
 
             await waitFor(() => {
-                expect(HeadlineTransformation).toHaveBeenCalledWith(
+                expect(LegacyHeadlineTransformation).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        dataView: expect.objectContaining({
+                            definition: singleMeasureExec.definition,
+                        }),
+                        onAfterRender: afterRender,
+                        drillableItems: [],
+                    }),
+                    {},
+                );
+            });
+        });
+    });
+
+    describe("render visual from headlineTransformation property", () => {
+        const MockHeadlineTransformation = vi.fn();
+
+        it("should render HeadlineTransformation from headlineTransformation property", async () => {
+            const drillEventCallback = vi.fn();
+            createComponent({
+                headlineTransformation: MockHeadlineTransformation,
+                execution: singleMeasureExec,
+                onDrill: drillEventCallback,
+            });
+
+            await waitFor(() => {
+                expect(MockHeadlineTransformation).toHaveBeenCalledWith(
                     expect.objectContaining({
                         dataView: expect.objectContaining({
                             definition: singleMeasureExec.definition,

@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { Headline } from "../Headline.js";
 import { CoreHeadline } from "../CoreHeadline.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -15,8 +15,10 @@ vi.mock("../CoreHeadline", () => ({
 }));
 
 describe("Headline", () => {
-    it("should render with custom SDK", () => {
+    it("should render with custom SDK", async () => {
         render(<Headline workspace="foo" primaryMeasure={ReferenceMd.Amount} backend={dummyBackend()} />);
-        expect(CoreHeadline).toHaveBeenCalled();
+        await waitFor(() => {
+            expect(CoreHeadline).toHaveBeenCalled();
+        });
     });
 });

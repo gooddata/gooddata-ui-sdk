@@ -3,6 +3,7 @@ import { ISeparators } from "@gooddata/numberjs";
 import { IColorPalette, Identifier } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { IComparison } from "./comparison.js";
 
 /**
  * Chart config is used to customize visual aspects of the different charts.
@@ -237,6 +238,15 @@ export interface IChartConfig {
      * Enables showing/hiding data labels and totals independently
      */
     enableSeparateTotalLabels?: boolean;
+
+    /**
+     * This configuration allows users to customize how the comparative measure looks.
+     *
+     * @remarks
+     * Note: currently, this property only supports headlines.
+     */
+    comparison?: IComparison;
+
     //
     //
     //
