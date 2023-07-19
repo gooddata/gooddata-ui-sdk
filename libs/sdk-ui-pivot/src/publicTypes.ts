@@ -89,7 +89,7 @@ export interface IColumnSizing {
 }
 
 /**
- * @public
+ * @alpha
  */
 export type MeasureGroupDimension = "columns" | "rows";
 
@@ -133,6 +133,7 @@ export interface IPivotTableConfig {
 
     /**
      * Customize placement of metrics - in columns or in rows
+     * @alpha
      */
     measureGroupDimension?: MeasureGroupDimension;
 }
