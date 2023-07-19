@@ -1,0 +1,1085 @@
+{
+    "count": [48, 10],
+    "data": [
+        [
+            "2174478.26",
+            "5917286.73",
+            "8091764.99",
+            "4045882.495",
+            null,
+            "1989393.54",
+            "5501537.16",
+            "7490930.7",
+            "3745465.35",
+            null
+        ],
+        [
+            "883793.08",
+            "2370306.08",
+            null,
+            "1627049.58",
+            "3254099.16",
+            "817756.22",
+            "2039952.64",
+            null,
+            "1428854.43",
+            "2857708.86"
+        ],
+        [
+            "405767.14",
+            "3156945.21",
+            "3562712.35",
+            "1781356.175",
+            null,
+            "529670.6",
+            "7547821",
+            "8077491.6",
+            "4038745.8",
+            null
+        ],
+        [
+            "194123.92",
+            "1270431.27",
+            null,
+            "732277.595",
+            "1464555.19",
+            "219798.78",
+            "1441807.88",
+            null,
+            "830803.33",
+            "1661606.66"
+        ],
+        [
+            "2580245.4",
+            "9074231.94",
+            "11654477.34",
+            null,
+            null,
+            "2519064.14",
+            "13049358.16",
+            "15568422.3",
+            null,
+            null
+        ],
+        ["1290122.7", "4537115.97", null, null, null, "1259532.07", "6524679.08", null, null, null],
+        ["538958.5", "1820368.675", null, null, null, "518777.5", "1740880.26", null, null, null],
+        [
+            "1077917",
+            "3640737.35",
+            null,
+            null,
+            "4718654.35",
+            "1037555",
+            "3481760.52",
+            null,
+            null,
+            "4519315.52"
+        ],
+        [
+            "2008366.85",
+            "4088621.31",
+            "6096988.16",
+            "3048494.08",
+            null,
+            "3467615.16",
+            "6623534.92",
+            "10091150.08",
+            "5045575.04",
+            null
+        ],
+        [
+            "754830.5",
+            "1350035.81",
+            null,
+            "1052433.155",
+            "2104866.31",
+            "1160639.56",
+            "2612041.49",
+            null,
+            "1886340.525",
+            "3772681.05"
+        ],
+        [
+            "590536.1",
+            "3053141.34",
+            "3643677.44",
+            "1821838.72",
+            null,
+            "547704.36",
+            "2567375.43",
+            "3115079.79",
+            "1557539.895",
+            null
+        ],
+        [
+            "283569.17",
+            "1746096.06",
+            null,
+            "1014832.615",
+            "2029665.23",
+            "108422.01",
+            "841972.46",
+            null,
+            "475197.235",
+            "950394.47"
+        ],
+        [
+            "2598902.95",
+            "7141762.65",
+            "9740665.6",
+            null,
+            null,
+            "4015319.52",
+            "9190910.35",
+            "13206229.87",
+            null,
+            null
+        ],
+        ["1299451.475", "3570881.325", null, null, null, "2007659.76", "4595455.175", null, null, null],
+        ["519199.835", "1548065.935", null, null, null, "634530.785", "1727006.975", null, null, null],
+        [
+            "1038399.67",
+            "3096131.87",
+            null,
+            null,
+            "4134531.54",
+            "1269061.57",
+            "3454013.95",
+            null,
+            null,
+            "4723075.52"
+        ],
+        [
+            "2610784.51",
+            "6011398.61",
+            "8622183.12",
+            "4311091.56",
+            null,
+            "2935008.02",
+            "18472467",
+            "21407475.02",
+            "10703737.51",
+            null
+        ],
+        [
+            "989426.6",
+            "2305188",
+            null,
+            "1647307.3",
+            "3294614.6",
+            "1106550.62",
+            "2097915.19",
+            null,
+            "1602232.905",
+            "3204465.81"
+        ],
+        [
+            "793939.81",
+            "3135777.62",
+            "3929717.43",
+            "1964858.715",
+            null,
+            "1929950.34",
+            "2706868.95",
+            "4636819.29",
+            "2318409.645",
+            null
+        ],
+        [
+            "430585.96",
+            "1226965.38",
+            null,
+            "828775.67",
+            "1657551.34",
+            "223202.05",
+            "867705.82",
+            null,
+            "545453.935",
+            "1090907.87"
+        ],
+        [
+            "3404724.32",
+            "9147176.23",
+            "12551900.55",
+            null,
+            null,
+            "4864958.36",
+            "21179335.95",
+            "26044294.31",
+            null,
+            null
+        ],
+        ["1702362.16", "4573588.115", null, null, null, "2432479.18", "10589667.975", null, null, null],
+        ["710006.28", "1766076.69", null, null, null, "664876.335", "1482810.505", null, null, null],
+        [
+            "1420012.56",
+            "3532153.38",
+            null,
+            null,
+            "4952165.94",
+            "1329752.67",
+            "2965621.01",
+            null,
+            null,
+            "4295373.68"
+        ],
+        [
+            "1964931.93",
+            "1060976.15",
+            "3025908.08",
+            "1512954.04",
+            null,
+            "361332.16",
+            "2476731.94",
+            "2838064.1",
+            "1419032.05",
+            null
+        ],
+        [
+            "826188.69",
+            "389910.95",
+            null,
+            "608049.82",
+            "1216099.64",
+            "259178.39",
+            "1434946.69",
+            null,
+            "847062.54",
+            "1694125.08"
+        ],
+        [
+            "268112.52",
+            "877547.53",
+            "1145660.05",
+            "572830.025",
+            null,
+            "167554.65",
+            "864845.04",
+            "1032399.69",
+            "516199.845",
+            null
+        ],
+        [
+            "167291.74",
+            "510727.21",
+            null,
+            "339009.475",
+            "678018.95",
+            "148902.34",
+            "236060.2",
+            null,
+            "192481.27",
+            "384962.54"
+        ],
+        [
+            "2233044.45",
+            "1938523.68",
+            "4171568.13",
+            null,
+            null,
+            "528886.81",
+            "3341576.98",
+            "3870463.79",
+            null,
+            null
+        ],
+        ["1116522.225", "969261.84", null, null, null, "264443.405", "1670788.49", null, null, null],
+        ["496740.215", "450319.08", null, null, null, "204040.365", "835503.445", null, null, null],
+        [
+            "993480.43",
+            "900638.16",
+            null,
+            null,
+            "1894118.59",
+            "408080.73",
+            "1671006.89",
+            null,
+            null,
+            "2079087.62"
+        ],
+        [
+            "1827108.25",
+            "1980712.38",
+            "3807820.63",
+            "1903910.315",
+            null,
+            "536526.06",
+            "1418895.61",
+            "1955421.67",
+            "977710.835",
+            null
+        ],
+        [
+            "229646.4",
+            "1150517.74",
+            null,
+            "690082.07",
+            "1380164.14",
+            "329035.25",
+            "583354.19",
+            null,
+            "456194.72",
+            "912389.44"
+        ],
+        [
+            "120416.22",
+            "1358755.87",
+            "1479172.09",
+            "739586.045",
+            null,
+            "180781.87",
+            "2102661.65",
+            "2283443.52",
+            "1141721.76",
+            null
+        ],
+        [
+            "87001.62",
+            "272152.06",
+            null,
+            "179576.84",
+            "359153.68",
+            "158881.03",
+            "563803.9",
+            null,
+            "361342.465",
+            "722684.93"
+        ],
+        [
+            "1947524.47",
+            "3339468.25",
+            "5286992.72",
+            null,
+            null,
+            "717307.93",
+            "3521557.26",
+            "4238865.19",
+            null,
+            null
+        ],
+        ["973762.235", "1669734.125", null, null, null, "358653.965", "1760778.63", null, null, null],
+        ["158324.01", "711334.9", null, null, null, "243958.14", "573579.045", null, null, null],
+        [
+            "316648.02",
+            "1422669.8",
+            null,
+            null,
+            "1739317.82",
+            "487916.28",
+            "1147158.09",
+            null,
+            null,
+            "1635074.37"
+        ],
+        [
+            "1374944.56",
+            "2542872.97",
+            "3917817.53",
+            "1958908.765",
+            null,
+            "728206.16",
+            "2332594.72",
+            "3060800.88",
+            "1530400.44",
+            null
+        ],
+        [
+            "550627.31",
+            "1109596.41",
+            null,
+            "830111.86",
+            "1660223.72",
+            "476598.4",
+            "676823.87",
+            null,
+            "576711.135",
+            "1153422.27"
+        ],
+        [
+            "278916.58",
+            "1330301.14",
+            "1609217.72",
+            "804608.86",
+            null,
+            "225050.77",
+            "1478689.84",
+            "1703740.61",
+            "851870.305",
+            null
+        ],
+        [
+            "119311.53",
+            "398431.88",
+            null,
+            "258871.705",
+            "517743.41",
+            "17398.48",
+            "271250.62",
+            null,
+            "144324.55",
+            "288649.1"
+        ],
+        [
+            "1653861.14",
+            "3873174.11",
+            "5527035.25",
+            null,
+            null,
+            "953256.93",
+            "3811284.56",
+            "4764541.49",
+            null,
+            null
+        ],
+        ["826930.57", "1936587.055", null, null, null, "476628.465", "1905642.28", null, null, null],
+        ["334969.42", "754014.145", null, null, null, "246998.44", "474037.245", null, null, null],
+        [
+            "669938.84",
+            "1508028.29",
+            null,
+            null,
+            "2177967.13",
+            "493996.88",
+            "948074.49",
+            null,
+            null,
+            "1442071.37"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "sum", "type": "sum" } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [48, 10],
+    "totals": [
+        [
+            [
+                "14418302.73",
+                "34514336.86",
+                "48932639.59",
+                null,
+                null,
+                "13598793.69",
+                "54094023.26",
+                "67692816.95",
+                null,
+                null
+            ],
+            ["5516396.52", "14100358.85", null, null, null, "5026363.13", "13667634.95", null, null, null]
+        ],
+        []
+    ]
+}

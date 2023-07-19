@@ -2367,6 +2367,9 @@ export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): bo
 export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
 
 // @public
+export const isMeasureGroupIdentifier: (itemOrTotal: DimensionItem) => boolean;
+
+// @public
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
 
 // @public

@@ -40,7 +40,13 @@ export interface IDimension {
  */
 export const MeasureGroupIdentifier = "measureGroup";
 
-const isMeasureGroupIdentifier = (itemOrTotal: DimensionItem) => itemOrTotal === MeasureGroupIdentifier;
+/**
+ * Determine if a given item is a measure group.
+ *
+ * @public
+ */
+export const isMeasureGroupIdentifier = (itemOrTotal: DimensionItem) =>
+    itemOrTotal === MeasureGroupIdentifier;
 
 //
 // Type guards

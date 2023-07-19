@@ -31,7 +31,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - two measures",
         "uri": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",

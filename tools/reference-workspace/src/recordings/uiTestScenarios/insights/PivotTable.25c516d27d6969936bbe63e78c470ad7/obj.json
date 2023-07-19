@@ -108,7 +108,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.25c516d27d6969936bbe63e78c470ad7",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with two measures, grand totals and subtotals with auto-resizing and grow to fit",
         "uri": "PivotTable.25c516d27d6969936bbe63e78c470ad7",

@@ -23,7 +23,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.d7f0911c29d085fc14f4bc34c8a1931f",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with two same dates",
         "uri": "PivotTable.d7f0911c29d085fc14f4bc34c8a1931f",

@@ -88,7 +88,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.4ab855bb1f8821c7be1e0cfeb53fcd78",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - two measures and multiple grand totals for each",
         "uri": "PivotTable.4ab855bb1f8821c7be1e0cfeb53fcd78",

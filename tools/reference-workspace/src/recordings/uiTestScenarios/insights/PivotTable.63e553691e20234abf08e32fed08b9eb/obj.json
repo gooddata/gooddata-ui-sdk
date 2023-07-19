@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.63e553691e20234abf08e32fed08b9eb",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - font",
         "uri": "PivotTable.63e553691e20234abf08e32fed08b9eb",

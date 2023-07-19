@@ -73,7 +73,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.bdcc7f7d29d754d3c8dc9174513c0b0c",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - two measures and single grand total for one",
         "uri": "PivotTable.bdcc7f7d29d754d3c8dc9174513c0b0c",

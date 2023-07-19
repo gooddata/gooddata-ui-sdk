@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.cc2cbda6c9fbb059be239e4cc3d971ca",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with small page and auto-resizing",
         "uri": "PivotTable.cc2cbda6c9fbb059be239e4cc3d971ca",

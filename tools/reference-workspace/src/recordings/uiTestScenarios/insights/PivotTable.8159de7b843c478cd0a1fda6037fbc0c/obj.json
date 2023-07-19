@@ -57,7 +57,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - measure format with colors",
         "uri": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",

@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
+import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
 import { TableFacade } from "../tableFacade.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";
 import { headerClassFactory } from "./colDefHeaderClass.js";
@@ -11,7 +12,7 @@ import { isSeriesCol } from "./tableDescriptorTypes.js";
 import { cellClassFactory } from "../cell/cellClass.js";
 import { createCellRenderer } from "../cell/cellRenderer.js";
 import ColumnTotalHeader from "./headers/ColumnTotalHeader.js";
-import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
+import MixedValuesColumnHeader from "./headers/MixedValuesColumnHeader.js";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
@@ -142,39 +143,6 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
     };
 }
 
-export function mixedValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const separators = props.config?.separators;
-    const cellRenderer = createCellRenderer();
-
-    return {
-        cellClass: cellClassFactory(table, props, "gd-column-attribute-column gd-mixed-values-column"),
-        headerClass: headerClassFactory(
-            table,
-            props,
-            "gd-column-attribute-column-header gd-mixed-values-column",
-        ),
-        valueFormatter: (params: ValueFormatterParams) => {
-            return potentialRowMeasureFormatter(params, separators);
-        },
-        cellStyle: (params) => {
-            if (params.data?.measureDescriptor) {
-                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
-
-                return params.value !== undefined
-                    ? getMeasureCellStyle(
-                          params.value,
-                          measureDescriptor.measureHeaderItem.format,
-                          separators,
-                          true,
-                      )
-                    : null;
-            }
-            return null;
-        },
-        cellRenderer,
-    };
-}
-
 export function totalSubTotalColumnTemplate(
     table: TableFacade,
     props: Readonly<ICorePivotTableProps>,
@@ -212,6 +180,36 @@ export function totalSubTotalColumnTemplate(
                       true,
                   )
                 : null;
+        },
+        cellRenderer,
+    };
+}
+
+export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const cellRenderer = createCellRenderer();
+    const separators = props.config?.separators;
+
+    return {
+        headerComponent: MixedValuesColumnHeader,
+        cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-mixed-values-column")),
+        headerClass: headerClassFactory(table, props, "gd-mixed-values-column-header"),
+        valueFormatter: (params: ValueFormatterParams) => {
+            return potentialRowMeasureFormatter(params, separators);
+        },
+        cellStyle: (params) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellStyle(
+                          params.value,
+                          measureDescriptor.measureHeaderItem.format,
+                          separators,
+                          true,
+                      )
+                    : null;
+            }
+            return null;
         },
         cellRenderer,
     };

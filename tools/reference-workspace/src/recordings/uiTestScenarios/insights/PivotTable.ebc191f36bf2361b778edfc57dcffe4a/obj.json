@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.ebc191f36bf2361b778edfc57dcffe4a",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - single measure with row and column attributes",
         "uri": "PivotTable.ebc191f36bf2361b778edfc57dcffe4a",

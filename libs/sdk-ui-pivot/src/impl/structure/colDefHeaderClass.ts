@@ -4,14 +4,17 @@ import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import cx from "classnames";
 import {
     agColId,
+    AnyCol,
     ColumnGroupingDescriptorId,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
+    isSliceMeasureCol,
 } from "./tableDescriptorTypes.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";
 import { isResultTotalHeader } from "@gooddata/sdk-model";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants.js";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL, COLUMN_ATTRIBUTE_COLUMN } from "../base/constants.js";
+import { TableDescriptor } from "./tableDescriptor.js";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
 
@@ -44,16 +47,21 @@ export function headerClassFactory(
             const treeIndexes = colDesc.fullIndexPathToHere;
             const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
             const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasScopingCols();
-            const noBottomBorder = isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);
+            const noBottomBorder = getNoBottomBorderGroupHeader(colDesc, tableDescriptor);
             const topBottomSolidTotal =
                 isScopeCol(colDesc) &&
                 isResultTotalHeader(colDesc.header) &&
                 colDesc.headersToHere.length === 0;
-            const isColumnTotal = (colDef as ColDef).type === COLUMN_TOTAL;
-            const isColumnSubtotal = (colDef as ColDef).type === COLUMN_SUBTOTAL;
+            const isColumnTotal = getColumnTotals(colDef, colDesc, tableDescriptor);
+            const isColumnSubtotal = getColumnSubTotals(colDef, colDesc, tableDescriptor);
             const absoluteColIndex = isSeriesCol(colDesc)
                 ? tableDescriptor.getAbsoluteLeafColIndex(colDesc)
                 : undefined;
+            const isTransposedHeader =
+                isScopeCol(colDesc) &&
+                tableDescriptor.isTransposed() &&
+                (colDef as ColDef).type === COLUMN_ATTRIBUTE_COLUMN;
+            const isSliceMeasure = isSliceMeasureCol(colDesc);
 
             return cx(
                 classList,
@@ -77,10 +85,40 @@ export function headerClassFactory(
                 topBottomSolidTotal
                     ? "gd-column-group-header-total--first s-column-group-header-total--first"
                     : null,
-                !colDef.headerName && !noBottomBorder ? "gd-column-group-header--empty" : null,
+                !colDef.headerName && !noBottomBorder && !tableDescriptor.isTransposed()
+                    ? "gd-column-group-header--empty"
+                    : null,
                 isColumnTotal ? "gd-column-total" : null,
                 isColumnSubtotal ? "gd-column-subtotal" : null,
+                isTransposedHeader ? "gd-transpose-header" : null,
+                isSliceMeasure ? "gd-row-slice-measure-header" : null,
             );
         }
     };
+}
+
+function getColumnTotals(colDef: ColDef, colDesc: AnyCol, tableDescriptor: TableDescriptor) {
+    if (tableDescriptor.isTransposed()) {
+        return isScopeCol(colDesc) && colDesc.isTotal === true;
+    } else {
+        return colDef.type === COLUMN_TOTAL;
+    }
+}
+
+function getColumnSubTotals(colDef: ColDef, colDesc: AnyCol, tableDescriptor: TableDescriptor) {
+    if (tableDescriptor.isTransposed()) {
+        return isScopeCol(colDesc) && colDesc.isSubtotal === true;
+    } else {
+        return colDef.type === COLUMN_SUBTOTAL;
+    }
+}
+
+function getNoBottomBorderGroupHeader(colDesc: AnyCol, tableDescriptor: TableDescriptor) {
+    if (tableDescriptor.isTransposed()) {
+        return (
+            isScopeCol(colDesc) && colDesc.headersToHere.length === 0 && isResultTotalHeader(colDesc.header)
+        );
+    } else {
+        return isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);
+    }
 }

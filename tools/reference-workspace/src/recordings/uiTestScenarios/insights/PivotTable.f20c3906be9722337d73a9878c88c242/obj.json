@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.f20c3906be9722337d73a9878c88c242",
-        "properties": {},
+        "properties": { "controls": { "measureGroupDimension": "rows" } },
         "sorts": [],
         "title": "PivotTable - two measures with single row attr with metrics in rows",
         "uri": "PivotTable.f20c3906be9722337d73a9878c88c242",

@@ -13,13 +13,15 @@ export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
 
 export default class ColumnGroupHeader extends React.Component<IProps> {
     public render() {
-        const { menu, intl } = this.props;
+        const { menu, intl, getTableDescriptor } = this.props;
         const colGroupDef = this.props.columnGroup.getColGroupDef()!;
         const colId = agColId(colGroupDef);
         const parent = this.props.columnGroup.getParent();
 
         // do not show menu for the first group header and empty headers above row attribute column headers
-        const showMenu = !!parent && !!colGroupDef.headerName;
+        // and also do not show when table is transposed => handled in rows
+        const isTransposed = getTableDescriptor().isTransposed();
+        const showMenu = !!parent && !!colGroupDef.headerName && !isTransposed;
 
         return (
             <HeaderCell
@@ -31,7 +33,7 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 menu={showMenu ? menu?.() : undefined}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 colId={colId}
-                getTableDescriptor={this.props.getTableDescriptor}
+                getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
                 getRowTotals={this.props.getRowTotals}

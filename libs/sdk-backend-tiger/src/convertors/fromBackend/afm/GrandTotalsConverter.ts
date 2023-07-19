@@ -41,12 +41,8 @@ export function transformGrandTotalData(
             totalDimensions,
             definition,
         );
-        transformedTotals.forEach((total, totalIdx) => {
-            if (total.dimensionIdx === 1) {
-                grandTotalsData[total.dimensionIdx] = grandTotal.data as DataValue[][];
-            } else {
-                grandTotalsData[total.dimensionIdx][totalIdx] = total.data;
-            }
+        transformedTotals.forEach((total) => {
+            grandTotalsData[total.dimensionIdx] = grandTotal.data as DataValue[][];
         });
     }
     return grandTotalsData;

@@ -36,7 +36,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.71f688d207f32bba1f14f6979254eab5",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with attributes without measures",
         "uri": "PivotTable.71f688d207f32bba1f14f6979254eab5",

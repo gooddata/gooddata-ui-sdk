@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.90c0425e18a46b40a7a56829745d50b5",
-        "properties": {},
+        "properties": { "controls": { "measureGroupDimension": "rows" } },
         "sorts": [],
         "title": "PivotTable - single measure pivot with both attributes and metrics in rows",
         "uri": "PivotTable.90c0425e18a46b40a7a56829745d50b5",

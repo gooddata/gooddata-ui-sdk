@@ -6,6 +6,7 @@ import {
     IResultAttributeHeader,
     isAttributeDescriptor,
     isResultTotalHeader,
+    MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import range from "lodash/range.js";
@@ -199,6 +200,9 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): Gro
 
     const bottom: ScopeCol[] = [];
     for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
+        const attributeHeaders = headers.map((header) => header[colIdx]);
+        const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders);
+
         bottom.push({
             type: "scopeCol",
             id: `cg_${colIdx}`,
@@ -208,6 +212,8 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): Gro
             headersToHere: headers.slice(0, numberOfAttributes - 1).map((attrHeaders) => attrHeaders[colIdx]),
             attributeDescriptor: descriptors[numberOfAttributes - 1],
             descriptorsToHere: descriptors.slice(0, numberOfAttributes - 1),
+            isTotal,
+            isSubtotal,
         });
     }
 
@@ -291,7 +297,7 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
 
 function getMeasureGroupDimensionIndex(dv: DataViewFacade) {
     return dv.definition.dimensions.findIndex((dimension) =>
-        dimension.itemIdentifiers.includes("measureGroup"),
+        dimension.itemIdentifiers.includes(MeasureGroupIdentifier),
     );
 }
 

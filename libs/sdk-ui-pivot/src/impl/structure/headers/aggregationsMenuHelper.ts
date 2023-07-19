@@ -37,10 +37,14 @@ function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentif
     return sameMeasureLocalIdentifiers.length === measureLocalIdentifiers2.length;
 }
 
-function getTotalsForAttributeHeader(totals: ITotal[], measureLocalIdentifiers: string[]): IColumnTotal[] {
+function getTotalsForAttributeHeader(
+    totals: ITotal[],
+    measureLocalIdentifiers: string[],
+    ignoreMeasures: boolean = false,
+): IColumnTotal[] {
     return AVAILABLE_TOTALS.reduce((columnTotals: IColumnTotal[], type: TotalType) => {
         const uniqueMeasureLocalIdentifiers = getUniqueMeasures(totals, type);
-        if (areMeasuresSame(uniqueMeasureLocalIdentifiers, measureLocalIdentifiers)) {
+        if (ignoreMeasures || areMeasuresSame(uniqueMeasureLocalIdentifiers, measureLocalIdentifiers)) {
             const attributeLocalIdentifiers = getAttributeIntersection(
                 totals,
                 type,

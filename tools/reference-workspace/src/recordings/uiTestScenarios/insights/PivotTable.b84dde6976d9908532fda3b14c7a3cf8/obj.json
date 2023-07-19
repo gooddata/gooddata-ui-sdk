@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.b84dde6976d9908532fda3b14c7a3cf8",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - no totals and no grouping",
         "uri": "PivotTable.b84dde6976d9908532fda3b14c7a3cf8",

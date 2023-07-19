@@ -31,7 +31,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.a64c658913fd686f8026853d6d45b194",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - single measure with row attribute",
         "uri": "PivotTable.a64c658913fd686f8026853d6d45b194",

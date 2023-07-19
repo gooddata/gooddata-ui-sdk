@@ -39,7 +39,7 @@
             }
         ],
         "identifier": "PivotTable.c7921d94e8a6584489462b7057c30c91",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with measure value filter",
         "uri": "PivotTable.c7921d94e8a6584489462b7057c30c91",

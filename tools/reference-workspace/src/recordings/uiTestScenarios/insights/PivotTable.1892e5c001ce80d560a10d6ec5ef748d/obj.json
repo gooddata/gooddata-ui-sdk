@@ -17,7 +17,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - single column",
         "uri": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",

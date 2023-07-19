@@ -43,7 +43,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.2eceab3f50f6adcc0e88cc95427aa633",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - one measure and repeating row attributes on different positions",
         "uri": "PivotTable.2eceab3f50f6adcc0e88cc95427aa633",

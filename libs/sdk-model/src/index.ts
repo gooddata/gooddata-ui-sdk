@@ -68,6 +68,7 @@ export {
     dimensionSetTotals,
     dimensionsFindItem,
     ItemInDimension,
+    isMeasureGroupIdentifier,
 } from "./execution/base/dimension.js";
 
 export { idRef, uriRef, localIdRef } from "./objRef/factory.js";

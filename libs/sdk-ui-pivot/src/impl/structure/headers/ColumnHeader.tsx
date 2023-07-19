@@ -1,6 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { IHeaderParams } from "@ag-grid-community/all-modules";
 import React from "react";
+import cx from "classnames";
 import { IMenu } from "../../../publicTypes.js";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
@@ -8,6 +9,7 @@ import { isEmptyScopeCol, isMixedValuesCol, isSliceCol, isSliceMeasureCol } from
 import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
+    className?: string;
     menu?: () => IMenu;
 }
 
@@ -55,7 +57,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     };
 
     public render() {
-        const { displayName, enableSorting, menu, column } = this.props;
+        const { className, getTableDescriptor, displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
         const textAlign =
             isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
@@ -63,9 +65,12 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         const isSortingEnabled =
             !isColumnAttribute && !isSliceMeasureCol(col) && !isMixedValuesCol(col) && enableSorting;
 
+        const tableDescriptor = getTableDescriptor();
+        const showMenu = tableDescriptor.isTransposed() ? isSliceMeasureCol(col) && displayName : true;
+
         return (
             <HeaderCell
-                className="s-pivot-table-column-header"
+                className={cx("s-pivot-table-column-header", className)}
                 textAlign={textAlign}
                 displayText={displayName}
                 enableSorting={isSortingEnabled}
@@ -73,9 +78,9 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 defaultSortDirection={this.getDefaultSortDirection()}
                 onSortClick={this.onSortRequested}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
-                menu={menu?.()}
+                menu={showMenu ? menu?.() : undefined}
                 colId={column.getColDef().field}
-                getTableDescriptor={this.props.getTableDescriptor}
+                getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
                 getRowTotals={this.props.getRowTotals}

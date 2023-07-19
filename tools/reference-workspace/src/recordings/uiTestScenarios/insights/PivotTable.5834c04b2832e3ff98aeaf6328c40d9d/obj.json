@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.5834c04b2832e3ff98aeaf6328c40d9d",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - empty values",
         "uri": "PivotTable.5834c04b2832e3ff98aeaf6328c40d9d",

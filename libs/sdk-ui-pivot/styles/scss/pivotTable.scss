@@ -229,6 +229,17 @@ $subtotal-odd-background-color: var(
             }
         }
 
+        .gd-column-subtotal,
+        .gd-column-total,
+        .gd-column-attribute-column.gd-table-row-metric-cell,
+        .gd-mixed-values-column {
+            &.gd-transpose-header,
+            &.gd-transpose {
+                border-left: $cell-border;
+                border-left-color: $cell-border-color;
+            }
+        }
+
         .gd-column-index-0,
         .gd-column-group-header--first {
             border-left: none;
@@ -296,6 +307,12 @@ $subtotal-odd-background-color: var(
 
         .gd-table-row {
             border: none;
+        }
+
+        .gd-mixed-values-column-header,
+        .gd-transpose-header,
+        .gd-row-slice-measure-header {
+            cursor: default;
         }
 
         .gd-column-total {
@@ -438,10 +455,13 @@ $subtotal-odd-background-color: var(
     display: flex;
     margin: 0 -11px 1px;
     flex-direction: row;
-    min-height: 29px;
-    line-height: 28px;
     flex: 1 1 auto;
     overflow: hidden;
+
+    &:not(.gd-row-measure-name) {
+        line-height: 28px;
+        min-height: 29px;
+    }
 
     .ag-header-group-cell-with-group & {
         line-height: 26px;
