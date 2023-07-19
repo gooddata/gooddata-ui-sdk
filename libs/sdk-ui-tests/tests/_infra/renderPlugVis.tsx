@@ -69,6 +69,10 @@ export async function mountInsight(
             onError={noop}
             pushData={noop}
             onLoadingChanged={noop}
+            featureFlags={{
+                // explicitly turn on table transposition to keep scenarios with metrics in rows working
+                enablePivotTableTransposition: true,
+            }}
         />,
     );
 
