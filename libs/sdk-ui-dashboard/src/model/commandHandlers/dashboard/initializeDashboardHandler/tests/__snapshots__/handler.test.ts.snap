@@ -197,6 +197,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   },
   "settings": {
     "enableKPIDashboardDrillFromAttribute": true,
+    "enablePivotTableTransposition": false,
   },
   "widgetsOverlay": {},
 }
