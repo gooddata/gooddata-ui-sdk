@@ -30,10 +30,14 @@ function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | Buc
 }
 
 function isTransposed(insight: IInsightDefinition, customVisualizationConfig?: any) {
+    if (customVisualizationConfig?.measureGroupDimension) {
+        return customVisualizationConfig?.measureGroupDimension === ROWS;
+    }
+
     const measureGroupDimension: MeasureGroupDimension =
         getMeasureGroupDimensionFromProperties(insightProperties(insight)) ?? COLUMNS;
 
-    return measureGroupDimension === ROWS || customVisualizationConfig?.measureGroupDimension === ROWS;
+    return measureGroupDimension === ROWS;
 }
 
 export function getPivotTableDimensions(
