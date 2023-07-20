@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-20T13:54:50.434Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-20T11:12:01.394Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2295,6 +2295,22 @@ export const Insights = {
      * Insight Title: Sales Rep chart
      * Insight ID: aaifwhL4qpvy
      */ SalesRepChart: "aaifwhL4qpvy",
+    /**
+     * Insight Title: Table has many rows/columns
+     * Insight ID: aajOOAvz2tOI
+     */ TableHasManyRowsColumns: "aajOOAvz2tOI",
+    /**
+     * Insight Title: Insight has invalid interaction
+     * Insight ID: aadiViS7TBVF
+     */ InsightHasInvalidInteraction: "aadiViS7TBVF",
+    /**
+     * Insight Title: Table with two measures one column and metrics in rows
+     * Insight ID: aabCWSktWctl
+     */ TableWithTwoMeasuresOneColumnAndMetricsInRows: "aabCWSktWctl",
+    /**
+     * Insight Title: Table with two measures on row and metrics in rows
+     * Insight ID: aaeG9BAFzRsq
+     */ TableWithTwoMeasuresOnRowAndMetricsInRows: "aaeG9BAFzRsq",
 };
 export const Dashboards = {
     /**
@@ -2482,4 +2498,12 @@ export const Dashboards = {
      * Dashboard Title: Single select filters
      * Dashboard ID: aakfv3CaA9wt
      */ SingleSelectFilters: "aakfv3CaA9wt",
+    /**
+     * Dashboard Title: KD with table has many rows/columns
+     * Dashboard ID: aadOQOXx2Jqf
+     */ KDWithTableHasManyRowsColumns: "aadOQOXx2Jqf",
+    /**
+     * Dashboard Title: Metrics in rows
+     * Dashboard ID: aabCVFBeuwcH
+     */ MetricsInRows: "aabCVFBeuwcH",
 };
