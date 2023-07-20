@@ -191,6 +191,9 @@
     "properties.legend.position.down": "bas",
     "properties.legend.position.right": "droite",
     "properties.legend.position.left": "gauche",
+    "properties.orientation.title": "Orientation",
+    "properties.orientation.horizontal": "Horizontale (par défaut)",
+    "properties.orientation.vertical": "Vertical",
     "properties.points.title": "Points",
     "properties.points.groupNearbyPoints": "Grouper les points proches",
     "properties.points.size.title": "Taille de point",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparaison",
     "sorting.disabled.explanation.attribute": "Le tri est impossible pour cette configuration de perception.",
     "sorting.disabled.explanation.measure._measure": "Pour trier la perception, vous devez ajouter au moins un attribut. Vous pouvez également ajuster la position des éléments dans la section Mesures pour modifier leur position dans la perception.",
-    "sorting.disabled.explanation.measure._metric": "Pour trier la perception, vous devez ajouter au moins un attribut. Vous pouvez également ajuster la position des éléments dans la section Métriques pour modifier leur position dans la perception."
+    "sorting.disabled.explanation.measure._metric": "Pour trier la perception, vous devez ajouter au moins un attribut. Vous pouvez également ajuster la position des éléments dans la section Métriques pour modifier leur position dans la perception.",
+    "properties.metrics.title._measure": "Mesures",
+    "properties.metrics.title._metric": "Métriques",
+    "properties.metrics.position": "Position",
+    "properties.metrics.position.columns": "colonnes (par défaut)",
+    "properties.metrics.position.rows": "lignes",
+    "dashboard.bucket.table.subtitle.columns": "en colonnes",
+    "dashboard.bucket.table.subtitle.rows": "en rangées"
 }

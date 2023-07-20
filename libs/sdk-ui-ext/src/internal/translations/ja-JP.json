@@ -191,6 +191,9 @@
     "properties.legend.position.down": "下",
     "properties.legend.position.right": "右",
     "properties.legend.position.left": "左",
+    "properties.orientation.title": "向き",
+    "properties.orientation.horizontal": "水平（デフォルト）",
+    "properties.orientation.vertical": "縦",
     "properties.points.title": "ポイント",
     "properties.points.groupNearbyPoints": "付近のポイントをグループ化する",
     "properties.points.size.title": "ポイントサイズ",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "比較",
     "sorting.disabled.explanation.attribute": "このインサイト構成では並べ替えはできません。",
     "sorting.disabled.explanation.measure._measure": "インサイトを並べ替えるには、少なくとも 1 つの属性を追加する必要があります。測定値セクションの項目の位置を調整して、インサイトでの位置を変更することもできます。",
-    "sorting.disabled.explanation.measure._metric": "インサイトを並べ替えるには、少なくとも 1 つの属性を追加する必要があります。メトリックセクションの項目の位置を調整して、インサイトでの位置を変更することもできます。"
+    "sorting.disabled.explanation.measure._metric": "インサイトを並べ替えるには、少なくとも 1 つの属性を追加する必要があります。メトリックセクションの項目の位置を調整して、インサイトでの位置を変更することもできます。",
+    "properties.metrics.title._measure": "メジャー",
+    "properties.metrics.title._metric": "メトリック",
+    "properties.metrics.position": "位置",
+    "properties.metrics.position.columns": "カラム（デフォルト）",
+    "properties.metrics.position.rows": "行数",
+    "dashboard.bucket.table.subtitle.columns": "列",
+    "dashboard.bucket.table.subtitle.rows": "行"
 }

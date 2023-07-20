@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Elija una localización del idioma específica. Si se desactiva, la visualización adoptará por defecto la configuración actual del idioma de visualización.",
     "embedInsightDialog.code.options.include.config.info": "Incluya la configuración de la perspectiva en cuanto a colores, ejes, leyenda y lienzos si está disponible.",
     "embedInsightDialog.code.options.custom.height": "Personalizar altura",
-    "embedInsightDialog.code.options.display.configuration": "Mostrar configuración",
+    "embedInsightDialog.code.options.display.configuration": "Incluir configuración",
     "embedInsightDialog.headLine.embedInsight": "Perspectiva incrustada",
     "embedInsightDialog.componentType.byReference.tooltip": "Incrustar como una referencia a una perspectiva guardada en un componente de reacción genérico de GD.UI. Cualquier cambio futuro en la perspectiva (como tipo de visuailzación, métricas, atributos) quedará reflejado en la versión incrustada.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Incrustar como una definición de perspectiva en un componente de reacción específico de GD.UI según el tipo de visualización seleccionado actualmente. Ningún cambio futuro en la perspectiva (como tipo de visualización, métricas, atributos) hecho en esta aplicación quedará reflejado en la versión incrustada.",
