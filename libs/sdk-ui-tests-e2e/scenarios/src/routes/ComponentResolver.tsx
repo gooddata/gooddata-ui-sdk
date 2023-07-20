@@ -37,6 +37,7 @@ import { DashboardCommands } from "../components/Scenarios/Dashboard/DashboardCo
 import { DashboardMultipleFiltersScenario } from "../components/Scenarios/Dashboard/DashboardMultipleFiltersScenario";
 import { DashboardDrillToInsightScenario } from "../components/Scenarios/Dashboard/DashboardDrilToInsightScenario";
 import { DashboardTargetDashboardScenario } from "../components/Scenarios/Dashboard/DashboardTargetDashboardScenario";
+import { DashboardDrillToInsightWithMetricsInRowsScenario } from "../components/Scenarios/Dashboard/DashboardDrillToInsightWithMetricsInRowsScenario";
 import { InsightOnDashboardScenario } from "../components/Scenarios/Dashboard/InsightOnDashboardScenario";
 import { HeaderSectionScenario } from "../components/Scenarios/Dashboard/HeaderSectionScenario";
 import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/HeaderSectionLocalizationScenario";
@@ -80,6 +81,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_DEPENDENT_FILTER_SET: "dashboard/dependent-filter-set",
     DASHBOARD_COMMANDS: "dashboard/commands",
     DASHBOARD_DRILL_TO_INSIGHT: "dashboard/drill-to-insight",
+    DASHBOARD_DRILL_TO_INSIGHT_METRICS_IN_ROWS: "dashboard/drill-to-insight-metrics-in-rows",
     DASHBOARD_TARGET: "dashboard/dashboard-target",
     DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS: "dashboard/dashboard-many-rows-columns",
     DASHBOARD_ATTRIBUTE_SELECTION: "dashboard/attribute-selection",
@@ -138,6 +140,10 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_DEPENDENT_FILTER_SET, DashboardDependentFilterSet],
     [SCENARIO_KEYS.DASHBOARD_COMMANDS, DashboardCommands],
     [SCENARIO_KEYS.DASHBOARD_DRILL_TO_INSIGHT, DashboardDrillToInsightScenario],
+    [
+        SCENARIO_KEYS.DASHBOARD_DRILL_TO_INSIGHT_METRICS_IN_ROWS,
+        DashboardDrillToInsightWithMetricsInRowsScenario,
+    ],
     [SCENARIO_KEYS.DASHBOARD_TARGET, DashboardTargetDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS, DashboardWithTableManyRowsColumnsScenario],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
