@@ -271,8 +271,16 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = ["columnWidths", "measureGroupDi
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
 
+const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
+    ...BASE_X_AXIS_PROPERTIES,
+    "xaxis.min",
+    "xaxis.max",
+    "xaxis.format",
+];
+
 export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_CHART_SUPPORTED_PROPERTIES,
+    ...WATERFALL_PRIMARY_X_AXIS_PROPERTIES,
     "total.enabled",
     "total.name",
     "total.measures",

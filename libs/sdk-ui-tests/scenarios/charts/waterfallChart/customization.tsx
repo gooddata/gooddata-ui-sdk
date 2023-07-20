@@ -63,6 +63,21 @@ const orientationConfigScenarios = scenariosFor<IWaterfallChartProps>("Waterfall
     .addScenario("change the orientation configuration", {
         ...WaterfallChartWithMultiMeasures,
         config: { orientation: { position: "vertical" } },
+    })
+    .addScenario("vertical orientation with custom axes configuration", {
+        ...WaterfallChartWithSingleMeasureAndViewBy,
+        config: {
+            orientation: { position: "vertical" },
+            xaxis: { min: "0", max: "130000000", name: { position: "high" } },
+            yaxis: { name: { position: "low" } },
+        },
+    })
+    .addScenario("horizontal orientation with custom axes configuration", {
+        ...WaterfallChartWithSingleMeasureAndViewBy,
+        config: {
+            xaxis: { name: { position: "high" } },
+            yaxis: { min: "0", max: "130000000", name: { position: "low" } },
+        },
     });
 export default [
     legendScenarios,
