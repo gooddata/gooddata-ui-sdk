@@ -331,7 +331,7 @@ export function createAgGridPage(
 
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
-    if (tableDescriptor.headers.mixedHeadersCols.length > 0) {
+    if (tableDescriptor.headers.mixedHeadersCols.length > 0 && tableDescriptor.isTransposed()) {
         const rowData: IGridRow[] = [];
 
         // rows with attribute values

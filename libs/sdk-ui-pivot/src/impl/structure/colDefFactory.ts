@@ -11,7 +11,7 @@ import {
     MIXED_VALUES_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
-    MIXED_HEADERS_COLUMN
+    MIXED_HEADERS_COLUMN,
 } from "../base/constants.js";
 import {
     agColId,
@@ -25,7 +25,7 @@ import {
     MixedValuesCol,
     MixedHeadersCol,
 } from "./tableDescriptorTypes.js";
-import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -36,7 +36,7 @@ import { messages } from "../../locales.js";
 type TransformState = {
     initialSorts: ISortItem[];
     cellRendererPlaced: ColDef | undefined;
-    rowColDefs: Array<ColDef>;
+    rowColDefs: Array<ColDef | ColGroupDef>;
     rootColDefs: Array<ColDef | ColGroupDef>;
     leafColDefs: Array<ColDef>;
     allColDefs: Array<ColDef | ColGroupDef>;
@@ -129,19 +129,64 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
 function createAndAddMixedHeadersColDefs(
     mixedHeadersCol: MixedHeadersCol[],
     state: TransformState,
+    table: TableCols,
+    isTransposed: boolean,
 ) {
     for (const col of mixedHeadersCol) {
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+        let colDef: ColDef | ColGroupDef;
+        if (isTransposed) {
+            colDef = {
+                type: MIXED_HEADERS_COLUMN,
+                colId: col.id,
+                field: col.id,
+                headerName: " ",
+                headerTooltip: undefined,
+                ...cellRendererProp,
+            };
+        } else {
+            const level = 0;
+            const getColDef = (
+                level: number,
+                scopingAttributes: IAttributeDescriptor[],
+            ): ColDef | ColGroupDef => {
+                const attributeName =
+                    level === 0 ? "" : scopingAttributes[level - 1].attributeHeader.formOf.name;
 
-        const colDef: ColDef = {
-            type: MIXED_HEADERS_COLUMN,
-            colId: col.id,
-            field: col.id,
-            headerName: " ", // do not render header, yet leave ability to resize it
-            headerTooltip: undefined,
-            ...cellRendererProp,
-        };
-
+                if (level === scopingAttributes.length) {
+                    return {
+                        type: MIXED_HEADERS_COLUMN,
+                        colId: col.id,
+                        field: col.id,
+                        headerName: attributeName,
+                        headerTooltip: attributeName,
+                        // add one extra level because of metric headers
+                        children: [
+                            {
+                                type: MIXED_HEADERS_COLUMN,
+                                colId: col.id,
+                                field: col.id,
+                                headerName: " ",
+                                headerTooltip: undefined,
+                                ...cellRendererProp,
+                            },
+                        ],
+                        ...cellRendererProp,
+                    };
+                }
+                const child = getColDef(level + 1, scopingAttributes);
+                return {
+                    type: MIXED_HEADERS_COLUMN,
+                    colId: col.id,
+                    field: col.id,
+                    headerName: attributeName,
+                    headerTooltip: attributeName,
+                    children: [child],
+                    ...cellRendererProp,
+                };
+            };
+            colDef = getColDef(level, table.scopingAttributes);
+        }
         state.rowColDefs.push(colDef); // TODO maybe add to a new collection
         state.allColDefs.push(colDef);
 
@@ -217,20 +262,25 @@ function createColumnHeadersFromDescriptors(
     cols: DataCol[],
     state: TransformState,
     intl?: IntlShape,
+    config?: IPivotTableConfig,
 ): Array<ColGroupDef | ColDef> {
     const colDefs: Array<ColGroupDef | ColDef> = [];
 
     for (const col of cols) {
         switch (col.type) {
             case "rootCol": {
-                const headerName = col.groupingAttributes
-                    .map((attr) => attr.attributeHeader.formOf.name)
-                    .join(COLUMN_GROUPING_DELIMITER);
+                const headerName =
+                    config?.columnHeadersPosition === "left"
+                        ? ""
+                        : col.groupingAttributes
+                              .map((attr) => attr.attributeHeader.formOf.name)
+                              .join(COLUMN_GROUPING_DELIMITER);
                 const colDef: ColGroupDef = {
                     groupId: ColumnGroupingDescriptorId,
                     children: createColumnHeadersFromDescriptors(col.children, state, intl),
                     headerName,
                     headerTooltip: headerName,
+                    ...(config?.columnHeadersPosition === "left" ? { headerGroupComponent: null } : {}),
                 };
 
                 colDefs.push(colDef);
@@ -276,8 +326,13 @@ function createColumnHeadersFromDescriptors(
     return colDefs;
 }
 
-function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?: IntlShape) {
-    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state, intl);
+function createAndAddDataColDefs(
+    table: TableCols,
+    state: TransformState,
+    intl?: IntlShape,
+    config?: IPivotTableConfig,
+) {
+    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state, intl, config);
 
     state.rootColDefs.push(...cols);
 }
@@ -300,6 +355,7 @@ export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
     emptyHeaderTitle: string,
+    isTransposed: boolean,
     config?: IPivotTableConfig,
     intl?: IntlShape,
 ): TableColDefs {
@@ -313,15 +369,13 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
+    createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
+    createAndAddDataColDefs(table, state, intl, config);
     if (config?.columnHeadersPosition === "left") {
-        createAndAddMixedHeadersColDefs(table.mixedHeadersCols, state);
-        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
-    } else {
-        createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
-        createAndAddDataColDefs(table, state, intl);
-        // handle metrics in rows and no column attribute case
-        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+        createAndAddMixedHeadersColDefs(table.mixedHeadersCols, state, table, isTransposed);
     }
+    // outside of columnHeadersPosition === "left" condition to handle also metrics in rows and no column attribute case
+    createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 
