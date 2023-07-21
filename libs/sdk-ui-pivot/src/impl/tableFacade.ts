@@ -811,11 +811,11 @@ export class TableFacade {
 
         const dv = this.visibleData;
 
-        // NESTOR - is enough with this?
-        const rowCount =
-            this.config?.columnHeadersPosition === "left"
-                ? dv.rawData().secondDimSize()
-                : dv.rawData().firstDimSize();
+        const rowCount = dv.rawData().firstDimSize();
+        let headerRowsMovedToDataRowsCount = 0;
+        if(this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
+            headerRowsMovedToDataRowsCount = dv.meta().dimensions()[1].headers.length; // count of column attributes now rendered in normal rows
+        }
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
         const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
@@ -824,7 +824,7 @@ export class TableFacade {
         // increased in order to resolve issue BB-1509
         const leeway = 2;
 
-        const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
+        const bodyHeight = (rowCount + headerRowsMovedToDataRowsCount) * DEFAULT_ROW_HEIGHT + leeway;
         const footerHeight = rowAggregationCount * DEFAULT_ROW_HEIGHT;
 
         return headerHeight + bodyHeight + footerHeight;
