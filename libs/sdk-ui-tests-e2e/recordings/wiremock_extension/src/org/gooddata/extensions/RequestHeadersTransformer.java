@@ -18,6 +18,7 @@ public class RequestHeadersTransformer extends StubRequestFilter {
         Request wrappedRequest = RequestWrapper.create()
                 .transformHeader("Origin", new OriginTransformer())
                 .transformHeader("Referer", new RefererTransformer())
+                .transformHeader("Accept-Encoding", new AcceptEncodingTransformer())
                 .wrap(request);
 
         return RequestFilterAction.continueWith(wrappedRequest);

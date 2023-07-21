@@ -60,9 +60,10 @@ if [ ${mode} = "interactive" ]; then
       -it \
       --user $(id -u):$(id -g) \
       --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
+      --volume ${WIREMOCK_DIR}/wiremock_extension:/var/wiremock/extensions:ro \
       --publish 8442:8442 \
       wiremock/wiremock:2.32.0 \
-        --https-port 8442 --enable-browser-proxying --verbose
+        --https-port 8442 --enable-browser-proxying --verbose --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer
 else
   if [ -z ${WIREMOCK_NET} ]; then
     #
@@ -75,9 +76,10 @@ else
         --detach=true \
         --user $(id -u):$(id -g) \
         --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
+        --volume ${WIREMOCK_DIR}/wiremock_extension:/var/wiremock/extensions:ro \
         --publish 8442:8442 \
         wiremock/wiremock:2.32.0 \
-          --https-port 8442 --enable-browser-proxying)
+          --https-port 8442 --enable-browser-proxying --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer)
   else
     #
     # When running on dedicated docker network, use network id passed via WIREMOCK_NET and alias the server as "bear".
@@ -88,9 +90,10 @@ else
         --detach=true \
         --user $(id -u):$(id -g) \
         --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
+        --volume ${WIREMOCK_DIR}/wiremock_extension:/var/wiremock/extensions:ro \
         --net "${WIREMOCK_NET}" --net-alias tiger \
         wiremock/wiremock:2.32.0 \
-          --https-port 8442 --enable-browser-proxying)
+          --https-port 8442 --enable-browser-proxying --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer)
   fi
 
   if [ ! $? -eq 0 ]; then
