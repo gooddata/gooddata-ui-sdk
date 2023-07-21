@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Escolha um idioma específico para a localização. Se desativado, a visualização assume como predefinição o seu idioma atual de apresentação.",
     "embedInsightDialog.code.options.include.config.info": "Incluir a configuração de cores, eixos, legenda e tela do insight, se disponível.",
     "embedInsightDialog.code.options.custom.height": "Altura personalizada",
-    "embedInsightDialog.code.options.display.configuration": "Apresentar configuração",
+    "embedInsightDialog.code.options.display.configuration": "Incluir configuração",
     "embedInsightDialog.headLine.embedInsight": "Incorporar insight",
     "embedInsightDialog.componentType.byReference.tooltip": "Incorporar como referência a um insight guardado num componente React GD.UI genérico. Todas as alterações futuras ao insight (tais como tipo de visualização, métricas, atributos) serão refletidas na versão incorporada.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Incorporar como definição de insight num componente React GD.UI específico, com base no tipo de visualização atualmente selecionado. As alterações futuras ao insight (tais como tipo de visualização, métricas, atributos) efetuadas nesta aplicação não serão refletidas na versão incorporada.",

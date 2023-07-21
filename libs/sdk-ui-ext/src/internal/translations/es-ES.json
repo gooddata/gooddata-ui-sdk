@@ -191,6 +191,9 @@
     "properties.legend.position.down": "parte inferior",
     "properties.legend.position.right": "derecha",
     "properties.legend.position.left": "izquierda",
+    "properties.orientation.title": "Orientación",
+    "properties.orientation.horizontal": "Horizontal (predeterminada)",
+    "properties.orientation.vertical": "Vertical",
     "properties.points.title": "Puntos",
     "properties.points.groupNearbyPoints": "Agrupar puntos cercanos",
     "properties.points.size.title": "Tamaño del punto",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativas",
     "sorting.disabled.explanation.attribute": "La opción de ordenar no está disponible para la configuración de esta perspectiva.",
     "sorting.disabled.explanation.measure._measure": "Debe añadir al menos un atributo para ordenar la perspectiva. También puede ajustar la posición de los elementos en la sección Medidas para cambiar su posición en la perspectiva.",
-    "sorting.disabled.explanation.measure._metric": "Debe añadir al menos un atributo para ordenar la perspectiva. También puede ajustar la posición de los elementos en la sección Métricas para cambiar su posición en la perspectiva."
+    "sorting.disabled.explanation.measure._metric": "Debe añadir al menos un atributo para ordenar la perspectiva. También puede ajustar la posición de los elementos en la sección Métricas para cambiar su posición en la perspectiva.",
+    "properties.metrics.title._measure": "Medidas",
+    "properties.metrics.title._metric": "Métricas",
+    "properties.metrics.position": "Posición",
+    "properties.metrics.position.columns": "columnas (predeterminado)",
+    "properties.metrics.position.rows": "filas",
+    "dashboard.bucket.table.subtitle.columns": "en columnas",
+    "dashboard.bucket.table.subtitle.rows": "en filas"
 }
