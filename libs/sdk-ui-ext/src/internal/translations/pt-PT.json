@@ -191,6 +191,9 @@
     "properties.legend.position.down": "baixo",
     "properties.legend.position.right": "direita",
     "properties.legend.position.left": "esquerda",
+    "properties.orientation.title": "Orientação",
+    "properties.orientation.horizontal": "Horizontal (predefinição)",
+    "properties.orientation.vertical": "Vertical",
     "properties.points.title": "Pontos",
     "properties.points.groupNearbyPoints": "Agrupar pontos próximos",
     "properties.points.size.title": "Tamanho do Ponto",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativo",
     "sorting.disabled.explanation.attribute": "Não é possível ordenar para esta configuração de insights.",
     "sorting.disabled.explanation.measure._measure": "Tem de adicionar pelo menos um atributo para ordenar o insight. Também pode ajustar a posição dos itens na secção Medidas para alterar a respetiva posição no insight.",
-    "sorting.disabled.explanation.measure._metric": "Tem de adicionar pelo menos um atributo para ordenar o insight. Também pode ajustar a posição dos itens na secção Métricas para alterar a respetiva posição no insight."
+    "sorting.disabled.explanation.measure._metric": "Tem de adicionar pelo menos um atributo para ordenar o insight. Também pode ajustar a posição dos itens na secção Métricas para alterar a respetiva posição no insight.",
+    "properties.metrics.title._measure": "Medidas",
+    "properties.metrics.title._metric": "Métricas",
+    "properties.metrics.position": "Posição",
+    "properties.metrics.position.columns": "colunas (predefinição)",
+    "properties.metrics.position.rows": "linhas",
+    "dashboard.bucket.table.subtitle.columns": "em colunas",
+    "dashboard.bucket.table.subtitle.rows": "em linhas"
 }

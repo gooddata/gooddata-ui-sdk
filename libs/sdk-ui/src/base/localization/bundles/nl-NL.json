@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Kies een specifieke taallocatie. Indien uitgeschakeld wordt de weergave ingesteld op de huidige taalinstellingen voor weergave.",
     "embedInsightDialog.code.options.include.config.info": "Implementeer de inzichtconfiguratie van kleuren, assen, legenda en canvas indien beschikbaar.",
     "embedInsightDialog.code.options.custom.height": "Aangepaste hoogte",
-    "embedInsightDialog.code.options.display.configuration": "Configuratie weergeven",
+    "embedInsightDialog.code.options.display.configuration": "Inclusief configuratie",
     "embedInsightDialog.headLine.embedInsight": "Inzicht insluiten",
     "embedInsightDialog.componentType.byReference.tooltip": "U kunt een referentie insluiten in een opgeslagen inzicht via een algemene GD.UI-reactiecomponent. Alle toekomstige wijzigingen aan het inzicht (zoals visualisatietype, meetgegevens, attributen) worden gereflecteerd in de ingesloten versie.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Sluit in als een inzichtdefinitie in een specifieke GD.UI-reactiecomponent op basis van het huidig geselecteerde visualisatietype. Toekomstige wijzigingen aan het inzicht (zoals visualisatietype, meetgegevens, attributen) in deze app worden niet gereflecteerd in de ingesloten versie.",

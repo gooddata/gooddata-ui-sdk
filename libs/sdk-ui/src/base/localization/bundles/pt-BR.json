@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Escolha a localização de uma língua específica. Se isso estiver desativado, a visualização padrão será a mesma das configurações de visualização de idioma atuais.",
     "embedInsightDialog.code.options.include.config.info": "Caso disponível, incluir a configuração do insight de cores, eixos, legenda e tela.",
     "embedInsightDialog.code.options.custom.height": "Personalizar altura",
-    "embedInsightDialog.code.options.display.configuration": "Exibir configuração",
+    "embedInsightDialog.code.options.display.configuration": "Incluir configuração",
     "embedInsightDialog.headLine.embedInsight": "Incorporar Insight",
     "embedInsightDialog.componentType.byReference.tooltip": "Incorporar como referência a um insight salvo em um componente de reação de interface do usuário do GoodData. Qualquer alteração futura no insight (como tipo de visualização, métricas, atributos) afetara a versão incorporada.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Incorporar como definição de insight em um componente de reação de interface de usuário específico, baseado no tipo atual de visualização selecionado. Nenhuma alteração futura no insight (como tipo de visualização, métricas, atributos) feita nesse aplicativo afetara a versão incorporada.",

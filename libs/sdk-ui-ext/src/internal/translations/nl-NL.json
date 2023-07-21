@@ -191,6 +191,9 @@
     "properties.legend.position.down": "onder",
     "properties.legend.position.right": "rechts",
     "properties.legend.position.left": "links",
+    "properties.orientation.title": "Oriëntatie",
+    "properties.orientation.horizontal": "Horizontaal (standaard)",
+    "properties.orientation.vertical": "Verticaal",
     "properties.points.title": "Punten",
     "properties.points.groupNearbyPoints": "Nabijgelegen punten groeperen",
     "properties.points.size.title": "Puntenformaat",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Relatief",
     "sorting.disabled.explanation.attribute": "Sorteren is niet mogelijk voor deze inzichtconfiguratie.",
     "sorting.disabled.explanation.measure._measure": "U moet minimaal één attribuut toevoegen aan het inzicht. U kunt ook de positie van items aanpassen in het gedeelte Maten om de positie ervan aan te passen in het inzicht.",
-    "sorting.disabled.explanation.measure._metric": "U moet minimaal één attribuut toevoegen aan het inzicht. U kunt ook de positie van items aanpassen in het gedeelte Meetgegevens om de positie ervan aan te passen in het inzicht."
+    "sorting.disabled.explanation.measure._metric": "U moet minimaal één attribuut toevoegen aan het inzicht. U kunt ook de positie van items aanpassen in het gedeelte Meetgegevens om de positie ervan aan te passen in het inzicht.",
+    "properties.metrics.title._measure": "Maten",
+    "properties.metrics.title._metric": "Meetgegevens",
+    "properties.metrics.position": "Positie",
+    "properties.metrics.position.columns": "kolommen (standaard)",
+    "properties.metrics.position.rows": "rijen",
+    "dashboard.bucket.table.subtitle.columns": "In kolommen",
+    "dashboard.bucket.table.subtitle.rows": "In rijen"
 }
