@@ -239,9 +239,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
         const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
         const originalColumnHeadersPosition =
-            rowAttributes.length > 0 || originalMeasureGroupDimension === "columns"
-                ? "top"
-                : newReferencePoint.properties?.controls?.columnHeadersPosition;
+            rowAttributes.length > 0 ? "top" : newReferencePoint.properties?.controls?.columnHeadersPosition;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
