@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Choisissez la localisation dans une langue spécifique. Si cette option est désactivée, la visualisation utilise par défaut vos paramètres de langue actuels.",
     "embedInsightDialog.code.options.include.config.info": "Inclure la configuration disponible des couleurs, axes, légendes et canevas de la perception.",
     "embedInsightDialog.code.options.custom.height": "Hauteur personnalisée",
-    "embedInsightDialog.code.options.display.configuration": "Afficher la configuration",
+    "embedInsightDialog.code.options.display.configuration": "Inclure la configuration",
     "embedInsightDialog.headLine.embedInsight": "Incorporer la perception",
     "embedInsightDialog.componentType.byReference.tooltip": "Incorporer en tant que référence à une perception enregistrée dans un composant React GD.UI générique. Toute modification ultérieure de cette perception (type de visualisation, métriques ou attributs par exemple) est appliquée à la version incorporée.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Incorporer en tant que définition de perception dans un composant React GD.UI spécifique sur la base du type de visualisation actuellement sélectionné. Aucune modification ultérieure de cette perception (type de visualisation, métriques ou attributs par exemple) effectuée dans cette application n'est appliquée à la version incorporée.",
