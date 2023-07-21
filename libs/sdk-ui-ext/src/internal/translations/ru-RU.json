@@ -191,6 +191,9 @@
     "properties.legend.position.down": "внизу",
     "properties.legend.position.right": "справа",
     "properties.legend.position.left": "слева",
+    "properties.orientation.title": "Ориентация",
+    "properties.orientation.horizontal": "Горизонтальная (по умолчанию)",
+    "properties.orientation.vertical": "Вертикальная",
     "properties.points.title": "Точки",
     "properties.points.groupNearbyPoints": "Группировать близлежащие точки",
     "properties.points.size.title": "Размер точки",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Сравнительный",
     "sorting.disabled.explanation.attribute": "Для этой конфигурации анализа сортировка невозможна.",
     "sorting.disabled.explanation.measure._measure": "Вы должны добавить хотя бы один атрибут, чтобы отсортировать анализ. Вы также можете настроить положение элементов в разделе «Показатели», чтобы изменить их положение в статистике.",
-    "sorting.disabled.explanation.measure._metric": "Вы должны добавить хотя бы один атрибут, чтобы отсортировать анализ. Вы также можете настроить положение элементов в разделе «Метрики», чтобы изменить их положение в статистике."
+    "sorting.disabled.explanation.measure._metric": "Вы должны добавить хотя бы один атрибут, чтобы отсортировать анализ. Вы также можете настроить положение элементов в разделе «Метрики», чтобы изменить их положение в статистике.",
+    "properties.metrics.title._measure": "Показатели",
+    "properties.metrics.title._metric": "Метрики",
+    "properties.metrics.position": "Позиция",
+    "properties.metrics.position.columns": "столбцы (по умолчанию)",
+    "properties.metrics.position.rows": "ряды",
+    "dashboard.bucket.table.subtitle.columns": "в столбцах",
+    "dashboard.bucket.table.subtitle.rows": "в строках"
 }

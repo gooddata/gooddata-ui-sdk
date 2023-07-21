@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Выберите конкретный языковой стандарт. Если этот параметр отключен, по умолчанию для визуализации используются текущие настройки языка отображения.",
     "embedInsightDialog.code.options.include.config.info": "Включить из анализа конфигурацию цветов, осей, условных обозначений и холста, если таковые имеются.",
     "embedInsightDialog.code.options.custom.height": "Нестандартная высота",
-    "embedInsightDialog.code.options.display.configuration": "Настройка отображения",
+    "embedInsightDialog.code.options.display.configuration": "Включить конфигурацию",
     "embedInsightDialog.headLine.embedInsight": "Встроить анализ",
     "embedInsightDialog.componentType.byReference.tooltip": "Встроить как ссылку на сохраненный анализ в общий компонент реакции GD.UI. Любые будущие изменения в анализе (например, тип визуализации, метрики, атрибуты) будут отражены во встроенной версии.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Встроить как определение анализа в конкретный компонент реакции GD.UI на основе выбранного в данный момент типа визуализации. Никакие будущие изменения в анализе (например, тип визуализации, метрики, атрибуты), сделанные в этом приложении, не будут отражены во встроенной версии.",

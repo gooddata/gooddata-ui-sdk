@@ -338,7 +338,7 @@
     "embedInsightDialog.webComponents.locale.tooltip": "Wählen Sie eine Sprache für die Oberfläche aus. Wenn diese Option deaktiviert ist, wird für die Visualisierung standardmäßig Ihre aktuelle Anzeigesprache verwendet.",
     "embedInsightDialog.code.options.include.config.info": "Schließen Sie die Betrachtungskonfiguration von Farben, Achsen, Legende und Arbeitsfläche ein (sofern verfügbar).",
     "embedInsightDialog.code.options.custom.height": "Benutzerdefinierte Höhe",
-    "embedInsightDialog.code.options.display.configuration": "Konfiguration anzeigen",
+    "embedInsightDialog.code.options.display.configuration": "Konfiguration einschließen",
     "embedInsightDialog.headLine.embedInsight": "Betrachtung einbetten",
     "embedInsightDialog.componentType.byReference.tooltip": "Betten Sie die Anwendung als Verweis auf eine gespeicherte Betrachtung in eine generische GD.UI-Reaktionskomponente ein. Alle zukünftigen Änderungen an der Betrachtung (z. B. Visualisierungsstil, Metriken, Attribute) werden in der eingebetteten Version widergespiegelt.",
     "embedInsightDialog.componentType.byDefinition.tooltip": "Betten Sie die Anwendung als Betrachtungsdefinition in eine bestimmte GD.UI-Reaktionskomponente basierend auf dem aktuell ausgewählten Visualisierungsstil ein. Zukünftige Änderungen an der Betrachtung (z. B. Visualisierungsstil, Metriken, Attribute), die in dieser Anwendung vorgenommen werden, werden in der eingebetteten Version nicht widergespiegelt.",
