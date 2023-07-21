@@ -3297,6 +3297,136 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{snapshot_eop}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "d6fb2bd18c25474cad170423f1386bb1",
+                                            "title": "_Snapshot [EOP]"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{timeline_eop}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "bbf8183f7ac94a0e9d1f088efa119ea9",
+                                            "title": "_Timeline [EOP]"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_opportunitysnapshot_forecastcategory}}}"
+                                            },
+                                            "localIdentifier": "c5ee72b8288f4cd1a2a488832856c86f"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"measureGroupDimension\":\"rows\"}}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aabCWSktWctl",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with two measures one column and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_with_two_measures_one_column_and_metrics_in_rows_aabCWSktWctl"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{snapshot_eop}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "8cb3c1d942e948ed95da6ffa52763ced",
+                                            "title": "_Snapshot [EOP]"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{timeline_eop}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "90c17ebc6dbe44f782cb56dee309cbc4",
+                                            "title": "_Timeline [EOP]"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_name_stagename}}}"
+                                            },
+                                            "localIdentifier": "13535b282eb0478e8585c6e269349907"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"measureGroupDimension\":\"rows\"},\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"13535b282eb0478e8585c6e269349907\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aaeG9BAFzRsq",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with two measures on row and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_with_two_measures_on_row_and_metrics_in_rows_aaeG9BAFzRsq"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -10759,6 +10889,148 @@
                 }
             },
             "name": "analyticalDashboard_KD_with_table_has_many_rows_columns_aadOQOXx2Jqf"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aaiCT8glV0K4",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aaiCT8glV0K4"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromMeasure": {
+                                            "localIdentifier": "d6fb2bd18c25474cad170423f1386bb1"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Insight_has_invalid_interaction_aadiViS7TBVF}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_two_measures_one_column_and_metrics_in_rows_aabCWSktWctl}}}"
+                    },
+                    "meta": {
+                        "identifier": "aadG9Eh974k5",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with two measures one column and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_two_measures_one_column_and_metrics_in_rows_aadG9Eh974k5"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromMeasure": {
+                                            "localIdentifier": "90c17ebc6dbe44f782cb56dee309cbc4"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Sales_table_aahfskIIpYkc}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_two_measures_on_row_and_metrics_in_rows_aaeG9BAFzRsq}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabG95zezU89",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with two measures on row and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_two_measures_on_row_and_metrics_in_rows_aabG95zezU89"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aaiCT8glV0K4}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_two_measures_one_column_and_metrics_in_rows_aadG9Eh974k5}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_two_measures_on_row_and_metrics_in_rows_aabG95zezU89}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_with_two_measures_one_column_and_metrics_in_rows_aadG9Eh974k5}}}",
+                            "{{{visualizationWidget_Table_with_two_measures_on_row_and_metrics_in_rows_aabG95zezU89}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aabCVFBeuwcH",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metrics in rows"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Metrics_in_rows_aabCVFBeuwcH"
         },
         {
             "content": {
