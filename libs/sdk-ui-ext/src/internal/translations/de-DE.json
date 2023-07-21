@@ -191,6 +191,9 @@
     "properties.legend.position.down": "unten",
     "properties.legend.position.right": "rechts",
     "properties.legend.position.left": "links",
+    "properties.orientation.title": "Ausrichtung",
+    "properties.orientation.horizontal": "Horizontal (Standard)",
+    "properties.orientation.vertical": "Vertikal",
     "properties.points.title": "Punkte",
     "properties.points.groupNearbyPoints": "Naheliegende Punkte gruppieren",
     "properties.points.size.title": "Punktgröße",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Komparativ",
     "sorting.disabled.explanation.attribute": "Die Sortierung ist für diese Betrachtungskonfiguration nicht möglich.",
     "sorting.disabled.explanation.measure._measure": "Sie müssen mindestens ein Attribut hinzufügen, um die Betrachtung zu sortieren. Sie können auch die Position von Elementen unter „Messungen“ anpassen, um ihre Position in der Betrachtung zu ändern.",
-    "sorting.disabled.explanation.measure._metric": "Sie müssen mindestens ein Attribut hinzufügen, um die Betrachtung zu sortieren. Sie können auch die Position von Elementen unter „Metriken“ anpassen, um ihre Position in der Betrachtung zu ändern."
+    "sorting.disabled.explanation.measure._metric": "Sie müssen mindestens ein Attribut hinzufügen, um die Betrachtung zu sortieren. Sie können auch die Position von Elementen unter „Metriken“ anpassen, um ihre Position in der Betrachtung zu ändern.",
+    "properties.metrics.title._measure": "Messungen",
+    "properties.metrics.title._metric": "Metriken",
+    "properties.metrics.position": "Position",
+    "properties.metrics.position.columns": "Spalten (Standard)",
+    "properties.metrics.position.rows": "Zeilen",
+    "dashboard.bucket.table.subtitle.columns": "in Spalten",
+    "dashboard.bucket.table.subtitle.rows": "in Zeilen"
 }

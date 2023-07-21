@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
 
-const { execSync } = require("child_process");
-const fs = require("fs");
+import { execSync } from "child_process";
+import { readFileSync, writeFileSync } from "fs";
 
 function mockSensitiveData(accountSetting) {
     const modifiedAccountSetting = { ...accountSetting };
@@ -35,14 +35,14 @@ function mockSensitiveData(accountSetting) {
             if (filePath === "") {
                 return;
             }
-            const data = fs.readFileSync(filePath);
+            const data = readFileSync(filePath);
             const json = JSON.parse(data);
             if (json.response?.body) {
                 const body = mockSensitiveData(JSON.parse(json.response.body));
 
                 json.response.body = JSON.stringify(body, null);
             }
-            fs.writeFileSync(filePath, JSON.stringify(json, null, 4));
+            writeFileSync(filePath, JSON.stringify(json, null, 4));
         });
     } catch (error) {
         process.stdout.write(`${error}\n`);

@@ -173,6 +173,7 @@ export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
     groupRows?: boolean;
     maxHeight?: number;
+    // @alpha
     measureGroupDimension?: MeasureGroupDimension;
     menu?: IMenu;
     separators?: ISeparators;
@@ -231,7 +232,7 @@ export interface IWeakMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
-// @public (undocumented)
+// @alpha (undocumented)
 export type MeasureGroupDimension = "columns" | "rows";
 
 // @public

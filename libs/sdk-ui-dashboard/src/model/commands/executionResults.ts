@@ -68,7 +68,6 @@ export function setExecutionResultError(
         {
             isLoading: false,
             error,
-            executionResult: undefined,
             warnings: undefined,
         },
         correlationId,

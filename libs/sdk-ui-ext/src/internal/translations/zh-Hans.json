@@ -191,6 +191,9 @@
     "properties.legend.position.down": "底部",
     "properties.legend.position.right": "右 ",
     "properties.legend.position.left": "左",
+    "properties.orientation.title": "方向",
+    "properties.orientation.horizontal": "水平（默认）",
+    "properties.orientation.vertical": "垂直",
     "properties.points.title": "点",
     "properties.points.groupNearbyPoints": "对附近点进行分组",
     "properties.points.size.title": "点尺寸",
@@ -228,5 +231,12 @@
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "比较",
     "sorting.disabled.explanation.attribute": "此洞察配置无法排序。",
     "sorting.disabled.explanation.measure._measure": "您必须添加至少一个属性才能对洞察排序。您还可以在“度量”部分调整各项位置，以更改它们在洞察中的位置。",
-    "sorting.disabled.explanation.measure._metric": "您必须添加至少一个属性才能对洞察排序。您还可以在“指标”部分调整各项位置，以更改它们在洞察中的位置。"
+    "sorting.disabled.explanation.measure._metric": "您必须添加至少一个属性才能对洞察排序。您还可以在“指标”部分调整各项位置，以更改它们在洞察中的位置。",
+    "properties.metrics.title._measure": "度量",
+    "properties.metrics.title._metric": "指标",
+    "properties.metrics.position": "位置",
+    "properties.metrics.position.columns": "列（默认）",
+    "properties.metrics.position.rows": "行",
+    "dashboard.bucket.table.subtitle.columns": "在列中",
+    "dashboard.bucket.table.subtitle.rows": "在行中"
 }
