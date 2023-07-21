@@ -11,7 +11,7 @@ import {
     MIXED_VALUES_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
-    MIXED_HEADERS_COLUMN
+    MIXED_HEADERS_COLUMN,
 } from "../base/constants.js";
 import {
     agColId,
@@ -126,24 +126,26 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
 function createAndAddMixedHeadersColDefs(
     mixedHeadersCol: MixedHeadersCol[],
     state: TransformState,
+    isTransposed: boolean,
 ) {
     for (const col of mixedHeadersCol) {
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+        if (isTransposed) {
+            const colDef: ColDef = {
+                type: MIXED_HEADERS_COLUMN,
+                colId: col.id,
+                field: col.id,
+                headerName: "",
+                headerTooltip: undefined,
+                ...cellRendererProp,
+            };
 
-        const colDef: ColDef = {
-            type: MIXED_HEADERS_COLUMN,
-            colId: col.id,
-            field: col.id,
-            headerName: " ", // do not render header, yet leave ability to resize it
-            headerTooltip: undefined,
-            ...cellRendererProp,
-        };
+            state.rowColDefs.push(colDef);
+            state.allColDefs.push(colDef);
 
-        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
-        state.allColDefs.push(colDef);
-
-        if (!state.cellRendererPlaced) {
-            state.cellRendererPlaced = colDef;
+            if (!state.cellRendererPlaced) {
+                state.cellRendererPlaced = colDef;
+            }
         }
     }
 }
@@ -297,6 +299,7 @@ export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
     emptyHeaderTitle: string,
+    isTransposed: boolean,
     config?: IPivotTableConfig,
     intl?: IntlShape,
 ): TableColDefs {
@@ -310,15 +313,13 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
+    createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
+    createAndAddDataColDefs(table, state, intl);
     if (config?.columnHeadersPosition === "left") {
-        createAndAddMixedHeadersColDefs(table.mixedHeadersCols, state);
-        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
-    } else {
-        createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
-        createAndAddDataColDefs(table, state, intl);
-        // handle metrics in rows and no column attribute case
-        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+        createAndAddMixedHeadersColDefs(table.mixedHeadersCols, state, isTransposed);
     }
+    // outside of columnHeadersPosition === "left" condition to handle also metrics in rows and no column attribute case
+    createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

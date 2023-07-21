@@ -25,7 +25,12 @@ import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../column
 import { searchForLocatorMatch } from "./colLocatorMatching.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
-import { ISortItem, IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
+import {
+    ISortItem,
+    IMeasureDescriptor,
+    IAttributeDescriptor,
+    MeasureGroupIdentifier,
+} from "@gooddata/sdk-model";
 import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting.js";
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import keyBy from "lodash/keyBy.js";
@@ -80,6 +85,12 @@ export class TableDescriptor {
         this._seriesColsCount = headers.leafDataCols.filter(isSeriesCol).length;
     }
 
+    private static _getMeasureGroupDimensionIndex(dv: DataViewFacade) {
+        return dv.definition.dimensions.findIndex((dimension) =>
+            dimension.itemIdentifiers.includes(MeasureGroupIdentifier),
+        );
+    }
+
     /**
      * Creates a new table descriptor from the provided data view facade.
      *
@@ -93,11 +104,27 @@ export class TableDescriptor {
         config?: IPivotTableConfig,
         intl?: IntlShape,
     ): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, config, intl);
+        const isTransposed = TableDescriptor.isTransposed(dv);
+        const { headers, colDefs } = createHeadersAndColDefs(
+            dv,
+            emptyHeaderTitle,
+            isTransposed,
+            config,
+            intl,
+        );
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
         return new TableDescriptor(dv, headers, colDefs);
+    }
+
+    /**
+     * Creates a new table descriptor from the provided data view facade.
+     *
+     * @param dv - data view facade
+     */
+    public static isTransposed(dv: DataViewFacade) {
+        return TableDescriptor._getMeasureGroupDimensionIndex(dv) === 0;
     }
 
     private _initializeZippedLeaves() {
@@ -193,7 +220,7 @@ export class TableDescriptor {
      * whether metrics are moved to rows or not
      */
     public isTransposed(): boolean {
-        return this.sliceMeasureColCount() !== 0;
+        return TableDescriptor.isTransposed(this.dv);
     }
 
     public attributeMeasureHeadersColsCount(): number {

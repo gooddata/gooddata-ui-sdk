@@ -319,7 +319,7 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     ];
 }
 
-function createAttributeMeasureHeadersColumnDescriptors(): MixedHeadersCol[] {
+function createMixedHeadersColumnDescriptors(): MixedHeadersCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [
@@ -332,7 +332,7 @@ function createAttributeMeasureHeadersColumnDescriptors(): MixedHeadersCol[] {
     ];
 }
 
-function createAttributeMeasureValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
+function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
     return dv
         .data()
         .slices()
@@ -358,14 +358,17 @@ function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
     ];
 }
 
-function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): TableCols {
+function createTableHeaders(
+    dv: DataViewFacade,
+    isTransposed: boolean,
+    config?: IPivotTableConfig,
+): TableCols {
     const idToDescriptor: Record<string, AnyCol> = {};
 
-    if (config?.columnHeadersPosition === "left") {
-        const mixedHeadersCols = createAttributeMeasureHeadersColumnDescriptors();
-        const mixedValuesCols = createAttributeMeasureValuesColumnDescriptors(dv);
+    if (config?.columnHeadersPosition === "left" && isTransposed) {
+        const mixedHeadersCols = createMixedHeadersColumnDescriptors();
+        const mixedValuesCols = createMixedValuesColumnDescriptors(dv);
 
-        // TODO DRY
         mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
 
@@ -374,23 +377,27 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
             sliceMeasureCols: [],
             rootDataCols: [],
             leafDataCols: [],
-            idToDescriptor,
-            scopingAttributes: [],
             mixedHeadersCols,
             mixedValuesCols,
+            idToDescriptor,
+            scopingAttributes: [],
         };
     } else {
         const rows: SliceCol[] = createRowDescriptors(dv);
-        const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
         const measureColumns = createMeasureColumnDescriptors(dv, rows);
+        let mixedHeadersCols: MixedHeadersCol[] = [];
+        if (config?.columnHeadersPosition === "left") {
+            mixedHeadersCols = createMixedHeadersColumnDescriptors();
+        }
+        const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
 
-        // TODO DRY
         rows.forEach((header) => (idToDescriptor[header.id] = header));
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
         const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
         const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+        mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
 
         allColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
@@ -399,10 +406,10 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
             sliceMeasureCols: measureColumns,
             rootDataCols: rootColumns,
             leafDataCols: leafColumns,
+            mixedHeadersCols,
+            mixedValuesCols,
             idToDescriptor,
             scopingAttributes: groupingAttributes,
-            mixedHeadersCols: [],
-            mixedValuesCols,
         };
     }
 }
@@ -424,14 +431,16 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
 export function createHeadersAndColDefs(
     dv: DataViewFacade,
     emptyHeaderTitle: string,
+    isTransposed: boolean,
     config?: IPivotTableConfig,
     intl?: IntlShape,
 ): { headers: TableCols; colDefs: TableColDefs } {
-    const headers = createTableHeaders(dv, config);
+    const headers = createTableHeaders(dv, isTransposed, config);
     const colDefs = createColDefsFromTableDescriptor(
         headers,
         dv.meta().effectiveSortItems(),
         emptyHeaderTitle,
+        isTransposed,
         config,
         intl,
     );
