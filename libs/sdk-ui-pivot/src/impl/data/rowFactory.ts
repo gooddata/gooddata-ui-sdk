@@ -338,7 +338,7 @@ export function createAgGridPage(
         headerItems[1].forEach((attributes, rowIndex) => {
             const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
             const attributeName = dv.data().slices().toArray()[0].descriptor.descriptors[rowIndex]
-                .attributeHeader.name;
+                .attributeHeader.formOf.name;
 
             const row: IGridRow = {
                 [headerColumn.id]: attributeName,
