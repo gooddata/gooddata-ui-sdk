@@ -25,7 +25,7 @@ import {
     MixedValuesCol,
     MixedHeadersCol,
 } from "./tableDescriptorTypes.js";
-import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -36,7 +36,7 @@ import { messages } from "../../locales.js";
 type TransformState = {
     initialSorts: ISortItem[];
     cellRendererPlaced: ColDef | undefined;
-    rowColDefs: Array<ColDef>;
+    rowColDefs: Array<ColDef | ColGroupDef>;
     rootColDefs: Array<ColDef | ColGroupDef>;
     leafColDefs: Array<ColDef>;
     allColDefs: Array<ColDef | ColGroupDef>;
@@ -216,20 +216,25 @@ function createColumnHeadersFromDescriptors(
     cols: DataCol[],
     state: TransformState,
     intl?: IntlShape,
+    config?: IPivotTableConfig,
 ): Array<ColGroupDef | ColDef> {
     const colDefs: Array<ColGroupDef | ColDef> = [];
 
     for (const col of cols) {
         switch (col.type) {
             case "rootCol": {
-                const headerName = col.groupingAttributes
-                    .map((attr) => attr.attributeHeader.formOf.name)
-                    .join(COLUMN_GROUPING_DELIMITER);
+                const headerName =
+                    config?.columnHeadersPosition === "left"
+                        ? ""
+                        : col.groupingAttributes
+                              .map((attr) => attr.attributeHeader.formOf.name)
+                              .join(COLUMN_GROUPING_DELIMITER);
                 const colDef: ColGroupDef = {
                     groupId: ColumnGroupingDescriptorId,
                     children: createColumnHeadersFromDescriptors(col.children, state, intl),
                     headerName,
                     headerTooltip: headerName,
+                    ...(config?.columnHeadersPosition === "left" ? { headerGroupComponent: null } : {}),
                 };
 
                 colDefs.push(colDef);
@@ -275,8 +280,13 @@ function createColumnHeadersFromDescriptors(
     return colDefs;
 }
 
-function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?: IntlShape) {
-    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state, intl);
+function createAndAddDataColDefs(
+    table: TableCols,
+    state: TransformState,
+    intl?: IntlShape,
+    config?: IPivotTableConfig,
+) {
+    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state, intl, config);
 
     state.rootColDefs.push(...cols);
 }
