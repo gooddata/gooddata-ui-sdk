@@ -411,6 +411,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     initializeClient(client: ITigerClient): void;
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
+    // (undocumented)
+    protected updateApiToken(apiToken: string): void;
 }
 
 // @internal (undocumented)

@@ -72,8 +72,17 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
  * @public
  */
 export class TigerTokenAuthProvider extends TigerAuthProviderBase {
+    // TigerBackend has factory methods that will return new instance of itself recreated with provided
+    // parameters. AuthProvider instance (this class) is forwarded to the new instance but client is
+    // recreated. Various components keep reference to previous instances of TigerBackend that uses the
+    // previous clients instances to make Axios calls. This could be probably bug in some cases.
+    // These clients would not get token updated and if token has expiration, the next API call would
+    // fail and application would logout the user from the session. The token auth provider must keep the
+    // reference to all these clients to update their tokens if needed.
+    private clients: ITigerClient[] = [];
+
     public constructor(
-        private readonly apiToken: string,
+        private apiToken: string,
         private readonly notAuthenticatedHandler?: NotAuthenticatedHandler,
     ) {
         super();
@@ -81,6 +90,11 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
 
     public initializeClient(client: ITigerClient): void {
         setAxiosAuthorizationToken(client.axios, this.apiToken);
+
+        // Keep reference to each new unique tiger client instance for token re-initialization purposes.
+        if (!this.clients.includes(client)) {
+            this.clients.push(client);
+        }
     }
 
     public onNotAuthenticated = (context: IAuthenticationContext, error: NotAuthenticated): void => {
@@ -91,6 +105,12 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
         await this.obtainCurrentPrincipal(context);
 
         return this.principal!;
+    }
+
+    protected updateApiToken(apiToken: string) {
+        invariant(this.clients.length > 0, "The method cannot be called before initializeClient method.");
+        this.apiToken = apiToken;
+        this.clients.map((client) => this.initializeClient(client));
     }
 }
 
@@ -130,7 +150,6 @@ export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
  * @alpha
  */
 export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
-    private client?: ITigerClient = undefined;
     // use "any" instead of "number" used by browser or "Timeout" used by NodeJS to not get type error in
     // the opposite platform than the one being used
     private expirationReminderId: any = -1;
@@ -159,7 +178,6 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
 
     public initializeClient(client: ITigerClient): void {
         super.initializeClient(client);
-        this.client = client; // keep reference to the tiger client for token re-initialization purposes
     }
 
     /**
@@ -171,10 +189,9 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
      *  or if JWT is not valid (if "sub" claim does not match the sub of the previous JWT).
      */
     public updateJwt = (jwt: string): void => {
-        invariant(this.client, "The method cannot be called before initializeClient method.");
         validateJwt(jwt, this.jwt);
         this.jwt = jwt;
-        setAxiosAuthorizationToken(this.client.axios, jwt); // set the new JWT as a Bearer token in the client
+        this.updateApiToken(jwt);
         this.startReminder(jwt);
     };
 
