@@ -12,6 +12,11 @@
  */
 export interface ISettings {
     /**
+     * Indicates whether the Headline's improvements is available.
+     */
+    enableNewHeadline?: boolean;
+
+    /**
      * Headline component will not be underlined when it is set up with drilling.
      */
     disableKpiDashboardHeadlineUnderline?: boolean;
