@@ -150,7 +150,6 @@ export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
  * @alpha
  */
 export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
-    private client?: ITigerClient = undefined;
     // use "any" instead of "number" used by browser or "Timeout" used by NodeJS to not get type error in
     // the opposite platform than the one being used
     private expirationReminderId: any = -1;
@@ -205,10 +204,9 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
      *  or if JWT is not valid (if "sub" claim does not match the sub of the previous JWT).
      */
     public updateJwt = (jwt: string): void => {
-        invariant(this.client, "The method cannot be called before initializeClient method.");
         validateJwt(jwt, this.jwt);
         this.jwt = jwt;
-        setAxiosAuthorizationToken(this.client.axios, jwt); // set the new JWT as a Bearer token in the client
+        this.updateApiToken(jwt);
         this.startReminder(jwt);
     };
 
