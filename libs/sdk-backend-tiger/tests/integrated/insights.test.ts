@@ -17,6 +17,7 @@ describe("tiger insights", () => {
     it("should load empty insights for out-of-range page", async () => {
         const result = await backend.workspace(testWorkspace()).insights().getInsights();
         const page = await result.goTo(4);
+        console.log("Page", JSON.stringify(page));
         const sanitizeResult = sanitizeKeyWithNewValue(page, "uri", "sanitize_uri");
         expect(sanitizeResult).toMatchSnapshot();
     });
