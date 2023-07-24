@@ -9,7 +9,11 @@ import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import { ElementUris } from "./fixtures.js";
 
 import { action } from "@storybook/addon-actions";
-import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
+import {
+    AttributeFilterButton,
+    AttributeFilterError,
+    AttributeFilterDropdownButton,
+} from "@gooddata/sdk-ui-filters";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
@@ -175,10 +179,66 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         filter={newNegativeAttributeFilter("NON_EXISTING", [])}
                         onApply={action("on-apply")}
                     />
+
+                    <p>with hover state</p>
+                    <div className="filter-hover">
+                        <AttributeFilterButton
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            filter={newNegativeAttributeFilter("NON_EXISTING", [])}
+                            onApply={action("on-apply")}
+                            ErrorComponent={() => <AttributeFilterError isDraggable={true} />}
+                        />
+                    </div>
+
+                    <p>can't load value error </p>
+                    <div className="error-not-load-value">
+                        <AttributeFilterButton
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                            onApply={action("on-apply")}
+                            DropdownButtonComponent={() => (
+                                <AttributeFilterDropdownButton
+                                    title="Product name"
+                                    subtitle="Laptop"
+                                    isError={true}
+                                />
+                            )}
+                        />
+                    </div>
+
+                    <p>can't load value error and hover state</p>
+                    <div className="error-not-load-value-hover">
+                        <AttributeFilterButton
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                            onApply={action("on-apply")}
+                            DropdownButtonComponent={() => (
+                                <AttributeFilterDropdownButton
+                                    title="Product name"
+                                    subtitle="Laptop"
+                                    isError={true}
+                                    isDraggable={true}
+                                />
+                            )}
+                        />
+                    </div>
                 </div>
             );
         },
-        { screenshot: true },
+        {
+            screenshots: {
+                hover: {
+                    hoverSelectors: [
+                        ".filter-hover .gd-attribute-filter-dropdown-button__next",
+                        ".error-not-load-value-hover .gd-attribute-filter-dropdown-button__next",
+                    ],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
     )
     .add(
         "themed",

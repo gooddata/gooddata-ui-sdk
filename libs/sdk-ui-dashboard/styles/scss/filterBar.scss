@@ -128,6 +128,10 @@ $attribute-filter-drag-handle-left: 10px;
     .dash-filters-date {
         position: relative;
 
+        .gd-attribute-filter-dropdown-button__next {
+            display: flex;
+        }
+
         .gd-attribute-filter-dropdown-button__next,
         .gd-date-filter-button {
             margin: 7px 11px 7px $default_space;

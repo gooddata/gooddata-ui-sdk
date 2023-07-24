@@ -424,6 +424,8 @@ export interface IAttributeFilterDropdownBodyProps {
 export interface IAttributeFilterDropdownButtonProps {
     icon?: ReactNode;
     isDraggable?: boolean;
+    // (undocumented)
+    isError?: boolean;
     isFiltering?: boolean;
     isLoaded?: boolean;
     isLoading?: boolean;
@@ -507,6 +509,8 @@ export interface IAttributeFilterEmptyResultProps {
 // @beta
 export interface IAttributeFilterErrorProps {
     error?: any;
+    isDraggable?: boolean;
+    isOpen?: boolean;
     message?: string;
 }
 

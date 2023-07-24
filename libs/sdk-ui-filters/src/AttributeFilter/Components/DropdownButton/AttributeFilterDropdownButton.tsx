@@ -108,6 +108,8 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     onClick?: () => void;
+
+    isError?: boolean;
 }
 
 /**
@@ -132,6 +134,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isFiltering,
         isLoading,
         isLoaded,
+        isError,
         isDraggable,
         icon,
         TooltipContentComponent,
@@ -141,7 +144,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
-
+    const filterIcon = isError ? <i className="gd-icon gd-icon-circle-cross" /> : icon;
     useEffect(() => {
         const element = subtitleSelectedItemsRef.current;
 
@@ -171,6 +174,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                 "s-attribute-filter",
                 `s-${stringUtils.simplifyText(title)}`,
                 {
+                    "gd-message": isError,
                     "gd-is-filtering": isFiltering,
                     "gd-is-active": isOpen,
                     "gd-is-loaded": isLoaded,
@@ -179,7 +183,9 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             )}
             onClick={onClick}
         >
-            {icon ? <div className="gd-attribute-filter-dropdown-button-icon__next">{icon}</div> : null}
+            {filterIcon ? (
+                <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>
+            ) : null}
             <div className="gd-attribute-filter-dropdown-button-content__next">
                 <div className="gd-attribute-filter-dropdown_button-title-content__next">
                     <div className="gd-attribute-filter-dropdown-button-title__next">
