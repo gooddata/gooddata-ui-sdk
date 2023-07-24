@@ -42,14 +42,17 @@ export function onCellClickedFactory(
         const { colDef, data, rowIndex } = cellEvent;
         const col = table.tableDescriptor.getCol(colDef);
 
-        if (isSliceMeasureCol(col) || isMixedValuesCol(col)) {
+        if (isSliceMeasureCol(col)) {
             return false;
         }
 
-        // cells belong to either slice column or leaf data column; if cells belong to column of a different
+        // cells belong to either slice column, leaf data column or mixed values column if table is transposed; if cells belong to column of a different
         // type then there must be either something messed up with table construction or a new type of cell
         invariant(
-            isSliceCol(col) || isSeriesCol(col) || (table.tableDescriptor.isTransposed() && isScopeCol(col)),
+            isSliceCol(col) ||
+                isSeriesCol(col) ||
+                (table.tableDescriptor.isTransposed() && isScopeCol(col)) ||
+                (table.tableDescriptor.isTransposed() && isMixedValuesCol(col)),
         );
 
         const { onDrill } = props;

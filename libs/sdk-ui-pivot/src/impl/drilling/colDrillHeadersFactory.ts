@@ -45,7 +45,7 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
     return mappingHeaders;
 }
 
-function createMixedValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+export function createMixedValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (row.measureDescriptor) {
@@ -69,7 +69,7 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-export function createDataColGroupHeaders(col: ScopeCol): IMappingHeader[] {
+export function createDataColGroupHeaders(col: ScopeCol, row?: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     col.descriptorsToHere.forEach((descriptor, index) => {
@@ -79,6 +79,10 @@ export function createDataColGroupHeaders(col: ScopeCol): IMappingHeader[] {
 
     mappingHeaders.push(col.header);
     mappingHeaders.push(col.attributeDescriptor);
+
+    if (row?.measureDescriptor) {
+        mappingHeaders.push(row.measureDescriptor);
+    }
 
     return mappingHeaders;
 }
@@ -97,7 +101,7 @@ export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[
     if (isSeriesCol(col)) {
         return createDataColLeafHeaders(col);
     } else if (isScopeCol(col)) {
-        return createDataColGroupHeaders(col);
+        return createDataColGroupHeaders(col, row);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a slice col, both the column & the row data must be

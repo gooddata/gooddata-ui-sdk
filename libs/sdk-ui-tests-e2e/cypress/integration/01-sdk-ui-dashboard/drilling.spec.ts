@@ -214,3 +214,21 @@ describe("Interaction", () => {
         },
     );
 });
+
+describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
+    beforeEach(() => {
+        Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");
+    });
+
+    it("should drill on insight from table with no rows and metrics in rows", () => {
+        new Widget(0).waitTableLoaded().getTable().click(0, 1);
+
+        drillModal.getTitleElement().should("have.text", "Insight has invalid interaction");
+    });
+
+    it("should drill on insight from table with no columns and metrics in rows", () => {
+        new Widget(1).scrollIntoView().waitTableLoaded().getTable().click(1, 2);
+
+        drillModal.getTitleElement().should("have.text", "Sales table");
+    });
+});

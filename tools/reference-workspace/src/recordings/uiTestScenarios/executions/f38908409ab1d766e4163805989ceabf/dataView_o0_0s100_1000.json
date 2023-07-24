@@ -1,0 +1,407 @@
+{
+    "count": [24, 4],
+    "data": [
+        ["2174478.26", "5917286.73", "1989393.54", "5501537.16"],
+        ["883793.08", "2370306.08", "817756.22", "2039952.64"],
+        ["405767.14", "3156945.21", "529670.6", "7547821"],
+        ["194123.92", "1270431.27", "219798.78", "1441807.88"],
+        ["2008366.85", "4088621.31", "3467615.16", "6623534.92"],
+        ["754830.5", "1350035.81", "1160639.56", "2612041.49"],
+        ["590536.1", "3053141.34", "547704.36", "2567375.43"],
+        ["283569.17", "1746096.06", "108422.01", "841972.46"],
+        ["2610784.51", "6011398.61", "2935008.02", "18472467"],
+        ["989426.6", "2305188", "1106550.62", "2097915.19"],
+        ["793939.81", "3135777.62", "1929950.34", "2706868.95"],
+        ["430585.96", "1226965.38", "223202.05", "867705.82"],
+        ["1964931.93", "1060976.15", "361332.16", "2476731.94"],
+        ["826188.69", "389910.95", "259178.39", "1434946.69"],
+        ["268112.52", "877547.53", "167554.65", "864845.04"],
+        ["167291.74", "510727.21", "148902.34", "236060.2"],
+        ["1827108.25", "1980712.38", "536526.06", "1418895.61"],
+        ["229646.4", "1150517.74", "329035.25", "583354.19"],
+        ["120416.22", "1358755.87", "180781.87", "2102661.65"],
+        ["87001.62", "272152.06", "158881.03", "563803.9"],
+        ["1374944.56", "2542872.97", "728206.16", "2332594.72"],
+        ["550627.31", "1109596.41", "476598.4", "676823.87"],
+        ["278916.58", "1330301.14", "225050.77", "1478689.84"],
+        ["119311.53", "398431.88", "17398.48", "271250.62"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [24, 4]
+}
