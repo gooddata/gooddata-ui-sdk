@@ -68,8 +68,8 @@ import {
 import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnWidthsFromProperties,
-    getMeasureGroupDimensionFromProperties,
     getReferencePointWithSupportedProperties,
+    getMeasureGroupDimensionFromProperties,
     getSupportedPropertiesControls,
 } from "../../../utils/propertiesHelper.js";
 
