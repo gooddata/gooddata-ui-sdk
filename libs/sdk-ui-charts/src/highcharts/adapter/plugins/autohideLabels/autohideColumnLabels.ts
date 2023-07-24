@@ -64,8 +64,9 @@ const toggleNonStackedChartLabels = (
 ) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
+        // should not get the invisible point
         visiblePoints.filter((point: any) => {
-            return hasDataLabel(point) && hasShape(point);
+            return hasDataLabel(point) && hasShape(point) && point.visible;
         }),
     ).some((pointPair) => {
         const [firstPoint, nextPoint]: any[] = pointPair || [];
