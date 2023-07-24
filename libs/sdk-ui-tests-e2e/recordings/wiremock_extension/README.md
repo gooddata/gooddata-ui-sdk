@@ -3,6 +3,7 @@
 To be able to run tests locally against a real backend, we need to modify some requests and responses.
 
 -   Change request Origin and Referer header fields from localhost to the target backend - done by RequestHeadersTransformer
+-   Change request Accept-Encoding request header to use gzip only because other encoding will not work (deflate and br)- done by RequestHeadersTransformer
 -   Remove domain field in cookies coming from the backend so that it's applied even on localhost; Remove X-GDC and Date headers - done by ResponseHeadersTransformer
 
 In case you need to change and compile these extensions
