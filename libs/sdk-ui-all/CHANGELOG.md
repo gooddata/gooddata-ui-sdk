@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 17 Apr 2023 08:24:37 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jul 2023 14:12:54 GMT and should not be manually modified.
+
+## 8.12.2
+Wed, 19 Jul 2023 14:12:54 GMT
+
+### Updates
+
+- The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 
 ## 8.12.1
 Mon, 17 Apr 2023 08:24:37 GMT
