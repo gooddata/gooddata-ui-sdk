@@ -156,6 +156,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enablePivotTableTransposition,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableNewHeadline,
+            "enableNewHeadline",
+            "BOOLEAN",
+            FeatureFlagsValues.enableNewHeadline,
+        ),
     };
 }
 
