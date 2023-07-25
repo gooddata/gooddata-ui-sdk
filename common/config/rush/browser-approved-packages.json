@@ -807,6 +807,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "node-xlsx",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "npm-run-all",
       "allowedCategories": [ "examples", "production" ]
     },

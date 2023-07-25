@@ -1,0 +1,41 @@
+{
+    "id": "7c819833-fabc-4908-b16a-933957292061",
+    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_attributes",
+    "request": {
+        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_attributes-7c819833-fabc-4908-b16a-933957292061.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "7c819833-fabc-4908-b16a-933957292061",
+    "persistent": true,
+    "insertionIndex": 5
+}

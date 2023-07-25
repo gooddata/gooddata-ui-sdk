@@ -257,6 +257,247 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
                 "measure": {
                   "definition": {
                     "measureDefinition": {
+                      "computeRatio": false,
+                      "filters": [
+                        {
+                          "positiveAttributeFilter": {
+                            "displayForm": {
+                              "identifier": "f_owner.department_id",
+                              "type": "displayForm",
+                            },
+                            "in": {
+                              "values": [
+                                "Direct Sales",
+                              ],
+                            },
+                          },
+                        },
+                      ],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+                  "title": "Amount (Department: Direct Sales)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "d100a73db7ec4d418429935e53239a90",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "label.f_account.account.name",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "(add)ventures",
+                  ".decimal",
+                  "1 Source Consulting",
+                  "1-800 Postcards",
+                  "1-800 We Answer",
+                  "1000Bulbs.com",
+                  "1-888-OhioComp",
+                  "101 Financial",
+                  "123 Exteriors",
+                  "14 West",
+                  "1Source International",
+                  "1st Choice Staffing & Consulting",
+                  "2 Wheel Bikes",
+                  "2HB Software Designs",
+                  "352 Media Group",
+                  "1st in Video - Music World",
+                  "3Degrees",
+                  "3E",
+                  "3balls.com",
+                  "3dCart Shopping Cart Software",
+                  "49er Communications",
+                  "4Wall Entertainment",
+                  "(mt) Media Temple",
+                  "4th Source",
+                  "5LINX Enterprises",
+                  "614 Media Group",
+                  "6K Systems",
+                  "7 Medical Systems",
+                  "7 Simple Machines",
+                  "7-Eleven",
+                  "720 Strategies",
+                  "90octane",
+                  "919 Marketing",
+                  "@properties",
+                  "A Main Hobbies",
+                  "A Place for Mom",
+                ],
+              },
+            },
+          },
+          {
+            "measureValueFilter": {
+              "condition": {
+                "comparison": {
+                  "operator": "GREATER_THAN",
+                  "treatNullValuesAs": 0,
+                  "value": 0,
+                },
+              },
+              "measure": {
+                "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+              },
+            },
+          },
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_oppcreated_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2008-01-01 00:00",
+              "to": "2009-01-01 23:59",
+            },
+          },
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "dt_oppcreated_timestamp.quarterOfYear",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "01",
+                  "02",
+                  "03",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Combine with all filter types",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "avg._amount",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
+                  "title": "Avg. Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "measureValueFilter": {
+              "measure": {
+                "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+              },
+            },
+          },
+        ],
+        "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "legend": {
+              "position": "right",
+            },
+          },
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Insight using long name metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "filters": [],
                       "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
@@ -498,6 +739,47 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
                     "measureDefinition": {
                       "filters": [],
                       "item": {
+                        "identifier": "negative_metric",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
+                  "title": "Negative Metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Negative Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -647,6 +929,677 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
                     "measureDefinition": {
                       "filters": [],
                       "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "arithmeticMeasure": {
+                      "measureIdentifiers": [
+                        "fccc4446dc314fc4911315b881d2b5c4",
+                        "a954df386c3b40e986820c47b50c3e7f",
+                      ],
+                      "operator": "sum",
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_stage.status_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2005-05-20 00:00",
+              "to": "2023-06-20 23:59",
+            },
+          },
+        ],
+        "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "columnWidths": [
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "element": "Lost",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 203,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 98,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 322,
+                  },
+                },
+              },
+            ],
+          },
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has AM metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[>=9][color=2190c0]██████████;
+[>=8][color=2190c0]█████████░;
+[>=7][color=2190c0]████████░░;
+[>=6][color=2190c0]███████░░░;
+[>=5][color=2190c0]██████░░░░;
+[>=4][color=2190c0]█████░░░░░;
+[>=3][color=2190c0]████░░░░░░;
+[>=2][color=2190c0]███░░░░░░░;
+[>=1][color=2190c0]██░░░░░░░░;
+[color=2190c0]█░░░░░░░░░
+",
+                  "localIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][red]#,#.##;
+[<1000][green]#,0.##;
+[>=1000][black]#,#.##",
+                  "localIdentifier": "820c5beb252641049020e6026be3e40e",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][green]▲ #,##0.0%;
+[=0][black]#,##0.0%;
+[>0][red]▼ #,##0.0%
+",
+                  "localIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                  "title": "Amount",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[BLUE][backgroundColor=aff8ef]$#,##0.00",
+                  "localIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "<button>#,##0.00</button>",
+                  "localIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                  "title": "Win Rate",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.0% long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long",
+                  "localIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                  "title": "Probability",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00 kiểm tra nghiêm khắc",
+                  "localIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[=NULL]null value; #,##0.00",
+                  "localIdentifier": "28f55bd907394608845f87a046f2117e",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": [
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [],
+        "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has multi metrics and multi formats",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "bf992ef0637142dba774330a0851098c",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Table using long name metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -733,8 +1686,8 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
   ],
   "items": [],
   "limit": 50,
-  "offset": 8,
-  "totalCount": 8,
+  "offset": 14,
+  "totalCount": 14,
 }
 `;
 
@@ -995,6 +1948,247 @@ exports[`tiger insights > should load insights 1`] = `
                 "measure": {
                   "definition": {
                     "measureDefinition": {
+                      "computeRatio": false,
+                      "filters": [
+                        {
+                          "positiveAttributeFilter": {
+                            "displayForm": {
+                              "identifier": "f_owner.department_id",
+                              "type": "displayForm",
+                            },
+                            "in": {
+                              "values": [
+                                "Direct Sales",
+                              ],
+                            },
+                          },
+                        },
+                      ],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+                  "title": "Amount (Department: Direct Sales)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "d100a73db7ec4d418429935e53239a90",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "label.f_account.account.name",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "(add)ventures",
+                  ".decimal",
+                  "1 Source Consulting",
+                  "1-800 Postcards",
+                  "1-800 We Answer",
+                  "1000Bulbs.com",
+                  "1-888-OhioComp",
+                  "101 Financial",
+                  "123 Exteriors",
+                  "14 West",
+                  "1Source International",
+                  "1st Choice Staffing & Consulting",
+                  "2 Wheel Bikes",
+                  "2HB Software Designs",
+                  "352 Media Group",
+                  "1st in Video - Music World",
+                  "3Degrees",
+                  "3E",
+                  "3balls.com",
+                  "3dCart Shopping Cart Software",
+                  "49er Communications",
+                  "4Wall Entertainment",
+                  "(mt) Media Temple",
+                  "4th Source",
+                  "5LINX Enterprises",
+                  "614 Media Group",
+                  "6K Systems",
+                  "7 Medical Systems",
+                  "7 Simple Machines",
+                  "7-Eleven",
+                  "720 Strategies",
+                  "90octane",
+                  "919 Marketing",
+                  "@properties",
+                  "A Main Hobbies",
+                  "A Place for Mom",
+                ],
+              },
+            },
+          },
+          {
+            "measureValueFilter": {
+              "condition": {
+                "comparison": {
+                  "operator": "GREATER_THAN",
+                  "treatNullValuesAs": 0,
+                  "value": 0,
+                },
+              },
+              "measure": {
+                "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+              },
+            },
+          },
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_oppcreated_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2008-01-01 00:00",
+              "to": "2009-01-01 23:59",
+            },
+          },
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "dt_oppcreated_timestamp.quarterOfYear",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "01",
+                  "02",
+                  "03",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Combine with all filter types",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "avg._amount",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
+                  "title": "Avg. Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "measureValueFilter": {
+              "measure": {
+                "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+              },
+            },
+          },
+        ],
+        "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "legend": {
+              "position": "right",
+            },
+          },
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Insight using long name metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "filters": [],
                       "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
@@ -1236,6 +2430,47 @@ exports[`tiger insights > should load insights 1`] = `
                     "measureDefinition": {
                       "filters": [],
                       "item": {
+                        "identifier": "negative_metric",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
+                  "title": "Negative Metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Negative Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -1370,6 +2605,677 @@ exports[`tiger insights > should load insights 1`] = `
         ],
         "summary": "Parent Insight",
         "title": "Parent Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "arithmeticMeasure": {
+                      "measureIdentifiers": [
+                        "fccc4446dc314fc4911315b881d2b5c4",
+                        "a954df386c3b40e986820c47b50c3e7f",
+                      ],
+                      "operator": "sum",
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_stage.status_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2005-05-20 00:00",
+              "to": "2023-06-20 23:59",
+            },
+          },
+        ],
+        "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "columnWidths": [
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "element": "Lost",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 203,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 98,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 322,
+                  },
+                },
+              },
+            ],
+          },
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has AM metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[>=9][color=2190c0]██████████;
+[>=8][color=2190c0]█████████░;
+[>=7][color=2190c0]████████░░;
+[>=6][color=2190c0]███████░░░;
+[>=5][color=2190c0]██████░░░░;
+[>=4][color=2190c0]█████░░░░░;
+[>=3][color=2190c0]████░░░░░░;
+[>=2][color=2190c0]███░░░░░░░;
+[>=1][color=2190c0]██░░░░░░░░;
+[color=2190c0]█░░░░░░░░░
+",
+                  "localIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][red]#,#.##;
+[<1000][green]#,0.##;
+[>=1000][black]#,#.##",
+                  "localIdentifier": "820c5beb252641049020e6026be3e40e",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][green]▲ #,##0.0%;
+[=0][black]#,##0.0%;
+[>0][red]▼ #,##0.0%
+",
+                  "localIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                  "title": "Amount",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[BLUE][backgroundColor=aff8ef]$#,##0.00",
+                  "localIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "<button>#,##0.00</button>",
+                  "localIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                  "title": "Win Rate",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.0% long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long",
+                  "localIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                  "title": "Probability",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00 kiểm tra nghiêm khắc",
+                  "localIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[=NULL]null value; #,##0.00",
+                  "localIdentifier": "28f55bd907394608845f87a046f2117e",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": [
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [],
+        "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has multi metrics and multi formats",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "bf992ef0637142dba774330a0851098c",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Table using long name metric",
         "uri": "sanitize_uri",
         "visualizationUrl": "local:table",
       },
@@ -1724,6 +3630,247 @@ exports[`tiger insights > should load insights 1`] = `
                 "measure": {
                   "definition": {
                     "measureDefinition": {
+                      "computeRatio": false,
+                      "filters": [
+                        {
+                          "positiveAttributeFilter": {
+                            "displayForm": {
+                              "identifier": "f_owner.department_id",
+                              "type": "displayForm",
+                            },
+                            "in": {
+                              "values": [
+                                "Direct Sales",
+                              ],
+                            },
+                          },
+                        },
+                      ],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+                  "title": "Amount (Department: Direct Sales)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "d100a73db7ec4d418429935e53239a90",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "label.f_account.account.name",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "(add)ventures",
+                  ".decimal",
+                  "1 Source Consulting",
+                  "1-800 Postcards",
+                  "1-800 We Answer",
+                  "1000Bulbs.com",
+                  "1-888-OhioComp",
+                  "101 Financial",
+                  "123 Exteriors",
+                  "14 West",
+                  "1Source International",
+                  "1st Choice Staffing & Consulting",
+                  "2 Wheel Bikes",
+                  "2HB Software Designs",
+                  "352 Media Group",
+                  "1st in Video - Music World",
+                  "3Degrees",
+                  "3E",
+                  "3balls.com",
+                  "3dCart Shopping Cart Software",
+                  "49er Communications",
+                  "4Wall Entertainment",
+                  "(mt) Media Temple",
+                  "4th Source",
+                  "5LINX Enterprises",
+                  "614 Media Group",
+                  "6K Systems",
+                  "7 Medical Systems",
+                  "7 Simple Machines",
+                  "7-Eleven",
+                  "720 Strategies",
+                  "90octane",
+                  "919 Marketing",
+                  "@properties",
+                  "A Main Hobbies",
+                  "A Place for Mom",
+                ],
+              },
+            },
+          },
+          {
+            "measureValueFilter": {
+              "condition": {
+                "comparison": {
+                  "operator": "GREATER_THAN",
+                  "treatNullValuesAs": 0,
+                  "value": 0,
+                },
+              },
+              "measure": {
+                "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+              },
+            },
+          },
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_oppcreated_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2008-01-01 00:00",
+              "to": "2009-01-01 23:59",
+            },
+          },
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
+                "identifier": "dt_oppcreated_timestamp.quarterOfYear",
+                "type": "displayForm",
+              },
+              "in": {
+                "values": [
+                  "01",
+                  "02",
+                  "03",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "ba13041b-87bc-458c-a514-fcc0074c9973",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Combine with all filter types",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "avg._amount",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
+                  "title": "Avg. Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": [
+          {
+            "measureValueFilter": {
+              "measure": {
+                "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+              },
+            },
+          },
+        ],
+        "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "legend": {
+              "position": "right",
+            },
+          },
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "843701ee-8f24-4942-8522-872a96575f8e",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Insight using long name metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "filters": [],
                       "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
@@ -1965,6 +4112,47 @@ exports[`tiger insights > should load insights 1`] = `
                     "measureDefinition": {
                       "filters": [],
                       "item": {
+                        "identifier": "negative_metric",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
+                  "title": "Negative Metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Negative Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:pyramid",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -2114,6 +4302,677 @@ exports[`tiger insights > should load insights 1`] = `
                     "measureDefinition": {
                       "filters": [],
                       "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "arithmeticMeasure": {
+                      "measureIdentifiers": [
+                        "fccc4446dc314fc4911315b881d2b5c4",
+                        "a954df386c3b40e986820c47b50c3e7f",
+                      ],
+                      "operator": "sum",
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_stage.status_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2005-05-20 00:00",
+              "to": "2023-06-20 23:59",
+            },
+          },
+        ],
+        "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+        "isLocked": false,
+        "properties": {
+          "controls": {
+            "columnWidths": [
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "element": "Lost",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "fccc4446dc314fc4911315b881d2b5c4",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 203,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "a954df386c3b40e986820c47b50c3e7f",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 98,
+                  },
+                },
+              },
+              {
+                "measureColumnWidthItem": {
+                  "locators": [
+                    {
+                      "attributeLocatorItem": {
+                        "attributeIdentifier": "62b9249ce0bd4bf68a00fa04bbc19435",
+                        "element": "Direct Sales",
+                      },
+                    },
+                    {
+                      "totalLocatorItem": {
+                        "attributeIdentifier": "37df01ac7f3047469b075685d37bfc8c",
+                        "totalFunction": "sum",
+                      },
+                    },
+                    {
+                      "measureLocatorItem": {
+                        "measureIdentifier": "6cb6dc742b4545789a804a4cdaca58b9",
+                      },
+                    },
+                  ],
+                  "width": {
+                    "value": 322,
+                  },
+                },
+              },
+            ],
+          },
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "02ee089c502047d391c3d783c7616a7f",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has AM metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[>=9][color=2190c0]██████████;
+[>=8][color=2190c0]█████████░;
+[>=7][color=2190c0]████████░░;
+[>=6][color=2190c0]███████░░░;
+[>=5][color=2190c0]██████░░░░;
+[>=4][color=2190c0]█████░░░░░;
+[>=3][color=2190c0]████░░░░░░;
+[>=2][color=2190c0]███░░░░░░░;
+[>=1][color=2190c0]██░░░░░░░░;
+[color=2190c0]█░░░░░░░░░
+",
+                  "localIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][red]#,#.##;
+[<1000][green]#,0.##;
+[>=1000][black]#,#.##",
+                  "localIdentifier": "820c5beb252641049020e6026be3e40e",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[<0][green]▲ #,##0.0%;
+[=0][black]#,##0.0%;
+[>0][red]▼ #,##0.0%
+",
+                  "localIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                  "title": "Amount",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[BLUE][backgroundColor=aff8ef]$#,##0.00",
+                  "localIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "<button>#,##0.00</button>",
+                  "localIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                  "title": "Win Rate",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.0% long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long",
+                  "localIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                  "title": "Probability",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00 kiểm tra nghiêm khắc",
+                  "localIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                  "title": "# Of Opportunities",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "format": "[=NULL]null value; #,##0.00",
+                  "localIdentifier": "28f55bd907394608845f87a046f2117e",
+                  "title": "Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+            "totals": [
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "79bcc8b9dc2546c7b40b9a59234637d0",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "9376f1cffa1b4b7b8f5b14d670e604e7",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "820c5beb252641049020e6026be3e40e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "7e1ab231b1104212a4e555c6811feec8",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "2a61f76ac2ae4fe2ad703e649e490dc4",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "3c00ebd0b2dc460b828ab564a06e49b1",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "28f55bd907394608845f87a046f2117e",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "34740fafafb84f3f99162cebf73590e5",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "201dd02a610c4575a44f7713b8f80fd4",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+              {
+                "attributeIdentifier": "50cd4fc5e04e41928d17bbebd2fb11d2",
+                "measureIdentifier": "c38865b3568b4d7cbf80b721b34f222d",
+                "type": "sum",
+              },
+            ],
+          },
+        ],
+        "filters": [],
+        "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
+                "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": {
+          "identifier": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+          "type": "insight",
+        },
+        "sorts": [
+          {
+            "attributeSortItem": {
+              "attributeIdentifier": "3aabb29d0ef6452ab0904fb21d7e8e6b",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "Table has multi metrics and multi formats",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "bf992ef0637142dba774330a0851098c",
+                  "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": [],
+        "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "",
+        "title": "Table using long name metric",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -2200,6 +5059,6 @@ exports[`tiger insights > should load insights 1`] = `
   ],
   "limit": 50,
   "offset": 0,
-  "totalCount": 8,
+  "totalCount": 14,
 }
 `;

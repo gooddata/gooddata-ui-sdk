@@ -134,6 +134,18 @@ export class Table {
         return this;
     }
 
+    openAggregationMenu(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
+        this.clickAggregationMenu(element, aggregationItem);
+        return this;
+    }
+
+    assertColumnTotal(expectItem: string, isChecked = false) {
+        cy.get(".s-menu-aggregation-inner")
+            .parent(isChecked ? ".is-checked" : ".gd-menu-item")
+            .should("exist")
+            .should("contain", expectItem);
+    }
+
     aggregationSubMenuHasColumn(element: Cypress.Chainable<JQuery<HTMLElement>>, exist = false) {
         element.trigger("mouseover").find(".gd-menuOpenedByClick-togglerWrapped").click();
 

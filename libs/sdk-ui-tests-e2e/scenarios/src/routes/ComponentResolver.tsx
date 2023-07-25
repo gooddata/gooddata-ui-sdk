@@ -20,6 +20,7 @@ import {
     PivotTableColumnsAggegationsMenuScenario,
     PivotTableColumnsAggregationsMenuAllTotalScenario,
     PivotTableAggregationsMenuOneColumnTotalScenario,
+    PivotTableColumnsAggregationsMenuOneSubtotalScenario,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import { NewDashboardScenario } from "../components/Scenarios/Dashboard/NewDashboardScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
@@ -58,6 +59,7 @@ import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenar
 import { FunnelChartScenario } from "../components/Scenarios/Visualizations/FunnelChart/FunnelChartScenario";
 import { PyramidChartScenario } from "../components/Scenarios/Visualizations/PyramidChart/PyramidChartScenario";
 import { DashboardWithTableManyRowsColumnsScenario } from "../components/Scenarios/Dashboard/DashboardWithTableManyRowColumnScenario";
+import { DashboardPivotTableScenario } from "../components/Scenarios/Dashboard/DashboardPivotTableScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -121,6 +123,9 @@ export const SCENARIO_KEYS = {
     SINGLE_SELECT_FILTER_INTEGRATION: "dashboard/single-select-filter-integration",
     VIS_FUNNEL_CHART: "visualizations/funnelchart/funnel-chart-scenario",
     VIS_PYRAMID_CHART: "visualizations/pyramidchart/pyramid-chart-scenario",
+    DASHBOARD_PIVOT_TABLE: "dashboard/dashboard-pivot-table-scenario",
+    VIS_PIVOT_TABLE_WITH_AGG_COLUMN_TOTAL:
+        "visualizations/pivot-table/pivot-table-columns-aggregations-menu-one-subtotal-scenario",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -191,6 +196,11 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.SINGLE_SELECT_FILTER_INTEGRATION, SingleSelectFilterIntegration],
     [SCENARIO_KEYS.VIS_PYRAMID_CHART, PyramidChartScenario],
     [SCENARIO_KEYS.VIS_FUNNEL_CHART, FunnelChartScenario],
+    [SCENARIO_KEYS.DASHBOARD_PIVOT_TABLE, DashboardPivotTableScenario],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_WITH_AGG_COLUMN_TOTAL,
+        PivotTableColumnsAggregationsMenuOneSubtotalScenario,
+    ],
 ]);
 
 const ComponentResolver: React.FC = () => {

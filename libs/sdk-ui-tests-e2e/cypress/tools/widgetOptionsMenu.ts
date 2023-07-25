@@ -6,11 +6,11 @@ export class WidgetOptionsMenu {
     constructor(private widget: Widget) {}
 
     getButtonElement() {
-        return this.widget.getElement().find(".s-dash-item-action-widget-options");
+        return this.widget.getElement();
     }
 
     open() {
-        this.getButtonElement().realHover().click();
+        this.getButtonElement().find(".dash-item-content .gd-absolute-row").click();
         return this;
     }
 

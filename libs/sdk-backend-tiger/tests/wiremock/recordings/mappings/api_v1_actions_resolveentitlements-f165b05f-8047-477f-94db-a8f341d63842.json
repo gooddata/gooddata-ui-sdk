@@ -1,5 +1,5 @@
 {
-    "id": "bf044e07-eb2e-4006-851a-3ec4395baf50",
+    "id": "f165b05f-8047-477f-94db-a8f341d63842",
     "name": "api_v1_actions_resolveentitlements",
     "request": {
         "url": "/api/v1/actions/resolveEntitlements",
@@ -14,27 +14,24 @@
         "status": 200,
         "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
         "headers": {
-            "Date": "Fri, 12 May 2023 10:28:02 GMT",
-            "Content-Type": "application/json",
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Vary": [
                 "Accept-Encoding",
                 "Origin",
                 "Access-Control-Request-Method",
                 "Access-Control-Request-Headers"
             ],
-            "X-GDC-TRACE-ID": "fdee6c6eba1593dd",
-            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-            "Pragma": "no-cache",
             "Expires": "0",
-            "X-Content-Type-Options": "nosniff",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "X-XSS-Protection": "1 ; mode=block",
-            "Referrer-Policy": "no-referrer",
-            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
-            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "bf044e07-eb2e-4006-851a-3ec4395baf50",
+    "uuid": "f165b05f-8047-477f-94db-a8f341d63842",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 4
 }
