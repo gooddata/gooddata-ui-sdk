@@ -8,7 +8,10 @@ import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { IDrillTargets } from "./drillTargetsTypes.js";
 
-const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => state.drillTargets);
+const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => {
+    console.log("State", state);
+    return state.drillTargets;
+});
 
 const selectDrillTargetsInternal = entitySelectors.selectAll;
 
