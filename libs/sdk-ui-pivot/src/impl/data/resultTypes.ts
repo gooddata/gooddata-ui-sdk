@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { ROW_TOTAL } from "../base/constants.js";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
 
 /**
  * All non-grand-total rows in the grid conform to this interface.
@@ -29,6 +29,11 @@ export interface IGridRow {
      * If metrics are in rows each row keeps corresponding metric descriptor
      */
     measureDescriptor?: IMeasureDescriptor;
+
+    /**
+     * If column attrbutes header posisiton is set to left.
+     */
+    attributeDescriptor?: IAttributeDescriptor;
 
     /**
      * If this is 'special' row such as total or subtotal, then the 'type' will be set to value of

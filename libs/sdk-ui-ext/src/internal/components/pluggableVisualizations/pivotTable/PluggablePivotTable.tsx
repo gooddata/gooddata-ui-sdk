@@ -430,6 +430,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const columnHeadersPosition: ColumnHeadersPosition = row
             ? "top"
             : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const measureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(
@@ -443,6 +444,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             maxHeight,
             maxWidth,
             columnHeadersPosition,
+            measureGroupDimension,
         };
 
         const pivotTableProps: ICorePivotTableProps = {

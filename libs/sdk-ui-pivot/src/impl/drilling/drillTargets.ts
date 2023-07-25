@@ -8,7 +8,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
-export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
+export function getAvailableDrillTargets(
+    dv: DataViewFacade,
+    measureGroupDimension?: string,
+    columnHeadersPosition?: string,
+): IAvailableDrillTargets {
     const measureDescriptors = dv
         .meta()
         .measureDescriptors()
@@ -27,8 +31,20 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
             intersectionAttributes: getIntersectionAttributes(attribute, attributes),
         }));
 
+    let columnAttributeItems: IAvailableDrillTargetAttribute[] = [];
+    if (measureGroupDimension === "rows" && columnHeadersPosition === "left") {
+        columnAttributeItems = dv
+            .meta()
+            .attributeDescriptorsForDim(1)
+            .map((attribute, _index, attributes) => ({
+                attribute,
+                intersectionAttributes: getIntersectionAttributes(attribute, attributes),
+            }));
+        console.log("columnAttributeItems", columnAttributeItems);
+    }
+
     return {
         measures: measureDescriptors,
-        attributes: rowAttributeItems,
+        attributes: rowAttributeItems.length > 0 ? rowAttributeItems : columnAttributeItems,
     };
 }

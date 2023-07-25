@@ -1009,6 +1009,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return this.props.config?.columnHeadersPosition ?? "top";
     };
 
+    private getTransposition = (): string => {
+        return this.props.config?.measureGroupDimension ?? "columns";
+    };
+
     private getMenuConfig = (): IMenu => {
         return this.props.config?.menu ?? {};
     };
@@ -1121,6 +1125,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getColumnTotals: this.getColumnTotals,
             getRowTotals: this.getRowTotals,
             getColumnHeadersPosition: this.getColumnHeadersPosition,
+            getTransposition: this.getTransposition,
             getResizingConfig: this.getResizingConfig,
 
             onLoadingChanged: this.onLoadingChanged,
