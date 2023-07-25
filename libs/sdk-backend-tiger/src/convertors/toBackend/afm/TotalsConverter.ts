@@ -18,6 +18,8 @@ import flatMap from "lodash/flatMap.js";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
+const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED"];
+
 const ATTRIBUTE = "attribute";
 const COLUMNS = "columns";
 
@@ -25,8 +27,13 @@ function getMeasureOrder(total: Total, measures: IMeasure[]) {
     return measures.findIndex((m) => m.measure.localIdentifier === total.metric);
 }
 
+function getFunctionOrder(total: Total): number {
+    return TOTAL_ORDER.findIndex((item) => item === total.function);
+}
+
 function enrichTotalWithMeasureIndex(total: Total, measures: IMeasure[]) {
     return {
+        functionOrder: getFunctionOrder(total),
         order: getMeasureOrder(total, measures),
         total,
     };
@@ -66,10 +73,16 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
         });
 
         // need to send these totals ordered to the backend so that we get executed totals in correct order
+        // -- order by total function and also by measure order
         const totalsWithOrders = mappedTotals?.map((total) =>
             enrichTotalWithMeasureIndex(total, def.measures),
         );
-        return totalsWithOrders?.sort((total1, total2) => total1.order - total2.order).map((t) => t.total);
+        return totalsWithOrders
+            ?.sort((total1, total2) => {
+                const fnOrder = total1.functionOrder - total2.functionOrder;
+                return fnOrder === 0 ? total1.order - total2.order : fnOrder;
+            })
+            .map((t) => t.total);
     }).filter((total): total is Total => total !== undefined);
 
     /**
