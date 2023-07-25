@@ -9,7 +9,6 @@ import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metada
 import { IDrillTargets } from "./drillTargetsTypes.js";
 
 const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => {
-    console.log("State", state);
     return state.drillTargets;
 });
 

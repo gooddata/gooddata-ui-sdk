@@ -103,6 +103,8 @@ export class TableFacadeInitializer {
                         if (isUnexpectedResponseError(error)) {
                             const availableDrillTargets = getAvailableDrillTargets(
                                 DataViewFacade.forResult(result),
+                                tableMethods.getTransposition(),
+                                tableMethods.getColumnHeadersPosition(),
                             );
 
                             this.props.pushData!({ availableDrillTargets });
@@ -115,6 +117,8 @@ export class TableFacadeInitializer {
                         if (isNoDataError(error) && error.dataView) {
                             const availableDrillTargets = getAvailableDrillTargets(
                                 DataViewFacade.for(error.dataView),
+                                tableMethods.getTransposition(),
+                                tableMethods.getColumnHeadersPosition(),
                             );
 
                             tableMethods.pushData({ availableDrillTargets });

@@ -45,11 +45,17 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
     return mappingHeaders;
 }
 
-export function createMixedValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+export function createMixedValuesColHeaders(col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (row.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
+    }
+
+    if (row.attributeDescriptor) {
+        const attributeElement = row.headerItemMap[col.id];
+        mappingHeaders.push(attributeElement);
+        mappingHeaders.push(row.attributeDescriptor);
     }
 
     return mappingHeaders;
