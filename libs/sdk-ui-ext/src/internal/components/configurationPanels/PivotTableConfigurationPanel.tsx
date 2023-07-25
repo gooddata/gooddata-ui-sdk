@@ -81,12 +81,4 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
 
         return !insight || isError || isLoading || !columnHeadersLeftPositionAllowed;
     }
-
-    private isColumnHeadersPositionControlDisabled() {
-        const { insight, isError, isLoading } = this.props;
-
-        const columnHeadersLeftPosition = isSetColumnHeadersPositionToLeftAllowed(insight);
-
-        return !insight || isError || isLoading || columnHeadersLeftPosition;
-    }
 }
