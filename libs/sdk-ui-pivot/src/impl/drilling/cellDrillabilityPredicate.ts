@@ -14,12 +14,19 @@ export function isCellDrillable(
     row: IGridRow,
     dv: DataViewFacade,
     drillablePredicates: IHeaderPredicate[],
+    columnHeadersPosition?: string,
+    isTransposed?: boolean,
 ): boolean {
     // TODO
     if (drillablePredicates.length === 0 || colDescriptor.type === "mixedHeadersCol") {
         return false;
     }
-    const headers: IMappingHeader[] = createDrillHeaders(colDescriptor, row);
+    const headers: IMappingHeader[] = createDrillHeaders(
+        colDescriptor,
+        row,
+        columnHeadersPosition,
+        isTransposed,
+    );
 
     return headers.some((drillItem: IMappingHeader) =>
         isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),

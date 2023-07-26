@@ -63,11 +63,19 @@ export function cellClassFactory(
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
         const cellIsNotTotalSubtotal = !isRowTotal && !isRowSubtotal && !isColumnTotal && !isColumnSubtotal;
 
+        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
+        const isTransposed = table.tableDescriptor.isTransposed();
         if (cellIsNotTotalSubtotal && !isRowMetric && cellAllowsDrill) {
-            hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
+            hasDrillableHeader = isCellDrillable(
+                col,
+                row,
+                dv,
+                drillablePredicates,
+                columnHeadersPosition,
+                isTransposed,
+            );
         }
 
-        const isTransposed = table.tableDescriptor.isTransposed();
         const colIndex = table.tableDescriptor.getAbsoluteLeafColIndex(col);
         const measureIndex = isSeriesCol(col) ? last(col.fullIndexPathToHere) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();

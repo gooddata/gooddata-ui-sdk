@@ -75,16 +75,23 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-export function createDataColGroupHeaders(col: ScopeCol, row?: IGridRow): IMappingHeader[] {
+export function createDataColGroupHeaders(
+    col: ScopeCol,
+    row?: IGridRow,
+    columnHeadersPosition?: string,
+    isTransposed?: boolean,
+): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
-    col.descriptorsToHere.forEach((descriptor, index) => {
-        mappingHeaders.push(col.headersToHere[index]);
-        mappingHeaders.push(descriptor);
-    });
+    if (columnHeadersPosition === "top" && !isTransposed) {
+        col.descriptorsToHere.forEach((descriptor, index) => {
+            mappingHeaders.push(col.headersToHere[index]);
+            mappingHeaders.push(descriptor);
+        });
 
-    mappingHeaders.push(col.header);
-    mappingHeaders.push(col.attributeDescriptor);
+        mappingHeaders.push(col.header);
+        mappingHeaders.push(col.attributeDescriptor);
+    }
 
     if (row?.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
@@ -103,11 +110,16 @@ export function createDataColGroupHeaders(col: ScopeCol, row?: IGridRow): IMappi
  * @param col - column to get mapping headers for
  * @param row - row
  */
-export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[] {
+export function createDrillHeaders(
+    col: AnyCol,
+    row?: IGridRow,
+    columnHeadersPosition?: string,
+    isTransposed?: boolean,
+): IMappingHeader[] {
     if (isSeriesCol(col)) {
         return createDataColLeafHeaders(col);
     } else if (isScopeCol(col)) {
-        return createDataColGroupHeaders(col, row);
+        return createDataColGroupHeaders(col, row, columnHeadersPosition, isTransposed);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a slice col, both the column & the row data must be
