@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-19T11:17:16.540Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-27T08:49:20.602Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1171,6 +1171,12 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_56f017ad236936c61189a98d5be922ce = {
+    definition: require("./uiTestScenarios/executions/56f017ad236936c61189a98d5be922ce/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/56f017ad236936c61189a98d5be922ce/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/56f017ad236936c61189a98d5be922ce/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/56f017ad236936c61189a98d5be922ce/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1408,6 +1414,10 @@ export const Scenarios = {
         TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
             scenarioIndex: 0,
             execution: fp_feb54597636051ea61a1ad9aa1a5138a,
+        },
+        MultipleMeasuresAndNoRowsWithTotals: {
+            scenarioIndex: 0,
+            execution: fp_56f017ad236936c61189a98d5be922ce,
         },
     },
     BarChart: {
@@ -4897,6 +4907,9 @@ const i_PivotTable_2d6b1aaa118412552cf5b13cdcbe272c = {
 const i_PivotTable_2eceab3f50f6adcc0e88cc95427aa633 = {
     obj: require("./uiTestScenarios/insights/PivotTable.2eceab3f50f6adcc0e88cc95427aa633/obj.json"),
 };
+const i_PivotTable_32350c51be25f3b4616bf6ea974e6109 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.32350c51be25f3b4616bf6ea974e6109/obj.json"),
+};
 const i_PivotTable_32b6b7eddd62674b4d7683676edd3057 = {
     obj: require("./uiTestScenarios/insights/PivotTable.32b6b7eddd62674b4d7683676edd3057/obj.json"),
 };
@@ -5887,6 +5900,9 @@ const i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc = {
 const i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.3dce281b7b1a552389fa105b6931ddb9/obj.json"),
 };
+const i_WaterfallChart_51f357fb8e0217f2725d9c11350a739d = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.51f357fb8e0217f2725d9c11350a739d/obj.json"),
+};
 const i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.5620cdf31981a82d1083c503eed9fa56/obj.json"),
 };
@@ -5991,6 +6007,9 @@ const i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5 = {
 };
 const i_WaterfallChart_c33d1b9464b049310aebe038257c2b04 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.c33d1b9464b049310aebe038257c2b04/obj.json"),
+};
+const i_WaterfallChart_c9b7a5abbc8764d68fe4f599535af117 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c9b7a5abbc8764d68fe4f599535af117/obj.json"),
 };
 const i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd/obj.json"),
@@ -6253,6 +6272,7 @@ export const Insights = {
         TwoMeasuresAndSingleGrandTotalForEach: i_PivotTable_2d6b1aaa118412552cf5b13cdcbe272c,
         OneMeasureAndRepeatingRowAttributesOnDifferentPositions:
             i_PivotTable_2eceab3f50f6adcc0e88cc95427aa633,
+        MultipleMeasuresAndNoRowsWithTotals: i_PivotTable_32350c51be25f3b4616bf6ea974e6109,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: i_PivotTable_32b6b7eddd62674b4d7683676edd3057,
         TwoMeasuresAndSingleGrandTotalAndSingleSubtotalSortedBySecondAttribute:
             i_PivotTable_342daf6d78ebd15b4a08bffc7d597cf5,
@@ -6605,6 +6625,7 @@ export const Recordings = {
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_feb54597636051ea61a1ad9aa1a5138a,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_56f017ad236936c61189a98d5be922ce,
     },
     metadata: {
         catalog,
@@ -7659,6 +7680,7 @@ export const Recordings = {
             i_PivotTable_2cb5eb0d6b1dfc120c5d8b42137b123f,
             i_PivotTable_2d6b1aaa118412552cf5b13cdcbe272c,
             i_PivotTable_2eceab3f50f6adcc0e88cc95427aa633,
+            i_PivotTable_32350c51be25f3b4616bf6ea974e6109,
             i_PivotTable_32b6b7eddd62674b4d7683676edd3057,
             i_PivotTable_342daf6d78ebd15b4a08bffc7d597cf5,
             i_PivotTable_3495df66ed7cc8ec1f7ca4f9f4b12f24,
@@ -7989,6 +8011,7 @@ export const Recordings = {
             i_WaterfallChart_32e6939264f78445ba74bceff9213102,
             i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc,
             i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9,
+            i_WaterfallChart_51f357fb8e0217f2725d9c11350a739d,
             i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56,
             i_WaterfallChart_5e337da70dd103b5b555e6de4f1abf7f,
             i_WaterfallChart_5fa47d5e951339b8ba1be7abde781fff,
@@ -8024,6 +8047,7 @@ export const Recordings = {
             i_WaterfallChart_c32195b4e13bc65d61a36e199240a4c0,
             i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5,
             i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
+            i_WaterfallChart_c9b7a5abbc8764d68fe4f599535af117,
             i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd,
             i_WaterfallChart_ccd75bba89907df176f81dd2f61193d8,
             i_WaterfallChart_cff7f5e77f3060ebb10b32808fcb96cf,
