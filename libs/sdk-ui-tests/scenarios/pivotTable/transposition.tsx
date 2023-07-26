@@ -21,6 +21,9 @@ import {
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("transposition")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withDefaultBackendSettings({
+        enablePivotTableTransposition: true,
+    })
     .addScenario("single measure pivot with both attributes and metrics in rows", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         config: {
