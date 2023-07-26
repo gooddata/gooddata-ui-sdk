@@ -236,7 +236,14 @@ export class XhrModule {
                 responseJson = {};
             }
 
-            let finalUrl = responseJson.uri ?? response.url ?? url;
+            /**
+             * It seems like 'fetch-mock' with Node 18 returns empty string in response.url,
+             * and this issue doesn't happen with real BE.
+             * For better backward compatibility, empty string will be treated as undefined.
+             */
+            const responseUrl = response.url !== "" ? response.url : undefined;
+
+            let finalUrl = responseJson.uri ?? responseUrl ?? url;
 
             const finalSettings = settings;
 
