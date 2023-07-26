@@ -48,7 +48,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
         ],
         config: {
-            ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+            ...getCommonPivotTableSizingConfig(),
             measureGroupDimension: "rows",
         },
     })
@@ -63,7 +63,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
         ],
         config: {
-            ...getCommonPivotTableSizingConfig([ReferenceMd.Region, ReferenceMd.Department]),
+            ...getCommonPivotTableSizingConfig(),
             measureGroupDimension: "rows",
         },
     })

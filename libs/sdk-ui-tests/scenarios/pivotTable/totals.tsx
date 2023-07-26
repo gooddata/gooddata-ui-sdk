@@ -24,7 +24,7 @@ export const PivotTableWithTwoMeasuresAndTotals = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("sum", ReferenceMd.Won, ReferenceMd.Product.Name),
     ],
-    config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name]),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
@@ -39,7 +39,7 @@ export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
         newTotal("med", ReferenceMd.Won, ReferenceMd.Department),
         newTotal("nat", ReferenceMd.Won, ReferenceMd.Department),
     ],
-    config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+    config: getCommonPivotTableSizingConfig(),
 };
 
 export const PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals = {
@@ -187,7 +187,7 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
-        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Owner]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("single measure and multiple column grand totals", {
         ...PivotTableWighSingleMeasureAndSingleRowColAttr,
@@ -221,12 +221,12 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
             newTotal("nat", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Owner]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and one column subtotal", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region)],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and multiple column subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -237,19 +237,19 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
         ],
         filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["West Coast"])],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and column grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals,
         filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["West Coast"])],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and column single grand total sorted by second attribute", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
         sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
         filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["West Coast"])],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario(
         "two measures and single column grand total and single subtotal sorted by second attribute",
@@ -264,7 +264,7 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             ],
             sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
             filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["West Coast"])],
-            config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+            config: getCommonPivotTableSizingConfig(),
         },
     );
 
@@ -315,7 +315,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
             newTotal("nat", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Owner]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and one column/row subtotal", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -323,7 +323,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
         ],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and multiple column/row subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -337,11 +337,11 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
             newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
             newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
         ],
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     })
     .addScenario("two measures and column/row grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresRowColumnGrandTotalsAndSubtotals,
-        config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+        config: getCommonPivotTableSizingConfig(),
     });
 
 export default [totalsForRows, totalsForColumns, totalsForRowsAndColumns];

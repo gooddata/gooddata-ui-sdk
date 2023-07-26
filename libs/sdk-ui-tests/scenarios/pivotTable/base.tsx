@@ -6,23 +6,15 @@ import {
     IPivotTableProps,
     PivotTable,
     IPivotTableConfig,
-    newWidthForAttributeColumn,
-    newWidthForAllColumnsForMeasure,
 } from "@gooddata/sdk-ui-pivot";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 import { requestPages } from "@gooddata/mock-handling";
 import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
-export function getCommonPivotTableSizingConfig(attributesUsed: IAttribute[] = []): IPivotTableConfig {
+export function getCommonPivotTableSizingConfig(): IPivotTableConfig {
     return {
         columnSizing: {
-            columnWidths: [
-                newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 100),
-                newWidthForAllColumnsForMeasure(ReferenceMd.Probability, 100),
-                newWidthForAllColumnsForMeasure(ReferenceMd.Won, 100),
-                ...attributesUsed.map((attribute) => newWidthForAttributeColumn(attribute, 120)),
-            ],
-            defaultWidth: "unset",
+            defaultWidth: "autoresizeAll",
             growToFit: false,
         },
     };
