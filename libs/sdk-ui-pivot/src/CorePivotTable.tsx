@@ -13,6 +13,7 @@ import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
+import cx from "classnames";
 import {
     BucketNames,
     createExportErrorFunction,
@@ -531,9 +532,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const shouldRenderLoadingOverlay =
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
 
+        const classNames = cx("gd-table-component", {
+            "gd-table-header-hide":
+                this.props.config?.columnHeadersPosition === "left" &&
+                this.internal.table.tableDescriptor.isTransposed(),
+        });
+
         return (
             <div
-                className="gd-table-component"
+                className={classNames}
                 style={style}
                 id={this.pivotTableId}
                 onMouseDown={this.stopEventWhenResizeHeader}

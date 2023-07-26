@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-19T11:17:16.540Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-26T06:55:25.262Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1171,6 +1171,12 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_c200a5a93f071eee50f14cc135edd5bf = {
+    definition: require("./uiTestScenarios/executions/c200a5a93f071eee50f14cc135edd5bf/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/c200a5a93f071eee50f14cc135edd5bf/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/c200a5a93f071eee50f14cc135edd5bf/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/c200a5a93f071eee50f14cc135edd5bf/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1408,6 +1414,10 @@ export const Scenarios = {
         TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
             scenarioIndex: 0,
             execution: fp_feb54597636051ea61a1ad9aa1a5138a,
+        },
+        TwoMeasuresInRowsWithOnlyColumnAttrsOnLeft: {
+            scenarioIndex: 0,
+            execution: fp_c200a5a93f071eee50f14cc135edd5bf,
         },
     },
     BarChart: {
@@ -4930,6 +4940,9 @@ const i_PivotTable_44c197353eefed217b514a40b4829fd7 = {
 const i_PivotTable_4535f7207b8c52d7b74f8a4a776cc116 = {
     obj: require("./uiTestScenarios/insights/PivotTable.4535f7207b8c52d7b74f8a4a776cc116/obj.json"),
 };
+const i_PivotTable_47209ad62f29be5a5f04dba069f4fec0 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.47209ad62f29be5a5f04dba069f4fec0/obj.json"),
+};
 const i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa = {
     obj: require("./uiTestScenarios/insights/PivotTable.4a93503fe378e5a5452f8b4a1a66f7fa/obj.json"),
 };
@@ -5887,6 +5900,9 @@ const i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc = {
 const i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.3dce281b7b1a552389fa105b6931ddb9/obj.json"),
 };
+const i_WaterfallChart_51f357fb8e0217f2725d9c11350a739d = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.51f357fb8e0217f2725d9c11350a739d/obj.json"),
+};
 const i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.5620cdf31981a82d1083c503eed9fa56/obj.json"),
 };
@@ -5991,6 +6007,9 @@ const i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5 = {
 };
 const i_WaterfallChart_c33d1b9464b049310aebe038257c2b04 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.c33d1b9464b049310aebe038257c2b04/obj.json"),
+};
+const i_WaterfallChart_c9b7a5abbc8764d68fe4f599535af117 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c9b7a5abbc8764d68fe4f599535af117/obj.json"),
 };
 const i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd/obj.json"),
@@ -6263,6 +6282,7 @@ export const Insights = {
         MultipleMeasuresAndNoColumnsWithTotals: i_PivotTable_44163eff5565a7f457046d5166d4d549,
         SingleMeasureWithColumnAttribute: i_PivotTable_44bc6f17d36eba6a67953586fccd4953,
         SingleMeasureAndSingleColumnRowGrandTotal: i_PivotTable_44c197353eefed217b514a40b4829fd7,
+        TwoMeasuresInRowsWithOnlyColumnAttrsOnLeft: i_PivotTable_47209ad62f29be5a5f04dba069f4fec0,
         TwoMeasuresAndSingleColumnGrandTotalForOne: i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa,
         TwoMeasuresAndMultipleGrandTotalsForEach: i_PivotTable_4ab855bb1f8821c7be1e0cfeb53fcd78,
         TwoMeasuresAndOneSubtotal: i_PivotTable_51f14b5c54ca0618d9c559bc1e8fec62,
@@ -6605,6 +6625,7 @@ export const Recordings = {
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_feb54597636051ea61a1ad9aa1a5138a,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_c200a5a93f071eee50f14cc135edd5bf,
     },
     metadata: {
         catalog,
@@ -7670,6 +7691,7 @@ export const Recordings = {
             i_PivotTable_44bc6f17d36eba6a67953586fccd4953,
             i_PivotTable_44c197353eefed217b514a40b4829fd7,
             i_PivotTable_4535f7207b8c52d7b74f8a4a776cc116,
+            i_PivotTable_47209ad62f29be5a5f04dba069f4fec0,
             i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa,
             i_PivotTable_4ab855bb1f8821c7be1e0cfeb53fcd78,
             i_PivotTable_51f14b5c54ca0618d9c559bc1e8fec62,
@@ -7989,6 +8011,7 @@ export const Recordings = {
             i_WaterfallChart_32e6939264f78445ba74bceff9213102,
             i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc,
             i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9,
+            i_WaterfallChart_51f357fb8e0217f2725d9c11350a739d,
             i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56,
             i_WaterfallChart_5e337da70dd103b5b555e6de4f1abf7f,
             i_WaterfallChart_5fa47d5e951339b8ba1be7abde781fff,
@@ -8024,6 +8047,7 @@ export const Recordings = {
             i_WaterfallChart_c32195b4e13bc65d61a36e199240a4c0,
             i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5,
             i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
+            i_WaterfallChart_c9b7a5abbc8764d68fe4f599535af117,
             i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd,
             i_WaterfallChart_ccd75bba89907df176f81dd2f61193d8,
             i_WaterfallChart_cff7f5e77f3060ebb10b32808fcb96cf,

@@ -73,6 +73,9 @@ export function createGridOptions(
         intl: props.intl,
     };
 
+    const hideEmptyHeader =
+        tableMethods.getColumnHeadersPosition() === "left" && table.tableDescriptor.isTransposed();
+
     return {
         // Initial data
         columnDefs: allColumnDefs,
@@ -147,5 +150,7 @@ export function createGridOptions(
         rowHeight: DEFAULT_ROW_HEIGHT,
         autoSizePadding: DEFAULT_AUTOSIZE_PADDING,
         enableBrowserTooltips: true,
+
+        headerHeight: hideEmptyHeader ? 0 : undefined,
     };
 }

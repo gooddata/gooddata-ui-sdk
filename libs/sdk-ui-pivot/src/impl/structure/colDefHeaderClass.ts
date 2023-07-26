@@ -6,6 +6,7 @@ import {
     agColId,
     AnyCol,
     ColumnGroupingDescriptorId,
+    isMixedHeadersCol,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
@@ -36,18 +37,25 @@ export function headerClassFactory(
             // This is the special, presentation-only ColGroupDef which communicates to the user
             // what attributes are used for grouping the column header.
 
+            const noColumnBefore =
+                !tableDescriptor.sliceColCount() &&
+                !tableDescriptor.sliceMeasureColCount() &&
+                !tableDescriptor.hasHeadersOnLeft();
+
             return cx(
                 classList,
                 "gd-column-group-header",
                 "s-table-column-group-header-descriptor",
-                !tableDescriptor.sliceColCount() ? "gd-column-group-header--first" : null,
+                noColumnBefore ? "gd-column-group-header--first" : null,
             );
         } else {
             const colDesc = tableDescriptor.getCol(colId);
             const treeIndexes = colDesc.fullIndexPathToHere;
             const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
             const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasScopingCols();
-            const noBottomBorder = getNoBottomBorderGroupHeader(colDesc, tableDescriptor);
+            const noBottomBorder =
+                getNoBottomBorderGroupHeader(colDesc, tableDescriptor) ||
+                hasEmptyChild(colDef as ColGroupDef, colDesc);
             const topBottomSolidTotal =
                 isScopeCol(colDesc) &&
                 isResultTotalHeader(colDesc.header) &&
@@ -121,4 +129,8 @@ function getNoBottomBorderGroupHeader(colDesc: AnyCol, tableDescriptor: TableDes
     } else {
         return isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);
     }
+}
+
+function hasEmptyChild(colDef: ColGroupDef, colDesc: AnyCol) {
+    return isMixedHeadersCol(colDesc) && colDef.children?.[0] && colDef.children[0].headerName === "";
 }
