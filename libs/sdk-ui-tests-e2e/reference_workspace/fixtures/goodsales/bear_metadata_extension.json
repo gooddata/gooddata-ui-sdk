@@ -3427,6 +3427,66 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "27fdda35001f4d64a05c036e1207ec58",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_name_stagename}}}"
+                                            },
+                                            "localIdentifier": "13728a9dfa684520bc30a24fd02b1fa0"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_isactive}}}"
+                                            },
+                                            "localIdentifier": "5ec3da5465e640d49b59bdb97f44a2f5"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"columnHeadersPosition\":\"left\",\"measureGroupDimension\":\"rows\"}}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aahgvak6wCmW",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with one measure two attributes with headers on left and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aahgvak6wCmW"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -10974,6 +11034,39 @@
         },
         {
             "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "13728a9dfa684520bc30a24fd02b1fa0"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_With_own_description_aa84cd0bv9i0}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aahgvak6wCmW}}}"
+                    },
+                    "meta": {
+                        "identifier": "aaSgxnpnwPiE",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with one measure two attributes with headers on left and metrics in rows"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aaSgxnpnwPiE"
+        },
+        {
+            "content": {
                 "analyticalDashboard": {
                     "content": {
                         "filterContext": "{{{filterContext_filterContext_aaiCT8glV0K4}}}",
@@ -11013,13 +11106,33 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aaSgxnpnwPiE}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         },
                         "widgets": [
                             "{{{visualizationWidget_Table_with_two_measures_one_column_and_metrics_in_rows_aadG9Eh974k5}}}",
-                            "{{{visualizationWidget_Table_with_two_measures_on_row_and_metrics_in_rows_aabG95zezU89}}}"
+                            "{{{visualizationWidget_Table_with_two_measures_on_row_and_metrics_in_rows_aabG95zezU89}}}",
+                            "{{{visualizationWidget_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aaSgxnpnwPiE}}}"
                         ]
                     },
                     "meta": {

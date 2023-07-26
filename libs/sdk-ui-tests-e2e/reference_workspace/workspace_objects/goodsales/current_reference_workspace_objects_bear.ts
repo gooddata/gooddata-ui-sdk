@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-25T03:26:48.421Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-26T09:44:08.723Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2311,6 +2311,10 @@ export const Insights = {
      * Insight Title: Table with two measures on row and metrics in rows
      * Insight ID: aaeG9BAFzRsq
      */ TableWithTwoMeasuresOnRowAndMetricsInRows: "aaeG9BAFzRsq",
+    /**
+     * Insight Title: Table with one measure two attributes with headers on left and metrics in rows
+     * Insight ID: aahgvak6wCmW
+     */ TableWithOneMeasureTwoAttributesWithHeadersOnLeftAndMetricsInRows: "aahgvak6wCmW",
 };
 export const Dashboards = {
     /**
