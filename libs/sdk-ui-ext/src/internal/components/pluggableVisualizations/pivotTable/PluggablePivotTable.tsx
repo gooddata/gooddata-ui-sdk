@@ -26,6 +26,7 @@ import {
     newAttributeSort,
     ISettings,
     bucketsFind,
+    bucketItems,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
@@ -429,9 +430,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const buckets = insightBuckets(insight);
         const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
 
-        const columnHeadersPosition: ColumnHeadersPosition = row
-            ? "top"
-            : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const columnHeadersPosition: ColumnHeadersPosition =
+            row && bucketItems(row).length > 0
+                ? "top"
+                : getColumnHeadersPositionFromProperties(insightProperties(insight));
 
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(

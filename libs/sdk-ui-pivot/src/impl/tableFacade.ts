@@ -813,7 +813,7 @@ export class TableFacade {
 
         const rowCount = dv.rawData().firstDimSize();
         let headerRowsMovedToDataRowsCount = 0;
-        if(this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
+        if (this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
             headerRowsMovedToDataRowsCount = dv.meta().dimensions()[1].headers.length; // count of column attributes now rendered in normal rows
         }
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;

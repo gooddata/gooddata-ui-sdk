@@ -87,6 +87,11 @@ export const PivotTableWithMeasuresAndColumnOnly = {
     columns: [ReferenceMd.Region],
 };
 
+export const PivotTableWithMeasuresAndColumnsOnly = {
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    columns: [ReferenceMd.Department, ReferenceMd.Region],
+};
+
 export const PivotTableWithAttributesWithoutMeasures = {
     measures: [],
     rows: [ReferenceMd.StageName.Default, ReferenceMd.Region],

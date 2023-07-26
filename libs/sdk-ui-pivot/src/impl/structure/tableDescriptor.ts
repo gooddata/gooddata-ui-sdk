@@ -272,6 +272,14 @@ export class TableDescriptor {
             return this.headers.sliceCols[0].id === id;
         }
 
+        if (this.headers.sliceCols.length === 0 && this.headers.sliceMeasureCols.length > 0) {
+            return this.headers.sliceMeasureCols[0].id === id;
+        }
+
+        if (this.headers.mixedHeadersCols.length > 0) {
+            return this.headers.mixedHeadersCols[0].id === id;
+        }
+
         return this.isFirstDataCol(id);
     }
 
