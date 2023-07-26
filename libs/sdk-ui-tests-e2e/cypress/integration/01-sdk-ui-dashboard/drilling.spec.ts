@@ -213,22 +213,28 @@ describe("Interaction", () => {
             message.hasWarningMessage(false);
         },
     );
-});
 
-describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
-    beforeEach(() => {
-        Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");
-    });
+    describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
+        beforeEach(() => {
+            Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");
+        });
 
-    it("should drill on insight from table with no rows and metrics in rows", () => {
-        new Widget(0).waitTableLoaded().getTable().click(0, 1);
+        it("should drill on insight from table with no rows and metrics in rows", () => {
+            new Widget(0).waitTableLoaded().getTable().click(0, 1);
 
-        drillModal.getTitleElement().should("have.text", "Insight has invalid interaction");
-    });
+            drillModal.getTitleElement().should("have.text", "Insight has invalid interaction");
+        });
 
-    it("should drill on insight from table with no columns and metrics in rows", () => {
-        new Widget(1).scrollIntoView().waitTableLoaded().getTable().click(1, 2);
+        it("should drill on insight from table with no columns and metrics in rows", () => {
+            new Widget(1).scrollIntoView().waitTableLoaded().getTable().click(1, 2);
 
-        drillModal.getTitleElement().should("have.text", "Sales table");
+            drillModal.getTitleElement().should("have.text", "Sales table");
+        });
+
+        it("should drill on insight from table with column headers position left and metrics in rows", () => {
+            new Widget(2).scrollIntoView().waitTableLoaded().getTable().click(0, 3);
+
+            drillModal.getTitleElement().should("have.text", "With own description");
+        });
     });
 });

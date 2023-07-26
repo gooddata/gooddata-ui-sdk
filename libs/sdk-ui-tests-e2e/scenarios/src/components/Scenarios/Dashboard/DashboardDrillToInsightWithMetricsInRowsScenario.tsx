@@ -9,6 +9,7 @@ const dashboardRef = idRef(Dashboards.MetricsInRows);
 const config: DashboardConfig = {
     settings: {
         enablePivotTableTransposition: true,
+        enableColumnHeadersPosition: true,
         enableKPIDashboardDrillToInsight: true,
     },
 };
