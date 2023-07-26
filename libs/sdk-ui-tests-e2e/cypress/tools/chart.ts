@@ -5,7 +5,6 @@ export const YAXIS_LABELS_SELECTOR =
 export const XAXIS_LABELS_SELECTOR =
     ".highcharts-xaxis-labels text[text-anchor = 'middle'], .highcharts-xaxis-labels text[text-anchor = 'end']";
 const LEGEND_ICON_SELECTOR = ".viz-legend .series-icon";
-
 const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 
 export class Chart {
@@ -130,5 +129,15 @@ export class Chart {
         for (let i = 0; i < labels.length; i++) {
             this.getElement().find(DATA_LABELS_SELECTOR).eq(i).contains(labels[i]).should("exist");
         }
+    }
+
+    public assertShortenMetricName(element: string, width: number) {
+        cy.get(element).invoke("css", "text-overflow").should("equal", "ellipsis");
+        cy.get(element)
+            .invoke("width")
+            .then((widthValue) => {
+                cy.wrap(widthValue).should("equal", width);
+            });
+        return this;
     }
 }
