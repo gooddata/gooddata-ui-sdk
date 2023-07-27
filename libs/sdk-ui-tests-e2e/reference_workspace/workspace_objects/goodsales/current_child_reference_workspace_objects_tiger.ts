@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-13T08:55:14.450Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-27T02:17:57.785Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -136,14 +136,14 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const Account = {
     /**
-     * Display Form Title: Name
-     * Display Form ID: label.f_account.account.name
-     */
-    Name: newAttribute("label.f_account.account.name"),
-    /**
      * Display Form Title: Account
      * Display Form ID: attr.f_account.account
-     */ Default: newAttribute("attr.f_account.account"),
+     */
+    Default: newAttribute("attr.f_account.account"),
+    /**
+     * Display Form Title: Name
+     * Display Form ID: label.f_account.account.name
+     */ Name: newAttribute("label.f_account.account.name"),
 };
 /**
  * Attribute Title: Activity
@@ -151,14 +151,14 @@ export const Account = {
  */
 export const Activity = {
     /**
-     * Display Form Title: Activity
-     * Display Form ID: attr.f_activity.activity
-     */
-    Default: newAttribute("attr.f_activity.activity"),
-    /**
      * Display Form Title: Subject
      * Display Form ID: label.f_activity.subject
-     */ Subject: newAttribute("label.f_activity.subject"),
+     */
+    Subject: newAttribute("label.f_activity.subject"),
+    /**
+     * Display Form Title: Activity
+     * Display Form ID: attr.f_activity.activity
+     */ Default: newAttribute("attr.f_activity.activity"),
 };
 /**
  * Attribute Title: City
@@ -166,34 +166,34 @@ export const Activity = {
  */
 export const City = {
     /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */
-    ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
-    /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
-    /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+     */
+    Name: newAttribute("f_city.id.cityname"),
     /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
      */ Location: newAttribute("f_city.id.location"),
     /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
+    /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
 };
 /**
  * Attribute Title: State
@@ -216,18 +216,18 @@ export const State = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: SFDC URL
-     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */
-    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
-    /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
-     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
+     */
+    Name: newAttribute("label.f_opportunity.opportunity.name"),
     /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
      */ Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: SFDC URL
+     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
+     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
 };
 /**
  * Attribute Title: Sales Rep
@@ -278,6 +278,12 @@ export const StageName = {
      * Display Form ID: attr.f_stage.stagename
      */ _1: newAttribute("attr.f_stage.stagename"),
 };
+/**
+ * Metric Title: Negative Metric
+ * Metric ID: negative_metric
+ * Metric Type: MAQL Metric
+ */
+export const NegativeMetric: IMeasure<IMeasureDefinition> = newMeasure(idRef("negative_metric", "measure"));
 /**
  * Metric Title: _Timeline [EOP]
  * Metric ID: 6b1411d5-e253-418e-8fd3-137a9f56ea92
@@ -426,6 +432,18 @@ export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snaps
  * Metric Type: MAQL Metric
  */
 export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
+/**
+ * Metric Title: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i
+ * Metric ID: lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i
+ * Metric Type: MAQL Metric
+ */
+export const LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorI: IMeasure<IMeasureDefinition> =
+    newMeasure(
+        idRef(
+            "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "measure",
+        ),
+    );
 /**
  * Fact Title: Activity (Date)
  * Fact ID: fact.f_activity.activitydate
@@ -1768,10 +1786,26 @@ export const DateDatasets = {
 };
 export const Insights = {
     /**
+     * Insight Title: Table has AM metric
+     * Insight ID: 343b329b-e2b0-43b2-9724-de8cd664ebac
+     */
+    TableHasAMMetric: "343b329b-e2b0-43b2-9724-de8cd664ebac",
+    /**
+     * Insight Title: Table has multi metrics and multi formats
+     * Insight ID: 6d236ec6-5cf7-493e-8285-6613fde4ce18
+     */ TableHasMultiMetricsAndMultiFormats: "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+    /**
+     * Insight Title: Combine with all filter types
+     * Insight ID: ba13041b-87bc-458c-a514-fcc0074c9973
+     */ CombineWithAllFilterTypes: "ba13041b-87bc-458c-a514-fcc0074c9973",
+    /**
+     * Insight Title: Negative Insight
+     * Insight ID: c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9
+     */ NegativeInsight: "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+    /**
      * Insight Title: merge cells insight
      * Insight ID: 3ef94acb-1e15-49ef-88d5-e9e2931be959
-     */
-    MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+     */ MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
     /**
      * Insight Title: big insight
      * Insight ID: 5517045e-661f-4d6b-b0b0-98030ab9f68c
@@ -1800,6 +1834,14 @@ export const Insights = {
      * Insight Title: unmerge cells insight
      * Insight ID: fb53ecfb-3874-4bee-8612-afecd3fa3e04
      */ UnmergeCellsInsight: "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+    /**
+     * Insight Title: Table using long name metric
+     * Insight ID: 1e17f8cf-aa34-4474-8dd5-c1249c688225
+     */ TableUsingLongNameMetric: "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+    /**
+     * Insight Title: Insight using long name metric
+     * Insight ID: 843701ee-8f24-4942-8522-872a96575f8e
+     */ InsightUsingLongNameMetric: "843701ee-8f24-4942-8522-872a96575f8e",
     /**
      * Insight Title: Funnel chart
      * Insight ID: 39fc72a9-5f25-455c-92bb-f7dbde85d586
@@ -1931,6 +1973,10 @@ export const Dashboards = {
      * Dashboard Title: KD with invalid insight
      * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12
      */ KDWithInvalidInsight: "f50c7076-1d45-4031-a4fd-564459254b12",
+    /**
+     * Dashboard Title: KD using long name metric
+     * Dashboard ID: 7b2cd4c1-bb41-473a-9017-e404cbc630d2
+     */ KDUsingLongNameMetric: "7b2cd4c1-bb41-473a-9017-e404cbc630d2",
     /**
      * Dashboard Title: Pivot Table Dashboard
      * Dashboard ID: c03bd065-4377-4b63-80c1-a00b00d20ddd

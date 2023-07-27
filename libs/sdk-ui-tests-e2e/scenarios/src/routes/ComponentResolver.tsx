@@ -60,6 +60,9 @@ import { FunnelChartScenario } from "../components/Scenarios/Visualizations/Funn
 import { PyramidChartScenario } from "../components/Scenarios/Visualizations/PyramidChart/PyramidChartScenario";
 import { DashboardWithTableManyRowsColumnsScenario } from "../components/Scenarios/Dashboard/DashboardWithTableManyRowColumnScenario";
 import { DashboardPivotTableScenario } from "../components/Scenarios/Dashboard/DashboardPivotTableScenario";
+import { ShortenMetricNameChartScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameChartScenario";
+import { ShortenMetricNameTableScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameTableScenario";
+import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dashboard/DashboardShortenMetricNameScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -126,6 +129,9 @@ export const SCENARIO_KEYS = {
     DASHBOARD_PIVOT_TABLE: "dashboard/dashboard-pivot-table-scenario",
     VIS_PIVOT_TABLE_WITH_AGG_COLUMN_TOTAL:
         "visualizations/pivot-table/pivot-table-columns-aggregations-menu-one-subtotal-scenario",
+    VIS_SHORTEN_METRIC_NAME_CHART: "visualizations/shortenmetricname/shorten-metric-name-chart-scenario",
+    VIS_SHORTEN_METRIC_NAME_TABLE: "visualizations/shortenmetricname/shorten-metric-name-table-scenario",
+    DASHBOARD_SHORTEN_METRIC_NAME: "dashboard/shorten-metric-name",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -201,6 +207,9 @@ const scenarios = new Map<string, React.ComponentType>([
         SCENARIO_KEYS.VIS_PIVOT_TABLE_WITH_AGG_COLUMN_TOTAL,
         PivotTableColumnsAggregationsMenuOneSubtotalScenario,
     ],
+    [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_CHART, ShortenMetricNameChartScenario],
+    [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_TABLE, ShortenMetricNameTableScenario],
+    [SCENARIO_KEYS.DASHBOARD_SHORTEN_METRIC_NAME, DashboardShortenMetricNameScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {
