@@ -132,9 +132,9 @@ exports[`convertTotals > should correctly convert multiple totals with various f
     ],
   },
   {
-    "function": "MIN",
-    "localIdentifier": "total_min_m1_by_localAttr1_0",
-    "metric": "m1",
+    "function": "MAX",
+    "localIdentifier": "total_max_m2_by_localAttr1_0",
+    "metric": "m2",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
@@ -145,9 +145,9 @@ exports[`convertTotals > should correctly convert multiple totals with various f
     ],
   },
   {
-    "function": "MAX",
-    "localIdentifier": "total_max_m2_by_localAttr1_0",
-    "metric": "m2",
+    "function": "MIN",
+    "localIdentifier": "total_min_m1_by_localAttr1_0",
+    "metric": "m1",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",

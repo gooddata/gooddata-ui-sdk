@@ -1,5 +1,11 @@
 // (C) 2022 GoodData Corporation
-import { DataValue, IExecutionDefinition, IResultHeader, isResultTotalHeader } from "@gooddata/sdk-model";
+import {
+    isMeasureGroupIdentifier,
+    DataValue,
+    IExecutionDefinition,
+    IResultHeader,
+    isResultTotalHeader,
+} from "@gooddata/sdk-model";
 import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty.js";
 import flatMap from "lodash/flatMap.js";
@@ -22,6 +28,11 @@ export function transformGrandTotalData(
         // SDK cannot work with explicit empty totals, undefined must be returned instead
         return undefined;
     }
+
+    const measureGroupDimension = definition.dimensions.findIndex((dim) =>
+        dim?.itemIdentifiers?.find(isMeasureGroupIdentifier),
+    );
+
     const grandTotalsData: DataValue[][][] = definition.dimensions.map((_) => []);
     const dimensionIdxByLocalId = new Map(
         definition.dimensions.map((_, idx) => [dimensionLocalIdentifier(idx), idx]),
@@ -42,7 +53,7 @@ export function transformGrandTotalData(
             definition,
         );
         transformedTotals.forEach((total, totalIdx) => {
-            if (total.dimensionIdx === 1) {
+            if (total.dimensionIdx === 1 || measureGroupDimension === 0) {
                 grandTotalsData[total.dimensionIdx] = grandTotal.data as DataValue[][];
             } else {
                 grandTotalsData[total.dimensionIdx][totalIdx] = total.data;
