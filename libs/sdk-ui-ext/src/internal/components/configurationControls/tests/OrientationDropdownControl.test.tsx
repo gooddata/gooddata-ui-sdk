@@ -93,7 +93,7 @@ describe("Test OrientationDropdownControl", () => {
                         position: "horizontal",
                     },
                     xaxis: {
-                        name: { position: "middle" },
+                        name: { position: "left" },
                         min: 0,
                         max: 3000,
                     },
@@ -104,13 +104,14 @@ describe("Test OrientationDropdownControl", () => {
             });
 
             expect(xaxis.rotation).toBe("90");
-            expect(xaxis.name).toEqual({ position: "middle" });
+            expect(xaxis.name).toBeUndefined();
             expect(xaxis.min).toBeUndefined();
             expect(xaxis.max).toBeUndefined();
 
             expect(yaxis.min).toBe(0);
             expect(yaxis.max).toBe(3000);
             expect(yaxis.rotation).toBeUndefined();
+            expect(yaxis.name).toEqual({ position: "top" });
         });
 
         it("should return the correct X, Y axes when the chart is vertical both X, Y axes are not null", () => {
@@ -135,10 +136,12 @@ describe("Test OrientationDropdownControl", () => {
             expect(xaxis.rotation).toBeUndefined();
             expect(xaxis.min).toBe(0);
             expect(xaxis.max).toBe(3000);
+            expect(xaxis.name).toEqual({ position: "left" });
+
             expect(yaxis.min).toBeUndefined();
             expect(yaxis.max).toBeUndefined();
             expect(yaxis.rotation).toBe("90");
-            expect(yaxis.name).toEqual({ position: "top" });
+            expect(yaxis.name).toBeUndefined();
         });
     });
 
