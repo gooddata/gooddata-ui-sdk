@@ -1,9 +1,28 @@
 // (C) 2023 GoodData Corporation
 
 import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions } from "../../lib/index.js";
+import { HighchartsOptions, XAxisOptions } from "../../lib/index.js";
 import { IChartOptions } from "../../typings/unsafe.js";
 import { isWaterfall } from "../_util/common.js";
+
+function shortenXAxisLabel(xAxis: XAxisOptions[]) {
+    if (!xAxis?.[0]?.categories || !xAxis[0].categories.some((item) => item.length >= 50)) {
+        return {};
+    }
+    return {
+        xAxis: [
+            {
+                labels: {
+                    useHTML: true,
+                    style: {
+                        width: 200,
+                        textOverflow: "ellipsis",
+                    },
+                },
+            },
+        ],
+    };
+}
 
 export function getChartOrientationConfiguration(
     chartOptions: IChartOptions,
@@ -16,7 +35,6 @@ export function getChartOrientationConfiguration(
     if (!isWaterfall(type) || !isInverted) {
         return {};
     }
-
     return {
         chart: {
             inverted: isInverted,
@@ -33,5 +51,6 @@ export function getChartOrientationConfiguration(
                 },
             },
         },
+        ...shortenXAxisLabel(config.xAxis as XAxisOptions[]),
     };
 }
