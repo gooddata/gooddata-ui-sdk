@@ -1,15 +1,5 @@
 # Change Log - @gooddata/sdk-ui-all
 
-<<<<<<< HEAD
-This log was last generated on Wed, 19 Jul 2023 14:12:54 GMT and should not be manually modified.
-
-## 8.12.2
-Wed, 19 Jul 2023 14:12:54 GMT
-
-### Updates
-
-- The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
-=======
 This log was last generated on Thu, 27 Jul 2023 12:35:32 GMT and should not be manually modified.
 
 ## 9.0.0
@@ -33,7 +23,13 @@ Thu, 27 Jul 2023 12:35:32 GMT
 - The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 - Make it possible to hide/show on demand the web components tab on embedding dialogs
 - Add the continuous line configuration for the Line, Area and Compo charts
->>>>>>> d6d6d7ca20 (Release 9.0.0)
+
+## 8.12.2
+Wed, 19 Jul 2023 14:12:54 GMT
+
+### Updates
+
+- The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 
 ## 8.12.1
 Mon, 17 Apr 2023 08:24:37 GMT
