@@ -2,15 +2,6 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
-<<<<<<< HEAD
-      "version": "8.12.2",
-      "tag": "@gooddata/sdk-ui-all_v8.12.2",
-      "date": "Wed, 19 Jul 2023 14:12:54 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication."
-=======
       "version": "9.0.0",
       "tag": "@gooddata/sdk-ui-all_v9.0.0",
       "date": "Thu, 27 Jul 2023 12:35:32 GMT",
@@ -63,7 +54,18 @@
           },
           {
             "comment": "Add the continuous line configuration for the Line, Area and Compo charts"
->>>>>>> d6d6d7ca20 (Release 9.0.0)
+          }
+        ]
+      }
+    },
+    {
+      "version": "8.12.2",
+      "tag": "@gooddata/sdk-ui-all_v8.12.2",
+      "date": "Wed, 19 Jul 2023 14:12:54 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication."
           }
         ]
       }
