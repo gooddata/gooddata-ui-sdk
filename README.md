@@ -48,7 +48,7 @@ The most notable packages in this monorepo
 
 ## Contributing
 
-To learn how to contribute, check out the [Contribution Guide](./docs/contributing.md).
+To learn how to contribute, check out the [Contribution Guide](./dev_docs/contributing.md).
 
 ## License
 
