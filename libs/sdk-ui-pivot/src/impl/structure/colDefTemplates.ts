@@ -120,35 +120,6 @@ export function mixedHeadersTemplate(table: TableFacade, props: Readonly<ICorePi
     };
 }
 
-export function mixedValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const separators = props.config?.separators;
-    const cellRenderer = createCellRenderer();
-
-    return {
-        cellClass: cellClassFactory(table, props, "gd-mixed-values-column"),
-        headerClass: headerClassFactory(table, props, "gd-mixed-values-column-header"),
-        valueFormatter: (params: ValueFormatterParams) => {
-            return potentialRowMeasureFormatter(params, separators);
-        },
-        cellStyle: (params) => {
-            if (params.data?.measureDescriptor) {
-                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
-
-                return params.value !== undefined
-                    ? getMeasureCellStyle(
-                          params.value,
-                          measureDescriptor.measureHeaderItem.format,
-                          separators,
-                          true,
-                      )
-                    : null;
-            }
-            return null;
-        },
-        cellRenderer,
-    };
-}
-
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
@@ -243,7 +214,7 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
 
     return {
         headerComponent: MixedValuesColumnHeader,
-        cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-mixed-values-column")),
+        cellClass: cellClassFactory(table, props, cx("gd-mixed-values-column")),
         headerClass: headerClassFactory(table, props, "gd-mixed-values-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
             return potentialRowMeasureFormatter(params, separators);
@@ -261,7 +232,9 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
                       )
                     : null;
             }
-            return null;
+            return {
+                textAlign: "left",
+            };
         },
         cellRenderer,
     };
