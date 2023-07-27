@@ -338,7 +338,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
     constructor(jwt: string, notAuthenticatedHandler?: NotAuthenticatedHandler, tokenIsAboutToExpireHandler?: JwtIsAboutToExpireHandler | undefined, secondsBeforeTokenExpirationToCallReminder?: number);
     // (undocumented)
     initializeClient(client: ITigerClient): void;
-    updateJwt: (jwt: string) => void;
+    updateJwt: (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 }
 
 // @internal
@@ -410,7 +410,7 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
     // (undocumented)
-    protected updateApiToken(apiToken: string): void;
+    updateApiToken: (apiToken: string) => void;
 }
 
 // @internal (undocumented)

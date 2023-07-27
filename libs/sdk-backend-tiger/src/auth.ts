@@ -107,11 +107,11 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
         return this.principal!;
     }
 
-    protected updateApiToken(apiToken: string) {
+    public updateApiToken = (apiToken: string): void => {
         invariant(this.clients.length > 0, "The method cannot be called before initializeClient method.");
         this.apiToken = apiToken;
         this.clients.map((client) => this.initializeClient(client));
-    }
+    };
 }
 
 /**
@@ -135,6 +135,8 @@ export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallRem
  * @alpha
  */
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
+
+const DEFAULT_EXPIRATION_REMINDER_IN_SECONDS = 60;
 
 /**
  * The implementation of authentication provider uses an JWT (JSON Web Token) as bearer of authentication.
@@ -170,7 +172,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
         private jwt: string,
         notAuthenticatedHandler?: NotAuthenticatedHandler,
         private readonly tokenIsAboutToExpireHandler?: JwtIsAboutToExpireHandler,
-        private readonly secondsBeforeTokenExpirationToCallReminder = 60,
+        private secondsBeforeTokenExpirationToCallReminder = DEFAULT_EXPIRATION_REMINDER_IN_SECONDS,
     ) {
         super(jwt, notAuthenticatedHandler);
         this.startReminder(jwt);
@@ -184,13 +186,22 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
      * Update JWT value of the API client
      *
      * @param jwt - new JWT value
+     * will receive function that can be used to set the new JWT to continue the current session.
+     * @param secondsBeforeTokenExpirationToCallReminder - The number of seconds before token expiration to
+     *  call tokenIsAboutToExpireHandler handler. The handler is called only when the value is positive number
+     *  greater than zero and tokenIsAboutToExpireHandler handler value was provided during provider
+     *  construction.
      *
      * @throws error is thrown when the method is called before client was initialized, if JWT is empty,
      *  or if JWT is not valid (if "sub" claim does not match the sub of the previous JWT).
      */
-    public updateJwt = (jwt: string): void => {
+    public updateJwt = (
+        jwt: string,
+        secondsBeforeTokenExpirationToCallReminder: number = DEFAULT_EXPIRATION_REMINDER_IN_SECONDS,
+    ): void => {
         validateJwt(jwt, this.jwt);
         this.jwt = jwt;
+        this.secondsBeforeTokenExpirationToCallReminder = secondsBeforeTokenExpirationToCallReminder;
         this.updateApiToken(jwt);
         this.startReminder(jwt);
     };
