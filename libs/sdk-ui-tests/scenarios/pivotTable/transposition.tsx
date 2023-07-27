@@ -9,6 +9,7 @@ import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     PivotTableWithMeasuresAndRowsOnly,
+    PivotTableWithMeasuresAndColumnOnly,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
 import {
@@ -67,6 +68,18 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ],
         config: {
             ...getCommonPivotTableSizingConfig([ReferenceMd.Region, ReferenceMd.Department]),
+            measureGroupDimension: "rows",
+        },
+    })
+    .addScenario("multiple measures and no rows, with totals", {
+        ...PivotTableWithMeasuresAndColumnOnly,
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+        ],
+        config: {
             measureGroupDimension: "rows",
         },
     })

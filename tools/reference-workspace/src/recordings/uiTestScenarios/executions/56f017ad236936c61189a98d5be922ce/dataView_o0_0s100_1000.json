@@ -1,0 +1,43 @@
+{
+    "count": [2, 2],
+    "data": [
+        ["28017096.42", "88608360.12"],
+        ["10542759.65", "27767993.8"]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 2],
+    "totals": [
+        [],
+        [
+            ["116625456.54", "58312728.27", null],
+            [null, "19155376.725", "38310753.45"]
+        ]
+    ]
+}

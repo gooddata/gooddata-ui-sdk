@@ -116,7 +116,10 @@ function getColumnSubTotals(colDef: ColDef, colDesc: AnyCol, tableDescriptor: Ta
 function getNoBottomBorderGroupHeader(colDesc: AnyCol, tableDescriptor: TableDescriptor) {
     if (tableDescriptor.isTransposed()) {
         return (
-            isScopeCol(colDesc) && colDesc.headersToHere.length === 0 && isResultTotalHeader(colDesc.header)
+            isScopeCol(colDesc) &&
+            isResultTotalHeader(colDesc.header) &&
+            colDesc.headersToHere.length === 0 &&
+            colDesc.children?.length > 0
         );
     } else {
         return isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);

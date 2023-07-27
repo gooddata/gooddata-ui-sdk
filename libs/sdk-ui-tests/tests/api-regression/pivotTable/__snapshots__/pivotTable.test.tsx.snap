@@ -959,6 +959,182 @@ exports[`PivotTable > with multiple measures and no columns, with totals > shoul
 }
 `;
 
+exports[`PivotTable > with multiple measures and no rows, with totals > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+      "totals": [
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "med",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "med",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+      ],
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_label.owner.region",
+      ],
+      "totals": [
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "med",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "med",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable > with multiple measures and no rows, with totals > should create expected props for core chart 1`] = `
+{
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": {
+    "measureGroupDimension": "rows",
+    "menu": {},
+  },
+  "drillableItems": [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable > with multiple measures and row attributes with metrics in rows, with drilling > should create expected execution definition 1`] = `
 {
   "attributes": [

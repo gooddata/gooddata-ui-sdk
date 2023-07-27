@@ -3423,6 +3423,11 @@
         "scenarioName": "one measure and repeating row attributes on different positions",
         "visName": "PivotTable"
     },
+    "PivotTable.32350c51be25f3b4616bf6ea974e6109": {
+        "comment": "Auto-generated insight for test scenario PivotTable - multiple measures and no rows, with totals.",
+        "scenarioName": "multiple measures and no rows, with totals",
+        "visName": "PivotTable"
+    },
     "PivotTable.32b6b7eddd62674b4d7683676edd3057": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals.",
         "scenarioName": "two measures and grand totals and multiple subtotals",
@@ -4581,6 +4586,9 @@
     "WaterfallChart.3dce281b7b1a552389fa105b6931ddb9": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend on right."
     },
+    "WaterfallChart.51f357fb8e0217f2725d9c11350a739d": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - horizontal orientation with custom axes configuration."
+    },
     "WaterfallChart.5620cdf31981a82d1083c503eed9fa56": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - disable total column."
     },
@@ -4697,6 +4705,9 @@
         "comment": "Auto-generated insight for test scenario WaterfallChart - multi measures.",
         "scenarioName": "multi measures",
         "visName": "WaterfallChart"
+    },
+    "WaterfallChart.c9b7a5abbc8764d68fe4f599535af117": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - vertical orientation with custom axes configuration."
     },
     "WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - auto legend."
