@@ -890,6 +890,17 @@ export class TableFacade {
     };
 
     public getRowCount = (): number => {
+        if (this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
+            /**
+             * in case of metrics in rows and column attributes on left
+             * the table has no header and its elements hierarchy is rendered in normal rows.
+             * It completely messes up ag-grid approach and data loading via dataSource. Only benefit is to have all rows scrollable instead of sticky header.
+             */
+            return (
+                this.visibleData.rawData().firstDimSize() +
+                this.visibleData.meta().dimensions()[1].headers.length
+            );
+        }
         return this.visibleData.rawData().firstDimSize();
     };
 
