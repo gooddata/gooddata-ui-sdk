@@ -1,5 +1,6 @@
 # Change Log - @gooddata/sdk-ui-all
 
+<<<<<<< HEAD
 This log was last generated on Wed, 19 Jul 2023 14:12:54 GMT and should not be manually modified.
 
 ## 8.12.2
@@ -8,6 +9,31 @@ Wed, 19 Jul 2023 14:12:54 GMT
 ### Updates
 
 - The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
+=======
+This log was last generated on Thu, 27 Jul 2023 12:35:32 GMT and should not be manually modified.
+
+## 9.0.0
+Thu, 27 Jul 2023 12:35:32 GMT
+
+### Updates
+
+- catalog-export: unified the way configuration is loaded for tiger and bear
+- sdk-backend-tiger: add apis to config localization, timezone for organization
+- Change build target of all libraries to ES2017
+- update minimal node version to 16.20.0
+- Single selection variant of Attribute Filter component
+- Remove all enzyme related packages and rewrite tests to react testing library.
+- Upgrade TypeScript to v5.
+- Add Dependency wheel chart visualizations.
+- Add Sankey chart visualizations.
+- Add @gooddata/app-toolkit as replacement for @gooddata/create-gooddata-react-app
+- Deprecated APIs were removed.
+- Attribute Filter Dropdown button supports description customisation in form of tooltip
+- Add Funnel chart and Pyramid chart visualizations.
+- The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
+- Make it possible to hide/show on demand the web components tab on embedding dialogs
+- Add the continuous line configuration for the Line, Area and Compo charts
+>>>>>>> d6d6d7ca20 (Release 9.0.0)
 
 ## 8.12.1
 Mon, 17 Apr 2023 08:24:37 GMT
