@@ -2,6 +2,63 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.0.0",
+      "tag": "@gooddata/sdk-ui-all_v9.0.0",
+      "date": "Thu, 27 Jul 2023 12:35:32 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "catalog-export: unified the way configuration is loaded for tiger and bear"
+          },
+          {
+            "comment": "sdk-backend-tiger: add apis to config localization, timezone for organization"
+          },
+          {
+            "comment": "Change build target of all libraries to ES2017"
+          },
+          {
+            "comment": "update minimal node version to 16.20.0"
+          },
+          {
+            "comment": "Single selection variant of Attribute Filter component"
+          },
+          {
+            "comment": "Remove all enzyme related packages and rewrite tests to react testing library."
+          },
+          {
+            "comment": "Upgrade TypeScript to v5."
+          },
+          {
+            "comment": "Add Dependency wheel chart visualizations."
+          },
+          {
+            "comment": "Add Sankey chart visualizations."
+          },
+          {
+            "comment": "Add @gooddata/app-toolkit as replacement for @gooddata/create-gooddata-react-app"
+          },
+          {
+            "comment": "Deprecated APIs were removed."
+          },
+          {
+            "comment": "Attribute Filter Dropdown button supports description customisation in form of tooltip"
+          },
+          {
+            "comment": "Add Funnel chart and Pyramid chart visualizations."
+          },
+          {
+            "comment": "The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication."
+          },
+          {
+            "comment": "Make it possible to hide/show on demand the web components tab on embedding dialogs"
+          },
+          {
+            "comment": "Add the continuous line configuration for the Line, Area and Compo charts"
+          }
+        ]
+      }
+    },
+    {
       "version": "8.12.1",
       "tag": "@gooddata/sdk-ui-all_v8.12.1",
       "date": "Mon, 17 Apr 2023 08:24:37 GMT",
