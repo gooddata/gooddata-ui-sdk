@@ -52,9 +52,6 @@ To learn how to contribute, check out the [Contribution Guide](./dev_docs/contri
 
 ## License
 
-(c) 2017-2022 GoodData Corporation
+(c) 2017-2023 GoodData Corporation
 
-This repository is under a GoodData commercial license available in the [LICENSE](LICENSE) file because it contains a
-commercial package, HighCharts. Subdirectories containing the MIT license are not subject to the GoodData
-commercial license and do not contain any commercial code.
-Please see the [NOTICE](NOTICE) file for additional licensing information related to this project's third-party open source components.
+This repository is under a GoodData commercial license available in the [LICENSE](LICENSE) file because it contains a commercial package, HighCharts. Subdirectories containing the MIT license are not subject to the GoodData commercial license and do not contain any commercial code. Please see the NOTICE file for additional licensing information related to this project's third-party open source components.

@@ -172,7 +172,7 @@ async function buildVersion(versionName, dev, shouldUpdateSymlink, onSuccess) {
     console.log("Starting api-documenter. Generated files will be stored in apidocs/docs.");
     const apiDocumenterBin = path.resolve(
         rootDir,
-        "common/temp/node_modules/@microsoft/api-documenter/bin/api-documenter",
+        "libs/sdk-ui-all/node_modules/@microsoft/api-documenter/bin/api-documenter",
     );
     await exec(
         `"${apiDocumenterBin}" markdown --input-folder "${apiDocInputDir}" --output-folder "${apiDocDirDocs}"`,
