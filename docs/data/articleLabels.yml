@@ -1,0 +1,12 @@
+- labelId: cn-only
+  text: >-
+    Only available with **GoodData.CN**
+- labelId: cn-ce-only
+  text: >-
+    Only available with **GoodData.CN Community Edition**
+- labelId: cloud-only
+  text: >-
+    Only available with **GoodData Cloud**
+- labelId: cloud-beta-only
+  text: >-
+    Only available with **GoodData Cloud Beta**
