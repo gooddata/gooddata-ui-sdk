@@ -1,0 +1,23 @@
+name: Netlify Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  netlify-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Hugo Build
+        uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-build-action@master
+        with:
+          base-url: https://www.gooddata.com/docs/gooddata-ui-sdk
+      - name: Publish
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy -d docs/public --prod
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
