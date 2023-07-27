@@ -1,0 +1,23 @@
+{
+  "name": "tiger-docs",
+  "version": "1.0.0",
+  "description": "Documentation website for Tiger project",
+  "dependencies": {
+    "autoprefixer": "^10.2.4",
+    "postcss": "^8.2.5",
+    "postcss-cli": "^8.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/gooddata/gdc-tiger-docs.git"
+  },
+  "author": "Tiger Team",
+  "homepage": "https://gitlab.com/gooddata/gdc-tiger-docs#readme",
+  "devDependencies": {
+    "hugo-extended": "^0.115.4"
+  },
+  "scripts": {
+    "build": "hugo",
+    "start": "hugo server"
+  }
+}
