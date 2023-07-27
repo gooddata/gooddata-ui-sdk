@@ -81,15 +81,12 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
     }
 
     for (const col of measureCols) {
-        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
-
         const colDef: ColDef = {
             type: ROW_MEASURE_COLUMN,
             colId: col.id,
             field: col.id,
             headerName: "",
             headerTooltip: undefined,
-            ...cellRendererProp,
         };
 
         state.rowColDefs.push(colDef);
