@@ -135,5 +135,5 @@ function getNoBottomBorderGroupHeader(colDesc: AnyCol, tableDescriptor: TableDes
 }
 
 function hasEmptyChild(colDef: ColGroupDef, colDesc: AnyCol) {
-    return isMixedHeadersCol(colDesc) && colDef.children?.[0] && colDef.children[0].headerName === "";
+    return isMixedHeadersCol(colDesc) && colDef.children?.[0]?.headerName === "";
 }

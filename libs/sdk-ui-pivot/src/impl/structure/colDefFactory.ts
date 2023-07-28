@@ -146,7 +146,7 @@ function createAndAddMixedHeadersColDefs(
             if (!state.cellRendererPlaced) {
                 state.cellRendererPlaced = colDef;
             }
-        }
+        } // else branch would be needed when column header position starts to be independent on measures in rows
     }
 }
 

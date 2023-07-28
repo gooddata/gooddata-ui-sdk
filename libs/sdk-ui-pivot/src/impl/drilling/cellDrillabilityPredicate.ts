@@ -15,7 +15,6 @@ export function isCellDrillable(
     dv: DataViewFacade,
     drillablePredicates: IHeaderPredicate[],
 ): boolean {
-    // TODO
     if (drillablePredicates.length === 0 || colDescriptor.type === "mixedHeadersCol") {
         return false;
     }

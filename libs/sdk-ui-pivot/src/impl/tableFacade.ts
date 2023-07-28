@@ -814,7 +814,7 @@ export class TableFacade {
         const rowCount = dv.rawData().firstDimSize();
         let headerRowsMovedToDataRowsCount = 0;
         if (this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
-            headerRowsMovedToDataRowsCount = dv.meta().dimensions()[1].headers.length; // count of column attributes now rendered in normal rows
+            headerRowsMovedToDataRowsCount = dv.meta().attributeHeadersForDim(1).length; // count of column attributes now rendered in normal rows
         }
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
@@ -898,7 +898,7 @@ export class TableFacade {
              */
             return (
                 this.visibleData.rawData().firstDimSize() +
-                this.visibleData.meta().dimensions()[1].headers.length
+                this.visibleData.meta().attributeHeadersForDim(1).length
             );
         }
         return this.visibleData.rawData().firstDimSize();

@@ -100,12 +100,9 @@ export class AgGridDatasource implements IDatasource {
 
         const columnHeadersPosition = this.config.getColumnHeadersPosition();
         // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
-        const lastRow =
-            offset[0] === 0 && count[0] === 0
-                ? 0
-                : columnHeadersPosition === "left"
-                ? rowData.length
-                : totalCount[0];
+        const rowsCount = columnHeadersPosition === "left" ? rowData.length : totalCount[0];
+
+        const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : rowsCount;
 
         this.config.onPageLoaded(dv);
         successCallback(rowData, lastRow);

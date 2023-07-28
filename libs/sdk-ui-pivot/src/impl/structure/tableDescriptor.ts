@@ -73,8 +73,6 @@ export class TableDescriptor {
     public readonly zippedLeaves: Array<[LeafDataCol, ColDef]> = [];
     private readonly _seriesColsCount: number;
 
-    // TODO solve zipping and lookup (does not seems to be used in the new transpose mode for now)
-
     private constructor(
         private readonly dv: DataViewFacade,
         public readonly headers: TableCols,

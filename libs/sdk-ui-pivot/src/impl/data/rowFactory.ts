@@ -348,7 +348,6 @@ export function createAgGridPage(
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
                 const header = attributes[columnIndex];
                 if (isResultAttributeHeader(header)) {
-                    // TODO what about formattedName?
                     row[column.id] = valueWithEmptyHandling(
                         getAttributeHeaderItemName(header.attributeHeaderItem),
                         emptyHeaderTitleFromIntl(intl),

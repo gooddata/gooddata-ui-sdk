@@ -151,10 +151,10 @@ export function minInputValidateAndPushData(
 }
 
 export function isSetColumnHeadersPositionToLeftAllowed(insight: IInsightDefinition) {
-    const rowAttribute = bucketsFind(insightBuckets(insight), BucketNames.ATTRIBUTE);
-    const hasRows = rowAttribute && bucketItems(rowAttribute).length > 0;
-    const columnAttribute = bucketsFind(insightBuckets(insight), BucketNames.COLUMNS);
-    const hasColumns = columnAttribute && bucketItems(columnAttribute).length > 0;
+    const rowsBucket = bucketsFind(insightBuckets(insight), BucketNames.ATTRIBUTE);
+    const hasRows = rowsBucket && bucketItems(rowsBucket).length > 0;
+    const columnsBucket = bucketsFind(insightBuckets(insight), BucketNames.COLUMNS);
+    const hasColumns = columnsBucket && bucketItems(columnsBucket).length > 0;
     const measureGroupDimension =
         getMeasureGroupDimensionFromProperties(insightProperties(insight)) ?? "columns";
 

@@ -73,6 +73,7 @@ export function createGridOptions(
         intl: props.intl,
     };
 
+    // For column headers on left and metrics in rows, all headers are rendered inside regular table cells, therefore complete ag-grid headers are hidden with headerHeight: 0
     const hideEmptyHeader =
         tableMethods.getColumnHeadersPosition() === "left" && table.tableDescriptor.isTransposed();
 
