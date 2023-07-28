@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
+
 import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
 import { DrillToModal } from "../../tools/drillToModal";
@@ -221,14 +222,20 @@ describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrat
     });
 
     it("should drill on insight from table with no rows and metrics in rows", () => {
-        new Widget(0).waitTableLoaded().getTable().click(0, 1);
+        new Widget(0).getTable().click(0, 1, false);
 
         drillModal.getTitleElement().should("have.text", "Insight has invalid interaction");
     });
 
     it("should drill on insight from table with no columns and metrics in rows", () => {
-        new Widget(1).scrollIntoView().waitTableLoaded().getTable().click(1, 2);
+        new Widget(1).waitTableLoaded().scrollIntoView().getTable().click(1, 2);
 
         drillModal.getTitleElement().should("have.text", "Sales table");
+    });
+
+    it("should drill on insight from table with column headers position left and metrics in rows", () => {
+        new Widget(2).waitTableLoaded().scrollIntoView().getTable().click(0, 3);
+
+        drillModal.getTitleElement().should("have.text", "With own description");
     });
 });

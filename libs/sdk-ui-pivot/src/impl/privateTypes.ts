@@ -2,9 +2,16 @@
 import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths.js";
 import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback, DefaultColumnWidth, IMenu } from "../publicTypes.js";
+import {
+    ColumnResizedCallback,
+    DefaultColumnWidth,
+    IMenu,
+    ColumnHeadersPosition,
+    MeasureGroupDimension,
+} from "../publicTypes.js";
 import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
 import { IScrollPosition } from "./stickyRowHandler.js";
+
 import {
     AgGridEvent,
     BodyScrollEvent,
@@ -58,7 +65,8 @@ export type TableConfigAccessors = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     getRowTotals: () => ITotal[];
-    getColumnHeadersPosition: () => string;
+    getColumnHeadersPosition: () => ColumnHeadersPosition;
+    getMeasureGroupDimension: () => MeasureGroupDimension;
 
     getResizingConfig: () => ColumnResizingConfig;
 };

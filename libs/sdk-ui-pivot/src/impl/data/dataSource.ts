@@ -19,13 +19,14 @@ import {
 import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes.js";
+import { ColumnHeadersPosition } from "../../publicTypes.js";
 
 export type DatasourceConfig = {
     tableDescriptor: TableDescriptor;
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     getRowTotals: () => ITotal[];
-    getColumnHeadersPosition: () => string;
+    getColumnHeadersPosition: () => ColumnHeadersPosition;
     onPageLoaded: OnPageLoaded;
     onExecutionTransformed: OnExecutionTransformed;
     onTransformedExecutionFailed: OnTransformedExecutionFailed;

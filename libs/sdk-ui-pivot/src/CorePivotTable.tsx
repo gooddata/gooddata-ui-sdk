@@ -33,7 +33,13 @@ import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregatio
 import { getScrollbarWidth, sanitizeDefTotals, getTotalsForColumnsBucket } from "./impl/utils.js";
 import { IScrollPosition } from "./impl/stickyRowHandler.js";
 
-import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes.js";
+import {
+    ColumnHeadersPosition,
+    DefaultColumnWidth,
+    ICorePivotTableProps,
+    IMenu,
+    MeasureGroupDimension,
+} from "./publicTypes.js";
 import { ColumnWidthItem } from "./columnWidths.js";
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
@@ -1005,7 +1011,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return this.props.config?.groupRows ?? true;
     };
 
-    private getColumnHeadersPosition = (): string => {
+    private getMeasureGroupDimension = (): MeasureGroupDimension => {
+        return this.props.config?.measureGroupDimension ?? "columns";
+    };
+
+    private getColumnHeadersPosition = (): ColumnHeadersPosition => {
         return this.props.config?.columnHeadersPosition ?? "top";
     };
 
@@ -1121,6 +1131,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getColumnTotals: this.getColumnTotals,
             getRowTotals: this.getRowTotals,
             getColumnHeadersPosition: this.getColumnHeadersPosition,
+            getMeasureGroupDimension: this.getMeasureGroupDimension,
             getResizingConfig: this.getResizingConfig,
 
             onLoadingChanged: this.onLoadingChanged,

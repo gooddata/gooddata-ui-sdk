@@ -23,6 +23,7 @@ import {
     bucketsFind,
     isAttribute,
     attributeLocalId,
+    isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import {
@@ -337,11 +338,12 @@ export function createAgGridPage(
         // rows with attribute values
         headerItems[1].forEach((attributes, rowIndex) => {
             const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
-            const attributeName = dv.data().slices().toArray()[0].descriptor.descriptors[rowIndex]
-                .attributeHeader.formOf.name;
+            const attributeDescriptor = dv.data().slices().descriptors.filter(isAttributeDescriptor);
+            const attributeName = attributeDescriptor[rowIndex].attributeHeader.formOf.name;
 
             const row: IGridRow = {
                 [headerColumn.id]: attributeName,
+                columnAttributeDescriptor: attributeDescriptor[rowIndex],
                 headerItemMap: {},
             };
 
@@ -352,6 +354,7 @@ export function createAgGridPage(
                         getAttributeHeaderItemName(header.attributeHeaderItem),
                         emptyHeaderTitleFromIntl(intl),
                     );
+                    row.headerItemMap[column.id] = header as IMappingHeader;
                 }
             });
 

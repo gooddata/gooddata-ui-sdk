@@ -14,6 +14,7 @@ import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { invariant, InvariantError } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes.js";
+import { ColumnHeadersPosition } from "../../publicTypes.js";
 
 export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
@@ -45,11 +46,18 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
     return mappingHeaders;
 }
 
-export function createMixedValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+export function createMixedValuesColHeaders(col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (row.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
+    }
+
+    if (row.columnAttributeDescriptor) {
+        const attributeElement = row.headerItemMap[col.id];
+
+        mappingHeaders.push(attributeElement);
+        mappingHeaders.push(row.columnAttributeDescriptor);
     }
 
     return mappingHeaders;
@@ -69,16 +77,23 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-export function createDataColGroupHeaders(col: ScopeCol, row?: IGridRow): IMappingHeader[] {
+export function createDataColGroupHeaders(
+    col: ScopeCol,
+    row?: IGridRow,
+    columnHeadersPosition?: ColumnHeadersPosition,
+    isTransposed?: boolean,
+): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
-    col.descriptorsToHere.forEach((descriptor, index) => {
-        mappingHeaders.push(col.headersToHere[index]);
-        mappingHeaders.push(descriptor);
-    });
+    if (columnHeadersPosition === "top" && !isTransposed) {
+        col.descriptorsToHere.forEach((descriptor, index) => {
+            mappingHeaders.push(col.headersToHere[index]);
+            mappingHeaders.push(descriptor);
+        });
 
-    mappingHeaders.push(col.header);
-    mappingHeaders.push(col.attributeDescriptor);
+        mappingHeaders.push(col.header);
+        mappingHeaders.push(col.attributeDescriptor);
+    }
 
     if (row?.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
@@ -97,11 +112,16 @@ export function createDataColGroupHeaders(col: ScopeCol, row?: IGridRow): IMappi
  * @param col - column to get mapping headers for
  * @param row - row
  */
-export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[] {
+export function createDrillHeaders(
+    col: AnyCol,
+    row?: IGridRow,
+    columnHeadersPosition?: ColumnHeadersPosition,
+    isTransposed?: boolean,
+): IMappingHeader[] {
     if (isSeriesCol(col)) {
         return createDataColLeafHeaders(col);
     } else if (isScopeCol(col)) {
-        return createDataColGroupHeaders(col, row);
+        return createDataColGroupHeaders(col, row, columnHeadersPosition, isTransposed);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a slice col, both the column & the row data must be

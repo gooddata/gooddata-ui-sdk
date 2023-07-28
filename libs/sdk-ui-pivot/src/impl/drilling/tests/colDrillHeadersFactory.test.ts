@@ -50,6 +50,6 @@ describe("createDrillHeaders", () => {
     ];
 
     it.each(Scenarios)("should generate drill item containing %s", (_desc, col, row) => {
-        expect(createDrillHeaders(col, row)).toMatchSnapshot();
+        expect(createDrillHeaders(col, row, "top", false)).toMatchSnapshot();
     });
 });
