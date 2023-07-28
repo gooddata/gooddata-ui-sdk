@@ -16,6 +16,8 @@ import {
     AnySliceCol,
     MixedValuesCol,
     isSliceMeasureCol,
+    isMixedHeadersCol,
+    MixedHeadersCol,
 } from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
@@ -23,11 +25,17 @@ import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../column
 import { searchForLocatorMatch } from "./colLocatorMatching.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
-import { ISortItem, IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
+import {
+    ISortItem,
+    IMeasureDescriptor,
+    IAttributeDescriptor,
+    MeasureGroupIdentifier,
+} from "@gooddata/sdk-model";
 import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting.js";
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import keyBy from "lodash/keyBy.js";
 import findIndex from "lodash/findIndex.js";
+import { IPivotTableConfig } from "../../publicTypes.js";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information
@@ -75,18 +83,46 @@ export class TableDescriptor {
         this._seriesColsCount = headers.leafDataCols.filter(isSeriesCol).length;
     }
 
+    private static _getMeasureGroupDimensionIndex(dv: DataViewFacade) {
+        return dv.definition.dimensions.findIndex((dimension) =>
+            dimension.itemIdentifiers.includes(MeasureGroupIdentifier),
+        );
+    }
+
     /**
      * Creates a new table descriptor from the provided data view facade.
      *
      * @param dv - data view facade
      * @param emptyHeaderTitle - what to show for title of headers with empty title
+     * @param config - optional pivot configuration
      */
-    public static for(dv: DataViewFacade, emptyHeaderTitle: string, intl?: IntlShape): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, intl);
+    public static for(
+        dv: DataViewFacade,
+        emptyHeaderTitle: string,
+        config?: IPivotTableConfig,
+        intl?: IntlShape,
+    ): TableDescriptor {
+        const isTransposed = TableDescriptor.isTransposed(dv);
+        const { headers, colDefs } = createHeadersAndColDefs(
+            dv,
+            emptyHeaderTitle,
+            isTransposed,
+            config,
+            intl,
+        );
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
         return new TableDescriptor(dv, headers, colDefs);
+    }
+
+    /**
+     * Creates a new table descriptor from the provided data view facade.
+     *
+     * @param dv - data view facade
+     */
+    public static isTransposed(dv: DataViewFacade) {
+        return TableDescriptor._getMeasureGroupDimensionIndex(dv) === 0;
     }
 
     private _initializeZippedLeaves() {
@@ -182,7 +218,11 @@ export class TableDescriptor {
      * whether metrics are moved to rows or not
      */
     public isTransposed(): boolean {
-        return this.sliceMeasureColCount() !== 0;
+        return TableDescriptor.isTransposed(this.dv);
+    }
+
+    public attributeMeasureHeadersColsCount(): number {
+        return this.headers.mixedHeadersCols.length;
     }
 
     /**
@@ -228,6 +268,14 @@ export class TableDescriptor {
 
         if (this.headers.sliceCols.length > 0) {
             return this.headers.sliceCols[0].id === id;
+        }
+
+        if (this.headers.sliceCols.length === 0 && this.headers.sliceMeasureCols.length > 0) {
+            return this.headers.sliceMeasureCols[0].id === id;
+        }
+
+        if (this.headers.mixedHeadersCols.length > 0) {
+            return this.headers.mixedHeadersCols[0].id === id;
         }
 
         return this.isFirstDataCol(id);
@@ -278,6 +326,13 @@ export class TableDescriptor {
     }
 
     /**
+     * Tests whether the table has column headers moved to the
+     */
+    public hasHeadersOnLeft(): boolean {
+        return this.headers.mixedHeadersCols.length > 0;
+    }
+
+    /**
      * Given a column that may appear as a leaf of table headers this method returns its absolute index in the table.
      *
      * This takes into account that the table columns go from left-to-right, starting with slicing columns first then
@@ -285,8 +340,10 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | MixedValuesCol): number {
-        if (isSliceCol(col) || isSliceMeasureCol(col)) {
+    public getAbsoluteLeafColIndex(
+        col: SliceCol | SliceMeasureCol | LeafDataCol | MixedHeadersCol | MixedValuesCol,
+    ): number {
+        if (isSliceCol(col) || isSliceMeasureCol(col) || isMixedHeadersCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
             // if this bombs, caller is not operating with the leaf columns correctly and sent over
@@ -300,7 +357,12 @@ export class TableDescriptor {
             );
         }
 
-        return this.sliceColCount() + this.sliceMeasureColCount() + col.index;
+        return (
+            this.sliceColCount() +
+            this.sliceMeasureColCount() +
+            this.attributeMeasureHeadersColsCount() +
+            col.index
+        );
     }
 
     /**

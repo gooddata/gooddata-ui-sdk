@@ -11,6 +11,7 @@ import {
     PivotTableWithMeasuresAndRowsOnly,
     PivotTableWithMeasuresAndColumnOnly,
     getCommonPivotTableSizingConfig,
+    PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
 import {
     DepartmentPredicate,
@@ -24,6 +25,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultBackendSettings({
         enablePivotTableTransposition: true,
+        enableColumnHeadersPosition: true,
     })
     .addScenario("single measure pivot with both attributes and metrics in rows", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -90,4 +92,11 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         },
         drillableItems: [ProductPredicate, DepartmentPredicate, AmountMeasurePredicate, WonMeasurePredicate],
         onDrill: action("onDrill"),
+    })
+    .addScenario("two measures in rows and only column attrs on left", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left",
+        },
     });

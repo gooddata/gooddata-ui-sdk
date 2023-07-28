@@ -15,7 +15,7 @@ export function isCellDrillable(
     dv: DataViewFacade,
     drillablePredicates: IHeaderPredicate[],
 ): boolean {
-    if (drillablePredicates.length === 0) {
+    if (drillablePredicates.length === 0 || colDescriptor.type === "mixedHeadersCol") {
         return false;
     }
     const headers: IMappingHeader[] = createDrillHeaders(colDescriptor, row);

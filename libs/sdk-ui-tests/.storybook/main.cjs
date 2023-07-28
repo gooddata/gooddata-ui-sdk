@@ -45,5 +45,16 @@ module.exports = {
                 ],
             }),
         ],
+        module: {
+            ...config.module,
+            rules: [
+                {
+                    test: /\.js$/,
+                    enforce: "pre",
+                    use: ["source-map-loader"],
+                },
+                ...config.module.rules
+            ]
+        },
     }),
 };

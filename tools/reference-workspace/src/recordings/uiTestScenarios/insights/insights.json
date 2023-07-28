@@ -3366,6 +3366,11 @@
         "scenarioName": "single measure pivot with grouping sorted by measure",
         "visName": "PivotTable"
     },
+    "PivotTable.1579d0eaacd9bfe38f8a8a938bcab99f": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and only column attrs on left.",
+        "scenarioName": "two measures in rows and only column attrs on left",
+        "visName": "PivotTable"
+    },
     "PivotTable.1783a1a458d66ad974dd01fb3632a667": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and single column/row grand total for one.",
         "scenarioName": "two measures and single column/row grand total for one",

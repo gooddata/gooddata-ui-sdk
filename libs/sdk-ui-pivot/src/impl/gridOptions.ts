@@ -21,6 +21,7 @@ import {
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN,
     MIXED_VALUES_COLUMN,
 } from "./base/constants.js";
 import {
@@ -30,6 +31,7 @@ import {
     rowMeasureTemplate,
     mixedValuesColsTemplate,
     totalSubTotalColumnTemplate,
+    mixedHeadersTemplate,
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
@@ -70,6 +72,10 @@ export function createGridOptions(
         getRowTotals: tableMethods.getRowTotals,
         intl: props.intl,
     };
+
+    // For column headers on left and metrics in rows, all headers are rendered inside regular table cells, therefore complete ag-grid headers are hidden with headerHeight: 0
+    const hideEmptyHeader =
+        tableMethods.getColumnHeadersPosition() === "left" && table.tableDescriptor.isTransposed();
 
     return {
         // Initial data
@@ -129,6 +135,7 @@ export function createGridOptions(
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
             [MIXED_VALUES_COLUMN]: mixedValuesColsTemplate(table, props),
+            [MIXED_HEADERS_COLUMN]: mixedHeadersTemplate(table, props),
             [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },
@@ -144,5 +151,7 @@ export function createGridOptions(
         rowHeight: DEFAULT_ROW_HEIGHT,
         autoSizePadding: DEFAULT_AUTOSIZE_PADDING,
         enableBrowserTooltips: true,
+
+        headerHeight: hideEmptyHeader ? 0 : undefined,
     };
 }

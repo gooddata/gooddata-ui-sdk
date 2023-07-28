@@ -78,6 +78,12 @@ $subtotal-odd-background-color: var(
 @use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
 
 .gd-table-component {
+    &.gd-table-header-hide {
+        .ag-header-row {
+            display: none;
+        }
+    }
+
     @include meta.load-css("@ag-grid-community/all-modules/dist/styles/ag-grid");
 
     // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
@@ -221,7 +227,8 @@ $subtotal-odd-background-color: var(
 
         .gd-column-group-header-0,
         .gd-column-measure-0,
-        .ag-header-group-cell-with-group {
+        .ag-header-group-cell-with-group,
+        .gd-transpose-header {
             &,
             &.ag-cell-focus {
                 border-left: $cell-border;

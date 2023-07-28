@@ -284,6 +284,11 @@ export interface ISettings {
      */
     enablePivotTableTransposition?: boolean;
 
+    /**
+     * Enable moving column attribute headers to the left.
+     */
+    enableColumnHeadersPosition?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

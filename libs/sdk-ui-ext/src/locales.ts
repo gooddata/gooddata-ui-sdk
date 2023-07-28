@@ -202,4 +202,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     metricsPositionRows: { id: "properties.metrics.position.rows" },
     inColumns: { id: "dashboard.bucket.table.subtitle.columns" },
     inRows: { id: "dashboard.bucket.table.subtitle.rows" },
+    columnHeaderPositionTitle: { id: "properties.column.headers.title" },
+    columnHeaderPositionLabel: { id: "properties.column.headers.position" },
+    columnHeaderPositionTop: { id: "properties.column.headers.position.top" },
+    columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
 });

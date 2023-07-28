@@ -97,6 +97,29 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
     };
 }
 
+export function mixedHeadersTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const cellRenderer = createCellRenderer();
+
+    return {
+        cellClass: cellClassFactory(table, props, "gd-mixed-headers-column"),
+        headerClass: headerClassFactory(table, props, "gd-mixed-headers-column-header"),
+        colSpan: (params) => {
+            if (
+                // params.data is undefined when rows are in loading state
+                params.data?.colSpan &&
+                AVAILABLE_TOTALS.find((item: string) => item === params.data[params.data.colSpan.headerKey])
+            ) {
+                return params.data.colSpan.count;
+            }
+            return 1;
+        },
+        valueFormatter: (params) => {
+            return params.value === undefined ? null : params.value;
+        },
+        cellRenderer,
+    };
+}
+
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
@@ -191,7 +214,7 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
 
     return {
         headerComponent: MixedValuesColumnHeader,
-        cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-mixed-values-column")),
+        cellClass: cellClassFactory(table, props, cx("gd-mixed-values-column")),
         headerClass: headerClassFactory(table, props, "gd-mixed-values-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
             return potentialRowMeasureFormatter(params, separators);
@@ -209,7 +232,9 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
                       )
                     : null;
             }
-            return null;
+            return {
+                textAlign: "left",
+            };
         },
         cellRenderer,
     };

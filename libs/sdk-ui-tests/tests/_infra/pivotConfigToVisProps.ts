@@ -36,14 +36,6 @@ import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
  * @param tableConfig - may be undefined
  */
 export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}): any {
-    if (!tableConfig?.columnSizing?.columnWidths) {
-        return {
-            controls: {
-                measureGroupDimension: tableConfig.measureGroupDimension,
-            },
-        };
-    }
-
     /*
      * Indeed, the properties content is stored in 'properties' entry in insight AND the content itself
      * is wrapped in another object under 'properties' entry.
@@ -54,7 +46,10 @@ export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}):
     return {
         controls: {
             measureGroupDimension: tableConfig.measureGroupDimension,
-            columnWidths: tableConfig.columnSizing.columnWidths,
+            columnHeadersPosition: tableConfig.columnHeadersPosition,
+            ...(tableConfig?.columnSizing?.columnWidths
+                ? { columnWidths: tableConfig.columnSizing.columnWidths }
+                : {}),
         },
     };
 }

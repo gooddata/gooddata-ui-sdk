@@ -50,7 +50,7 @@ import {
     TableConfigAccessors,
     OnExecutionTransformed,
 } from "./privateTypes.js";
-import { ICorePivotTableProps } from "../publicTypes.js";
+import { ICorePivotTableProps, IPivotTableConfig } from "../publicTypes.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -76,6 +76,7 @@ export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
     private readonly originalExecution: IPreparedExecution;
+    private readonly config: IPivotTableConfig | undefined;
 
     /**
      * When user changes sorts or totals by interacting with the table, the current execution result will
@@ -137,6 +138,7 @@ export class TableFacade {
         this.tableDescriptor = TableDescriptor.for(
             this.visibleData,
             emptyHeaderTitleFromIntl(props.intl),
+            props.config,
             props.intl,
         );
 
@@ -150,6 +152,8 @@ export class TableFacade {
         this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
         this.originalExecution = props.execution;
+
+        this.config = props.config;
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -251,6 +255,7 @@ export class TableFacade {
                 getGroupRows: tableMethods.getGroupRows,
                 getColumnTotals: tableMethods.getColumnTotals,
                 getRowTotals: tableMethods.getRowTotals,
+                getColumnHeadersPosition: tableMethods.getColumnHeadersPosition,
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,
@@ -807,6 +812,10 @@ export class TableFacade {
         const dv = this.visibleData;
 
         const rowCount = dv.rawData().firstDimSize();
+        let headerRowsMovedToDataRowsCount = 0;
+        if (this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
+            headerRowsMovedToDataRowsCount = dv.meta().attributeHeadersForDim(1).length; // count of column attributes now rendered in normal rows
+        }
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
         const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
@@ -815,7 +824,7 @@ export class TableFacade {
         // increased in order to resolve issue BB-1509
         const leeway = 2;
 
-        const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
+        const bodyHeight = (rowCount + headerRowsMovedToDataRowsCount) * DEFAULT_ROW_HEIGHT + leeway;
         const footerHeight = rowAggregationCount * DEFAULT_ROW_HEIGHT;
 
         return headerHeight + bodyHeight + footerHeight;
@@ -881,6 +890,17 @@ export class TableFacade {
     };
 
     public getRowCount = (): number => {
+        if (this.config?.columnHeadersPosition === "left" && this.tableDescriptor.isTransposed()) {
+            /**
+             * in case of metrics in rows and column attributes on left
+             * the table has no header and its elements hierarchy is rendered in normal rows.
+             * It completely messes up ag-grid approach and data loading via dataSource. Only benefit is to have all rows scrollable instead of sticky header.
+             */
+            return (
+                this.visibleData.rawData().firstDimSize() +
+                this.visibleData.meta().attributeHeadersForDim(1).length
+            );
+        }
         return this.visibleData.rawData().firstDimSize();
     };
 

@@ -21,6 +21,11 @@ export interface IResultDataMethods {
     firstDimSize(): number;
 
     /**
+     * @returns size for second dimension of the data view
+     */
+    secondDimSize(): number;
+
+    /**
      * @param index - index within first dimension
      * @returns data at index of the first dimension of the data view; if the data view has single dimension
      *  then returns actual data point; if the data view is two dimensional, then returns array
@@ -104,6 +109,10 @@ class ResultDataMethods implements IResultDataMethods {
 
     public firstDimSize(): number {
         return this.dataView.totalCount[0];
+    }
+
+    public secondDimSize(): number {
+        return this.dataView.totalCount[1];
     }
 
     public dataAt(index: number): DataValue | DataValue[] {

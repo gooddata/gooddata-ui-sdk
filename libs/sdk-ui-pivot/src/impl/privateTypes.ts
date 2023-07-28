@@ -58,6 +58,7 @@ export type TableConfigAccessors = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     getRowTotals: () => ITotal[];
+    getColumnHeadersPosition: () => string;
 
     getResizingConfig: () => ColumnResizingConfig;
 };

@@ -95,6 +95,24 @@ function isTransposed(config: IPivotTableConfig) {
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 
+const validateConfig = (props: IPivotTableProps): IPivotTableConfig => {
+    const { rows, config = {} } = props;
+    if (config.columnHeadersPosition === "left") {
+        if (!rows && config.measureGroupDimension === "rows") {
+            return config;
+        } else {
+            console.warn(
+                "Invalid table configuration. `columnHeadersPosition: left` requires metrics in rows and no row attributes defined",
+            );
+            return {
+                ...config,
+                columnHeadersPosition: "top",
+            };
+        }
+    }
+    return config;
+};
+
 class RenderPivotTable extends React.Component<IPivotTableProps> {
     public render() {
         const { exportTitle, backend, workspace, config = {} } = this.props;
@@ -115,7 +133,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
         );
 
         const pivotTableConfig: IPivotTableConfig = {
-            ...config,
+            ...validateConfig(this.props),
             menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),
         };
         const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);

@@ -13,6 +13,7 @@ import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
+import cx from "classnames";
 import {
     BucketNames,
     createExportErrorFunction,
@@ -366,10 +367,19 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
+        const columnHeadersPositionIsSame = isEqual(
+            prevProps.config?.columnHeadersPosition,
+            this.props.config?.columnHeadersPosition,
+        );
+
         if (!drillingIsSame) {
             // eslint-disable-next-line no-console
             console.debug("drilling is different", prevProps.drillableItems, this.props.drillableItems);
 
+            return true;
+        }
+
+        if (!columnHeadersPositionIsSame) {
             return true;
         }
 
@@ -522,9 +532,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const shouldRenderLoadingOverlay =
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
 
+        const classNames = cx("gd-table-component", {
+            "gd-table-header-hide":
+                this.props.config?.columnHeadersPosition === "left" &&
+                this.internal.table.tableDescriptor.isTransposed(),
+        });
+
         return (
             <div
-                className="gd-table-component"
+                className={classNames}
                 style={style}
                 id={this.pivotTableId}
                 onMouseDown={this.stopEventWhenResizeHeader}
@@ -989,6 +1005,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return this.props.config?.groupRows ?? true;
     };
 
+    private getColumnHeadersPosition = (): string => {
+        return this.props.config?.columnHeadersPosition ?? "top";
+    };
+
     private getMenuConfig = (): IMenu => {
         return this.props.config?.menu ?? {};
     };
@@ -1100,6 +1120,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
             getRowTotals: this.getRowTotals,
+            getColumnHeadersPosition: this.getColumnHeadersPosition,
             getResizingConfig: this.getResizingConfig,
 
             onLoadingChanged: this.onLoadingChanged,

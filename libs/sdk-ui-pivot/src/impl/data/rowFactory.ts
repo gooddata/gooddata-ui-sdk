@@ -4,6 +4,7 @@ import { IntlShape } from "react-intl";
 import {
     DataViewFacade,
     emptyHeaderTitleFromIntl,
+    getAttributeHeaderItemName,
     getMappingHeaderFormattedName,
     IMappingHeader,
     BucketNames,
@@ -24,7 +25,13 @@ import {
     attributeLocalId,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, SliceCol, SliceMeasureCol } from "../structure/tableDescriptorTypes.js";
+import {
+    isSeriesCol,
+    SliceCol,
+    SliceMeasureCol,
+    MixedHeadersCol,
+    MixedValuesCol,
+} from "../structure/tableDescriptorTypes.js";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
 import { getSubtotalStyles } from "./dataSourceUtils.js";
@@ -63,7 +70,7 @@ function getTotalLinkValue(measureHeaders: IResultMeasureHeader[] | undefined, t
 function getCell(
     rowHeaderData: IResultHeader[][],
     rowIndex: number,
-    rowHeader: SliceCol | SliceMeasureCol,
+    rowHeader: SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol,
     rowHeaderIndex: number,
     intl: IntlShape,
 ): {
@@ -324,27 +331,77 @@ export function createAgGridPage(
 
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
-    const columnTotalsData = dv.rawData().columnTotals();
+    if (tableDescriptor.headers.mixedHeadersCols.length > 0 && tableDescriptor.isTransposed()) {
+        const rowData: IGridRow[] = [];
 
-    const subtotalStyles = getSubtotalStyles(dimensions?.[0]);
-    const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) => {
-        const mergedDataRowWithColumnTotals = dv.rawData().hasColumnTotals()
-            ? [...dataRow, ...columnTotalsData![dataRowIndex]]
-            : dataRow;
-        return getRow(
-            tableDescriptor,
-            mergedDataRowWithColumnTotals,
-            dataRowIndex,
-            headerItems[0],
-            subtotalStyles,
-            intl,
-        );
-    });
+        // rows with attribute values
+        headerItems[1].forEach((attributes, rowIndex) => {
+            const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
+            const attributeName = dv.data().slices().toArray()[0].descriptor.descriptors[rowIndex]
+                .attributeHeader.formOf.name;
 
-    const rowTotals = getRowTotals(tableDescriptor, dv, intl)!;
+            const row: IGridRow = {
+                [headerColumn.id]: attributeName,
+                headerItemMap: {},
+            };
 
-    return {
-        rowData,
-        rowTotals,
-    };
+            tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
+                const header = attributes[columnIndex];
+                if (isResultAttributeHeader(header)) {
+                    row[column.id] = valueWithEmptyHandling(
+                        getAttributeHeaderItemName(header.attributeHeaderItem),
+                        emptyHeaderTitleFromIntl(intl),
+                    );
+                }
+            });
+
+            rowData.push(row);
+        });
+
+        // rows with measure values
+        headerItems[0][0].filter(isResultMeasureHeader).map((measureHeader, measureRowIndex) => {
+            const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
+
+            const measureHeaderItem = measureHeader.measureHeaderItem;
+            const row: IGridRow = {
+                [headerColumn.id]: measureHeaderItem.name,
+                measureDescriptor: tableDescriptor.getMeasures()[measureHeaderItem.order],
+                headerItemMap: {},
+            };
+            tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
+                row[column.id] = minimalRowData[measureRowIndex][columnIndex];
+            });
+
+            rowData.push(row);
+        });
+
+        return {
+            rowData,
+            rowTotals: [],
+        };
+    } else {
+        const columnTotalsData = dv.rawData().columnTotals();
+
+        const subtotalStyles = getSubtotalStyles(dimensions?.[0]);
+        const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) => {
+            const mergedDataRowWithColumnTotals = dv.rawData().hasColumnTotals()
+                ? [...dataRow, ...columnTotalsData![dataRowIndex]]
+                : dataRow;
+            return getRow(
+                tableDescriptor,
+                mergedDataRowWithColumnTotals,
+                dataRowIndex,
+                headerItems[0],
+                subtotalStyles,
+                intl,
+            );
+        });
+
+        const rowTotals = getRowTotals(tableDescriptor, dv, intl)!;
+
+        return {
+            rowData,
+            rowTotals,
+        };
+    }
 }
