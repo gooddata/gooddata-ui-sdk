@@ -10,6 +10,7 @@ export const MIXED_HEADERS_COLUMN = "MIXED_HEADERS_COLUMN";
 export const MIXED_VALUES_COLUMN = "MIXED_VALUES_COLUMN";
 export const ROW_TOTAL = "rowTotal";
 export const ROW_SUBTOTAL = "rowSubtotal";
+export const ROW_MEASURE = "rowMeasure";
 export const COLUMN_TOTAL = "COLUMN_TOTAL";
 export const COLUMN_SUBTOTAL = "COLUMN_SUBTOTAL";
 export const COLUMN_GROUPING_DELIMITER = " › ";

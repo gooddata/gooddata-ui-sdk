@@ -4,13 +4,14 @@ import { IntlShape } from "react-intl";
 import {
     DataViewFacade,
     emptyHeaderTitleFromIntl,
+    //@ts-ignore
     getAttributeHeaderItemName,
     getMappingHeaderFormattedName,
     IMappingHeader,
     BucketNames,
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
+import { ROW_MEASURE, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 import {
     DataValue,
     IResultHeader,
@@ -333,7 +334,16 @@ export function createAgGridPage(
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
     if (tableDescriptor.headers.mixedHeadersCols.length > 0 && tableDescriptor.isTransposed()) {
+        const columnTotalsData = dv.rawData().columnTotals();
+        let headersLeftData: DataValue[][] = minimalRowData;
         const rowData: IGridRow[] = [];
+        if (dv.rawData().columnTotals()) {
+            columnTotalsData!.forEach((_m, index) => {
+                headersLeftData[index].push(...columnTotalsData![index]);
+            });
+        }
+
+        console.log("After", headersLeftData);
 
         // rows with attribute values
         headerItems[1].forEach((attributes, rowIndex) => {
@@ -351,12 +361,16 @@ export function createAgGridPage(
 
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
                 const header = attributes[columnIndex];
+                let value = valueWithEmptyHandling(
+                    getMappingHeaderFormattedName(header),
+                    emptyHeaderTitleFromIntl(intl),
+                );
                 if (isResultAttributeHeader(header)) {
                     // TODO what about formattedName?
-                    row[column.id] = valueWithEmptyHandling(
-                        getAttributeHeaderItemName(header.attributeHeaderItem),
-                        emptyHeaderTitleFromIntl(intl),
-                    );
+                    row[column.id] = value;
+                    row.headerItemMap[column.id] = header as IMappingHeader;
+                } else if (isResultTotalHeader(header)) {
+                    row[column.id] = intl?.formatMessage(messages[value]);
                     row.headerItemMap[column.id] = header as IMappingHeader;
                 }
             });
@@ -375,7 +389,8 @@ export function createAgGridPage(
                 headerItemMap: {},
             };
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
-                row[column.id] = minimalRowData[measureRowIndex][columnIndex];
+                row[column.id] = headersLeftData[measureRowIndex][columnIndex];
+                row.type = ROW_MEASURE;
             });
 
             rowData.push(row);

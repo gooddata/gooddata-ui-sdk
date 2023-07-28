@@ -337,12 +337,23 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         .data()
         .slices()
         .toArray()
-        .map((_slice, idx) => ({
-            type: "mixedValuesCol",
-            id: `amv_${idx}`,
-            index: idx,
-            fullIndexPathToHere: [idx],
-        }));
+        .map((slice, idx) => {
+            console.log("Slice", slice);
+            const attributeHeaders = slice.descriptor.headers;
+            const descriptors = slice.descriptor.descriptors;
+            const numberOfAttributes = descriptors.length;
+            const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders as IResultAttributeHeader[]);
+
+            return {
+                type: "mixedValuesCol",
+                id: `amv_${idx}`,
+                index: idx,
+                fullIndexPathToHere: [idx],
+                headersToHere: (attributeHeaders as IResultAttributeHeader[]).slice(0, numberOfAttributes),
+                isTotal,
+                isSubtotal,
+            };
+        });
 }
 
 function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {

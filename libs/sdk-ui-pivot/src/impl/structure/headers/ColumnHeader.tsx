@@ -15,6 +15,7 @@ import {
 import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
+    displayMenu?: boolean;
     className?: string;
     menu?: () => IMenu;
 }
@@ -63,7 +64,8 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     };
 
     public render() {
-        const { className, getTableDescriptor, displayName, enableSorting, menu, column } = this.props;
+        const { displayMenu, className, getTableDescriptor, displayName, enableSorting, menu, column } =
+            this.props;
         const col = this.getColDescriptor();
         const textAlign =
             isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isMixedValuesCol(col)
@@ -71,15 +73,18 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
         const isSortingEnabled =
-            !isColumnAttribute && !isSliceMeasureCol(col) && !isMixedValuesCol(col) && enableSorting;
-        !isColumnAttribute &&
+            !isColumnAttribute &&
             !isSliceMeasureCol(col) &&
-            !isMixedHeadersCol(col) &&
             !isMixedValuesCol(col) &&
+            !isMixedHeadersCol(col) &&
             enableSorting;
 
         const tableDescriptor = getTableDescriptor();
-        const showMenu = tableDescriptor.isTransposed() ? isSliceMeasureCol(col) && displayName : true;
+        const showMenu = displayMenu
+            ? true
+            : tableDescriptor.isTransposed()
+            ? isSliceMeasureCol(col) && displayName
+            : true;
 
         return (
             <HeaderCell

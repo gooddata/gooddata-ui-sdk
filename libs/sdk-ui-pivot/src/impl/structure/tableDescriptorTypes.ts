@@ -135,6 +135,22 @@ export interface MixedValuesCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+
+    /**
+     * Descriptors of all attribute headers on the way to this column group - excluding the header of the
+     * current group.
+     */
+    readonly headersToHere?: IResultAttributeHeader[];
+
+    /**
+     * Checks whether this column group is part of grand total.
+     */
+    readonly isTotal?: boolean;
+
+    /**
+     * Checks whether this column group is part of sub-total.
+     */
+    readonly isSubtotal?: boolean;
 }
 
 export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {

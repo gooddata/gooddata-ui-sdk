@@ -6,8 +6,15 @@ import { IGridRow } from "../data/resultTypes.js";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, isRootCol, isScopeCol, AnyCol } from "../structure/tableDescriptorTypes.js";
+import {
+    isSeriesCol,
+    isRootCol,
+    isScopeCol,
+    AnyCol,
+    isMixedValuesCol,
+} from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+import { isResultTotalHeader } from "@gooddata/sdk-model";
 import {
     ROW_SUBTOTAL,
     ROW_TOTAL,
@@ -52,18 +59,24 @@ export function cellClassFactory(
 
         invariant(!isRootCol(col));
 
+        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
         const isRowTotal = row.type === ROW_TOTAL;
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
-        const isColumnTotal = getColumnTotals(colDef, col, table.tableDescriptor);
-        const isColumnSubtotal = getColumnSubTotals(colDef, col, table.tableDescriptor);
+        const isColumnTotal = getColumnTotals(colDef, col, row, table.tableDescriptor, columnHeadersPosition);
+        const isColumnSubtotal = getColumnSubTotals(
+            colDef,
+            col,
+            row,
+            table.tableDescriptor,
+            columnHeadersPosition,
+        );
         const isRowMetric = colDef.type === ROW_MEASURE_COLUMN;
         let hasDrillableHeader = false;
 
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
         const cellIsNotTotalSubtotal = !isRowTotal && !isRowSubtotal && !isColumnTotal && !isColumnSubtotal;
 
-        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
         const isTransposed = table.tableDescriptor.isTransposed();
         if (cellIsNotTotalSubtotal && !isRowMetric && cellAllowsDrill) {
             hasDrillableHeader = isCellDrillable(
@@ -119,16 +132,48 @@ export function cellClassFactory(
     };
 }
 
-function getColumnTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
-    if (tableDescriptor.isTransposed()) {
+function getColumnTotals(
+    colDef: ColDef,
+    col: AnyCol,
+    row: IGridRow,
+    tableDescriptor: TableDescriptor,
+    columnHeadersPosition: string,
+) {
+    if (columnHeadersPosition === "left" && tableDescriptor.isTransposed()) {
+        if (Object.keys(row.headerItemMap).length > 0) {
+            return (
+                isMixedValuesCol(col) &&
+                col.isTotal === true &&
+                isResultTotalHeader(row.headerItemMap[col.id])
+            );
+        } else {
+            return isMixedValuesCol(col) && col.isTotal === true;
+        }
+    } else if (tableDescriptor.isTransposed()) {
         return isScopeCol(col) && col.isTotal === true;
     } else {
         return colDef.type === COLUMN_TOTAL;
     }
 }
 
-function getColumnSubTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
-    if (tableDescriptor.isTransposed()) {
+function getColumnSubTotals(
+    colDef: ColDef,
+    col: AnyCol,
+    row: IGridRow,
+    tableDescriptor: TableDescriptor,
+    columnHeadersPosition: string,
+) {
+    if (columnHeadersPosition === "left" && tableDescriptor.isTransposed()) {
+        if (Object.keys(row.headerItemMap).length > 0) {
+            return (
+                isMixedValuesCol(col) &&
+                col.isSubtotal === true &&
+                isResultTotalHeader(row.headerItemMap[col.id])
+            );
+        } else {
+            return isMixedValuesCol(col) && col.isSubtotal === true;
+        }
+    } else if (tableDescriptor.isTransposed()) {
         return isScopeCol(col) && col.isSubtotal === true;
     } else {
         return colDef.type === COLUMN_SUBTOTAL;

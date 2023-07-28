@@ -3,7 +3,7 @@ import React from "react";
 import { ITotal, IMeasureDescriptorItem } from "@gooddata/sdk-model";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
-import { VALUE_CLASS, ROW_MEASURE_COLUMN } from "../base/constants.js";
+import { VALUE_CLASS, ROW_MEASURE_COLUMN, ROW_MEASURE, MIXED_HEADERS_COLUMN } from "../base/constants.js";
 import { IGridTotalsRow } from "../data/resultTypes.js";
 import { agColId } from "../structure/tableDescriptorTypes.js";
 import { IMenuAggregationClickConfig } from "../privateTypes.js";
@@ -59,7 +59,11 @@ export function createCellRenderer(): (params: ICellRendererParams) => JSX.Eleme
                 ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
                 : params.formatValue!(params.value);
 
-        if (params.colDef?.type === ROW_MEASURE_COLUMN && params.data?.measureDescriptor) {
+        console.log("Params", params.colDef?.type);
+        if (
+            (params.colDef?.type === ROW_MEASURE_COLUMN && params.data?.measureDescriptor) ||
+            (params.colDef?.type === MIXED_HEADERS_COLUMN && params.data?.type === ROW_MEASURE)
+        ) {
             const HeaderComponent = params.colDef?.headerComponent;
             const measureHeaderItem = params.data?.measureDescriptor?.measureHeaderItem;
             const headerParams = updateMenuAggregationClickForMeasure(
@@ -82,10 +86,13 @@ export function createCellRenderer(): (params: ICellRendererParams) => JSX.Eleme
                         (total: ITotal) => total.measureIdentifier === measureHeaderItem?.localIdentifier,
                     );
 
+            const showMenu = params.colDef?.type === "MIXED_HEADERS_COLUMN";
+
             return (
                 <HeaderComponent
                     {...headerParams}
                     className="gd-row-measure-name"
+                    displayMenu={showMenu}
                     column={params.column}
                     displayName={formattedValue}
                     getRowTotals={getMatchingRowTotals}
