@@ -3343,6 +3343,11 @@
         "scenarioName": "two measures and multiple subtotals",
         "visName": "PivotTable"
     },
+    "PivotTable.03542ee6c6cd49d06f874576acf11dea": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and only column attrs on left, with drilling.",
+        "scenarioName": "two measures in rows and only column attrs on left, with drilling",
+        "visName": "PivotTable"
+    },
     "PivotTable.03d6b3d66f30e0595bc109a891877850": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with three rows and two column attributes.",
         "scenarioName": "two measures with three rows and two column attributes",

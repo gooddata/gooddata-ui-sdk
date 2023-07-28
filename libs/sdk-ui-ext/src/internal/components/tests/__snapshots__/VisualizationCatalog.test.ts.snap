@@ -41843,6 +41843,46 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for PivotTable - two measures in rows and only column attrs on left, with drilling 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    measureGroupDimension: \\"rows\\",
+    columnHeadersPosition: \\"left\\"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for PivotTable - two measures in rows with only column attrs on left 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
