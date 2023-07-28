@@ -58,9 +58,10 @@ if [[ "$IS_AIO" == true ]]; then
   EXTRA_PARAMS=" --net=$NETWORK_ID "
 
   if [[ "$AIO_VERSION" == "master" || "$AIO_VERSION" == "stable" ]]; then
+    # Will be done in QA-19631 after  GL -> GH migration (gdc-nas) is done
     AIO_IMAGE="registry.gitlab.com/gooddata/gdc-nas/gooddata-cn-ce:$AIO_VERSION"
   else
-    AIO_IMAGE="gooddata/gooddata-cn-ce:$AIO_VERSION"
+    AIO_IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/nas/gooddata-cn-ce:$AIO_VERSION"
   fi
 
   trap shutdownAIO EXIT
