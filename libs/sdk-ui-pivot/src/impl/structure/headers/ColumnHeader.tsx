@@ -68,7 +68,11 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
             this.props;
         const col = this.getColDescriptor();
         const textAlign =
-            isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isMixedValuesCol(col)
+            isSliceCol(col) ||
+            isEmptyScopeCol(col) ||
+            isSliceMeasureCol(col) ||
+            isMixedValuesCol(col) ||
+            isMixedHeadersCol(col)
                 ? ALIGN_LEFT
                 : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
