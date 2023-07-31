@@ -343,8 +343,6 @@ export function createAgGridPage(
             });
         }
 
-        console.log("After", headersLeftData);
-
         // rows with attribute values
         headerItems[1].forEach((attributes, rowIndex) => {
             const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];

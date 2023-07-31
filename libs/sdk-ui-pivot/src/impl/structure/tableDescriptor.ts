@@ -79,6 +79,7 @@ export class TableDescriptor {
         private readonly dv: DataViewFacade,
         public readonly headers: TableCols,
         public readonly colDefs: TableColDefs,
+        public readonly isColumnHeadersPositionLeft: boolean,
     ) {
         this._initializeZippedLeaves();
         this._initializeZippedSliceCols();
@@ -105,6 +106,7 @@ export class TableDescriptor {
         intl?: IntlShape,
     ): TableDescriptor {
         const isTransposed = TableDescriptor.isTransposed(dv);
+        const isColumnHeadersPositionLeft = this.isColumnHeadersPositionLeft(config);
         const { headers, colDefs } = createHeadersAndColDefs(
             dv,
             emptyHeaderTitle,
@@ -115,7 +117,7 @@ export class TableDescriptor {
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
-        return new TableDescriptor(dv, headers, colDefs);
+        return new TableDescriptor(dv, headers, colDefs, isColumnHeadersPositionLeft);
     }
 
     /**
@@ -125,6 +127,10 @@ export class TableDescriptor {
      */
     public static isTransposed(dv: DataViewFacade) {
         return TableDescriptor._getMeasureGroupDimensionIndex(dv) === 0;
+    }
+
+    public static isColumnHeadersPositionLeft(config?: IPivotTableConfig) {
+        return config?.columnHeadersPosition === "left";
     }
 
     private _initializeZippedLeaves() {
@@ -408,7 +414,14 @@ export class TableDescriptor {
      * sum or have no columns whatseover.
      */
     public canTableHaveColumnTotals(): boolean {
-        return this.scopingColCount() > 0 && (this.seriesColsCount() > 0 || this.sliceMeasureColCount() > 0);
+        // To meet this condition we know that all requirements to allow column totals should have passed previously.
+        if (this.isColumnHeadersPositionLeft) {
+            return true;
+        } else {
+            return (
+                this.scopingColCount() > 0 && (this.seriesColsCount() > 0 || this.sliceMeasureColCount() > 0)
+            );
+        }
     }
 
     /**

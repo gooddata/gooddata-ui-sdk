@@ -338,7 +338,6 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         .slices()
         .toArray()
         .map((slice, idx) => {
-            console.log("Slice", slice);
             const attributeHeaders = slice.descriptor.headers;
             const descriptors = slice.descriptor.descriptors;
             const numberOfAttributes = descriptors.length;
@@ -383,6 +382,9 @@ function createTableHeaders(
         mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
 
+        // NESTOR - consequences?
+        const scopingAttributes = dv.data().slices().descriptors ?? [];
+
         return {
             sliceCols: [],
             sliceMeasureCols: [],
@@ -391,7 +393,7 @@ function createTableHeaders(
             mixedHeadersCols,
             mixedValuesCols,
             idToDescriptor,
-            scopingAttributes: [],
+            scopingAttributes: scopingAttributes.filter(isAttributeDescriptor),
         };
     } else {
         const rows: SliceCol[] = createRowDescriptors(dv);

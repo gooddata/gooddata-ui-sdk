@@ -40,7 +40,6 @@ export function getAvailableDrillTargets(
                 attribute,
                 intersectionAttributes: getIntersectionAttributes(attribute, attributes),
             }));
-        console.log("columnAttributeItems", columnAttributeItems);
     }
 
     return {

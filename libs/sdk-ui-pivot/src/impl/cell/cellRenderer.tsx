@@ -59,7 +59,6 @@ export function createCellRenderer(): (params: ICellRendererParams) => JSX.Eleme
                 ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
                 : params.formatValue!(params.value);
 
-        console.log("Params", params.colDef?.type);
         if (
             (params.colDef?.type === ROW_MEASURE_COLUMN && params.data?.measureDescriptor) ||
             (params.colDef?.type === MIXED_HEADERS_COLUMN && params.data?.type === ROW_MEASURE)
