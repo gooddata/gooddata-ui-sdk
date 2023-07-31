@@ -87,8 +87,12 @@ const widthItemLocatorsHaveProperLength = (
         widthItemLocatorsLength === columnAttributesCount;
     const locatorsMatchesLength = hasMeasureLocators && widthItemLocatorsMatchesColumnAttributesLength;
     const locatorsAreEmpty = hasNotMeasureLocators && widthItemLocatorsHasLengthAsColumnAttributesLength;
+    // Transposed - metrics in rows
+    const locatorsMatchesMeasureLength = hasMeasureLocators && widthItemLocatorsLength === measuresCount;
 
-    return hasWidthItemLocators && (locatorsMatchesLength || locatorsAreEmpty);
+    return (
+        hasWidthItemLocators && (locatorsMatchesLength || locatorsAreEmpty || locatorsMatchesMeasureLength)
+    );
 };
 
 function removeInvalidLocators(
@@ -285,6 +289,7 @@ export function adaptMdObjectWidthItemsToPivotTable(
         ? bucketAttributes(columnBucket).map(attributeLocalId)
         : [];
 
+    // const columnAttributes = getColumnAttributes(insight.insight.buckets);
     return adaptWidthItemsToPivotTable(
         originalColumnWidths,
         measureLocalIdentifiers,

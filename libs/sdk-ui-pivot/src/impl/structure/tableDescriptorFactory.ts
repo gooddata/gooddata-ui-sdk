@@ -308,6 +308,13 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
         return [];
     }
     const idx = rows.length;
+    const seriesDescriptor = dv
+        .data()
+        .series()
+        .toArray()
+        .map((series) => {
+            return series.descriptor;
+        });
     // always just one measure column if measures are in row dimension
     return [
         {
@@ -315,6 +322,7 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
             id: `r_${idx}`,
             index: idx,
             fullIndexPathToHere: [idx],
+            seriesDescriptor,
         },
     ];
 }
@@ -355,8 +363,16 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         });
 }
 
-function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
+function createMeasureValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
     const idx = 0;
+    //@ts-ignore
+    const seriesDescriptor = dv
+        .data()
+        .series()
+        .toArray()
+        .map((series) => {
+            return series.descriptor;
+        });
     // always just one column with mixed attribute and measure headers
     return [
         {
@@ -408,7 +424,7 @@ function createTableHeaders(
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
         const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
-        const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
+        const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors(dv) : [];
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
         mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
 

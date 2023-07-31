@@ -106,6 +106,9 @@ export interface SliceMeasureCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+
+    // NESTOR
+    readonly seriesDescriptor: DataSeriesDescriptor[];
 }
 
 export interface MixedHeadersCol extends TableCol {
@@ -141,6 +144,8 @@ export interface MixedValuesCol extends TableCol {
      * current group.
      */
     readonly headersToHere?: IResultAttributeHeader[];
+
+    readonly seriesDescriptor?: DataSeriesDescriptor;
 
     /**
      * Checks whether this column group is part of grand total.

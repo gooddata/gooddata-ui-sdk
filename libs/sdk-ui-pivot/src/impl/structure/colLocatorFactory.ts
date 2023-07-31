@@ -1,6 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes.js";
+import {
+    isScopeCol,
+    isSeriesCol,
+    isSliceMeasureCol,
+    LeafDataCol,
+    SliceMeasureCol,
+    MixedValuesCol,
+} from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
     ITotalColumnLocator,
@@ -65,7 +72,7 @@ function createMeasureLocator(descriptor: IMeasureDescriptor): IMeasureColumnLoc
  *
  * @param col - col definition to get locators for
  */
-export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
+export function createColumnLocator(col: LeafDataCol | SliceMeasureCol | MixedValuesCol): ColumnLocator[] {
     if (isScopeCol(col)) {
         const { descriptorsToHere, headersToHere } = col;
         const descriptorsAndHeaders = zip(descriptorsToHere, headersToHere);
@@ -76,7 +83,7 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
                 ? createTotalLocator(descriptor, header)
                 : createAttributeLocator(descriptor, header),
         );
-    } else {
+    } else if (isScopeCol(col) || isSeriesCol(col)) {
         const result: ColumnLocator[] = [];
 
         if (col.seriesDescriptor.attributeDescriptors && col.seriesDescriptor.attributeHeaders) {
@@ -97,5 +104,14 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
         result.push(createMeasureLocator(col.seriesDescriptor.measureDescriptor));
 
         return result;
+    } else if (isSliceMeasureCol(col)) {
+        const result: ColumnLocator[] = [];
+        col.seriesDescriptor!.forEach((serieDescriptor) => {
+            result.push(createMeasureLocator(serieDescriptor.measureDescriptor));
+        });
+
+        return result;
+    } else {
+        return [];
     }
 }

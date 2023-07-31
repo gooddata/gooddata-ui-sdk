@@ -231,7 +231,10 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
 /**
  * @public
  */
-export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
+export type ColumnResizedCallback = (
+    columnWidths: ColumnWidthItem[],
+    measureGroupDimension?: string,
+) => void;
 
 /**
  * @public

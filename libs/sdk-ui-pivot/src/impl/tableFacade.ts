@@ -743,7 +743,7 @@ export class TableFacade {
         }
         const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap();
 
-        resizingConfig.onColumnResized?.(columnWidths);
+        resizingConfig.onColumnResized?.(columnWidths, this.config?.measureGroupDimension);
     };
 
     public getGroupingProvider = (): IGroupingProvider => {

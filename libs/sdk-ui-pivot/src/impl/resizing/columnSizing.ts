@@ -499,7 +499,8 @@ function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
         } else {
             throw new InvariantError(`width value for attributeColumnWidthItem has to be number ${col.id}`);
         }
-    } else if (isScopeCol(col) || isSeriesCol(col)) {
+        // NESTOR - extend with slice measure col
+    } else if (isScopeCol(col) || isSeriesCol(col) || isSliceMeasureCol(col) || isMixedValuesCol(col)) {
         return {
             measureColumnWidthItem: {
                 width,

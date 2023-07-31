@@ -547,12 +547,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     ) {
         // This is sanitization of properties from KD vs current mdObject from AD
         const columnWidths = getColumnWidthsFromProperties(visualizationProperties);
+        const measureGroupDimension = getMeasureGroupDimensionFromProperties(visualizationProperties);
         if (columnWidths) {
-            this.sanitizeColumnWidths(columnWidths, insight);
+            this.sanitizeColumnWidths(columnWidths, insight, measureGroupDimension);
         }
     }
 
-    private sanitizeColumnWidths(columnWidths: ColumnWidthItem[], insight: IInsightDefinition) {
+    private sanitizeColumnWidths(
+        columnWidths: ColumnWidthItem[],
+        insight: IInsightDefinition,
+        measureGroupDimension: string,
+    ) {
         if (isEmpty(insightBuckets(insight))) {
             return;
         }
@@ -565,17 +570,19 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 properties: {
                     controls: {
                         columnWidths: adaptedColumnWidths,
+                        measureGroupDimension,
                     },
                 },
             });
         }
     }
 
-    private onColumnResized(columnWidths: ColumnWidthItem[]) {
+    private onColumnResized(columnWidths: ColumnWidthItem[], measureGroupDimension?: string) {
         this.pushData({
             properties: {
                 controls: {
                     columnWidths,
+                    measureGroupDimension,
                 },
             },
         });

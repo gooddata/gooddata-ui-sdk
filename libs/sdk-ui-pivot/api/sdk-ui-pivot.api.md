@@ -35,7 +35,7 @@ export type ColumnHeadersPosition = "top" | "left";
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 // @public (undocumented)
-export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
+export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[], measureGroupDimension?: string) => void;
 
 // @public (undocumented)
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
