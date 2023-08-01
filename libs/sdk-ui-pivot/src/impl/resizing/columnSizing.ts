@@ -972,9 +972,12 @@ function getRowDataFont(
     config: CalculateColumnWidthsConfig,
     colDesc: AnyCol,
 ): string {
-    if (isColumnTotal(colDef) || (isScopeCol(colDesc) && colDesc.isTotal)) {
+    if (isColumnTotal(colDef) || ((isScopeCol(colDesc) || isMixedValuesCol(colDesc)) && colDesc.isTotal)) {
         return config.totalColumnFont;
-    } else if (isColumnSubtotal(colDef) || (isScopeCol(colDesc) && colDesc.isSubtotal)) {
+    } else if (
+        isColumnSubtotal(colDef) ||
+        ((isScopeCol(colDesc) || isMixedValuesCol(colDesc)) && colDesc.isSubtotal)
+    ) {
         return config.subtotalColumnFont;
     } else if (isSomeTotal(row.type)) {
         return config.subtotalFont;
