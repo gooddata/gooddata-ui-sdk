@@ -6,6 +6,7 @@ import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes.js";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
 import {
+    isMixedHeadersCol,
     isMixedValuesCol,
     isScopeCol,
     isSeriesCol,
@@ -42,7 +43,7 @@ export function onCellClickedFactory(
         const { colDef, data, rowIndex } = cellEvent;
         const col = table.tableDescriptor.getCol(colDef);
 
-        if (isSliceMeasureCol(col)) {
+        if (isSliceMeasureCol(col) || isMixedHeadersCol(col)) {
             return false;
         }
 

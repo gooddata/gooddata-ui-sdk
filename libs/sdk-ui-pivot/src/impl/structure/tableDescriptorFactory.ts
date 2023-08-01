@@ -337,12 +337,19 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         .data()
         .slices()
         .toArray()
-        .map((_slice, idx) => ({
-            type: "mixedValuesCol",
-            id: `amv_${idx}`,
-            index: idx,
-            fullIndexPathToHere: [idx],
-        }));
+        .map((slice, idx) => {
+            const attributeHeaders = slice.descriptor.headers;
+            const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders as IResultAttributeHeader[]);
+
+            return {
+                type: "mixedValuesCol",
+                id: `amv_${idx}`,
+                index: idx,
+                fullIndexPathToHere: [idx],
+                isTotal,
+                isSubtotal,
+            };
+        });
 }
 
 function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
@@ -372,6 +379,8 @@ function createTableHeaders(
         mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
 
+        const scopingAttributes = dv.data().slices().descriptors ?? [];
+
         return {
             sliceCols: [],
             sliceMeasureCols: [],
@@ -380,7 +389,7 @@ function createTableHeaders(
             mixedHeadersCols,
             mixedValuesCols,
             idToDescriptor,
-            scopingAttributes: [],
+            scopingAttributes: scopingAttributes.filter(isAttributeDescriptor),
         };
     } else {
         const rows: SliceCol[] = createRowDescriptors(dv);

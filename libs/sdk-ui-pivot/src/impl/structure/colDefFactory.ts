@@ -129,7 +129,6 @@ function createAndAddMixedHeadersColDefs(
     isTransposed: boolean,
 ) {
     for (const col of mixedHeadersCol) {
-        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
         if (isTransposed) {
             const colDef: ColDef = {
                 type: MIXED_HEADERS_COLUMN,
@@ -137,7 +136,6 @@ function createAndAddMixedHeadersColDefs(
                 field: col.id,
                 headerName: "",
                 headerTooltip: undefined,
-                ...cellRendererProp,
             };
 
             state.rowColDefs.push(colDef);

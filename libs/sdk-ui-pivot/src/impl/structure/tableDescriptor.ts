@@ -406,7 +406,12 @@ export class TableDescriptor {
      * sum or have no columns whatseover.
      */
     public canTableHaveColumnTotals(): boolean {
-        return this.scopingColCount() > 0 && (this.seriesColsCount() > 0 || this.sliceMeasureColCount() > 0);
+        return (
+            this.scopingColCount() > 0 &&
+            (this.seriesColsCount() > 0 ||
+                this.sliceMeasureColCount() > 0 ||
+                this.attributeMeasureHeadersColsCount() > 0)
+        );
     }
 
     /**

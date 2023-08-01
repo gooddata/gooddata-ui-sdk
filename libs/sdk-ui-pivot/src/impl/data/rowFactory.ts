@@ -4,7 +4,6 @@ import { IntlShape } from "react-intl";
 import {
     DataViewFacade,
     emptyHeaderTitleFromIntl,
-    getAttributeHeaderItemName,
     getMappingHeaderFormattedName,
     IMappingHeader,
     BucketNames,
@@ -333,7 +332,14 @@ export function createAgGridPage(
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
     if (tableDescriptor.headers.mixedHeadersCols.length > 0 && tableDescriptor.isTransposed()) {
+        const columnTotalsData = dv.rawData().columnTotals();
+        const mergedColumnTotalsData: DataValue[][] = minimalRowData;
         const rowData: IGridRow[] = [];
+        if (columnTotalsData) {
+            columnTotalsData!.forEach((_m, index) => {
+                mergedColumnTotalsData[index].push(...columnTotalsData[index]);
+            });
+        }
 
         // rows with attribute values
         headerItems[1].forEach((attributes, rowIndex) => {
@@ -349,11 +355,15 @@ export function createAgGridPage(
 
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
                 const header = attributes[columnIndex];
+                const value = valueWithEmptyHandling(
+                    getMappingHeaderFormattedName(header),
+                    emptyHeaderTitleFromIntl(intl),
+                );
                 if (isResultAttributeHeader(header)) {
-                    row[column.id] = valueWithEmptyHandling(
-                        getAttributeHeaderItemName(header.attributeHeaderItem),
-                        emptyHeaderTitleFromIntl(intl),
-                    );
+                    row[column.id] = value;
+                    row.headerItemMap[column.id] = header as IMappingHeader;
+                } else if (isResultTotalHeader(header)) {
+                    row[column.id] = intl?.formatMessage(messages[value]);
                     row.headerItemMap[column.id] = header as IMappingHeader;
                 }
             });
@@ -372,7 +382,7 @@ export function createAgGridPage(
                 headerItemMap: {},
             };
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
-                row[column.id] = minimalRowData[measureRowIndex][columnIndex];
+                row[column.id] = mergedColumnTotalsData[measureRowIndex][columnIndex];
             });
 
             rowData.push(row);
