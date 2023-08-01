@@ -1,0 +1,72 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "nat"
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.503132745faf066bc57850467a3a8f08",
+        "properties": { "controls": { "columnHeadersPosition": "left", "measureGroupDimension": "rows" } },
+        "sorts": [],
+        "title": "PivotTable - two measures in rows and only column attrs on left, with totals",
+        "uri": "PivotTable.503132745faf066bc57850467a3a8f08",
+        "visualizationUrl": "local:table"
+    }
+}
