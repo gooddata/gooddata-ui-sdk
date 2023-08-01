@@ -3,12 +3,14 @@
 import React, { ReactNode } from "react";
 
 type ConfigDummySectionProps = {
+    id: string;
     children: ReactNode;
 };
 
-export const ConfigDummySection: React.FC<ConfigDummySectionProps> = ({ children }) => {
+export const ConfigDummySection: React.FC<ConfigDummySectionProps> = ({ id, children }) => {
+    const className = `adi-bucket-configuration s-config-section-${id}`;
     return (
-        <div className={"adi-bucket-configuration"} aria-label="Configuration section">
+        <div className={className} aria-label="Configuration section">
             {children}
         </div>
     );

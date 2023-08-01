@@ -28,7 +28,7 @@ class MetricsPositionControl extends React.Component<IMetricsPositionControlProp
         const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
 
         return (
-            <ConfigDummySection>
+            <ConfigDummySection id="metric_position_section">
                 <ConfigSubsection title={messages.metricsPositionTitle.id}>
                     <DropdownControl
                         value={metricsPosition}
