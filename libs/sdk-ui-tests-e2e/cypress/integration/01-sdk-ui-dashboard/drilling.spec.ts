@@ -234,7 +234,7 @@ describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrat
     });
 
     it("should drill on insight from table with column headers position left and metrics in rows", () => {
-        new Widget(2).waitTableLoaded().scrollIntoView().getTable().click(0, 3);
+        new Widget(2).scrollIntoView().getTable().click(0, 3, false);
 
         drillModal.getTitleElement().should("have.text", "With own description");
     });

@@ -3499,6 +3499,11 @@
         "scenarioName": "two measures and multiple grand totals for each",
         "visName": "PivotTable"
     },
+    "PivotTable.503132745faf066bc57850467a3a8f08": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and only column attrs on left, with totals.",
+        "scenarioName": "two measures in rows and only column attrs on left, with totals",
+        "visName": "PivotTable"
+    },
     "PivotTable.51f14b5c54ca0618d9c559bc1e8fec62": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and one subtotal.",
         "scenarioName": "two measures and one subtotal",

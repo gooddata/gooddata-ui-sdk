@@ -66,20 +66,25 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         const { className, getTableDescriptor, displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
         const textAlign =
-            isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isMixedValuesCol(col)
+            isSliceCol(col) ||
+            isEmptyScopeCol(col) ||
+            isSliceMeasureCol(col) ||
+            isMixedValuesCol(col) ||
+            isMixedHeadersCol(col)
                 ? ALIGN_LEFT
                 : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
         const isSortingEnabled =
-            !isColumnAttribute && !isSliceMeasureCol(col) && !isMixedValuesCol(col) && enableSorting;
-        !isColumnAttribute &&
+            !isColumnAttribute &&
             !isSliceMeasureCol(col) &&
-            !isMixedHeadersCol(col) &&
             !isMixedValuesCol(col) &&
+            !isMixedHeadersCol(col) &&
             enableSorting;
 
         const tableDescriptor = getTableDescriptor();
-        const showMenu = tableDescriptor.isTransposed() ? isSliceMeasureCol(col) && displayName : true;
+        const showMenu = tableDescriptor.isTransposed()
+            ? (isSliceMeasureCol(col) && displayName) || isMixedHeadersCol(col)
+            : true;
 
         return (
             <HeaderCell

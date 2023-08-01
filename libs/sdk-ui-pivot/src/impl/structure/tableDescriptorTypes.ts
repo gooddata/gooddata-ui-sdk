@@ -135,6 +135,16 @@ export interface MixedValuesCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+
+    /**
+     * Checks whether this column group is part of grand total.
+     */
+    readonly isTotal?: boolean;
+
+    /**
+     * Checks whether this column group is part of sub-total.
+     */
+    readonly isSubtotal?: boolean;
 }
 
 export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {

@@ -109,4 +109,17 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         },
         drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
         onDrill: action("onDrill"),
+    })
+    .addScenario("two measures in rows and only column attrs on left, with totals", {
+        ...PivotTableWithMeasuresAndColumnOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left",
+        },
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+        ],
     });

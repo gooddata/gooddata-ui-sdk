@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-28T14:45:04.581Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-08-01T11:07:22.610Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1295,6 +1295,10 @@ export const Scenarios = {
         },
         MultipleMeasuresAndNoRowsWithTotals: {
             scenarioIndex: 0,
+            execution: fp_56f017ad236936c61189a98d5be922ce,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
+            scenarioIndex: 1,
             execution: fp_56f017ad236936c61189a98d5be922ce,
         },
         TwoMeasuresAndSingleGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
@@ -4969,6 +4973,9 @@ const i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa = {
 const i_PivotTable_4ab855bb1f8821c7be1e0cfeb53fcd78 = {
     obj: require("./uiTestScenarios/insights/PivotTable.4ab855bb1f8821c7be1e0cfeb53fcd78/obj.json"),
 };
+const i_PivotTable_503132745faf066bc57850467a3a8f08 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.503132745faf066bc57850467a3a8f08/obj.json"),
+};
 const i_PivotTable_51f14b5c54ca0618d9c559bc1e8fec62 = {
     obj: require("./uiTestScenarios/insights/PivotTable.51f14b5c54ca0618d9c559bc1e8fec62/obj.json"),
 };
@@ -6307,6 +6314,7 @@ export const Insights = {
         SingleMeasureAndSingleColumnRowGrandTotal: i_PivotTable_44c197353eefed217b514a40b4829fd7,
         TwoMeasuresAndSingleColumnGrandTotalForOne: i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa,
         TwoMeasuresAndMultipleGrandTotalsForEach: i_PivotTable_4ab855bb1f8821c7be1e0cfeb53fcd78,
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: i_PivotTable_503132745faf066bc57850467a3a8f08,
         TwoMeasuresAndOneSubtotal: i_PivotTable_51f14b5c54ca0618d9c559bc1e8fec62,
         SingleMeasureAndSingleGrandTotal: i_PivotTable_5498f09d475a6befec416b306dbad6df,
         EmptyValues: i_PivotTable_5834c04b2832e3ff98aeaf6328c40d9d,
@@ -7719,6 +7727,7 @@ export const Recordings = {
             i_PivotTable_4535f7207b8c52d7b74f8a4a776cc116,
             i_PivotTable_4a93503fe378e5a5452f8b4a1a66f7fa,
             i_PivotTable_4ab855bb1f8821c7be1e0cfeb53fcd78,
+            i_PivotTable_503132745faf066bc57850467a3a8f08,
             i_PivotTable_51f14b5c54ca0618d9c559bc1e8fec62,
             i_PivotTable_5498f09d475a6befec416b306dbad6df,
             i_PivotTable_5802924a21d96020f2ae35b2e57e0f96,

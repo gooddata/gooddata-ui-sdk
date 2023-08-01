@@ -1,13 +1,20 @@
 // (C) 2007-2021 GoodData Corporation
 import { CellClassParams, ColDef } from "@ag-grid-community/all-modules";
 import { TableFacade } from "../tableFacade.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
+import { ColumnHeadersPosition, ICorePivotTableProps } from "../../publicTypes.js";
 import { IGridRow } from "../data/resultTypes.js";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, isRootCol, isScopeCol, AnyCol } from "../structure/tableDescriptorTypes.js";
+import {
+    isSeriesCol,
+    isRootCol,
+    isScopeCol,
+    AnyCol,
+    isMixedValuesCol,
+} from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+import { isResultTotalHeader } from "@gooddata/sdk-model";
 import {
     ROW_SUBTOTAL,
     ROW_TOTAL,
@@ -19,7 +26,6 @@ import {
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import last from "lodash/last.js";
 import { getCellClassNames } from "./cellUtils.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
@@ -52,18 +58,24 @@ export function cellClassFactory(
 
         invariant(!isRootCol(col));
 
+        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
+        const isTransposed = table.tableDescriptor.isTransposed();
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
         const isRowTotal = row.type === ROW_TOTAL;
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
-        const isColumnTotal = getColumnTotals(colDef, col, table.tableDescriptor);
-        const isColumnSubtotal = getColumnSubTotals(colDef, col, table.tableDescriptor);
+        const { isColumnTotal, isColumnSubtotal } = getColumnTotalOrSubTotalInfo(
+            colDef,
+            col,
+            row,
+            isTransposed,
+            columnHeadersPosition,
+        );
+
         const isRowMetric = colDef.type === ROW_MEASURE_COLUMN;
         let hasDrillableHeader = false;
 
-        const isTransposed = table.tableDescriptor.isTransposed();
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
         const cellIsNotTotalSubtotal = !isRowTotal && !isRowSubtotal && !isColumnTotal && !isColumnSubtotal;
-        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
 
         if (cellIsNotTotalSubtotal && !isRowMetric && cellAllowsDrill) {
             hasDrillableHeader = isCellDrillable(
@@ -119,18 +131,40 @@ export function cellClassFactory(
     };
 }
 
-function getColumnTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
-    if (tableDescriptor.isTransposed()) {
-        return isScopeCol(col) && col.isTotal === true;
+function getColumnTotalOrSubTotalInfo(
+    colDef: ColDef,
+    col: AnyCol,
+    row: IGridRow,
+    isTransposed: boolean,
+    columnHeadersPosition: ColumnHeadersPosition,
+) {
+    if (columnHeadersPosition === "left" && isTransposed) {
+        if (Object.keys(row.headerItemMap).length > 0) {
+            return {
+                isColumnTotal:
+                    isMixedValuesCol(col) &&
+                    isResultTotalHeader(row.headerItemMap[col.id]) &&
+                    col.isTotal === true,
+                isColumnSubtotal:
+                    isMixedValuesCol(col) &&
+                    isResultTotalHeader(row.headerItemMap[col.id]) &&
+                    col.isSubtotal === true,
+            };
+        } else {
+            return {
+                isColumnTotal: isMixedValuesCol(col) && col.isTotal === true,
+                isColumnSubtotal: isMixedValuesCol(col) && col.isSubtotal === true,
+            };
+        }
+    } else if (isTransposed) {
+        return {
+            isColumnTotal: isScopeCol(col) && col.isTotal === true,
+            isColumnSubtotal: isScopeCol(col) && col.isSubtotal === true,
+        };
     } else {
-        return colDef.type === COLUMN_TOTAL;
-    }
-}
-
-function getColumnSubTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
-    if (tableDescriptor.isTransposed()) {
-        return isScopeCol(col) && col.isSubtotal === true;
-    } else {
-        return colDef.type === COLUMN_SUBTOTAL;
+        return {
+            isColumnTotal: colDef.type === COLUMN_TOTAL,
+            isColumnSubtotal: colDef.type === COLUMN_SUBTOTAL,
+        };
     }
 }

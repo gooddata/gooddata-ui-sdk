@@ -159,8 +159,6 @@ describe("AggregationsSubMenu", () => {
         ];
         renderComponent({ columnTotals, rowTotals });
 
-        screen.logTestingPlaygroundURL();
-
         expect(document.querySelectorAll(".is-checked")).toHaveLength(4);
     });
 
