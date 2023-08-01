@@ -37,3 +37,5 @@ export const ProductPredicate = HeaderPredicates.identifierMatch(
 export const SalesRepPredicate = HeaderPredicates.identifierMatch(
     attributeIdentifier(ReferenceMd.SalesRep.OwnerName)!,
 );
+
+export const RegionPredicate = HeaderPredicates.identifierMatch(attributeIdentifier(ReferenceMd.Region)!);

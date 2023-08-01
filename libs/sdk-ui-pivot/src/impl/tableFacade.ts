@@ -293,7 +293,11 @@ export class TableFacade {
     };
 
     public getAvailableDrillTargets = (): IAvailableDrillTargets => {
-        return getAvailableDrillTargets(this.visibleData);
+        return getAvailableDrillTargets(
+            this.visibleData,
+            this.config?.measureGroupDimension,
+            this.config?.columnHeadersPosition,
+        );
     };
 
     public refreshHeader = (): void => {

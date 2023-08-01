@@ -25,8 +25,10 @@ export class Table {
         return this;
     }
 
-    click(rowIndex: number, columnIndex: number) {
-        this.waitLoaded();
+    click(rowIndex: number, columnIndex: number, waitForLoad = true) {
+        if (waitForLoad) {
+            this.waitLoaded();
+        }
 
         this.getElement()
             .find(`.gd-cell-drillable.s-cell-${rowIndex}-${columnIndex} .s-value`)

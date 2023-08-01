@@ -14,10 +14,11 @@ import {
     PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
 import {
-    DepartmentPredicate,
     AmountMeasurePredicate,
     WonMeasurePredicate,
+    DepartmentPredicate,
     ProductPredicate,
+    RegionPredicate,
 } from "../_infra/predicates.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
@@ -99,4 +100,13 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             measureGroupDimension: "rows",
             columnHeadersPosition: "left",
         },
+    })
+    .addScenario("two measures in rows and only column attrs on left, with drilling", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left",
+        },
+        drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
     });
