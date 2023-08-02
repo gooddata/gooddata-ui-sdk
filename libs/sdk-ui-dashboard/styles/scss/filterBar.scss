@@ -128,8 +128,14 @@ $attribute-filter-drag-handle-left: 10px;
     .dash-filters-date {
         position: relative;
 
-        .gd-attribute-filter-dropdown-button__next {
-            display: flex;
+        .gd-bubble-trigger {
+            .gd-attribute-filter-dropdown-button__next {
+                display: flex;
+            }
+
+            .gd-attribute-filter-dropdown-button-content__next {
+                width: calc(100% - 17px);
+            }
         }
 
         .gd-attribute-filter-dropdown-button__next,
