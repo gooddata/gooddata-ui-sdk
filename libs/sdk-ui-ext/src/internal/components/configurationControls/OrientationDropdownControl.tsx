@@ -18,6 +18,23 @@ export interface IOrientationDropdownControl {
     pushData: (data: IPushData) => void;
 }
 
+export function convertXYNamePosition(namePosition: { position: string }) {
+    if (!namePosition?.position) {
+        return undefined;
+    }
+
+    const xAxisPosition = ["left", "center", "right"];
+    const yAxisPosition = ["top", "middle", "bottom"];
+    let currentPosition = xAxisPosition.indexOf(namePosition.position);
+
+    if (currentPosition >= 0) {
+        return { position: yAxisPosition[currentPosition] };
+    }
+
+    currentPosition = yAxisPosition.indexOf(namePosition.position);
+    return { position: xAxisPosition[currentPosition] };
+}
+
 export function getAxesByChartOrientation(properties: IVisualizationProperties) {
     const { xaxis, yaxis } = properties?.controls || {};
 
@@ -25,18 +42,18 @@ export function getAxesByChartOrientation(properties: IVisualizationProperties) 
         return { xaxis, yaxis };
     }
 
-    const isInverted = (properties?.controls?.orientation?.position as ChartOrientationType) === "vertical";
-
-    if (isInverted && yaxis) {
-        return {
-            xaxis: { ...yaxis, name: xaxis?.name },
-            yaxis: { ...xaxis, min: undefined, max: undefined, name: yaxis?.name },
-        };
-    }
+    const resetProperties: { [properties: string]: string | number | undefined } = {
+        rotation: undefined,
+        min: undefined,
+        max: undefined,
+        format: undefined,
+    };
+    const newXAxisName = convertXYNamePosition(yaxis?.name);
+    const newYAxisName = convertXYNamePosition(xaxis?.name);
 
     return {
-        xaxis: { ...yaxis, min: undefined, max: undefined, name: xaxis?.name },
-        yaxis: { ...xaxis, name: yaxis?.name },
+        xaxis: { ...resetProperties, ...yaxis, name: newXAxisName },
+        yaxis: { ...resetProperties, ...xaxis, name: newYAxisName },
     };
 }
 
