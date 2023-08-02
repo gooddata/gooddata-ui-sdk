@@ -37,7 +37,7 @@ class ColumnHeadersPositionControl extends React.Component<
             : defaultValue;
 
         return (
-            <ConfigDummySection>
+            <ConfigDummySection id="column_header_position_section">
                 <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
                     <DropdownControl
                         value={columnHeadersPosition}

@@ -139,11 +139,16 @@ export interface IPivotTableConfig {
     /**
      * Customize placement of metrics - in columns or in rows
      * @alpha
+     *
+     * Default: "columns"
      */
     measureGroupDimension?: MeasureGroupDimension;
 
     /**
      * Customize placement of column headers - top or left
+     * @alpha
+     *
+     * Default: "top"
      */
     columnHeadersPosition?: ColumnHeadersPosition;
 }
