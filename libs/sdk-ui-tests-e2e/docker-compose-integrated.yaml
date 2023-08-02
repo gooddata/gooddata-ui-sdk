@@ -10,7 +10,7 @@ services:
             - ./nginx/templates:/etc/nginx/templates/
 
     integrated-tests:
-        image: cypress/included:12.10.0
+        image: cypress/included:12.17.3
         entrypoint: node ./scripts/run_integrated.js
         volumes:
             - ../../:/gooddata-ui-sdk-e2e:rw

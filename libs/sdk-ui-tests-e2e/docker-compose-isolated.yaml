@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     isolated-tests:
-        image: cypress/included:12.10.0
+        image: cypress/included:12.17.3
         entrypoint:
             [
                 "bash",
