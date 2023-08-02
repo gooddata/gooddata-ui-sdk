@@ -1,14 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    IBucket,
-    IMeasure,
-    INullableFilter,
-    MeasureGroupIdentifier,
-    newBucket,
-    newDimension,
-} from "@gooddata/sdk-model";
+import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
     Subtract,
@@ -17,10 +10,13 @@ import {
     MeasureOrPlaceholder,
     NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
-import { CoreHeadline } from "./CoreHeadline.js";
 import omit from "lodash/omit.js";
 import { invariant } from "ts-invariant";
+
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
+import { CoreHeadline, ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
+import { createHeadlineProvider } from "./HeadlineProviderFactory.js";
+import { IHeadlineProvider } from "./HeadlineProvider.js";
 
 //
 // Public interface
@@ -38,8 +34,15 @@ export interface IHeadlineBucketProps {
     /**
      * Specify secondary measure whose value will be shown for comparison with the primary measure.
      * The change in percent between the two values will also be calculated and displayed.
+     *
+     * @deprecated this property is deprecated, use secondaryMeasures instead
      */
     secondaryMeasure?: MeasureOrPlaceholder;
+
+    /**
+     * Specify secondary measures whose values will be shown for comparison with the primary measure.
+     */
+    secondaryMeasures?: MeasureOrPlaceholder[];
 
     /**
      * Specify filters to apply on the data to chart.
@@ -81,8 +84,32 @@ export const Headline = (props: IHeadlineProps) => {
 };
 
 export function RenderHeadline(props: IHeadlineProps): JSX.Element {
-    invariant(props.primaryMeasure, "The property primaryMeasure must be specified.");
-    return <CoreHeadline {...toCoreHeadlineProps(props)} />;
+    const { backend, workspace, primaryMeasure } = props;
+    invariant(primaryMeasure, "The property primaryMeasure must be specified.");
+
+    const [isEnableNewHeadline, setEnableNewHeadline] = useState<boolean>();
+
+    // TODO - this block should be removed when removing FF enableNewHeadline (JIRA: EGL-162)
+    useEffect(() => {
+        if (backend && workspace) {
+            backend
+                .workspace(workspace)
+                .settings()
+                .getSettingsForCurrentUser()
+                .then(
+                    (featureFlags) => {
+                        setEnableNewHeadline(!!featureFlags.enableNewHeadline);
+                    },
+                    () => {
+                        setEnableNewHeadline(false);
+                    },
+                );
+        }
+    }, [backend, workspace]);
+
+    return isEnableNewHeadline !== undefined ? (
+        <CoreHeadline {...toCoreHeadlineProps(props, isEnableNewHeadline)} />
+    ) : null;
 }
 
 //
@@ -91,10 +118,15 @@ export function RenderHeadline(props: IHeadlineProps): JSX.Element {
 
 type IIrrelevantHeadlineProps = IHeadlineBucketProps & IBucketChartProps;
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IIrrelevantHeadlineProps>;
+type CoreHeadlineProps = ICoreChartProps & ICoreHeadlineExtendedProps;
 
-export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
+export function toCoreHeadlineProps(props: IHeadlineProps, enableNewHeadline: boolean): CoreHeadlineProps {
+    const primaryMeasure = props.primaryMeasure as IMeasure;
+    const secondaryMeasures = [props.secondaryMeasure, ...(props.secondaryMeasures || [])] as IMeasure[];
+
     const buckets = [
-        newBucket(BucketNames.MEASURES, props.primaryMeasure as IMeasure, props.secondaryMeasure as IMeasure),
+        newBucket(BucketNames.MEASURES, primaryMeasure),
+        newBucket(BucketNames.SECONDARY_MEASURES, ...secondaryMeasures),
     ];
 
     const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IIrrelevantHeadlineProps>(props, [
@@ -104,21 +136,27 @@ export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
         "backend",
     ]);
 
+    const provider = createHeadlineProvider(buckets, props.config, enableNewHeadline);
+
     return {
         ...newProps,
-        execution: createExecution(buckets, props),
+        headlineTransformation: provider.getHeadlineTransformationComponent(),
+        execution: createExecution(provider, buckets, props),
         exportTitle: props.exportTitle || "Headline",
     };
 }
 
-function createExecution(buckets: IBucket[], props: IHeadlineProps): IPreparedExecution {
-    const { backend, workspace, execConfig } = props;
+function createExecution(
+    provider: IHeadlineProvider,
+    buckets: IBucket[],
+    props: IHeadlineProps,
+): IPreparedExecution {
+    const { backend, workspace, execConfig, filters } = props;
+    const executionFactory = backend.withTelemetry("Headline", props).workspace(workspace).execution();
 
-    return backend
-        .withTelemetry("Headline", props)
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, props.filters as INullableFilter[])
-        .withDimensions(newDimension([MeasureGroupIdentifier]))
-        .withExecConfig(execConfig);
+    return provider.createExecution(executionFactory, {
+        buckets,
+        filters: filters as INullableFilter[],
+        executionConfig: execConfig,
+    });
 }

@@ -12,17 +12,24 @@ import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
+import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IBucket } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
+import { IDrillEventCallback } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
+import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
+import { IFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISettings } from '@gooddata/sdk-model';
+import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
@@ -55,6 +62,14 @@ export const BubbleChart: (props: IBubbleChartProps) => JSX.Element;
 // @public
 export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 
+// @public (undocumented)
+export enum CalculationType {
+    CHANGE = "change",
+    CHANGE_DIFFERENCE = "change_difference",
+    DIFFERENCE = "difference",
+    RATIO = "ratio"
+}
+
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
@@ -69,11 +84,21 @@ export const ColumnChart: (props: IColumnChartProps) => JSX.Element;
 // @public
 export const ComboChart: (props: IComboChartProps) => JSX.Element;
 
-// @internal
-export const CoreHeadline: React_2.ComponentClass<ICoreChartProps, any>;
+// @public (undocumented)
+export enum ComparisonPositionType {
+    LEFT = "left",
+    RIGHT = "right",
+    TOP = "top"
+}
+
+// @internal (undocumented)
+export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
+
+// @internal
+export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
 
 // @public
 export const DependencyWheelChart: (props: IDependencyWheelChartProps) => JSX.Element;
@@ -196,6 +221,7 @@ export interface IChartConfig {
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
+    comparison?: IComparison;
     continuousLine?: IContinuousLineConfig;
     dataLabels?: IDataLabelsConfig;
     dataPoints?: IDataPointsConfig;
@@ -250,6 +276,13 @@ export interface IChartLimits {
     series?: number;
 }
 
+// @public (undocumented)
+export interface IColorConfig {
+    equals?: string;
+    negative?: string;
+    positive?: string;
+}
+
 export { IColorMapping }
 
 // @public (undocumented)
@@ -288,6 +321,19 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     width?: number;
 }
 
+// @public (undocumented)
+export interface IComparison {
+    calculationType?: CalculationType;
+    colorConfig?: IColorConfig;
+    enabled: boolean;
+    format?: string;
+    isArrowEnabled?: boolean;
+    isSignEnabled?: boolean;
+    labelConfig?: ILabelConfig;
+    position?: ComparisonPositionType;
+    subFormat?: string;
+}
+
 // @public
 export interface IContinuousLineConfig {
     enabled?: boolean;
@@ -296,6 +342,26 @@ export interface IContinuousLineConfig {
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
     execution: IPreparedExecution;
+}
+
+// @internal (undocumented)
+export interface ICoreHeadlineExtendedProps {
+    // (undocumented)
+    headlineTransformation: React_2.ComponentType<IHeadlineTransformationProps>;
+}
+
+// @internal (undocumented)
+export interface ICreateExecutionParams {
+    // (undocumented)
+    buckets: IBucket[];
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    executionConfig: IExecutionConfig;
+    // (undocumented)
+    filters: IFilter[];
+    // (undocumented)
+    sortItems?: ISortItem[];
 }
 
 // @public (undocumented)
@@ -370,11 +436,33 @@ export interface IHeadlineBucketProps {
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
     primaryMeasure: MeasureOrPlaceholder;
+    // @deprecated
     secondaryMeasure?: MeasureOrPlaceholder;
+    secondaryMeasures?: MeasureOrPlaceholder[];
 }
 
 // @public (undocumented)
 export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps {
+}
+
+// @internal
+export interface IHeadlineProvider {
+    createExecution(executionFactory: IExecutionFactory, params: ICreateExecutionParams): IPreparedExecution;
+    getHeadlineTransformationComponent: () => React.ComponentType<IHeadlineTransformationProps>;
+}
+
+// @internal (undocumented)
+export interface IHeadlineTransformationProps {
+    // (undocumented)
+    config?: IChartConfig;
+    // (undocumented)
+    dataView: IDataView;
+    // (undocumented)
+    drillableItems?: ExplicitDrill[];
+    // (undocumented)
+    onAfterRender?: () => void;
+    // (undocumented)
+    onDrill?: IDrillEventCallback;
 }
 
 // @public (undocumented)
@@ -389,6 +477,15 @@ export interface IHeatmapBucketProps {
 
 // @public (undocumented)
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
+}
+
+// @public (undocumented)
+export interface ILabelConfig {
+    equals?: string;
+    isConditional?: boolean;
+    negative?: string;
+    positive?: string;
+    unconditionalValue?: string;
 }
 
 // @public (undocumented)

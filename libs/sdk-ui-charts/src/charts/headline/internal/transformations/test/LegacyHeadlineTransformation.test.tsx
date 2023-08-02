@@ -1,22 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import HeadlineTransformation, { IHeadlineTransformationProps } from "../HeadlineTransformation.js";
-import * as headlineComponent from "../Headline.js";
+import HeadlineTransformation from "../LegacyHeadlineTransformation.js";
+import * as headlineComponent from "../../Headline.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasures,
     headlineWithTwoMeasuresWithIdentifier,
-} from "../../../../../__mocks__/fixtures.js";
+} from "../../../../../../__mocks__/fixtures.js";
 import {
     DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
     DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
-} from "./HeadlineTransformation.fixtures.js";
+} from "./LegacyHeadlineTransformation.fixtures.js";
 import noop from "lodash/noop.js";
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
+import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 
 describe("HeadlineTransformation", () => {
     let Headline = vi.spyOn(headlineComponent, "default").mockImplementation((): null => null);

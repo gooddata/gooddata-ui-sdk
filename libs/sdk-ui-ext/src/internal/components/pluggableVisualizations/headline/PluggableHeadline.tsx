@@ -9,10 +9,13 @@ import {
     MeasureGroupIdentifier,
     newDimension,
     ISettings,
+    insightBuckets,
+    insightFilters,
+    insightSorts,
 } from "@gooddata/sdk-model";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
+import { CoreHeadline, createHeadlineProvider, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import { METRIC } from "../../../constants/bucket.js";
 import {
@@ -187,15 +190,31 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         const { locale, custom = {}, config, customVisualizationConfig } = options;
         const { drillableItems } = custom;
-        const execution = this.getExecution(options, insight, executionFactory);
+
+        const headlineConfig = updateConfigWithSettings(
+            { ...config, ...customVisualizationConfig },
+            this.settings,
+        );
+        const buckets = [...(insightBuckets(insight) || [])];
+
+        const provider = createHeadlineProvider(buckets, headlineConfig, this.settings?.enableNewHeadline);
+        const headlineTransformation = provider.getHeadlineTransformationComponent();
+        const execution = provider.createExecution(executionFactory, {
+            buckets,
+            filters: [...(insightFilters(insight) || [])],
+            sortItems: [...(insightSorts(insight) || [])],
+            executionConfig: options.executionConfig,
+            dateFormat: options.dateFormat,
+        });
 
         this.renderFun(
             <CoreHeadline
+                headlineTransformation={headlineTransformation}
                 execution={execution}
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings({ ...config, ...customVisualizationConfig }, this.settings)}
+                config={headlineConfig}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}

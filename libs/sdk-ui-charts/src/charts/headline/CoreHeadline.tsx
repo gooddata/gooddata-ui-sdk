@@ -9,16 +9,24 @@ import {
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 import { ICoreChartProps } from "../../interfaces/index.js";
-import HeadlineTransformation from "./internal/HeadlineTransformation.js";
 import { defaultCoreChartProps } from "../_commons/defaultProps.js";
+import { IHeadlineTransformationProps } from "./HeadlineProvider.js";
 
-type Props = ICoreChartProps & ILoadingInjectedProps;
-export class HeadlineStateless extends React.Component<Props> {
+/**
+ * @internal
+ */
+interface ICoreHeadlineExtendedProps {
+    headlineTransformation: React.ComponentType<IHeadlineTransformationProps>;
+}
+
+type CoreHeadlineProps = ICoreChartProps & ILoadingInjectedProps & ICoreHeadlineExtendedProps;
+
+export class HeadlineStateless extends React.Component<CoreHeadlineProps> {
     public static defaultProps = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
 
-    constructor(props: Props) {
+    constructor(props: CoreHeadlineProps) {
         super(props);
         this.errorMap = newErrorMapping(props.intl);
     }
@@ -48,7 +56,15 @@ export class HeadlineStateless extends React.Component<Props> {
     }
 
     protected renderVisualization(): JSX.Element {
-        const { afterRender, drillableItems, locale, dataView, onDrill, config } = this.props;
+        const {
+            afterRender,
+            drillableItems,
+            locale,
+            dataView,
+            onDrill,
+            config,
+            headlineTransformation: HeadlineTransformation,
+        } = this.props;
 
         return (
             <IntlWrapper locale={locale}>
@@ -65,8 +81,11 @@ export class HeadlineStateless extends React.Component<Props> {
 }
 
 /**
- * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
- *
  * @internal
  */
-export const CoreHeadline = withEntireDataView(HeadlineStateless);
+const CoreHeadline = withEntireDataView(HeadlineStateless);
+
+/**
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ */
+export { CoreHeadline, ICoreHeadlineExtendedProps };

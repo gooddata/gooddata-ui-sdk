@@ -36,9 +36,8 @@ describe(Chart, () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario);
-
         it("should create expected execution definition", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario);
             const interactions = await promisedInteractions;
 
             expect(interactions.triggeredExecution).toMatchSnapshot();
@@ -46,7 +45,6 @@ describe(Chart, () => {
 
         it("should create expected props for core chart", async () => {
             const promisedInteractions = mountChartAndCapture(scenario, extractProps);
-
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
@@ -55,6 +53,7 @@ describe(Chart, () => {
         });
 
         it("should lead to same execution when rendered as insight via plug viz", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario);
             const interactions = await promisedInteractions;
 
             const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
