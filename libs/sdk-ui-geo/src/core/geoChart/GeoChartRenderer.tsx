@@ -110,6 +110,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         // resize map when component is updated
         // for example: toggle legend, change position of legend
         this.chart.resize();
+        this.updateViewport();
 
         // only update map when style is ready
         // work around for ticket SD-898
@@ -171,15 +172,17 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         const { isExportMode = false, cooperativeGestures = true } = config || {};
         const isViewportFrozen = this.isViewportFrozen();
         const locale = cooperativeGestures ? this.generateLocale() : {};
+        const { zoom, center } = getViewportOptions(data, config);
 
         this.chart = new mapboxgl.Map({
             ...DEFAULT_MAPBOX_OPTIONS,
-            ...getViewportOptions(data, config),
             container: this.chartRef!,
             // If true, the map’s canvas can be exported to a PNG using map.getCanvas().toDataURL().
             // This is false by default as a performance optimization.
             interactive: !isViewportFrozen,
             preserveDrawingBuffer: isExportMode,
+            ...(center ? { center } : {}),
+            ...(zoom ? { zoom } : {}),
             cooperativeGestures,
             locale,
         });
@@ -205,7 +208,6 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         }
 
         this.updatePanAndZoom();
-        this.updateViewport(prevConfig);
     };
 
     private resetMap = (): void => {
@@ -289,21 +291,15 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         this.toggleInteractionEvents();
     };
 
-    private updateViewport = (prevConfig: IGeoConfig): void => {
+    private updateViewport = (): void => {
         invariant(this.chart, "illegal state - updating viewport while map not initialized");
 
         const { config, geoData } = this.props;
         const data = geoData.location!.data;
-
-        const { viewport: prevViewport } = prevConfig;
-        const { viewport } = config;
-        if (isEqual(prevViewport, viewport)) {
-            return;
-        }
-
         const { bounds } = getViewportOptions(data, config);
+
         if (bounds) {
-            this.chart!.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+            this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
         }
     };
 
