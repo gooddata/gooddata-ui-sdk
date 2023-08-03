@@ -3,6 +3,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 import classNames from "classnames";
+import isEmpty from "lodash/isEmpty.js";
 
 const LOADING_MASK_HEIGHT = 60;
 
@@ -24,12 +25,14 @@ export const ParameterDetail: React.FC<IParameterDetailProps> = (props) => {
             <div className="gd-parameter-detail-title">{title}</div>
             <ParameterTypeSection typeName={typeName} />
             {label ? <ParameterLabelSection label={label} /> : null}
-            <ParameterValuesSection
-                isLoading={isLoading}
-                useEllipsis={useEllipsis}
-                values={values}
-                additionalValues={additionalValues}
-            />
+            {!isEmpty(values) && (
+                <ParameterValuesSection
+                    isLoading={isLoading}
+                    useEllipsis={useEllipsis}
+                    values={values}
+                    additionalValues={additionalValues}
+                />
+            )}
         </div>
     );
 };
