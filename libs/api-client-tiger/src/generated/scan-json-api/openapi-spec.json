@@ -12,12 +12,6 @@
     ],
     "tags": [
         {
-            "name": "Scanning"
-        },
-        {
-            "name": "Test Connection"
-        },
-        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }

@@ -1072,7 +1072,7 @@ export interface FilterBy {
      * @type {string}
      * @memberof FilterBy
      */
-    labelType: FilterByLabelTypeEnum;
+    labelType?: FilterByLabelTypeEnum;
 }
 
 export const FilterByLabelTypeEnum = {
