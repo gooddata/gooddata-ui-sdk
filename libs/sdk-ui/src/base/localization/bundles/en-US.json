@@ -177,6 +177,21 @@
         "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'.",
         "limit": 0
     },
+    "visualizations.headline.comparison.title.change": {
+        "value": "Change",
+        "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the change between two values.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.ratio": {
+        "value": "of",
+        "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the the ratio between two values.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference": {
+        "value": "Difference",
+        "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
+        "limit": 0
+    },
     "visualization.numericValues.k": {
         "value": "k",
         "comment": "Character 'k' stands for metric prefix kilo (1.000).",

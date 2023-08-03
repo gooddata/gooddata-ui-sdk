@@ -17,7 +17,7 @@ import {
     IHeaderPredicate,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { IHeadlineData } from "../../../headline/Headlines.js";
+import { IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
 
 export interface IXirrExecutionData {
     date: string;

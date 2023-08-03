@@ -10,6 +10,12 @@
     width: 100%;
     height: 100%;
 
+    .primary-section {
+        &.gd-flex-container {
+            justify-content: center;
+        }
+    }
+
     .headline-primary-item {
         @include typo-mixins.gd-heading-1;
 
@@ -41,19 +47,22 @@
                 var(--gd-palette-complementary-6, kit-variables.$default-gd-color-disabled)
             );
         }
-    }
 
-    .headline-secondary-item {
+        &.gd-flex-item {
+            overflow: hidden;
+            flex-shrink: 1;
+
+            .headline-value-wrapper {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .headline-secondary-item,
+    .headline-compare-item {
         flex-shrink: 1;
         padding-right: 0;
-        border-left: 1px dashed
-            var(
-                --gd-kpi-secondaryInfoColor,
-                var(
-                    --gd-palette-complementary-3,
-                    color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
-                )
-            );
 
         &.is-drillable {
             cursor: pointer;
@@ -68,10 +77,32 @@
                 opacity: 0.6;
             }
         }
+
+        .headline-item-link .headline-value {
+            &.headline-link-style-underline::after {
+                border-bottom: 1px solid;
+            }
+            &.headline-value--empty::after {
+                border-bottom: none;
+            }
+        }
+    }
+
+    .headline-secondary-item,
+    .headline-compare-item:nth-child(2) {
+        border-left: 1px dashed
+            var(
+                --gd-kpi-secondaryInfoColor,
+                var(
+                    --gd-palette-complementary-3,
+                    color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
+                )
+            );
     }
 
     .headline-primary-item,
-    .headline-secondary-item {
+    .headline-secondary-item,
+    .headline-compare-item {
         .headline-value {
             position: relative;
             display: inline-block;
@@ -102,17 +133,6 @@
         }
     }
 
-    .headline-secondary-item .headline-item-link {
-        .headline-value {
-            &.headline-link-style-underline::after {
-                border-bottom: 1px solid;
-            }
-            &.headline-value--empty::after {
-                border-bottom: none;
-            }
-        }
-    }
-
     .headline-compare-section {
         @include typo-mixins.gd-font-base;
 
@@ -132,7 +152,8 @@
             margin: 0 10px;
         }
 
-        .headline-secondary-item {
+        .headline-secondary-item,
+        .headline-compare-item {
             border-left: 0;
         }
 

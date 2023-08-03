@@ -7,16 +7,16 @@ import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import {
     DataViewFacade,
+    HeadlineElementType,
     IDrillEvent,
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,
     IHeaderPredicate,
     isSomeHeaderPredicateMatched,
-    HeadlineElementType,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IHeadlineData, IHeadlineDataItem } from "../../Headlines.js";
-import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
+import { DataValue, Identifier, IMeasureDescriptor } from "@gooddata/sdk-model";
+import { IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export interface IHeadlineExecutionData {
     measureHeaderItem: IMeasureDescriptor["measureHeaderItem"];
@@ -27,20 +27,6 @@ export interface IHeadlineDrillItemContext {
     localIdentifier: Identifier;
     value: string;
     element: HeadlineElementType;
-}
-
-function createHeadlineDataItem(executionDataItem: IHeadlineExecutionData): IHeadlineDataItem {
-    if (!executionDataItem) {
-        return null;
-    }
-
-    return {
-        localIdentifier: executionDataItem.measureHeaderItem.localIdentifier,
-        title: executionDataItem.measureHeaderItem.name,
-        value: executionDataItem.value ? String(executionDataItem.value) : null,
-        format: executionDataItem.measureHeaderItem.format,
-        isDrillable: false,
-    };
 }
 
 function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlShape): IHeadlineDataItem {
@@ -71,7 +57,24 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
     };
 }
 
-function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
+export function createHeadlineDataItem(
+    executionDataItem: IHeadlineExecutionData,
+    isDrillable?: boolean,
+): IHeadlineDataItem {
+    if (!executionDataItem) {
+        return null;
+    }
+
+    return {
+        localIdentifier: executionDataItem.measureHeaderItem.localIdentifier,
+        title: executionDataItem.measureHeaderItem.name,
+        value: executionDataItem.value ? String(executionDataItem.value) : null,
+        format: executionDataItem.measureHeaderItem.format,
+        isDrillable: !!isDrillable,
+    };
+}
+
+export function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
     const headerItems = dv.meta().measureDescriptors();
     const data = dv.rawData().singleDimData();
 

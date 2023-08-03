@@ -152,12 +152,14 @@ $legend-paging-background: #eee;
             }
         }
 
-        .headline-tertiary-item {
+        .headline-tertiary-item,
+        .headline-compare-item:nth-child(1) {
             padding: 10px 0 0;
             text-align: center;
         }
 
-        .headline-secondary-item {
+        .headline-secondary-item,
+        .headline-compare-item:nth-child(2) {
             border-left: 0;
             border-bottom: 1px dashed
                 var(

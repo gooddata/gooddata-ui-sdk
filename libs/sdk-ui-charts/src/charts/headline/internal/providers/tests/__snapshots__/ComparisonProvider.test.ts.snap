@@ -1,0 +1,561 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is difference 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "fact.opportunitysnapshot.amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_aangOxLSeztu",
+                    "m_fact.opportunitysnapshot.amount_sum",
+                  ],
+                  "operator": "difference",
+                },
+              },
+              "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.account.id.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "fact.opportunitysnapshot.amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_aangOxLSeztu",
+                "m_fact.opportunitysnapshot.amount_sum",
+              ],
+              "operator": "difference",
+            },
+          },
+          "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is undefined 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "fact.opportunitysnapshot.amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_aangOxLSeztu",
+                    "m_fact.opportunitysnapshot.amount_sum",
+                  ],
+                  "operator": "ratio",
+                },
+              },
+              "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.account.id.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "fact.opportunitysnapshot.amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_aangOxLSeztu",
+                "m_fact.opportunitysnapshot.amount_sum",
+              ],
+              "operator": "ratio",
+            },
+          },
+          "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with difference operator when provided calculation is difference 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "fact.opportunitysnapshot.amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_aangOxLSeztu",
+                    "m_fact.opportunitysnapshot.amount_sum",
+                  ],
+                  "operator": "difference",
+                },
+              },
+              "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.account.id.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "fact.opportunitysnapshot.amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_aangOxLSeztu",
+                "m_fact.opportunitysnapshot.amount_sum",
+              ],
+              "operator": "difference",
+            },
+          },
+          "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSorting": [Function],
+}
+`;
+
+exports[`ComparisonProvider > createExecution > Should build execution with ratio operator when provided calculation is difference 1`] = `
+{
+  "definition": {
+    "attributes": [],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "aggregation": "sum",
+                  "item": {
+                    "identifier": "fact.opportunitysnapshot.amount",
+                    "type": "fact",
+                  },
+                },
+              },
+              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+            },
+          },
+        ],
+        "localIdentifier": "secondary_measures",
+      },
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "arithmeticMeasure": {
+                  "measureIdentifiers": [
+                    "m_aangOxLSeztu",
+                    "m_fact.opportunitysnapshot.amount_sum",
+                  ],
+                  "operator": "difference",
+                },
+              },
+              "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+            },
+          },
+        ],
+        "localIdentifier": "comparison_arithmetic_bucket",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+    ],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
+            "identifier": "label.account.id.name",
+            "type": "displayForm",
+          },
+          "in": {
+            "values": [],
+          },
+        },
+      },
+    ],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "aggregation": "sum",
+              "item": {
+                "identifier": "fact.opportunitysnapshot.amount",
+                "type": "fact",
+              },
+            },
+          },
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+        },
+      },
+      {
+        "measure": {
+          "definition": {
+            "arithmeticMeasure": {
+              "measureIdentifiers": [
+                "m_aangOxLSeztu",
+                "m_fact.opportunitysnapshot.amount_sum",
+              ],
+              "operator": "difference",
+            },
+          },
+          "localIdentifier": "m_f5dcfe1c003bbfbfc6e3dda95e53c04a",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "PROJECTID",
+  },
+  "equals": [Function],
+  "execute": [Function],
+  "explain": [Function],
+  "fingerprint": [Function],
+  "withDateFormat": [Function],
+  "withDimensions": [Function],
+  "withExecConfig": [Function],
+  "withSorting": [Function],
+}
+`;
