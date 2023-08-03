@@ -69,7 +69,7 @@ export function createCellRenderer(
         const loadingDone = params.node.id !== undefined || params.node.rowPinned === "bottom";
 
         const theme = useTheme();
-        const column = params.colDef && tableDescriptor.getCol(params.colDef);
+        const column = params.colDef && tableDescriptor?.getCol(params.colDef);
         const showLoadingComponent =
             column && !isRootCol(column) && tableDescriptor.getAbsoluteLeafColIndex(column) === 0; // only for first column
         if (!loadingDone && showLoadingComponent) {
