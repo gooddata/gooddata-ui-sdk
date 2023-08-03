@@ -3,7 +3,7 @@
 exports[`cellRenderer > should escape value 1`] = `
 <div>
   <span
-    class="s-value"
+    class="s-value s-loading-done"
   >
     &lt;button&gt;xss&lt;/button&gt;
   </span>
