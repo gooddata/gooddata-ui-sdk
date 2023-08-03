@@ -35,7 +35,6 @@ import { messages } from "../../locales.js";
 
 type TransformState = {
     initialSorts: ISortItem[];
-    cellRendererPlaced: ColDef | undefined;
     rowColDefs: Array<ColDef>;
     rootColDefs: Array<ColDef | ColGroupDef>;
     leafColDefs: Array<ColDef>;
@@ -62,7 +61,6 @@ function getSortProp(
 function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol[], state: TransformState) {
     for (const row of rows) {
         const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
-        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
         const headerName = row.attributeDescriptor.attributeHeader.formOf.name;
 
         const colDef: ColDef = {
@@ -71,16 +69,11 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
             field: row.id,
             headerName,
             headerTooltip: headerName,
-            ...cellRendererProp,
             ...sortProp,
         };
 
         state.rowColDefs.push(colDef);
         state.allColDefs.push(colDef);
-
-        if (!state.cellRendererPlaced) {
-            state.cellRendererPlaced = colDef;
-        }
     }
 
     for (const col of measureCols) {
@@ -94,32 +87,21 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
 
         state.rowColDefs.push(colDef);
         state.allColDefs.push(colDef);
-
-        if (!state.cellRendererPlaced) {
-            state.cellRendererPlaced = colDef;
-        }
     }
 }
 
 function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state: TransformState) {
     for (const col of mixedValuesCol) {
-        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
-
         const colDef: ColDef = {
             type: MIXED_VALUES_COLUMN,
             colId: col.id,
             field: col.id,
             headerName: "", // do not render header, yet leave ability to resize it
             headerTooltip: undefined,
-            ...cellRendererProp,
         };
 
-        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
+        state.rowColDefs.push(colDef);
         state.allColDefs.push(colDef);
-
-        if (!state.cellRendererPlaced) {
-            state.cellRendererPlaced = colDef;
-        }
     }
 }
 
@@ -140,10 +122,6 @@ function createAndAddMixedHeadersColDefs(
 
             state.rowColDefs.push(colDef);
             state.allColDefs.push(colDef);
-
-            if (!state.cellRendererPlaced) {
-                state.cellRendererPlaced = colDef;
-            }
         } // else branch would be needed when column header position starts to be independent on measures in rows
     }
 }
@@ -242,7 +220,6 @@ function createColumnHeadersFromDescriptors(
             }
             case "seriesCol": {
                 const sortProp = getSortProp(state.initialSorts, (s) => measureSortMatcher(col, s));
-                const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
                 const headerName = col.seriesDescriptor.measureTitle();
                 const isTotal = col.seriesDescriptor.isTotal;
                 const isSubtotal = col.seriesDescriptor.isSubtotal;
@@ -254,17 +231,11 @@ function createColumnHeadersFromDescriptors(
                     headerName,
                     headerTooltip: headerName,
                     ...sortProp,
-                    ...cellRendererProp,
                 };
 
                 colDefs.push(colDef);
                 state.leafColDefs.push(colDef);
                 state.allColDefs.push(colDef);
-
-                if (!state.cellRendererPlaced) {
-                    state.cellRendererPlaced = colDef;
-                }
-
                 break;
             }
         }
@@ -303,7 +274,6 @@ export function createColDefsFromTableDescriptor(
 ): TableColDefs {
     const state: TransformState = {
         initialSorts,
-        cellRendererPlaced: undefined,
         rootColDefs: [],
         allColDefs: [],
         leafColDefs: [],

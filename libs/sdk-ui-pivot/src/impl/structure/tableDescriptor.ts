@@ -221,7 +221,7 @@ export class TableDescriptor {
         return TableDescriptor.isTransposed(this.dv);
     }
 
-    public attributeMeasureHeadersColsCount(): number {
+    public mixedHeadersColsCount(): number {
         return this.headers.mixedHeadersCols.length;
     }
 
@@ -357,12 +357,7 @@ export class TableDescriptor {
             );
         }
 
-        return (
-            this.sliceColCount() +
-            this.sliceMeasureColCount() +
-            this.attributeMeasureHeadersColsCount() +
-            col.index
-        );
+        return this.sliceColCount() + this.sliceMeasureColCount() + this.mixedHeadersColsCount() + col.index;
     }
 
     /**
@@ -410,7 +405,7 @@ export class TableDescriptor {
             this.scopingColCount() > 0 &&
             (this.seriesColsCount() > 0 ||
                 this.sliceMeasureColCount() > 0 ||
-                this.attributeMeasureHeadersColsCount() > 0)
+                this.mixedHeadersColsCount() > 0)
         );
     }
 

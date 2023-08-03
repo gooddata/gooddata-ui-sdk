@@ -35,7 +35,6 @@ import {
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
-import { createLoadingRenderer } from "./data/loadingRenderer.js";
 
 export function createGridOptions(
     table: TableFacade,
@@ -138,12 +137,6 @@ export function createGridOptions(
             [MIXED_HEADERS_COLUMN]: mixedHeadersTemplate(table, props),
             [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
-        },
-
-        // Custom renderers
-        components: {
-            // any is needed here because of incompatible types with AgGridReact types
-            loadingRenderer: createLoadingRenderer(table, props), // loading indicator
         },
 
         // Custom CSS classes

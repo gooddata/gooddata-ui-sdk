@@ -39,6 +39,8 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
             containerRef: undefined,
             separators: undefined,
         }),
+        getMeasureGroupDimension: () => "columns",
+        getColumnHeadersPosition: () => "top",
     };
 }
 

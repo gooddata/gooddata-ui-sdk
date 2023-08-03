@@ -88,7 +88,6 @@ exports[`updateColumnDefinitionsWithWidths > should enrich colDefs based on colu
 exports[`updateColumnDefinitionsWithWidths > should enrich colDefs based on column width items 2`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -139,7 +138,6 @@ exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of m
 exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing 2`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -180,7 +178,6 @@ exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of m
 exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on 2`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -221,7 +218,6 @@ exports[`updateColumnDefinitionsWithWidths > should set with to default if no ot
 exports[`updateColumnDefinitionsWithWidths > should set with to default if no other size specification provided 2`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",

@@ -15,7 +15,7 @@ import ColumnTotalHeader from "./headers/ColumnTotalHeader.js";
 import MixedValuesColumnHeader from "./headers/MixedValuesColumnHeader.js";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
         cellClass: cellClassFactory(table, props, "gd-row-attribute-column"),
@@ -38,7 +38,7 @@ export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePi
 }
 
 export function rowMeasureTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
         cellClass: cellClassFactory(table, props, "gd-row-measure-column"),
@@ -70,7 +70,7 @@ function potentialRowMeasureFormatter(params: ValueFormatterParams, separators?:
 
 export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const separators = props.config?.separators;
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
         cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),
@@ -98,7 +98,7 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
 }
 
 export function mixedHeadersTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
         cellClass: cellClassFactory(table, props, "gd-mixed-headers-column"),
@@ -124,7 +124,7 @@ const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
 export function measureColumnTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
     const separators = props.config?.separators;
 
     return {
@@ -170,7 +170,7 @@ export function totalSubTotalColumnTemplate(
     table: TableFacade,
     props: Readonly<ICorePivotTableProps>,
 ): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
     const separators = props.config?.separators;
 
     return {
@@ -209,7 +209,7 @@ export function totalSubTotalColumnTemplate(
 }
 
 export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
-    const cellRenderer = createCellRenderer();
+    const cellRenderer = createCellRenderer(table.tableDescriptor);
     const separators = props.config?.separators;
 
     return {
