@@ -65,11 +65,11 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
     }
 
     private isPositionControlDisabled() {
-        const { insight, isError, isLoading } = this.props;
+        const { insight, isLoading } = this.props;
 
         const measures = insightMeasures(insight);
 
-        return measures.length === 0 || isError || isLoading;
+        return measures.length === 0 || isLoading;
     }
 
     private isColumnHeadersPositionControlDisabled() {
