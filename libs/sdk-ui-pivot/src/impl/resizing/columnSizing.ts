@@ -30,9 +30,13 @@ import {
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
     isMeasureColumnWidthItem,
+    isMixedValuesColumnWidthItem,
+    isSliceMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
+    IMixedValuesColumnWidthItem,
 } from "../../columnWidths.js";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
@@ -51,8 +55,9 @@ import {
     isMixedValuesCol,
     MixedHeadersCol,
     MixedValuesCol,
+    TransposedMeasureDataCol,
 } from "../structure/tableDescriptorTypes.js";
-import { createColumnLocator } from "../structure/colLocatorFactory.js";
+import { createColumnLocator, createTransposedColumnLocator } from "../structure/colLocatorFactory.js";
 import { colMeasureLocalId } from "../structure/colAccessors.js";
 import { IGridRow } from "../data/resultTypes.js";
 import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
@@ -60,6 +65,7 @@ import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { ColumnResizingConfig } from "../privateTypes.js";
 import { DefaultColumnWidth } from "../../publicTypes.js";
 import { IGroupingProvider } from "../data/rowGroupingProvider.js";
+import { isStrongColumnWidthItems } from "../utils.js";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -325,9 +331,7 @@ export class ResizedColumnsStore {
 
     private filterStrongColumnWidthItems(columnWidths: ColumnWidthItem[] | undefined) {
         if (columnWidths) {
-            return columnWidths.filter(
-                (item) => isAttributeColumnWidthItem(item) || isMeasureColumnWidthItem(item),
-            );
+            return columnWidths.filter(isStrongColumnWidthItems);
         }
         return [];
     }
@@ -454,6 +458,24 @@ export function convertColumnWidthsToMap(
                 measureIdentifier: colMeasureLocalId(col),
             };
         }
+
+        if (isSliceMeasureColumnWidthItem(columnWidth) || isMixedValuesColumnWidthItem(columnWidth)) {
+            const result = getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
+                tableDescriptor,
+                columnWidth,
+            );
+
+            if (!result) {
+                return;
+            }
+
+            const [col, width] = result;
+
+            columnWidthsMap[col.id] = {
+                width: widthValidator(width),
+                measureIdentifier: colMeasureLocalId(col),
+            };
+        }
     });
     return columnWidthsMap;
 }
@@ -483,7 +505,27 @@ function getMeasureColumnWidthItemFieldAndWidth(
         return undefined;
     }
 
-    return [col, columnWidthItem.measureColumnWidthItem.width];
+    return [col as LeafDataCol, columnWidthItem.measureColumnWidthItem.width];
+}
+
+function getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
+    tableDescriptor: TableDescriptor,
+    columnWidthItem: ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem,
+): [TransposedMeasureDataCol, ColumnWidth] | undefined {
+    const col = isSliceMeasureColumnWidthItem(columnWidthItem)
+        ? tableDescriptor.matchSliceMeasureWidthItem(columnWidthItem)
+        : tableDescriptor.matchMixedValuesWidthItem(columnWidthItem);
+
+    if (!col) {
+        // it is a valid case that no column matches locators. data may change, elements are no longer there etc..
+        return undefined;
+    }
+
+    const width = isSliceMeasureColumnWidthItem(columnWidthItem)
+        ? columnWidthItem.sliceMeasureColumnWidthItem.width
+        : columnWidthItem.mixedValuesColumnWidthItem.width;
+
+    return [col as TransposedMeasureDataCol, width];
 }
 
 function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
@@ -504,6 +546,20 @@ function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
             measureColumnWidthItem: {
                 width,
                 locators: createColumnLocator(col),
+            },
+        };
+    } else if (isSliceMeasureCol(col)) {
+        return {
+            sliceMeasureColumnWidthItem: {
+                width,
+                locators: createTransposedColumnLocator(col),
+            },
+        };
+    } else if (isMixedValuesCol(col)) {
+        return {
+            mixedValuesColumnWidthItem: {
+                width,
+                locators: createTransposedColumnLocator(col),
             },
         };
     }
@@ -563,10 +619,9 @@ export function updateColumnDefinitionsWithWidths(
 
     allSizableCols.forEach(([colDesc, colDef]) => {
         const colId = colDesc.id;
+        // NESTOR
         // TODO TNT-1594 Handle manual width for slice measure column
-        const manualSize = isSliceMeasureCol(colDesc)
-            ? undefined
-            : resizedColumnsStore.getManuallyResizedColumn2(colDesc);
+        const manualSize = resizedColumnsStore.getManuallyResizedColumn2(colDesc);
         const autoResizeSize = autoResizedColumns[colId];
 
         colDef.maxWidth = MANUALLY_SIZED_MAX_WIDTH;

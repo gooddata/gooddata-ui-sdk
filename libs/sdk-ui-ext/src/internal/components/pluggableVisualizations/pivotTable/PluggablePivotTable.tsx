@@ -550,11 +550,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         // This is sanitization of properties from KD vs current mdObject from AD
         const columnWidths = getColumnWidthsFromProperties(visualizationProperties);
         if (columnWidths) {
-            this.sanitizeColumnWidths(columnWidths, insight);
+            this.sanitizeColumnWidths(columnWidths, insight, visualizationProperties);
         }
     }
 
-    private sanitizeColumnWidths(columnWidths: ColumnWidthItem[], insight: IInsightDefinition) {
+    private sanitizeColumnWidths(
+        columnWidths: ColumnWidthItem[],
+        insight: IInsightDefinition,
+        visualizationProperties: IVisualizationProperties,
+    ) {
         if (isEmpty(insightBuckets(insight))) {
             return;
         }
@@ -567,6 +571,18 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 properties: {
                     controls: {
                         columnWidths: adaptedColumnWidths,
+                        ...(tableTranspositionEnabled(this.settings)
+                            ? {
+                                  measureGroupDimension:
+                                      getMeasureGroupDimensionFromProperties(visualizationProperties),
+                              }
+                            : {}),
+                        ...(tableColumnHeadersPositionEnabled(this.settings)
+                            ? {
+                                  columnHeadersPosition:
+                                      getColumnHeadersPositionFromProperties(visualizationProperties),
+                              }
+                            : {}),
                     },
                 },
             });
@@ -574,10 +590,18 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private onColumnResized(columnWidths: ColumnWidthItem[]) {
+        const properties = this.visualizationProperties ?? {};
+
         this.pushData({
             properties: {
                 controls: {
                     columnWidths,
+                    ...(tableTranspositionEnabled(this.settings)
+                        ? { measureGroupDimension: getMeasureGroupDimensionFromProperties(properties) }
+                        : {}),
+                    ...(tableColumnHeadersPositionEnabled(this.settings)
+                        ? { columnHeadersPosition: getColumnHeadersPositionFromProperties(properties) }
+                        : {}),
                 },
             },
         });

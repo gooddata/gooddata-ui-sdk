@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import {
     PivotTable,
-    IAllMeasureColumnWidthItem,
-    IMeasureColumnWidthItem,
-    IAttributeColumnWidthItem,
     newWidthForAttributeColumn,
     newWidthForSelectedColumns,
     newAttributeColumnLocator,
+    ColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
@@ -36,19 +34,16 @@ const measureWidth = (width: number) =>
     );
 
 export const PivotTableManualResizingExample: React.FC = () => {
-    const [columnWidths, setColumnWidths] = useState<
-        (IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem)[]
-    >([measureWidth(200), attributeWidth(200)]);
+    const [columnWidths, setColumnWidths] = useState<ColumnWidthItem[]>([
+        measureWidth(200),
+        attributeWidth(200),
+    ]);
 
-    const onButtonClick = (
-        columnWidthItem: IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem,
-    ): void => {
+    const onButtonClick = (columnWidthItem: ColumnWidthItem): void => {
         setColumnWidths([columnWidthItem]);
     };
 
-    const onColumnResized = (
-        columnWidths: Array<IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem>,
-    ): void => {
+    const onColumnResized = (columnWidths: Array<ColumnWidthItem>): void => {
         setColumnWidths(columnWidths);
     };
 

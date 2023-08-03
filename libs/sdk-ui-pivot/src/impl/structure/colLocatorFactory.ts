@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes.js";
+import { isScopeCol, LeafDataCol, TransposedMeasureDataCol } from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
     ITotalColumnLocator,
@@ -98,4 +98,29 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
 
         return result;
     }
+}
+
+/**
+ * Given a transposed slice measure or mixed values data col, this function will create column locator that can be used in
+ * width items.
+ *
+ * @param col - col definition to get locators for
+ */
+export function createTransposedColumnLocator(
+    col: TransposedMeasureDataCol | TransposedMeasureDataCol,
+): IMeasureColumnLocator[] {
+    const result: IMeasureColumnLocator[] = [];
+
+    if (col.seriesDescriptor) {
+        const filteredSeriesDescriptor = col.seriesDescriptor.filter(
+            (serieDescriptor, index, self) =>
+                self.findIndex((s) => s.measureDescriptor === serieDescriptor.measureDescriptor) === index,
+        );
+
+        filteredSeriesDescriptor.forEach((serieDescriptor) => {
+            result.push(createMeasureLocator(serieDescriptor.measureDescriptor));
+        });
+    }
+
+    return result;
 }

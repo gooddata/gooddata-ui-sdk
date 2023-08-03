@@ -89,7 +89,7 @@ export interface IColumnSizing {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type MeasureGroupDimension = "columns" | "rows";
 

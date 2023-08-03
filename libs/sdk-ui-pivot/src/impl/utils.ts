@@ -9,7 +9,15 @@ import {
     ITotal,
     sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+
+import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    ColumnWidthItem,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
+    isMixedValuesColumnWidthItem,
+    isSliceMeasureColumnWidthItem,
+} from "../columnWidths.js";
 
 function getScrollbarWidthBody(): number {
     const outer = document.createElement("div");
@@ -82,3 +90,23 @@ export const tableHasRowAttributes = (rowAttributes: IAttributeDescriptor[]): bo
 
 export const tableHasColumnAttributes = (columnAttributes: IAttributeDescriptor[]): boolean =>
     columnAttributes.length > 0;
+
+export const isStrongColumnWidthItems = (item: ColumnWidthItem) => {
+    const isAttributeOrMeasureColumnWidthItem =
+        isAttributeColumnWidthItem(item) || isMeasureColumnWidthItem(item);
+    const isTransposedMeasureColumnWidthItem =
+        isSliceMeasureColumnWidthItem(item) || isMixedValuesColumnWidthItem(item);
+
+    return isAttributeOrMeasureColumnWidthItem || isTransposedMeasureColumnWidthItem;
+};
+
+export const getDataViewSeriesDescriptors = (dv: DataViewFacade) =>
+    dv
+        .data()
+        .series()
+        .toArray()
+        .map((series) => series.descriptor)
+        .filter(
+            (descriptor, index, self) =>
+                self.findIndex((s) => s.measureDescriptor === descriptor.measureDescriptor) === index,
+        );

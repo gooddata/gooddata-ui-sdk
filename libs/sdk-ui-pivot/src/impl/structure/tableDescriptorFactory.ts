@@ -27,6 +27,7 @@ import {
 } from "./tableDescriptorTypes.js";
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import { IPivotTableConfig } from "../../publicTypes.js";
+import { getDataViewSeriesDescriptors } from "../utils.js";
 
 type ColumnGroupLevel = {
     pkToGroup: Record<string, ScopeCol>;
@@ -315,6 +316,7 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
             id: `r_${idx}`,
             index: idx,
             fullIndexPathToHere: [idx],
+            seriesDescriptor: getDataViewSeriesDescriptors(dv),
         },
     ];
 }
@@ -352,7 +354,7 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         });
 }
 
-function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
+function createMeasureValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [
@@ -361,6 +363,7 @@ function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
             id: `amv_${idx}`,
             index: idx,
             fullIndexPathToHere: [idx],
+            seriesDescriptor: getDataViewSeriesDescriptors(dv),
         },
     ];
 }
@@ -404,7 +407,7 @@ function createTableHeaders(
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
         const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
-        const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
+        const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors(dv) : [];
         mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
         mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
 

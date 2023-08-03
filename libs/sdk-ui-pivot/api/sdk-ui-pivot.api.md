@@ -41,7 +41,7 @@ export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 // @public (undocumented)
-export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
+export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
 // @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
@@ -153,6 +153,12 @@ export interface IMenu {
 }
 
 // @public (undocumented)
+export interface IMixedValuesColumnWidthItem {
+    // (undocumented)
+    mixedValuesColumnWidthItem: IMeasureColumnWidthItemBody;
+}
+
+// @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
     execConfig?: IExecutionConfig;
@@ -202,11 +208,23 @@ export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnL
 // @public
 export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem;
 
+// @public (undocumented)
+export interface ISliceMeasureColumnWidthItem {
+    // (undocumented)
+    sliceMeasureColumnWidthItem: IMeasureColumnWidthItemBody;
+}
+
 // @public
 export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator;
 
 // @public
 export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem;
+
+// @public
+export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesColumnWidthItem;
+
+// @public
+export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem;
 
 // @public
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
@@ -237,7 +255,7 @@ export interface IWeakMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type MeasureGroupDimension = "columns" | "rows";
 
 // @public
