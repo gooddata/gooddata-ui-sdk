@@ -120,6 +120,7 @@ export function searchForTransposedLocatorMatch(
         if (col.seriesDescriptor?.length !== locators.length || !isMeasureColumnLocator(locators[0])) {
             return undefined;
         }
+
         if (colMeasureLocalId(col) === locators[0].measureLocatorItem.measureIdentifier) {
             found = col;
         }

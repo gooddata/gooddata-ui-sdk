@@ -316,7 +316,7 @@ export type TransposedMeasureDataCol = SliceMeasureCol | MixedValuesCol;
 /**
  * Data col is a composite structure describing the data part of the table.
  */
-export type DataCol = RootCol | LeafDataCol | TransposedMeasureDataCol;
+export type DataCol = RootCol | LeafDataCol;
 
 /**
  * All types of slice cols.

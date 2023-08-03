@@ -59,3 +59,33 @@ exports[`createColumnLocator > creates valid leaf column locator in table withou
   },
 ]
 `;
+
+exports[`createColumnLocator > creates valid mixed values column locator in transposed table 1`] = `
+[
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_aangOxLSeztu",
+    },
+  },
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_acugFHNJgsBy",
+    },
+  },
+]
+`;
+
+exports[`createColumnLocator > creates valid slice measure column locator in transposed table 1`] = `
+[
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_aangOxLSeztu",
+    },
+  },
+  {
+    "measureLocatorItem": {
+      "measureIdentifier": "m_acugFHNJgsBy",
+    },
+  },
+]
+`;

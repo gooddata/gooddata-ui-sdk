@@ -5,11 +5,13 @@ import {
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
+    TwoMeasuresWithSingleRowAttrWithMetricsInRows,
+    MultipleMeasuresAndNoColumnsWithMetricsInRows,
 } from "./table.fixture.js";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths.js";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
-import { searchForLocatorMatch } from "../colLocatorMatching.js";
+import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "../colLocatorMatching.js";
 import { describe, it, expect } from "vitest";
 
 describe("searchForLocatorMatch", () => {
@@ -153,8 +155,52 @@ describe("searchForLocatorMatch", () => {
     ];
 
     it.each(Scenarios)("%s", (_desc, locators, dv, expected) => {
-        const tableDescriptor = createHeadersAndColDefs(dv, "empty value");
+        const tableDescriptor = createHeadersAndColDefs(dv, "empty value", false);
         const result = searchForLocatorMatch(tableDescriptor.headers.rootDataCols, locators);
+
+        expect(result?.id).toEqual(expected);
+    });
+});
+
+describe("searchForLocatorMatch transposed table", () => {
+    const SlicedMeasuresScenarios: Array<[string, ColumnLocator[], DataViewFacade, string | undefined]> = [
+        [
+            "matches slice measure locator in two measure table",
+            [newMeasureColumnLocator(ReferenceMd.Amount), newMeasureColumnLocator(ReferenceMd.Won)],
+            TwoMeasuresWithSingleRowAttrWithMetricsInRows,
+            "r_1",
+        ],
+        [
+            "does not match when slice measure missing in two measure table",
+            [newMeasureColumnLocator(ReferenceMd.Amount)],
+            TwoMeasuresWithSingleRowAttrWithMetricsInRows,
+            undefined,
+        ],
+    ];
+    it.each(SlicedMeasuresScenarios)("%s", (_desc, locators, dv, expected) => {
+        const tableDescriptor = createHeadersAndColDefs(dv, "empty value", false);
+        const result = searchForTransposedLocatorMatch(tableDescriptor.headers.sliceMeasureCols, locators);
+
+        expect(result?.id).toEqual(expected);
+    });
+
+    const MixedValuesScenarios: Array<[string, ColumnLocator[], DataViewFacade, string | undefined]> = [
+        [
+            "matches mixed values measure locator in two measure table",
+            [newMeasureColumnLocator(ReferenceMd.Amount), newMeasureColumnLocator(ReferenceMd.Won)],
+            MultipleMeasuresAndNoColumnsWithMetricsInRows,
+            "amv_0",
+        ],
+        [
+            "does not match when mixed value measure missing in two measure table",
+            [newMeasureColumnLocator(ReferenceMd.Amount)],
+            MultipleMeasuresAndNoColumnsWithMetricsInRows,
+            undefined,
+        ],
+    ];
+    it.each(MixedValuesScenarios)("%s", (_desc, locators, dv, expected) => {
+        const tableDescriptor = createHeadersAndColDefs(dv, "empty value", false);
+        const result = searchForTransposedLocatorMatch(tableDescriptor.headers.mixedValuesCols, locators);
 
         expect(result?.id).toEqual(expected);
     });

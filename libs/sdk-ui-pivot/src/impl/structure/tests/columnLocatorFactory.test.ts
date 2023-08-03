@@ -1,12 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 
 import {
+    MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
+    TwoMeasuresWithSingleRowAttrWithMetricsInRows,
 } from "./table.fixture.js";
 import { TableDescriptor } from "../tableDescriptor.js";
 import { createColumnLocator } from "../colLocatorFactory.js";
-import { ScopeCol } from "../tableDescriptorTypes.js";
+import { ScopeCol, SliceMeasureCol, MixedValuesCol } from "../tableDescriptorTypes.js";
 import { describe, it, expect } from "vitest";
 
 describe("createColumnLocator", () => {
@@ -36,5 +38,21 @@ describe("createColumnLocator", () => {
         const secondLevelGroup = t.headers.rootDataCols[0].children[0].children[0] as ScopeCol;
 
         expect(createColumnLocator(secondLevelGroup)).toMatchSnapshot();
+    });
+
+    it("creates valid slice measure column locator in transposed table", () => {
+        const t = TableDescriptor.for(TwoMeasuresWithSingleRowAttrWithMetricsInRows, "empty value");
+
+        const sliceMeasureCol = t.headers.sliceMeasureCols[0] as SliceMeasureCol;
+
+        expect(createColumnLocator(sliceMeasureCol)).toMatchSnapshot();
+    });
+
+    it("creates valid mixed values column locator in transposed table", () => {
+        const t = TableDescriptor.for(MultipleMeasuresAndNoColumnsWithMetricsInRows, "empty value");
+
+        const mixedValuesCol = t.headers.mixedValuesCols[0] as MixedValuesCol;
+
+        expect(createColumnLocator(mixedValuesCol)).toMatchSnapshot();
     });
 });

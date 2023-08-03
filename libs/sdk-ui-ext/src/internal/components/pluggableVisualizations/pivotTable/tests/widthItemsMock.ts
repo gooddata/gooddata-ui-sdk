@@ -5,6 +5,8 @@ import {
     IAttributeColumnWidthItem,
     IAllMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
+    IMixedValuesColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
@@ -141,5 +143,67 @@ export const transformedWeakMeasureColumnWidth: IWeakMeasureColumnWidthItem = {
                 measureIdentifier: "m1",
             },
         },
+    },
+};
+
+export const validSliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItem = {
+    sliceMeasureColumnWidthItem: {
+        width: { value: 100 },
+        locators: [
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m1",
+                },
+            },
+        ],
+    },
+};
+
+export const invalidSliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItem = {
+    sliceMeasureColumnWidthItem: {
+        width: { value: 100 },
+        locators: [
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m1",
+                },
+            },
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m2",
+                },
+            },
+        ],
+    },
+};
+
+export const validMixedValuesColumnWidthItem: IMixedValuesColumnWidthItem = {
+    mixedValuesColumnWidthItem: {
+        width: { value: 100 },
+        locators: [
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m1",
+                },
+            },
+        ],
+    },
+};
+
+export const invalidMixedValueColumnWidthItem: IMixedValuesColumnWidthItem = {
+    mixedValuesColumnWidthItem: {
+        width: { value: 100 },
+        locators: [
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m1",
+                },
+            },
+            {
+                measureLocatorItem: {
+                    measureIdentifier: "m2",
+                },
+            },
+        ],
     },
 };
