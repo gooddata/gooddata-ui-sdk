@@ -36,10 +36,14 @@ export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
 /**
  * For transposed table add metric descriptor from row
  */
-export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): IMappingHeader[] {
-    const mappingHeaders: IMappingHeader[] = createDataColGroupHeaders(col);
+export function createScopeColWithMetricHeaders(
+    col: ScopeCol,
+    includeColGroupHeaders: boolean,
+    row?: IGridRow,
+): IMappingHeader[] {
+    const mappingHeaders: IMappingHeader[] = includeColGroupHeaders ? createDataColGroupHeaders(col) : [];
 
-    if (row.measureDescriptor) {
+    if (row?.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
     }
 
@@ -77,27 +81,16 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-export function createDataColGroupHeaders(
-    col: ScopeCol,
-    row?: IGridRow,
-    columnHeadersPosition?: ColumnHeadersPosition,
-    isTransposed?: boolean,
-): IMappingHeader[] {
+function createDataColGroupHeaders(col: ScopeCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
-    if (columnHeadersPosition === "top" && !isTransposed) {
-        col.descriptorsToHere.forEach((descriptor, index) => {
-            mappingHeaders.push(col.headersToHere[index]);
-            mappingHeaders.push(descriptor);
-        });
+    col.descriptorsToHere.forEach((descriptor, index) => {
+        mappingHeaders.push(col.headersToHere[index]);
+        mappingHeaders.push(descriptor);
+    });
 
-        mappingHeaders.push(col.header);
-        mappingHeaders.push(col.attributeDescriptor);
-    }
-
-    if (row?.measureDescriptor) {
-        mappingHeaders.push(row.measureDescriptor);
-    }
+    mappingHeaders.push(col.header);
+    mappingHeaders.push(col.attributeDescriptor);
 
     return mappingHeaders;
 }
@@ -114,14 +107,15 @@ export function createDataColGroupHeaders(
  */
 export function createDrillHeaders(
     col: AnyCol,
-    row?: IGridRow,
-    columnHeadersPosition?: ColumnHeadersPosition,
-    isTransposed?: boolean,
+    row: IGridRow,
+    columnHeadersPosition: ColumnHeadersPosition,
+    isTransposed: boolean,
 ): IMappingHeader[] {
     if (isSeriesCol(col)) {
         return createDataColLeafHeaders(col);
     } else if (isScopeCol(col)) {
-        return createDataColGroupHeaders(col, row, columnHeadersPosition, isTransposed);
+        const includeColGroupHeaders = columnHeadersPosition === "top" && !isTransposed;
+        return createScopeColWithMetricHeaders(col, includeColGroupHeaders, row);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a slice col, both the column & the row data must be

@@ -29,6 +29,7 @@ import { IGridRow } from "../data/resultTypes.js";
 export function createDrillIntersection(
     cellEvent: CellEvent,
     tableDescriptor: TableDescriptor,
+    rowNodes: IGridRow[],
 ): IDrillEventIntersectionElement[] {
     const mappingHeaders: IMappingHeader[] = [];
     const col: AnyCol = tableDescriptor.getCol(cellEvent.colDef);
@@ -47,9 +48,11 @@ export function createDrillIntersection(
 
     if (tableDescriptor.isTransposed()) {
         if (isScopeCol(col)) {
-            mappingHeaders.push(...createScopeColWithMetricHeaders(col, row));
+            mappingHeaders.push(...createScopeColWithMetricHeaders(col, true, row));
         } else if (isMixedValuesCol(col)) {
             mappingHeaders.push(...createMixedValuesColHeaders(col, row));
+
+            rowNodes.forEach((rowNode) => mappingHeaders.push(...createMixedValuesColHeaders(col, rowNode)));
         }
     }
 

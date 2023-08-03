@@ -51,6 +51,7 @@ import {
     OnExecutionTransformed,
 } from "./privateTypes.js";
 import { ICorePivotTableProps, IPivotTableConfig } from "../publicTypes.js";
+import { IGridRow } from "./data/resultTypes.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -476,6 +477,19 @@ export class TableFacade {
             },
             this.getGroupingProvider(),
         );
+    };
+
+    public getRowNodes = (): IGridRow[] => {
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return [];
+        }
+
+        const rowData: IGridRow[] = [];
+        gridApi.forEachNode((node) => rowData.push(node.data));
+
+        return rowData;
     };
 
     public isPivotTableReady = (): boolean => {
