@@ -155,7 +155,15 @@ export interface IMenu {
 // @public (undocumented)
 export interface IMixedValuesColumnWidthItem {
     // (undocumented)
-    mixedValuesColumnWidthItem: IMeasureColumnWidthItemBody;
+    mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
+}
+
+// @public
+export interface IMixedValuesColumnWidthItemBody {
+    // (undocumented)
+    locators: IMeasureColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
 }
 
 // @public (undocumented)
@@ -211,7 +219,15 @@ export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColum
 // @public (undocumented)
 export interface ISliceMeasureColumnWidthItem {
     // (undocumented)
-    sliceMeasureColumnWidthItem: IMeasureColumnWidthItemBody;
+    sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface ISliceMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: IMeasureColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
 }
 
 // @public

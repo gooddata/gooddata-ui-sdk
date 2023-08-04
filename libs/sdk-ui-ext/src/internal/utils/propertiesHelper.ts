@@ -375,3 +375,19 @@ const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
 function getMaxWidthForCollapsedLegend(legendPosition: string): number {
     return legendPosition === "auto" ? MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND : MAX_WIDTH_FOR_COLLAPSED_LEGEND;
 }
+
+export function getPivotTableProperties(settings: ISettings, properties: IVisualizationProperties) {
+    const { enablePivotTableTransposition, enableColumnHeadersPosition } = settings;
+    return {
+        ...(enablePivotTableTransposition === true
+            ? {
+                  measureGroupDimension: getMeasureGroupDimensionFromProperties(properties),
+              }
+            : {}),
+        ...(enableColumnHeadersPosition === true
+            ? {
+                  columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
+              }
+            : {}),
+    };
+}

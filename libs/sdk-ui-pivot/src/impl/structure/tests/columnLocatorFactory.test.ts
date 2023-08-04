@@ -7,7 +7,7 @@ import {
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
 } from "./table.fixture.js";
 import { TableDescriptor } from "../tableDescriptor.js";
-import { createColumnLocator } from "../colLocatorFactory.js";
+import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
 import { ScopeCol, SliceMeasureCol, MixedValuesCol } from "../tableDescriptorTypes.js";
 import { describe, it, expect } from "vitest";
 
@@ -45,7 +45,7 @@ describe("createColumnLocator", () => {
 
         const sliceMeasureCol = t.headers.sliceMeasureCols[0] as SliceMeasureCol;
 
-        expect(createColumnLocator(sliceMeasureCol)).toMatchSnapshot();
+        expect(createTransposedColumnLocator(sliceMeasureCol)).toMatchSnapshot();
     });
 
     it("creates valid mixed values column locator in transposed table", () => {
@@ -53,6 +53,6 @@ describe("createColumnLocator", () => {
 
         const mixedValuesCol = t.headers.mixedValuesCols[0] as MixedValuesCol;
 
-        expect(createColumnLocator(mixedValuesCol)).toMatchSnapshot();
+        expect(createTransposedColumnLocator(mixedValuesCol)).toMatchSnapshot();
     });
 });

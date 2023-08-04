@@ -75,6 +75,7 @@ import {
     getReferencePointWithSupportedProperties,
     getMeasureGroupDimensionFromProperties,
     getSupportedPropertiesControls,
+    getPivotTableProperties,
 } from "../../../utils/propertiesHelper.js";
 
 import {
@@ -571,18 +572,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 properties: {
                     controls: {
                         columnWidths: adaptedColumnWidths,
-                        ...(tableTranspositionEnabled(this.settings)
-                            ? {
-                                  measureGroupDimension:
-                                      getMeasureGroupDimensionFromProperties(visualizationProperties),
-                              }
-                            : {}),
-                        ...(tableColumnHeadersPositionEnabled(this.settings)
-                            ? {
-                                  columnHeadersPosition:
-                                      getColumnHeadersPositionFromProperties(visualizationProperties),
-                              }
-                            : {}),
+                        ...getPivotTableProperties(this.settings, visualizationProperties),
                     },
                 },
             });
@@ -596,12 +586,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             properties: {
                 controls: {
                     columnWidths,
-                    ...(tableTranspositionEnabled(this.settings)
-                        ? { measureGroupDimension: getMeasureGroupDimensionFromProperties(properties) }
-                        : {}),
-                    ...(tableColumnHeadersPositionEnabled(this.settings)
-                        ? { columnHeadersPosition: getColumnHeadersPositionFromProperties(properties) }
-                        : {}),
+                    ...getPivotTableProperties(this.settings, properties),
                 },
             },
         });

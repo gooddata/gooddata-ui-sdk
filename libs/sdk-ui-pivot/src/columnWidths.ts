@@ -97,17 +97,37 @@ export interface IMeasureColumnWidthItem {
 }
 
 /**
+ * Object defining the {@link ISliceMeasureColumnWidthItem } object body.
+ *
+ * @public
+ */
+export interface ISliceMeasureColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: IMeasureColumnLocator[];
+}
+
+/**
  * @public
  */
 export interface ISliceMeasureColumnWidthItem {
-    sliceMeasureColumnWidthItem: IMeasureColumnWidthItemBody;
+    sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
+}
+
+/**
+ * Object defining the {@link IMixedValuesColumnWidthItemBody } object body.
+ *
+ * @public
+ */
+export interface IMixedValuesColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: IMeasureColumnLocator[];
 }
 
 /**
  * @public
  */
 export interface IMixedValuesColumnWidthItem {
-    mixedValuesColumnWidthItem: IMeasureColumnWidthItemBody;
+    mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
 }
 
 /**

@@ -8,12 +8,12 @@ import { AnyCol, isMixedValuesCol, isSeriesCol, isSliceMeasureCol } from "./tabl
  * @param col - column descriptor
  */
 export function colMeasureLocalId(col: AnyCol): string | undefined {
-    const isSliceOrMixedValuesCol =
+    const sliceOrMixedValuesColLocalId =
         isSliceMeasureCol(col) || isMixedValuesCol(col)
             ? col.seriesDescriptor![0].measureDescriptor.measureHeaderItem.localIdentifier
             : undefined;
 
     return isSeriesCol(col)
         ? col.seriesDescriptor.measureDescriptor.measureHeaderItem.localIdentifier
-        : isSliceOrMixedValuesCol;
+        : sliceOrMixedValuesColLocalId;
 }

@@ -91,7 +91,7 @@ export const tableHasRowAttributes = (rowAttributes: IAttributeDescriptor[]): bo
 export const tableHasColumnAttributes = (columnAttributes: IAttributeDescriptor[]): boolean =>
     columnAttributes.length > 0;
 
-export const isStrongColumnWidthItems = (item: ColumnWidthItem) => {
+export const isStrongColumnWidthItem = (item: ColumnWidthItem) => {
     const isAttributeOrMeasureColumnWidthItem =
         isAttributeColumnWidthItem(item) || isMeasureColumnWidthItem(item);
     const isTransposedMeasureColumnWidthItem =

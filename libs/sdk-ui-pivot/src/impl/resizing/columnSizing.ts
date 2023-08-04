@@ -65,7 +65,7 @@ import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { ColumnResizingConfig } from "../privateTypes.js";
 import { DefaultColumnWidth } from "../../publicTypes.js";
 import { IGroupingProvider } from "../data/rowGroupingProvider.js";
-import { isStrongColumnWidthItems } from "../utils.js";
+import { isStrongColumnWidthItem } from "../utils.js";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -331,7 +331,7 @@ export class ResizedColumnsStore {
 
     private filterStrongColumnWidthItems(columnWidths: ColumnWidthItem[] | undefined) {
         if (columnWidths) {
-            return columnWidths.filter(isStrongColumnWidthItems);
+            return columnWidths.filter(isStrongColumnWidthItem);
         }
         return [];
     }
@@ -619,8 +619,6 @@ export function updateColumnDefinitionsWithWidths(
 
     allSizableCols.forEach(([colDesc, colDef]) => {
         const colId = colDesc.id;
-        // NESTOR
-        // TODO TNT-1594 Handle manual width for slice measure column
         const manualSize = resizedColumnsStore.getManuallyResizedColumn2(colDesc);
         const autoResizeSize = autoResizedColumns[colId];
 

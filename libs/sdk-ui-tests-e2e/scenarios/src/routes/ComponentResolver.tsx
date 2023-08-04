@@ -11,7 +11,10 @@ import { AttributeFilterButtonParentChildScenario } from "../components/Scenario
 import { ParentChildFiltersWithPlaceholders } from "../components/Scenarios/Filters/ParentChildFiltersWithPlaceholders";
 import { DashboardFilteringScenario } from "../components/Scenarios/Dashboard/DashboardFilteringScenario";
 import { HeadDrillingScenario } from "../components/Scenarios/Visualizations/Headline/HeadlineDrillingScenario";
-import { PivotTableComplexResetScenario } from "../components/Scenarios/Visualizations/PivotTable/Sizing/PivotTableComplexResetScenario";
+import {
+    PivotTableComplexResetScenario,
+    PivotTableTransposedComplexResetScenario,
+} from "../components/Scenarios/Visualizations/PivotTable/Sizing/PivotTableComplexResetScenario";
 import { PivotTableSizingScenario } from "../components/Scenarios/Visualizations/PivotTable/Sizing/PivotTableSizingScenario";
 import {
     PivotTableAggregationsMenuScenario,
@@ -103,6 +106,8 @@ export const SCENARIO_KEYS = {
     VIS_PIVOT_TABLE_ONE_TOTAL_COLUMN_AGG_MENU:
         "visualizations/pivot-table/pivot-table-one-total-column-aggregations-menu",
     VIS_PIVOT_TABLE_SIZING_RESET: "visualizations/pivot-table/sizing/pivot-table-complex-reset",
+    VIS_PIVOT_TABLE_TRANSPOSED_SIZING_RESET:
+        "visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset",
     VIS_PIVOT_TABLE_SIZING: "visualizations/pivot-table/sizing/pivot-table-sizing",
     FILTERS_ATTRIBUTE_FILTER_PARENT_CHILD_EXAMPLE: "filters/attribute-filter-parent-child-example",
     FILTERS_ATTRIBUTE_FILTER_BUTTON: "filters/attribute-filter-button",
@@ -180,6 +185,7 @@ const scenarios = new Map<string, React.ComponentType>([
         PivotTableAggregationsMenuOneColumnTotalScenario,
     ],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING_RESET, PivotTableComplexResetScenario],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_SIZING_RESET, PivotTableTransposedComplexResetScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING, PivotTableSizingScenario],
     [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTER_CONFIG, DashboardFilterConfigurationScenario],
     [SCENARIO_KEYS.INSIGHT_ON_DASHBOARD, InsightOnDashboardScenario],
