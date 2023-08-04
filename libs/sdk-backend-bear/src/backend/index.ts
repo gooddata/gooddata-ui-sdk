@@ -89,6 +89,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsNonProductionDatasets: true,
     supportsShowAllAttributeValues: false,
     supportsSeparateLatitudeLongitudeLabels: false,
+    supportsEnumeratingDatetimeAttributes: true,
 };
 
 /**

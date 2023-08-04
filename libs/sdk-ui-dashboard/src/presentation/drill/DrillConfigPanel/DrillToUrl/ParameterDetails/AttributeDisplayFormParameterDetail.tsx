@@ -6,6 +6,13 @@ import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } f
 import { ParameterDetail } from "./ParameterDetail.js";
 import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    selectBackendCapabilities,
+    selectCatalogDateDatasets,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
+import { newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
+import flatMap from "lodash/flatMap.js";
 
 const MAX_CACHED_REQUESTS = 50;
 const MAX_URL_LENGTH = 100;
@@ -79,6 +86,24 @@ const getCachedRequests = async (backend: IAnalyticalBackend, projectId: string,
     return response;
 };
 
+const useSupportsEnumeration = (displayFormRef: ObjRef) => {
+    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const { hasTypeScopedIdentifiers, supportsEnumeratingDatetimeAttributes } =
+        useDashboardSelector(selectBackendCapabilities);
+
+    if (supportsEnumeratingDatetimeAttributes) {
+        return true;
+    }
+
+    const dateAttributes = flatMap(dateDatasets, (dateDataset) => dateDataset.dateAttributes);
+    const displayForms = flatMap(dateAttributes, (dateAttribute) => dateAttribute.attribute.displayForms);
+    const displayFormMap = newDisplayFormMap(displayForms, hasTypeScopedIdentifiers);
+    const isDateAttribute = Boolean(displayFormMap.get(displayFormRef));
+
+    // datetime attributes should be skipped as they are not supporting enumeration
+    return !isDateAttribute;
+};
+
 export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayFormParameterDetailProps> = (
     props,
 ) => {
@@ -89,6 +114,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
     const [isLoading, setIsLoading] = useState(true);
     const [values, setValues] = useState<string[]>([]);
     const [additionalValues, setAdditionalValues] = useState(0);
+    const supportsEnumeration = useSupportsEnumeration(displayFormRef);
 
     useEffect(() => {
         let isMounted = true;
@@ -105,7 +131,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
             }
         };
 
-        if (showValues) {
+        if (showValues && supportsEnumeration) {
             getValues();
         } else {
             setIsLoading(false);
@@ -114,7 +140,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
         return () => {
             isMounted = false;
         };
-    }, [displayFormRef, type, intl, projectId, showValues, backend]);
+    }, [displayFormRef, type, intl, projectId, showValues, backend, supportsEnumeration]);
 
     return (
         <ParameterDetail

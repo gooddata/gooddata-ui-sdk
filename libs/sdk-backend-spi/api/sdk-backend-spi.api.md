@@ -241,6 +241,7 @@ export interface IBackendCapabilities {
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsEnumeratingDatetimeAttributes?: boolean;
     supportsEveryoneUserGroupForAccessControl?: boolean;
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
