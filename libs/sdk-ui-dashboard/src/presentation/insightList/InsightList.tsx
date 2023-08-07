@@ -113,6 +113,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         params,
         [backend, pagesToLoad, search, selectedTabId, insightListLastUpdateRequested],
         [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
+        true,
     );
 
     useEffect(() => {
@@ -129,7 +130,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         debounce((searchString: string) => {
             setPagesToLoad([0]);
             setSearch(searchString);
-        }, 250),
+        }, 500),
         [],
     );
 

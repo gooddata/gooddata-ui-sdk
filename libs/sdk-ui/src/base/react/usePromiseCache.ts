@@ -29,6 +29,7 @@ export function usePromiseCache<TParams, TResult, TError>(
     fetchParams: TParams[],
     fetchDeps: React.DependencyList,
     resetDeps: React.DependencyList,
+    preventResetPromises?: boolean,
     getCacheKey?: (params: TParams) => string,
 ): IUsePromiseCacheState<TResult, TError> {
     const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>(
@@ -40,11 +41,15 @@ export function usePromiseCache<TParams, TResult, TError>(
     const setResults = (results: TResult[]) => setState((state) => ({ ...state, results }));
     const setErrors = (errors: TError[]) => setState((state) => ({ ...state, errors }));
     const setLoading = (isLoading: boolean) => setState((state) => ({ ...state, isLoading }));
+    const preventResetPromisesRef = useRef(false);
 
     useEffect(() => {
         return () => {
-            promiseCacheRef.current.reset();
-            setInitialState();
+            if (!preventResetPromisesRef.current) {
+                promiseCacheRef.current.reset();
+                setInitialState();
+            }
+            preventResetPromisesRef.current = false;
         };
     }, resetDeps);
 
@@ -68,14 +73,23 @@ export function usePromiseCache<TParams, TResult, TError>(
                 setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setResults(results);
+                    preventResetPromisesRef.current = true;
                 }
             })
             .catch((errors) => {
+                if (errors?.message === "Canceled") {
+                    return;
+                }
                 setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setErrors(errors);
                 }
             });
+
+        return () => {
+            preventResetPromisesRef.current = !!preventResetPromises;
+            usedPromiseCache.cancel(newParams[0]);
+        };
     }, fetchDeps);
 
     return state;
