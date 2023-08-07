@@ -10,6 +10,7 @@ import isEqual from "lodash/isEqual.js";
 import {
     attributeLocalId,
     bucketAttribute,
+    bucketSetTotals,
     defTotals,
     dimensionSetTotals,
     isAttributeSort,
@@ -150,6 +151,11 @@ export class AgGridDatasource implements IDatasource {
             .withDimensions(
                 dimensionSetTotals(definition.dimensions[0], desiredTotals),
                 dimensionSetTotals(definition.dimensions[1], desiredRowTotals),
+            )
+            .withBuckets(
+                definition.buckets[0],
+                bucketSetTotals(definition.buckets[1], desiredTotals),
+                bucketSetTotals(definition.buckets[2], desiredRowTotals),
             );
 
         this.config.onExecutionTransformed(transformedExecution);

@@ -24,7 +24,7 @@ import {
 } from "../../../index.js";
 import { Account, Activity, Won } from "../../../../__mocks__/model.js";
 import { IFilter } from "../../filter/index.js";
-import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index.js";
+import { defSetBuckets, defSetPostProcessing, defWithFilters, IPostProcessing } from "../index.js";
 
 const Workspace = "testWorkspace";
 
@@ -39,6 +39,8 @@ const DefWithFilters = newDefForItems(
     [Account.Name, Activity.Subject, Won],
     [PositiveFilter, RelativeDateFilter],
 );
+
+const AccountBucket = newBucket("attr", Account.Name);
 
 describe("defWithFilters", () => {
     const Scenarios: Array<[string, any, any, IFilter[]]> = [
@@ -145,8 +147,9 @@ describe("defFingerprint", () => {
         DefWithAttrAndMeasure,
         newTwoDimensional([Account.Name], [MeasureGroupIdentifier]),
     );
+    const DefWithAttrAndMeasureAndBuckets = defSetBuckets(DefWithAttrAndMeasure, [AccountBucket]);
 
-    const DefWithAttrFromBuckets = newDefForBuckets(Workspace, [newBucket("attr", Account.Name)]);
+    const DefWithAttrFromBuckets = newDefForBuckets(Workspace, [AccountBucket]);
 
     const Scenarios: Array<[boolean, string, any, any]> = [
         [true, "empty defs on same workspace", emptyDef("test1"), emptyDef("test1")],
@@ -156,6 +159,7 @@ describe("defFingerprint", () => {
         [false, "def with added dimensions", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndDims],
         [false, "def with added filters", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndFilter],
         // bucket is just metadata for the execution; it has no impact on what the backend does
+        [true, "def with added buckets", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndBuckets],
         [true, "def regardless of buckets presence", DefWithAttr, DefWithAttrFromBuckets],
     ];
 
@@ -184,6 +188,25 @@ describe("defSetPostProcessing", () => {
             const newDefWithDateFormat = defSetPostProcessing(definition, postProcessing);
             expect(newDefWithDateFormat).not.toBe(definition);
             expect(newDefWithDateFormat.postProcessing).toEqual(postProcessing);
+        },
+    );
+});
+
+describe("defSetBuckets", () => {
+    const DefWithBucketWithTotal = { ...EmptyDef, buckets: [{ ...AccountBucket, totals: ["not empty"] }] };
+
+    const Scenarios: Array<[string, any, any]> = [
+        ["empty buckets", EmptyDef, []],
+        ["account bucket", EmptyDef, [AccountBucket]],
+        ["account bucket without totals", DefWithBucketWithTotal, [AccountBucket]],
+    ];
+
+    it.each(Scenarios)(
+        'should return a new instance of execution definition with "%s"',
+        (_desc, definition, buckets) => {
+            const newDefWithBuckets = defSetBuckets(definition, buckets);
+            expect(newDefWithBuckets).not.toBe(definition);
+            expect(newDefWithBuckets.buckets).toEqual(buckets);
         },
     );
 });

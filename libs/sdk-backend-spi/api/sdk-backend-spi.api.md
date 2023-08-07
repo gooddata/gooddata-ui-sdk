@@ -585,6 +585,7 @@ export interface IPreparedExecution {
     // @internal
     explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
+    withBuckets(...buckets: IBucket[]): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withExecConfig(config: IExecutionConfig): IPreparedExecution;

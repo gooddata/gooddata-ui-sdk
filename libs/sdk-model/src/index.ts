@@ -314,6 +314,7 @@ export {
     defFingerprint,
     defSetDimensions,
     defSetSorts,
+    defSetBuckets,
     defTotals,
     defSetExecConfig,
     IPostProcessing,
@@ -329,6 +330,7 @@ export {
     defWithPostProcessing,
     defWithDateFormat,
     defWithExecConfig,
+    defWithBuckets,
     defaultDimensionsGenerator,
     emptyDef,
 } from "./execution/executionDefinition/factory.js";

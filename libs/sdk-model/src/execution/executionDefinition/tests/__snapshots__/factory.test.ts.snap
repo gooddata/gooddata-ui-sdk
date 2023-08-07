@@ -1,5 +1,119 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`defWithBuckets > should create definition with no bucket 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`defWithBuckets > should create definition with one bucket 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.account.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.account.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attributeBucket",
+    },
+  ],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`defWithBuckets > should create definition with overriden bucket 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measureBucket",
+    },
+  ],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`defWithBuckets > should create definition with two buckets 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.account.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.account.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attributeBucket",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attributeBucket",
+    },
+  ],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`defaultDimensionsGenerator > should create single dim when just attributes in def 1`] = `
 [
   {

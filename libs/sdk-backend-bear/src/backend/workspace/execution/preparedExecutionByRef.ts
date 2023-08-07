@@ -20,6 +20,8 @@ import {
     ISortItem,
     IExecutionConfig,
     defWithDateFormat,
+    IBucket,
+    defWithBuckets,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -92,6 +94,10 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+    }
+
+    public withBuckets(...buckets: IBucket[]): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithBuckets(this.definition, buckets));
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {

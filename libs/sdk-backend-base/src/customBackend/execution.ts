@@ -96,6 +96,10 @@ class CustomPreparedExecution implements IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     };
 
+    public withBuckets = (): IPreparedExecution => {
+        return this.executionFactory.forDefinition(this.definition);
+    };
+
     public withDateFormat = (dateFormat: string): IPreparedExecution => {
         return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     };

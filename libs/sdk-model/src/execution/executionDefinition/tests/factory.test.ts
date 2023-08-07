@@ -13,14 +13,15 @@ import {
 } from "../../../index.js";
 import { newInsight } from "../../../../__mocks__/insights.js";
 import { Account, Activity, Department, Velocity, Won } from "../../../../__mocks__/model.js";
-import { emptyDef, newDefForItems } from "../factory.js";
+import { defWithBuckets, emptyDef, newDefForItems } from "../factory.js";
 
 const Workspace = "testWorkspace";
 const VisClassId = "testTable";
+const EmptyDef = emptyDef(Workspace);
 
 describe("emptyDef", () => {
     it("should create def with all fields empty", () => {
-        expect(emptyDef(Workspace)).toMatchSnapshot();
+        expect(EmptyDef).toMatchSnapshot();
     });
 });
 
@@ -33,6 +34,8 @@ const AttributeBucket2 = newBucket("attributeBucket", Department);
 const MeasureBucket = newBucket("measureBucket", Won);
 const MixedBucket = newBucket("mixedBucket", Activity.Subject, Velocity.Sum);
 const AttributeSort = newAttributeSort(Activity.Subject, "asc");
+
+const DefWithMixedBucket = { ...EmptyDef, buckets: [MixedBucket] };
 
 describe("newDefForItems", () => {
     const Scenarios: Array<[string, any, any]> = [
@@ -144,5 +147,18 @@ describe("defaultDimensionsGenerator", () => {
 
     it.each(Scenarios)("should create %s", (_desc, execArg) => {
         expect(defaultDimensionsGenerator(execArg)).toMatchSnapshot();
+    });
+});
+
+describe("defWithBuckets", () => {
+    const Scenarios: Array<[string, any, any]> = [
+        ["no bucket", EmptyDef, []],
+        ["one bucket", EmptyDef, [AttributeBucket]],
+        ["two buckets", EmptyDef, [AttributeBucket, AttributeBucket2]],
+        ["overriden bucket", DefWithMixedBucket, [MeasureBucket]],
+    ];
+
+    it.each(Scenarios)("should create definition with %s", (_desc, def, buckets) => {
+        expect(defWithBuckets(def, buckets)).toMatchSnapshot();
     });
 });
