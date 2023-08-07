@@ -97,6 +97,40 @@ export interface IMeasureColumnWidthItem {
 }
 
 /**
+ * Object defining the {@link ISliceMeasureColumnWidthItem } object body.
+ *
+ * @public
+ */
+export interface ISliceMeasureColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: IMeasureColumnLocator[];
+}
+
+/**
+ * @public
+ */
+export interface ISliceMeasureColumnWidthItem {
+    sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
+}
+
+/**
+ * Object defining the {@link IMixedValuesColumnWidthItemBody } object body.
+ *
+ * @public
+ */
+export interface IMixedValuesColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: IMeasureColumnLocator[];
+}
+
+/**
+ * @public
+ */
+export interface IMixedValuesColumnWidthItem {
+    mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
+}
+
+/**
  * Object defining {@link IAllMeasureColumnWidthItem} object body.
  *
  * @public
@@ -135,6 +169,8 @@ export interface IWeakMeasureColumnWidthItem {
 export type ColumnWidthItem =
     | IAttributeColumnWidthItem
     | IMeasureColumnWidthItem
+    | ISliceMeasureColumnWidthItem
+    | IMixedValuesColumnWidthItem
     | IAllMeasureColumnWidthItem
     | IWeakMeasureColumnWidthItem;
 
@@ -271,6 +307,32 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
         !isEmpty(obj) &&
         (obj as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
         (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
+    );
+}
+
+/**
+ * Tests whether object is an instance of {@link ISliceMeasureColumnWidthItem}
+ *
+ * @public
+ */
+export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem {
+    return (
+        !isEmpty(obj) &&
+        (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem !== undefined &&
+        (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem.locators !== undefined
+    );
+}
+
+/**
+ * Tests whether object is an instance of {@link IMixedValuesColumnWidthItem}
+ *
+ * @public
+ */
+export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesColumnWidthItem {
+    return (
+        !isEmpty(obj) &&
+        (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem !== undefined &&
+        (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem.locators !== undefined
     );
 }
 

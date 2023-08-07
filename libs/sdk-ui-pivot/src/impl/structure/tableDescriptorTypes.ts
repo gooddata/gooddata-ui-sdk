@@ -106,6 +106,8 @@ export interface SliceMeasureCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+
+    readonly seriesDescriptor: DataSeriesDescriptor[];
 }
 
 export interface MixedHeadersCol extends TableCol {
@@ -135,6 +137,8 @@ export interface MixedValuesCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+
+    readonly seriesDescriptor?: DataSeriesDescriptor[];
 
     /**
      * Checks whether this column group is part of grand total.
@@ -305,6 +309,11 @@ export function isRootCol(obj: unknown): obj is RootCol {
 export type LeafDataCol = SeriesCol | ScopeCol;
 
 /**
+ * Represents table columns which displays names and values of metrics when is transposed to rows.
+ */
+export type TransposedMeasureDataCol = SliceMeasureCol | MixedValuesCol;
+
+/**
  * Data col is a composite structure describing the data part of the table.
  */
 export type DataCol = RootCol | LeafDataCol;
@@ -312,7 +321,7 @@ export type DataCol = RootCol | LeafDataCol;
 /**
  * All types of slice cols.
  */
-export type AnySliceCol = SliceCol | SliceMeasureCol;
+export type AnySliceCol = SliceCol | SliceMeasureCol | MixedValuesCol;
 
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.

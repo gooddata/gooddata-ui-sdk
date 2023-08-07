@@ -7,6 +7,7 @@ import {
     isSeriesCol,
     isRootCol,
     LeafDataCol,
+    TransposedMeasureDataCol,
 } from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
@@ -94,6 +95,34 @@ export function searchForLocatorMatch(
             if (colMeasureLocalId(col) === locators[0].measureLocatorItem.measureIdentifier) {
                 found = col;
             }
+        }
+
+        if (found) {
+            return found;
+        }
+    }
+
+    return undefined;
+}
+
+/**
+ *
+ * @param cols - columns to search
+ * @param locators - column locators to match
+ */
+export function searchForTransposedLocatorMatch(
+    cols: TransposedMeasureDataCol[],
+    locators: ColumnLocator[],
+): TransposedMeasureDataCol | undefined {
+    let found: TransposedMeasureDataCol | undefined = undefined;
+
+    for (const col of cols) {
+        if (col.seriesDescriptor?.length !== locators.length || !isMeasureColumnLocator(locators[0])) {
+            return undefined;
+        }
+
+        if (colMeasureLocalId(col) === locators[0].measureLocatorItem.measureIdentifier) {
+            found = col;
         }
 
         if (found) {

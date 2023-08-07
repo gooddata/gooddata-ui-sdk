@@ -47,3 +47,18 @@ export const TwoMeasuresAndGrandTotalsAndMultipleSubtotals = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndGrandTotalsAndMultipleSubtotals,
     DataViewFirstPage,
 );
+
+export const TwoMeasuresWithSingleRowAttrWithMetricsInRows = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithSingleRowAttrWithMetricsInRows,
+    DataViewFirstPage,
+);
+
+export const MultipleMeasuresAndNoColumnsWithMetricsInRows = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PivotTable.MultipleMeasuresAndNoColumnsWithTotals,
+    DataViewFirstPage,
+);
+
+export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft = recordedDataFacade(
+    ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft,
+    DataViewFirstPage,
+);

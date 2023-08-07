@@ -7,8 +7,12 @@ import {
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
+    isSliceMeasureColumnWidthItem,
+    isMixedValuesColumnWidthItem,
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
+    ColumnLocator,
+    IMeasureColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
@@ -116,6 +120,15 @@ function removeInvalidLocators(
         return false;
     });
 }
+
+const columnWidthLocatorsAndMeasuresHaveSameValues = (
+    locators: ColumnLocator[],
+    measureLocalIdentifiers: string[],
+) => {
+    return locators.every((locator: IMeasureColumnLocator) => {
+        return measureLocalIdentifiers.includes(locator.measureLocatorItem.measureIdentifier);
+    });
+};
 
 function transformToWeakMeasureColumnWidthItem(
     columnWidth: IMeasureColumnWidthItem,
@@ -225,6 +238,24 @@ function adaptWidthItemsToPivotTable(
         ) {
             columnWidths.push(columnWidth);
             return columnWidths;
+        } else if (isSliceMeasureColumnWidthItem(columnWidth)) {
+            const hasSameLocatorsAsMeasures = columnWidthLocatorsAndMeasuresHaveSameValues(
+                columnWidth.sliceMeasureColumnWidthItem.locators,
+                measureLocalIdentifiers,
+            );
+
+            if (hasSameLocatorsAsMeasures) {
+                columnWidths.push(columnWidth);
+            }
+        } else if (isMixedValuesColumnWidthItem(columnWidth)) {
+            const hasSameLocatorsAsMeasures = columnWidthLocatorsAndMeasuresHaveSameValues(
+                columnWidth.mixedValuesColumnWidthItem.locators,
+                measureLocalIdentifiers,
+            );
+
+            if (hasSameLocatorsAsMeasures) {
+                columnWidths.push(columnWidth);
+            }
         }
 
         return columnWidths;
