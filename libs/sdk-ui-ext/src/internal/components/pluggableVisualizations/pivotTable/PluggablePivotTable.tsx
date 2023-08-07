@@ -25,8 +25,6 @@ import {
     ISortItem,
     newAttributeSort,
     ISettings,
-    bucketsFind,
-    bucketItems,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
@@ -95,6 +93,7 @@ import {
     sanitizePivotTableSorts,
 } from "./sortItemsHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
+import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -427,13 +426,9 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             insightProperties(insight),
         );
 
-        const buckets = insightBuckets(insight);
-        const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-
-        const columnHeadersPosition: ColumnHeadersPosition =
-            row && bucketItems(row).length > 0
-                ? "top"
-                : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
+            ? "top"
+            : getColumnHeadersPositionFromProperties(insightProperties(insight));
 
         const measureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
