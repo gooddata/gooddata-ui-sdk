@@ -7,6 +7,7 @@ import {
     insightSummary,
     insightUpdated,
     insightVisualizationType,
+    insightCreated,
 } from "@gooddata/sdk-model";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsightListProps, InsightList } from "../../../insightList/index.js";
@@ -50,7 +51,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                         type={visualizationType}
                         width={width}
                         className={classNames}
-                        updated={insightUpdated(insight)}
+                        updated={insightUpdated(insight) ?? insightCreated(insight)}
                         isLocked={insightIsLocked(insight)}
                         insight={insight}
                         onDescriptionPanelOpen={() => {

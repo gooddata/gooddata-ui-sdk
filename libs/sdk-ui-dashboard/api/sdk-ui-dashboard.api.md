@@ -6453,6 +6453,9 @@ export const selectSupportsHierarchicalWorkspacesCapability: DashboardSelector<b
 // @internal
 export const selectSupportsKpiWidgetCapability: DashboardSelector<boolean>;
 
+// @internal
+export const selectSupportsObjectUris: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
 

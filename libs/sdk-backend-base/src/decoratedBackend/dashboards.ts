@@ -10,6 +10,7 @@ import {
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
     IExportResult,
+    IGetDashboardPluginOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -149,12 +150,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.getResolvedFiltersForWidget(widget, filters);
     }
 
-    getDashboardPlugins(): Promise<IDashboardPlugin[]> {
-        return this.decorated.getDashboardPlugins();
+    getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]> {
+        return this.decorated.getDashboardPlugins(options);
     }
 
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin> {
-        return this.decorated.getDashboardPlugin(ref);
+    getDashboardPlugin(ref: ObjRef, options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin> {
+        return this.decorated.getDashboardPlugin(ref, options);
     }
 
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> {

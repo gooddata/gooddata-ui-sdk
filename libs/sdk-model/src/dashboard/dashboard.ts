@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { IAuditableDates, IAuditableUsers } from "../base/metadata.js";
+import { IAuditableDates, IAuditableUsers, IAuditable } from "../base/metadata.js";
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
@@ -121,7 +121,7 @@ export interface IDashboardPluginBase {
 /**
  * @alpha
  */
-export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {}
+export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditable {}
 
 /**
  * @alpha

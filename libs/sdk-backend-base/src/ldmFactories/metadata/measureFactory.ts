@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity.js";
-import { ObjRef, IMeasureMetadataObject } from "@gooddata/sdk-model";
+import { ObjRef, IMeasureMetadataObject, IUser } from "@gooddata/sdk-model";
 import { MetadataObjectBuilder } from "./factory.js";
 import { builderFactory, BuilderModifications } from "../builder.js";
 
@@ -25,6 +25,26 @@ export class MeasureMetadataObjectBuilder<
 
     public isLocked(isLocked: boolean): this {
         this.item.isLocked = isLocked;
+        return this;
+    }
+
+    public created(createdAt?: string): this {
+        this.item.created = createdAt;
+        return this;
+    }
+
+    public createdBy(createdBy?: IUser): this {
+        this.item.createdBy = createdBy;
+        return this;
+    }
+
+    public updated(updatedAt?: string): this {
+        this.item.updated = updatedAt;
+        return this;
+    }
+
+    public updatedBy(updatedBy?: IUser): this {
+        this.item.updatedBy = updatedBy;
         return this;
     }
 }

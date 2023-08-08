@@ -12,9 +12,6 @@
     ],
     "tags": [
         {
-            "name": "Computation"
-        },
-        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }

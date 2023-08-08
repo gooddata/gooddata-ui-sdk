@@ -6,8 +6,10 @@
  * @public
  */
 export type IEntitlementsName =
+    | "CacheStrategy"
     | "Contract"
     | "CustomTheming"
+    | "ExtraCache"
     | "ManagedOIDC"
     | "UiLocalization"
     | "Tier"

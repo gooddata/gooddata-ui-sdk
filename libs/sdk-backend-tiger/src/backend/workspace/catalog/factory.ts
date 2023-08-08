@@ -147,7 +147,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 .then(MetadataUtilities.filterValidEntities);
         });
 
-        return measures.data.map(convertMeasure);
+        return measures.data.map((measure) => convertMeasure(measure, measures.included));
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {

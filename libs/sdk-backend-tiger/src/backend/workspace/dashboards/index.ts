@@ -22,6 +22,7 @@ import {
     UnexpectedError,
     TimeoutError,
     IExportResult,
+    IGetDashboardPluginOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -77,17 +78,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Public methods
     public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {
-        if (options?.loadUserData) {
-            console.warn(
-                "Tiger backend does not support the 'loadUserData' option of getDashboards. Ignoring.",
-            );
-        }
-
+        const includeUser = options?.loadUserData
+            ? { include: ["createdBy" as const, "modifiedBy" as const] }
+            : {};
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.entities.getAllEntitiesAnalyticalDashboards,
-                { workspaceId: this.workspace, metaInclude: ["accessInfo"] },
+                { workspaceId: this.workspace, metaInclude: ["accessInfo"], ...includeUser },
                 // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
                 // { headers: ValidateRelationsHeader },
             )
@@ -103,19 +101,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filterContextRef?: ObjRef,
         options?: IGetDashboardOptions,
     ): Promise<IDashboard> => {
-        if (options?.loadUserData) {
-            console.warn(
-                "Tiger backend does not support the 'loadUserData' option of getDashboard. Ignoring.",
-            );
-        }
-
+        const includeUser = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return client.entities.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId: id,
-                    include: ["filterContexts"],
+                    include: ["filterContexts", ...includeUser],
                     metaInclude: ["accessInfo"],
                 },
                 {
@@ -138,18 +131,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
         types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
     ): Promise<IDashboardWithReferences> => {
-        if (options?.loadUserData) {
-            console.warn(
-                "Tiger backend does not support the 'loadUserData' option of getDashboardWithReferences. Ignoring.",
-            );
-        }
-
-        const dashboard = await this.getDashboardWithSideloads(ref, types);
+        const dashboard = await this.getDashboardWithSideloads(ref, types, options);
         const included = dashboard.included || [];
-        const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
+        const insights = included
+            .filter(isVisualizationObjectsItem)
+            .map((insight) => visualizationObjectsItemToInsight(insight, included));
         const plugins = included
             .filter(isDashboardPluginsItem)
-            .map(convertDashboardPluginWithLinksFromBackend);
+            .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included));
 
         const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
 
@@ -170,10 +159,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const included = result.included || [];
 
             return {
-                insights: included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight),
+                insights: included
+                    .filter(isVisualizationObjectsItem)
+                    .map((insight) => visualizationObjectsItemToInsight(insight, included)),
                 plugins: included
                     .filter(isDashboardPluginsItem)
-                    .map(convertDashboardPluginWithLinksFromBackend),
+                    .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included)),
             };
         });
     };
@@ -208,8 +199,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private getDashboardWithSideloads = async (
         ref: ObjRef,
         types: SupportedDashboardReferenceTypes[],
+        options?: IGetDashboardOptions,
     ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
-        const include: EntitiesApiGetEntityAnalyticalDashboardsRequest["include"] = ["filterContexts"];
+        const includeUser = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
+        const include: EntitiesApiGetEntityAnalyticalDashboardsRequest["include"] = [
+            "filterContexts",
+            ...includeUser,
+        ];
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
@@ -514,13 +510,20 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
     };
 
-    public getDashboardPlugin = async (ref: ObjRef): Promise<IDashboardPlugin> => {
+    public getDashboardPlugin = async (
+        ref: ObjRef,
+        options?: IGetDashboardPluginOptions,
+    ): Promise<IDashboardPlugin> => {
+        const includeUser = options?.loadUserData
+            ? { include: ["createdBy" as const, "modifiedBy" as const] }
+            : {};
         const objectId = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return client.entities.getEntityDashboardPlugins(
                 {
                     workspaceId: this.workspace,
                     objectId,
+                    ...includeUser,
                 },
                 {
                     headers: jsonApiHeaders,
@@ -531,19 +534,26 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertDashboardPluginFromBackend(result.data);
     };
 
-    public getDashboardPlugins = async (): Promise<IDashboardPlugin[]> => {
+    public getDashboardPlugins = async (
+        options?: IGetDashboardPluginOptions,
+    ): Promise<IDashboardPlugin[]> => {
+        const includeUser = options?.loadUserData
+            ? { include: ["createdBy" as const, "modifiedBy" as const] }
+            : {};
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.entities.getAllEntitiesDashboardPlugins,
-                { workspaceId: this.workspace },
+                { workspaceId: this.workspace, ...includeUser },
                 { headers: ValidateRelationsHeader },
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
         });
 
-        return result.data.map(convertDashboardPluginWithLinksFromBackend);
+        return result.data.map((plugin) =>
+            convertDashboardPluginWithLinksFromBackend(plugin, result.included),
+        );
     };
 
     public validateDashboardsExistence = async (dashboardRefs: ObjRef[]) => {

@@ -13,6 +13,7 @@ export {
     selectSupportsKpiWidgetCapability,
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
+    selectSupportsObjectUris,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {

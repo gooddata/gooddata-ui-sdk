@@ -15,6 +15,7 @@ import {
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
     walkLayout,
+    IGetDashboardPluginOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -373,11 +374,14 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
-    public getDashboardPlugin(_ref: ObjRef): Promise<IDashboardPlugin> {
+    public getDashboardPlugin(
+        _ref: ObjRef,
+        _options?: IGetDashboardPluginOptions,
+    ): Promise<IDashboardPlugin> {
         throw new NotSupported("recorded backend does not support this call");
     }
 
-    public getDashboardPlugins(): Promise<IDashboardPlugin[]> {
+    public getDashboardPlugins(_options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]> {
         throw new NotSupported("recorded backend does not support this call");
     }
 

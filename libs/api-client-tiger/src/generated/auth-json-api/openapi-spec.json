@@ -12,9 +12,6 @@
     ],
     "tags": [
         {
-            "name": "User Authorization"
-        },
-        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         },

@@ -24,6 +24,7 @@ import { isInheritedObject } from "../../ObjectInheritance.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
+import { convertUserIdentifier } from "../../UsersConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -71,8 +72,10 @@ export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
-    const { id, attributes = {}, meta = {} } = analyticalDashboard.data;
-    const { title = "", description = "", content } = attributes;
+    const { data, links, included } = analyticalDashboard;
+    const { id, attributes = {}, meta = {}, relationships = {} } = data;
+    const { createdBy, modifiedBy } = relationships;
+    const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
     const { dateFilterConfig, layout } = getConvertedAnalyticalDashboardContent(
@@ -83,13 +86,15 @@ export function convertDashboard(
         type: "IDashboard",
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
-        uri: stripQueryParams(analyticalDashboard.links!.self),
+        uri: stripQueryParams(links!.self),
         title,
         description,
-        created: "",
-        updated: "",
+        created: createdAt,
+        createdBy: convertUserIdentifier(createdBy, included),
+        updated: modifiedAt,
+        updatedBy: convertUserIdentifier(modifiedBy, included),
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
-        isLocked: isInheritedObject(analyticalDashboard.data),
+        isLocked: isInheritedObject(data),
         shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         tags: attributes.tags,

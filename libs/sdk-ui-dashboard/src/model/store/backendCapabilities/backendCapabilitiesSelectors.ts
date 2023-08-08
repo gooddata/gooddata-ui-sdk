@@ -92,3 +92,13 @@ export const selectSupportsExportToXlsx: DashboardSelector<boolean> = createSele
     selectBackendCapabilities,
     (capabilities) => capabilities.canExportXlsx ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsObjectUris}
+ *
+ * @internal
+ */
+export const selectSupportsObjectUris: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsObjectUris ?? false,
+);
