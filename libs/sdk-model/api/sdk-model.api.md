@@ -957,7 +957,7 @@ export type IDashboardPermissions = {
 };
 
 // @alpha (undocumented)
-export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {
+export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditable {
 }
 
 // @alpha (undocumented)
@@ -1206,7 +1206,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "Contract" | "CustomTheming" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount";
 
 // @public
 export interface IExecutionConfig {
@@ -1542,7 +1542,7 @@ export interface IMeasureLocatorItemBody {
 }
 
 // @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
 
 // @public (undocumented)
 export interface IMeasureMetadataObjectBase {

@@ -131,7 +131,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             );
         });
 
-        return convertMetricFromBackend(result.data);
+        return convertMetricFromBackend(result.data, result.data.included);
     }
 
     async updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
@@ -156,7 +156,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             );
         });
 
-        return convertMetricFromBackend(result.data);
+        return convertMetricFromBackend(result.data, result.data.included);
     }
 
     async deleteMeasure(measureRef: ObjRef): Promise<void> {
@@ -180,7 +180,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 filter: `metrics.id==${id}`, // RSQL format of querying data
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
-                .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
+                .then((insights) =>
+                    insights.data.map((insight) =>
+                        visualizationObjectsItemToInsight(insight, insights.included),
+                    ),
+                ),
         );
 
         const measures = this.authCall((client) =>
@@ -191,7 +195,9 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 filter: `metrics.id==${id}`, // RSQL format of querying data
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
-                .then((measures) => measures.data.map(convertMetricFromBackend)),
+                .then((measures) =>
+                    measures.data.map((metric) => convertMetricFromBackend(metric, measures.included)),
+                ),
         );
 
         const request = Promise.all([insights, measures]);

@@ -10,6 +10,7 @@ import {
     isUriRef,
     areObjRefsEqual,
     insightSummary,
+    insightCreated,
 } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce.js";
 import range from "lodash/range.js";
@@ -206,7 +207,10 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             type={insightListSourceItem.insightType}
                             width={width}
                             isSelected={isSelected}
-                            updated={insightUpdated(insightListSourceItem.insight)}
+                            updated={
+                                insightUpdated(insightListSourceItem.insight) ??
+                                insightCreated(insightListSourceItem.insight)
+                            }
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                         />

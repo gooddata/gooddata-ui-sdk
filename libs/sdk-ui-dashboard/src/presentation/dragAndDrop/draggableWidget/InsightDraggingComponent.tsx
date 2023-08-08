@@ -1,6 +1,12 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { insightIsLocked, insightTitle, insightUpdated, insightVisualizationType } from "@gooddata/sdk-model";
+import {
+    insightIsLocked,
+    insightTitle,
+    insightUpdated,
+    insightVisualizationType,
+    insightCreated,
+} from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import { IInsightDraggingComponentProps } from "../../componentDefinition/types.js";
@@ -18,7 +24,7 @@ export function InsightDraggingComponent({ item }: IInsightDraggingComponentProp
             className="move-insight-placeholder"
             type={visualizationType}
             title={insightTitle(insight)}
-            updated={insightUpdated(insight)}
+            updated={insightUpdated(insight) ?? insightCreated(insight)}
             isLocked={insightIsLocked(insight)}
         />
     );

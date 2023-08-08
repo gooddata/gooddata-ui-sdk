@@ -16,6 +16,7 @@ import {
     JsonApiFactOutWithLinks,
     JsonApiLabelOutWithLinks,
     JsonApiMetricOutWithLinks,
+    JsonApiMetricOutIncludes,
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions.js";
 import {
@@ -31,6 +32,7 @@ import {
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
+import { convertUserIdentifier } from "./UsersConverter.js";
 
 const commonGroupableCatalogItemModifications =
     <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
@@ -79,7 +81,10 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (measure: JsonApiMetricOutWithLinks): ICatalogMeasure => {
+export const convertMeasure = (
+    measure: JsonApiMetricOutWithLinks,
+    included: JsonApiMetricOutIncludes[] = [],
+): ICatalogMeasure => {
     const { maql = "", format = "" } = measure.attributes?.content || {};
 
     return newCatalogMeasure((catalogM) =>
@@ -89,7 +94,11 @@ export const convertMeasure = (measure: JsonApiMetricOutWithLinks): ICatalogMeas
                     .modify(commonMetadataObjectModifications(measure))
                     .expression(maql)
                     .format(format)
-                    .isLocked(isInheritedObject(measure)),
+                    .isLocked(isInheritedObject(measure))
+                    .created(measure.attributes?.createdAt)
+                    .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
+                    .updated(measure.attributes?.modifiedAt)
+                    .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included)),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
     );

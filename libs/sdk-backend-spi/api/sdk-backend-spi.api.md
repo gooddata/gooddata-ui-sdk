@@ -450,6 +450,11 @@ export interface IGetDashboardOptions {
     loadUserData?: boolean;
 }
 
+// @alpha
+export interface IGetDashboardPluginOptions {
+    loadUserData?: boolean;
+}
+
 // @public
 export interface IGetInsightOptions {
     loadUserData?: boolean;
@@ -796,8 +801,8 @@ export interface IWorkspaceDashboardsService {
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardPlugin(ref: ObjRef, options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin>;
+    getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]>;
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
