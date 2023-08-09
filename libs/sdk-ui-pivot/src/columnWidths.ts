@@ -454,6 +454,7 @@ export function newWidthForAllColumnsForMeasure(
 
 /**
  * Creates width item that will set width for all columns containing values of the provided measure.
+ * To prepare width items for columns in tables without measures, pass measureOrId as `null`.
  *
  * @remarks
  * See also {@link newAttributeColumnLocator} to learn more about the attribute column locators.
@@ -465,12 +466,12 @@ export function newWidthForAllColumnsForMeasure(
  * @public
  */
 export function newWidthForSelectedColumns(
-    measureOrId: IMeasure | string,
+    measureOrId: IMeasure | string | null,
     locators: IAttributeColumnLocator[],
     width: number | "auto",
     allowGrowToFit?: boolean,
 ): IMeasureColumnWidthItem {
-    const measureLocator = newMeasureColumnLocator(measureOrId);
+    const measureLocator = measureOrId ? [newMeasureColumnLocator(measureOrId)] : [];
     const growToFitProp = allowGrowToFit !== undefined && width !== "auto" ? { allowGrowToFit } : {};
 
     // Note: beware here. The attribute locators _must_ come first for some obscure, impl dependent reason
@@ -480,7 +481,7 @@ export function newWidthForSelectedColumns(
                 value: width,
                 ...growToFitProp,
             },
-            locators: [...locators, measureLocator],
+            locators: [...locators, ...measureLocator],
         },
     };
 }
