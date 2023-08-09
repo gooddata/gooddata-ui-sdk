@@ -49,8 +49,9 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
     );
 
     // cannot use lodash compact, that would remove 0 values which we want to keep here
+    const measureLocatorIdentifier = measureLocator?.measureLocatorItem?.measureIdentifier;
     const params = [
-        `"${measureLocator.measureLocatorItem.measureIdentifier}"`,
+        measureLocatorIdentifier ? `"${measureLocatorIdentifier}"` : "null",
         `[${attributeLocatorFactories.join(", ")}]`,
         isString(width.value) ? `"${width.value}"` : width.value,
         allowGrowToFit && "true",

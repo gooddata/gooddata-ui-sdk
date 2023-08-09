@@ -287,7 +287,7 @@ export function newWidthForAllMeasureColumns(width: number, allowGrowToFit?: boo
 export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, width: number, allowGrowToFit?: boolean): IAttributeColumnWidthItem;
 
 // @public
-export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
+export function newWidthForSelectedColumns(measureOrId: IMeasure | string | null, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
 export const PivotTable: (props: IPivotTableProps) => JSX.Element;
