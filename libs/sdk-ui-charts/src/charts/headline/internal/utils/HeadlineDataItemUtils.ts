@@ -1,9 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../Headlines.js";
+import { RefObject } from "react";
+import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 import isNaN from "lodash/isNaN.js";
+
+import { getHeadlineResponsiveClassName } from "@gooddata/sdk-ui-vis-commons";
+import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
@@ -30,6 +35,16 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
         style.backgroundColor = backgroundColor;
     }
     return style;
+}
+
+function isShortenedLabel(titleRef: RefObject<HTMLDivElement>): boolean {
+    if (!titleRef.current) {
+        return false;
+    }
+
+    const { height } = titleRef.current.getBoundingClientRect();
+    const { lineHeight } = window.getComputedStyle(titleRef.current);
+    return height > parseFloat(lineHeight) * 2;
 }
 
 /**
@@ -90,4 +105,19 @@ export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadli
         value: formattedValue,
         isValueEmpty: false,
     };
+}
+
+export function getDrillableClasses(isDrillable: boolean) {
+    return isDrillable ? ["is-drillable", "s-is-drillable"] : [];
+}
+
+export function getCompareSectionClasses(
+    clientWidth: number,
+    secondaryItemTitleWrapperRef: RefObject<HTMLDivElement>,
+): string {
+    const responsiveClassName = getHeadlineResponsiveClassName(
+        clientWidth,
+        isShortenedLabel(secondaryItemTitleWrapperRef),
+    );
+    return cx("gd-flex-container", "headline-compare-section", responsiveClassName);
 }

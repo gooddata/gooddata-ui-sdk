@@ -15,7 +15,8 @@ import {
     buildDrillEventData,
 } from "./utils/XirrTransformationUtils.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import Headline, { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/Headline.js";
+import LegacyHeadline from "../../headline/internal/headlines/LegacyHeadline.js";
+import { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/interfaces/DrillEvents.js";
 
 export interface IXirrTransformationProps {
     dataView: IDataView;
@@ -27,7 +28,7 @@ export interface IXirrTransformationProps {
 }
 
 /**
- * The React component that handles the transformation of the execution objects into the data accepted by the {@link Headline}
+ * The React component that handles the transformation of the execution objects into the data accepted by the {@link LegacyHeadline}
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
@@ -50,7 +51,7 @@ class XirrTransformation extends React.Component<IXirrTransformationProps & Wrap
         const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
         const disableDrillUnderline = this.getDisableDrillUnderlineFromConfig();
         return (
-            <Headline
+            <LegacyHeadline
                 data={dataWithUpdatedDrilling}
                 config={config}
                 onDrill={this.handleFiredDrillEvent}

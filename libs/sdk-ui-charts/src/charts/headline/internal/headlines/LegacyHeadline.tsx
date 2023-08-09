@@ -4,39 +4,32 @@ import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines.js";
-import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils.js";
-import { Identifier } from "@gooddata/sdk-model";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
+import {
+    formatItemValue,
+    formatPercentageValue,
+    getCompareSectionClasses,
+    getDrillableClasses,
+} from "../utils/HeadlineDataItemUtils.js";
 import noop from "lodash/noop.js";
 import {
     HeadlinePagination,
     calculateHeadlineHeightFontSize,
     shouldRenderPagination,
-    getHeadlineResponsiveClassName,
 } from "@gooddata/sdk-ui-vis-commons";
 import { defaultImport } from "default-import";
+import { HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(ReactMeasure);
 
-export interface IHeadlineFiredDrillEventItemContext {
-    localIdentifier: Identifier;
-    value: string | null;
-    element: HeadlineElementType;
-}
-
-export type IHeadlineFiredDrillEvent = (
-    itemContext?: IHeadlineFiredDrillEventItemContext,
-    elementTarget?: EventTarget,
-) => void;
-
 export interface IHeadlineVisualizationProps {
     data: IHeadlineData;
     config?: IChartConfig;
-    onDrill?: IHeadlineFiredDrillEvent;
+    onDrill?: HeadlineFiredDrillEvent;
     onAfterRender?: () => void;
     disableDrillUnderline?: boolean;
 }
@@ -44,7 +37,7 @@ export interface IHeadlineVisualizationProps {
 /**
  * The React component that renders the Headline visualisation.
  */
-export default class Headline extends React.Component<IHeadlineVisualizationProps> {
+export default class LegacyHeadline extends React.Component<IHeadlineVisualizationProps> {
     public static defaultProps: Pick<
         IHeadlineVisualizationProps,
         "onDrill" | "onAfterRender" | "config" | "disableDrillUnderline"
@@ -80,15 +73,11 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         );
     }
 
-    private getDrillableClasses(isDrillable: boolean) {
-        return isDrillable ? ["is-drillable", "s-is-drillable"] : [];
-    }
-
     private getPrimaryItemClasses(primaryItem: IHeadlineDataItem) {
         return cx([
             "headline-primary-item",
             "s-headline-primary-item",
-            ...this.getDrillableClasses(primaryItem.isDrillable),
+            ...getDrillableClasses(primaryItem.isDrillable),
         ]);
     }
 
@@ -98,7 +87,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
             "headline-compare-section-item",
             "headline-secondary-item",
             "s-headline-secondary-item",
-            ...this.getDrillableClasses(secondaryItem.isDrillable),
+            ...getDrillableClasses(secondaryItem.isDrillable),
         ]);
     }
 
@@ -215,7 +204,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         }
 
         return (
-            <div className={this.getCompareSectionClasses(clientWidth)}>
+            <div className={getCompareSectionClasses(clientWidth, this.secondaryItemTitleWrapperRef)}>
                 {this.renderTertiaryItem()}
                 {this.renderSecondaryItem()}
             </div>
@@ -290,20 +279,5 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 </ResponsiveText>
             </div>
         );
-    }
-
-    private getCompareSectionClasses(clientWidth?: number): string {
-        const responsiveClassName = getHeadlineResponsiveClassName(clientWidth, this.isShortenedLabel());
-        return cx("gd-flex-container", "headline-compare-section", responsiveClassName);
-    }
-
-    private isShortenedLabel(): boolean {
-        if (!this.secondaryItemTitleWrapperRef.current) {
-            return false;
-        }
-
-        const { height } = this.secondaryItemTitleWrapperRef.current.getBoundingClientRect();
-        const { lineHeight } = window.getComputedStyle(this.secondaryItemTitleWrapperRef.current);
-        return height > parseFloat(lineHeight) * 2;
     }
 }

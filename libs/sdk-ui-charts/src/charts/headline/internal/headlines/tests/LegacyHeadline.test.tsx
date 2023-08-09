@@ -1,12 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import Headline, { IHeadlineVisualizationProps } from "../Headline.js";
+import LegacyHeadline, { IHeadlineVisualizationProps } from "../LegacyHeadline.js";
 import { describe, it, expect, vi } from "vitest";
 
-describe("Headline", () => {
+describe("LegacyHeadline", () => {
     function createComponent(props: IHeadlineVisualizationProps) {
-        return render(<Headline {...props} />);
+        return render(<LegacyHeadline {...props} />);
     }
 
     it("should call after render callback on componentDidMount", () => {

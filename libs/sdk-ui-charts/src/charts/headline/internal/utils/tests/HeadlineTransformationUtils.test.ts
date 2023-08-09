@@ -19,7 +19,7 @@ import {
     headlineWithTwoMeasuresSecondZero,
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures.js";
-import { IHeadlineData } from "../../../Headlines.js";
+import { IHeadlineData } from "../../interfaces/Headlines.js";
 import { describe, it, expect } from "vitest";
 
 describe("HeadlineTransformationUtils", () => {

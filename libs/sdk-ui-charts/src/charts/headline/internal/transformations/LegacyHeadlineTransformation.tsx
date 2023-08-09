@@ -2,7 +2,7 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "@gooddata/sdk-ui";
-import Headline, { IHeadlineFiredDrillEventItemContext } from "../Headline.js";
+import LegacyHeadline from "../headlines/LegacyHeadline.js";
 import {
     applyDrillableItems,
     buildDrillEventData,
@@ -10,9 +10,10 @@ import {
 } from "../utils/HeadlineTransformationUtils.js";
 import noop from "lodash/noop.js";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
+import { IHeadlineFiredDrillEventItemContext } from "../interfaces/DrillEvents.js";
 
 /**
- * The React component that handles the transformation of the execution objects into the data accepted by the {@link Headline}
+ * The React component that handles the transformation of the execution objects into the data accepted by the {@link LegacyHeadline}
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
@@ -43,7 +44,7 @@ class LegacyHeadlineTransformation extends React.Component<
         const disableDrillUnderline = this.getDisableDrillUnderlineFromConfig();
 
         return (
-            <Headline
+            <LegacyHeadline
                 data={dataWithUpdatedDrilling}
                 config={config}
                 onDrill={this.handleFiredDrillEvent}
