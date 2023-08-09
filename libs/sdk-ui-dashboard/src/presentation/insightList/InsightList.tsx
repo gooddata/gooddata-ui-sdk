@@ -56,7 +56,7 @@ const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll] as ITab[]
 const useAuthor = () => {
     const isObjectUrisSupported = useDashboardSelector(selectSupportsObjectUris);
     const user = useDashboardSelector(selectCurrentUser);
-    const userUri = isUriRef(user) ? user.uri : undefined;
+    const userUri = isUriRef(user.ref) ? user.ref.uri : undefined;
 
     // getInsights filter via user URI on Bear, via user's login on Tiger
     return isObjectUrisSupported ? userUri : user.login;
