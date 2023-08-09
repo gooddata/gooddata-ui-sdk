@@ -14,6 +14,7 @@ import {
     isTotalColumnLocator,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
+    IMeasureColumnLocator,
 } from "../../columnWidths.js";
 import { colMeasureLocalId } from "./colAccessors.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -69,7 +70,25 @@ export function searchForLocatorMatch(
                 matchingLocator.totalLocatorItem.totalFunction === col.header?.totalHeaderItem?.name;
 
             if (matchingAttr || matchingTot) {
-                if (locators.length === 1) {
+                // When table is transposed (metrics in rows). Need to check that existing measures descriptors on data view
+                // matches the exsting ones on the resized scope column.
+                if (col.measureDescriptors) {
+                    const measureDescriptorsId = col.measureDescriptors.map(
+                        (measureDescriptor) => measureDescriptor.measureHeaderItem.localIdentifier,
+                    );
+                    const measureLocators = locators.filter(isMeasureColumnLocator);
+                    const matchingMeasureLocators = measureLocators.every(
+                        (locator: IMeasureColumnLocator) => {
+                            return measureDescriptorsId.includes(
+                                locator.measureLocatorItem.measureIdentifier,
+                            );
+                        },
+                    );
+
+                    if (matchingMeasureLocators) {
+                        found = col;
+                    }
+                } else if (locators.length === 1) {
                     // elements match; see if all locators exhausted. if so, it means the width item does
                     // not contain any measure locator; it's OK to match the DataColGroup though, so mark it
                     // as found and bail out

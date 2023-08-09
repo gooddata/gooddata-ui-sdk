@@ -1,5 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
-import { IAttributeDescriptor, IResultAttributeHeader, ITotalDescriptor } from "@gooddata/sdk-model";
+import {
+    IAttributeDescriptor,
+    IResultAttributeHeader,
+    ITotalDescriptor,
+    IMeasureDescriptor,
+} from "@gooddata/sdk-model";
 import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 
@@ -269,6 +274,11 @@ export interface ScopeCol extends TableCol {
      * Checks whether this column group is part of sub-total.
      */
     readonly isSubtotal?: boolean;
+
+    /**
+     * When table is transposed (metrics in rows). Descriptor of the measure object whose computed values are in the data series
+     */
+    readonly measureDescriptors?: IMeasureDescriptor[];
 }
 
 export function isScopeCol(obj: unknown): obj is ScopeCol {
