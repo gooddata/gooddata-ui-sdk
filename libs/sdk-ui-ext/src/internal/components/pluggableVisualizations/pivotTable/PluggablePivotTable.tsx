@@ -36,6 +36,7 @@ import {
     IColumnSizing,
     ICorePivotTableProps,
     IPivotTableConfig,
+    MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import React from "react";
@@ -252,6 +253,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             previousRowAttributes ? previousRowAttributes : [],
             previousColumnAttributes ? previousColumnAttributes : [],
             filters,
+            originalMeasureGroupDimension,
         );
 
         const measureGroupDimensionProp =
@@ -543,10 +545,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         visualizationProperties: IVisualizationProperties,
         insight: IInsightDefinition,
     ) {
+        const measureGroupDimension = getMeasureGroupDimensionFromProperties(visualizationProperties);
         // This is sanitization of properties from KD vs current mdObject from AD
         const columnWidths = getColumnWidthsFromProperties(visualizationProperties);
         if (columnWidths) {
-            this.sanitizeColumnWidths(columnWidths, insight, visualizationProperties);
+            this.sanitizeColumnWidths(columnWidths, insight, visualizationProperties, measureGroupDimension);
         }
     }
 
@@ -554,12 +557,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         columnWidths: ColumnWidthItem[],
         insight: IInsightDefinition,
         visualizationProperties: IVisualizationProperties,
+        measureGroupDimension: MeasureGroupDimension,
     ) {
         if (isEmpty(insightBuckets(insight))) {
             return;
         }
 
-        const adaptedColumnWidths = adaptMdObjectWidthItemsToPivotTable(columnWidths, insight);
+        const adaptedColumnWidths = adaptMdObjectWidthItemsToPivotTable(
+            columnWidths,
+            insight,
+            measureGroupDimension,
+        );
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
             this.visualizationProperties.controls.columnWidths = adaptedColumnWidths;

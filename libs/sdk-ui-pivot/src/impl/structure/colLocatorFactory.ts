@@ -67,15 +67,24 @@ function createMeasureLocator(descriptor: IMeasureDescriptor): IMeasureColumnLoc
  */
 export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
     if (isScopeCol(col)) {
-        const { descriptorsToHere, headersToHere } = col;
+        const result: ColumnLocator[] = [];
+        const { descriptorsToHere, headersToHere, measureDescriptors } = col;
         const descriptorsAndHeaders = zip(descriptorsToHere, headersToHere);
         descriptorsAndHeaders.push([col.attributeDescriptor, col.header]);
 
-        return descriptorsAndHeaders.map(([descriptor, header]) =>
+        descriptorsAndHeaders.forEach(([descriptor, header]) =>
             isResultTotalHeader(header)
-                ? createTotalLocator(descriptor, header)
-                : createAttributeLocator(descriptor, header),
+                ? result.push(createTotalLocator(descriptor, header))
+                : result.push(createAttributeLocator(descriptor, header)),
         );
+
+        if (measureDescriptors) {
+            measureDescriptors.forEach((measureDescriptor) =>
+                result.push(createMeasureLocator(measureDescriptor)),
+            );
+        }
+
+        return result;
     } else {
         const result: ColumnLocator[] = [];
 

@@ -183,7 +183,10 @@ function groupColumns(
  * This function creates bottom-most column descriptors from column attributes. It essentially creates the bottom-most
  * {@link ScopeCol} which would normally host the measure columns.
  */
-function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): GroupingOperationResult {
+function createColumnDescriptorsWhenNoMeasuresInColumns(
+    dv: DataViewFacade,
+    isTransposed?: boolean,
+): GroupingOperationResult {
     const descriptors = dv.meta().attributeDescriptorsForDim(1);
     const headers = dv.meta().attributeHeadersForDim(1);
     const numberOfColumns = headers[0]?.length ?? 0;
@@ -202,6 +205,8 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): Gro
     invariant(descriptors.length === headers.length);
 
     const bottom: ScopeCol[] = [];
+
+    const seriesDescriptor = getDataViewSeriesDescriptors(dv);
     for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
         const attributeHeaders = headers.map((header) => header[colIdx]);
         const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders);
@@ -217,6 +222,13 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): Gro
             descriptorsToHere: descriptors.slice(0, numberOfAttributes - 1),
             isTotal,
             isSubtotal,
+            ...(isTransposed
+                ? {
+                      measureDescriptors: seriesDescriptor.map(
+                          (serieDescriptor) => serieDescriptor.measureDescriptor,
+                      ),
+                  }
+                : {}),
         });
     }
 
@@ -275,7 +287,7 @@ function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
     }
 }
 
-function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
+function createColumnDescriptors(dv: DataViewFacade, isTransposed: boolean): GroupingOperationResult {
     if (dv.meta().measureDescriptors().length === 0 && dv.meta().dimensions().length === 2) {
         /*
          * Columns for a table without any measures but with attributes in both dimensions cannot be created
@@ -292,7 +304,7 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
     }
 
     if (getMeasureGroupDimensionIndex(dv) === 0) {
-        return createColumnDescriptorsWhenNoMeasuresInColumns(dv);
+        return createColumnDescriptorsWhenNoMeasuresInColumns(dv, isTransposed);
     }
 
     return createColumnDescriptorsFromDataSeries(dv);
@@ -401,7 +413,10 @@ function createTableHeaders(
         if (config?.columnHeadersPosition === "left") {
             mixedHeadersCols = createMixedHeadersColumnDescriptors();
         }
-        const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
+        const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(
+            dv,
+            isTransposed,
+        );
 
         rows.forEach((header) => (idToDescriptor[header.id] = header));
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
