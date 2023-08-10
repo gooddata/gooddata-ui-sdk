@@ -14,7 +14,6 @@ import {
     isTotalColumnLocator,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
-    IMeasureColumnLocator,
 } from "../../columnWidths.js";
 import { colMeasureLocalId } from "./colAccessors.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -73,19 +72,14 @@ export function searchForLocatorMatch(
                 // When table is transposed (metrics in rows). Need to check that existing measures descriptors on data view
                 // matches the exsting ones on the resized scope column.
                 if (col.measureDescriptors) {
-                    const measureDescriptorsId = col.measureDescriptors.map(
-                        (measureDescriptor) => measureDescriptor.measureHeaderItem.localIdentifier,
-                    );
                     const measureLocators = locators.filter(isMeasureColumnLocator);
-                    const matchingMeasureLocators = measureLocators.every(
-                        (locator: IMeasureColumnLocator) => {
-                            return measureDescriptorsId.includes(
-                                locator.measureLocatorItem.measureIdentifier,
-                            );
-                        },
-                    );
 
-                    if (matchingMeasureLocators) {
+                    if (
+                        col.measureDescriptors?.length !== measureLocators.length ||
+                        !isMeasureColumnLocator(measureLocators[0])
+                    ) {
+                        return undefined;
+                    } else {
                         found = col;
                     }
                 } else if (locators.length === 1) {

@@ -13,6 +13,7 @@ import {
     IWeakMeasureColumnWidthItem,
     ColumnLocator,
     IMeasureColumnLocator,
+    MeasureGroupDimension,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
@@ -80,6 +81,7 @@ const widthItemLocatorsHaveProperLength = (
     widthItem: IMeasureColumnWidthItem,
     measuresCount: number,
     columnAttributesCount: number,
+    measureGroupDimension?: MeasureGroupDimension,
 ): boolean => {
     const widthItemLocatorsLength = widthItem.measureColumnWidthItem.locators.length;
     const hasWidthItemLocators = widthItemLocatorsLength > 0;
@@ -92,7 +94,11 @@ const widthItemLocatorsHaveProperLength = (
     const locatorsMatchesLength = hasMeasureLocators && widthItemLocatorsMatchesColumnAttributesLength;
     const locatorsAreEmpty = hasNotMeasureLocators && widthItemLocatorsHasLengthAsColumnAttributesLength;
 
-    return hasWidthItemLocators && (locatorsMatchesLength || locatorsAreEmpty);
+    const locatorsHavePropertLength = hasWidthItemLocators && (locatorsMatchesLength || locatorsAreEmpty);
+    const transposedLocatorsHavePropertLength =
+        hasWidthItemLocators && widthItemLocatorsLength === measuresCount + columnAttributesCount;
+
+    return measureGroupDimension !== "rows" ? locatorsHavePropertLength : transposedLocatorsHavePropertLength;
 };
 
 function removeInvalidLocators(
@@ -158,6 +164,7 @@ function adaptWidthItemsToPivotTable(
     firstColumnAttributeAdded: boolean,
     columnAttributes: IBucketItem[],
     isAdaptPropertiesToInsight?: boolean,
+    measureGroupDimension?: MeasureGroupDimension,
 ): ColumnWidthItem[] {
     if (!originalColumnWidths) {
         return originalColumnWidths;
@@ -211,15 +218,18 @@ function adaptWidthItemsToPivotTable(
                 }
             }
 
+            const measureColumnWidthItem =
+                measureGroupDimension !== "rows" ? filteredMeasureColumnWidthItem : columnWidth;
             if (
                 matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters, columnAttributes) &&
                 widthItemLocatorsHaveProperLength(
-                    filteredMeasureColumnWidthItem,
+                    measureColumnWidthItem,
                     measureLocalIdentifiers.length,
                     filteredColumnAttributeLocalIdentifiers.length,
+                    measureGroupDimension,
                 )
             ) {
-                columnWidths.push(filteredMeasureColumnWidthItem);
+                columnWidths.push(measureColumnWidthItem);
                 return columnWidths;
             }
         } else if (isAttributeColumnWidthItem(columnWidth)) {
@@ -270,6 +280,7 @@ export function adaptReferencePointWidthItemsToPivotTable(
     previousRowAttributes: IBucketItem[],
     previousColumnAttributes: IBucketItem[],
     filters: IBucketFilter[],
+    measureGroupDimension: MeasureGroupDimension,
 ): ColumnWidthItem[] {
     const measureLocalIdentifiers = measures.map((measure) => measure.localIdentifier);
     const rowAttributeLocalIdentifiers = rowAttributes.map((rowAttribute) => rowAttribute.localIdentifier);
@@ -300,12 +311,15 @@ export function adaptReferencePointWidthItemsToPivotTable(
         filters,
         firstColumnAttributeAdded,
         columnAttributes,
+        false,
+        measureGroupDimension,
     );
 }
 
 export function adaptMdObjectWidthItemsToPivotTable(
     originalColumnWidths: ColumnWidthItem[],
     insight: IInsightDefinition,
+    measureGroupDimension?: MeasureGroupDimension,
 ): ColumnWidthItem[] {
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
     const columnBucket = insightBucket(insight, BucketNames.COLUMNS);
@@ -325,5 +339,6 @@ export function adaptMdObjectWidthItemsToPivotTable(
         false,
         [],
         true,
+        measureGroupDimension,
     );
 }
