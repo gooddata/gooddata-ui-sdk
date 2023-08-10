@@ -1,0 +1,64 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1272"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.department",
+                            "name": "Department",
+                            "uri": "/gdc/md/referenceworkspace/obj/1088"
+                        },
+                        "identifier": "label.owner.department",
+                        "localIdentifier": "a_label.owner.department",
+                        "name": "Department",
+                        "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
+                        "uri": "/gdc/md/referenceworkspace/obj/1089"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.region",
+                            "name": "Region",
+                            "uri": "/gdc/md/referenceworkspace/obj/1086"
+                        },
+                        "identifier": "label.owner.region",
+                        "localIdentifier": "a_label.owner.region",
+                        "name": "Region",
+                        "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
+                        "uri": "/gdc/md/referenceworkspace/obj/1087"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,88 @@
+{
+    "count": [2, 6],
+    "data": [
+        ["21978695.46", "58427629.5", "80406324.96", "6038400.96", "30180730.62", "36219131.58"],
+        ["8384271.02", "18120589.06", null, "2158488.63", "9647404.74", null]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 6],
+    "totals": [[], [["116625456.54"], [null]]]
+}

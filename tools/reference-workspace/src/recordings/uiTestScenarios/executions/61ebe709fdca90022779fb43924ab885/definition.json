@@ -15,7 +15,8 @@
                 }
             ],
             "localIdentifier": "measures"
-        }
+        },
+        { "items": [], "localIdentifier": "secondary_measures" }
     ],
     "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
     "filters": [],

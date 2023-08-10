@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.owner.department",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.0366a2850b535c4c62f9d877e7870b31",
+        "properties": { "controls": { "columnHeadersPosition": "left", "measureGroupDimension": "rows" } },
+        "sorts": [],
+        "title": "PivotTable - two measures in rows and column attrs on left, with totals",
+        "uri": "PivotTable.0366a2850b535c4c62f9d877e7870b31",
+        "visualizationUrl": "local:table"
+    }
+}

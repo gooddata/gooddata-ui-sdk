@@ -1,0 +1,112 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.department"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        { "items": [], "localIdentifier": "attribute" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.department"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+                {
+                    "attributeIdentifier": "a_label.owner.department",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "sum"
+                },
+                {
+                    "attributeIdentifier": "a_label.owner.region",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "sum"
+                }
+            ]
+        }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        {
+            "itemIdentifiers": ["a_label.owner.department", "a_label.owner.region"],
+            "totals": [
+                {
+                    "attributeIdentifier": "a_label.owner.department",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "sum"
+                },
+                {
+                    "attributeIdentifier": "a_label.owner.region",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "sum"
+                }
+            ]
+        }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

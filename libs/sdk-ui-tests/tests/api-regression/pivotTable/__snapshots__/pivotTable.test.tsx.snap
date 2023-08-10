@@ -14433,6 +14433,185 @@ exports[`PivotTable > with two measures and single grand total sorted by second 
 }
 `;
 
+exports[`PivotTable > with two measures in rows and column attrs on left, with totals > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+      "totals": [
+        {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_label.owner.department",
+        "a_label.owner.region",
+      ],
+      "totals": [
+        {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        {
+          "attributeIdentifier": "a_label.owner.region",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable > with two measures in rows and column attrs on left, with totals > should create expected props for core chart 1`] = `
+{
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": {
+    "columnHeadersPosition": "left",
+    "columnSizing": {
+      "defaultWidth": "autoresizeAll",
+    },
+    "measureGroupDimension": "rows",
+    "menu": {},
+  },
+  "drillableItems": [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable > with two measures in rows and column attrs on top, with drilling on metrics > should create expected execution definition 1`] = `
 {
   "attributes": [
@@ -15208,158 +15387,6 @@ exports[`PivotTable > with two measures in rows and only column attrs on left, w
 `;
 
 exports[`PivotTable > with two measures in rows and only column attrs on left, with totals > should create expected props for core chart 1`] = `
-{
-  "ErrorComponent": [Function],
-  "LoadingComponent": [Function],
-  "afterRender": [Function],
-  "config": {
-    "columnHeadersPosition": "left",
-    "measureGroupDimension": "rows",
-    "menu": {},
-  },
-  "drillableItems": [],
-  "exportTitle": "PivotTable",
-  "locale": "en-US",
-  "onColumnResized": [Function],
-  "onDrill": [Function],
-  "onExportReady": [Function],
-  "onLoadingChanged": [Function],
-  "pageSize": 100,
-  "pushData": [Function],
-}
-`;
-
-exports[`PivotTable > with two measures in rows with only column attrs on left > should create expected execution definition 1`] = `
-{
-  "attributes": [
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.owner.department",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.owner.department",
-      },
-    },
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.owner.region",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": [
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    {
-      "items": [],
-      "localIdentifier": "attribute",
-    },
-    {
-      "items": [
-        {
-          "attribute": {
-            "displayForm": {
-              "identifier": "label.owner.department",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.owner.department",
-          },
-        },
-        {
-          "attribute": {
-            "displayForm": {
-              "identifier": "label.owner.region",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "columns",
-    },
-  ],
-  "dimensions": [
-    {
-      "itemIdentifiers": [
-        "measureGroup",
-      ],
-    },
-    {
-      "itemIdentifiers": [
-        "a_label.owner.department",
-        "a_label.owner.region",
-      ],
-    },
-  ],
-  "filters": [],
-  "measures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "postProcessing": {},
-  "sortBy": [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`PivotTable > with two measures in rows with only column attrs on left > should create expected props for core chart 1`] = `
 {
   "ErrorComponent": [Function],
   "LoadingComponent": [Function],

@@ -12,7 +12,12 @@
                             },
                             "localIdentifier": "m_acugFHNJgsBy"
                         }
-                    },
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
                     {
                         "measure": {
                             "alias": "Won Last Year",
@@ -26,7 +31,7 @@
                         }
                     }
                 ],
-                "localIdentifier": "measures"
+                "localIdentifier": "secondary_measures"
             }
         ],
         "filters": [],

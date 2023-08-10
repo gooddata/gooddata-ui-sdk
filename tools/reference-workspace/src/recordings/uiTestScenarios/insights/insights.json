@@ -3348,6 +3348,11 @@
         "scenarioName": "two measures in rows and only column attrs on left, with drilling",
         "visName": "PivotTable"
     },
+    "PivotTable.0366a2850b535c4c62f9d877e7870b31": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and column attrs on left, with totals.",
+        "scenarioName": "two measures in rows and column attrs on left, with totals",
+        "visName": "PivotTable"
+    },
     "PivotTable.03d6b3d66f30e0595bc109a891877850": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with three rows and two column attributes.",
         "scenarioName": "two measures with three rows and two column attributes",
@@ -3686,6 +3691,11 @@
     "PivotTable.d035dfd48f33046d5e04517f55e67dd8": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."
     },
+    "PivotTable.d16cdd0f4a9b1c3f4eee117c4628ac4a": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and column attrs on top, with invalid drilling on attributes.",
+        "scenarioName": "two measures in rows and column attrs on top, with invalid drilling on attributes",
+        "visName": "PivotTable"
+    },
     "PivotTable.d39918fa34783f48b73ec5a6dfafa927": {
         "comment": "Auto-generated insight for test scenario PivotTable - with two measures and row attribute with auto-resizing."
     },
@@ -3744,6 +3754,11 @@
     "PivotTable.f20c3906be9722337d73a9878c88c242": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr with metrics in rows.",
         "scenarioName": "two measures with single row attr with metrics in rows",
+        "visName": "PivotTable"
+    },
+    "PivotTable.f31cf60375d6f107435eb2dc4fdf8ec6": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures in rows and column attrs on top, with drilling on metrics.",
+        "scenarioName": "two measures in rows and column attrs on top, with drilling on metrics",
         "visName": "PivotTable"
     },
     "PivotTable.f4e6daf76d4f96679de3ecbe4bb07088": {

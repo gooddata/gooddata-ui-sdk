@@ -15,7 +15,8 @@
                     }
                 ],
                 "localIdentifier": "measures"
-            }
+            },
+            { "items": [], "localIdentifier": "secondary_measures" }
         ],
         "filters": [],
         "identifier": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
