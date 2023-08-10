@@ -14,6 +14,7 @@ import {
     IDashboardReferences,
     IGetScheduledMailOptions,
     IExportResult,
+    IGetDashboardPluginOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -72,7 +73,7 @@ import { WidgetReferencesQuery } from "./widgetReferences.js";
 import { invariant } from "ts-invariant";
 import { resolveWidgetFilters } from "./widgetFilters.js";
 import { sanitizeFilterContext } from "./filterContexts.js";
-import { getAnalyticalDashboardUserUris } from "../../../utils/metadata.js";
+import { getAnalyticalDashboardUserUris, getDashboardPluginUserUris } from "../../../utils/metadata.js";
 import isEmpty from "lodash/isEmpty.js";
 import includes from "lodash/includes.js";
 import remove from "lodash/remove.js";
@@ -994,23 +995,44 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    public getDashboardPlugin = async (ref: ObjRef): Promise<IDashboardPlugin> => {
+    public getDashboardPlugin = async (
+        ref: ObjRef,
+        options?: IGetDashboardPluginOptions,
+    ): Promise<IDashboardPlugin> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
 
-        return this.authCall((sdk) => {
+        const wrappedPlugin = await this.authCall((sdk) => {
             return sdk.md.getObjectDetails<IWrappedDashboardPlugin>(uri);
-        }).then(toSdkModel.convertDashboardPlugin);
+        });
+
+        const userMap: Map<string, IUser> = options?.loadUserData
+            ? await updateUserMap(new Map(), getDashboardPluginUserUris(wrappedPlugin), this.authCall)
+            : new Map();
+
+        return toSdkModel.convertDashboardPlugin(wrappedPlugin, userMap);
     };
 
-    public getDashboardPlugins = async (): Promise<IDashboardPlugin[]> => {
+    public getDashboardPlugins = async (
+        options?: IGetDashboardPluginOptions,
+    ): Promise<IDashboardPlugin[]> => {
         const pluginLinks = await this.authCall((sdk) => sdk.md.getDashboardPlugins(this.workspace));
         const pluginUris = pluginLinks.map((link) => link.link);
 
-        return this.authCall((sdk) => {
+        const wrappedPlugins = await this.authCall((sdk) => {
             return sdk.md.getObjects<IWrappedDashboardPlugin>(this.workspace, pluginUris);
-        }).then((plugins) => {
-            return plugins.map(toSdkModel.convertDashboardPlugin);
         });
+
+        const userMap: Map<string, IUser> = options?.loadUserData
+            ? await updateUserMap(
+                  new Map(),
+                  compact(flatMap(wrappedPlugins, getDashboardPluginUserUris)),
+                  this.authCall,
+              )
+            : new Map();
+
+        return wrappedPlugins.map((value: IWrappedDashboardPlugin) =>
+            toSdkModel.convertDashboardPlugin(value, userMap),
+        );
     };
 
     /**

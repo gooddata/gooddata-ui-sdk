@@ -72,7 +72,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsExplain: true,
     supportsAccessControl: true,
     usesStrictAccessControl: true,
-    supportsOwners: false,
+    supportsOwners: true,
     allowsInconsistentRelations: true,
     supportsTimeGranularities: true,
     supportsHierarchicalWorkspaces: true,
@@ -86,6 +86,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsNonProductionDatasets: false,
     supportsShowAllAttributeValues: true,
     supportsSeparateLatitudeLongitudeLabels: true,
+    supportsEnumeratingDatetimeAttributes: false,
 };
 
 /**

@@ -126,6 +126,7 @@ export { IWorkspaceFactsService } from "./workspace/facts/index.js";
 export {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
+    IGetDashboardPluginOptions,
     IGetScheduledMailOptions,
     IWidgetAlertCount,
     SupportedDashboardReferenceTypes,

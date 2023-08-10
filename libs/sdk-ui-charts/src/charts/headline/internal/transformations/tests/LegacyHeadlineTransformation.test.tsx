@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import HeadlineTransformation from "../LegacyHeadlineTransformation.js";
-import * as headlineComponent from "../../Headline.js";
+import * as headlineComponent from "../../headlines/LegacyHeadline.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     headlineWithOneMeasure,

@@ -10,6 +10,7 @@ import {
     isUriRef,
     areObjRefsEqual,
     insightSummary,
+    insightCreated,
 } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce.js";
 import range from "lodash/range.js";
@@ -22,11 +23,12 @@ import {
     createInsightRequested,
     selectAllowCreateInsightRequest,
     selectCanCreateVisualization,
-    selectCurrentUserRef,
     selectInsightListLastUpdateRequested,
     selectSettings,
     useDashboardEventDispatch,
     useDashboardSelector,
+    selectCurrentUser,
+    selectSupportsObjectUris,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -51,6 +53,15 @@ export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
 
 const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll] as ITab[];
 
+const useAuthor = () => {
+    const isObjectUrisSupported = useDashboardSelector(selectSupportsObjectUris);
+    const user = useDashboardSelector(selectCurrentUser);
+    const userUri = isUriRef(user.ref) ? user.ref.uri : undefined;
+
+    // getInsights filter via user URI on Bear, via user's login on Tiger
+    return isObjectUrisSupported ? userUri : user.login;
+};
+
 /**
  * @internal
  */
@@ -70,8 +81,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const [pagesToLoad, setPagesToLoad] = useState<number[]>([0]); // first page loaded
     const [search, setSearch] = useState("");
     const [selectedTabId, setSelectedTabId] = useState(messages.tabsMy.id);
-    const userRef = useDashboardSelector(selectCurrentUserRef);
-    const userUri = isUriRef(userRef) ? userRef.uri : undefined;
+    const author = useAuthor();
     const insightListLastUpdateRequested = useDashboardSelector(selectInsightListLastUpdateRequested);
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
@@ -81,7 +91,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         limit: ITEMS_PER_PAGE,
         offset: pageNumber * ITEMS_PER_PAGE,
         title: search,
-        author: selectedTabId === messages.tabsMy.id && !search ? userUri : undefined,
+        author: selectedTabId === messages.tabsMy.id && !search ? author : undefined,
     }));
 
     const {
@@ -113,6 +123,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         params,
         [backend, pagesToLoad, search, selectedTabId, insightListLastUpdateRequested],
         [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
+        true,
     );
 
     useEffect(() => {
@@ -129,7 +140,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         debounce((searchString: string) => {
             setPagesToLoad([0]);
             setSearch(searchString);
-        }, 250),
+        }, 500),
         [],
     );
 
@@ -176,7 +187,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
             onSearch={onSearch}
             disableAutofocus={!searchAutofocus}
             showTabs={showDropdownListTabs}
-            tabs={backend.capabilities.supportsOwners && userUri ? dropdownTabsTranslationIds : undefined}
+            tabs={backend.capabilities.supportsOwners && author ? dropdownTabsTranslationIds : undefined}
             selectedTabId={selectedTabId}
             onTabSelect={({ id }) => {
                 setPagesToLoad([0]);
@@ -206,7 +217,10 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             type={insightListSourceItem.insightType}
                             width={width}
                             isSelected={isSelected}
-                            updated={insightUpdated(insightListSourceItem.insight)}
+                            updated={
+                                insightUpdated(insightListSourceItem.insight) ??
+                                insightCreated(insightListSourceItem.insight)
+                            }
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                         />

@@ -5,6 +5,7 @@ import {
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
+    JsonApiAnalyticalDashboardOutIncludes,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 
@@ -29,6 +30,7 @@ import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
+import { convertUserIdentifier } from "../../UsersConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -88,8 +90,10 @@ export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
-    const { id, attributes = {}, meta = {} } = analyticalDashboard.data;
-    const { title = "", description = "", content } = attributes;
+    const { data, links, included } = analyticalDashboard;
+    const { id, attributes = {}, meta = {}, relationships = {} } = data;
+    const { createdBy, modifiedBy } = relationships;
+    const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
     const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
@@ -100,13 +104,15 @@ export function convertDashboard(
         type: "IDashboard",
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
-        uri: stripQueryParams(analyticalDashboard.links!.self),
+        uri: stripQueryParams(links!.self),
         title,
         description,
-        created: "",
-        updated: "",
+        created: createdAt,
+        createdBy: convertUserIdentifier(createdBy, included),
+        updated: modifiedAt,
+        updatedBy: convertUserIdentifier(modifiedBy, included),
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
-        isLocked: isInheritedObject(analyticalDashboard.data),
+        isLocked: isInheritedObject(data),
         shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         tags: attributes.tags ?? [],
@@ -140,27 +146,35 @@ export function convertFilterContextFilters(
 }
 
 export function convertDashboardPlugin(plugin: JsonApiDashboardPluginOutDocument): IDashboardPlugin {
-    const { id, type, attributes } = plugin.data;
-    const { title = "", description = "", content, tags } = attributes!;
+    const { data, links, included } = plugin;
+    const { id, type, attributes, relationships = {} } = data;
+    const { createdBy, modifiedBy } = relationships;
+    const { title = "", description = "", content, tags, createdAt = "", modifiedAt = "" } = attributes!;
     const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
 
     return {
         ref: idRef(id, type as ObjectType),
         identifier: id,
-        uri: plugin.links!.self,
+        uri: links!.self,
         name: title,
         description,
         tags: tags ?? [],
         type: "IDashboardPlugin",
         url,
+        created: createdAt,
+        createdBy: convertUserIdentifier(createdBy, included),
+        updated: modifiedAt,
+        updatedBy: convertUserIdentifier(modifiedBy, included),
     };
 }
 
 export function convertDashboardPluginWithLinks(
     plugin: JsonApiDashboardPluginOutWithLinks,
+    included: JsonApiAnalyticalDashboardOutIncludes[] = [],
 ): IDashboardPlugin {
-    const { id, type, attributes } = plugin;
-    const { title = "", description = "", content, tags } = attributes!;
+    const { id, type, attributes, relationships = {} } = plugin;
+    const { createdBy, modifiedBy } = relationships;
+    const { title = "", description = "", content, tags, createdAt, modifiedAt } = attributes!;
     const { url } = content as AnalyticalDashboardModelV2.IDashboardPlugin;
 
     return {
@@ -172,5 +186,9 @@ export function convertDashboardPluginWithLinks(
         tags: tags ?? [],
         type: "IDashboardPlugin",
         url,
+        created: createdAt,
+        createdBy: convertUserIdentifier(createdBy, included),
+        updated: modifiedAt,
+        updatedBy: convertUserIdentifier(modifiedBy, included),
     };
 }

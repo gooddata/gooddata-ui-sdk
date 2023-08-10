@@ -28,7 +28,7 @@ pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 SDK_BACKEND=${SDK_BACKEND:-TIGER}
 HOST=${HOST:-}
-CYPRESS_TEST_TAGS=checklist_integrated_${sdk_backend}
+CYPRESS_TEST_TAGS=checklist_integrated_boiler_${sdk_backend}
 FIXTURE_TYPE=${FIXTURE_TYPE:-}
 FILTER=${FILTER:-}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:?}

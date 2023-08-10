@@ -54,6 +54,7 @@ import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
+import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -80,6 +81,7 @@ import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
@@ -512,9 +514,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
     // (undocumented)
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
+    getDashboardPlugin(ref: ObjRef, options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin>;
     // (undocumented)
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]>;
     // (undocumented)
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     // (undocumented)
@@ -795,11 +797,19 @@ export type LocalIdMap = {
 // @beta
 export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMeasureMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
+    created(createdAt?: string): this;
+    // (undocumented)
+    createdBy(createdBy?: IUser): this;
+    // (undocumented)
     expression(maql: string): this;
     // (undocumented)
     format(format: string): this;
     // (undocumented)
     isLocked(isLocked: boolean): this;
+    // (undocumented)
+    updated(updatedAt?: string): this;
+    // (undocumented)
+    updatedBy(updatedBy?: IUser): this;
 }
 
 // @beta

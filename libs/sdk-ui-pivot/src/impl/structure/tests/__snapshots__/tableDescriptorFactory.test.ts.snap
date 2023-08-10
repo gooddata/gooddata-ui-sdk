@@ -64,7 +64,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with just c
 exports[`createTableDescriptor > correctly creates colDefs for table with just row attribute 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -77,7 +76,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with just r
 exports[`createTableDescriptor > correctly creates colDefs for table with just two measures 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -101,7 +99,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
       {
         "children": [
           {
-            "cellRenderer": "loadingRenderer",
             "colId": "c_0",
             "field": "c_0",
             "headerName": "Amount",
@@ -138,7 +135,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
 exports[`createTableDescriptor > correctly creates colDefs for table with single row and column pivot 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -186,7 +182,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
 exports[`createTableDescriptor > correctly creates colDefs for table with two attribute pivot 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -497,7 +492,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
       {
         "children": [
           {
-            "cellRenderer": "loadingRenderer",
             "colId": "c_0",
             "field": "c_0",
             "headerName": "Amount",
@@ -548,7 +542,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
 exports[`createTableDescriptor > correctly creates colDefs for table with two measures, rows and cols and totals and subtotals 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",
@@ -673,7 +666,6 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
 exports[`createTableDescriptor > correctly creates colDefs for table without pivoting 1`] = `
 [
   {
-    "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
     "headerName": "Product",

@@ -241,6 +241,7 @@ export interface IBackendCapabilities {
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsEnumeratingDatetimeAttributes?: boolean;
     supportsEveryoneUserGroupForAccessControl?: boolean;
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
@@ -446,6 +447,11 @@ export interface IFilterElementsQuery {
 export interface IGetDashboardOptions {
     exportId?: string;
     includeAvailableViaLink?: boolean;
+    loadUserData?: boolean;
+}
+
+// @alpha
+export interface IGetDashboardPluginOptions {
     loadUserData?: boolean;
 }
 
@@ -795,8 +801,8 @@ export interface IWorkspaceDashboardsService {
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardPlugin(ref: ObjRef, options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin>;
+    getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]>;
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;

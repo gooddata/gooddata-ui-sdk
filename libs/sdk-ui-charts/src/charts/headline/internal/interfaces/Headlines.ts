@@ -4,8 +4,8 @@ import { Identifier, DataValue } from "@gooddata/sdk-model";
 
 export interface IHeadlineDataItem {
     localIdentifier: Identifier;
-    title?: string;
     value: string;
+    title?: string;
     format?: string;
     isDrillable?: boolean;
 }

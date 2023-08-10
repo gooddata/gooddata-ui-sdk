@@ -119,6 +119,21 @@ export interface IGetDashboardOptions {
 }
 
 /**
+ * Configuration options for getting dashboard plugin.
+ *
+ * @alpha
+ */
+export interface IGetDashboardPluginOptions {
+    /**
+     * Specify if information about the users that created/modified the dashboard plugin should be loaded.
+     * Defaults to false.
+     *
+     * If user is inactive or logged-in user has not rights to access this information than users that created/modified is undefined.
+     */
+    loadUserData?: boolean;
+}
+
+/**
  * Configuration options for getting scheduled mails.
  *
  * @alpha
@@ -379,15 +394,18 @@ export interface IWorkspaceDashboardsService {
 
     /**
      * Gets all dashboard plugins registered in the current workspace.
+     *
+     * @param options - options that specify how the plugin should be loaded
      */
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]>;
 
     /**
      * Load dashboard plugin by it's reference.
      *
      * @param ref - plugin reference
+     * @param options - options that specify how the plugin should be loaded
      */
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
+    getDashboardPlugin(ref: ObjRef, options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin>;
 
     /**
      * Creates a record about a dashboard plugin. Creating a new dashboard plugin does not impact any

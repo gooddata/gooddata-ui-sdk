@@ -110,6 +110,24 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
         onDrill: action("onDrill"),
     })
+    .addScenario("two measures in rows and column attrs on top, with invalid drilling on attributes", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "top",
+        },
+        drillableItems: [DepartmentPredicate, RegionPredicate],
+        onDrill: action("onDrill"),
+    })
+    .addScenario("two measures in rows and column attrs on top, with drilling on metrics", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "top",
+        },
+        drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
+        onDrill: action("onDrill"),
+    })
     .addScenario("two measures in rows and only column attrs on left, with totals", {
         ...PivotTableWithMeasuresAndColumnOnly,
         config: {

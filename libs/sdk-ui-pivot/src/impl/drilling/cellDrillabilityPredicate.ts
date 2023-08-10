@@ -15,8 +15,8 @@ export function isCellDrillable(
     row: IGridRow,
     dv: DataViewFacade,
     drillablePredicates: IHeaderPredicate[],
-    columnHeadersPosition?: ColumnHeadersPosition,
-    isTransposed?: boolean,
+    columnHeadersPosition: ColumnHeadersPosition,
+    isTransposed: boolean,
 ): boolean {
     if (drillablePredicates.length === 0 || colDescriptor.type === "mixedHeadersCol") {
         return false;

@@ -11,6 +11,7 @@ import {
     JsonApiFilterContextOutWithLinks,
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
+    JsonApiAnalyticalDashboardOutIncludes,
 } from "@gooddata/api-client-tiger";
 
 import {
@@ -36,21 +37,27 @@ import {
 } from "@gooddata/sdk-model";
 import { isInheritedObject } from "../ObjectInheritance.js";
 import { getShareStatus } from "../utils.js";
+import { convertUserIdentifier } from "../UsersConverter.js";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
+    included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IListedDashboard => {
-    const attributes = analyticalDashboard.attributes;
-    const isPrivate = analyticalDashboard.meta?.accessInfo?.private ?? false;
+    const { id, links, attributes = {}, meta, relationships = {} } = analyticalDashboard;
+    const { createdBy, modifiedBy } = relationships;
+    const { createdAt, modifiedAt } = attributes;
+    const isPrivate = meta?.accessInfo?.private ?? false;
 
     return {
-        ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
-        uri: analyticalDashboard.links!.self,
-        identifier: analyticalDashboard.id,
+        ref: idRef(id, "analyticalDashboard"),
+        uri: links!.self,
+        identifier: id,
         title: attributes?.title ?? "",
         description: attributes?.description ?? "",
-        created: "",
-        updated: "",
+        created: createdAt ?? "",
+        createdBy: convertUserIdentifier(createdBy, included),
+        updated: modifiedAt ?? "",
+        updatedBy: convertUserIdentifier(modifiedBy, included),
         tags: attributes?.tags ?? [],
         isLocked: isInheritedObject(analyticalDashboard),
         shareStatus: getShareStatus(isPrivate),
@@ -62,7 +69,9 @@ export const convertAnalyticalDashboard = (
 export const convertAnalyticalDashboardToListItems = (
     analyticalDashboards: JsonApiAnalyticalDashboardOutList,
 ): IListedDashboard[] => {
-    return analyticalDashboards.data.map(convertAnalyticalDashboard);
+    return analyticalDashboards.data.map((dashboard) =>
+        convertAnalyticalDashboard(dashboard, analyticalDashboards.included),
+    );
 };
 
 export function convertDashboard(
@@ -114,13 +123,14 @@ export function convertDashboardPluginFromBackend(
 
 export function convertDashboardPluginWithLinksFromBackend(
     plugin: JsonApiDashboardPluginOutWithLinks,
+    included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IDashboardPlugin {
     const content = plugin.attributes!.content;
 
     // V1 does not support plugins
 
     if (AnalyticalDashboardModelV2.isDashboardPlugin(content)) {
-        return convertDashboardPluginWithLinksV2(plugin);
+        return convertDashboardPluginWithLinksV2(plugin, included);
     }
 
     invariant(false, "Unknown dashboard plugin version");

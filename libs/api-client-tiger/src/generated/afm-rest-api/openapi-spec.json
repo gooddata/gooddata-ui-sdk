@@ -12,9 +12,6 @@
     ],
     "tags": [
         {
-            "name": "Computation"
-        },
-        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
@@ -601,7 +598,6 @@
                 }
             },
             "FilterBy": {
-                "required": ["labelType"],
                 "type": "object",
                 "properties": {
                     "labelType": {
@@ -896,8 +892,7 @@
                         "items": {
                             "type": "string",
                             "description": "Set of label values.",
-                            "example": "[\"value1\",\"value2\"]",
-                            "nullable": true
+                            "example": "[\"value1\",\"value2\"]"
                         }
                     }
                 },

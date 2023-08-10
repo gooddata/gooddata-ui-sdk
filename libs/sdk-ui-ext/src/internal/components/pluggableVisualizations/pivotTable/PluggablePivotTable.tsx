@@ -25,8 +25,6 @@ import {
     ISortItem,
     newAttributeSort,
     ISettings,
-    bucketsFind,
-    bucketItems,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
@@ -75,6 +73,7 @@ import {
     getReferencePointWithSupportedProperties,
     getMeasureGroupDimensionFromProperties,
     getSupportedPropertiesControls,
+    getPivotTableProperties,
 } from "../../../utils/propertiesHelper.js";
 
 import {
@@ -95,6 +94,7 @@ import {
     sanitizePivotTableSorts,
 } from "./sortItemsHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
+import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -427,13 +427,9 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             insightProperties(insight),
         );
 
-        const buckets = insightBuckets(insight);
-        const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-
-        const columnHeadersPosition: ColumnHeadersPosition =
-            row && bucketItems(row).length > 0
-                ? "top"
-                : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
+            ? "top"
+            : getColumnHeadersPositionFromProperties(insightProperties(insight));
 
         const measureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
@@ -550,11 +546,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         // This is sanitization of properties from KD vs current mdObject from AD
         const columnWidths = getColumnWidthsFromProperties(visualizationProperties);
         if (columnWidths) {
-            this.sanitizeColumnWidths(columnWidths, insight);
+            this.sanitizeColumnWidths(columnWidths, insight, visualizationProperties);
         }
     }
 
-    private sanitizeColumnWidths(columnWidths: ColumnWidthItem[], insight: IInsightDefinition) {
+    private sanitizeColumnWidths(
+        columnWidths: ColumnWidthItem[],
+        insight: IInsightDefinition,
+        visualizationProperties: IVisualizationProperties,
+    ) {
         if (isEmpty(insightBuckets(insight))) {
             return;
         }
@@ -567,6 +567,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 properties: {
                     controls: {
                         columnWidths: adaptedColumnWidths,
+                        ...getPivotTableProperties(this.settings, visualizationProperties),
                     },
                 },
             });
@@ -574,10 +575,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private onColumnResized(columnWidths: ColumnWidthItem[]) {
+        const properties = this.visualizationProperties ?? {};
+
         this.pushData({
             properties: {
                 controls: {
                     columnWidths,
+                    ...getPivotTableProperties(this.settings, properties),
                 },
             },
         });

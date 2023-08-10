@@ -7,7 +7,6 @@ import {
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedError,
-    NotSupported,
     IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,11 +21,9 @@ import {
     mergeFilters,
     insightFilters,
     insightSetFilters,
-    insightUpdated,
     insightTags,
     insightSummary,
 } from "@gooddata/sdk-model";
-import sortBy from "lodash/sortBy.js";
 import {
     jsonApiHeaders,
     MetadataUtilities,
@@ -34,6 +31,7 @@ import {
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
     ValidateRelationsHeader,
+    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -49,6 +47,8 @@ import { convertInsight } from "../../../convertors/toBackend/InsightConverter.j
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
+import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
+import { insightListComparator } from "./comparator.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -69,20 +69,12 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
-        if (options?.loadUserData) {
-            throw new NotSupported(
-                "Tiger backend does not support the 'loadUserData' option of getInsights.",
-            );
-        }
-
-        const orderBy = options?.orderBy;
-        const usesOrderingByUpdated = !orderBy || orderBy === "updated";
-
+        const requestParameters = this.getInsightsRequestParameters(options);
         const allInsights = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.entities.getAllEntitiesVisualizationObjects,
-                { workspaceId: this.workspace, ...(usesOrderingByUpdated ? {} : { sort: [orderBy!] }) },
+                requestParameters,
                 { headers: ValidateRelationsHeader },
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
@@ -97,46 +89,61 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
                                 return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
                             })
-                            .map(visualizationObjectsItemToInsight);
+                            .map((insight) => visualizationObjectsItemToInsight(insight, res.included));
                     }
-                    return res.data.map(visualizationObjectsItemToInsight);
+                    return res.data.map((insight) =>
+                        visualizationObjectsItemToInsight(insight, res.included),
+                    );
                 });
         });
 
-        // tiger does not support the "updated" property of the metadata objects at the moment
-        // -> fall back to title ordering in a future-compatible way if "updated" ordering was requested
-        let sanitizedOrder = allInsights;
-        if (usesOrderingByUpdated && allInsights.length > 0) {
-            // tiger started sending "updated" property -> use it to sort
-            if (insightUpdated(allInsights[0])) {
-                sanitizedOrder = sortBy(allInsights, (insight) => insightUpdated(insight));
-            }
-            // tiger still does not support the "updated" property -> sort by title
-            else {
-                sanitizedOrder = sortBy(allInsights, (insight) => insightTitle(insight).toUpperCase());
-            }
-        }
+        // Remove when API starts to support sort=modifiedBy,createdBy,insight.title
+        // (first verify that modifiedBy,createdBy behave as the code below, i.e., use createdBy if modifiedBy is
+        // not defined as it is missing for the insights that were just created and never updated, also title
+        // should be compared in case-insensitive manner)
+        const sanitizedOrder =
+            requestParameters.sort === undefined && allInsights.length > 0
+                ? [...allInsights].sort(insightListComparator)
+                : allInsights;
 
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
     };
 
+    private getInsightsRequestParameters = (
+        options?: IInsightsQueryOptions,
+    ): EntitiesApiGetAllEntitiesVisualizationObjectsRequest => {
+        const orderBy = options?.orderBy;
+        const usesOrderingByUpdated = !orderBy || orderBy === "updated";
+        const sortConfiguration = usesOrderingByUpdated ? {} : { sort: [orderBy!] }; // sort: ["modifiedAt", "createdAt"]
+        const includeUser =
+            options?.loadUserData || options?.author
+                ? { include: ["createdBy" as const, "modifiedBy" as const] }
+                : {};
+        const authorFilter = options?.author ? { filter: `createdBy.id=='${options?.author}'` } : {};
+
+        return { workspaceId: this.workspace, ...sortConfiguration, ...includeUser, ...authorFilter };
+    };
+
     public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
-        if (options.loadUserData) {
-            throw new NotSupported("Tiger backend does not support the 'loadUserData' option of getInsight.");
-        }
         const id = await objRefToIdentifier(ref, this.authCall);
+        const includeUser = options?.loadUserData
+            ? { include: ["createdBy" as const, "modifiedBy" as const] }
+            : {};
         const response = await this.authCall((client) =>
             client.entities.getEntityVisualizationObjects(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
+                    ...includeUser,
                 },
                 {
                     headers: jsonApiHeaders,
                 },
             ),
         );
-        const { data: visualizationObject, links } = response.data;
+        const { data: visualizationObject, links, included } = response.data;
+        const { relationships = {} } = visualizationObject;
+        const { createdBy, modifiedBy } = relationships;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
                 visualizationObject.attributes!.content! as
@@ -150,6 +157,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             links!.self,
             visualizationObject.attributes!.tags,
             isInheritedObject(visualizationObject),
+            visualizationObject.attributes?.createdAt,
+            visualizationObject.attributes?.modifiedAt,
+            convertUserIdentifier(createdBy, included),
+            convertUserIdentifier(modifiedBy, included),
         );
 
         if (!insight) {
@@ -188,6 +199,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.links!.self,
             insightData.data.attributes?.tags,
             isInheritedObject(insightData.data),
+            insightData.data.attributes?.createdAt,
+            insightData.data.attributes?.modifiedAt,
+            convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
+            convertUserIdentifier(insightData.data.relationships?.modifiedBy, insightData.included),
         );
     };
 

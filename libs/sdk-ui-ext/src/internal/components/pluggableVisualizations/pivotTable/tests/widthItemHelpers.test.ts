@@ -12,6 +12,10 @@ import {
     validMeasureColumnWidthItem,
     validAllMeasureColumnWidthItem,
     validWeakMeasureColumnWidthItem,
+    invalidSliceMeasureColumnWidthItem,
+    invalidMixedValueColumnWidthItem,
+    validSliceMeasureColumnWidthItem,
+    validMixedValuesColumnWidthItem,
 } from "./widthItemsMock.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
@@ -218,5 +222,34 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
         );
 
         expect(result).toEqual([validMeasureColumnWidthItem]);
+    });
+});
+
+describe("adaptReferencePointWidthItemsToPivotTable transposed", () => {
+    it("should remove invalid width items", async () => {
+        const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+
+        const sourceColumnWidths: ColumnWidthItem[] = [
+            invalidSliceMeasureColumnWidthItem,
+            invalidMixedValueColumnWidthItem,
+            validSliceMeasureColumnWidthItem,
+            validMixedValuesColumnWidthItem,
+        ];
+
+        const measures: IBucketItem[] = sourceReferencePoint.buckets[0].items;
+        const rowAttributes: IBucketItem[] = sourceReferencePoint.buckets[1].items;
+        const columnAttributes: IBucketItem[] = sourceReferencePoint.buckets[2].items;
+
+        const result = adaptReferencePointWidthItemsToPivotTable(
+            sourceColumnWidths,
+            measures,
+            rowAttributes,
+            columnAttributes,
+            [],
+            [],
+            [],
+        );
+
+        expect(result).toEqual([validSliceMeasureColumnWidthItem, validMixedValuesColumnWidthItem]);
     });
 });

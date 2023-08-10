@@ -60,7 +60,18 @@ export function onCellClickedFactory(
         const dv = table.getDrillDataContext();
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
 
-        const areDrillableHeaders = isCellDrillable(col, cellEvent.data, dv, drillablePredicates);
+        const isTransposed = table.tableDescriptor.isTransposed();
+        const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
+        const rowNodes = table.getRowNodes().slice(0, rowIndex!);
+
+        const areDrillableHeaders = isCellDrillable(
+            col,
+            cellEvent.data,
+            dv,
+            drillablePredicates,
+            columnHeadersPosition,
+            isTransposed,
+        );
 
         if (!areDrillableHeaders) {
             return false;
@@ -72,7 +83,7 @@ export function onCellClickedFactory(
             columnIndex: table.tableDescriptor.getAbsoluteLeafColIndex(col),
             rowIndex: rowIndex!,
             row: createDrilledRow(data as IGridRow, table.tableDescriptor),
-            intersection: createDrillIntersection(cellEvent, table.tableDescriptor),
+            intersection: createDrillIntersection(cellEvent, table.tableDescriptor, rowNodes),
         };
         const drillEvent: IDrillEvent = {
             dataView: dv.dataView,

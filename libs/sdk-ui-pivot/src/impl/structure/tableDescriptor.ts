@@ -18,11 +18,17 @@ import {
     isSliceMeasureCol,
     isMixedHeadersCol,
     MixedHeadersCol,
+    TransposedMeasureDataCol,
 } from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
-import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths.js";
-import { searchForLocatorMatch } from "./colLocatorMatching.js";
+import {
+    IAttributeColumnWidthItem,
+    IMeasureColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
+    IMixedValuesColumnWidthItem,
+} from "../../columnWidths.js";
+import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
 import {
@@ -64,7 +70,7 @@ export class TableDescriptor {
      * This field contains slice column descriptors zipped with their respective ColDef that should
      * be used for ag-grid.
      */
-    public readonly zippedSliceCols: Array<[SliceCol | SliceMeasureCol, ColDef]> = [];
+    public readonly zippedSliceCols: Array<[SliceCol | SliceMeasureCol | MixedValuesCol, ColDef]> = [];
 
     /**
      * This field contains descriptors of leaf columns zipped with their respective ColDef that should
@@ -146,6 +152,9 @@ export class TableDescriptor {
         this.headers.sliceMeasureCols.forEach((col) => {
             this.zippedSliceCols.push(this._zipOneCol(col));
         });
+        this.headers.mixedValuesCols.forEach((col) => {
+            this.zippedSliceCols.push(this._zipOneCol(col));
+        });
     }
 
     /**
@@ -221,7 +230,7 @@ export class TableDescriptor {
         return TableDescriptor.isTransposed(this.dv);
     }
 
-    public attributeMeasureHeadersColsCount(): number {
+    public mixedHeadersColsCount(): number {
         return this.headers.mixedHeadersCols.length;
     }
 
@@ -357,12 +366,7 @@ export class TableDescriptor {
             );
         }
 
-        return (
-            this.sliceColCount() +
-            this.sliceMeasureColCount() +
-            this.attributeMeasureHeadersColsCount() +
-            col.index
-        );
+        return this.sliceColCount() + this.sliceMeasureColCount() + this.mixedHeadersColsCount() + col.index;
     }
 
     /**
@@ -392,6 +396,36 @@ export class TableDescriptor {
     }
 
     /**
+     * Attempts to match the provided slice measure width item to a transposed measure data col. The locators in the item
+     * will be used to traverse the column structure.
+     *
+     * @param measureWidthItem - item to match
+     */
+    public matchSliceMeasureWidthItem(
+        sliceMeasureWidthItem: ISliceMeasureColumnWidthItem,
+    ): TransposedMeasureDataCol | undefined {
+        return searchForTransposedLocatorMatch(
+            this.headers.sliceMeasureCols,
+            sliceMeasureWidthItem.sliceMeasureColumnWidthItem.locators,
+        );
+    }
+
+    /**
+     * Attempts to match the provided mixed values measure width item to a tranposed measure data col. The locators in the item
+     * will be used to traverse the column structure.
+     *
+     * @param measureWidthItem - item to match
+     */
+    public matchMixedValuesWidthItem(
+        mixedValuesWidhItem: IMixedValuesColumnWidthItem,
+    ): TransposedMeasureDataCol | undefined {
+        return searchForTransposedLocatorMatch(
+            this.headers.mixedValuesCols,
+            mixedValuesWidhItem.mixedValuesColumnWidthItem.locators,
+        );
+    }
+
+    /**
      * Tests whether the table can be enriched by row totals. Tables that do not have any measures, do not have any
      * slicing attributes cannot have row totals. Because by definition they either have exactly 1 row with all measure grant total
      * sum or have no rows whatsoever.
@@ -410,7 +444,7 @@ export class TableDescriptor {
             this.scopingColCount() > 0 &&
             (this.seriesColsCount() > 0 ||
                 this.sliceMeasureColCount() > 0 ||
-                this.attributeMeasureHeadersColsCount() > 0)
+                this.mixedHeadersColsCount() > 0)
         );
     }
 
