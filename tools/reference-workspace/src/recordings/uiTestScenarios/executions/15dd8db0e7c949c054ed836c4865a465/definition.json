@@ -12,7 +12,12 @@
                         },
                         "localIdentifier": "m_acugFHNJgsBy"
                     }
-                },
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
                 {
                     "measure": {
                         "definition": {
@@ -24,7 +29,7 @@
                     }
                 }
             ],
-            "localIdentifier": "measures"
+            "localIdentifier": "secondary_measures"
         }
     ],
     "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],

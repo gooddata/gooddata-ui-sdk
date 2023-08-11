@@ -1,0 +1,56 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.f31cf60375d6f107435eb2dc4fdf8ec6",
+        "properties": { "controls": { "columnHeadersPosition": "top", "measureGroupDimension": "rows" } },
+        "sorts": [],
+        "title": "PivotTable - two measures in rows and column attrs on top, with drilling on metrics",
+        "uri": "PivotTable.f31cf60375d6f107435eb2dc4fdf8ec6",
+        "visualizationUrl": "local:table"
+    }
+}

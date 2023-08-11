@@ -23,6 +23,7 @@ import {
     isAttribute,
     attributeLocalId,
     isAttributeDescriptor,
+    isTotalDescriptor,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import {
@@ -363,7 +364,19 @@ export function createAgGridPage(
                     row[column.id] = value;
                     row.headerItemMap[column.id] = header as IMappingHeader;
                 } else if (isResultTotalHeader(header)) {
-                    row[column.id] = intl?.formatMessage(messages[value]);
+                    let title = intl?.formatMessage(messages[value]);
+                    if (rowIndex > 0) {
+                        const previousRowItem = headerItems[1][rowIndex - 1]?.[columnIndex];
+                        if (
+                            isTotalDescriptor(previousRowItem) &&
+                            getMappingHeaderFormattedName(previousRowItem) ===
+                                getMappingHeaderFormattedName(header)
+                        ) {
+                            title = "";
+                        }
+                    }
+
+                    row[column.id] = title;
                     row.headerItemMap[column.id] = header as IMappingHeader;
                 }
             });

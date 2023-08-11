@@ -128,6 +128,20 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
         onDrill: action("onDrill"),
     })
+    .addScenario("two measures in rows and column attrs on left, with totals", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left",
+            columnSizing: {
+                defaultWidth: "autoresizeAll",
+            },
+        },
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
+        ],
+    })
     .addScenario("two measures in rows and only column attrs on left, with totals", {
         ...PivotTableWithMeasuresAndColumnOnly,
         config: {
