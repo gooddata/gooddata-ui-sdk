@@ -2061,6 +2061,8 @@ export interface IInsightListItemProps {
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
+    metadataTimeZone?: string;
+    // (undocumented)
     onClick?: () => void;
     // (undocumented)
     onDelete?: () => void;

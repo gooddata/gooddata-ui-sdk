@@ -10,6 +10,7 @@ import { IFeatureFlags } from "@gooddata/api-client-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api.js";
 import { ANONYMOUS_USER_SETTINGS } from "../../constants.js";
+import { DefaultUiSettings } from "../../../uiSettings.js";
 
 // settings which are ignored from user level as they can be set up only for project and above levels
 // no explicit type as every string is valid key from IUserWorkspaceSettings
@@ -45,6 +46,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
             const flags = await sdk.project.getProjectFeatureFlags(this.workspace);
 
             return {
+                ...DefaultUiSettings,
                 workspace: this.workspace,
                 ...flags,
             };
@@ -59,6 +61,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
             if (!userLoginMd5) {
                 const workspaceSettings = await this.getSettings();
                 return {
+                    ...DefaultUiSettings,
                     // the order is important here, we want workspace settings to overwrite anonymous user settings
                     ...ANONYMOUS_USER_SETTINGS,
                     ...workspaceSettings,
@@ -76,6 +79,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
 
             const { language } = currentProfile;
             return {
+                ...DefaultUiSettings,
                 userId: userLoginMd5,
                 workspace: this.workspace,
                 locale: language!,

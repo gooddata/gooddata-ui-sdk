@@ -52,6 +52,7 @@ export interface IInsightListItemProps {
     onDescriptionPanelOpen?: () => void;
 
     showDescriptionPanel?: boolean;
+    metadataTimeZone?: string;
 }
 
 /**
@@ -144,7 +145,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
     };
 
     private renderUpdatedDateTime = (date: any) => {
-        const { type } = this.props;
+        const { type, metadataTimeZone } = this.props;
 
         if (!date) {
             return false;
@@ -154,7 +155,8 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             return <span />;
         }
 
-        return <InsightListItemDate config={getDateTimeConfig(date)} />;
+        const dateTimeConfig = getDateTimeConfig(date, { dateTimezone: metadataTimeZone });
+        return <InsightListItemDate config={dateTimeConfig} />;
     };
 
     private shouldRenderActions = () => !!this.props.onDelete;
