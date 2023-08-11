@@ -13,6 +13,7 @@ import { hasNoMeasures, hasNoSecondaryMeasures } from "../bucketRules.js";
 import { setBucketTitles, getItemsCount } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
 import { messages } from "../../../locales.js";
+import { ISettings } from "@gooddata/sdk-model";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -20,12 +21,20 @@ import { messages } from "../../../locales.js";
 const headlineMeasuresIcon = "local:headline/bucket-title-measures.svg";
 const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-measures.svg";
 
-export function getDefaultHeadlineUiConfig(): IUiConfig {
-    return cloneDeep(DEFAULT_HEADLINE_UICONFIG);
+export function getDefaultHeadlineUiConfig(settings?: ISettings): IUiConfig {
+    const uiConfig = cloneDeep(DEFAULT_HEADLINE_UICONFIG);
+    if (settings?.enableNewHeadline) {
+        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
+    }
+    return uiConfig;
 }
 
-export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlShape): IUiConfig {
-    let uiConfig = getDefaultHeadlineUiConfig();
+export function getHeadlineUiConfig(
+    referencePoint: IReferencePoint,
+    intl: IntlShape,
+    settings?: ISettings,
+): IUiConfig {
+    let uiConfig = getDefaultHeadlineUiConfig(settings);
 
     const buckets = referencePoint?.buckets ?? [];
     const viewCanAddPrimaryItems = hasNoMeasures(buckets);
@@ -54,6 +63,12 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
             heading: getTranslation(messages.heading.id, intl),
             text: getTranslation(messages.text.id, intl),
         };
+    }
+
+    if (settings?.enableNewHeadline) {
+        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], secondaryMeasuresCount < 2);
+        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
+        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
     }
 
     return uiConfig;

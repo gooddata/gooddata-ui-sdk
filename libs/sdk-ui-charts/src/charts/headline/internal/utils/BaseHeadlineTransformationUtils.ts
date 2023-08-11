@@ -21,6 +21,50 @@ import {
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { CALCULATION_VALUES_DEFAULT } from "../interfaces/ComparisonHeadlines.js";
 
+export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+
+    const dv = DataViewFacade.for(dataView);
+    const executionData = getExecutionData(dv);
+    const [primaryItemHeader, secondaryItemHeader, tertiaryItemHeader] = dv.meta().measureDescriptors();
+
+    const primaryItem = createBaseHeadlineItem(
+        executionData[0],
+        isSomeHeaderPredicateMatched(drillablePredicates, primaryItemHeader, dv),
+        "primaryValue",
+    );
+
+    let secondaryItemData: IHeadlineExecutionData;
+    let tertiaryItemData: IHeadlineExecutionData;
+    if (executionData.length === 3) {
+        // There are 2 secondary metrics
+        // The left item will be the second metric
+        // The right item will be the third metric
+        secondaryItemData = executionData[2];
+        tertiaryItemData = executionData[1];
+    } else {
+        secondaryItemData = executionData[1];
+    }
+
+    const secondaryItem = createBaseHeadlineItem(
+        secondaryItemData,
+        isSomeHeaderPredicateMatched(drillablePredicates, secondaryItemHeader, dv),
+        "secondaryValue",
+    );
+
+    const tertiaryItem = createBaseHeadlineItem(
+        tertiaryItemData,
+        isSomeHeaderPredicateMatched(drillablePredicates, tertiaryItemHeader, dv),
+        "secondaryValue",
+    );
+
+    return {
+        primaryItem,
+        secondaryItem,
+        tertiaryItem,
+    };
+}
+
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,
     drillableItems: ExplicitDrill[],
@@ -80,11 +124,13 @@ function createBaseHeadlineItem(
 ): IBaseHeadlineItem {
     const data = createHeadlineDataItem(executionData, isDrillable);
 
-    return {
-        data,
-        elementType,
-        baseHeadlineDataItemComponent: BaseHeadlineDataItem,
-    };
+    return data
+        ? {
+              data,
+              elementType,
+              baseHeadlineDataItemComponent: BaseHeadlineDataItem,
+          }
+        : null;
 }
 
 function getCalculationValuesDefault(calculationType: CalculationType = CalculationType.CHANGE) {

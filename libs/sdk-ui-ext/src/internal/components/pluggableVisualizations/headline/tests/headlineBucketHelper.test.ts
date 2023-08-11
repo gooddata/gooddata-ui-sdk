@@ -434,11 +434,9 @@ describe("headlineBucketHelper", () => {
         });
 
         it("should return primary bucket with one item and secondary with second item", () => {
-            const headlineReferencePoint = setHeadlineRefPointBuckets(
-                createReferencePoint(),
-                primary,
+            const headlineReferencePoint = setHeadlineRefPointBuckets(createReferencePoint(), primary, [
                 secondary,
-            );
+            ]);
 
             expect(headlineReferencePoint.buckets).toEqual([
                 {

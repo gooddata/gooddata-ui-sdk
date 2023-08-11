@@ -61,7 +61,7 @@ export function tryToMapForeignBuckets(
 export function setHeadlineRefPointBuckets(
     extendedReferencePoint: Readonly<IExtendedReferencePoint>,
     primaryMeasure?: IBucketItem,
-    secondaryMeasure?: IBucketItem,
+    secondaryMeasure?: IBucketItem[],
 ): IExtendedReferencePoint {
     const newReferencePoint: IExtendedReferencePoint = cloneDeep(extendedReferencePoint);
 
@@ -72,7 +72,7 @@ export function setHeadlineRefPointBuckets(
         },
         {
             localIdentifier: BucketNames.SECONDARY_MEASURES,
-            items: secondaryMeasure ? [secondaryMeasure] : [],
+            items: secondaryMeasure ? secondaryMeasure : [],
         },
     ];
 

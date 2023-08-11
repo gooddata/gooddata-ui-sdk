@@ -53,12 +53,7 @@ import {
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
-import {
-    findComplementaryOverTimeComparisonMeasure,
-    findSecondMasterMeasure,
-    setHeadlineRefPointBuckets,
-    tryToMapForeignBuckets,
-} from "./headlineBucketHelper.js";
+import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
 import cloneDeep from "lodash/cloneDeep.js";
 
 /**
@@ -74,7 +69,7 @@ import cloneDeep from "lodash/cloneDeep.js";
  * ### Bucket axioms
  *
  * - |MeasurePrimary| = 1
- * - |MeasureSecondary| ≤ 1
+ * - |MeasureSecondary| ≤ 2
  *
  * ## Dimensions
  *
@@ -109,7 +104,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const referencePointCloned = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
-            uiConfig: getDefaultHeadlineUiConfig(),
+            uiConfig: getDefaultHeadlineUiConfig(this.settings),
         };
 
         if (!hasGlobalDateFilter(referencePoint.filters)) {
@@ -122,12 +117,17 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         if (mappedReferencePoint) {
             newReferencePoint = mappedReferencePoint;
         } else {
-            const limitedBuckets = limitNumberOfMeasuresInBuckets(newReferencePoint.buckets, 2, true);
+            const numberOfSecondaryMeasure =
+                newReferencePoint.uiConfig.buckets[BucketNames.SECONDARY_MEASURES].itemsLimit;
+            const limitedBuckets = limitNumberOfMeasuresInBuckets(
+                newReferencePoint.buckets,
+                numberOfSecondaryMeasure + 1,
+                true,
+            );
             const allMeasures = getAllItemsByType(limitedBuckets, [METRIC]);
             const primaryMeasure = allMeasures.length > 0 ? allMeasures[0] : null;
             const secondaryMeasure =
-                findComplementaryOverTimeComparisonMeasure(primaryMeasure, allMeasures) ||
-                findSecondMasterMeasure(allMeasures);
+                allMeasures.length > 1 ? allMeasures.slice(1, numberOfSecondaryMeasure + 1) : null;
 
             newReferencePoint = setHeadlineRefPointBuckets(
                 newReferencePoint,
@@ -140,7 +140,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
 
-        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl);
+        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl, this.settings);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,
