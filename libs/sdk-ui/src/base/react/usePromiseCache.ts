@@ -73,7 +73,7 @@ export function usePromiseCache<TParams, TResult, TError>(
                 setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setResults(results);
-                    preventResetPromisesRef.current = true;
+                    preventResetPromisesRef.current = false;
                 }
             })
             .catch((errors) => {
