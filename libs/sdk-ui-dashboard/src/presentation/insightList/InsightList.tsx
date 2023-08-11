@@ -223,6 +223,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             }
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
+                            metadataTimeZone={settings?.metadataTimeZone}
                         />
                     );
                 })
