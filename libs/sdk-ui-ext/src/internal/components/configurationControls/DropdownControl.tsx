@@ -1,7 +1,13 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownList,
+    DropdownButton,
+    SingleSelectListItem,
+    ISingleSelectListItemProps,
+} from "@gooddata/sdk-ui-kit";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 
@@ -19,6 +25,7 @@ export interface IDropdownControlProps {
     disabled?: boolean;
     width?: number;
     showDisabledMessage?: boolean;
+    customListItem?: React.ComponentType<ISingleSelectListItemProps>;
 
     pushData(data: any): void;
 }
@@ -34,6 +41,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
         disabled: false,
         width: 117,
         showDisabledMessage: false,
+        customListItem: SingleSelectListItem,
     };
 
     constructor(props: IDropdownControlProps & WrappedComponentProps) {
@@ -43,7 +51,16 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
     }
 
     public render() {
-        const { disabled, labelText, value, width, items, showDisabledMessage, intl } = this.props;
+        const {
+            disabled,
+            labelText,
+            value,
+            width,
+            items,
+            showDisabledMessage,
+            customListItem: ListItem,
+            intl,
+        } = this.props;
         const selectedItem = this.getSelectedItem(value) || {};
 
         return (
@@ -65,7 +82,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                                         isMobile={isMobile}
                                         items={items}
                                         renderItem={({ item }) => (
-                                            <SingleSelectListItem
+                                            <ListItem
                                                 title={item.title}
                                                 isSelected={item.value === selectedItem.value}
                                                 onClick={() => {

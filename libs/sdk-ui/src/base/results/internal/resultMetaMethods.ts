@@ -25,6 +25,7 @@ import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
+    isVirtualArithmeticMeasure,
 } from "@gooddata/sdk-model";
 import findIndex from "lodash/findIndex.js";
 
@@ -112,6 +113,15 @@ export interface IResultMetaMethods {
      *  period; false otherwise.
      */
     isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
+
+    /**
+     * Tests whether measure descriptor is for a virtual measure - that is, the measure is specified in
+     * execution definition and is either virtual measure.
+     *
+     * @param measureDescriptor - input measure descriptor
+     * @returns true if measure for the provide measure descriptor is in definition AND is either virtual measure; false otherwise.
+     */
+    isVirtualMeasure(measureDescriptor: IMeasureDescriptor): boolean;
 
     /**
      * Returns only those sort items from the result's definition which are actually applied on the result.
@@ -259,6 +269,12 @@ class ResultMetaMethods implements IResultMetaMethods {
 
             return isPoPMeasure(measure) || isPreviousPeriodMeasure(measure);
         });
+    }
+
+    public isVirtualMeasure(measureDescriptor: IMeasureDescriptor): boolean {
+        const measureIdMatch = idMatchMeasure(measureDescriptor.measureHeaderItem.localIdentifier);
+        const measure = this.dataView.definition.measures.find(measureIdMatch);
+        return isVirtualArithmeticMeasure(measure);
     }
 
     /**

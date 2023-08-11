@@ -207,3 +207,33 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     columnHeaderPositionTop: { id: "properties.column.headers.position.top" },
     columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
 });
+
+export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({
+    title: { id: "properties.comparison.title" },
+    calculationTypeTitle: { id: "properties.comparison.calculationType.title" },
+    calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },
+    calculatedAsRatio: { id: "properties.comparison.calculationType.as.ratio" },
+    calculatedAsDifference: { id: "properties.comparison.calculationType.as.difference" },
+    calculationTooltipExampleSection: { id: "properties.comparison.calculationType.tooltip.example.section" },
+    calculationTooltipFormulaSection: { id: "properties.comparison.calculationType.tooltip.formula.section" },
+    calculationTooltipUseInSection: { id: "properties.comparison.calculationType.tooltip.useIn.section" },
+    calculatedAsChangeTooltipExample: {
+        id: "properties.comparison.calculationType.as.change.tooltip.example",
+    },
+    calculatedAsChangeTooltipUseIn: { id: "properties.comparison.calculationType.as.change.tooltip.useIn" },
+    calculatedAsChangeTooltipFormula: {
+        id: "properties.comparison.calculationType.as.change.tooltip.formula",
+    },
+    calculatedAsRatioTooltipExample: { id: "properties.comparison.calculationType.as.ratio.tooltip.example" },
+    calculatedAsRatioTooltipUseIn: { id: "properties.comparison.calculationType.as.ratio.tooltip.useIn" },
+    calculatedAsRatioTooltipFormula: { id: "properties.comparison.calculationType.as.ratio.tooltip.formula" },
+    calculatedAsDifferenceTooltipExample: {
+        id: "properties.comparison.calculationType.as.difference.tooltip.example",
+    },
+    calculatedAsDifferenceTooltipUseIn: {
+        id: "properties.comparison.calculationType.as.difference.tooltip.useIn",
+    },
+    calculatedAsDifferenceTooltipFormula: {
+        id: "properties.comparison.calculationType.as.difference.tooltip.formula",
+    },
+});

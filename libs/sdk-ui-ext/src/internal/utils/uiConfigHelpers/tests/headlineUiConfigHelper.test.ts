@@ -1,9 +1,19 @@
 // (C) 2019-2020 GoodData Corporation
-import { DefaultLocale } from "@gooddata/sdk-ui";
+import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 import { createInternalIntl } from "../../internalIntlProvider.js";
-import { getHeadlineUiConfig } from "../headlineUiConfigHelper.js";
+import {
+    buildHeadlineVisualizationConfig,
+    getHeadlineSupportedProperties,
+    getHeadlineUiConfig,
+    isComparisonEnabled,
+} from "../headlineUiConfigHelper.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import { IBucket, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import { CalculationType, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
+import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 
 describe("headlineUiConfigHelper", () => {
     describe("getHeadlineUiConfig", () => {
@@ -62,6 +72,161 @@ describe("headlineUiConfigHelper", () => {
                 );
                 expect(uiConfig.buckets.measures.title).toEqual("Measure");
                 expect(uiConfig.buckets.secondary_measures.title).toEqual("Measure");
+            });
+        });
+    });
+
+    describe("isComparisonEnabled", () => {
+        it("Should return true when bucket have 1 primary measure", () => {
+            const buckets: IBucket[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [newMeasure("measure-1")],
+                },
+            ];
+
+            const insight = newInsight(buckets);
+            expect(isComparisonEnabled(insight)).toBe(false);
+        });
+
+        it("Should return true when bucket have 1 primary measure and 2 secondary measures", () => {
+            const buckets: IBucket[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [newMeasure("measure-1")],
+                },
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("measure-2"), newMeasure("measure-3")],
+                },
+            ];
+
+            const insight = newInsight(buckets);
+            expect(isComparisonEnabled(insight)).toBe(false);
+        });
+
+        it("Should return false when bucket have 1 primary measure and 1 secondary measure", () => {
+            const buckets: IBucket[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [newMeasure("measure-1")],
+                },
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("measure-2")],
+                },
+            ];
+
+            const insight = newInsight(buckets);
+            expect(isComparisonEnabled(insight)).toBe(true);
+        });
+    });
+
+    describe("getHeadlineSupportedProperties", () => {
+        it("Should return default control properties", () => {
+            const buckets: IBucket[] = [
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("measure-2")],
+                },
+            ];
+
+            const insight = newInsight(buckets);
+            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
+                createTestProperties<HeadlineControlProperties>({
+                    comparison: {
+                        enabled: true,
+                        calculationType: CalculationType.RATIO,
+                    },
+                }),
+            );
+        });
+
+        it("Should return default control properties for case secondary measure is derived measure", () => {
+            let insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newPopMeasure("foo", "attr")],
+                },
+            ]);
+            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
+                createTestProperties<HeadlineControlProperties>({
+                    comparison: {
+                        enabled: true,
+                        calculationType: CalculationType.CHANGE,
+                    },
+                }),
+            );
+
+            insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])],
+                },
+            ]);
+            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
+                createTestProperties<HeadlineControlProperties>({
+                    comparison: {
+                        enabled: true,
+                        calculationType: CalculationType.CHANGE,
+                    },
+                }),
+            );
+        });
+
+        it("Should return properties override default properties", () => {
+            const buckets: IBucket[] = [
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("measure-2")],
+                },
+            ];
+
+            const visualizationProperties = createTestProperties<HeadlineControlProperties>({
+                comparison: {
+                    enabled: false,
+                    calculationType: CalculationType.DIFFERENCE,
+                },
+            });
+            const properties: IVisualizationProperties<HeadlineControlProperties> = {
+                ...visualizationProperties,
+                controls: {
+                    ...visualizationProperties.controls,
+                    color: ["red"],
+                },
+            };
+
+            const insight = newInsight(buckets);
+            expect(getHeadlineSupportedProperties(insight, properties)).toEqual(properties);
+        });
+    });
+
+    describe("buildHeadlineVisualizationConfig", () => {
+        it("Should build config correctly", () => {
+            const insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("measure-2")],
+                },
+            ]);
+
+            const properties = createTestProperties<HeadlineControlProperties>({
+                comparison: {
+                    enabled: false,
+                    calculationType: CalculationType.DIFFERENCE,
+                },
+            });
+
+            const config: IChartConfig = {
+                separators: {
+                    thousand: ",",
+                    decimal: ".",
+                },
+            };
+
+            expect(buildHeadlineVisualizationConfig(insight, properties, {}, { config })).toEqual({
+                ...config,
+                ...properties.controls,
             });
         });
     });

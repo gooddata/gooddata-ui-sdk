@@ -46,14 +46,17 @@ function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetA
 }
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
+    const meta = dv.meta();
+
     const attributes = uniqBy(
         (attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
-        dv.meta().attributeDescriptors(),
+        meta.attributeDescriptors(),
     );
+
     return {
-        measures: dv
-            .meta()
+        measures: meta
             .measureDescriptors()
+            .filter((measure: IMeasureDescriptor) => !meta.isVirtualMeasure(measure))
             .map(
                 (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
                     measure,

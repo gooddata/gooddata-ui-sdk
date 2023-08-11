@@ -1155,6 +1155,7 @@ export interface IResultMetaMethods {
     effectiveSortItems(): ISortItem[];
     hasNoHeadersInDim(dim: number): boolean;
     isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
+    isVirtualMeasure(measureDescriptor: IMeasureDescriptor): boolean;
     measureDescriptor(localId: string): IMeasureDescriptor | undefined;
     measureDescriptors(): IMeasureDescriptor[];
     // (undocumented)
@@ -1509,6 +1510,9 @@ export type PlaceholderValue<T> = T extends IPlaceholder<infer A> ? A : T extend
 export class ProtectedReportSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @internal (undocumented)
+export type PushDataCallback = (data: IPushData) => void;
 
 // @public
 export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;

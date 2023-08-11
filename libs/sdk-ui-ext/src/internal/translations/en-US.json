@@ -1362,5 +1362,105 @@
         "value": "in rows",
         "comment": "",
         "limit": 0
+    },
+    "properties.comparison.title": {
+        "value": "Comparison",
+        "comment": "The title of comparison section",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.title": {
+        "value": "Calculated as",
+        "comment": "The label of calculation type dropdown",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.change": {
+        "value": "Change",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change between two values.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.ratio": {
+        "value": "Ratio",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the ratio between two values.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.difference": {
+        "value": "Difference",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.useIn.section": {
+        "value": "When to use",
+        "comment": "The title of the section that describes the pertinent scenarios for the calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.change.tooltip.useIn._metric": {
+        "value": "To calculate relative change between primary and secondary metric values.",
+        "comment": "The content describes the pertinent scenarios for the change calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.change.tooltip.useIn._measure": {
+        "value": "To calculate relative change between primary and secondary measure values.",
+        "comment": "The content describes the pertinent scenarios for the change calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.ratio.tooltip.useIn._metric": {
+        "value": "To calculate what part of secondary metric value is primary metric value.",
+        "comment": "The content describes the pertinent scenarios for the ratio calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.ratio.tooltip.useIn._measure": {
+        "value": "To calculate what part of secondary metric value is primary measure value.",
+        "comment": "The content describes the pertinent scenarios for the ratio calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.difference.tooltip.useIn._metric": {
+        "value": "To calculate absolute difference between primary and secondary metrics values.",
+        "comment": "The content describes the pertinent scenarios for the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.difference.tooltip.useIn._measure": {
+        "value": "To calculate absolute difference between primary and secondary measures values.",
+        "comment": "The content describes the pertinent scenarios for the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.formula.section": {
+        "value": "Formula",
+        "comment": "The title of the section that describes the formula for the calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.change.tooltip.formula": {
+        "value": "(Primary - Secondary) / Secondary",
+        "comment": "The content describes the formula of the change calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.ratio.tooltip.formula": {
+        "value": "Primary / Secondary",
+        "comment": "The content describes the formula of the ratio calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.difference.tooltip.formula": {
+        "value": "Primary - Secondary",
+        "comment": "The content describes the formula of the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.example.section": {
+        "value": "Example",
+        "comment": "The title of the section that provides an example for the calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.change.tooltip.example": {
+        "value": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales",
+        "comment": "The example illustrating the change calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.ratio.tooltip.example": {
+        "value": "Sales this year compared to a quota = This year sales / quota",
+        "comment": "The example illustrating the ratio calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.difference.tooltip.example": {
+        "value": "...",
+        "comment": "The example illustrating the difference calculation.",
+        "limit": 0
     }
 }

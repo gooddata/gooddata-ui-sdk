@@ -21,6 +21,7 @@ import {
     MeasureOrLocalId,
     isInlineMeasure,
     IInlineMeasureDefinition,
+    IVirtualArithmeticMeasureDefinition,
 } from "./index.js";
 import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef/index.js";
 import { IMeasureFilter } from "../filter/index.js";
@@ -552,8 +553,24 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
     protected generateLocalId(): string {
         const hasher = new SparkMD5();
         this.arithmeticMeasure.measureIdentifiers.forEach((id) => hasher.append(id));
-
         return hasher.end();
+    }
+}
+
+/**
+ * Builder for virtual arithmetic measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newVirtualArithmeticMeasure}.
+ *
+ * @internal
+ */
+export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
+    protected buildDefinition(): IVirtualArithmeticMeasureDefinition {
+        const arithmeticDefinition = super.buildDefinition();
+        return {
+            ...arithmeticDefinition,
+            virtual: true,
+        };
     }
 }
 
@@ -915,6 +932,25 @@ export function newArithmeticMeasure(
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
 ): IMeasure<IArithmeticMeasureDefinition> {
     const builder = new ArithmeticMeasureBuilder({ measuresOrIds, operator });
+
+    return modifications(builder).build();
+}
+
+/**
+ * Creates a new virtual arithmetic measure with the specified measure identifiers and operator and optional modifications and localIdentifier.
+ *
+ * @param measuresOrIds - measures or identifiers of the measures to be included in this arithmetic measure
+ * @param operator - operator of the measure
+ * @param modifications - optional modifications (e.g. alias, title, etc.)
+ *
+ * @internal
+ */
+export function newVirtualArithmeticMeasure(
+    measuresOrIds: ReadonlyArray<MeasureOrLocalId>,
+    operator: ArithmeticMeasureOperator,
+    modifications: MeasureModifications<VirtualArithmeticMeasureBuilder> = identity,
+): IMeasure<IVirtualArithmeticMeasureDefinition> {
+    const builder = new VirtualArithmeticMeasureBuilder({ measuresOrIds, operator });
 
     return modifications(builder).build();
 }

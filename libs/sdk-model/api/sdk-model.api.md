@@ -2491,6 +2491,12 @@ export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccess
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
+// @internal
+export function isVirtualArithmeticMeasure(obj: unknown): obj is IMeasure<IVirtualArithmeticMeasureDefinition>;
+
+// @internal
+export function isVirtualArithmeticMeasureDefinition(obj: unknown): obj is IVirtualArithmeticMeasureDefinition;
+
 // @alpha
 export function isWidget(obj: unknown): obj is IWidget;
 
@@ -2858,6 +2864,12 @@ export interface IUserGroupAccessGrantee {
 export interface IVariableMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "variable";
+}
+
+// @internal
+export interface IVirtualArithmeticMeasureDefinition extends IArithmeticMeasureDefinition {
+    // (undocumented)
+    virtual?: boolean;
 }
 
 // @public
@@ -3232,6 +3244,9 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 // @public
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
+// @internal
+export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
+
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin";
 
@@ -3363,6 +3378,12 @@ export function uriRef(uri: Uri): UriRef;
 
 // @public
 export function userFullName(user: IUser): string | undefined;
+
+// @internal
+export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
+    // (undocumented)
+    protected buildDefinition(): IVirtualArithmeticMeasureDefinition;
+}
 
 // @public
 export function visClassId(vc: IVisualizationClass): string;

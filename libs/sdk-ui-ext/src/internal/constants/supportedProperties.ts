@@ -290,3 +290,5 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     "total.measures",
     "orientation.position",
 ];
+
+export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison"];

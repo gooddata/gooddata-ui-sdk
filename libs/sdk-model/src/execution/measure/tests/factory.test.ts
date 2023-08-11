@@ -13,6 +13,7 @@ import {
     newPreviousPeriodMeasure,
     newInlineMeasure,
     modifyInlineMeasure,
+    newVirtualArithmeticMeasure,
 } from "../factory.js";
 import { measureLocalId } from "../index.js";
 import { idRef, uriRef } from "../../../objRef/factory.js";
@@ -102,6 +103,16 @@ describe("measure factories", () => {
 
         it("should return a simple arithmetic measure from two measure objects", () => {
             expect(newArithmeticMeasure([Won, Velocity.Min], "sum")).toMatchSnapshot();
+        });
+    });
+
+    describe("newVirtualArithmeticMeasure", () => {
+        it("should return a simple virtual arithmetic measure", () => {
+            expect(newVirtualArithmeticMeasure(["foo", "bar"], "sum")).toMatchSnapshot();
+        });
+
+        it("should return a simple arithmetic measure from two measure objects", () => {
+            expect(newVirtualArithmeticMeasure([Won, Velocity.Min], "sum")).toMatchSnapshot();
         });
     });
 

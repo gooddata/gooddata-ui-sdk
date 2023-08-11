@@ -261,6 +261,7 @@ export {
 } from "./vis/VisualizationProps.js";
 export {
     IPushData,
+    PushDataCallback,
     IOpenAsReportUiConfig,
     OnError,
     OnExportReady,
