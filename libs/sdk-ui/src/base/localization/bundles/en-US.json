@@ -402,7 +402,7 @@
         "limit": 0
     },
     "gs.list.error": {
-        "value": "Error loading list items",
+        "value": "Error when loading filter values.",
         "comment": "",
         "limit": 0
     },
