@@ -53,7 +53,7 @@
             "comment": "Make it possible to hide/show on demand the web components tab on embedding dialogs"
           },
           {
-            "comment": "Add the continuous line configuration for the Line, Area and Compo charts"
+            "comment": "Add the continuous line configuration for the Line, Area and Combo charts"
           }
         ]
       }
