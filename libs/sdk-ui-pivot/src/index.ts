@@ -60,6 +60,7 @@ export {
     IMeasureColumnLocatorBody,
     isMeasureColumnLocator,
     isAttributeColumnLocator,
+    isTotalColumnLocator,
     newAttributeColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
@@ -67,4 +68,5 @@ export {
     newWidthForSelectedColumns,
     newWidthForTransposedSelectedColumns,
     newMeasureColumnLocator,
+    newTotalColumnLocator,
 } from "./columnWidths.js";

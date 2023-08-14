@@ -243,6 +243,9 @@ export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesC
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem;
 
 // @public
+export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator;
+
+// @public
 export function isTransposedMeasureColumnWidthItem(obj: unknown): obj is ITransposedMeasureColumnWidthItem;
 
 // @public
@@ -297,6 +300,9 @@ export function newAttributeColumnLocator(attributeOrId: IAttribute | string, el
 // @alpha
 export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator;
 
+// @alpha
+export function newTotalColumnLocator(attributeOrId: IAttribute | string, totalFunction: string): ITotalColumnLocator;
+
 // @public
 export function newWidthForAllColumnsForMeasure(measureOrId: IMeasure | string, width: number, allowGrowToFit?: boolean): IWeakMeasureColumnWidthItem;
 
@@ -307,10 +313,10 @@ export function newWidthForAllMeasureColumns(width: number, allowGrowToFit?: boo
 export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, width: number, allowGrowToFit?: boolean): IAttributeColumnWidthItem;
 
 // @public
-export function newWidthForSelectedColumns(measureOrId: IMeasure | string | null, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
+export function newWidthForSelectedColumns(measureOrId: IMeasure | string | null, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @alpha
-export function newWidthForTransposedSelectedColumns(locators: (IAttributeColumnLocator | IMeasureColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): ITransposedMeasureColumnWidthItem;
+export function newWidthForTransposedSelectedColumns(locators: (IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): ITransposedMeasureColumnWidthItem;
 
 // @public
 export const PivotTable: (props: IPivotTableProps) => JSX.Element;

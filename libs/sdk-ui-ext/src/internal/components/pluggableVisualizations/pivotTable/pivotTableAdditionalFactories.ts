@@ -20,6 +20,7 @@ import {
     IWeakMeasureColumnWidthItem,
     isTransposedMeasureColumnWidthItem,
     ITransposedMeasureColumnWidthItem,
+    isTotalColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
@@ -163,7 +164,16 @@ export const pivotTableAdditionalFactories: IAdditionalFactoryDefinition[] = [
             return isMeasureColumnLocator(obj) ? factoryNotationForMeasureColumnLocator(obj) : undefined;
         },
     },
-
+    {
+        importInfo: {
+            name: "newTotalColumnLocator",
+            package: "@gooddata/sdk-ui-pivot",
+            importType: "named",
+        },
+        transformation: (obj) => {
+            return isTotalColumnLocator(obj) ? factoryNotationForTotalColumnLocator(obj) : undefined;
+        },
+    },
     {
         importInfo: {
             name: "newWidthForAllColumnsForMeasure",
