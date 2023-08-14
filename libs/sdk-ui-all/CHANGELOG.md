@@ -22,7 +22,7 @@ Thu, 27 Jul 2023 12:35:32 GMT
 - Add Funnel chart and Pyramid chart visualizations.
 - The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 - Make it possible to hide/show on demand the web components tab on embedding dialogs
-- Add the continuous line configuration for the Line, Area and Compo charts
+- Add the continuous line configuration for the Line, Area and Combo charts
 
 ## 8.12.2
 Wed, 19 Jul 2023 14:12:54 GMT
