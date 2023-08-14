@@ -28,7 +28,7 @@ You might be interested in:
 
 ### GoodData.CN and Cloud authentication
 
-The [GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns. 
+The [GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication or [JWT authentication](https://jwt.io/introduction) for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns. 
 
 Context deferred authentication is designed for use with SSO providers in UI applications and resolves authentication exceptions accordingly. Functions like `createTigerAuthenticationUrl`, `createTigerDeauthenticationUrl`, and `redirectToTigerAuthentication` are provided to assist in the authentication process.
 
