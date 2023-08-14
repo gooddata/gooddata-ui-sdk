@@ -1,10 +1,11 @@
 // (C) 2022 GoodData Corporation
 import {
     newAttributeColumnLocator,
+    newTotalColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot";
 import {
     factoryNotationForAllMeasureColumnWidthItem,
@@ -13,6 +14,7 @@ import {
     factoryNotationForMeasureColumnWidthItem,
     factoryNotationForWeakMeasureColumnWidthItem,
 } from "../pivotTableAdditionalFactories.js";
+
 import { describe, it, expect } from "vitest";
 
 describe("pivotTableAdditionalFactories", () => {
@@ -31,18 +33,39 @@ describe("pivotTableAdditionalFactories", () => {
 
     describe("factoryNotationForMeasureColumnWidthItem", () => {
         const attributeLocators = [newAttributeColumnLocator("attr-id")];
+        const totalLocators = [newTotalColumnLocator("attr-id", "max")];
 
         describe.each([
             ["numeric", 123],
             ["string", "auto"],
         ] as const)("with %s width value", (_, width) => {
             it("should handle item without grow to fit", () => {
-                const input = newWidthForSelectedColumns("some-id", attributeLocators, width);
+                const input = setNewWidthForSelectedColumns("some-id", attributeLocators, width);
                 const actual = factoryNotationForMeasureColumnWidthItem(input);
                 expect(actual).toMatchSnapshot();
             });
             it("should handle item with grow to fit", () => {
-                const input = newWidthForSelectedColumns("some-id", attributeLocators, width, true);
+                const input = setNewWidthForSelectedColumns("some-id", attributeLocators, width, true);
+                const actual = factoryNotationForMeasureColumnWidthItem(input);
+                expect(actual).toMatchSnapshot();
+            });
+            it("should handle item with transposed metrics and without grow to fit", () => {
+                const input = setNewWidthForSelectedColumns(
+                    ["measure-1", "measure-2", "measure-3"],
+                    [...attributeLocators, ...totalLocators],
+                    width,
+                    true,
+                );
+                const actual = factoryNotationForMeasureColumnWidthItem(input);
+                expect(actual).toMatchSnapshot();
+            });
+            it("should handle item with transposed metrics and with grow to fit", () => {
+                const input = setNewWidthForSelectedColumns(
+                    ["measure-1", "measure-2"],
+                    [...attributeLocators, ...totalLocators],
+                    width,
+                    true,
+                );
                 const actual = factoryNotationForMeasureColumnWidthItem(input);
                 expect(actual).toMatchSnapshot();
             });

@@ -463,15 +463,45 @@ export function newWidthForAllColumnsForMeasure(
  * @param locators - Attribute locators to narrow down selection
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+   @deprecated this method is deprecated, please use {@link setNewWidthForSelectedColumns} instead.
  * @public
  */
 export function newWidthForSelectedColumns(
-    measureOrId: IMeasure | string | null,
-    locators: IAttributeColumnLocator[],
+    measureOrId: IMeasure | string,
+    locators: (IAttributeColumnLocator | ITotalColumnLocator)[],
     width: number | "auto",
     allowGrowToFit?: boolean,
 ): IMeasureColumnWidthItem {
-    const measureLocator = measureOrId ? [newMeasureColumnLocator(measureOrId)] : [];
+    return setNewWidthForSelectedColumns(measureOrId, locators, width, allowGrowToFit);
+}
+
+/**
+ * Creates width item that will set width for all columns containing values of the provided measure.
+ * To prepare width items for columns in tables without measures, pass measureOrId as `null`.
+ *
+ * @remarks
+ * See also {@link newAttributeColumnLocator} to learn more about the attribute column locators.
+ *
+ * @param measuresOrIds - Measures specified either by value or by localId reference
+ * @param locators - Attribute locators to narrow down selection
+ * @param width - Width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @public
+ */
+export function setNewWidthForSelectedColumns(
+    measuresOrIds: IMeasure | string | IMeasure[] | string[] | null,
+    locators: (IAttributeColumnLocator | ITotalColumnLocator)[],
+    width: number | "auto",
+    allowGrowToFit?: boolean,
+): IMeasureColumnWidthItem {
+    let measureLocators: IMeasureColumnLocator[] = [];
+
+    if (Array.isArray(measuresOrIds)) {
+        measureLocators = measuresOrIds.map(newMeasureColumnLocator);
+    } else if (measuresOrIds) {
+        measureLocators.push(newMeasureColumnLocator(measuresOrIds));
+    }
+
     const growToFitProp = allowGrowToFit !== undefined && width !== "auto" ? { allowGrowToFit } : {};
 
     // Note: beware here. The attribute locators _must_ come first for some obscure, impl dependent reason
@@ -481,7 +511,7 @@ export function newWidthForSelectedColumns(
                 value: width,
                 ...growToFitProp,
             },
-            locators: [...locators, ...measureLocator],
+            locators: [...locators, ...measureLocators],
         },
     };
 }

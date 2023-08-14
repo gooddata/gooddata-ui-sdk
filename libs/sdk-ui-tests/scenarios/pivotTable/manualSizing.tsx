@@ -5,7 +5,7 @@ import {
     IPivotTableProps,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
     PivotTable,
 } from "@gooddata/sdk-ui-pivot";
 import {
@@ -18,7 +18,7 @@ const ATTRIBUTE_WIDTH = 400;
 const MEASURE_WIDTH = 60;
 
 const attributeColumnWidthItem = newWidthForAttributeColumn(ReferenceMd.Product.Name, ATTRIBUTE_WIDTH);
-const measureColumnWidthItemSimple = newWidthForSelectedColumns(ReferenceMd.Amount, [], MEASURE_WIDTH);
+const measureColumnWidthItemSimple = setNewWidthForSelectedColumns(ReferenceMd.Amount, [], MEASURE_WIDTH);
 const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceMd.Amount, MEASURE_WIDTH);
 
 const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)

@@ -6,7 +6,7 @@ import {
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
 } from "../../../columnWidths.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
@@ -24,7 +24,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
     it("should enrich colDefs based on column width items", () => {
         const table = TableDescriptor.for(TwoMeasuresWithTwoRowAndTwoColumnAttributes, "empty value");
         const widths: ColumnWidthItem[] = [
-            newWidthForSelectedColumns(
+            setNewWidthForSelectedColumns(
                 ReferenceMd.Amount,
                 [
                     newAttributeColumnLocator(
@@ -67,7 +67,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
 
     it("should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on", () => {
         const table = TableDescriptor.for(TwoMeasuresWithRowAttribute, "empty value");
-        const store = testStore(table, newWidthForSelectedColumns(ReferenceMd.Won, [], 200));
+        const store = testStore(table, setNewWidthForSelectedColumns(ReferenceMd.Won, [], 200));
 
         updateColumnDefinitionsWithWidths(table, store, { r_0: { width: 100 } }, 666, true, {
             c_0: { width: 500 },

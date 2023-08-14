@@ -6,7 +6,7 @@ import {
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
 } from "../columnWidths.js";
 import { IAttribute, IMeasure } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -44,7 +44,7 @@ describe("newWidthForAttributeColumn", () => {
     });
 });
 
-describe("newWidthForSelectedColumns", () => {
+describe("setNewWidthForSelectedColumns", () => {
     const Scenarios: Array<
         [string, IMeasure | string, IAttributeColumnLocator[], number, boolean | undefined]
     > = [
@@ -62,6 +62,6 @@ describe("newWidthForSelectedColumns", () => {
     ];
 
     it.each(Scenarios)("should create width item %s", (_desc, measureOrId, locators, width, grow) => {
-        expect(newWidthForSelectedColumns(measureOrId, locators, width, grow)).toMatchSnapshot();
+        expect(setNewWidthForSelectedColumns(measureOrId, locators, width, grow)).toMatchSnapshot();
     });
 });

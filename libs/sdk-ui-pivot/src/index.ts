@@ -62,4 +62,6 @@ export {
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
     newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
+    newTotalColumnLocator,
 } from "./columnWidths.js";

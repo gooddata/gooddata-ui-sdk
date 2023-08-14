@@ -8,7 +8,7 @@ import {
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
 } from "../../../columnWidths.js";
 import {
     getMaxWidth,
@@ -74,26 +74,26 @@ describe("ResizedColumnStore", () => {
         [
             "for first measure column on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
-            [newWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
+            [setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
         ],
         [
             "for second measure column on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
-            [newWidthForSelectedColumns(ReferenceMd.Won, [], 100)],
+            [setNewWidthForSelectedColumns(ReferenceMd.Won, [], 100)],
         ],
         [
             "for both measure columns on non-pivoted table with two measures",
             TwoMeasuresWithRowAttributeDescriptor,
             [
-                newWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
-                newWidthForSelectedColumns(ReferenceMd.Won, [], 200),
+                setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
+                setNewWidthForSelectedColumns(ReferenceMd.Won, [], 200),
             ],
         ],
         [
             "for exactly one measure column on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -110,7 +110,7 @@ describe("ResizedColumnStore", () => {
             "for auto-sizing exactly one measure column on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -127,7 +127,7 @@ describe("ResizedColumnStore", () => {
             "for exactly two measure columns of same measure on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -138,7 +138,7 @@ describe("ResizedColumnStore", () => {
                     ],
                     100,
                 ),
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -155,7 +155,7 @@ describe("ResizedColumnStore", () => {
             "for exactly two measure columns of two different measures on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -166,7 +166,7 @@ describe("ResizedColumnStore", () => {
                     ],
                     100,
                 ),
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Won,
                     [
                         newAttributeColumnLocator(
@@ -183,7 +183,7 @@ describe("ResizedColumnStore", () => {
             "for auto-sizing exactly two measure columns of two different measures on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -194,7 +194,7 @@ describe("ResizedColumnStore", () => {
                     ],
                     "auto",
                 ),
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Won,
                     [
                         newAttributeColumnLocator(
@@ -226,7 +226,7 @@ describe("ResizedColumnStore", () => {
             "for combination of single measure and all measure widths on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -244,7 +244,7 @@ describe("ResizedColumnStore", () => {
             "for combination of attribute, single measure and all measure widths on pivoted table",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -325,7 +325,7 @@ describe("ResizedColumnStore", () => {
         it("should remove measure from manual resizing", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
-                newWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
+                setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 100),
             );
 
             const column = getFakeColumn({
@@ -390,7 +390,7 @@ describe("ResizedColumnStore", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
                 newWidthForAllMeasureColumns(155),
-                newWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
+                setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
             );
 
             const column = getFakeColumn({
@@ -408,13 +408,13 @@ describe("ResizedColumnStore", () => {
             [
                 "keep fixed-size single measure column setting",
                 TwoMeasuresWithRowAttributeDescriptor,
-                [newWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
+                [setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 100)],
                 100,
             ],
             [
                 "remove measure column settings when using auto-size",
                 TwoMeasuresWithRowAttributeDescriptor,
-                [newWidthForSelectedColumns(ReferenceMd.Amount, [], "auto")],
+                [setNewWidthForSelectedColumns(ReferenceMd.Amount, [], "auto")],
                 undefined,
             ],
             [
@@ -459,7 +459,7 @@ describe("ResizedColumnStore", () => {
             const store = testStore(
                 TwoMeasuresWithRowAttributeDescriptor,
                 newWidthForAllColumnsForMeasure(ReferenceMd.Amount, 100),
-                newWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
+                setNewWidthForSelectedColumns(ReferenceMd.Amount, [], 175),
             );
 
             const column = getFakeColumn({
@@ -507,7 +507,7 @@ describe("ResizedColumnStore", () => {
         it("should replace single row measure width with weak column", () => {
             const store = testStore(
                 TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
@@ -714,7 +714,7 @@ describe("ResizedColumnStore", () => {
         it("should return explicit measure column width", () => {
             const store = testStore(
                 TestTable,
-                newWidthForSelectedColumns(
+                setNewWidthForSelectedColumns(
                     ReferenceMd.Amount,
                     [
                         newAttributeColumnLocator(
