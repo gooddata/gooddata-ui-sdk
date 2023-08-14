@@ -97,6 +97,23 @@ export interface IMeasureColumnWidthItem {
 }
 
 /**
+ * Object defining the {@link ITransposedMeasureColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface ITransposedMeasureColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: ColumnLocator[];
+}
+
+/**
+ * @public
+ */
+export interface ITransposedMeasureColumnWidthItem {
+    transposedMeasureColumnWidthItem: ITransposedMeasureColumnWidthItemBody;
+}
+
+/**
  * Object defining the {@link ISliceMeasureColumnWidthItem } object body.
  *
  * @public
@@ -169,6 +186,7 @@ export interface IWeakMeasureColumnWidthItem {
 export type ColumnWidthItem =
     | IAttributeColumnWidthItem
     | IMeasureColumnWidthItem
+    | ITransposedMeasureColumnWidthItem
     | ISliceMeasureColumnWidthItem
     | IMixedValuesColumnWidthItem
     | IAllMeasureColumnWidthItem
@@ -311,6 +329,19 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
 }
 
 /**
+ * Tests whether object is an instance of {@link ITransposedMeasureColumnWidthItem}
+ *
+ * @public
+ */
+export function isTransposedMeasureColumnWidthItem(obj: unknown): obj is ITransposedMeasureColumnWidthItem {
+    return (
+        !isEmpty(obj) &&
+        (obj as ITransposedMeasureColumnWidthItem).transposedMeasureColumnWidthItem !== undefined &&
+        (obj as ITransposedMeasureColumnWidthItem).transposedMeasureColumnWidthItem.locators !== undefined
+    );
+}
+
+/**
  * Tests whether object is an instance of {@link ISliceMeasureColumnWidthItem}
  *
  * @public
@@ -364,7 +395,10 @@ export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureC
 }
 
 /**
- * @internal
+ * Creates a new measure column locator
+ *
+ * @param measureOrId - Measure specified by either value or by localId reference
+ * @alpha
  */
 export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator {
     const measureIdentifier = measureLocalId(measureOrId);
@@ -482,6 +516,36 @@ export function newWidthForSelectedColumns(
                 ...growToFitProp,
             },
             locators: [...locators, ...measureLocator],
+        },
+    };
+}
+
+/**
+ * Creates width item that will set width for all transposed columns containing values of the provided measure.
+ *
+ * @remarks
+ * See also {@link newAttributeColumnLocator} to learn more about the attribute column locators.
+ * See also {@link newMeasureColumnLocator} to learn more about the measure column locators.
+ *
+ * @param locators - Attribute and Measure locators to narrow down selection
+ * @param width - Width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @alpha
+ */
+export function newWidthForTransposedSelectedColumns(
+    locators: (IAttributeColumnLocator | IMeasureColumnLocator)[],
+    width: number | "auto",
+    allowGrowToFit?: boolean,
+): ITransposedMeasureColumnWidthItem {
+    const growToFitProp = allowGrowToFit !== undefined && width !== "auto" ? { allowGrowToFit } : {};
+
+    return {
+        transposedMeasureColumnWidthItem: {
+            width: {
+                value: width,
+                ...growToFitProp,
+            },
+            locators,
         },
     };
 }

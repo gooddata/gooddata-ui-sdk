@@ -37,6 +37,8 @@ import {
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
     IMixedValuesColumnWidthItem,
+    isTransposedMeasureColumnWidthItem,
+    ITransposedMeasureColumnWidthItem,
 } from "../../columnWidths.js";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
@@ -476,6 +478,21 @@ export function convertColumnWidthsToMap(
                 measureIdentifier: colMeasureLocalId(col),
             };
         }
+
+        if (isTransposedMeasureColumnWidthItem(columnWidth)) {
+            const result = getTransposedMeasureColumnWidthItemFieldAndWidth(tableDescriptor, columnWidth);
+
+            if (!result) {
+                return;
+            }
+
+            const [col, width] = result;
+
+            columnWidthsMap[col.id] = {
+                width: widthValidator(width),
+                measureIdentifier: colMeasureLocalId(col),
+            };
+        }
     });
     return columnWidthsMap;
 }
@@ -508,6 +525,20 @@ function getMeasureColumnWidthItemFieldAndWidth(
     return [col as LeafDataCol, columnWidthItem.measureColumnWidthItem.width];
 }
 
+function getTransposedMeasureColumnWidthItemFieldAndWidth(
+    tableDescriptor: TableDescriptor,
+    columnWidthItem: ITransposedMeasureColumnWidthItem,
+): [LeafDataCol, ColumnWidth] | undefined {
+    const col = tableDescriptor.matchTransposedMeasureWidthItem(columnWidthItem);
+
+    if (!col) {
+        // it is a valid case that no column matches locators. data may change, elements are no longer there etc..
+        return undefined;
+    }
+
+    return [col as LeafDataCol, columnWidthItem.transposedMeasureColumnWidthItem.width];
+}
+
 function getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
     tableDescriptor: TableDescriptor,
     columnWidthItem: ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem,
@@ -528,7 +559,7 @@ function getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
     return [col as TransposedMeasureDataCol, width];
 }
 
-function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
+function getSizeItemByColId(col: AnyCol, width: ColumnWidth, isTransposed?: boolean): ColumnWidthItem {
     if (isSliceCol(col)) {
         const attributeIdentifier = col.attributeDescriptor.attributeHeader.localIdentifier;
         if (isAbsoluteColumnWidth(width)) {
@@ -541,6 +572,13 @@ function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
         } else {
             throw new InvariantError(`width value for attributeColumnWidthItem has to be number ${col.id}`);
         }
+    } else if (isScopeCol(col) && isTransposed) {
+        return {
+            transposedMeasureColumnWidthItem: {
+                width,
+                locators: createColumnLocator(col),
+            },
+        };
     } else if (isScopeCol(col) || isSeriesCol(col)) {
         return {
             measureColumnWidthItem: {
@@ -573,7 +611,7 @@ export function getColumnWidthsFromMap(
     return Object.keys(map).map((colId: string) => {
         const { width } = map[colId];
         const col: AnyCol = tableDescriptor.getCol(colId);
-        const sizeItem = getSizeItemByColId(col, width);
+        const sizeItem = getSizeItemByColId(col, width, tableDescriptor.isTransposed());
 
         invariant(sizeItem, `unable to find size item by filed ${colId}`);
 

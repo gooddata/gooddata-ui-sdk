@@ -27,6 +27,7 @@ import {
     IMeasureColumnWidthItem,
     ISliceMeasureColumnWidthItem,
     IMixedValuesColumnWidthItem,
+    ITransposedMeasureColumnWidthItem,
 } from "../../columnWidths.js";
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
@@ -392,6 +393,21 @@ export class TableDescriptor {
         return searchForLocatorMatch(
             this.headers.rootDataCols,
             measureWidthItem.measureColumnWidthItem.locators,
+        );
+    }
+
+    /**
+     * Attempts to match the provided measure width item to a leaf data col when table is transposed. The locators in the item
+     * will be used to traverse the column structure.
+     *
+     * @param measureWidthItem - item to match
+     */
+    public matchTransposedMeasureWidthItem(
+        transposedMeasureWidthItem: ITransposedMeasureColumnWidthItem,
+    ): LeafDataCol | undefined {
+        return searchForLocatorMatch(
+            this.headers.rootDataCols,
+            transposedMeasureWidthItem.transposedMeasureColumnWidthItem.locators,
         );
     }
 

@@ -41,7 +41,7 @@ export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 // @public (undocumented)
-export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
+export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
 // @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
@@ -243,6 +243,9 @@ export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesC
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem;
 
 // @public
+export function isTransposedMeasureColumnWidthItem(obj: unknown): obj is ITransposedMeasureColumnWidthItem;
+
+// @public
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
 
 // @public
@@ -255,6 +258,20 @@ export interface ITotalColumnLocator {
 export interface ITotalColumnLocatorBody {
     attributeIdentifier: Identifier;
     totalFunction: string;
+}
+
+// @public (undocumented)
+export interface ITransposedMeasureColumnWidthItem {
+    // (undocumented)
+    transposedMeasureColumnWidthItem: ITransposedMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface ITransposedMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: ColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
 }
 
 // @public (undocumented)
@@ -277,6 +294,9 @@ export type MeasureGroupDimension = "columns" | "rows";
 // @public
 export function newAttributeColumnLocator(attributeOrId: IAttribute | string, element?: string): IAttributeColumnLocator;
 
+// @alpha
+export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator;
+
 // @public
 export function newWidthForAllColumnsForMeasure(measureOrId: IMeasure | string, width: number, allowGrowToFit?: boolean): IWeakMeasureColumnWidthItem;
 
@@ -288,6 +308,9 @@ export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, w
 
 // @public
 export function newWidthForSelectedColumns(measureOrId: IMeasure | string | null, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
+
+// @alpha
+export function newWidthForTransposedSelectedColumns(locators: (IAttributeColumnLocator | IMeasureColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): ITransposedMeasureColumnWidthItem;
 
 // @public
 export const PivotTable: (props: IPivotTableProps) => JSX.Element;

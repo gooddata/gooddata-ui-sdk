@@ -14,6 +14,8 @@ import {
     ColumnLocator,
     IMeasureColumnLocator,
     MeasureGroupDimension,
+    ITransposedMeasureColumnWidthItem,
+    isTransposedMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
@@ -74,16 +76,31 @@ const matchesWidthItemFilters = (
     return true;
 };
 
-const containsMeasureLocator = (widthItem: IMeasureColumnWidthItem): boolean =>
-    widthItem.measureColumnWidthItem.locators.some((locator) => isMeasureLocator(locator));
+function getMeasureOrTransposedWidthItem(
+    widthItem: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
+) {
+    if (isMeasureColumnWidthItem(widthItem)) {
+        return widthItem.measureColumnWidthItem;
+    } else {
+        return widthItem.transposedMeasureColumnWidthItem;
+    }
+}
+
+const containsMeasureLocator = (
+    widthItem: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
+): boolean => {
+    const columnWidthItem = getMeasureOrTransposedWidthItem(widthItem);
+    return columnWidthItem.locators.some((locator) => isMeasureLocator(locator));
+};
 
 const widthItemLocatorsHaveProperLength = (
-    widthItem: IMeasureColumnWidthItem,
+    widthItem: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
     measuresCount: number,
     columnAttributesCount: number,
     measureGroupDimension?: MeasureGroupDimension,
 ): boolean => {
-    const widthItemLocatorsLength = widthItem.measureColumnWidthItem.locators.length;
+    const columnWidthItem = getMeasureOrTransposedWidthItem(widthItem);
+    const widthItemLocatorsLength = columnWidthItem.locators.length;
     const hasWidthItemLocators = widthItemLocatorsLength > 0;
     const hasMeasureLocators = measuresCount > 0 && containsMeasureLocator(widthItem);
     const hasNotMeasureLocators = measuresCount === 0 && !containsMeasureLocator(widthItem);
@@ -102,11 +119,13 @@ const widthItemLocatorsHaveProperLength = (
 };
 
 function removeInvalidLocators(
-    columnWidth: IMeasureColumnWidthItem,
+    columnWidth: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
     measureLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
 ) {
-    return columnWidth.measureColumnWidthItem.locators.filter((locator) => {
+    const columnWidthItem = getMeasureOrTransposedWidthItem(columnWidth);
+
+    return columnWidthItem.locators.filter((locator) => {
         // filter out invalid measure locators
         if (isMeasureLocator(locator)) {
             return includes(measureLocalIdentifiers, locator.measureLocatorItem.measureIdentifier);
@@ -137,17 +156,48 @@ const columnWidthLocatorsAndMeasuresHaveSameValues = (
 };
 
 function transformToWeakMeasureColumnWidthItem(
-    columnWidth: IMeasureColumnWidthItem,
+    columnWidth: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
 ): IWeakMeasureColumnWidthItem {
+    const columnWidthItem = getMeasureOrTransposedWidthItem(columnWidth);
     if (
-        isAbsoluteColumnWidth(columnWidth.measureColumnWidthItem.width) &&
-        columnWidth.measureColumnWidthItem.locators.length === 1 &&
-        isMeasureLocator(columnWidth.measureColumnWidthItem.locators[0])
+        isAbsoluteColumnWidth(columnWidthItem.width) &&
+        columnWidthItem.locators.length === 1 &&
+        isMeasureLocator(columnWidthItem.locators[0])
     ) {
         return {
             measureColumnWidthItem: {
-                width: columnWidth.measureColumnWidthItem.width,
-                locator: columnWidth.measureColumnWidthItem.locators.filter(isMeasureLocator)[0],
+                width: columnWidthItem.width,
+                locator: columnWidthItem.locators.filter(isMeasureLocator)[0],
+            },
+        };
+    }
+}
+
+function getFilteredMeasureColumnWidthItem(
+    columnWidth: IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem,
+    measureLocalIdentifiers: string[],
+    columnAttributeLocalIdentifiers: string[],
+): IMeasureColumnWidthItem | ITransposedMeasureColumnWidthItem {
+    if (isMeasureColumnWidthItem(columnWidth)) {
+        return {
+            measureColumnWidthItem: {
+                ...columnWidth.measureColumnWidthItem,
+                locators: removeInvalidLocators(
+                    columnWidth,
+                    measureLocalIdentifiers,
+                    columnAttributeLocalIdentifiers,
+                ),
+            },
+        };
+    } else {
+        return {
+            transposedMeasureColumnWidthItem: {
+                ...columnWidth.transposedMeasureColumnWidthItem,
+                locators: removeInvalidLocators(
+                    columnWidth,
+                    measureLocalIdentifiers,
+                    columnAttributeLocalIdentifiers,
+                ),
             },
         };
     }
@@ -171,23 +221,20 @@ function adaptWidthItemsToPivotTable(
     }
 
     return originalColumnWidths.reduce((columnWidths: ColumnWidthItem[], columnWidth: ColumnWidthItem) => {
-        if (isMeasureColumnWidthItem(columnWidth)) {
-            const filteredMeasureColumnWidthItem: IMeasureColumnWidthItem = {
-                measureColumnWidthItem: {
-                    ...columnWidth.measureColumnWidthItem,
-                    locators: removeInvalidLocators(
-                        columnWidth,
-                        measureLocalIdentifiers,
-                        columnAttributeLocalIdentifiers,
-                    ),
-                },
-            };
+        if (isMeasureColumnWidthItem(columnWidth) || isTransposedMeasureColumnWidthItem(columnWidth)) {
+            const filteredColumnWidthItem = getFilteredMeasureColumnWidthItem(
+                columnWidth,
+                measureLocalIdentifiers,
+                columnAttributeLocalIdentifiers,
+            );
+
+            const columnWidthItem = getMeasureOrTransposedWidthItem(filteredColumnWidthItem);
 
             // need to filter this too, so it takes in consideration previous row bucket identifiers that were moved to column bucket, as same as is done with referencePoint
             let filteredColumnAttributeLocalIdentifiers: string[] = [];
             if (isAdaptPropertiesToInsight) {
                 filteredColumnAttributeLocalIdentifiers = [];
-                filteredMeasureColumnWidthItem.measureColumnWidthItem.locators.forEach((locator) => {
+                columnWidthItem.locators.forEach((locator) => {
                     if (isAttributeLocator(locator)) {
                         columnAttributeLocalIdentifiers.forEach((columnAttributeIdentifier) => {
                             if (
@@ -219,17 +266,18 @@ function adaptWidthItemsToPivotTable(
             }
 
             const measureColumnWidthItem =
-                measureGroupDimension !== "rows" ? filteredMeasureColumnWidthItem : columnWidth;
+                measureGroupDimension !== "rows" ? filteredColumnWidthItem : columnWidth;
             if (
-                matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters, columnAttributes) &&
+                matchesWidthItemFilters(filteredColumnWidthItem, filters, columnAttributes) &&
                 widthItemLocatorsHaveProperLength(
-                    measureColumnWidthItem,
+                    filteredColumnWidthItem,
                     measureLocalIdentifiers.length,
                     filteredColumnAttributeLocalIdentifiers.length,
                     measureGroupDimension,
                 )
             ) {
                 columnWidths.push(measureColumnWidthItem);
+
                 return columnWidths;
             }
         } else if (isAttributeColumnWidthItem(columnWidth)) {

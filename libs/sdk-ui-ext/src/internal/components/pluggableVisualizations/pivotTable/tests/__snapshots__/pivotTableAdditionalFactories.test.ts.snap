@@ -20,6 +20,14 @@ exports[`pivotTableAdditionalFactories > factoryNotationForMeasureColumnWidthIte
 
 exports[`pivotTableAdditionalFactories > factoryNotationForMeasureColumnWidthItem > with string width value > should handle item without grow to fit 1`] = `"newWidthForSelectedColumns(\\"some-id\\", [newAttributeColumnLocator(\\"attr-id\\")], \\"auto\\")"`;
 
+exports[`pivotTableAdditionalFactories > factoryNotationForTransposedMeasureColumnWidthItem > with numeric width value > should handle item with grow to fit 1`] = `"newWidthForTransposedSelectedColumns([newMeasureColumnLocator(\\"measure-id-1\\"), newMeasureColumnLocator(\\"measure-id-2\\"), newAttributeColumnLocator(\\"attr-id\\"), newTotalColumnLocator(\\"attr-id\\", \\"sum\\")], 123, true)"`;
+
+exports[`pivotTableAdditionalFactories > factoryNotationForTransposedMeasureColumnWidthItem > with numeric width value > should handle item without grow to fit 1`] = `"newWidthForTransposedSelectedColumns([newMeasureColumnLocator(\\"measure-id-1\\"), newMeasureColumnLocator(\\"measure-id-2\\"), newAttributeColumnLocator(\\"attr-id\\")], 123)"`;
+
+exports[`pivotTableAdditionalFactories > factoryNotationForTransposedMeasureColumnWidthItem > with string width value > should handle item with grow to fit 1`] = `"newWidthForTransposedSelectedColumns([newMeasureColumnLocator(\\"measure-id-1\\"), newMeasureColumnLocator(\\"measure-id-2\\"), newAttributeColumnLocator(\\"attr-id\\"), newTotalColumnLocator(\\"attr-id\\", \\"sum\\")], \\"auto\\")"`;
+
+exports[`pivotTableAdditionalFactories > factoryNotationForTransposedMeasureColumnWidthItem > with string width value > should handle item without grow to fit 1`] = `"newWidthForTransposedSelectedColumns([newMeasureColumnLocator(\\"measure-id-1\\"), newMeasureColumnLocator(\\"measure-id-2\\"), newAttributeColumnLocator(\\"attr-id\\")], \\"auto\\")"`;
+
 exports[`pivotTableAdditionalFactories > factoryNotationForWeakMeasureColumnWidthItem > should handle item with grow to fit 1`] = `"newWidthForAllColumnsForMeasure(\\"some-id\\", 123, true)"`;
 
 exports[`pivotTableAdditionalFactories > factoryNotationForWeakMeasureColumnWidthItem > should handle item without grow to fit 1`] = `"newWidthForAllColumnsForMeasure(\\"some-id\\", 123)"`;

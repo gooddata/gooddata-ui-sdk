@@ -18,6 +18,8 @@ import {
     isMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
+    isTransposedMeasureColumnWidthItem,
+    ITransposedMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
@@ -59,11 +61,46 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
     return `newWidthForSelectedColumns(${params.join(", ")})`;
 }
 
+export function factoryNotationForTransposedMeasureColumnWidthItem(
+    obj: ITransposedMeasureColumnWidthItem,
+): string {
+    const { locators, width } = obj.transposedMeasureColumnWidthItem;
+
+    const [measureLocators, attributeLocators] = partition<ColumnLocator, IMeasureColumnLocator>(
+        locators,
+        isMeasureColumnLocator,
+    );
+
+    const mergedLocators = [...measureLocators, ...attributeLocators];
+    const allowGrowToFit = isString(width) ? false : (width as IAbsoluteColumnWidth).allowGrowToFit;
+    const locatorsFactories = mergedLocators.map((locator) =>
+        isAttributeColumnLocator(locator)
+            ? factoryNotationForAttributeColumnLocator(locator)
+            : isMeasureColumnLocator(locator)
+            ? factoryNotationForMeasureColumnLocator(locator)
+            : factoryNotationForTotalColumnLocator(locator),
+    );
+
+    const params = [
+        `[${locatorsFactories.join(", ")}]`,
+        isString(width.value) ? `"${width.value}"` : width.value,
+        allowGrowToFit && "true",
+    ].filter((item) => !isNil(item));
+    return `newWidthForTransposedSelectedColumns(${params.join(", ")})`;
+}
+
 export function factoryNotationForAttributeColumnLocator(obj: IAttributeColumnLocator): string {
     const { attributeIdentifier, element } = obj.attributeLocatorItem;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
     const params = [`"${attributeIdentifier}"`, element && `"${element}"`].filter((item) => !isNil(item));
     return `newAttributeColumnLocator(${params.join(", ")})`;
+}
+
+export function factoryNotationForMeasureColumnLocator(obj: IMeasureColumnLocator): string {
+    const { measureIdentifier } = obj.measureLocatorItem;
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
+    const params = [`"${measureIdentifier}"`].filter((item) => !isNil(item));
+    return `newMeasureColumnLocator(${params.join(", ")})`;
 }
 
 export function factoryNotationForTotalColumnLocator(obj: ITotalColumnLocator): string {
@@ -118,6 +155,17 @@ export const pivotTableAdditionalFactories: IAdditionalFactoryDefinition[] = [
     },
     {
         importInfo: {
+            name: "newMeasureColumnLocator",
+            package: "@gooddata/sdk-ui-pivot",
+            importType: "named",
+        },
+        transformation: (obj) => {
+            return isMeasureColumnLocator(obj) ? factoryNotationForMeasureColumnLocator(obj) : undefined;
+        },
+    },
+
+    {
+        importInfo: {
             name: "newWidthForAllColumnsForMeasure",
             package: "@gooddata/sdk-ui-pivot",
             importType: "named",
@@ -136,6 +184,18 @@ export const pivotTableAdditionalFactories: IAdditionalFactoryDefinition[] = [
         },
         transformation: (obj) => {
             return isMeasureColumnWidthItem(obj) ? factoryNotationForMeasureColumnWidthItem(obj) : undefined;
+        },
+    },
+    {
+        importInfo: {
+            name: "newWidthForTransposedSelectedColumns",
+            package: "@gooddata/sdk-ui-pivot",
+            importType: "named",
+        },
+        transformation: (obj) => {
+            return isTransposedMeasureColumnWidthItem(obj)
+                ? factoryNotationForTransposedMeasureColumnWidthItem(obj)
+                : undefined;
         },
     },
     {

@@ -17,6 +17,7 @@ import {
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,
     isSliceMeasureColumnWidthItem,
+    isTransposedMeasureColumnWidthItem,
 } from "../columnWidths.js";
 
 function getScrollbarWidthBody(): number {
@@ -94,10 +95,12 @@ export const tableHasColumnAttributes = (columnAttributes: IAttributeDescriptor[
 export const isStrongColumnWidthItem = (item: ColumnWidthItem) => {
     const isAttributeOrMeasureColumnWidthItem =
         isAttributeColumnWidthItem(item) || isMeasureColumnWidthItem(item);
-    const isTransposedMeasureColumnWidthItem =
-        isSliceMeasureColumnWidthItem(item) || isMixedValuesColumnWidthItem(item);
+    const isTransposedColumnWidthItem =
+        isSliceMeasureColumnWidthItem(item) ||
+        isMixedValuesColumnWidthItem(item) ||
+        isTransposedMeasureColumnWidthItem(item);
 
-    return isAttributeOrMeasureColumnWidthItem || isTransposedMeasureColumnWidthItem;
+    return isAttributeOrMeasureColumnWidthItem || isTransposedColumnWidthItem;
 };
 
 export const getDataViewSeriesDescriptors = (dv: DataViewFacade) =>
