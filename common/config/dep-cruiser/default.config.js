@@ -180,6 +180,16 @@ const DefaultRules = [
         from: {},
         to: { path: "date-fns/index.js", dependencyTypes: ["npm"] },
     },
+    {
+        name: "not-to-whole-date-fns-tz",
+        comment:
+            "This module depends on the whole date-fns-tz. Please use individual imports - eg." +
+            ' `import format from "date-fns-tz/format";` instead of `import { format } from "date-fns-tz";`' +
+            "This helps to keep the resulting bundles smaller for the users",
+        severity: "error",
+        from: {},
+        to: { path: "date-fns-tz/index.js", dependencyTypes: ["npm"] },
+    },
 ];
 
 const DefaultOptions = {
@@ -254,8 +264,8 @@ const DefaultOptions = {
     */
     // , externalModuleResolutionStrategy: 'node_modules'
     enhancedResolveOptions: {
-        mainFields:["main","types"]
-    }
+        mainFields: ["main", "types"],
+    },
 };
 
 const DontImportRootIndex = {
