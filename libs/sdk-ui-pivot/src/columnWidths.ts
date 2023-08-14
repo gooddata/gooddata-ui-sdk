@@ -271,7 +271,7 @@ export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnL
 }
 
 /**
- * Tests whether object is an instance of {@link TotalColumnLocator}
+ * Tests whether object is an instance of {@link ITotalColumnLocator}
  *
  * @public
  */
@@ -372,6 +372,25 @@ export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasur
     return {
         measureLocatorItem: {
             measureIdentifier,
+        },
+    };
+}
+
+/**
+ * Creates a new total column locator
+ *
+ * @param attributeOrId - Column attribute specified by either value or by localId reference
+ * @param totalFunction - Function for the total, such as sum, max, min...
+ * @alpha
+ */
+export function newTotalColumnLocator(
+    attributeOrId: IAttribute | string,
+    totalFunction: string,
+): ITotalColumnLocator {
+    return {
+        totalLocatorItem: {
+            attributeIdentifier: attributeLocalId(attributeOrId),
+            totalFunction,
         },
     };
 }

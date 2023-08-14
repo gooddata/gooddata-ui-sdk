@@ -57,6 +57,7 @@ export {
     IMeasureColumnLocatorBody,
     isMeasureColumnLocator,
     isAttributeColumnLocator,
+    isTotalColumnLocator,
     newAttributeColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
