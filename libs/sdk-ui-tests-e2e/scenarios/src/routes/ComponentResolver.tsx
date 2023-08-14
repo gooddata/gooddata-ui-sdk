@@ -66,6 +66,7 @@ import { DashboardPivotTableScenario } from "../components/Scenarios/Dashboard/D
 import { ShortenMetricNameChartScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameChartScenario";
 import { ShortenMetricNameTableScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameTableScenario";
 import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dashboard/DashboardShortenMetricNameScenario";
+import { DashboardForDateFilterScenario } from "../components/Scenarios/Dashboard/DashboardForDateFilterScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -93,6 +94,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_TARGET: "dashboard/dashboard-target",
     DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS: "dashboard/dashboard-many-rows-columns",
     DASHBOARD_ATTRIBUTE_SELECTION: "dashboard/attribute-selection",
+    DASHBOARD_FOR_DATE_FILTER: "dashboard/for-date-filter",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -162,6 +164,7 @@ const scenarios = new Map<string, React.ComponentType>([
     ],
     [SCENARIO_KEYS.DASHBOARD_TARGET, DashboardTargetDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS, DashboardWithTableManyRowsColumnsScenario],
+    [SCENARIO_KEYS.DASHBOARD_FOR_DATE_FILTER, DashboardForDateFilterScenario],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
     [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],

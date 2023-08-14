@@ -61,7 +61,10 @@
         "attr.stagehistory.id",
         "attr.account.id",
         "attr.product.id",
-        "attr.owner.region"
+        "attr.owner.region",
+        "snapshot.dataset.dt",
+        "snapshot.year",
+        "fact.opportunitysnapshot.amount"
     ],
     "objects": [
         {
@@ -172,6 +175,25 @@
                 }
             },
             "name": "metric_Metric_format_UTF_8_aacBsHcOc5rY"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT SUM([{{{fact_opportunitysnapshot_amount}}}]) WHERE [{{{snapshot_year}}}] = 3000",
+                        "folders": [],
+                        "format": "#,##0.00"
+                    },
+                    "meta": {
+                        "identifier": "aah8ztyDUink",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Filtered Out Metric",
+                        "unlisted": 1
+                    }
+                }
+            },
+            "name": "metric_Filtered_Out_Metric_aah8ztyDUink"
         },
         {
             "content": {
@@ -11144,6 +11166,93 @@
                 }
             },
             "name": "analyticalDashboard_Metrics_in_rows_aabCVFBeuwcH"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "dateDataSet": "{{{snapshot_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{metric_Filtered_Out_Metric_aah8ztyDUink}}}"
+                    },
+                    "meta": {
+                        "identifier": "aab8BYZwUuQx",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Filtered Out Metric"
+                    }
+                }
+            },
+            "name": "kpi_Filtered_Out_Metric_aab8BYZwUuQx"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "dateFilter": {
+                                    "from": "0",
+                                    "granularity": "GDC.time.month",
+                                    "to": "0",
+                                    "type": "relative"
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aab8BYZysnn8",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aab8BYZysnn8"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aab8BYZysnn8}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_Filtered_Out_Metric_aab8BYZwUuQx}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 11,
+                                                        "width": 2
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": ["{{{kpi_Filtered_Out_Metric_aab8BYZwUuQx}}}"]
+                    },
+                    "meta": {
+                        "identifier": "aab8BY5ksnoC",
+                        "summary": "",
+                        "tags": "",
+                        "title": "KPI for date filter"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_KPI_for_date_filter_aab8BY5ksnoC"
         },
         {
             "content": {

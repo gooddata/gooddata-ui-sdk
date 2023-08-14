@@ -1,4 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
+
+const DATE_MESSAGE_SELECTOR = ".gd-extended-date-filter-edit-mode-message-text";
 
 type ButtonType = "apply" | "cancel";
 
@@ -65,6 +67,11 @@ export class DateFilter {
         return this;
     }
 
+    openAndSelectDateFilterByName(dateFilterName: string): this {
+        this.open().getElement(".gd-filter-list-item").contains(dateFilterName).scrollIntoView().click();
+        return this;
+    }
+
     openAndSelectRelativeForm(): this {
         return this.open().selectRelativeForm();
     }
@@ -122,6 +129,21 @@ export class DateFilter {
 
     cancel() {
         this.getDropdownElement().find(".s-date-filter-cancel").click();
+        return this;
+    }
+
+    isDateFilterMessageVisibled(expect: boolean) {
+        this.getElement(DATE_MESSAGE_SELECTOR).should(expect ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hasSelectedDateFilterValue(dateValue: string) {
+        cy.get(".gd-list-item.is-selected").should("have.text", dateValue);
+        return this;
+    }
+
+    waitDateFilterButtonVisible() {
+        cy.get(".s-date-filter-button", { timeout: 60000 }).should("be.visible");
         return this;
     }
 }
