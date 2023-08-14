@@ -2281,6 +2281,7 @@ export interface ISettings {
     enableWeekFilters?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
+    metadataTimeZone?: string;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     weekStart?: WeekStart;

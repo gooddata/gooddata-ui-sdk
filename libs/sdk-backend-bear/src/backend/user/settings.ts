@@ -3,6 +3,7 @@ import { IUserSettingsService, IUserSettings, NotSupported } from "@gooddata/sdk
 import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../utils/api.js";
 import { BearAuthenticatedCallGuard } from "../../types/auth.js";
 import { ANONYMOUS_USER_SETTINGS } from "../constants.js";
+import { DefaultUiSettings } from "../../uiSettings.js";
 
 export class BearUserSettingsService implements IUserSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
@@ -25,6 +26,7 @@ export class BearUserSettingsService implements IUserSettingsService {
             const { language } = currentProfile;
 
             return {
+                ...DefaultUiSettings,
                 userId: userLoginMd5,
                 locale: language!,
                 separators,

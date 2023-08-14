@@ -289,6 +289,11 @@ export interface ISettings {
      */
     enableColumnHeadersPosition?: boolean;
 
+    /**
+     * IANA identifier of time zone in which the platform metadata are stored.
+     */
+    metadataTimeZone?: string;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
