@@ -23,10 +23,12 @@ describe("CalculationControl", () => {
 
     const renderCalculationControl = (params?: {
         properties?: IVisualizationProperties<IComparisonControlProperties>;
+        defaultCalculationType?: CalculationType;
         disabled?: boolean;
     }) => {
         const props = {
             disabled: params?.disabled,
+            defaultCalculationType: params?.defaultCalculationType,
             pushData: mockPushData,
             properties: params?.properties || {},
         };
@@ -58,6 +60,29 @@ describe("CalculationControl", () => {
                 customListItem: CalculationListItem.default,
             }),
             expect.anything(),
+        );
+    });
+
+    it("Should select provided calculation-type", () => {
+        const { container } = renderCalculationControl({
+            defaultCalculationType: CalculationType.DIFFERENCE,
+            properties: createTestProperties<IComparisonControlProperties>({
+                comparison: {
+                    enabled: true,
+                    calculationType: CalculationType.RATIO,
+                },
+            }),
+        });
+
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(RATIO_ITEM_TEXT_QUERY);
+    });
+
+    it("Should select default calculation-type while calculation-type is empty", () => {
+        const { container } = renderCalculationControl({
+            defaultCalculationType: CalculationType.DIFFERENCE,
+        });
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
+            DIFFERENCE_ITEM_TEXT_QUERY,
         );
     });
 

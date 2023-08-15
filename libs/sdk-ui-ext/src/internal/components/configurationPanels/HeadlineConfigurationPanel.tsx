@@ -11,18 +11,26 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import ComparisonSection from "../configurationControls/comparison/ComparisonSection.js";
-import { isComparisonEnabled } from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
+import {
+    getComparisonDefaultCalculationType,
+    isComparisonEnabled,
+} from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
+import { IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
 
 const BUBBLE_ARROW_OFFSETS = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];
 
-class HeadlineConfigurationPanel extends ConfigurationPanelContent {
+class HeadlineConfigurationPanel extends ConfigurationPanelContent<
+    IConfigurationPanelContentProps<IHeadlinePanelConfig>
+> {
     protected renderConfigurationPanel(): React.ReactNode {
-        const { insight, propertiesMeta, properties, pushData } = this.props;
+        const { insight, propertiesMeta, properties, pushData, panelConfig } = this.props;
+
         const controlDisabled = this.isControlDisabled();
         const comparisonDisabled = controlDisabled || !isComparisonEnabled(insight);
+        const defaultCalculationType = getComparisonDefaultCalculationType(insight);
 
         const bubbleClassNames = cx("bubble-primary", { invisible: !controlDisabled });
 
@@ -31,6 +39,8 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent {
                 <div>
                     <ComparisonSection
                         comparisonDisabled={comparisonDisabled}
+                        defaultCalculationType={defaultCalculationType}
+                        separators={panelConfig.separators}
                         properties={properties}
                         propertiesMeta={propertiesMeta}
                         pushData={pushData}

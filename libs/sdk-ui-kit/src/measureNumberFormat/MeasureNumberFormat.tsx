@@ -26,6 +26,7 @@ export interface IMeasureNumberFormatOwnProps {
     documentationLink?: string;
     templates?: ReadonlyArray<IFormatTemplate>;
     locale?: string;
+    disabled?: boolean;
 }
 
 export type MeasureNumberFormatProps = IMeasureNumberFormatOwnProps & WrappedComponentProps;
@@ -55,6 +56,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
     public render() {
         const {
             toggleButton: ToggleButton,
+            disabled,
             anchorElementSelector,
             presets,
             separators,
@@ -82,6 +84,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
                     isOpened={showDropdown || showCustomFormatDialog}
                     toggleDropdown={this.toggleDropdownOpened}
                     selectedPreset={selectedPreset}
+                    disabled={disabled}
                 />
                 {showDropdown ? (
                     <PresetsDropdown

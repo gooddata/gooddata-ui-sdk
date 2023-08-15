@@ -3,6 +3,7 @@ import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import {
     buildHeadlineVisualizationConfig,
+    getComparisonDefaultCalculationType,
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
     isComparisonEnabled,
@@ -124,64 +125,16 @@ describe("headlineUiConfigHelper", () => {
 
     describe("getHeadlineSupportedProperties", () => {
         it("Should return default control properties", () => {
-            const buckets: IBucket[] = [
-                {
-                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                    items: [newMeasure("measure-2")],
-                },
-            ];
-
-            const insight = newInsight(buckets);
-            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
+            expect(getHeadlineSupportedProperties({})).toEqual(
                 createTestProperties<HeadlineControlProperties>({
                     comparison: {
                         enabled: true,
-                        calculationType: CalculationType.RATIO,
-                    },
-                }),
-            );
-        });
-
-        it("Should return default control properties for case secondary measure is derived measure", () => {
-            let insight = newInsight([
-                {
-                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                    items: [newPopMeasure("foo", "attr")],
-                },
-            ]);
-            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
-                createTestProperties<HeadlineControlProperties>({
-                    comparison: {
-                        enabled: true,
-                        calculationType: CalculationType.CHANGE,
-                    },
-                }),
-            );
-
-            insight = newInsight([
-                {
-                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                    items: [newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])],
-                },
-            ]);
-            expect(getHeadlineSupportedProperties(insight, {})).toEqual(
-                createTestProperties<HeadlineControlProperties>({
-                    comparison: {
-                        enabled: true,
-                        calculationType: CalculationType.CHANGE,
                     },
                 }),
             );
         });
 
         it("Should return properties override default properties", () => {
-            const buckets: IBucket[] = [
-                {
-                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                    items: [newMeasure("measure-2")],
-                },
-            ];
-
             const visualizationProperties = createTestProperties<HeadlineControlProperties>({
                 comparison: {
                     enabled: false,
@@ -196,20 +149,12 @@ describe("headlineUiConfigHelper", () => {
                 },
             };
 
-            const insight = newInsight(buckets);
-            expect(getHeadlineSupportedProperties(insight, properties)).toEqual(properties);
+            expect(getHeadlineSupportedProperties(properties)).toEqual(properties);
         });
     });
 
     describe("buildHeadlineVisualizationConfig", () => {
         it("Should build config correctly", () => {
-            const insight = newInsight([
-                {
-                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                    items: [newMeasure("measure-2")],
-                },
-            ]);
-
             const properties = createTestProperties<HeadlineControlProperties>({
                 comparison: {
                     enabled: false,
@@ -224,10 +169,42 @@ describe("headlineUiConfigHelper", () => {
                 },
             };
 
-            expect(buildHeadlineVisualizationConfig(insight, properties, {}, { config })).toEqual({
+            expect(buildHeadlineVisualizationConfig(properties, {}, { config })).toEqual({
                 ...config,
                 ...properties.controls,
             });
+        });
+    });
+
+    describe("getComparisonDefaultCalculationType", () => {
+        it("Should return calculation type as change in case secondary measure is pop measure", () => {
+            const insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newPopMeasure("foo", "attr")],
+                },
+            ]);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.CHANGE);
+        });
+
+        it("Should return calculation type as change in case secondary measure is previous period measure", () => {
+            const insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])],
+                },
+            ]);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.CHANGE);
+        });
+
+        it("Should return calculation type as ratio in case secondary measure is not a derived measure", () => {
+            const insight = newInsight([
+                {
+                    localIdentifier: BucketNames.SECONDARY_MEASURES,
+                    items: [newMeasure("foo")],
+                },
+            ]);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.RATIO);
         });
     });
 });

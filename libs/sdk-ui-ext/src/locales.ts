@@ -210,6 +210,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({
     title: { id: "properties.comparison.title" },
+
     calculationTypeTitle: { id: "properties.comparison.calculationType.title" },
     calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },
     calculatedAsRatio: { id: "properties.comparison.calculationType.as.ratio" },
@@ -235,5 +236,50 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     },
     calculatedAsDifferenceTooltipFormula: {
         id: "properties.comparison.calculationType.as.difference.tooltip.formula",
+    },
+
+    valueSubSectionTitle: { id: "properties.comparison.valueSubSection.title" },
+    formatTitle: { id: "properties.comparison.format.title" },
+    formatPresetRounded: { id: "properties.comparison.measureNumber.format.preset.rounded" },
+    formatPresetDecimal1: { id: "properties.comparison.measureNumber.format.preset.decimal1" },
+    formatPresetDecimal2: { id: "properties.comparison.measureNumber.format.preset.decimal2" },
+    formatPresetPercentRounded: { id: "properties.comparison.measureNumber.format.preset.percentRounded" },
+    formatPresetPercent1: { id: "properties.comparison.measureNumber.format.preset.percent1" },
+    formatPresetPercent2: { id: "properties.comparison.measureNumber.format.preset.percent2" },
+    formatPresetInherit: { id: "properties.comparison.measureNumber.format.preset.inherit" },
+    formatTemplateRounded: { id: "properties.comparison.measureNumber.format.template.rounded" },
+    formatTemplateDecimal1: { id: "properties.comparison.measureNumber.format.template.decimal1" },
+    formatTemplateDecimal2: { id: "properties.comparison.measureNumber.format.template.decimal2" },
+    formatTemplatePercentRounded: {
+        id: "properties.comparison.measureNumber.format.template.percentRounded",
+    },
+    formatTemplatePercent1: { id: "properties.comparison.measureNumber.format.template.percent1" },
+    formatTemplatePercent2: { id: "properties.comparison.measureNumber.format.template.percent2" },
+    formatTemplateCurrency: { id: "properties.comparison.measureNumber.format.template.currency" },
+    formatTemplateCurrencyShortened: {
+        id: "properties.comparison.measureNumber.format.template.currencyShortened",
+    },
+    formatTemplateLargeNumbersShortened: {
+        id: "properties.comparison.measureNumber.format.template.largeNumbersShortened",
+    },
+    formatTemplateLargeNumbersShortenedWithColors: {
+        id: "properties.comparison.measureNumber.format.template.largeNumbersShortenedWithColors",
+    },
+    formatTemplateNegativeNumbersRed: {
+        id: "properties.comparison.measureNumber.format.template.negativeNumbersRed",
+    },
+    formatTemplateFinancial: { id: "properties.comparison.measureNumber.format.template.financial" },
+    formatTemplateDecimalWithoutThousandsSeparator: {
+        id: "properties.comparison.measureNumber.format.template.decimalWithoutThousandsSeparator",
+    },
+    formatTemplateConditionalColors: {
+        id: "properties.comparison.measureNumber.format.template.conditionalColors",
+    },
+    formatTemplateTrendSymbols: { id: "properties.comparison.measureNumber.format.template.trendSymbols" },
+    formatTemplateTimeFromSeconds: {
+        id: "properties.comparison.measureNumber.format.template.timeFromSeconds",
+    },
+    formatTemplateZeroInsteadOfNull: {
+        id: "properties.comparison.measureNumber.format.template.zeroInsteadOfNull",
     },
 });

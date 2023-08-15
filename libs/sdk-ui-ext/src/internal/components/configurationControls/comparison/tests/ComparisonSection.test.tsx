@@ -11,7 +11,7 @@ import { IComparisonControlProperties } from "../../../../interfaces/ControlProp
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import * as ConfigSection from "../../ConfigSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
-import { createTestProperties } from "../../../../tests/testDataProvider.js";
+import { createTestProperties, TEST_DEFAULT_SEPARATOR } from "../../../../tests/testDataProvider.js";
 
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";
 
@@ -23,15 +23,19 @@ describe("ComparisonSection", () => {
 
     const renderComparisonSection = (params?: {
         comparisonDisabled?: boolean;
+        defaultCalculationType?: CalculationType;
         properties?: IVisualizationProperties<IComparisonControlProperties>;
     }) => {
         const props = {
             comparisonDisabled: DEFAULT_COMPARISON_DISABLED,
             properties: {},
-            pushData,
             propertiesMeta: {},
+            defaultCalculationType: CalculationType.RATIO,
+            separators: TEST_DEFAULT_SEPARATOR,
+            pushData,
             ...params,
         };
+
         return render(
             <InternalIntlWrapper>
                 <ComparisonSection {...props} />

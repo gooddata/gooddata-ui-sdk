@@ -2632,6 +2632,8 @@ export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     defaultCustomFormat?: string;
     // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
     documentationLink?: string;
     // (undocumented)
     locale?: string;
@@ -3872,6 +3874,8 @@ export interface ITimepickerOwnProps {
 
 // @internal (undocumented)
 export interface IToggleButtonProps {
+    // (undocumented)
+    disabled?: boolean;
     // (undocumented)
     isOpened: boolean;
     // (undocumented)

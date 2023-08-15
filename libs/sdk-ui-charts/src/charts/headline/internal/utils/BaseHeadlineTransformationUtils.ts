@@ -9,9 +9,10 @@ import {
     HeadlineElementType,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
-import { CalculationType, IComparison } from "../../../../interfaces/index.js";
+import { IComparison } from "../../../../interfaces/index.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import {
     createHeadlineDataItem,
@@ -19,8 +20,7 @@ import {
     IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
-import { CALCULATION_VALUES_DEFAULT } from "../interfaces/ComparisonHeadlines.js";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { getCalculationValuesDefault } from "../../headlineHelper.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
@@ -111,14 +111,15 @@ function createComparisonDataItem(
     comparison: IComparison,
     intl: IntlShape,
 ): IHeadlineDataItem {
+    const { calculationType, format } = comparison;
     const { value, measureHeaderItem } = executionData;
     const { localIdentifier } = measureHeaderItem;
-    const { format, labelKey } = getCalculationValuesDefault(comparison.calculationType);
+    const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(calculationType);
 
     return {
-        title: intl.formatMessage({ id: labelKey }),
+        title: intl.formatMessage({ id: defaultLabelKey }),
         value: value ? String(value) : null,
-        format: format || inheritFormat,
+        format: format || defaultFormat || inheritFormat,
         localIdentifier,
     };
 }
@@ -137,10 +138,6 @@ function createBaseHeadlineItem(
               baseHeadlineDataItemComponent: BaseHeadlineDataItem,
           }
         : null;
-}
-
-function getCalculationValuesDefault(calculationType: CalculationType = CalculationType.CHANGE) {
-    return CALCULATION_VALUES_DEFAULT[calculationType];
 }
 
 function createComparisonItem(

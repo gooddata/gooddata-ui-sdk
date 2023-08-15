@@ -1462,5 +1462,135 @@
         "value": "...",
         "comment": "The example illustrating the difference calculation.",
         "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.inherit": {
+        "value": "Inherit",
+        "comment": "An item in list of formatting presets. Means: use inherited measure format",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.rounded": {
+        "value": "Rounded",
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.decimal1": {
+        "value": "Decimal (1)",
+        "comment": "An item in list of formatting presets. Decimal number measure format with one decimal number.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.decimal2": {
+        "value": "Decimal (2)",
+        "comment": "An item in list of formatting presets. Decimal number measure format with two decimal numbers.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.percentRounded": {
+        "value": "Percent (rounded)",
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers and with % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.percent1": {
+        "value": "Percent (1)",
+        "comment": "An item in list of formatting presets. Decimal number with one decimal number and % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.preset.percent2": {
+        "value": "Percent (2)",
+        "comment": "An item in list of formatting presets. Decimal number with two decimal numbers and % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.rounded": {
+        "value": "Rounded",
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.decimal1": {
+        "value": "Decimal (1)",
+        "comment": "An item in list of formatting templates. Decimal number measure format with one decimal number.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.decimal2": {
+        "value": "Decimal (2)",
+        "comment": "An item in list of formatting templates. Decimal number measure format with two decimal numbers.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.percentRounded": {
+        "value": "Percent (rounded)",
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers and with % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.percent1": {
+        "value": "Percent (1)",
+        "comment": "An item in list of formatting templates. Decimal number with one decimal number and % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.percent2": {
+        "value": "Percent (2)",
+        "comment": "An item in list of formatting templates. Decimal number with two decimal numbers and % sign at the end.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.currency": {
+        "value": "Currency",
+        "comment": "An item in list of formatting templates. Number with currency sign.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.currencyShortened": {
+        "value": "Currency shortened",
+        "comment": "An item in list of formatting templates. Number with currency sign shortened with K, M, B and T characters.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.largeNumbersShortened": {
+        "value": "Large numbers shortened",
+        "comment": "An item in list of formatting templates. Number shortened with K, M, B and T characters.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.largeNumbersShortenedWithColors": {
+        "value": "Large numbers shortened with colors",
+        "comment": "An item in list of formatting templates. Colored number shortened with K, M, B and T characters.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.negativeNumbersRed": {
+        "value": "Negative numbers in red",
+        "comment": "An item in list of formatting templates. Number is formatted in red color if negative.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.financial": {
+        "value": "Financial",
+        "comment": "An item in list of formatting templates. Number is in brackets if negative.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.decimalWithoutThousandsSeparator": {
+        "value": "Decimal (2) without thousands separator",
+        "comment": "An item in list of formatting templates.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.conditionalColors": {
+        "value": "Conditional colors",
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors based on its value.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.trendSymbols": {
+        "value": "Trend symbols",
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors prefixed with arrow symbol based on its value.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.timeFromSeconds": {
+        "value": "Time (from seconds)",
+        "comment": "An item in list of formatting templates. Seconds are formatted properly in hours, minutes and seconds.",
+        "limit": 0
+    },
+    "properties.comparison.measureNumber.format.template.zeroInsteadOfNull": {
+        "value": "Zero instead of blank value",
+        "comment": "An item in list of formatting templates. Null value is replaced with 0.",
+        "limit": 0
+    },
+    "properties.comparison.valueSubSection.title": {
+        "value": "Value",
+        "comment": "The label of comparison value sub section.",
+        "limit": 0
+    },
+    "properties.comparison.format.title": {
+        "value": "Format",
+        "comment": "The label of comparison format control.",
+        "limit": 0
     }
 }
