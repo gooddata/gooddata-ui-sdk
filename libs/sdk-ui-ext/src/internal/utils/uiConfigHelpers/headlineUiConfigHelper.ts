@@ -88,7 +88,7 @@ export function getHeadlineUiConfig(
     }
 
     if (settings?.enableNewHeadline) {
-        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], secondaryMeasuresCount < 2);
+        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
         set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
         set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
     }
