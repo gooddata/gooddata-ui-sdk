@@ -40,6 +40,7 @@ describe("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
     it("Check insight not reloaded after ignore filter", () => {
         Navigation.visit("dashboard/date-filtering");
 
+        new Widget(1).waitTableLoaded();
         new DateFilter().open().selectRelativePreset("relative-this-year").apply();
 
         new Widget(1).isLoading(false);
