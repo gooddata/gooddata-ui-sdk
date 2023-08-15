@@ -39,8 +39,11 @@ export class Widget {
     }
 
     isLoading(expected = true) {
+        const css = expected
+            ? ".s-loading-done, .content-loaded.widget-loaded, .visualization-value-loading"
+            : ".content-loaded.widget-loaded, .visualization-value-loading";
         this.getElement()
-            .find(".s-loading-done, .content-loaded.widget-loaded, .visualization-value-loading")
+            .find(css)
             .should(expected ? "exist" : "not.exist");
         return this;
     }

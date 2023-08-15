@@ -95,6 +95,7 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
             .should("have.length", 2);
 
         account.removeFilter();
+        new Widget(0).waitTableLoaded();
         stageName.open().isAttributeItemFiltered(false).getValueList().should("have.length", 8);
     });
 

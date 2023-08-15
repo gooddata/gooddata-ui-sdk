@@ -146,7 +146,9 @@ export class KPIMeasureDropdown {
     }
 
     find(measureName: string) {
-        this.getElement().find(".gd-input-field").type(measureName);
+        this.getElement().find(".gd-input-field").type(measureName, {
+            delay: 100,
+        });
         return this;
     }
 
