@@ -1,6 +1,6 @@
 # SDK End-to-end tests
 
-This project contains End-to-End tests for GoodData.UI components.
+This project contains End-to-End tests for GoodData.UI components.Draft to test
 
 ## Overview
 
