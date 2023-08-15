@@ -17,6 +17,7 @@ import {
     MeasureGroupIdentifier,
     newBucket,
     newTwoDimensional,
+    isMeasureSort,
 } from "@gooddata/sdk-model";
 import {
     ICorePivotTableProps,
@@ -48,6 +49,8 @@ import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
 function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     const { backend, workspace, filters, sortBy = [], execConfig = {}, config = {} } = props;
 
+    const sanitizedSortBy = getSanitizedPivotTableSortBy(sortBy as ISortItem[], isTransposed(config));
+
     return backend!
         .withTelemetry("PivotTable", props)
         .workspace(workspace!)
@@ -56,7 +59,7 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
         .withDimensions((def: IExecutionDefinition) =>
             getPivotTableDimensions(def.buckets, isTransposed(config)),
         )
-        .withSorting(...(sortBy as ISortItem[]))
+        .withSorting(...(sanitizedSortBy as ISortItem[]))
         .withExecConfig(execConfig);
 }
 
@@ -245,4 +248,13 @@ export function getPivotTableDimensions(buckets: IBucket[], isTransposed: boolea
         [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
         [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
     );
+}
+
+function getSanitizedPivotTableSortBy(sortBy: ISortItem[], isTransposed: boolean) {
+    // Measure sort is not supported on transposed table (metrics in rows).
+    if (isTransposed) {
+        return sortBy.filter((item) => !isMeasureSort(item));
+    }
+
+    return sortBy;
 }

@@ -19,6 +19,7 @@ import {
     measureLocalId,
     newAttributeSort,
 } from "@gooddata/sdk-model";
+import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 import includes from "lodash/includes.js";
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -111,7 +112,13 @@ export function adaptReferencePointSortItemsToPivotTable(
     );
 }
 
-export function sanitizePivotTableSorts(originalSortItems: ISortItem[], buckets: IBucket[]): ISortItem[] {
+export function sanitizePivotTableSorts(
+    originalSortItems: ISortItem[],
+    buckets: IBucket[],
+    measureGroupDimension: MeasureGroupDimension,
+): ISortItem[] {
+    const sanitizedOriginalSortItems = getSanitizedSortItems(originalSortItems, measureGroupDimension);
+
     const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureLocalId);
 
     const rowBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
@@ -123,7 +130,7 @@ export function sanitizePivotTableSorts(originalSortItems: ISortItem[], buckets:
         : [];
 
     return filterInvalidSortItems(
-        originalSortItems,
+        sanitizedOriginalSortItems,
         measureLocalIdentifiers,
         rowAttributeLocalIdentifiers,
         columnAttributeLocalIdentifiers,
@@ -221,4 +228,16 @@ export function isSortItemVisible(
     return isAttributeSort(sortItem)
         ? isAttributeSortItemVisible(sortItem, filters)
         : isMeasureSortItemVisible(sortItem, filters, columnAttributes, tableSortingCheckDisabled);
+}
+
+export function getSanitizedSortItems(
+    sortItems: ISortItem[],
+    measureGroupDimension: MeasureGroupDimension,
+): ISortItem[] {
+    // Measure sort is not supported on transposed table (metrics in rows).
+    if (measureGroupDimension === "rows") {
+        return sortItems ? sortItems.filter((sortItem) => !isMeasureSort(sortItem)) : [];
+    }
+
+    return sortItems ?? [];
 }
