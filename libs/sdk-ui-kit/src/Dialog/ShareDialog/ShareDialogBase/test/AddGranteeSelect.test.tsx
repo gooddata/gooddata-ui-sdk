@@ -5,7 +5,11 @@ import { AddGranteeSelect } from "../AddGranteeSelect.js";
 import { IAddGranteeSelectProps } from "../types.js";
 import { noop } from "lodash";
 import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
+import {
+    defaultRecordedBackendCapabilities,
+    recordedBackend,
+    RecordedBackendConfig,
+} from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     availableUserAccessGrantee,
@@ -16,6 +20,7 @@ import {
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { uriRef, IAvailableAccessGrantee } from "@gooddata/sdk-model";
 import { describe, it, expect, vi } from "vitest";
+import { IBackendCapabilities } from "sdk-backend-spi/esm/index.js";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,
@@ -27,6 +32,7 @@ const defaultProps: IAddGranteeSelectProps = {
 const createComponent = (
     customProps: Partial<IAddGranteeSelectProps> = {},
     availableGrantees: IAvailableAccessGrantee[] = [],
+    backendCapabilities: Partial<IBackendCapabilities> = {},
 ) => {
     const props: IAddGranteeSelectProps = { ...defaultProps, ...customProps };
     const config: RecordedBackendConfig = {
@@ -37,7 +43,10 @@ const createComponent = (
         },
     };
 
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings, config, {
+        ...defaultRecordedBackendCapabilities,
+        ...backendCapabilities,
+    });
     const Wrapped = withIntl(AddGranteeSelect);
 
     return render(
@@ -78,8 +87,24 @@ describe("AddGranteeSelect", () => {
         });
     });
 
+    it("it should render one all group option when is not specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
+        createComponent({}, [], { supportsGranularAccessControl: true });
+
+        await waitFor(() => {
+            expect(getGroupAll()).toBeInTheDocument();
+        });
+    });
+
     it("it should not render all group option when is specified in appliedGrantees", async () => {
         createComponent({ appliedGrantees: [groupAll] });
+
+        await waitFor(() => {
+            expect(getGroupAll()).not.toBeInTheDocument();
+        });
+    });
+
+    it("it should not render all group option when is specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
+        createComponent({ appliedGrantees: [groupAll] }, [], { supportsGranularAccessControl: true });
 
         await waitFor(() => {
             expect(getGroupAll()).not.toBeInTheDocument();

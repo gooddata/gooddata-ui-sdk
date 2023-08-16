@@ -681,7 +681,7 @@ export type GetPositionedSelfRegion = {
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal (undocumented)
-export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup;
+export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
@@ -690,7 +690,7 @@ export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
 export type GranteeStatus = "Inactive" | "Active";
 
 // @internal (undocumented)
-export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup";
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup" | "allWorkspaceUsers";
 
 // @internal
 export function guidFor(obj: any): string;
@@ -1903,6 +1903,20 @@ export interface IGranteeItemProps {
     onChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
+}
+
+// @internal (undocumented)
+export interface IGranteeRules extends IGranteeBase {
+    // (undocumented)
+    id: {
+        identifier: "allWorkspaceUsers";
+    };
+    // (undocumented)
+    inheritedPermissions: AccessGranularPermission[];
+    // (undocumented)
+    permissions: AccessGranularPermission[];
+    // (undocumented)
+    type: "allWorkspaceUsers";
 }
 
 // @internal (undocumented)
@@ -3517,6 +3531,9 @@ export function isFreemiumEdition(platformEdition: string | undefined): boolean;
 
 // @internal (undocumented)
 export const isGranteeGroup: (obj: unknown) => obj is IGranteeGroup;
+
+// @internal (undocumented)
+export const isGranteeRules: (obj: unknown) => obj is IGranteeRules;
 
 // @internal (undocumented)
 export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;

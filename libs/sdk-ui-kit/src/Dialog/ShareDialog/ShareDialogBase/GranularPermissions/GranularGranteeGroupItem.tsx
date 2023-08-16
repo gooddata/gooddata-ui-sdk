@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { GranteeGroupIcon } from "../GranteeIcons.js";
-import { DialogModeType, GranteeItem, IGranularGranteeGroup } from "../types.js";
+import { DialogModeType, GranteeItem, IGranteeRules, IGranularGranteeGroup } from "../types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
 import { CurrentUserPermissions } from "../../types.js";
 
@@ -15,7 +15,7 @@ import { getGranteePossibilities } from "./permissionsLogic.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 
 interface IGranularGranteeGroupItemProps {
-    grantee: IGranularGranteeGroup;
+    grantee: IGranularGranteeGroup | IGranteeRules;
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
     mode: DialogModeType;

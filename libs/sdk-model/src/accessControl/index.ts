@@ -288,7 +288,11 @@ export const isGranularUserGroupAccessGrantee = (obj: unknown): obj is IGranular
  * @alpha
  */
 export const isGranularAccessGrantee = (obj: unknown): obj is IGranularAccessGrantee => {
-    return isGranularUserAccessGrantee(obj) || isGranularUserGroupAccessGrantee(obj);
+    return (
+        isGranularUserAccessGrantee(obj) ||
+        isGranularUserGroupAccessGrantee(obj) ||
+        isGranularRulesAccessGrantee(obj)
+    );
 };
 
 /**

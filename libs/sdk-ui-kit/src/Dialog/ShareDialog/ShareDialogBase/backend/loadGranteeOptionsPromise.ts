@@ -4,7 +4,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 
 import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types.js";
-import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils.js";
+import { getGranteeLabel, GranteeRules, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils.js";
 import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import {
     ObjRef,
@@ -83,8 +83,11 @@ export const loadGranteeOptionsPromise =
             ) {
                 const groupAllOption: ISelectOption = {
                     label: allGroupLabel,
-                    value: GranteeGroupAll,
+                    value: backend.capabilities.supportsGranularAccessControl
+                        ? GranteeRules
+                        : GranteeGroupAll,
                 };
+
                 mappedGroups = [groupAllOption, ...mappedGroups];
             }
 

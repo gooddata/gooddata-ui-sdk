@@ -7,6 +7,7 @@ import {
     GranteeItem,
     IGranteeGroupAll,
     IGranularGrantee,
+    isGranteeRules,
     isGranteeUserInactive,
     isGranularGrantee,
     IShareDialogBaseProps,
@@ -73,6 +74,9 @@ const useShareDialogState = (
 
     const onGranteeAdd = useCallback(
         (grantee: GranteeItem) => {
+            if (isGranteeRules(grantee)) {
+                setGranteesToDelete((state) => state.filter((s) => !areObjRefsEqual(s.id, grantee.id)));
+            }
             setGranteesToAdd((state) => [...state, grantee]);
             granteeAddInteraction(grantee);
         },
