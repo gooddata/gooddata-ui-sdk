@@ -16,6 +16,11 @@ export class Kpi {
         return this;
     }
 
+    isEmptyValue() {
+        this.getContentElement().find(".kpi-value").should("have.class", "is-empty-value");
+        return this;
+    }
+
     hasPOPSection(expected = true) {
         this.getContentElement()
             .find(".headline-compare-section")
