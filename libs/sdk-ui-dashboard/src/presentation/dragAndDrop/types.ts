@@ -287,6 +287,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     className?: string;
     showDescriptionPanel?: boolean;
     onDescriptionPanelOpen?: () => void;
+    metadataTimeZone?: string;
 };
 
 /**
