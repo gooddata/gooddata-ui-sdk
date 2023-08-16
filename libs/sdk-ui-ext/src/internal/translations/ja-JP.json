@@ -237,6 +237,10 @@
     "properties.metrics.position": "位置",
     "properties.metrics.position.columns": "カラム（デフォルト）",
     "properties.metrics.position.rows": "行数",
+    "properties.column.headers.title": "カラムヘッダー",
+    "properties.column.headers.position": "位置",
+    "properties.column.headers.position.top": "上（デフォルト）",
+    "properties.column.headers.position.left": "左",
     "dashboard.bucket.table.subtitle.columns": "列",
     "dashboard.bucket.table.subtitle.rows": "行"
 }

@@ -237,6 +237,10 @@
     "properties.metrics.position": "Позиция",
     "properties.metrics.position.columns": "столбцы (по умолчанию)",
     "properties.metrics.position.rows": "ряды",
+    "properties.column.headers.title": "Заголовки столбцов",
+    "properties.column.headers.position": "Позиция",
+    "properties.column.headers.position.top": "вверху (по умолчанию)",
+    "properties.column.headers.position.left": "слева",
     "dashboard.bucket.table.subtitle.columns": "в столбцах",
     "dashboard.bucket.table.subtitle.rows": "в строках"
 }

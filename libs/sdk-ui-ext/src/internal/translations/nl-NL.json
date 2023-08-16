@@ -237,6 +237,10 @@
     "properties.metrics.position": "Positie",
     "properties.metrics.position.columns": "kolommen (standaard)",
     "properties.metrics.position.rows": "rijen",
+    "properties.column.headers.title": "Kolomkoppen",
+    "properties.column.headers.position": "Positie",
+    "properties.column.headers.position.top": "boven (standaard)",
+    "properties.column.headers.position.left": "links",
     "dashboard.bucket.table.subtitle.columns": "In kolommen",
     "dashboard.bucket.table.subtitle.rows": "In rijen"
 }

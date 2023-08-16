@@ -237,6 +237,10 @@
     "properties.metrics.position": "Posición",
     "properties.metrics.position.columns": "columnas (predeterminado)",
     "properties.metrics.position.rows": "filas",
+    "properties.column.headers.title": "Encabezados de columnas",
+    "properties.column.headers.position": "Posición",
+    "properties.column.headers.position.top": "superior (predeterminado)",
+    "properties.column.headers.position.left": "izquierda",
     "dashboard.bucket.table.subtitle.columns": "en columnas",
     "dashboard.bucket.table.subtitle.rows": "en filas"
 }
