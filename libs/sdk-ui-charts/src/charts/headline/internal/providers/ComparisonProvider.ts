@@ -10,17 +10,17 @@ import {
     IMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
-    newArithmeticMeasure,
     newBucket,
+    newVirtualArithmeticMeasure,
 } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import AbstractProvider from "./AbstractProvider.js";
 import ComparisonTransformation from "../transformations/ComparisonTransformation.js";
 import { CalculationType, IComparison } from "../../../../interfaces/index.js";
-import { BucketNames } from "@gooddata/sdk-ui";
 
-const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_arithmetic_bucket";
+const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
 class ComparisonProvider extends AbstractProvider {
     private readonly comparison: IComparison;
@@ -36,11 +36,11 @@ class ComparisonProvider extends AbstractProvider {
     }
 
     protected prepareBuckets(originalBuckets: IBucket[]): IBucket[] {
-        const arithmeticBucket = this.prepareArithmeticBucket(originalBuckets);
+        const arithmeticBucket = this.prepareVirtualArithmeticBucket(originalBuckets);
         return [...originalBuckets, arithmeticBucket];
     }
 
-    private prepareArithmeticBucket(originalBuckets: IBucket[]): IBucket {
+    private prepareVirtualArithmeticBucket(originalBuckets: IBucket[]): IBucket {
         const primaryBucket = bucketsFind(originalBuckets, BucketNames.MEASURES);
         const primaryMeasure = primaryBucket && bucketMeasure(primaryBucket);
 
@@ -49,36 +49,36 @@ class ComparisonProvider extends AbstractProvider {
 
         return newBucket(
             ARITHMETIC_BUCKET_IDENTIFIER,
-            ...this.createArithmeticMeasures(primaryMeasure, secondaryMeasures),
+            ...this.createVirtualArithmeticMeasures(primaryMeasure, secondaryMeasures),
         );
     }
 
-    private createArithmeticMeasures(
+    private createVirtualArithmeticMeasures(
         primaryMeasure: IMeasure,
         secondaryMeasure: IMeasure,
     ): IMeasure<IArithmeticMeasureDefinition>[] {
-        const createArithmeticMeasure = (
+        const createVirtualArithmeticMeasure = (
             operator: ArithmeticMeasureOperator,
         ): IMeasure<IArithmeticMeasureDefinition> => {
-            return newArithmeticMeasure([primaryMeasure, secondaryMeasure], operator);
+            return newVirtualArithmeticMeasure([primaryMeasure, secondaryMeasure], operator);
         };
 
         switch (this.comparison.calculationType) {
             case CalculationType.DIFFERENCE:
-                return [createArithmeticMeasure("difference")];
+                return [createVirtualArithmeticMeasure("difference")];
 
             case CalculationType.RATIO:
-                return [createArithmeticMeasure("ratio")];
+                return [createVirtualArithmeticMeasure("ratio")];
 
             case CalculationType.CHANGE:
-                return [createArithmeticMeasure("change")];
+                return [createVirtualArithmeticMeasure("change")];
 
             default:
                 if (isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure)) {
-                    return [createArithmeticMeasure("change")];
+                    return [createVirtualArithmeticMeasure("change")];
                 }
 
-                return [createArithmeticMeasure("ratio")];
+                return [createVirtualArithmeticMeasure("ratio")];
         }
     }
 }

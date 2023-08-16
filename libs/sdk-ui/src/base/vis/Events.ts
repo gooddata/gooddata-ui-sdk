@@ -128,3 +128,8 @@ export interface IPushData {
     openAsReport?: IOpenAsReportUiConfig;
     ignoreUndoRedo?: boolean;
 }
+
+/**
+ * @internal
+ */
+export type PushDataCallback = (data: IPushData) => void;

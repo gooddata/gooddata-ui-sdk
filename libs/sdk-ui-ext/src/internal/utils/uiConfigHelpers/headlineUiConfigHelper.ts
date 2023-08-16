@@ -4,7 +4,29 @@ import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IUiConfig, IReferencePoint } from "../../interfaces/Visualization.js";
+import {
+    bucketMeasure,
+    bucketMeasures,
+    IInsightDefinition,
+    IMeasure,
+    insightBucket,
+    ISettings,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+} from "@gooddata/sdk-model";
+import {
+    CalculationType,
+    IChartConfig,
+    IComparison,
+    updateConfigWithSettings,
+} from "@gooddata/sdk-ui-charts";
+
+import {
+    IUiConfig,
+    IReferencePoint,
+    IVisProps,
+    IVisualizationProperties,
+} from "../../interfaces/Visualization.js";
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
 import { BUCKETS } from "../../constants/bucket.js";
 
@@ -13,7 +35,7 @@ import { hasNoMeasures, hasNoSecondaryMeasures } from "../bucketRules.js";
 import { setBucketTitles, getItemsCount } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
 import { messages } from "../../../locales.js";
-import { ISettings } from "@gooddata/sdk-model";
+import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -72,4 +94,67 @@ export function getHeadlineUiConfig(
     }
 
     return uiConfig;
+}
+
+export function buildHeadlineVisualizationConfig(
+    insight: IInsightDefinition,
+    visualizationProperties: IVisualizationProperties,
+    settings: ISettings,
+    options: IVisProps,
+): IChartConfig {
+    const { config, customVisualizationConfig } = options;
+
+    const supportedProperties = getHeadlineSupportedProperties(insight, visualizationProperties);
+    const fullConfig = {
+        ...config,
+        ...supportedProperties.controls,
+    };
+
+    return updateConfigWithSettings({ ...fullConfig, ...customVisualizationConfig }, settings);
+}
+
+export function getHeadlineSupportedProperties(
+    insight: IInsightDefinition,
+    visualizationProperties: IVisualizationProperties,
+): IVisualizationProperties<HeadlineControlProperties> {
+    const comparison: IComparison = {
+        ...getDefaultComparisonProperties(insight),
+        ...(visualizationProperties?.controls?.comparison || {}),
+    };
+
+    return {
+        ...visualizationProperties,
+        controls: {
+            ...visualizationProperties.controls,
+            comparison,
+        },
+    };
+}
+
+export function isComparisonEnabled(insight: IInsightDefinition) {
+    const primaryMeasure = insightPrimaryMeasure(insight);
+    const secondaryMeasures = insightSecondaryMeasures(insight);
+
+    return primaryMeasure && secondaryMeasures?.length === 1;
+}
+
+function getDefaultComparisonProperties(insight: IInsightDefinition): IComparison {
+    const [secondaryMeasure] = insightSecondaryMeasures(insight);
+    const secondaryIsDerivedMeasure =
+        isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure);
+
+    return {
+        enabled: true,
+        calculationType: secondaryIsDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO,
+    };
+}
+
+function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure {
+    const primaryBucket = insightBucket(insight, BucketNames.MEASURES);
+    return primaryBucket && bucketMeasure(primaryBucket);
+}
+
+function insightSecondaryMeasures(insight: IInsightDefinition): IMeasure[] {
+    const secondaryBucket = insightBucket(insight, BucketNames.SECONDARY_MEASURES);
+    return (secondaryBucket && bucketMeasures(secondaryBucket)) || [];
 }

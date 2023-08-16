@@ -30,6 +30,7 @@ import {
     IOpenAsReportUiConfig,
 } from "@gooddata/sdk-ui";
 import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
+import { IDefaultControlProperties } from "./ControlProperties.js";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
@@ -308,12 +309,11 @@ export interface IUiConfig {
     supportedLocationIcon?: ISupportedLocationIcon;
 }
 
-export interface IVisualizationProperties {
+export interface IVisualizationProperties<
+    ControlProperties extends IDefaultControlProperties = IDefaultControlProperties,
+> {
     sortItems?: ISortItem[];
-    controls?: {
-        // This can be anything depending on a visualization type
-        [property: string]: any;
-    };
+    controls?: IDefaultControlProperties & ControlProperties;
     [property: string]: any; // should not be used like this but to be backward compatible
 }
 

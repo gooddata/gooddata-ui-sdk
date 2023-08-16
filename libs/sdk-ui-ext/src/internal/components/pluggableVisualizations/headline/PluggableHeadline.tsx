@@ -1,22 +1,23 @@
 // (C) 2019-2022 GoodData Corporation
+import React from "react";
+import cloneDeep from "lodash/cloneDeep.js";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     bucketIsEmpty,
     IInsightDefinition,
     insightBucket,
-    insightHasDataDefined,
-    MeasureGroupIdentifier,
-    newDimension,
-    ISettings,
     insightBuckets,
     insightFilters,
+    insightHasDataDefined,
     insightSorts,
+    ISettings,
+    MeasureGroupIdentifier,
+    newDimension,
 } from "@gooddata/sdk-model";
-
 import { BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, createHeadlineProvider, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import React from "react";
+import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
+
 import { METRIC } from "../../../constants/bucket.js";
 import {
     IBucketItem,
@@ -29,7 +30,6 @@ import {
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
-
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     findDerivedBucketItem,
@@ -42,19 +42,19 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
-import {
-    getReferencePointWithSupportedProperties,
-    getSupportedProperties,
-} from "../../../utils/propertiesHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import {
+    buildHeadlineVisualizationConfig,
     getDefaultHeadlineUiConfig,
+    getHeadlineSupportedProperties,
     getHeadlineUiConfig,
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
+import HeadlineConfigurationPanel from "../../configurationPanels/HeadlineConfigurationPanel.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
-import cloneDeep from "lodash/cloneDeep.js";
+import { HEADLINE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 
 /**
  * PluggableHeadline
@@ -92,6 +92,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.settings = props.featureFlags;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
+
+        this.supportedPropertiesList = HEADLINE_SUPPORTED_PROPERTIES;
     }
 
     public unmount(): void {
@@ -188,16 +190,19 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom = {}, config, customVisualizationConfig } = options;
+        const { visualizationProperties, settings } = this;
+        const { locale, custom = {} } = options;
         const { drillableItems } = custom;
 
-        const headlineConfig = updateConfigWithSettings(
-            { ...config, ...customVisualizationConfig },
-            this.settings,
-        );
         const buckets = [...(insightBuckets(insight) || [])];
+        const headlineConfig = buildHeadlineVisualizationConfig(
+            insight,
+            visualizationProperties,
+            settings,
+            options,
+        );
 
-        const provider = createHeadlineProvider(buckets, headlineConfig, this.settings?.enableNewHeadline);
+        const provider = createHeadlineProvider(buckets, headlineConfig, settings?.enableNewHeadline);
         const headlineTransformation = provider.getHeadlineTransformationComponent();
         const execution = provider.createExecution(executionFactory, {
             buckets,
@@ -226,17 +231,22 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         );
     }
 
-    protected renderConfigurationPanel(): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         const configPanelElement = this.getConfigPanelElement();
-
         if (configPanelElement) {
-            const properties = this.visualizationProperties ?? {};
+            const ConfigurationPanel = this.settings?.enableNewHeadline
+                ? HeadlineConfigurationPanel
+                : UnsupportedConfigurationPanel;
 
             this.renderFun(
-                <UnsupportedConfigurationPanel
+                <ConfigurationPanel
                     locale={this.locale}
+                    insight={insight}
                     pushData={this.pushData}
-                    properties={getSupportedProperties(properties, this.supportedPropertiesList)}
+                    properties={getHeadlineSupportedProperties(insight, this.visualizationProperties)}
+                    propertiesMeta={this.propertiesMeta}
+                    isError={this.getIsError()}
+                    isLoading={this.isLoading}
                 />,
                 configPanelElement,
             );

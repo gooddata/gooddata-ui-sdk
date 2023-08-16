@@ -60,7 +60,7 @@ describe("BaseHeadlineDataItem", () => {
         expect(container.querySelector(HEADLINE_LINK_STYLE_UNDERLINE)).not.toBeInTheDocument();
     });
 
-    describe("", () => {
+    describe("Render values", () => {
         it.each(TEST_RENDER_VALUE_SPECS)(
             "%s",
             (_condition: string, data: { value: string; format: string }, expected: string) => {

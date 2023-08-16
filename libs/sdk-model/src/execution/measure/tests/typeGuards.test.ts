@@ -16,6 +16,7 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
     newInlineMeasure,
+    newVirtualArithmeticMeasure,
 } from "../factory.js";
 import {
     isArithmeticMeasure,
@@ -25,10 +26,12 @@ import {
     measureLocalId,
     isAdhocMeasure,
     isInlineMeasure,
+    isVirtualArithmeticMeasure,
 } from "../index.js";
 
 const SimpleMeasure = Won;
 const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");
+const VirtualArithmeticMeasure = newVirtualArithmeticMeasure([Won, Velocity.Min], "sum");
 const PopMeasure = newPopMeasure(measureLocalId(Won), "myPopAttribute");
 const PreviousPeriodMeasure = newPreviousPeriodMeasure(Won, [{ dataSet: "dataSet", periodsAgo: 1 }]);
 const InlineMeasure = newInlineMeasure("SELECT 1;");
@@ -71,6 +74,7 @@ describe("measure type guards", () => {
             ...InvalidInputTestCases,
             [false, "simple measure", SimpleMeasure],
             [true, "arithmetic measure", ArithmeticMeasure],
+            [true, "virtual arithmetic measure", VirtualArithmeticMeasure],
             [false, "PoP measure", PopMeasure],
             [false, "PreviousPeriodMeasure", PreviousPeriodMeasure],
             [false, "InlineMeasure", InlineMeasure],
@@ -78,6 +82,22 @@ describe("measure type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isArithmeticMeasure(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isVirtualArithmeticMeasure", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure", SimpleMeasure],
+            [false, "arithmetic measure", ArithmeticMeasure],
+            [true, "virtual arithmetic measure", VirtualArithmeticMeasure],
+            [false, "PoP measure", PopMeasure],
+            [false, "PreviousPeriodMeasure", PreviousPeriodMeasure],
+            [false, "InlineMeasure", InlineMeasure],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isVirtualArithmeticMeasure(input)).toBe(expectedResult);
         });
     });
 

@@ -171,6 +171,21 @@ export interface IArithmeticMeasureDefinition {
 }
 
 /**
+ * Virtual arithmetic measures are the same arithmetic measure and include flag virtual
+ *
+ * @remarks
+ * In fact, the 'virtual' property should ideally be introduced within the 'IArithmeticMeasureDefinition' interface.
+ * However, since 'IArithmeticMeasureDefinition' is a public interface and the 'virtual' property is intended for internal use,
+ * we are hesitant to expose this property publicly.
+ * Publicizing this property could raise concerns among users about whether the arithmetic measure is virtual or not.
+ *
+ * @internal
+ */
+export interface IVirtualArithmeticMeasureDefinition extends IArithmeticMeasureDefinition {
+    virtual?: boolean;
+}
+
+/**
  * Object defining the {@link IPoPMeasureDefinition} object body.
  *
  * @public
@@ -346,6 +361,20 @@ export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMe
 }
 
 /**
+ * Type guard for checking whether an object is a virtual arithmetic measure.
+ *
+ * @internal
+ *
+ * @param obj - The object to be checked for being a virtual arithmetic measure.
+ * @returns Returns true if the object is a virtual arithmetic measure, false otherwise.
+ */
+export function isVirtualArithmeticMeasure(
+    obj: unknown,
+): obj is IMeasure<IVirtualArithmeticMeasureDefinition> {
+    return isMeasure(obj) && isVirtualArithmeticMeasureDefinition(obj.measure.definition);
+}
+
+/**
  * Type guard for checking whether object is a measure definition.
  *
  * @public
@@ -388,6 +417,20 @@ export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviou
  */
 export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition {
     return !isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
+}
+
+/**
+ * Type guard for checking whether object is a virtual arithmetic measure definition.
+ *
+ * @internal
+ */
+export function isVirtualArithmeticMeasureDefinition(
+    obj: unknown,
+): obj is IVirtualArithmeticMeasureDefinition {
+    const virtualArithmeticDefinition = obj as IVirtualArithmeticMeasureDefinition;
+    return (
+        isArithmeticMeasureDefinition(virtualArithmeticDefinition) && !!virtualArithmeticDefinition.virtual
+    );
 }
 
 //
