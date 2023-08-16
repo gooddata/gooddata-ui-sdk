@@ -237,6 +237,10 @@
     "properties.metrics.position": "Position",
     "properties.metrics.position.columns": "Spalten (Standard)",
     "properties.metrics.position.rows": "Zeilen",
+    "properties.column.headers.title": "Spaltenüberschriften",
+    "properties.column.headers.position": "Position",
+    "properties.column.headers.position.top": "oben (Standard)",
+    "properties.column.headers.position.left": "links",
     "dashboard.bucket.table.subtitle.columns": "in Spalten",
     "dashboard.bucket.table.subtitle.rows": "in Zeilen"
 }

@@ -237,6 +237,10 @@
     "properties.metrics.position": "Position",
     "properties.metrics.position.columns": "colonnes (par défaut)",
     "properties.metrics.position.rows": "lignes",
+    "properties.column.headers.title": "En-têtes de colonnes",
+    "properties.column.headers.position": "Position",
+    "properties.column.headers.position.top": "en haut (par défaut)",
+    "properties.column.headers.position.left": "gauche",
     "dashboard.bucket.table.subtitle.columns": "en colonnes",
     "dashboard.bucket.table.subtitle.rows": "en rangées"
 }
