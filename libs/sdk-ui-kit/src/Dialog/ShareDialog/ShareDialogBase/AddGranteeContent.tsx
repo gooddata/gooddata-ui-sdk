@@ -11,6 +11,8 @@ import {
     isGranteeUser,
     IGranteeUser,
     IGranteeGroup,
+    isGranteeRules,
+    IGranteeRules,
 } from "./types.js";
 import { AddGranteeSelect } from "./AddGranteeSelect.js";
 
@@ -18,8 +20,8 @@ import { AddGranteeSelect } from "./AddGranteeSelect.js";
  * In case of user and group, we need to make sure, that the added grantee has some default granular permission.
  */
 const enrichGranteeWithDefaultPermission = (
-    grantee: IGranteeUser | IGranteeGroup,
-): IGranularGranteeUser | IGranularGranteeGroup => {
+    grantee: IGranteeUser | IGranteeGroup | IGranteeRules,
+): IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules => {
     const defaultPermissions: IGranteeGranularity = {
         permissions: ["VIEW"],
         inheritedPermissions: [],
@@ -30,6 +32,12 @@ const enrichGranteeWithDefaultPermission = (
             ...grantee,
             ...defaultPermissions,
             type: "granularUser",
+        };
+    } else if (isGranteeRules(grantee)) {
+        return {
+            ...grantee,
+            ...defaultPermissions,
+            type: "allWorkspaceUsers",
         };
     } else {
         return {
@@ -60,7 +68,11 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
             if (!appliedGrantees.some((g) => areObjRefsEqual(g.id, grantee.id))) {
-                if (areGranularPermissionsSupported && (isGranteeUser(grantee) || isGranteeGroup(grantee))) {
+                const isGranularGrantee =
+                    areGranularPermissionsSupported &&
+                    (isGranteeUser(grantee) || isGranteeGroup(grantee) || isGranteeRules(grantee));
+
+                if (isGranularGrantee) {
                     onAddUserOrGroups(enrichGranteeWithDefaultPermission(grantee));
                 } else {
                     onAddUserOrGroups(grantee);

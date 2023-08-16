@@ -25,6 +25,7 @@ export type {
     IGranteeGroupAll,
     IGranularGranteeUser,
     IGranularGranteeGroup,
+    IGranteeRules,
     IGranteeInactiveOwner,
     IShareDialogBaseProps,
     IGranteeItemProps,
@@ -41,6 +42,7 @@ export {
     isGranteeGroup,
     isGranularGranteeUser,
     isGranularGranteeGroup,
+    isGranteeRules,
 } from "./ShareDialogBase/types.js";
 
 export { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";

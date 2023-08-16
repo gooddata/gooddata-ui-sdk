@@ -15,12 +15,20 @@ export type GranteeItem =
     | IGranteeGroup
     | IGranteeGroupAll
     | IGranularGranteeUser
-    | IGranularGranteeGroup;
+    | IGranularGranteeGroup
+    | IGranteeRules;
 
 /**
  * @internal
  */
-export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup";
+export type GranteeType =
+    | "user"
+    | "inactive_owner"
+    | "group"
+    | "groupAll"
+    | "granularUser"
+    | "granularGroup"
+    | "allWorkspaceUsers";
 
 /**
  * @internal
@@ -124,13 +132,13 @@ export const isGranularGranteeGroup = (obj: unknown): obj is IGranularGranteeGro
 /**
  * @internal
  */
-export type IGranularGrantee = IGranularGranteeUser | IGranularGranteeGroup;
+export type IGranularGrantee = IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 /**
  * @internal
  */
 export const isGranularGrantee = (obj: unknown): obj is IGranularGrantee => {
-    return isGranularGranteeUser(obj) || isGranularGranteeGroup(obj);
+    return isGranularGranteeUser(obj) || isGranularGranteeGroup(obj) || isGranteeRules(obj);
 };
 
 /**
@@ -151,10 +159,33 @@ export const isGranteeGroupAll = (obj: unknown): obj is IGranteeGroupAll => {
 /**
  * @internal
  */
+export interface IGranteeRules extends IGranteeBase {
+    type: "allWorkspaceUsers";
+    id: {
+        identifier: "allWorkspaceUsers";
+    };
+    permissions: AccessGranularPermission[];
+    inheritedPermissions: AccessGranularPermission[];
+}
+
+/**
+ * @internal
+ */
+export const isGranteeRules = (obj: unknown): obj is IGranteeRules => {
+    return !isEmpty(obj) && (obj as IGranteeRules).type === "allWorkspaceUsers";
+};
+
+/**
+ * @internal
+ */
 export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
     return (
         !isEmpty(obj) &&
-        (isGranteeGroupAll(obj) || isGranteeGroup(obj) || isGranteeUserInactive(obj) || isGranteeUser(obj))
+        (isGranteeGroupAll(obj) ||
+            isGranteeGroup(obj) ||
+            isGranteeUserInactive(obj) ||
+            isGranteeUser(obj) ||
+            isGranteeRules(obj))
     );
 };
 

@@ -82,7 +82,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsBootstrapResource: false,
     supportsMetadataObjectLocking: false,
     supportsGranularAccessControl: true,
-    supportsEveryoneUserGroupForAccessControl: false,
+    supportsEveryoneUserGroupForAccessControl: true,
     supportsNonProductionDatasets: false,
     supportsShowAllAttributeValues: true,
     supportsSeparateLatitudeLongitudeLabels: true,
