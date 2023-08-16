@@ -98,8 +98,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCompositeGrain: false,
     enableTableTotalRows: false,
     enablePdmRemovalDeprecationPhase: false,
-    enablePivotTableTransposition: false,
-    enableColumnHeadersPosition: false,
+    enablePivotTableTransposition: true,
+    enableColumnHeadersPosition: true,
     enableNewHeadline: false,
 };
 
