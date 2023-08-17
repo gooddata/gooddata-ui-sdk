@@ -179,7 +179,7 @@ You can create these items using the following factory functions:
 -  `newWidthForAttributeColumn` sets the width of a row attribute column.
 -  `newWidthForAllMeasureColumns` sets the width of all measure columns.
 -  `newWidthForAllColumnsForMeasure` sets the width of all columns for a particular measure.
--  `newWidthForSelectedColumns` sets the width for one or more columns specified by the locators.
+-  `setNewWidthForSelectedColumns` sets the width for one or more columns specified by the locators.
 
 The factory functions are exported from the `@gooddata/sdk-ui-pivot` package.
 
@@ -188,7 +188,7 @@ const config = {
     columnSizing: {
        columnWidths: [
             newWidthForAttributeColumn(Md.Date, 100),
-            newWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200)
+            setNewWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200)
        ]
     }
 }
@@ -238,7 +238,7 @@ const config = {
 
 ### Priorities of column width definitions
 
-`newWidthForSelectedColumns` defined for a specific column overrides the value set by `newWidthForAllColumnsForMeasure` or `newWidthForAllMeasureColumns`.
+`setNewWidthForSelectedColumns` defined for a specific column overrides the value set by `newWidthForAllColumnsForMeasure` or `newWidthForAllMeasureColumns`.
 
 ### Combining auto resizing and manual resizing
 
@@ -254,7 +254,7 @@ const config = {
         defaultWidth: "autoresizeAll",
         columnWidths: [
             newWidthForAttributeColumn(Md.Date, 100),
-            newWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200),
+            setNewWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200),
         ]
     }
 }
@@ -262,7 +262,7 @@ const config = {
 
 **Example 2:** In the following code sample:
 * The width of all the measure columns is set to the value of the `width` prop passed to `newWidthForAllMeasureColumns` (see [Manual resizing](#manual-resizing)).
-* However, the `newWidthForSelectedColumns` prop overrides the value set by `newWidthForAllMeasureColumns` for the measure columns that are defined in the call to `newWidthForSelectedColumns`. Notice that the `width` prop passed to `newWidthForSelectedColumns` is set to `"auto"` and not to a number as in **Example 1**. This means that at the initial rendering these measure columns will be resized to fit the content (see [Auto resizing](#auto-resizing)), while all the other measure columns will be set to the width defined by `newWidthForAllMeasureColumns`.
+* However, the `setNewWidthForSelectedColumns` prop overrides the value set by `newWidthForAllMeasureColumns` for the measure columns that are defined in the call to `setNewWidthForSelectedColumns`. Notice that the `width` prop passed to `setNewWidthForSelectedColumns` is set to `"auto"` and not to a number as in **Example 1**. This means that at the initial rendering these measure columns will be resized to fit the content (see [Auto resizing](#auto-resizing)), while all the other measure columns will be set to the width defined by `newWidthForAllMeasureColumns`.
 * All the attribute columns, if any, are resized to fit the content (see [Auto resizing](#auto-resizing)).
 
 ```jsx
@@ -271,7 +271,7 @@ const config = {
         defaultWidth: "autoresizeAll",
         columnWidths: [
             newWidthForAllMeasureColumns(200),
-            newWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], "auto"),
+            setNewWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], "auto"),
         ]
     }
 }
@@ -280,7 +280,7 @@ const config = {
 **Example 3:** In the following code sample:
 * The width of all the measure columns is set to the value of the `width` prop passed to `allMeasureColumnWidthItem` (see [Manual resizing](#manual-resizing)).
 * The width of all columns of the selected measure is set to the value of the `width` prop passed to `newWidthForAllColumnsForMeasure` and overrides the value from `newWidthForAllMeasureColumns` (see [Manual resizing](#manual-resizing)).
-* However, the `newWidthForSelectedColumns`prop overrides the value set by `newWidthForAllMeasureColumns` and `newWidthForAllColumnsForMeasure` for the measure column that is defined under `newWidthForSelectedColumns`. Notice that the `width` prop passed to `newWidthForSelectedColumns` is set to `"auto"` and not to a number as in **Example 1**. This means that at the initial rendering this measure column will be resized to fit the content (see [Auto resizing](#auto-resizing)), while all the other measure columns will be set to the width defined by `newWidthForAllMeasureColumns` or `newWidthForAllColumnsForMeasure`.
+* However, the `setNewWidthForSelectedColumns`prop overrides the value set by `newWidthForAllMeasureColumns` and `newWidthForAllColumnsForMeasure` for the measure column that is defined under `setNewWidthForSelectedColumns`. Notice that the `width` prop passed to `setNewWidthForSelectedColumns` is set to `"auto"` and not to a number as in **Example 1**. This means that at the initial rendering this measure column will be resized to fit the content (see [Auto resizing](#auto-resizing)), while all the other measure columns will be set to the width defined by `newWidthForAllMeasureColumns` or `newWidthForAllColumnsForMeasure`.
 * All the attribute columns, if any, are resized to fit the content (see [Auto resizing](#auto-resizing)).
 
 ```jsx
@@ -290,7 +290,7 @@ const config = {
         columnWidths: [
             newWidthForAllMeasureColumns(200),
             newWidthForAllColumnsForMeasure(Md.$TotalSales, 200),
-            newWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], "auto"),
+            setNewWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], "auto"),
         ]
     }
 }
@@ -329,7 +329,7 @@ const config = {
 
     All the measures columns are resized to the set width.
 
-    The new column widths are propagated via the `onColumnResized` callback array. All the `newWidthForSelectedColumns` items are removed. The `newWidthForAllMeasureColumns` item is added.
+    The new column widths are propagated via the `onColumnResized` callback array. All the `setNewWidthForSelectedColumns` items are removed. The `newWidthForAllMeasureColumns` item is added.
 
 ### Resizing all columns of a specific measure at once to a custom width
 
@@ -338,7 +338,7 @@ const config = {
 
     All columns of the corresponding measure are resized to the set width.
 
-    The new column widths are propagated via the `onColumnResized` callback array. All the `newWidthForSelectedColumns` items for the corresponding measure are removed. The `newWidthForAllColumnsForMeasure` item is added.
+    The new column widths are propagated via the `onColumnResized` callback array. All the `setNewWidthForSelectedColumns` items for the corresponding measure are removed. The `newWidthForAllColumnsForMeasure` item is added.
 
 ### Resizing a column to fit its content
 
@@ -351,7 +351,7 @@ const config = {
 
 **NOTES:**
 * This behavior is not applied if [auto resizing](#auto-resizing) is enabled and you double-click a column that was auto-resized at the initial rendering and then its width was manually adjusted in the UI. Such column is removed from the `onColumnResized` callback array.
-* If [auto resizing](#auto-resizing) is enabled, and `columnWidths` includes the `newWidthForAllMeasureColumns` or `newWidthForAllColumnsForMeasure` items, and you double-click a measure column, the `newWidthForSelectedColumns` item with `width` set to `"auto"` is added to the `onColumnResized` callback array.
+* If [auto resizing](#auto-resizing) is enabled, and `columnWidths` includes the `newWidthForAllMeasureColumns` or `newWidthForAllColumnsForMeasure` items, and you double-click a measure column, the `setNewWidthForSelectedColumns` item with `width` set to `"auto"` is added to the `onColumnResized` callback array.
 
 ### Resizing all measure columns at once to fit their content
 
@@ -409,7 +409,7 @@ const config = {
         defaultWidth: "autoresizeAll",
         columnWidths: [
             newWidthForAttributeColumn(Md.Date, 100),
-            newWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200),
+            setNewWidthForSelectedColumns(Md.$FranchiseFees, [newAttributeColumnLocator(Md.DateMonth.Short, monthDateJanuaryUri)], 200),
         ]
     }
 };

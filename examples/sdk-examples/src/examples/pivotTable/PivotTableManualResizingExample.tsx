@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
     PivotTable,
     newWidthForAttributeColumn,
-    newWidthForSelectedColumns,
+    setNewWidthForSelectedColumns,
     newAttributeColumnLocator,
     ColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
@@ -22,7 +22,7 @@ const columns = [Md.DateDatasets.Date.Quarter.Default];
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
 const measureWidth = (width: number) =>
-    newWidthForSelectedColumns(
+    setNewWidthForSelectedColumns(
         FranchiseFees,
         [
             newAttributeColumnLocator(
