@@ -13,7 +13,7 @@ import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/ComparisonDataItem.js";
-import { IComparison } from "../../../../interfaces/index.js";
+import { CalculationType, IComparison } from "../../../../interfaces/index.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import {
     createHeadlineDataItem,
@@ -21,7 +21,11 @@ import {
     IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { IBaseHeadlineData, IBaseHeadlineItem, EvaluationType } from "../interfaces/BaseHeadlines.js";
-import { getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
+import {
+    getCalculationValuesDefault,
+    getComparisonFormat,
+    getComparisonTitle,
+} from "../../headlineHelper.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
@@ -100,6 +104,7 @@ export function getComparisonBaseHeadlineData(
     const comparisonEvaluationType = getComparisonEvaluationType(executionData);
     const tertiaryItem = createComparisonItem(
         tertiaryItemData,
+        dv.meta().isDerivedMeasure(secondaryItemHeader),
         comparisonEvaluationType,
         primaryItem.data?.format,
         comparison,
@@ -115,17 +120,22 @@ export function getComparisonBaseHeadlineData(
 
 function createComparisonDataItem(
     executionData: IHeadlineExecutionData,
+    isSecondaryDerivedMeasure: boolean,
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
 ): IHeadlineDataItem {
-    const { calculationType, format } = comparison;
+    const { calculationType, format, labelConfig } = comparison;
     const { value, measureHeaderItem } = executionData;
     const { localIdentifier } = measureHeaderItem;
-    const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(calculationType);
+
+    const defaultCalculationType = isSecondaryDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO;
+    const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(
+        calculationType ?? defaultCalculationType,
+    );
 
     return {
-        title: intl.formatMessage({ id: defaultLabelKey }),
+        title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
         value: String(value),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
         localIdentifier,
@@ -150,12 +160,19 @@ function createBaseHeadlineItem(
 
 function createComparisonItem(
     executionData: IHeadlineExecutionData,
+    isSecondaryDerivedMeasure: boolean,
     comparisonEvaluationType: EvaluationType,
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
 ): IBaseHeadlineItem {
-    const data = createComparisonDataItem(executionData, inheritFormat, comparison, intl);
+    const data = createComparisonDataItem(
+        executionData,
+        isSecondaryDerivedMeasure,
+        inheritFormat,
+        comparison,
+        intl,
+    );
 
     return {
         data,
