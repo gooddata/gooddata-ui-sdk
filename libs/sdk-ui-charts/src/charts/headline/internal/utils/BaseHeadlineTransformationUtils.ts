@@ -20,41 +20,47 @@ import {
 } from "./HeadlineTransformationUtils.js";
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { CALCULATION_VALUES_DEFAULT } from "../interfaces/ComparisonHeadlines.js";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
     const dv = DataViewFacade.for(dataView);
     const executionData = getExecutionData(dv);
-    const [primaryItemHeader, secondaryItemHeader, tertiaryItemHeader] = dv.meta().measureDescriptors();
+    const itemHeaders = dv.meta().measureDescriptors();
 
     const primaryItem = createBaseHeadlineItem(
         executionData[0],
-        isSomeHeaderPredicateMatched(drillablePredicates, primaryItemHeader, dv),
+        isSomeHeaderPredicateMatched(drillablePredicates, itemHeaders[0], dv),
         "primaryValue",
     );
 
     let secondaryItemData: IHeadlineExecutionData;
+    let secondaryItemHeader: IMeasureDescriptor;
     let tertiaryItemData: IHeadlineExecutionData;
+    let tertiaryItemHeader: IMeasureDescriptor;
     if (executionData.length === 3) {
         // There are 2 secondary metrics
         // The left item will be the second metric
         // The right item will be the third metric
         secondaryItemData = executionData[2];
+        secondaryItemHeader = itemHeaders[2];
         tertiaryItemData = executionData[1];
+        tertiaryItemHeader = itemHeaders[1];
     } else {
         secondaryItemData = executionData[1];
+        secondaryItemHeader = itemHeaders[1];
     }
 
     const secondaryItem = createBaseHeadlineItem(
         secondaryItemData,
-        isSomeHeaderPredicateMatched(drillablePredicates, secondaryItemHeader, dv),
+        secondaryItemHeader && isSomeHeaderPredicateMatched(drillablePredicates, secondaryItemHeader, dv),
         "secondaryValue",
     );
 
     const tertiaryItem = createBaseHeadlineItem(
         tertiaryItemData,
-        isSomeHeaderPredicateMatched(drillablePredicates, tertiaryItemHeader, dv),
+        tertiaryItemHeader && isSomeHeaderPredicateMatched(drillablePredicates, tertiaryItemHeader, dv),
         "secondaryValue",
     );
 
