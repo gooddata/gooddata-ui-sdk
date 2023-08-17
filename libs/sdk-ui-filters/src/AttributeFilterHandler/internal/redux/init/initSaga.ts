@@ -8,6 +8,8 @@ import { initAttributeSaga } from "./initAttributeSaga.js";
 import { initSelectionSaga } from "./initSelectionSaga.js";
 import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
 import { initTotalCountSaga } from "./initTotalCount.js";
+import { selectLimitingAttributeFilters } from "../elements/elementsSelectors.js";
+import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
 
 /**
  * @internal
@@ -25,22 +27,26 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
         yield put(actions.initStart({ correlation }));
 
         const hiddenElements: ReturnType<typeof selectHiddenElements> = yield select(selectHiddenElements);
+        const limitingFilters: ReturnType<typeof selectLimitingAttributeFilters> = yield select(
+            selectLimitingAttributeFilters,
+        );
+
+        const loadTotal = !isLimitingAttributeFiltersEmpty(limitingFilters);
+
+        const sagas = [initSelectionSaga, initAttributeElementsPageSaga];
         if (hiddenElements?.length > 0) {
+            // the rest need the attribute already loaded for the hiddenElements to work
             yield call(initAttributeSaga, correlation);
-            // these need the attribute loaded for the hiddenElements to work
-            yield all([
-                call(initSelectionSaga, correlation),
-                call(initAttributeElementsPageSaga, correlation),
-                call(initTotalCountSaga, correlation),
-            ]);
         } else {
-            yield all([
-                call(initAttributeSaga, correlation),
-                call(initSelectionSaga, correlation),
-                call(initAttributeElementsPageSaga, correlation),
-                call(initTotalCountSaga, correlation),
-            ]);
+            sagas.unshift(initAttributeSaga);
         }
+
+        if (loadTotal) {
+            // total count without applying parent filter needs to be fetched separately.
+            // It is because the fact that when elements fetched filtered by parent selection, the includeTotalCountWithoutFilters: true option does not work, despite its name
+            sagas.push(initTotalCountSaga);
+        }
+        yield all(sagas.map((saga) => call(saga, correlation)));
 
         yield put(actions.initSuccess({ correlation: correlation }));
     } catch (error) {

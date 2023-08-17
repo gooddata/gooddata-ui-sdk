@@ -25,7 +25,7 @@ export function* loadAttributeSaga(
     action: ReturnType<typeof actions.loadAttributeRequest> | ReturnType<typeof actions.loadAttributeRequest>,
 ): SagaIterator<IAttributeMetadataObject> {
     if (actions.loadAttributeCancelRequest.match(action)) {
-        // Saga was triggered by cancel request - do nothing, just jump to finally statement
+        // Saga was triggered by loadAttributeCancelRequest - do nothing, finally statement was already called, because takeLatest can run only one saga at a time === the previous one was canceled
         return;
     }
 

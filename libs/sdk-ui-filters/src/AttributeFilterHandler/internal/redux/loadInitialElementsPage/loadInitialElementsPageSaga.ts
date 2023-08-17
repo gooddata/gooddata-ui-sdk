@@ -30,6 +30,11 @@ export function* loadInitialElementsPageSaga(
         | ReturnType<typeof actions.loadInitialElementsPageRequest>
         | ReturnType<typeof actions.loadInitialElementsPageCancelRequest>,
 ): SagaIterator<void> {
+    if (actions.loadInitialElementsPageCancelRequest.match(action)) {
+        // Saga was triggered by cancel request - do nothing - do nothing, finally statement was already called, because takeLatest can run only one saga at a time === the previous one was canceled
+        return;
+    }
+
     const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
     const abortController = new AbortController();
 
@@ -38,11 +43,6 @@ export function* loadInitialElementsPageSaga(
     } = action;
 
     try {
-        if (actions.loadInitialElementsPageCancelRequest.match(action)) {
-            // Saga was triggered by cancel request - do nothing, just jump to finally statement
-            return;
-        }
-
         yield put(actions.loadInitialElementsPageStart({ correlation }));
 
         const loadOptions: ReturnType<typeof selectLoadElementsOptions> = yield select(

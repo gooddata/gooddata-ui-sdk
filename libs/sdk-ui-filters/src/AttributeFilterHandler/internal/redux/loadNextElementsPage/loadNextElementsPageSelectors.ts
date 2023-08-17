@@ -6,7 +6,7 @@ import omit from "lodash/omit.js";
 
 import { selectState } from "../common/selectors.js";
 import {
-    selectElementsTotalCount,
+    selectElementsTotalCountWithCurrentSettings,
     selectLastLoadedElementsOptions,
     selectLoadElementsOptions,
 } from "../elements/elementsSelectors.js";
@@ -47,9 +47,9 @@ export const selectLoadNextElementsPageOptions: FilterSelector<ILoadElementsOpti
  */
 export const selectHasNextPage: FilterSelector<boolean> = createSelector(
     selectLastLoadedElementsOptions,
-    selectElementsTotalCount,
-    (lastLoadedOptions, totalCount) => {
-        return lastLoadedOptions.offset + lastLoadedOptions.limit < totalCount;
+    selectElementsTotalCountWithCurrentSettings,
+    (lastLoadedOptions, totalCountWithCurrentSettings) => {
+        return lastLoadedOptions.offset + lastLoadedOptions.limit < totalCountWithCurrentSettings;
     },
 );
 
