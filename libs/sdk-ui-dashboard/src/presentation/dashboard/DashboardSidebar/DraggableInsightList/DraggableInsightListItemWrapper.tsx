@@ -35,6 +35,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
         updated,
         insight,
         onDescriptionPanelOpen,
+        metadataTimeZone,
     } = props;
     return (
         <DraggableInsightListItem
@@ -49,6 +50,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
                 updated,
                 showDescriptionPanel,
                 onDescriptionPanelOpen,
+                metadataTimeZone,
             }}
             insight={insight}
         />
