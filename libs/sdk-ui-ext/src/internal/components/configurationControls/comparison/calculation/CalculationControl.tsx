@@ -15,15 +15,22 @@ import { IVisualizationProperties } from "../../../../interfaces/Visualization.j
 
 interface ICalculationControlProps {
     disabled: boolean;
+    defaultCalculationType: CalculationType;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
 }
 
 const CALCULATION_DROPDOWN_WIDTH = 194;
 
-const CalculationControl: React.FC<ICalculationControlProps> = ({ disabled, properties, pushData }) => {
+const CalculationControl: React.FC<ICalculationControlProps> = ({
+    disabled,
+    defaultCalculationType,
+    properties,
+    pushData,
+}) => {
     const { formatMessage } = useIntl();
-    const calculationType: CalculationType = properties.controls?.comparison?.calculationType;
+    const calculationType: CalculationType =
+        properties.controls?.comparison?.calculationType || defaultCalculationType;
 
     const items = useMemo(
         () =>

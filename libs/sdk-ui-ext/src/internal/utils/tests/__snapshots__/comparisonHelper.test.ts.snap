@@ -1,0 +1,177 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`comparisonHelper > getPresets > Should get presets correctly 1`] = `
+[
+  {
+    "format": null,
+    "localIdentifier": "inherit",
+    "name": "Inherit",
+    "previewNumber": 1000.12,
+  },
+  {
+    "format": "#,##0",
+    "localIdentifier": "rounded",
+    "name": "Rounded",
+    "previewNumber": 1000.12,
+  },
+  {
+    "format": "#,##0.0",
+    "localIdentifier": "decimal-1",
+    "name": "Decimal (1)",
+    "previewNumber": 1000.12,
+  },
+  {
+    "format": "#,##0.00",
+    "localIdentifier": "decimal-2",
+    "name": "Decimal (2)",
+    "previewNumber": 1000.12,
+  },
+  {
+    "format": "#,##0%",
+    "localIdentifier": "percent-rounded",
+    "name": "Percent (rounded)",
+    "previewNumber": 0.1,
+  },
+  {
+    "format": "#,##0.0%",
+    "localIdentifier": "percent-1",
+    "name": "Percent (1)",
+    "previewNumber": 0.101,
+  },
+  {
+    "format": "#,##0.00%",
+    "localIdentifier": "percent-2",
+    "name": "Percent (2)",
+    "previewNumber": 0.1012,
+  },
+]
+`;
+
+exports[`comparisonHelper > getTemplates > Should get presets correctly 1`] = `
+[
+  {
+    "format": "#,##0",
+    "localIdentifier": "rounded",
+    "name": "Rounded",
+  },
+  {
+    "format": "#,##0.0",
+    "localIdentifier": "decimal-1",
+    "name": "Decimal (1)",
+  },
+  {
+    "format": "#,##0.00",
+    "localIdentifier": "decimal-2",
+    "name": "Decimal (2)",
+  },
+  {
+    "format": "#,##0%",
+    "localIdentifier": "percent-rounded",
+    "name": "Percent (rounded)",
+  },
+  {
+    "format": "#,##0.0%",
+    "localIdentifier": "percent-1",
+    "name": "Percent (1)",
+  },
+  {
+    "format": "#,##0.00%",
+    "localIdentifier": "percent-2",
+    "name": "Percent (2)",
+  },
+  {
+    "format": "$#,##0.00",
+    "localIdentifier": "currency",
+    "name": "Currency",
+  },
+  {
+    "format": "[>=1000000000000]$#,,,,.0 T;
+[>=1000000000]$#,,,.0 B;
+[>=1000000]$#,,.0 M;
+[>=1000]$#,.0 K;
+[>=0]$#,##0;
+[<=-1000000000000]-$#,,,,.0 T;
+[<=-1000000000]-$#,,,.0 B;
+[<=-1000000]-$#,,.0 M;
+[<=-1000]-$#,.0 K;
+[<0]-$#,##0",
+    "localIdentifier": "currency-shortened",
+    "name": "Currency shortened",
+  },
+  {
+    "format": "[>=1000000000000]#,,,,.0 T;
+[>=1000000000]#,,,.0 B;
+[>=1000000]#,,.0 M;
+[>=1000]#,.0 K;
+[>=0]#,##0;
+[<=-1000000000000]-#,,,,.0 T;
+[<=-1000000000]-#,,,.0 B;
+[<=-1000000]-#,,.0 M;
+[<=-1000]-#,.0 K;
+[<0]-#,##0",
+    "localIdentifier": "large-numbers-shortened",
+    "name": "Large numbers shortened",
+  },
+  {
+    "format": "[>=1000000000000][green]#,,,,.0 T;
+[>=1000000000][green]#,,,.0 B;
+[>=1000000][green]#,,.0 M;
+[>=1000][black]#,.0 K;
+[>=0][black]#,##0;
+[<=-1000000000000][red]-#,,,,.0 T;
+[<=-1000000000][red]-#,,,.0 B;
+[<=-1000000][red]-#,,.0 M;
+[<=-1000][red]-#,.0 K;
+[<0][black]-#,##0",
+    "localIdentifier": "large-numbers-shortened-with-colors",
+    "name": "Large numbers shortened with colors",
+  },
+  {
+    "format": "[<0][red]-#,##0.0;
+[black]#,##0.0",
+    "localIdentifier": "negative-numbers-red",
+    "name": "Negative numbers in red",
+  },
+  {
+    "format": "[<0](#,##0.0);
+#,##0.0",
+    "localIdentifier": "financial",
+    "name": "Financial",
+  },
+  {
+    "format": "0.00",
+    "localIdentifier": "decimal-without-thousands-separator",
+    "name": "Decimal (2) without thousands separator",
+  },
+  {
+    "format": "[<0][red]#,#.##;
+[<1000][black]#,0.##;
+[>=1000][green]#,#.##",
+    "localIdentifier": "conditional-colors",
+    "name": "Conditional colors",
+  },
+  {
+    "format": "[<0][green]▲ #,##0.0%;
+[=0][black]#,##0.0%;
+[>0][red]▼ #,##0.0%",
+    "localIdentifier": "trend-symbols",
+    "name": "Trend symbols",
+  },
+  {
+    "format": "[>=86400]{{{86400||0d}}} {{{3600|24|00}}}h;
+[>=3600]{{{3600|24|00}}}h {{{60|60|00}}}m;
+[>=60]{{{60|60|00}}}m {{{|60.|00}}}s;
+[>0]{{{|60.|00.0}}}s;
+[=0]{{{|60.|0}}}",
+    "localIdentifier": "time-from-seconds",
+    "name": "Time (from seconds)",
+  },
+  {
+    "format": "[=null]0.00;
+[>=0]#,#0.00;
+[<0]-#,#0.00",
+    "localIdentifier": "zero-instead-of-null",
+    "name": "Zero instead of blank value",
+  },
+]
+`;

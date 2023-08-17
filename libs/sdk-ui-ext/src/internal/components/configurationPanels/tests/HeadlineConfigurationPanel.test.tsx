@@ -73,7 +73,7 @@ describe("HeadlineComparisonPanel", () => {
 
     it("should disabled comparison section when control is disabled", () => {
         const MockComparisonSection = mockComparisonSection();
-        renderHeadlineComparisonPanel({ insight: null });
+        renderHeadlineComparisonPanel({ insight: newInsight([]) });
         expect(MockComparisonSection).toHaveBeenCalledWith(
             expect.objectContaining({
                 comparisonDisabled: true,

@@ -11,7 +11,7 @@ import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import noop from "lodash/noop.js";
 
-export interface IConfigurationPanelContentProps {
+export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
     references?: IReferences;
     propertiesMeta?: any;
@@ -24,7 +24,7 @@ export interface IConfigurationPanelContentProps {
     featureFlags?: ISettings;
     axis?: string;
     pushData?(data: any): void;
-    panelConfig?: any;
+    panelConfig?: PanelConfig;
 }
 
 export default abstract class ConfigurationPanelContent<

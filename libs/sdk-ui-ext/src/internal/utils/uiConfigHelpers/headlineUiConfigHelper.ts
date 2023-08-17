@@ -36,6 +36,7 @@ import { setBucketTitles, getItemsCount } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
 import { messages } from "../../../locales.js";
 import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
+import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedProperties.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -97,14 +98,13 @@ export function getHeadlineUiConfig(
 }
 
 export function buildHeadlineVisualizationConfig(
-    insight: IInsightDefinition,
     visualizationProperties: IVisualizationProperties,
     settings: ISettings,
     options: IVisProps,
 ): IChartConfig {
     const { config, customVisualizationConfig } = options;
 
-    const supportedProperties = getHeadlineSupportedProperties(insight, visualizationProperties);
+    const supportedProperties = getHeadlineSupportedProperties(visualizationProperties);
     const fullConfig = {
         ...config,
         ...supportedProperties.controls,
@@ -114,11 +114,10 @@ export function buildHeadlineVisualizationConfig(
 }
 
 export function getHeadlineSupportedProperties(
-    insight: IInsightDefinition,
     visualizationProperties: IVisualizationProperties,
 ): IVisualizationProperties<HeadlineControlProperties> {
     const comparison: IComparison = {
-        ...getDefaultComparisonProperties(insight),
+        ...HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison,
         ...(visualizationProperties?.controls?.comparison || {}),
     };
 
@@ -138,19 +137,12 @@ export function isComparisonEnabled(insight: IInsightDefinition) {
     return primaryMeasure && secondaryMeasures?.length === 1;
 }
 
-export function getDefaultComparisonProperties(insight?: IInsightDefinition): IComparison {
-    if (insight) {
-        const [secondaryMeasure] = insightSecondaryMeasures(insight);
-        const secondaryIsDerivedMeasure =
-            isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure);
+export function getComparisonDefaultCalculationType(insight: IInsightDefinition) {
+    const [secondaryMeasure] = insightSecondaryMeasures(insight);
+    const secondaryIsDerivedMeasure =
+        isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure);
 
-        return {
-            enabled: true,
-            calculationType: secondaryIsDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO,
-        };
-    }
-
-    return { enabled: true };
+    return secondaryIsDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO;
 }
 
 function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure {

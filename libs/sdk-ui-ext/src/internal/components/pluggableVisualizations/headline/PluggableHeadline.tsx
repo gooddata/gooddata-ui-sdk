@@ -50,7 +50,6 @@ import {
 import { removeSort } from "../../../utils/sort.js";
 import {
     buildHeadlineVisualizationConfig,
-    getDefaultComparisonProperties,
     getDefaultHeadlineUiConfig,
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
@@ -59,7 +58,10 @@ import HeadlineConfigurationPanel from "../../configurationPanels/HeadlineConfig
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
-import { HEADLINE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import {
+    HEADLINE_DEFAULT_CONTROL_PROPERTIES,
+    HEADLINE_SUPPORTED_PROPERTIES,
+} from "../../../constants/supportedProperties.js";
 
 /**
  * PluggableHeadline
@@ -203,12 +205,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
 
         const buckets = [...(insightBuckets(insight) || [])];
-        const headlineConfig = buildHeadlineVisualizationConfig(
-            insight,
-            visualizationProperties,
-            settings,
-            options,
-        );
+        const headlineConfig = buildHeadlineVisualizationConfig(visualizationProperties, settings, options);
 
         const provider = createHeadlineProvider(buckets, headlineConfig, settings?.enableNewHeadline);
         const headlineTransformation = provider.getHeadlineTransformationComponent();
@@ -250,8 +247,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 <ConfigurationPanel
                     locale={this.locale}
                     insight={insight}
+                    panelConfig={{
+                        separators: this.settings?.separators,
+                    }}
                     pushData={this.pushData}
-                    properties={getHeadlineSupportedProperties(insight, this.visualizationProperties)}
+                    properties={getHeadlineSupportedProperties(this.visualizationProperties)}
                     propertiesMeta={this.propertiesMeta}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
@@ -296,7 +296,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             supportedProperties: {
                 controls: {
                     ...supportedProperties,
-                    comparison: getDefaultComparisonProperties(),
+                    ...HEADLINE_DEFAULT_CONTROL_PROPERTIES,
                 },
             },
         };

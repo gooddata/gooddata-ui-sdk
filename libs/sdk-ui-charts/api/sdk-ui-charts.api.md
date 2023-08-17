@@ -109,6 +109,9 @@ export const DonutChart: (props: IDonutChartProps) => JSX.Element;
 // @public
 export const FunnelChart: (props: IFunnelChartProps) => JSX.Element;
 
+// @internal
+export const getCalculationValuesDefault: (calculationType?: CalculationType) => ICalculationDefaultValue;
+
 export { getColorMappingPredicate }
 
 // @public
@@ -207,6 +210,14 @@ export interface IBulletChartBucketProps {
 
 // @public (undocumented)
 export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChartProps {
+}
+
+// @internal (undocumented)
+export interface ICalculationDefaultValue {
+    // (undocumented)
+    defaultFormat: string;
+    // (undocumented)
+    defaultLabelKey: string;
 }
 
 // @public
