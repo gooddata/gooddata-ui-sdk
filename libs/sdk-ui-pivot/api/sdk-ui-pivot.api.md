@@ -243,6 +243,9 @@ export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesC
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem;
 
 // @public
+export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator;
+
+// @public
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
 
 // @public
@@ -277,6 +280,9 @@ export type MeasureGroupDimension = "columns" | "rows";
 // @public
 export function newAttributeColumnLocator(attributeOrId: IAttribute | string, element?: string): IAttributeColumnLocator;
 
+// @alpha
+export function newTotalColumnLocator(attributeOrId: IAttribute | string, totalFunction: string): ITotalColumnLocator;
+
 // @public
 export function newWidthForAllColumnsForMeasure(measureOrId: IMeasure | string, width: number, allowGrowToFit?: boolean): IWeakMeasureColumnWidthItem;
 
@@ -286,13 +292,16 @@ export function newWidthForAllMeasureColumns(width: number, allowGrowToFit?: boo
 // @public
 export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, width: number, allowGrowToFit?: boolean): IAttributeColumnWidthItem;
 
-// @public
-export function newWidthForSelectedColumns(measureOrId: IMeasure | string | null, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
+// @public @deprecated
+export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
 export const PivotTable: (props: IPivotTableProps) => JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
+
+// @public
+export function setNewWidthForSelectedColumns(measuresOrIds: IMeasure | string | IMeasure[] | string[] | null, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 ```

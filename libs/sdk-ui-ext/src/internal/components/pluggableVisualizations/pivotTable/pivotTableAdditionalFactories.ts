@@ -18,6 +18,7 @@ import {
     isMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
+    isTotalColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
@@ -35,8 +36,7 @@ export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumn
 export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidthItem): string {
     const { locators, width } = obj.measureColumnWidthItem;
 
-    // we know there is exactly one measureLocator and several attributeLocators
-    const [[measureLocator], attributeLocators] = partition<ColumnLocator, IMeasureColumnLocator>(
+    const [measureLocators, attributeLocators] = partition<ColumnLocator, IMeasureColumnLocator>(
         locators,
         isMeasureColumnLocator,
     );
@@ -48,15 +48,19 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
             : factoryNotationForTotalColumnLocator(locator),
     );
 
-    // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const measureLocatorIdentifier = measureLocator?.measureLocatorItem?.measureIdentifier;
+    const measureLocatorIdentifiers = measureLocators?.map(
+        (measureLocator) => measureLocator.measureLocatorItem.measureIdentifier,
+    );
+
     const params = [
-        measureLocatorIdentifier ? `"${measureLocatorIdentifier}"` : "null",
+        measureLocatorIdentifiers && measureLocatorIdentifiers.length > 0
+            ? `["${measureLocatorIdentifiers.join('","')}"]`
+            : "null",
         `[${attributeLocatorFactories.join(", ")}]`,
         isString(width.value) ? `"${width.value}"` : width.value,
         allowGrowToFit && "true",
     ].filter((item) => !isNil(item));
-    return `newWidthForSelectedColumns(${params.join(", ")})`;
+    return `setNewWidthForSelectedColumns(${params.join(", ")})`;
 }
 
 export function factoryNotationForAttributeColumnLocator(obj: IAttributeColumnLocator): string {
@@ -118,6 +122,16 @@ export const pivotTableAdditionalFactories: IAdditionalFactoryDefinition[] = [
     },
     {
         importInfo: {
+            name: "newTotalColumnLocator",
+            package: "@gooddata/sdk-ui-pivot",
+            importType: "named",
+        },
+        transformation: (obj) => {
+            return isTotalColumnLocator(obj) ? factoryNotationForTotalColumnLocator(obj) : undefined;
+        },
+    },
+    {
+        importInfo: {
             name: "newWidthForAllColumnsForMeasure",
             package: "@gooddata/sdk-ui-pivot",
             importType: "named",
@@ -130,7 +144,7 @@ export const pivotTableAdditionalFactories: IAdditionalFactoryDefinition[] = [
     },
     {
         importInfo: {
-            name: "newWidthForSelectedColumns",
+            name: "setNewWidthForSelectedColumns",
             package: "@gooddata/sdk-ui-pivot",
             importType: "named",
         },

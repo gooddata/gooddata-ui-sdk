@@ -118,7 +118,7 @@ exports[`newWidthForAttributeColumn > should create width item with grow to fit 
 }
 `;
 
-exports[`newWidthForSelectedColumns > should create width item when measure as localId and without grow to fit prop 1`] = `
+exports[`setNewWidthForSelectedColumns > should create width item when measure as localId and without grow to fit prop 1`] = `
 {
   "measureColumnWidthItem": {
     "locators": [
@@ -135,7 +135,7 @@ exports[`newWidthForSelectedColumns > should create width item when measure as l
 }
 `;
 
-exports[`newWidthForSelectedColumns > should create width item when measure as value and without grow to fit prop 1`] = `
+exports[`setNewWidthForSelectedColumns > should create width item when measure as value and without grow to fit prop 1`] = `
 {
   "measureColumnWidthItem": {
     "locators": [
@@ -152,7 +152,7 @@ exports[`newWidthForSelectedColumns > should create width item when measure as v
 }
 `;
 
-exports[`newWidthForSelectedColumns > should create width item with attr locators in front of measure locator 1`] = `
+exports[`setNewWidthForSelectedColumns > should create width item with attr locators in front of measure locator 1`] = `
 {
   "measureColumnWidthItem": {
     "locators": [
@@ -175,7 +175,7 @@ exports[`newWidthForSelectedColumns > should create width item with attr locator
 }
 `;
 
-exports[`newWidthForSelectedColumns > should create width item with grow to fit prop false 1`] = `
+exports[`setNewWidthForSelectedColumns > should create width item with grow to fit prop false 1`] = `
 {
   "measureColumnWidthItem": {
     "locators": [
@@ -193,7 +193,7 @@ exports[`newWidthForSelectedColumns > should create width item with grow to fit 
 }
 `;
 
-exports[`newWidthForSelectedColumns > should create width item with grow to fit prop true 1`] = `
+exports[`setNewWidthForSelectedColumns > should create width item with grow to fit prop true 1`] = `
 {
   "measureColumnWidthItem": {
     "locators": [
