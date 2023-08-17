@@ -92,6 +92,7 @@ import {
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
+    getSanitizedSortItems,
     sanitizePivotTableSorts,
 } from "./sortItemsHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
@@ -237,9 +238,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             },
         ]);
 
-        const originalSortItems: ISortItem[] = newReferencePoint.properties?.sortItems ?? [];
         const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
         const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
+        const originalSortItems: ISortItem[] = getSanitizedSortItems(
+            newReferencePoint.properties?.sortItems,
+            originalMeasureGroupDimension,
+        );
+
         const originalColumnHeadersPosition =
             rowAttributes.length > 0 || originalMeasureGroupDimension === "columns"
                 ? "top"
@@ -504,10 +509,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             const properties = this.visualizationProperties ?? {};
 
             // we need to handle cases when attribute previously bearing the default sort is no longer available
+            // and when measure sort is present but table is transposed
             const sanitizedProperties = properties.sortItems
                 ? {
                       ...properties,
-                      sortItems: sanitizePivotTableSorts(properties.sortItems, insightBuckets(insight)),
+                      sortItems: sanitizePivotTableSorts(
+                          properties.sortItems,
+                          insightBuckets(insight),
+                          getMeasureGroupDimensionFromProperties(properties),
+                      ),
                   }
                 : properties;
 
@@ -725,6 +735,7 @@ export function createPivotTableConfig(
  */
 function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
     const sorts = insightSorts(insight);
+    const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
     if (!isEmpty(sorts)) {
         /*
@@ -736,7 +747,7 @@ function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
          * it is still the responsibility of the PluggablePivotTable to call the CorePivot correctly and so this
          * sanitization here also makes sense.
          */
-        return sanitizePivotTableSorts(sorts, insightBuckets(insight));
+        return sanitizePivotTableSorts(sorts, insightBuckets(insight), mesureGroupDimension);
     }
 
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
