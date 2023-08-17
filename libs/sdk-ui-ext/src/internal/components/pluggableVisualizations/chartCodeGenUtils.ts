@@ -49,6 +49,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "yLabel",
     "total",
     "orientation",
+    "comparison",
 ]);
 
 export function chartConfigFromInsight(
