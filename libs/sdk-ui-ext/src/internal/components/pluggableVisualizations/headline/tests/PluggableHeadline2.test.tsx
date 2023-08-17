@@ -80,7 +80,7 @@ describe("PluggableHeadline2", () => {
                 },
             });
 
-            expect(pushData).not.toHaveBeenCalled();
+            expect(pushData).toHaveBeenCalledTimes(1);
         });
     });
 

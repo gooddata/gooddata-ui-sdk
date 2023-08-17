@@ -27,6 +27,7 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
+    IVisualizationProperties,
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
@@ -42,10 +43,14 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import {
+    getReferencePointWithSupportedProperties,
+    getSupportedPropertiesControls,
+} from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import {
     buildHeadlineVisualizationConfig,
+    getDefaultComparisonProperties,
     getDefaultHeadlineUiConfig,
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
@@ -94,6 +99,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.unmountFun = props.unmountFun;
 
         this.supportedPropertiesList = HEADLINE_SUPPORTED_PROPERTIES;
+        if (props.featureFlags?.enableNewHeadline) {
+            this.initializeProperties(props.visualizationProperties);
+        }
     }
 
     public unmount(): void {
@@ -278,5 +286,23 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
             return resultItems;
         }, []);
+    }
+
+    private initializeProperties(visualizationProperties: IVisualizationProperties): void {
+        const controls = visualizationProperties?.controls;
+
+        const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
+        const initialProperties = {
+            supportedProperties: {
+                controls: {
+                    ...supportedProperties,
+                    comparison: getDefaultComparisonProperties(),
+                },
+            },
+        };
+
+        this.pushData({
+            initialProperties,
+        });
     }
 }

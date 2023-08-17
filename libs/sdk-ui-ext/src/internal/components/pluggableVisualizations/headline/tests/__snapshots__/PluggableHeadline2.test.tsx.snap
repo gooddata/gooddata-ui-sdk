@@ -169,7 +169,7 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should return proper e
         "allowsDuplicateItems": true,
         "allowsReordering": true,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
         "icon": "local:headline/bucket-title-secondary-measures.svg",
         "isShowInPercentEnabled": false,

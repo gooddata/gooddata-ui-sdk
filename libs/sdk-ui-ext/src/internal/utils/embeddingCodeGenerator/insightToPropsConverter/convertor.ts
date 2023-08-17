@@ -84,10 +84,14 @@ export function getInsightToPropsConverter<TProps extends object>(
                 acc: Record<string, PropWithMeta<TProps>>,
                 [propName, conversion]: [string, IInsightToPropConversion<any, any, any>],
             ) => {
-                acc[propName] = {
-                    value: conversion.itemAccessor(insight, ctx),
-                    meta: conversion.propType,
-                };
+                const propValue = conversion.itemAccessor(insight, ctx);
+                if (propValue) {
+                    acc[propName] = {
+                        value: propValue,
+                        meta: conversion.propType,
+                    };
+                }
+
                 return acc;
             },
             {},
