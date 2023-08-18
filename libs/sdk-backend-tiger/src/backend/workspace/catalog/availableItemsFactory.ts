@@ -20,6 +20,7 @@ import {
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import intersectionWith from "lodash/intersectionWith.js";
@@ -53,6 +54,10 @@ const mapToTigerRestrictingType = (type: CatalogItemType): CatalogItemType => {
         // date datasets' availability is restricted by their attributes' availability in tiger
         return "attribute";
     }
+    if (type === "attributeHierarchy") {
+        // attribute hierarchy availability is restricted by used attributes' availability in tiger
+        return "attribute";
+    }
     return type;
 };
 
@@ -67,6 +72,8 @@ const catalogItemRefs = (item: CatalogItem): ObjRef[] => {
         ? [item.fact.ref]
         : isCatalogMeasure(item)
         ? [item.measure.ref]
+        : isCatalogAttributeHierarchy(item)
+        ? [item.attributeHierarchy.ref]
         : item.dateAttributes.map((attr) => attr.attribute.ref);
 };
 
@@ -77,7 +84,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         private readonly groups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly options: IWorkspaceCatalogWithAvailableItemsFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -166,11 +173,14 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
 
         const availableObjRefs: ObjRef[] = availableItemsResponse.data.items.map(jsonApiIdToObjRef);
         const availableItems = filterAvailableItems(availableObjRefs, this.items);
+        const allAvailableItems = types.includes("attributeHierarchy")
+            ? [...availableItems, ...this.items.filter(isCatalogAttributeHierarchy)]
+            : [...availableItems];
 
         return new TigerWorkspaceCatalogWithAvailableItems(
             this.groups,
             this.items,
-            availableItems,
+            allAvailableItems,
             this.options,
         );
     }

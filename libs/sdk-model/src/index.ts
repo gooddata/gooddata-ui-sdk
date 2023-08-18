@@ -561,11 +561,13 @@ export {
     CatalogItem,
     ICatalogGroup,
     ICatalogAttribute,
+    ICatalogAttributeHierarchy,
     ICatalogFact,
     ICatalogMeasure,
     ICatalogDateDataset,
     ICatalogDateAttribute,
     isCatalogAttribute,
+    isCatalogAttributeHierarchy,
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
@@ -604,6 +606,8 @@ export {
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
+    IAttributeHierarchyMetadataObject,
+    isAttributeHierarchyMetadataObject,
 } from "./ldm/metadata/index.js";
 
 export {

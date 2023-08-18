@@ -3,7 +3,9 @@
 import { testBackend, testWorkspace } from "./backend.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
-import { describe, expect, it, beforeAll } from "vitest";
+import { describe, expect, it, beforeAll, vi } from "vitest";
+
+vi.mock("uuid", () => ({ v4: () => "mockedId" }));
 
 const backend = testBackend();
 

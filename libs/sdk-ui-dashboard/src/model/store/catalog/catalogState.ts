@@ -1,5 +1,11 @@
 // (C) 2021-2023 GoodData Corporation
-import { ICatalogAttribute, ICatalogFact, ICatalogMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
+import {
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogAttributeHierarchy,
+} from "@gooddata/sdk-model";
 
 /**
  * @public
@@ -13,6 +19,8 @@ export interface CatalogState {
     dateDatasets?: ICatalogDateDataset[];
     /** @beta */
     facts?: ICatalogFact[];
+    /** @beta */
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
 }
 
 export const catalogInitialState: CatalogState = {
@@ -20,4 +28,5 @@ export const catalogInitialState: CatalogState = {
     measures: undefined,
     dateDatasets: undefined,
     facts: undefined,
+    attributeHierarchies: undefined,
 };

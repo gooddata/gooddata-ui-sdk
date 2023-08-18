@@ -49,7 +49,8 @@ export type ObjectCategory =
     | "visualizationObject"
     | "visualizationWidget"
     | "theme"
-    | "colorPalette";
+    | "colorPalette"
+    | "attributeHierarchy";
 
 /**
  * @public

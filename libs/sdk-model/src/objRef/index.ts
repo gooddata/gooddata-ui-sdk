@@ -49,7 +49,8 @@ export type ObjectType =
     | "theme"
     | "colorPalette"
     | "filterContext"
-    | "dashboardPlugin";
+    | "dashboardPlugin"
+    | "attributeHierarchy";
 
 /**
  * Model object reference using object's unique identifier.

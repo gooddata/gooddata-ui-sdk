@@ -20,7 +20,7 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { TigerWorkspaceCatalog } from "./catalog.js";
-import { loadAttributesAndDateDatasets } from "./datasetLoader.js";
+import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
 import flatten from "lodash/flatten.js";
 import flatMap from "lodash/flatMap.js";
 import uniqBy from "lodash/uniqBy.js";
@@ -33,7 +33,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
         public readonly options: IWorkspaceCatalogFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -90,8 +90,15 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const includeAttributes = this.options.types.includes("attribute");
         const includeDateDatasets = this.options.types.includes("dateDataset");
+        const includeAttributeHierarchies = this.options.types.includes("attributeHierarchy");
         if (includeAttributes || includeDateDatasets) {
-            promises.push(this.loadAttributesAndDates(includeAttributes, includeDateDatasets));
+            promises.push(
+                this.loadAttributesAndDatesAndHierarchies(
+                    includeAttributes,
+                    includeDateDatasets,
+                    includeAttributeHierarchies,
+                ),
+            );
         }
 
         const loadersResults = await Promise.all(promises);
@@ -118,19 +125,21 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return undefined;
     };
 
-    private loadAttributesAndDates = async (
+    private loadAttributesAndDatesAndHierarchies = async (
         loadAttributes: boolean,
         loadDateDataSets: boolean,
+        loadAttributeHierarchies: boolean,
     ): Promise<CatalogItem[]> => {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
 
         return this.authCall((client) =>
-            loadAttributesAndDateDatasets(
+            loadAttributesAndDateDatasetsAndHierarchies(
                 client,
                 this.workspace,
                 rsqlTagFilter,
                 loadAttributes,
                 loadDateDataSets,
+                loadAttributeHierarchies,
             ),
         );
     };
@@ -166,7 +175,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     // Groups are collected from all catalog entities.
     // There is no separate endpoint for the tags anymore.
     private extractGroups(catalogItems: CatalogItem[]): ICatalogGroup[] {
-        const groupableItems = catalogItems.filter((item) => item.type !== "dateDataset");
+        const groupableItems = catalogItems.filter(
+            (item) => item.type !== "dateDataset" && item.type !== "attributeHierarchy",
+        );
         const allTags = flatMap(groupableItems, (item): ICatalogGroup[] => {
             return (item as IGroupableCatalogItemBase).groups.map((tag) => ({
                 title: (tag as IdentifierRef).identifier,

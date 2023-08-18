@@ -165,6 +165,9 @@ export {
     TotalFunctionEnum,
     AttributeFormat,
     ElementsResponseGranularityEnum,
+    ActionsApiComputeValidDescendantsRequest,
+    AfmValidDescendantsQuery,
+    AfmValidDescendantsResponse,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

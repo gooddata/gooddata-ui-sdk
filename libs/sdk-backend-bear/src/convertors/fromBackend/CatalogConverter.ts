@@ -42,11 +42,11 @@ import {
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
 
-export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
+export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset" | "attributeHierarchy">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;
 
 export const isCompatibleCatalogItemType = (type: CatalogItemType): type is CompatibleCatalogItemType =>
-    type !== "dateDataset";
+    type !== "dateDataset" && type !== "attributeHierarchy";
 
 const bearItemTypeByCatalogItemType: {
     [catalogItemType in CompatibleCatalogItemType]: BearCatalogItemType;

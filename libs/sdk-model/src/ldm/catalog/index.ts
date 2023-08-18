@@ -4,13 +4,19 @@ import { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 import { ICatalogFact, isCatalogFact } from "./fact/index.js";
 import { ICatalogDateDataset } from "./dateDataset/index.js";
 import { MetadataObject } from "../metadata/index.js";
+import { ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
 
 /**
  * Type representing catalog item - attribute, measure, fact or dateDataset
  *
  * @public
  */
-export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
+export type CatalogItem =
+    | ICatalogAttribute
+    | ICatalogMeasure
+    | ICatalogFact
+    | ICatalogDateDataset
+    | ICatalogAttributeHierarchy;
 
 /**
  * Get metadata object that catalog item represents
@@ -28,6 +34,8 @@ export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObj
         item = catalogItem.measure;
     } else if (isCatalogFact(catalogItem)) {
         item = catalogItem.fact;
+    } else if (isCatalogAttributeHierarchy(catalogItem)) {
+        item = catalogItem.attributeHierarchy;
     } else {
         item = catalogItem.dataSet;
     }
@@ -52,3 +60,4 @@ export { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 export { ICatalogFact, isCatalogFact } from "./fact/index.js";
 export { ICatalogDateDataset, ICatalogDateAttribute, isCatalogDateDataset } from "./dateDataset/index.js";
 export { ICatalogGroup, IGroupableCatalogItemBase } from "./group/index.js";
+export { ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";

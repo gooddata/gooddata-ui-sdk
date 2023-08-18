@@ -5,7 +5,7 @@ import { IVisualizationObjectContent } from "../visualizationObject/GdcVisualiza
 /**
  * @public
  */
-export type CatalogItemType = "attribute" | "metric" | "fact";
+export type CatalogItemType = "attribute" | "metric" | "fact" | "attributeHierarchy";
 
 /**
  * @public

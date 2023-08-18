@@ -283,6 +283,7 @@ export const objectTypeToTigerIdType: {
     colorPalette: TigerObjectType;
     filterContext: TigerObjectType;
     dashboardPlugin: TigerObjectType;
+    attributeHierarchy: TigerObjectType;
 };
 
 // @internal (undocumented)

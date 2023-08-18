@@ -14842,6 +14842,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure",
       "fact",
       "dateDataset",
+      "attributeHierarchy",
     ],
   },
   "workspace": "00d48e50c5e0442abc2181a7afd0f66b",

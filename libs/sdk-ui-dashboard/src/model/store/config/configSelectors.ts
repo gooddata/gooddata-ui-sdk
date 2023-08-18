@@ -535,3 +535,31 @@ export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<b
 export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.hideShareButton ?? false;
 });
+
+/**
+ * Returns whether attribute hierarchies are enabled.
+ *
+ * @internal
+ */
+export const selectEnableAttributeHierarchies: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAttributeHierarchies ?? false;
+    },
+);
+
+/**
+ * Returns whether drill down is enabled.
+ *
+ * On Bear, drill down is driven by isKPIDashboardImplicitDrillDown.
+ * On Tiger, it is driven by attribute hierarchies, thus isAttribueHierarchiesEnabled.
+ *
+ * @internal
+ */
+export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelector(
+    selectEnableKPIDashboardImplicitDrillDown,
+    selectEnableAttributeHierarchies,
+    (isKPIDashboardImplicitDrillDownEnabled, isAttribueHierarchiesEnabled) => {
+        return isKPIDashboardImplicitDrillDownEnabled || isAttribueHierarchiesEnabled;
+    },
+);

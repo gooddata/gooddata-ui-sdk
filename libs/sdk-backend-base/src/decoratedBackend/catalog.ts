@@ -14,6 +14,7 @@ import {
     ICatalogFact,
     ICatalogMeasure,
     ICatalogDateDataset,
+    ICatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity.js";
 
@@ -109,5 +110,9 @@ export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
 
     public measures(): ICatalogMeasure[] {
         return this.decorated.measures();
+    }
+
+    public attributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.decorated.attributeHierarchies();
     }
 }
