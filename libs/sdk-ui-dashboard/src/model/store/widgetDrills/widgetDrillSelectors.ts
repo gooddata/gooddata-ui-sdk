@@ -85,21 +85,35 @@ function getDrillDownDefinitionsWithPredicates(
         );
     });
 
-    return matchingAvailableDrillAttributes.map((drill): IImplicitDrillWithPredicates => {
+    return matchingAvailableDrillAttributes.flatMap((drill) => {
         const matchingCatalogAttribute = attributesWithDrillDown.find((attr) =>
             areObjRefsEqual(attr.attribute.ref, drill.attribute.attributeHeader.formOf.ref),
         );
+        const { descendants } = matchingCatalogAttribute!.attribute;
 
-        return {
-            drillDefinition: {
-                type: "drillDown",
-                origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
-                target: matchingCatalogAttribute!.attribute.drillDownStep!,
-            },
-            predicates: [
-                HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
-            ],
-        };
+        if (descendants) {
+            return descendants.map((descendant) => ({
+                drillDefinition: {
+                    type: "drillDown",
+                    origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
+                    target: descendant.ref,
+                },
+                predicates: [
+                    HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
+                ],
+            }));
+        } else {
+            return {
+                drillDefinition: {
+                    type: "drillDown",
+                    origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
+                    target: matchingCatalogAttribute!.attribute.drillDownStep!,
+                },
+                predicates: [
+                    HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
+                ],
+            };
+        }
     });
 }
 

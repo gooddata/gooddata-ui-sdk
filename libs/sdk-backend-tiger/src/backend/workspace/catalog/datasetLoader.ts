@@ -19,6 +19,11 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
+import {
+    IAttributeDescendants,
+    getAttributeDescendantsFromAttributeHierarchies,
+} from "./attributeDescendants.js";
+import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
 function lookupRelatedObject(
     included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
@@ -58,7 +63,10 @@ function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     );
 }
 
-function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {
+function createNonDateAttributes(
+    attributes: JsonApiAttributeOutList,
+    descendants: IAttributeDescendants,
+): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
@@ -70,7 +78,7 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
         // use the defaultView if available, fall back to primary: exactly one label is guaranteed to be primary
         const defaultLabel = defaultViewLabel ?? allLabels.filter((label) => label.attributes!.primary)[0];
 
-        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels);
+        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels, descendants);
     });
 }
 
@@ -108,7 +116,10 @@ function identifyDateDatasets(
     return values(datasets);
 }
 
-function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDataset[] {
+function createDateDatasets(
+    attributes: JsonApiAttributeOutList,
+    descendants: IAttributeDescendants,
+): ICatalogDateDataset[] {
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
@@ -118,7 +129,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
                 const labels = getAttributeLabels(attribute, attributes.included);
                 const defaultLabel = labels[0];
 
-                return convertDateAttribute(attribute, defaultLabel, labels);
+                return convertDateAttribute(attribute, defaultLabel, labels, descendants);
             });
 
             return convertDateDataset(dd.dataset, catalogDateAttributes);
@@ -148,16 +159,76 @@ export async function loadAttributesAndDateDatasets(
         params,
     ).then(MetadataUtilities.mergeEntitiesResults);
 
+    const attributeIds = attributes.data.map(({ id }) => id);
+    const attributeHierarchies = await loadAttributeHierarchies();
+    const attributeDescendants = getAttributeDescendantsFromAttributeHierarchies(
+        attributeIds,
+        attributeHierarchies,
+    );
+    console.log("🚀 ~ file: datasetLoader.ts:168 ~ attributeDescendants:", attributeDescendants);
+
     const catalogItems: CatalogItem[] = [];
 
     if (loadAttributes) {
-        const nonDateAttributes = createNonDateAttributes(attributes);
+        const nonDateAttributes = createNonDateAttributes(attributes, attributeDescendants);
         catalogItems.push(...nonDateAttributes);
     }
     if (loadDateDatasets) {
-        const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
+        const dateDatasets: CatalogItem[] = createDateDatasets(attributes, attributeDescendants);
         catalogItems.push(...dateDatasets);
     }
 
     return catalogItems;
+}
+
+// TODO: move this inside loadAttributesAndDateDatasets as a separate getAllPagesOf call for hierarchies
+function loadAttributeHierarchies(): Promise<any[]> {
+    const hierarchiesOut = [
+        {
+            id: "hierarchy1",
+            type: "AttributeHierarchy",
+            attributes: {
+                title: "My Hierarchy 1",
+                attributes: [
+                    {
+                        id: "f_opportunitysnapshot.forecastcategory_id",
+                        type: "attribute",
+                    },
+                    {
+                        id: "f_owner.department_id",
+                        type: "attribute",
+                    },
+                    {
+                        id: "attr.f_stage.stagename",
+                        type: "attribute",
+                    },
+                ],
+            },
+        },
+        {
+            id: "hierarchy2",
+            type: "AttributeHierarchy",
+            attributes: {
+                title: "My Hierarchy 2",
+                attributes: [
+                    {
+                        id: "f_owner.region_id",
+                        type: "attribute",
+                    },
+                    {
+                        id: "f_owner.department_id",
+                        type: "attribute",
+                    },
+                    {
+                        id: "attr.f_owner.salesrep",
+                        type: "attribute",
+                    },
+                ],
+            },
+        },
+    ];
+
+    const hierarchies = hierarchiesOut.map(convertAttributeHierarchy);
+
+    return Promise.resolve(hierarchies);
 }

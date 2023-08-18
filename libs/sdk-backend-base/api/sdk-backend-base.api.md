@@ -163,6 +163,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
 // @beta
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
+    descendants(descendants: any): this;
+    // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
     // (undocumented)
     drillDownStep(ref: ObjRef | undefined): this;

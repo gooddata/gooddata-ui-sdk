@@ -594,6 +594,10 @@ export interface IAttributeLocatorItemBody {
 
 // @public
 export interface IAttributeMetadataObject extends IMetadataObject {
+    descendants?: {
+        hierarchyTitle: string;
+        ref: ObjRef;
+    }[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
     drillToAttributeLink?: ObjRef;

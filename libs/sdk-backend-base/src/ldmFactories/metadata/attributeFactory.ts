@@ -31,6 +31,14 @@ export class AttributeMetadataObjectBuilder<
         this.item.displayForms = displayForms;
         return this;
     }
+
+    // TODO: we need proper type here
+    public descendants(descendants: any): this {
+        if (descendants) {
+            this.item.descendants = descendants;
+        }
+        return this;
+    }
 }
 
 /**

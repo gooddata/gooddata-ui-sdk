@@ -20,6 +20,15 @@ export interface IAttributeMetadataObject extends IMetadataObject {
     drillDownStep?: ObjRef;
 
     /**
+     * Array of references to attribute display forms that represent direct descendants
+     * in attribute hierarchy.
+     *
+     * @remarks
+     * Attribute hierarchy may be used for example for implicit drill down.
+     */
+    descendants?: { hierarchyTitle: string; ref: ObjRef }[];
+
+    /**
      * A reference to the attribute displayForm that represents implicit drill to url from attribute value
      *
      * @remarks

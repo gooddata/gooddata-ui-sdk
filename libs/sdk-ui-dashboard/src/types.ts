@@ -93,6 +93,9 @@ export interface IDrillDownDefinition {
      * Target attribute display form for drill down.
      */
     target: ObjRef;
+
+    // TODO: use this description to differentiate hierarchies in drill select
+    description?: string;
 }
 
 /**

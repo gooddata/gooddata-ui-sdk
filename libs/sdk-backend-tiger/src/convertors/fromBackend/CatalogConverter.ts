@@ -33,6 +33,7 @@ import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./Meta
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
+import { IAttributeDescendants } from "../../backend/workspace/catalog/attributeDescendants.js";
 
 const commonGroupableCatalogItemModifications =
     <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
@@ -62,6 +63,7 @@ export const convertAttribute = (
     defaultLabel: JsonApiLabelOutWithLinks,
     geoLabels: JsonApiLabelOutWithLinks[],
     allLabels: JsonApiLabelOutWithLinks[],
+    descendants: IAttributeDescendants,
 ): ICatalogAttribute => {
     const attributeRef = idRef(attribute.id, "attribute");
 
@@ -72,7 +74,10 @@ export const convertAttribute = (
     return newCatalogAttribute((catalogA) =>
         catalogA
             .attribute(attributeRef, (a) =>
-                a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
+                a
+                    .modify(commonMetadataObjectModifications(attribute))
+                    .displayForms(displayForms)
+                    .descendants(descendants[attribute.id]),
             )
             .defaultDisplayForm(defaultDisplayForm)
             .geoPinDisplayForms(geoPinDisplayForms)
@@ -116,6 +121,7 @@ export const convertDateAttribute = (
     attribute: JsonApiAttributeOutWithLinks,
     label: JsonApiLabelOutWithLinks,
     allLabels: JsonApiLabelOutWithLinks[],
+    descendants: IAttributeDescendants,
 ): ICatalogDateAttribute => {
     const attributeRef = idRef(attribute.id, "attribute");
 
@@ -126,7 +132,10 @@ export const convertDateAttribute = (
         return dateAttribute
             .granularity(toSdkGranularity(attribute.attributes!.granularity!))
             .attribute(idRef(attribute.id, "attribute"), (a) =>
-                a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
+                a
+                    .modify(commonMetadataObjectModifications(attribute))
+                    .displayForms(displayForms)
+                    .descendants(descendants[attribute.id]),
             )
             .defaultDisplayForm(defaultDisplayForm);
     });

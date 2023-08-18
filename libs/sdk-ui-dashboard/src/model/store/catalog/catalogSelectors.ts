@@ -128,7 +128,16 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
     createSelector(
         [selectCatalogAttributes, selectCatalogDateAttributes],
         (attributes = [], dateAttributes = []) => {
-            return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
+            const attributesWithDrilldown = [...attributes, ...dateAttributes].filter(
+                (attr) => attr.attribute.drillDownStep || attr.attribute.descendants,
+            );
+
+            console.log(
+                "🚀 ~ file: catalogSelectors.ts:132 ~ attributesWithDrilldown:",
+                attributesWithDrilldown,
+            );
+
+            return attributesWithDrilldown;
         },
     );
 
