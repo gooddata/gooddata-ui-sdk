@@ -23,7 +23,11 @@ export { Headline, IHeadlineProps, IHeadlineBucketProps } from "./headline/Headl
 
 export { CoreHeadline, ICoreHeadlineExtendedProps } from "./headline/CoreHeadline.js";
 export { createHeadlineProvider } from "./headline/HeadlineProviderFactory.js";
-export { ICalculationDefaultValue, getCalculationValuesDefault } from "./headline/headlineHelper.js";
+export {
+    ICalculationDefaultValue,
+    getCalculationValuesDefault,
+    getComparisonFormat,
+} from "./headline/headlineHelper.js";
 export {
     IHeadlineProvider,
     IHeadlineTransformationProps,

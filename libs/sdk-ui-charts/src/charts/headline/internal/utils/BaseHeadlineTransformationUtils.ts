@@ -20,7 +20,7 @@ import {
     IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
-import { getCalculationValuesDefault } from "../../headlineHelper.js";
+import { getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
@@ -119,7 +119,7 @@ function createComparisonDataItem(
     return {
         title: intl.formatMessage({ id: defaultLabelKey }),
         value: value ? String(value) : null,
-        format: format || defaultFormat || inheritFormat,
+        format: getComparisonFormat(format, defaultFormat) || inheritFormat,
         localIdentifier,
     };
 }

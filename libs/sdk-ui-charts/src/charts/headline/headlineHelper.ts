@@ -25,6 +25,21 @@ const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefau
 };
 
 /**
+ * Get comparison format
+ *
+ * @remarks
+ * We offer the option to inherit the format with a null value. When the provided format is null,
+ * it indicates the user's preference to utilize the inherit format.
+ *
+ * If the format is undefined, the default format will be used.
+ *
+ * @internal
+ */
+const getComparisonFormat = (providedFormat: string, defaultFormat: string): string => {
+    return providedFormat === undefined ? defaultFormat : providedFormat;
+};
+
+/**
  * Method to retrieve default values corresponding to the calculation type.
  *
  * @internal
@@ -38,4 +53,4 @@ const getCalculationValuesDefault = (
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
  */
-export { getCalculationValuesDefault, ICalculationDefaultValue };
+export { getCalculationValuesDefault, getComparisonFormat, ICalculationDefaultValue };
