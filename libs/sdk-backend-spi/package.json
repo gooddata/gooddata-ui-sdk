@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "9.1.0-alpha.26.fix.1",
+    "version": "9.1.0-alpha.26.fix.2",
     "author": "GoodData",
     "description": "GoodData Backend SPI abstraction interfaces",
     "repository": {
