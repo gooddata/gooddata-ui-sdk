@@ -1,11 +1,11 @@
 // (C) 2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
+import { CalculationType, getCalculationValuesDefault, getComparisonFormat } from "@gooddata/sdk-ui-charts";
 import { IFormatPreset, IFormatTemplate } from "@gooddata/sdk-ui-kit";
 
 import { IVisualizationProperties } from "../interfaces/Visualization.js";
-import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
+import { HeadlineControlProperties, IComparisonControlProperties } from "../interfaces/ControlProperties.js";
 import { comparisonMessages } from "../../locales.js";
 
 const NUMBER_FORMAT_PRESET_INHERIT = "inherit";
@@ -16,6 +16,13 @@ export function getComparisonDefaultFormat(
 ): string {
     const calculationType = properties?.controls?.comparison?.calculationType || defaultCalculationType;
     return getCalculationValuesDefault(calculationType)?.defaultFormat;
+}
+
+export function getNumberFormat(
+    properties: IVisualizationProperties<IComparisonControlProperties>,
+    defaultFormat: string,
+) {
+    return getComparisonFormat(properties?.controls?.comparison?.format, defaultFormat);
 }
 
 export const getPresets = (intl: IntlShape): ReadonlyArray<IFormatPreset> => [

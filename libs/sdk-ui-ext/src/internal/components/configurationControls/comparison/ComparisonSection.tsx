@@ -44,7 +44,7 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             properties={properties}
             pushData={pushData}
             canBeToggled={true}
-            toggleDisabled={sectionDisabled}
+            toggleDisabled={comparisonDisabled}
             toggledOn={toggledOn}
         >
             <CalculationControl

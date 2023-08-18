@@ -114,6 +114,9 @@ export const getCalculationValuesDefault: (calculationType?: CalculationType) =>
 
 export { getColorMappingPredicate }
 
+// @internal
+export const getComparisonFormat: (providedFormat: string, defaultFormat: string) => string;
+
 // @public
 export const Headline: (props: IHeadlineProps) => JSX.Element;
 

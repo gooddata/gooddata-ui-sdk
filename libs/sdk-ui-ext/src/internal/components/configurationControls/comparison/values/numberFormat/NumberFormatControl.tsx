@@ -12,7 +12,7 @@ import { IVisualizationProperties } from "../../../../../interfaces/Visualizatio
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { COMPARISON_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
 import { comparisonMessages } from "../../../../../../locales.js";
-import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
+import { getNumberFormat, getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
 
 interface INumberFormatControlProps {
     disabled: boolean;
@@ -31,7 +31,7 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
 }) => {
     const intl = useIntl();
 
-    const format = properties?.controls?.comparison?.format || defaultFormat;
+    const format = getNumberFormat(properties, defaultFormat);
 
     const selectFormat = (format: string) => {
         const clonedProperties = cloneDeep(properties);
