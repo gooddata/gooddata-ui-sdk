@@ -834,6 +834,7 @@ export interface IWorkspaceDescriptor {
     id: string;
     // (undocumented)
     isDemo?: boolean;
+    parentPrefixes?: string[];
     parentWorkspace?: string;
     prefix?: string;
     // (undocumented)
