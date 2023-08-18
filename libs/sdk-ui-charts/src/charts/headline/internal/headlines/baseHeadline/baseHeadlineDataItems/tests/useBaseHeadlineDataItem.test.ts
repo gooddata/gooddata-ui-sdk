@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react";
 
 import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
-import { TEST_DATA_ITEM } from "../../tests/TestData.fixtures.js";
+import { TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 
 describe("useBaseHeadlineDataItem", () => {
     beforeEach(() => {
@@ -19,6 +19,5 @@ describe("useBaseHeadlineDataItem", () => {
         const { result } = renderHook(() => useBaseHeadlineDataItem(TEST_DATA_ITEM));
 
         expect(result.current.formattedItem).toBeTruthy();
-        expect(result.current.valueClassNames).toBeTruthy();
     });
 });

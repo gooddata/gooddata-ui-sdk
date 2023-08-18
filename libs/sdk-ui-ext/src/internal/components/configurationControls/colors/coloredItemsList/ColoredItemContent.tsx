@@ -28,8 +28,10 @@ export default class ColoredItemContent extends React.PureComponent<IColoredItem
     }
 
     private getClassName() {
+        const { isSelected, disabled } = this.props;
         return cx("gd-list-item gd-color-config-list-item s-colored-items-list-item", {
-            "is-active": this.props.isSelected,
+            "is-active": isSelected && !disabled,
+            "is-disabled": disabled,
         });
     }
 

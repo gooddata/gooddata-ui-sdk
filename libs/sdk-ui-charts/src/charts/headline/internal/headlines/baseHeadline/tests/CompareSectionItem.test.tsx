@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import CompareSectionItem from "../CompareSectionItem.js";
-import { TEST_BASE_HEADLINE_ITEM } from "./TestData.fixtures.js";
+import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 
 describe("CompareSectionItem", () => {
     const renderCompareSectionItem = (props?: {

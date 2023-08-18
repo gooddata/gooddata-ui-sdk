@@ -1,5 +1,7 @@
 // (C) 2023 GoodData Corporation
 
+import { IColor } from "@gooddata/sdk-model";
+
 /**
  * @public
  */
@@ -60,31 +62,39 @@ export enum ComparisonPositionType {
  */
 export interface IColorConfig {
     /**
-     * Specify the color (#rrggbb) of the positive comparison value
+     * Disable comparison color
+     * <br/>
+     *
+     * @defaultValue false
+     */
+    disabled?: boolean;
+
+    /**
+     * Specify the color from colorPalette or provide custom color as RGB code
      * <br/>
      * Primary &gt; Secondary
      *
-     * @defaultValue #00C18D
+     * @defaultValue rgb(0, 193, 141)
      */
-    positive?: string;
+    positive?: IColor;
 
     /**
-     * Specify the color (#rrggbb) of the negative comparison
+     * Specify the color from colorPalette or provide custom color as RGB code
      * <br/>
      * Primary &lt; Secondary
      *
-     * @defaultValue #E54D40
+     * @defaultValue rgb(229, 77, 64)
      */
-    negative?: string;
+    negative?: IColor;
 
     /**
-     * Specify the color (#rrggbb) of the equals comparison value
+     * Specify the color from colorPalette or provide custom color as RGB code
      * <br/>
      * Primary = Secondary
      *
-     * @defaultValue #94A1AD
+     * @defaultValue rgb(148, 161, 173)
      */
-    equals?: string;
+    equals?: IColor;
 }
 
 /**

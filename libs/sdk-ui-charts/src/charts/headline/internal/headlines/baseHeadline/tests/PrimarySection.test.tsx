@@ -4,7 +4,7 @@ import { afterAll, beforeEach, describe, expect, it, SpyInstance, vi } from "vit
 import { render } from "@testing-library/react";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import PrimarySection from "../PrimarySection.js";
-import { TEST_BASE_HEADLINE_ITEM } from "./TestData.fixtures.js";
+import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import * as PrimarySectionContent from "../PrimarySectionContent.js";
 import * as PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";
 

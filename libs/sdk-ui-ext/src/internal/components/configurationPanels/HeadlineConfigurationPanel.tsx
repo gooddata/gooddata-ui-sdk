@@ -41,6 +41,7 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
                         comparisonDisabled={comparisonDisabled}
                         defaultCalculationType={defaultCalculationType}
                         separators={panelConfig.separators}
+                        colorPalette={panelConfig.comparisonColorPalette}
                         properties={properties}
                         propertiesMeta={propertiesMeta}
                         pushData={pushData}

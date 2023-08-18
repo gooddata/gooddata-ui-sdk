@@ -16,7 +16,7 @@ import {
     newDimension,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
+import { CoreHeadline, createHeadlineProvider, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
 import { METRIC } from "../../../constants/bucket.js";
 import {
@@ -249,6 +249,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     insight={insight}
                     panelConfig={{
                         separators: this.settings?.separators,
+                        comparisonColorPalette: DEFAULT_COMPARISON_PALETTE,
                     }}
                     pushData={this.pushData}
                     properties={getHeadlineSupportedProperties(this.visualizationProperties)}

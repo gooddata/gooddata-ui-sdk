@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 import PrimarySectionContent from "../PrimarySectionContent.js";
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
-import { TEST_BASE_HEADLINE_ITEM } from "./TestData.fixtures.js";
+import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 
 describe("PrimarySectionContent", () => {
     const renderPrimarySectionContent = (props?: { primaryItem: IBaseHeadlineItem }) => {

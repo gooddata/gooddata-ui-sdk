@@ -6,7 +6,10 @@ import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import CompareSection from "../CompareSection.js";
 import * as CompareSectionItem from "../CompareSectionItem.js";
-import { HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR, TEST_BASE_HEADLINE_ITEM } from "./TestData.fixtures.js";
+import {
+    HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
+    TEST_BASE_HEADLINE_ITEM,
+} from "../../../tests/TestData.fixtures.js";
 
 describe("CompareSection", () => {
     let MockCompareItem: SpyInstance;

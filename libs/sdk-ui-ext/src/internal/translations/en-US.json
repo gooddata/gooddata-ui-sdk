@@ -1592,5 +1592,35 @@
         "value": "Format",
         "comment": "The label of comparison format control.",
         "limit": 0
+    },
+    "properties.comparison.indicator.title": {
+        "value": "Indicator",
+        "comment": "The label of comparison indicator sub section",
+        "limit": 0
+    },
+    "properties.comparison.indicator.arrow.title": {
+        "value": "Arrow",
+        "comment": "The label of the checkbox that controls whether to use the arrow indicator or not.",
+        "limit": 0
+    },
+    "properties.comparison.indicator.colorConfig.title": {
+        "value": "Color",
+        "comment": "The label of the checkbox that controls whether to use the color or not.",
+        "limit": 0
+    },
+    "properties.comparison.indicator.colorConfig.equals": {
+        "value": "Primary = Secondary",
+        "comment": "The label of the color item will be set when the primary value is equal to the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.indicator.colorConfig.positive": {
+        "value": "Primary > Secondary",
+        "comment": "The label of the color item will be set when the primary value is greater than the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.indicator.colorConfig.negative": {
+        "value": "Primary < Secondary",
+        "comment": "The label of the color item will be set when the primary value is less than the secondary value.",
+        "limit": 0
     }
 }

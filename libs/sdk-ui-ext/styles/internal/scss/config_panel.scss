@@ -23,6 +23,16 @@ $color-picker-spacing: 5px;
             opacity: 1;
         }
     }
+
+    &.is-disabled:hover {
+        background: unset;
+        color: unset;
+        cursor: unset;
+
+        .gd-color-config-item-sample::before {
+            opacity: 0;
+        }
+    }
 }
 
 .gd-color-config-item-sample {

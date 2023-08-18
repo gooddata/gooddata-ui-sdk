@@ -12,6 +12,7 @@ import {
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
+import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/ComparisonDataItem.js";
 import { IComparison } from "../../../../interfaces/index.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import {
@@ -19,7 +20,7 @@ import {
     getExecutionData,
     IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
-import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
+import { IBaseHeadlineData, IBaseHeadlineItem, EvaluationType } from "../interfaces/BaseHeadlines.js";
 import { getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
@@ -96,7 +97,14 @@ export function getComparisonBaseHeadlineData(
         "secondaryValue",
     );
 
-    const tertiaryItem = createComparisonItem(tertiaryItemData, primaryItem.data?.format, comparison, intl);
+    const comparisonEvaluationType = getComparisonEvaluationType(executionData);
+    const tertiaryItem = createComparisonItem(
+        tertiaryItemData,
+        comparisonEvaluationType,
+        primaryItem.data?.format,
+        comparison,
+        intl,
+    );
 
     return {
         primaryItem,
@@ -118,7 +126,7 @@ function createComparisonDataItem(
 
     return {
         title: intl.formatMessage({ id: defaultLabelKey }),
-        value: value ? String(value) : null,
+        value: String(value),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
         localIdentifier,
     };
@@ -142,6 +150,7 @@ function createBaseHeadlineItem(
 
 function createComparisonItem(
     executionData: IHeadlineExecutionData,
+    comparisonEvaluationType: EvaluationType,
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
@@ -150,7 +159,24 @@ function createComparisonItem(
 
     return {
         data,
-        // TODO: should be introduced ComparisonDataItem while implementing indicator and color (EGL-147)
-        baseHeadlineDataItemComponent: BaseHeadlineDataItem,
+        baseHeadlineDataItemComponent: ComparisonDataItem,
+        evaluationType: comparisonEvaluationType,
     };
+}
+
+function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): EvaluationType {
+    const [primaryItem, secondaryItem] = executionData;
+
+    const primaryItemValue = primaryItem.value ?? 0;
+    const secondaryItemValue = secondaryItem.value ?? 0;
+
+    if (primaryItemValue > secondaryItemValue) {
+        return EvaluationType.POSITIVE_VALUE;
+    }
+
+    if (primaryItemValue < secondaryItemValue) {
+        return EvaluationType.NEGATIVE_VALUE;
+    }
+
+    return EvaluationType.EQUALS_VALUE;
 }

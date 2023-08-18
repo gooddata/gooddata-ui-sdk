@@ -2,10 +2,14 @@
 import { describe, expect, it } from "vitest";
 import { CalculationType } from "../../../interfaces/index.js";
 import {
+    ComparisonColorType,
+    DEFAULT_COMPARISON_PALETTE,
     getCalculationValuesDefault,
     getComparisonFormat,
+    getComparisonRgbColor,
     ICalculationDefaultValue,
 } from "../headlineHelper.js";
+import { IColorFromPalette, IRgbColor } from "@gooddata/sdk-model";
 
 describe("headlineHelper", () => {
     const PERCENT_ROUNDED_FORMAT = "#,##0%";
@@ -64,6 +68,73 @@ describe("headlineHelper", () => {
             expect(getComparisonFormat(DECIMAL_FORMAT, PERCENT_ROUNDED_FORMAT)).toEqual(DECIMAL_FORMAT);
             expect(getComparisonFormat(PERCENT_ROUNDED_FORMAT, DECIMAL_FORMAT)).toEqual(
                 PERCENT_ROUNDED_FORMAT,
+            );
+        });
+    });
+
+    describe("getComparisonRgbColor", () => {
+        const colorPalette = DEFAULT_COMPARISON_PALETTE;
+
+        it("Should return rgb color from palette in case color is empty", () => {
+            expect(getComparisonRgbColor(null, ComparisonColorType.POSITIVE, colorPalette)).toEqual(
+                colorPalette[0].fill,
+            );
+            expect(getComparisonRgbColor(null, ComparisonColorType.NEGATIVE, colorPalette)).toEqual(
+                colorPalette[1].fill,
+            );
+            expect(getComparisonRgbColor(null, ComparisonColorType.EQUALS, colorPalette)).toEqual(
+                colorPalette[2].fill,
+            );
+        });
+
+        it("Should return correctly from provided rgb color", () => {
+            const color: IRgbColor = {
+                type: "rgb",
+                value: { r: 1, g: 1, b: 1 },
+            };
+
+            expect(getComparisonRgbColor(color, ComparisonColorType.POSITIVE, colorPalette)).toEqual(
+                color.value,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.NEGATIVE, colorPalette)).toEqual(
+                color.value,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.EQUALS, colorPalette)).toEqual(
+                color.value,
+            );
+        });
+
+        it("Should return correctly from provided color from palette", () => {
+            const color: IColorFromPalette = {
+                type: "guid",
+                value: "positive",
+            };
+
+            expect(getComparisonRgbColor(color, ComparisonColorType.POSITIVE, colorPalette)).toEqual(
+                colorPalette[0].fill,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.NEGATIVE, colorPalette)).toEqual(
+                colorPalette[0].fill,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.EQUALS, colorPalette)).toEqual(
+                colorPalette[0].fill,
+            );
+        });
+
+        it("Should return correctly color from color type when provided color is not match", () => {
+            const color: IColorFromPalette = {
+                type: "guid",
+                value: "not-match-color",
+            };
+
+            expect(getComparisonRgbColor(color, ComparisonColorType.POSITIVE, colorPalette)).toEqual(
+                colorPalette[0].fill,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.NEGATIVE, colorPalette)).toEqual(
+                colorPalette[1].fill,
+            );
+            expect(getComparisonRgbColor(color, ComparisonColorType.EQUALS, colorPalette)).toEqual(
+                colorPalette[2].fill,
             );
         });
     });

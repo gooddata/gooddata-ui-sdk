@@ -18,6 +18,7 @@ import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IColor } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -27,6 +28,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -84,6 +86,16 @@ export const ColumnChart: (props: IColumnChartProps) => JSX.Element;
 // @public
 export const ComboChart: (props: IComboChartProps) => JSX.Element;
 
+// @internal (undocumented)
+export enum ComparisonColorType {
+    // (undocumented)
+    EQUALS = "equals",
+    // (undocumented)
+    NEGATIVE = "negative",
+    // (undocumented)
+    POSITIVE = "positive"
+}
+
 // @public (undocumented)
 export enum ComparisonPositionType {
     LEFT = "left",
@@ -99,6 +111,9 @@ export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 
 // @internal
 export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
+
+// @internal (undocumented)
+export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
 // @public
 export const DependencyWheelChart: (props: IDependencyWheelChartProps) => JSX.Element;
@@ -116,6 +131,9 @@ export { getColorMappingPredicate }
 
 // @internal
 export const getComparisonFormat: (providedFormat: string, defaultFormat: string) => string;
+
+// @internal (undocumented)
+export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
 
 // @public
 export const Headline: (props: IHeadlineProps) => JSX.Element;
@@ -292,9 +310,10 @@ export interface IChartLimits {
 
 // @public (undocumented)
 export interface IColorConfig {
-    equals?: string;
-    negative?: string;
-    positive?: string;
+    disabled?: boolean;
+    equals?: IColor;
+    negative?: IColor;
+    positive?: IColor;
 }
 
 export { IColorMapping }

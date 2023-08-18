@@ -210,7 +210,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({
     title: { id: "properties.comparison.title" },
-
     calculationTypeTitle: { id: "properties.comparison.calculationType.title" },
     calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },
     calculatedAsRatio: { id: "properties.comparison.calculationType.as.ratio" },
@@ -281,5 +280,23 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     },
     formatTemplateZeroInsteadOfNull: {
         id: "properties.comparison.measureNumber.format.template.zeroInsteadOfNull",
+    },
+    indicatorSubSectionTitle: {
+        id: "properties.comparison.indicator.title",
+    },
+    arrowControlTitle: {
+        id: "properties.comparison.indicator.arrow.title",
+    },
+    colorsConfigTitle: {
+        id: "properties.comparison.indicator.colorConfig.title",
+    },
+    colorsConfigEquals: {
+        id: "properties.comparison.indicator.colorConfig.equals",
+    },
+    colorsConfigPositive: {
+        id: "properties.comparison.indicator.colorConfig.positive",
+    },
+    colorsConfigNegative: {
+        id: "properties.comparison.indicator.colorConfig.negative",
     },
 });

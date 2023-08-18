@@ -17,6 +17,7 @@ export enum IconPosition {
 export interface ISelectableChild {
     isSelected?: boolean;
     position?: IconPosition;
+    disabled?: boolean;
 }
 
 export interface IColorDropdownOwnProps {
@@ -24,6 +25,7 @@ export interface IColorDropdownOwnProps {
     colorPalette: IColorPalette;
     showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
+    disabled?: boolean;
     children?: React.ReactNode;
 }
 
@@ -80,6 +82,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
         const childProps: ISelectableChild = {
             isSelected: this.state.isDropdownOpen,
             position: this.getIconPosition(),
+            disabled: this.props.disabled,
         };
         return React.cloneElement(this.props.children as React.ReactElement<ISelectableChild>, childProps);
     }
@@ -171,7 +174,9 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
     };
 
     private onDropdownButtonClick = () => {
-        this.toggleDropdown();
+        if (!this.props.disabled) {
+            this.toggleDropdown();
+        }
     };
 
     private onColorSelected = (color: IColor) => {

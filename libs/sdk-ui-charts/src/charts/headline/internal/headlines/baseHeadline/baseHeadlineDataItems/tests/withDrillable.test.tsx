@@ -6,7 +6,7 @@ import { fireEvent, render } from "@testing-library/react";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
-import { TEST_DATA_ITEM, HEADLINE_ITEM_LINK_SELECTOR } from "../../tests/TestData.fixtures.js";
+import { TEST_DATA_ITEM, HEADLINE_ITEM_LINK_SELECTOR } from "../../../../tests/TestData.fixtures.js";
 import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
 import { withDrillable } from "../withDrillable.js";

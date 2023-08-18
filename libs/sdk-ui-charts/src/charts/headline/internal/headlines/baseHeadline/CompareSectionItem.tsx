@@ -28,6 +28,7 @@ const CompareSectionItem: React.FC<ICompareSectionItemProps> = ({ dataItem, titl
         <div className={classNames}>
             <BaseHeadlineDataItem
                 dataItem={dataItem.data}
+                evaluationType={dataItem.evaluationType}
                 elementType={dataItem.elementType}
                 titleRef={titleRef}
             />
