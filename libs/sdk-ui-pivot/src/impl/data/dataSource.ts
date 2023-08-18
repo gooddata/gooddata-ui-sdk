@@ -102,8 +102,12 @@ export class AgGridDatasource implements IDatasource {
         const columnHeadersPosition = this.config.getColumnHeadersPosition();
         // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
         const rowsCount = columnHeadersPosition === "left" ? rowData.length : totalCount[0];
+        // Tiger backend returns incorrectly count when no measures are present count: [1, N]
+        // Check if there are no measures or row attributes present to display
+        const shouldNotHaveRows =
+            this.config.tableDescriptor.getMeasures().length === 0 && rowAttributeIds.length === 0;
 
-        const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : rowsCount;
+        const lastRow = (offset[0] === 0 && count[0] === 0) || shouldNotHaveRows ? 0 : rowsCount;
 
         this.config.onPageLoaded(dv);
         successCallback(rowData, lastRow);
