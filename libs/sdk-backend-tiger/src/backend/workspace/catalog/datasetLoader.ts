@@ -166,6 +166,7 @@ export async function loadAttributesAndDateDatasets(
         attributeHierarchies,
     );
     console.log("🚀 ~ file: datasetLoader.ts:168 ~ attributeDescendants:", attributeDescendants);
+    console.log("🚀 ~ file: datasetLoader.ts:163 ~ attributes:", attributes.data);
 
     const catalogItems: CatalogItem[] = [];
 
@@ -178,12 +179,80 @@ export async function loadAttributesAndDateDatasets(
         catalogItems.push(...dateDatasets);
     }
 
+    console.log("🚀 ~ file: datasetLoader.ts:183 ~ catalogItems:", catalogItems);
     return catalogItems;
 }
 
 // TODO: move this inside loadAttributesAndDateDatasets as a separate getAllPagesOf call for hierarchies
 function loadAttributeHierarchies(): Promise<any[]> {
     const hierarchiesOut = [
+        // {
+        //     id: "hierarchy1",
+        //     type: "AttributeHierarchy",
+        //     attributes: {
+        //         title: "My Hierarchy 1",
+        //         attributes: [
+        //             {
+        //                 id: "f_opportunitysnapshot.forecastcategory_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "attr.f_opportunitysnapshot.oppsnapshot",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "f_owner.department_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "attr.f_stage.stagename",
+        //                 type: "attribute",
+        //             },
+        //         ],
+        //     },
+        // },
+        // {
+        //     id: "hierarchy2",
+        //     type: "AttributeHierarchy",
+        //     attributes: {
+        //         title: "My Hierarchy 2",
+        //         attributes: [
+        //             {
+        //                 id: "f_owner.region_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "f_owner.department_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "attr.f_owner.salesrep",
+        //                 type: "attribute",
+        //             },
+        //         ],
+        //     },
+        // },
+        // {
+        //     id: "hierarchy3",
+        //     type: "AttributeHierarchy",
+        //     attributes: {
+        //         title: "My Hierarchy 3",
+        //         attributes: [
+        //             {
+        //                 id: "f_owner.region_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "f_owner.department_id",
+        //                 type: "attribute",
+        //             },
+        //             {
+        //                 id: "f_stage.status_id",
+        //                 type: "attribute",
+        //             },
+        //         ],
+        //     },
+        // },
         {
             id: "hierarchy1",
             type: "AttributeHierarchy",
@@ -191,11 +260,15 @@ function loadAttributeHierarchies(): Promise<any[]> {
                 title: "My Hierarchy 1",
                 attributes: [
                     {
-                        id: "f_opportunitysnapshot.forecastcategory_id",
+                        id: "f_owner.region_id",
                         type: "attribute",
                     },
                     {
-                        id: "f_owner.department_id",
+                        id: "attr.f_owner.salesrep",
+                        type: "attribute",
+                    },
+                    {
+                        id: "attr.f_product.product",
                         type: "attribute",
                     },
                     {
@@ -221,6 +294,14 @@ function loadAttributeHierarchies(): Promise<any[]> {
                     },
                     {
                         id: "attr.f_owner.salesrep",
+                        type: "attribute",
+                    },
+                    {
+                        id: "attr.f_stage.stagename",
+                        type: "attribute",
+                    },
+                    {
+                        id: "attr.f_product.product",
                         type: "attribute",
                     },
                 ],

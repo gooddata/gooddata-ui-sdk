@@ -29,6 +29,7 @@ import { DashboardDrillDefinition } from "../../../types.js";
 import { selectWidgetDrills } from "../layout/layoutSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
+    selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithDrillDown,
@@ -48,6 +49,7 @@ import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 
 /**
  * @internal
@@ -78,6 +80,7 @@ function drillDefinitionToPredicates(drill: DrillDefinition): IHeaderPredicate[]
 function getDrillDownDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithDrillDown: Array<ICatalogAttribute | ICatalogDateAttribute>,
+    allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
 ): IImplicitDrillWithPredicates[] {
     const matchingAvailableDrillAttributes = availableDrillAttributes.filter((candidate) => {
         return attributesWithDrillDown.some((attr) =>
@@ -92,16 +95,29 @@ function getDrillDownDefinitionsWithPredicates(
         const { descendants } = matchingCatalogAttribute!.attribute;
 
         if (descendants) {
-            return descendants.map((descendant) => ({
-                drillDefinition: {
-                    type: "drillDown",
-                    origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
-                    target: descendant.ref,
-                },
-                predicates: [
-                    HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
-                ],
-            }));
+            return compact(
+                descendants.map((descendant): IImplicitDrillWithPredicates | undefined => {
+                    const targetCatalogAttribute = allCatalogAttributesMap.get(descendant);
+
+                    if (!targetCatalogAttribute) {
+                        return undefined;
+                    }
+
+                    return {
+                        drillDefinition: {
+                            type: "drillDown",
+                            origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
+                            target: targetCatalogAttribute.defaultDisplayForm.ref, // use default display form for drill-down
+                            description: targetCatalogAttribute.attribute.title, // title is used to distinguish between multiple drill-downs
+                        },
+                        predicates: [
+                            HeaderPredicates.localIdentifierMatch(
+                                drill.attribute.attributeHeader.localIdentifier,
+                            ),
+                        ],
+                    };
+                }),
+            );
         } else {
             return {
                 drillDefinition: {
@@ -181,13 +197,20 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDrillDown,
         selectEnableKPIDashboardImplicitDrillDown,
-        (availableDrillTargets, attributesWithDrillDown, isKPIDashboardImplicitDrillDown) => {
+        selectAllCatalogAttributesMap,
+        (
+            availableDrillTargets,
+            attributesWithDrillDown,
+            isKPIDashboardImplicitDrillDown,
+            allCatalogAttributesMap,
+        ) => {
             if (isKPIDashboardImplicitDrillDown) {
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
                 return getDrillDownDefinitionsWithPredicates(
                     availableDrillAttributes,
                     attributesWithDrillDown,
+                    allCatalogAttributesMap,
                 );
             }
 
@@ -404,11 +427,13 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
         createSelector(
             selectAttributesWithDrillDown,
             selectAttributesWithDisplayFormLink,
-            (attributesWithDrillDown, attributesWithLink) => {
+            selectAllCatalogAttributesMap,
+            (attributesWithDrillDown, attributesWithLink, allCatalogAttributesMap) => {
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = getDrillDownDefinitionsWithPredicates(
                     availableDrillAttributes,
                     attributesWithDrillDown,
+                    allCatalogAttributesMap,
                 );
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(
                     availableDrillAttributes,

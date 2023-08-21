@@ -4,10 +4,7 @@ import { ObjRef, idRef } from "@gooddata/sdk-model";
 import { IAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
 export interface IAttributeDescendants {
-    [key: string]: {
-        hierarchyTitle: string;
-        ref: ObjRef;
-    }[];
+    [key: string]: ObjRef[];
 }
 
 export function getAttributeDescendantsFromAttributeHierarchies(
@@ -19,27 +16,24 @@ export function getAttributeDescendantsFromAttributeHierarchies(
     // TODO: is there some other way to optimize this lookup?
     attributeIds.forEach((attributeId) => {
         attributeHierarchies.forEach((hierarchy) => {
-            const foundAttributeIndex = hierarchy.attributes.findIndex((id) => id === attributeId);
+            const foundAttributeIndex = hierarchy.attributes.findIndex(({ id }) => id === attributeId);
 
             if (foundAttributeIndex < 0) {
                 return;
             }
 
-            const foundAttributeDescendantId = hierarchy.attributes[foundAttributeIndex + 1];
+            const foundAttributeDescendant = hierarchy.attributes[foundAttributeIndex + 1];
 
-            if (!foundAttributeDescendantId) {
+            if (!foundAttributeDescendant) {
                 return;
             }
 
-            const foundDescendant = {
-                hierarchyTitle: hierarchy.title,
-                ref: idRef(foundAttributeDescendantId),
-            };
+            const foundDescendantRef = idRef(foundAttributeDescendant.id, foundAttributeDescendant.type);
 
             if (descendants[attributeId]) {
-                descendants[attributeId].push(foundDescendant);
+                descendants[attributeId].push(foundDescendantRef);
             } else {
-                descendants[attributeId] = [foundDescendant];
+                descendants[attributeId] = [foundDescendantRef];
             }
         });
     });

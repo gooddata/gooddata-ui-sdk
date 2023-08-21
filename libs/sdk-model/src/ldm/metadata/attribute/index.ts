@@ -26,7 +26,7 @@ export interface IAttributeMetadataObject extends IMetadataObject {
      * @remarks
      * Attribute hierarchy may be used for example for implicit drill down.
      */
-    descendants?: { hierarchyTitle: string; ref: ObjRef }[];
+    descendants?: ObjRef[];
 
     /**
      * A reference to the attribute displayForm that represents implicit drill to url from attribute value
