@@ -40,7 +40,7 @@ stages:
 build-web-components:
   extends:
     - .release
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:16
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18
   stage: build
   cache:
     key: build-web-components

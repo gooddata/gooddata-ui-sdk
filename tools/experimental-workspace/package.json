@@ -47,7 +47,7 @@
         "@gooddata/mock-handling": "workspace:*",
         "@microsoft/api-extractor": "^7.36.0",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^16.18.23",
+        "@types/node": "^18.17.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "dependency-cruiser": "^13.0.3",
