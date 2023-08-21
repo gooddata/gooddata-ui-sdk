@@ -1,42 +1,114 @@
 // (C) 2023 GoodData Corporation
 
 import { ObjRef, idRef } from "@gooddata/sdk-model";
-import { IAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
+import {
+    IAttributeHierarchy,
+    convertAttributeHierarchy,
+} from "../../../convertors/fromBackend/HierarchyConverter.js";
+
+// TODO: getAllPagesOf attributeHierarchy entity
+export function loadAttributeHierarchies(): Promise<any[]> {
+    const hierarchies = hierarchiesOut.map(convertAttributeHierarchy);
+
+    return Promise.resolve(hierarchies);
+}
+
+// TODO: call /computeValidDescendants for all attributes that have descendants and filter out invalid ones
+export async function sanitizeAttributeDescendants(
+    descendants: IAttributeDescendants,
+): Promise<IAttributeDescendants> {
+    return Promise.resolve(descendants);
+}
 
 export interface IAttributeDescendants {
     [key: string]: ObjRef[];
 }
 
-export function getAttributeDescendantsFromAttributeHierarchies(
-    attributeIds: string[],
-    attributeHierarchies: IAttributeHierarchy[],
-) {
-    const descendants: IAttributeDescendants = {};
+export function getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies: IAttributeHierarchy[]) {
+    const descendantsMap: IAttributeDescendants = {};
 
-    // TODO: is there some other way to optimize this lookup?
-    attributeIds.forEach((attributeId) => {
-        attributeHierarchies.forEach((hierarchy) => {
-            const foundAttributeIndex = hierarchy.attributes.findIndex(({ id }) => id === attributeId);
+    // construct descendants map for all attributes available in hierarchies for convenience
+    attributeHierarchies.forEach((hierarchy) => {
+        const { attributes } = hierarchy;
 
-            if (foundAttributeIndex < 0) {
+        attributes.forEach((attribute, index) => {
+            const { id: attributeId } = attribute;
+
+            // attributes in each hierarchy are represented by an ordered list,
+            // so for each attribute, we take the next one as its descendant
+            const foundDescendant = attributes[index + 1];
+
+            if (!foundDescendant) {
                 return;
             }
 
-            const foundAttributeDescendant = hierarchy.attributes[foundAttributeIndex + 1];
+            const foundDescendantRef = idRef(foundDescendant.id, foundDescendant.type);
 
-            if (!foundAttributeDescendant) {
-                return;
-            }
-
-            const foundDescendantRef = idRef(foundAttributeDescendant.id, foundAttributeDescendant.type);
-
-            if (descendants[attributeId]) {
-                descendants[attributeId].push(foundDescendantRef);
+            if (descendantsMap[attributeId]) {
+                descendantsMap[attributeId].push(foundDescendantRef);
             } else {
-                descendants[attributeId] = [foundDescendantRef];
+                descendantsMap[attributeId] = [foundDescendantRef];
             }
         });
     });
 
-    return descendants;
+    return descendantsMap;
 }
+
+// TODO: remove dummy hierarchy data
+const hierarchiesOut = [
+    {
+        id: "hierarchy1",
+        type: "AttributeHierarchy",
+        attributes: {
+            title: "My Hierarchy 1",
+            attributes: [
+                {
+                    id: "f_owner.region_id",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_owner.salesrep",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_product.product",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_stage.stagename",
+                    type: "attribute",
+                },
+            ],
+        },
+    },
+    {
+        id: "hierarchy2",
+        type: "AttributeHierarchy",
+        attributes: {
+            title: "My Hierarchy 2",
+            attributes: [
+                {
+                    id: "f_owner.region_id",
+                    type: "attribute",
+                },
+                {
+                    id: "f_owner.department_id",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_owner.salesrep",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_stage.stagename",
+                    type: "attribute",
+                },
+                {
+                    id: "attr.f_product.product",
+                    type: "attribute",
+                },
+            ],
+        },
+    },
+];

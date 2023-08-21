@@ -22,8 +22,9 @@ import { addRsqlFilterToParams } from "./rsqlFilter.js";
 import {
     IAttributeDescendants,
     getAttributeDescendantsFromAttributeHierarchies,
+    loadAttributeHierarchies,
+    sanitizeAttributeDescendants,
 } from "./attributeDescendants.js";
-import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
 function lookupRelatedObject(
     included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
@@ -159,157 +160,23 @@ export async function loadAttributesAndDateDatasets(
         params,
     ).then(MetadataUtilities.mergeEntitiesResults);
 
-    const attributeIds = attributes.data.map(({ id }) => id);
     const attributeHierarchies = await loadAttributeHierarchies();
-    const attributeDescendants = getAttributeDescendantsFromAttributeHierarchies(
-        attributeIds,
-        attributeHierarchies,
-    );
-    console.log("🚀 ~ file: datasetLoader.ts:168 ~ attributeDescendants:", attributeDescendants);
-    console.log("🚀 ~ file: datasetLoader.ts:163 ~ attributes:", attributes.data);
+    const attributeDescendants = getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies);
+    const sanitizedAttributeDescendants = await sanitizeAttributeDescendants(attributeDescendants);
+
+    console.log("🚀 ~ file: datasetLoader.ts:168 ~ attributeDescendants:", sanitizedAttributeDescendants);
 
     const catalogItems: CatalogItem[] = [];
 
     if (loadAttributes) {
-        const nonDateAttributes = createNonDateAttributes(attributes, attributeDescendants);
+        const nonDateAttributes = createNonDateAttributes(attributes, sanitizedAttributeDescendants);
         catalogItems.push(...nonDateAttributes);
     }
     if (loadDateDatasets) {
-        const dateDatasets: CatalogItem[] = createDateDatasets(attributes, attributeDescendants);
+        const dateDatasets: CatalogItem[] = createDateDatasets(attributes, sanitizedAttributeDescendants);
         catalogItems.push(...dateDatasets);
     }
 
     console.log("🚀 ~ file: datasetLoader.ts:183 ~ catalogItems:", catalogItems);
     return catalogItems;
-}
-
-// TODO: move this inside loadAttributesAndDateDatasets as a separate getAllPagesOf call for hierarchies
-function loadAttributeHierarchies(): Promise<any[]> {
-    const hierarchiesOut = [
-        // {
-        //     id: "hierarchy1",
-        //     type: "AttributeHierarchy",
-        //     attributes: {
-        //         title: "My Hierarchy 1",
-        //         attributes: [
-        //             {
-        //                 id: "f_opportunitysnapshot.forecastcategory_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "attr.f_opportunitysnapshot.oppsnapshot",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "f_owner.department_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "attr.f_stage.stagename",
-        //                 type: "attribute",
-        //             },
-        //         ],
-        //     },
-        // },
-        // {
-        //     id: "hierarchy2",
-        //     type: "AttributeHierarchy",
-        //     attributes: {
-        //         title: "My Hierarchy 2",
-        //         attributes: [
-        //             {
-        //                 id: "f_owner.region_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "f_owner.department_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "attr.f_owner.salesrep",
-        //                 type: "attribute",
-        //             },
-        //         ],
-        //     },
-        // },
-        // {
-        //     id: "hierarchy3",
-        //     type: "AttributeHierarchy",
-        //     attributes: {
-        //         title: "My Hierarchy 3",
-        //         attributes: [
-        //             {
-        //                 id: "f_owner.region_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "f_owner.department_id",
-        //                 type: "attribute",
-        //             },
-        //             {
-        //                 id: "f_stage.status_id",
-        //                 type: "attribute",
-        //             },
-        //         ],
-        //     },
-        // },
-        {
-            id: "hierarchy1",
-            type: "AttributeHierarchy",
-            attributes: {
-                title: "My Hierarchy 1",
-                attributes: [
-                    {
-                        id: "f_owner.region_id",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_owner.salesrep",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_product.product",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_stage.stagename",
-                        type: "attribute",
-                    },
-                ],
-            },
-        },
-        {
-            id: "hierarchy2",
-            type: "AttributeHierarchy",
-            attributes: {
-                title: "My Hierarchy 2",
-                attributes: [
-                    {
-                        id: "f_owner.region_id",
-                        type: "attribute",
-                    },
-                    {
-                        id: "f_owner.department_id",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_owner.salesrep",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_stage.stagename",
-                        type: "attribute",
-                    },
-                    {
-                        id: "attr.f_product.product",
-                        type: "attribute",
-                    },
-                ],
-            },
-        },
-    ];
-
-    const hierarchies = hierarchiesOut.map(convertAttributeHierarchy);
-
-    return Promise.resolve(hierarchies);
 }
