@@ -5,30 +5,24 @@ copyright: (C) 2007-2018 GoodData Corporation
 weight: 11
 ---
 
-To embed an existing insight created in Analytical Designer, use the [InsightView component](../../visualize_data/insightview/).
+To embed an existing dashboard created in KPI Dashboards, use the [Dashboard component](../../../references/dashboard_component/).
 
 **Steps:**
 
-1. Obtain the identifier of the insight via [catalog-export](../../visualize_data/export_catalog/).
+1. Obtain the identifier of the dashboard via [catalog-export](../../visualize_data/export_catalog/).
 
-2. Import the InsightView component from the `@gooddata/sdk-ui-ext` package into your app:
+2. Import the Dashboard component from the `@gooddata/sdk-ui-dashboard` package into your app:
+
     ```javascript
-    import { InsightView } from "@gooddata/sdk-ui-ext";
+    import { Dashboard } from "@gooddata/sdk-ui-dashboard";
     ```
 
-3. Create an `InsightView` component in your app, and provide it with the workspace ID and the visualization identifier that you obtained at Step 1:
-    ```jsx
-    import { InsightView } from "@gooddata/sdk-ui-ext";
-    import "@gooddata/sdk-ui-ext/styles/css/main.css";
+3. Create a `Dashboard` component in your app, and provide it with the workspace ID and the visualization identifier that you obtained at Step 1:
 
-    <InsightView
-        insight="aby3polcaFxy"
-        config={{
-            colors: ["rgb(195, 49, 73)", "rgb(168, 194, 86)"],
-            legend: {
-                enabled: true,
-                position: "bottom"
-            }
-        }}
-    />
+    ```jsx
+    import { idRef } from "@gooddata/sdk-model";
+    import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+    import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+
+    <Dashboard dashboard={idRef("aby3polcaFxy")} />;
     ```
