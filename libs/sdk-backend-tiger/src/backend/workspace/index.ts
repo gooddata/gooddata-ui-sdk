@@ -56,6 +56,13 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                         });
                     })
                 ).data.data,
+                (
+                    await this.authCall(async (client) => {
+                        return client.actions.inheritedEntityPrefixes({
+                            workspaceId: this.workspace,
+                        });
+                    })
+                ).data,
             );
         }
         return this.descriptor;

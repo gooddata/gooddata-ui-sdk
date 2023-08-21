@@ -66,7 +66,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     }
 
     private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceOutList): IWorkspaceDescriptor[] => {
-        return result.data.map(workspaceConverter);
+        return result.data.map((item) => workspaceConverter(item, []));
     };
 
     private searchWorkspaceDescriptors =

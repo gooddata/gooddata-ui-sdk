@@ -136,6 +136,10 @@ export interface IWorkspaceDescriptor {
      * Identifier of the parent workspace
      */
     parentWorkspace?: string;
+    /**
+     * Prefixes of parent workspaces
+     */
+    parentPrefixes?: string[];
 }
 
 /**
