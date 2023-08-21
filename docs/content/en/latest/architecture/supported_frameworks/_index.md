@@ -2,7 +2,7 @@
 title: Supported Frameworks
 linkTitle: Supported Frameworks
 copyright: (C) 2007-2018 GoodData Corporation
-weight: 40
+weight: 28
 no_list: true
 ---
 

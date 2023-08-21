@@ -70,6 +70,63 @@ const style = { height: 300 };
 </div>
 ```
 
+## Pivot table transposition
+
+By default, ```measures``` are rendered in columns together with column attributes.
+If you want measures to create rows rather than columns you can use the config property `measureGroupDimension` and set it to `rows` (default is `columns`).
+This will move the measure headers to the left, next to the row attributes. Measure values will be rendered as rows instead of columns. Together with the possibility to swap column and row attributes, this allows for full transposition of table (swapping rows and columns).
+
+```jsx
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import * as Md from "./md/full";
+
+const style = { height: 300 };
+
+<div style={style}>
+    <PivotTable
+        measures={[Md.$FranchiseFees]}
+        rows={[Md.LocationState]}
+        columns={[Md.DateDatasets.Date.MonthYear.Short]}
+        config={{
+            measureGroupDimension: "rows"
+        }}
+    />
+</div>
+```
+
+![Pivot Table Component](gd-ui/pivot_table_measures_in_rows.png "Pivot Table with measures in rows")
+
+### Column attribute name position
+
+By default, column attribute names are rendered at the top of the table. However, in some cases, it may be preferable to render them on the left. For this option to be available, the table must have measures in rows and no row attribute defined. You can then use the config prop `columnHeadersPosition` and set it to `left` (the default is `top`).
+Column names are then rendered on the left.
+
+```jsx
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import * as Md from "./md/full";
+
+const style = { height: 300 };
+
+<div style={style}>
+    <PivotTable
+        measures={[Md.$FranchiseFees]}
+        columns={[Md.LocationState]}
+        config={{
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left"
+        }}
+    />
+</div>
+```
+
+> There is a limitation: when column names are moved to the left then columns cannot be resized.
+
+![Pivot Table Component](gd-ui/pivot_table_column_name_left.png "Pivot Table with column attribute name on left")
+
+
+
 ## Sorting in pivot tables
 
 You can sort rows and attribute columns in any pivot table. Measures are always listed in the same order in which they were defined in the ```measures``` prop.

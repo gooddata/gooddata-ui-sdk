@@ -3,6 +3,7 @@ title: Migration from Version 8.x
 linkTitle: Migration Guide
 copyright: (C) 2007-2019 GoodData Corporation
 id: migration_guide_9
+weight: 30
 ---
 
 ## Before You Begin:
@@ -67,7 +68,9 @@ provideCreateRoot(createRoot);
 This ensures GoodData.UI uses the React 18 render method instead of the legacy method in its internal code.
 
 ### Dashboard Plugins
-Refer to the standard [upgrade guide](upgrade_dashboard_plugins). Note that plugins are now built with a `.mjs` extension and loaded as ESM modules, so you cannot redeploy the plugin to the same URL. Deploy the v9 plugin to a new location, create a new metadata object for it, unlink the previous one, and link the upgraded plugin with the desired dashboards.
+Refer to the standard [upgrade guide](../../references/dashboard_component/dashboard_plugins_upgrade/). You will also need to update the [import paths](https://www.typescriptlang.org/docs/handbook/esm-node.html#type-in-packagejson-and-new-extensions) in your plugin code to include `.js` extensions.
+
+Note that plugins are now built with a .mjs extension and loaded as ESM modules, so you cannot redeploy the plugin to the same URL. Deploy the v9 plugin to a new location, create a new metadata object for it, unlink the previous one, and link the upgraded plugin with the desired dashboards.
 
 Plugins built with v9 **must have CORS configured on their respective hosting platforms** in order to be accessible from the GoodData domain.
 
