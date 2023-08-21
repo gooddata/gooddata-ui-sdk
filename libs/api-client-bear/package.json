@@ -58,7 +58,7 @@
         "@types/fast-levenshtein": "0.0.1",
         "@types/isomorphic-fetch": "^0.0.34",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^16.18.23",
+        "@types/node": "^18.17.6",
         "@types/node-fetch": "^2.6.4",
         "@types/qs": "^6.5.1",
         "@types/spark-md5": "^3.0.1",

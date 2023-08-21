@@ -186,7 +186,7 @@ importers:
       '@types/history': ^4.7.5
       '@types/isomorphic-fetch': ^0.0.34
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/react': ^18.2.0
       '@types/react-datepicker': ^4.3.2
       '@types/react-dom': ^18.2.1
@@ -305,7 +305,7 @@ importers:
       '@types/history': 4.7.11
       '@types/isomorphic-fetch': 0.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/react': 18.2.0
       '@types/react-datepicker': 4.10.0_biqbaboplfbrettd7655fr4n2y
       '@types/react-dom': 18.2.1
@@ -360,7 +360,7 @@ importers:
       '@types/fast-levenshtein': 0.0.1
       '@types/isomorphic-fetch': ^0.0.34
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/node-fetch': ^2.6.4
       '@types/qs': ^6.5.1
       '@types/spark-md5': ^3.0.1
@@ -411,7 +411,7 @@ importers:
       '@types/fast-levenshtein': 0.0.1
       '@types/isomorphic-fetch': 0.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/node-fetch': 2.6.4
       '@types/qs': 6.9.7
       '@types/spark-md5': 3.0.2
@@ -650,7 +650,7 @@ importers:
       '@microsoft/api-extractor': ^7.36.0
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/spark-md5': ^3.0.1
       '@types/uuid': ^8.3.4
       '@typescript-eslint/eslint-plugin': ^5.57.1
@@ -698,11 +698,11 @@ importers:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/spark-md5': 3.0.2
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
@@ -1069,7 +1069,7 @@ importers:
       '@types/hoist-non-react-statics': ^3.3.1
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -1135,15 +1135,15 @@ importers:
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/dom': 9.2.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.2.0
       '@types/hoist-non-react-statics': 3.3.1
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -1258,7 +1258,7 @@ importers:
       '@testing-library/react': ^14.0.0
       '@types/hoist-non-react-statics': ^3.3.1
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -1331,12 +1331,12 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/hoist-non-react-statics': 3.3.1
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -1398,7 +1398,7 @@ importers:
       '@testing-library/user-event': ^14.4.2
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -1478,7 +1478,7 @@ importers:
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
       lru-cache: 9.1.1
-      react-dnd: 14.0.5_lb26vhfratm6tb5rszlyepzfpy
+      react-dnd: 14.0.5_u3shqvyrwf4hz652pzkkzivaka
       react-dnd-html5-backend: 14.1.0
       react-grid-system: 8.1.9_react@18.2.0
       react-intl: 6.4.1_odn5rdmyrxuyfnlhepsb7fjnvi
@@ -1497,14 +1497,14 @@ importers:
       '@gooddata/i18n-toolkit': link:../../tools/i18n-toolkit
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/dom': 9.2.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.2.0
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -1571,7 +1571,7 @@ importers:
       '@testing-library/react': ^14.0.0
       '@testing-library/user-event': ^14.4.2
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -1659,13 +1659,13 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/dom': 9.2.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.2.0
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -1722,7 +1722,7 @@ importers:
       '@testing-library/react': ^14.0.0
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -1803,12 +1803,12 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -1863,7 +1863,7 @@ importers:
       '@testing-library/react': ^14.0.0
       '@types/lodash': ^4.14.158
       '@types/mapbox-gl': ^2.6.0
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
       '@types/react-measure': ^2.0.8
@@ -1926,12 +1926,12 @@ importers:
       '@gooddata/live-examples-workspace': link:../../tools/live-examples-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/lodash': 4.14.194
       '@types/mapbox-gl': 2.7.10
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-measure': 2.0.8
@@ -1986,7 +1986,7 @@ importers:
       '@types/debounce-promise': ^3.1.4
       '@types/kefir': ^3.8.5
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -2092,8 +2092,8 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/dom': 9.2.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.2.0
@@ -2101,7 +2101,7 @@ importers:
       '@types/debounce-promise': 3.1.6
       '@types/kefir': 3.8.7
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -2154,7 +2154,7 @@ importers:
       '@microsoft/api-extractor': ^7.36.0
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -2199,11 +2199,11 @@ importers:
       tslib: 2.5.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -2250,7 +2250,7 @@ importers:
       '@microsoft/api-extractor': ^7.36.0
       '@testing-library/react': ^14.0.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -2314,11 +2314,11 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -2393,7 +2393,7 @@ importers:
       '@testing-library/react': ^14.0.0
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
       '@types/react-responsive': ^8.0.2
@@ -2500,7 +2500,7 @@ importers:
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-responsive': 8.0.5
@@ -2534,7 +2534,7 @@ importers:
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4_jsdom@22.1.0
 
@@ -2571,7 +2571,7 @@ importers:
       '@microsoft/api-documenter': ^7.17.0
       '@microsoft/api-extractor': ^7.36.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/pdf-parse': ^1.1.1
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
@@ -2670,10 +2670,10 @@ importers:
       '@babel/preset-typescript': 7.21.4_@babel+core@7.21.4
       '@babel/runtime': 7.21.0
       '@cypress/grep': 3.1.5_6xjulfxiiww4emjzu2ighrucye
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/pdf-parse': 1.1.1
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
@@ -2731,7 +2731,7 @@ importers:
       '@microsoft/api-extractor': ^7.36.0
       '@testing-library/react': ^14.0.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -2774,11 +2774,11 @@ importers:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -2822,7 +2822,7 @@ importers:
       '@microsoft/api-extractor': ^7.36.0
       '@testing-library/react': ^14.0.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
       '@types/react-measure': ^2.0.8
@@ -2878,11 +2878,11 @@ importers:
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
       '@gooddata/stylelint-config': 5.0.2
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-measure': 2.0.8
@@ -2937,7 +2937,7 @@ importers:
       '@microsoft/api-documenter': ^7.17.0
       '@microsoft/api-extractor': ^7.36.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -3001,10 +3001,10 @@ importers:
       '@babel/preset-react': 7.18.6_@babel+core@7.21.4
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
-      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-documenter': 7.21.7_@types+node@18.17.6
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -3226,7 +3226,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@types/inquirer': ^8.2.6
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/tar': ^6.1.0
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
@@ -3291,7 +3291,7 @@ importers:
       '@types/fs-extra': 9.0.13
       '@types/inquirer': 8.2.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/tar': 6.1.4
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
@@ -3308,7 +3308,7 @@ importers:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
       prettier: 2.5.1
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4
 
@@ -3319,7 +3319,7 @@ importers:
       '@types/cross-spawn': ^6.0.2
       '@types/json5': ^0.0.30
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       blessed: ^0.1.81
@@ -3359,7 +3359,7 @@ importers:
       '@types/cross-spawn': 6.0.2
       '@types/json5': 0.0.30
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       dependency-cruiser: 13.0.3
@@ -3373,7 +3373,7 @@ importers:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
       prettier: 2.5.1
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4
 
@@ -3389,7 +3389,7 @@ importers:
       '@types/babel__core': ^7.20.1
       '@types/inquirer': ^8.2.6
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/prettier': ~1.18.2
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
@@ -3444,7 +3444,7 @@ importers:
       '@types/babel__core': 7.20.1
       '@types/inquirer': 8.2.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/prettier': 1.18.4
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
@@ -3460,7 +3460,7 @@ importers:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
       happy-dom: 9.20.3
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4_happy-dom@9.20.3
 
@@ -3487,7 +3487,7 @@ importers:
       '@gooddata/sdk-ui-pivot': workspace:*
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
@@ -3556,7 +3556,7 @@ importers:
       '@gooddata/sdk-ui-pivot': link:../../libs/sdk-ui-pivot
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/raf': 3.4.0
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -3606,7 +3606,7 @@ importers:
       '@gooddata/sdk-model': workspace:*
       '@microsoft/api-extractor': ^7.36.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       dependency-cruiser: ^13.0.3
@@ -3633,9 +3633,9 @@ importers:
       '@gooddata/catalog-export': link:../catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/mock-handling': link:../mock-handling
-      '@microsoft/api-extractor': 7.36.0_@types+node@16.18.23
+      '@microsoft/api-extractor': 7.36.0_@types+node@18.17.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       dependency-cruiser: 13.0.3
@@ -3658,7 +3658,7 @@ importers:
       '@formatjs/icu-messageformat-parser': ^2.1.10
       '@gooddata/eslint-config': ^4.1.0
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       chalk: ^4.1.1
@@ -3699,7 +3699,7 @@ importers:
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       concurrently: 6.5.1
@@ -3727,7 +3727,7 @@ importers:
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-model': workspace:*
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       dependency-cruiser: ^13.0.3
@@ -3755,7 +3755,7 @@ importers:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/mock-handling': link:../mock-handling
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       dependency-cruiser: 13.0.3
@@ -3782,7 +3782,7 @@ importers:
       '@types/inquirer': ^8.2.6
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/prettier': ~1.18.2
       '@types/rimraf': ^2.0.2
       '@typescript-eslint/eslint-plugin': ^5.57.1
@@ -3833,7 +3833,7 @@ importers:
       '@types/inquirer': 8.2.6
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/prettier': 1.18.4
       '@types/rimraf': 2.0.5
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
@@ -3849,7 +3849,7 @@ importers:
       eslint-plugin-regexp: 1.14.0_eslint@8.38.0
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4
 
@@ -3869,7 +3869,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@types/inquirer': ^8.2.6
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@types/tar': ^6.1.0
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
@@ -3935,7 +3935,7 @@ importers:
       '@types/fs-extra': 9.0.13
       '@types/inquirer': 8.2.6
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/tar': 6.1.4
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
@@ -3952,7 +3952,7 @@ importers:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
       prettier: 2.5.1
-      ts-node: 10.9.1_2qbue3w6kzejc37b4l5oa2ak4u
+      ts-node: 10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a
       typescript: 5.0.2
       vitest: 0.31.4
 
@@ -4075,7 +4075,7 @@ importers:
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-model': workspace:*
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       dependency-cruiser: ^13.0.3
@@ -4101,7 +4101,7 @@ importers:
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       dependency-cruiser: 13.0.3
@@ -4124,7 +4124,7 @@ importers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/mock-handling': workspace:*
       '@types/lodash': ^4.14.158
-      '@types/node': ^16.18.23
+      '@types/node': ^18.17.6
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       dependency-cruiser: ^13.0.3
@@ -4148,7 +4148,7 @@ importers:
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@types/lodash': 4.14.194
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/parser': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       dependency-cruiser: 13.0.3
@@ -6754,13 +6754,13 @@ packages:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-documenter/7.21.7_@types+node@16.18.23:
+  /@microsoft/api-documenter/7.21.7_@types+node@18.17.6:
     resolution: {integrity: sha512-qlCJ9dSefL6Rmuv1FKtxg7i6N7Bv6LUPrA5Bb0dR/9Ffac2xQuXtuSXOJ09seM7G0WkpQOzta2Kc1CPixzDaIw==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.26.4_@types+node@16.18.23
+      '@microsoft/api-extractor-model': 7.26.4_@types+node@18.17.6
       '@microsoft/tsdoc': 0.14.2
-      '@rushstack/node-core-library': 3.55.2_@types+node@16.18.23
+      '@rushstack/node-core-library': 3.55.2_@types+node@18.17.6
       '@rushstack/ts-command-line': 4.13.2
       colors: 1.2.5
       js-yaml: 3.13.1
@@ -6779,12 +6779,12 @@ packages:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-extractor-model/7.26.4_@types+node@16.18.23:
+  /@microsoft/api-extractor-model/7.26.4_@types+node@18.17.6:
     resolution: {integrity: sha512-PDCgCzXDo+SLY5bsfl4bS7hxaeEtnXj7XtuzEE+BtALp7B5mK/NrS2kHWU69pohgsRmEALycQdaQPXoyT2i5MQ==}
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.55.2_@types+node@16.18.23
+      '@rushstack/node-core-library': 3.55.2_@types+node@18.17.6
     transitivePeerDependencies:
       - '@types/node'
     dev: true
@@ -6799,12 +6799,12 @@ packages:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-extractor-model/7.27.3_@types+node@16.18.23:
+  /@microsoft/api-extractor-model/7.27.3_@types+node@18.17.6:
     resolution: {integrity: sha512-fSFvw7otYHduOkyshjTbapKKgwF8bgquVHvgF8VgeKtMYvqXkoaj7W6VcM7PNY7E2bbblhUgC4XNdqZLD4SJGw==}
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.4_@types+node@16.18.23
+      '@rushstack/node-core-library': 3.59.4_@types+node@18.17.6
     transitivePeerDependencies:
       - '@types/node'
     dev: true
@@ -6829,14 +6829,14 @@ packages:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-extractor/7.36.0_@types+node@16.18.23:
+  /@microsoft/api-extractor/7.36.0_@types+node@18.17.6:
     resolution: {integrity: sha512-P+kYgJFDXIr+UNzhRMhlpM/dderi6ab4lxn35vdhfAIMPtGCSXIJxrrtpTOQmQW8CZtmoZX06LYoUsKCc1zjow==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.27.3_@types+node@16.18.23
+      '@microsoft/api-extractor-model': 7.27.3_@types+node@18.17.6
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.4_@types+node@16.18.23
+      '@rushstack/node-core-library': 3.59.4_@types+node@18.17.6
       '@rushstack/rig-package': 0.4.0
       '@rushstack/ts-command-line': 4.15.1
       colors: 1.2.5
@@ -7504,7 +7504,7 @@ packages:
       z-schema: 5.0.5
     dev: true
 
-  /@rushstack/node-core-library/3.55.2_@types+node@16.18.23:
+  /@rushstack/node-core-library/3.55.2_@types+node@18.17.6:
     resolution: {integrity: sha512-SaLe/x/Q/uBVdNFK5V1xXvsVps0y7h1sN7aSJllQyFbugyOaxhNRF25bwEDnicARNEjJw0pk0lYnJQ9Kr6ev0A==}
     peerDependencies:
       '@types/node': '*'
@@ -7512,7 +7512,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -7539,7 +7539,7 @@ packages:
       z-schema: 5.0.5
     dev: true
 
-  /@rushstack/node-core-library/3.59.4_@types+node@16.18.23:
+  /@rushstack/node-core-library/3.59.4_@types+node@18.17.6:
     resolution: {integrity: sha512-YAKJDC6Mz/KA1D7bvB88WaRX3knt/ZuLzkRu5G9QADGSjLtvTWzCNCytRF2PCSaaHOZaZsWul4F1KQdgFgUDqA==}
     peerDependencies:
       '@types/node': '*'
@@ -7547,7 +7547,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -9201,6 +9201,9 @@ packages:
 
   /@types/node/16.18.23:
     resolution: {integrity: sha512-XAMpaw1s1+6zM+jn2tmw8MyaRDIJfXxqmIQIS0HfoGYPuf7dUWeiUKopwq13KFX9lEp1+THGtlaaYx39Nxr58g==}
+
+  /@types/node/18.17.6:
+    resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -18789,7 +18792,7 @@ packages:
       dnd-core: 14.0.1
     dev: false
 
-  /react-dnd/14.0.5_lb26vhfratm6tb5rszlyepzfpy:
+  /react-dnd/14.0.5_u3shqvyrwf4hz652pzkkzivaka:
     resolution: {integrity: sha512-9i1jSgbyVw0ELlEVt/NkCUkxy1hmhJOkePoCH713u75vzHGyXhPDm28oLfc2NMSBjZRM1Y+wRjHXJT3sPrTy+A==}
     peerDependencies:
       '@types/hoist-non-react-statics': '>= 3.3.1'
@@ -18806,7 +18809,7 @@ packages:
     dependencies:
       '@react-dnd/invariant': 2.0.0
       '@react-dnd/shallowequal': 2.0.0
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/react': 18.2.0
       dnd-core: 14.0.1
       fast-deep-equal: 3.1.3
@@ -21553,7 +21556,7 @@ packages:
       code-block-writer: 11.0.3
     dev: false
 
-  /ts-node/10.9.1_2qbue3w6kzejc37b4l5oa2ak4u:
+  /ts-node/10.9.1_3d5jxcu3vurpo3ihqdv2ttl43a:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -21572,7 +21575,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3

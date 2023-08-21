@@ -14,7 +14,7 @@
      * will recalculate all version selections.
      */
     "preferredVersions": {
-        "@types/node": "^16.18.23",
+        "@types/node": "^18.17.6",
 
         "@microsoft/api-extractor": "^7.36.0",
         "@microsoft/api-documenter": "^7.17.0",
