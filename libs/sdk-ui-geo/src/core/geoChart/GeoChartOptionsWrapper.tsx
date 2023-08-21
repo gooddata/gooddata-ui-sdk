@@ -2,7 +2,7 @@
 import React from "react";
 import { invariant } from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart.js";
-import { isDataOfReasonableSize } from "./helpers/geoChart/common.js";
+import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
 import { getGeoData } from "./helpers/geoChart/data.js";
 import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
 import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
@@ -71,7 +71,15 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
 
         if (validationResult?.isDataTooLarge) {
             invariant(onDataTooLarge, "GeoChart's onDataTooLarge callback is missing.");
-            onDataTooLarge();
+
+            const { location } = geoData;
+            const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
+            const locationData = location !== undefined ? attributeHeaderItems[location.index] : [];
+
+            const limit = this.props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
+            const errorMessage = `LocationData limit: ${limit} actual: ${locationData.length}`;
+
+            onDataTooLarge(undefined, errorMessage);
 
             return null;
         }

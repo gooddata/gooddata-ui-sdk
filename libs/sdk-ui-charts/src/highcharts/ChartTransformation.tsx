@@ -30,7 +30,7 @@ import omitBy from "lodash/omitBy.js";
 import { IChartOptions } from "./typings/unsafe.js";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
-import { validateData } from "./chartTypes/_chartOptions/chartLimits.js";
+import { getDataTooLargeErrorMessage, validateData } from "./chartTypes/_chartOptions/chartLimits.js";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import Highcharts from "./lib/index.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
@@ -59,7 +59,7 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
-    onDataTooLarge(chartOptions: any): void;
+    onDataTooLarge(chartOptions: any, errorMessage?: string): void;
     onNegativeValues(chartOptions: any): void;
 
     numericSymbols?: string[];
@@ -123,7 +123,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     if (validationResult.dataTooLarge) {
         // always force onDataTooLarge error handling
         invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-        onDataTooLarge(chartOptions);
+        onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
     } else if (validationResult.hasNegativeValue) {
         // ignore hasNegativeValue if validation already fails on dataTooLarge
         // force onNegativeValues error handling only for pie chart.

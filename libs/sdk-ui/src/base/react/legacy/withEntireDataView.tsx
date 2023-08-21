@@ -67,7 +67,7 @@ export interface ILoadingInjectedProps {
     /**
      * Callback to trigger if the chart cannot visualize the data because it is too large.
      */
-    onDataTooLarge(): void;
+    onDataTooLarge(data: any, errorMessage?: string): void;
 
     /**
      * Callback to trigger if the chart cannot visualize the data because it contains negative values.
@@ -179,8 +179,8 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.props.onError?.(error);
         }
 
-        private onDataTooLarge() {
-            this.onError(new DataTooLargeToDisplaySdkError());
+        private onDataTooLarge(_data: any, errorMessage?: string) {
+            this.onError(new DataTooLargeToDisplaySdkError(errorMessage));
         }
 
         private onNegativeValues() {
