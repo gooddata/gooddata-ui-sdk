@@ -42,7 +42,7 @@
 
         {{ if and (not (eq $page.Params.toc_hide true)) (not (eq $page $site.Home)) }}
             {{ $activePage := eq $page $currentPage }}
-            {{ $activeSection := $currentPage.IsDescendant $page }}
+            {{ $activeSection := or $activePage ($currentPage.IsDescendant $page) }}
             {{ $pageId := replace (replaceRE "^/|/$" "" $page.RelPermalink) "/" "_" }}
 
             <li class="gd-docs-menu-page{{ if $activePage }} active{{ end }}{{ if $page.Params.navSeparator }} gd-docs-menu-page__separator{{ end }}">
