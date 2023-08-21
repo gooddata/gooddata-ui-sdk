@@ -4,11 +4,11 @@ linkTitle: "Quick Start"
 weight: 12
 ---
 
-The easiest way to get hands-on experience with GoodData.ui is to use the `@gooddata/apptoolkit`, which contans a sample setup for a React app 
+The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app 
  
 To see it in action:
-- Run `npx @gooddata/apptoolkit init`
-- Follow incstructions on the screen
+- Run `npx @gooddata/app-toolkit@latest init`
+- Follow instructions on the screen
 
 ## Quick Introduction
 

@@ -1,7 +1,7 @@
 ---
 title: "Architecture Overview"
 linkTitle: "Architecture Overview"
-weight: 30
+weight: 1
 no_list: true
 ---
 

@@ -70,7 +70,7 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 
 ## Migration from v8 to v9
 
-Since there are not many changes at the API level between v8 and v9, we believe that read [what is new in version 9](whats_new_9) should be sufficient to process the migration.
+Since there are not many changes at the API level between v8 and v9, we believe that read [what is new in version 9](../../whats_new/) should be sufficient to process the migration.
 
 
 <table class="tg">
