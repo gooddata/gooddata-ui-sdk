@@ -245,10 +245,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             originalMeasureGroupDimension,
         );
 
-        const originalColumnHeadersPosition =
-            rowAttributes.length > 0 || originalMeasureGroupDimension === "columns"
-                ? "top"
-                : newReferencePoint.properties?.controls?.columnHeadersPosition;
+        const originalColumnHeadersPosition = shouldAdjustColumnHeadersPositionToTop(
+            newReferencePoint,
+            rowAttributes,
+            originalMeasureGroupDimension,
+        )
+            ? "top"
+            : newReferencePoint.properties?.controls?.columnHeadersPosition;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -756,4 +759,15 @@ function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
     if (rowAttribute) {
         return [newAttributeSort(rowAttribute, "asc")];
     }
+}
+
+function shouldAdjustColumnHeadersPositionToTop(
+    newReferencePoint: IExtendedReferencePoint,
+    rowAttributes: IBucketItem[],
+    measureGroupDimension: MeasureGroupDimension,
+) {
+    return (
+        newReferencePoint.properties?.controls?.columnHeadersPosition &&
+        (rowAttributes.length > 0 || measureGroupDimension === "columns")
+    );
 }
