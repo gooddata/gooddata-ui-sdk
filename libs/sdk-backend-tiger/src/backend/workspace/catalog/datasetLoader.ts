@@ -21,9 +21,8 @@ import {
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
 import {
     IAttributeDescendants,
-    getAttributeDescendantsFromAttributeHierarchies,
-    loadAttributeHierarchies,
-    sanitizeAttributeDescendants,
+    getAttributeHierarchies,
+    getAttributeDescendants,
 } from "./attributeDescendants.js";
 
 function lookupRelatedObject(
@@ -160,23 +159,19 @@ export async function loadAttributesAndDateDatasets(
         params,
     ).then(MetadataUtilities.mergeEntitiesResults);
 
-    const attributeHierarchies = await loadAttributeHierarchies();
-    const attributeDescendants = getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies);
-    const sanitizedAttributeDescendants = await sanitizeAttributeDescendants(attributeDescendants);
-
-    console.log("🚀 ~ file: datasetLoader.ts:168 ~ attributeDescendants:", sanitizedAttributeDescendants);
+    const attributeHierarchies = await getAttributeHierarchies();
+    const attributeDescendants = await getAttributeDescendants(attributeHierarchies);
 
     const catalogItems: CatalogItem[] = [];
 
     if (loadAttributes) {
-        const nonDateAttributes = createNonDateAttributes(attributes, sanitizedAttributeDescendants);
+        const nonDateAttributes = createNonDateAttributes(attributes, attributeDescendants);
         catalogItems.push(...nonDateAttributes);
     }
     if (loadDateDatasets) {
-        const dateDatasets: CatalogItem[] = createDateDatasets(attributes, sanitizedAttributeDescendants);
+        const dateDatasets: CatalogItem[] = createDateDatasets(attributes, attributeDescendants);
         catalogItems.push(...dateDatasets);
     }
 
-    console.log("🚀 ~ file: datasetLoader.ts:183 ~ catalogItems:", catalogItems);
     return catalogItems;
 }

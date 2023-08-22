@@ -6,25 +6,33 @@ import {
     convertAttributeHierarchy,
 } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
+export interface IAttributeDescendants {
+    [key: string]: ObjRef[];
+}
+
 // TODO: getAllPagesOf attributeHierarchy entity
-export function loadAttributeHierarchies(): Promise<any[]> {
+export async function getAttributeHierarchies(): Promise<any[]> {
     const hierarchies = hierarchiesOut.map(convertAttributeHierarchy);
 
     return Promise.resolve(hierarchies);
 }
 
-// TODO: call /computeValidDescendants for all attributes that have descendants and filter out invalid ones
-export async function sanitizeAttributeDescendants(
+export async function getAttributeDescendants(
+    attributeHierarchies: IAttributeHierarchy[],
+): Promise<IAttributeDescendants> {
+    const attributeDescendants = getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies);
+
+    return sanitizeAttributeDescendants(attributeDescendants);
+}
+
+// TODO: call /computeValidDescendants for all attributes (keys of descendants map) and filter out invalid descendants
+async function sanitizeAttributeDescendants(
     descendants: IAttributeDescendants,
 ): Promise<IAttributeDescendants> {
     return Promise.resolve(descendants);
 }
 
-export interface IAttributeDescendants {
-    [key: string]: ObjRef[];
-}
-
-export function getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies: IAttributeHierarchy[]) {
+function getAttributeDescendantsFromAttributeHierarchies(attributeHierarchies: IAttributeHierarchy[]) {
     const descendantsMap: IAttributeDescendants = {};
 
     // construct descendants map for all attributes available in hierarchies for convenience
