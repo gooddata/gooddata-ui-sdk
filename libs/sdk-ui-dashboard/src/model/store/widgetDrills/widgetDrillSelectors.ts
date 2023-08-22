@@ -50,6 +50,7 @@ import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibl
 import { selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 /**
  * @internal
@@ -81,6 +82,7 @@ function getDrillDownDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithDrillDown: Array<ICatalogAttribute | ICatalogDateAttribute>,
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    isAttributeHierarchiesSupported: boolean,
 ): IImplicitDrillWithPredicates[] {
     const matchingAvailableDrillAttributes = availableDrillAttributes.filter((candidate) => {
         return attributesWithDrillDown.some((attr) =>
@@ -94,7 +96,7 @@ function getDrillDownDefinitionsWithPredicates(
         );
         const { descendants } = matchingCatalogAttribute!.attribute;
 
-        if (descendants) {
+        if (isAttributeHierarchiesSupported && descendants) {
             return compact(
                 descendants.map((descendant): IImplicitDrillWithPredicates | undefined => {
                     const targetCatalogAttribute = allCatalogAttributesMap.get(descendant);
@@ -198,12 +200,15 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectAttributesWithDrillDown,
         selectEnableKPIDashboardImplicitDrillDown,
         selectAllCatalogAttributesMap,
+        selectSupportsAttributeHierarchies,
         (
             availableDrillTargets,
             attributesWithDrillDown,
             isKPIDashboardImplicitDrillDown,
             allCatalogAttributesMap,
+            isAttributeHierarchiesSupported,
         ) => {
+            // TODO: || new FF
             if (isKPIDashboardImplicitDrillDown) {
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
@@ -211,6 +216,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
                     availableDrillAttributes,
                     attributesWithDrillDown,
                     allCatalogAttributesMap,
+                    isAttributeHierarchiesSupported,
                 );
             }
 
@@ -428,12 +434,19 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectAttributesWithDrillDown,
             selectAttributesWithDisplayFormLink,
             selectAllCatalogAttributesMap,
-            (attributesWithDrillDown, attributesWithLink, allCatalogAttributesMap) => {
+            selectSupportsAttributeHierarchies,
+            (
+                attributesWithDrillDown,
+                attributesWithLink,
+                allCatalogAttributesMap,
+                isAttributeHierarchiesSupported,
+            ) => {
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = getDrillDownDefinitionsWithPredicates(
                     availableDrillAttributes,
                     attributesWithDrillDown,
                     allCatalogAttributesMap,
+                    isAttributeHierarchiesSupported,
                 );
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(
                     availableDrillAttributes,

@@ -102,3 +102,13 @@ export const selectSupportsObjectUris: DashboardSelector<boolean> = createSelect
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsObjectUris ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsAttributeHierarchies}
+ *
+ * @internal
+ */
+export const selectSupportsAttributeHierarchies: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsAttributeHierarchies ?? false,
+);
