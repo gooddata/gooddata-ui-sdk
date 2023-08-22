@@ -3755,7 +3755,6 @@ export interface IDrillDownContext {
 
 // @beta
 export interface IDrillDownDefinition {
-    // (undocumented)
     description?: string;
     origin: LocalIdRef;
     target: ObjRef;

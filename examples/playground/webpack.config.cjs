@@ -14,13 +14,12 @@ const playgroundDefinitions = {
     sec: ["https://secure.gooddata.com", "k26dtejorcqlqf11crn6imbeevp2q4kg", "bear"],
     secure: ["https://secure.gooddata.com", "k26dtejorcqlqf11crn6imbeevp2q4kg", "bear"],
     stg: ["https://staging.intgdc.com", "na1q8a0q4efb7cajbgre9mmm776dr1yv", "bear"],
-    stg2: ["https://staging2.intgdc.com", "o16iocno8zph6jd3r9p8r4bvjz0eexs4", "bear"],
+    stg2: ["https://staging2.intgdc.com", "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg", "bear"],
     stg3: ["https://staging3.intgdc.com", "mbuumy476p78ybcceiru61hcyr8i8lo8", "bear"],
     developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],
-    "tiger-stg": ["https://staging.anywhere.gooddata.com", "6c3a7a4718dc44c68845e7677c444d2e", "tiger"],
-    nudata: ["https://portal.nudatasecurity.com/", "kpwf31wryyibh2fsgspugtefj8r7tp3l", "bear"],
+    "tiger-stg": ["https://staging.anywhere.gooddata.com", "4dc4e033e611421791adea58d34d958c", "tiger"],
 };
 
 module.exports = async (env, argv) => {

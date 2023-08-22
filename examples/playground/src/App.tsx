@@ -2,7 +2,6 @@
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
-import { MyApp } from "./playground/MyApp.js";
 
 function hasCredentialsSetup(): boolean {
     if (BACKEND_TYPE === "tiger") {
@@ -21,7 +20,6 @@ const AppWithBackend: React.FC = () => {
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={WORKSPACE}>
                 {/* Build your playground components under the playground directory.*/}
-                <MyApp />
             </WorkspaceProvider>
         </BackendProvider>
     );

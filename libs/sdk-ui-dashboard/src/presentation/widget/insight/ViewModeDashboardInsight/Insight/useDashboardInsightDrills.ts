@@ -66,12 +66,6 @@ export const useDashboardInsightDrills = ({
         selectConfiguredAndImplicitDrillsByWidgetRef(widget.ref),
     );
 
-    // console.log(
-    //     "🚀 ~ file: useDashboardInsightDrills.ts:68 ~ implicitDrillDefinitions:",
-    //     (widget.ref as any).identifier,
-    //     implicitDrillDefinitions,
-    // );
-
     const onDrill = onDrillFn
         ? (event: IDrillEvent) => {
               const facade = DataViewFacade.for(event.dataView);

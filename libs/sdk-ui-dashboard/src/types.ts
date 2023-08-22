@@ -94,7 +94,9 @@ export interface IDrillDownDefinition {
      */
     target: ObjRef;
 
-    // TODO: use this description to differentiate hierarchies in drill select
+    /**
+     * Target description for drill down.
+     */
     description?: string;
 }
 
