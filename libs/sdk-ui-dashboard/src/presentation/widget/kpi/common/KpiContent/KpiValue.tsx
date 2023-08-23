@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
@@ -117,7 +117,7 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
             return NO_DATA_PLACEHOLDER;
         }
 
-        return formatMetric(this.props.value ?? null, this.props.format, this.props.separators);
+        return formatMetric(this.props.value, this.props.format, this.props.separators);
     }
 
     isValueUnhandledNull() {

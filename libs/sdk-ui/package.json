@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@formatjs/intl-pluralrules": "~1.3.7",
-        "@gooddata/numberjs": "^4.0.3",
+        "@gooddata/number-formatter": "1.0.0",
         "@gooddata/sdk-backend-spi": "^8.12.3-beta.0",
         "@gooddata/sdk-model": "^8.12.3-beta.0",
         "@gooddata/util": "^8.12.3-beta.0",

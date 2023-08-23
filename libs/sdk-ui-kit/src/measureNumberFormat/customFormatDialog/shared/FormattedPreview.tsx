@@ -1,10 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import numberJS from "@gooddata/numberjs";
-import { ISeparators } from "@gooddata/sdk-ui";
-
-const { stripColors, numberFormat, colors2Object }: any = numberJS;
+import { ClientFormatterFacade, IFormattedResult, ISeparators } from "@gooddata/number-formatter";
 
 export const Label: React.FC<{ value?: string; style?: React.CSSProperties; className?: string }> = ({
     value,
@@ -24,6 +21,14 @@ export interface IFormattedPreviewProps {
     className?: string;
 }
 
+function getFormattedNumber(
+    value: number | null,
+    format: string,
+    separators: ISeparators | undefined,
+): IFormattedResult {
+    return ClientFormatterFacade.formatValue(value, format, separators);
+}
+
 export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
     previewNumber,
     format,
@@ -35,20 +40,14 @@ export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
         return <Label />;
     }
 
-    const preview = previewNumber !== null ? previewNumber : "";
+    const style = { color: "", backgroundColor: "" };
 
-    if (!colors) {
-        const label = numberFormat(preview, stripColors(format), undefined, separators);
-        return <Label value={label} className={customClassName} />;
+    const { formattedValue, colors: formattedColors } = getFormattedNumber(previewNumber, format, separators);
+
+    if (colors) {
+        style.color = formattedColors.color;
+        style.backgroundColor = formattedColors.backgroundColor;
     }
 
-    const {
-        label,
-        color = "",
-        backgroundColor = "",
-    } = colors2Object(numberFormat(preview, format, undefined, separators));
-
-    const style = { color, backgroundColor };
-
-    return <Label value={label} className={customClassName} style={style} />;
+    return <Label value={formattedValue} className={customClassName} style={style} />;
 };

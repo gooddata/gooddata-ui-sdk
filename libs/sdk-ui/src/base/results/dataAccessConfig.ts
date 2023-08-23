@@ -1,7 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import { DataValue } from "@gooddata/sdk-model";
-import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
-import isEmpty from "lodash/isEmpty";
+// (C) 2019-2023 GoodData Corporation
+import { DataValue, ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import escape from "lodash/escape";
 import unescape from "lodash/unescape";
 
@@ -18,7 +17,7 @@ export type ValueFormatter = (value: DataValue, format: string) => string;
 export type HeaderTranslator = (value: string) => string;
 
 /**
- * Creates value formatter that uses `@gooddata/numberjs` to format raw measure values according
+ * Creates value formatter that uses `@gooddata/number-formatter` to format raw measure values according
  * to the format string.
  *
  * @remarks
@@ -30,17 +29,14 @@ export type HeaderTranslator = (value: string) => string;
  */
 export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter {
     return (value: DataValue, format: string) => {
-        const valueToFormat = value === null && !isEmpty(format) ? "" : parseFloat(value as string);
-
-        const formattedValue = numberFormat(valueToFormat, format, undefined, separators);
-        const formattedObject: INumberObject = colors2Object(formattedValue);
-
-        return customEscape(formattedObject.label);
+        const valueToFormat = ClientFormatterFacade.convertValue(value);
+        const { formattedValue } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
+        return customEscape(formattedValue);
     };
 }
 
 /**
- * Default configuration for the data access methods. Uses default `@gooddata/numberjs` formatter and no result formatting.
+ * Default configuration for the data access methods. Uses default `@gooddata/number-formatter` formatter and no result formatting.
  *
  * @public
  */

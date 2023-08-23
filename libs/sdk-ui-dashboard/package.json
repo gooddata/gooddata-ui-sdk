@@ -64,7 +64,6 @@
         "validate-locales-ci": "i18n-toolkit"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.3",
         "@gooddata/sdk-backend-base": "^8.12.3-beta.0",
         "@gooddata/sdk-backend-spi": "^8.12.3-beta.0",
         "@gooddata/sdk-model": "^8.12.3-beta.0",
@@ -77,6 +76,7 @@
         "@gooddata/sdk-ui-geo": "^8.12.3-beta.0",
         "@gooddata/util": "^8.12.3-beta.0",
         "@reduxjs/toolkit": ">=1.5.1 <1.8.0",
+        "@gooddata/number-formatter": "1.0.0",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
         "immer": "^9.0.3",
