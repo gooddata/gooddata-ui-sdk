@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { ISeparators } from "@gooddata/numberjs";
+import { ISeparators } from "@gooddata/sdk-model";
 import { getTooltipHtml, shouldShowTooltip, TOOLTIP_MAX_WIDTH } from "../geoChartTooltip";
 
 describe("geoChartTooltip", () => {
@@ -123,12 +123,12 @@ describe("geoChartTooltip", () => {
             </div><div class="gd-viz-tooltip-item">
                 <span class="gd-viz-tooltip-title">&lt;script&gt;alert(&quot;Population&quot;)&lt;/script&gt;</span>
                 <div class="gd-viz-tooltip-value-wraper">
-                    <span class="gd-viz-tooltip-value">&#39;111,00R</span>
+                    <span class="gd-viz-tooltip-value">111,00R</span>
                 </div>
             </div><div class="gd-viz-tooltip-item">
                 <span class="gd-viz-tooltip-title">population [Sum]</span>
                 <div class="gd-viz-tooltip-value-wraper">
-                    <span class="gd-viz-tooltip-value">&#39;105&#39;555&#39;562,33</span>
+                    <span class="gd-viz-tooltip-value">105&#39;555&#39;562,33</span>
                 </div>
             </div></div>
             </div>`);

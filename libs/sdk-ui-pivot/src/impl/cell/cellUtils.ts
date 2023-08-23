@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import cx from "classnames";
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
 
-import { DataValue } from "@gooddata/sdk-model";
+import { DataValue, ISeparators } from "@gooddata/sdk-model";
 
 export interface ITableCellStyle {
     backgroundColor?: string;
@@ -10,12 +10,9 @@ export interface ITableCellStyle {
     fontWeight?: React.CSSProperties["fontWeight"];
 }
 
-// TODO: see if we can use existing / common function for this
-function getFormattedNumber(value: DataValue, format: string, separators: ISeparators | undefined): string {
-    const parsedNumber: string | number =
-        value === null ? "" : typeof value === "string" ? parseFloat(value) : value;
-
-    return numberFormat(parsedNumber, format, undefined, separators);
+function getFormattedNumber(value: DataValue, format?: string, separators?: ISeparators): IFormattedResult {
+    const parsedNumber = ClientFormatterFacade.convertValue(value);
+    return ClientFormatterFacade.formatValue(parsedNumber, format, separators);
 }
 
 // TODO: move to cell class; refactor tests
@@ -35,10 +32,9 @@ export function getMeasureCellFormattedValue(
     format: string,
     separators: ISeparators | undefined,
 ): string {
-    const formattedNumber = getFormattedNumber(value, format, separators);
-    const { label } = colors2Object(formattedNumber);
+    const { formattedValue } = getFormattedNumber(value, format, separators);
 
-    return label === "" ? "–" : label;
+    return formattedValue === "" ? "–" : formattedValue;
 }
 
 export function getMeasureCellStyle(
@@ -47,10 +43,11 @@ export function getMeasureCellStyle(
     separators: ISeparators | undefined,
     applyColor: boolean,
 ): ITableCellStyle {
-    const formattedNumber = getFormattedNumber(value, format, separators);
-    const { backgroundColor, color, label } = colors2Object(formattedNumber);
+    const { formattedValue, colors } = getFormattedNumber(value, format, separators);
+    const color = colors.color;
+    const backgroundColor = colors.backgroundColor;
 
-    if (label === "") {
+    if (formattedValue === "") {
         return {
             color: "var(--gd-table-nullValueColor, var(--gd-palette-complementary-6, #94a1ad))",
             fontWeight: "bold",

@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { colors2Object, INumberObject, numberFormat } from "@gooddata/numberjs";
-import { ISeparators } from "@gooddata/sdk-ui";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { ISeparators } from "@gooddata/sdk-model";
 import escape from "lodash/escape";
 import unescape from "lodash/unescape";
 
@@ -15,8 +15,11 @@ export function formatValueForTooltip(
         return `${val}`;
     }
 
-    const formattedObject: INumberObject = colors2Object(numberFormat(val, format, undefined, separators));
-    return customEscape(formattedObject.label);
+    const convertedValue = ClientFormatterFacade.convertValue(val);
+
+    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, separators);
+
+    return customEscape(formattedValue);
 }
 
 export function getTooltipContentWidth(

@@ -1,5 +1,4 @@
 // (C) 2019-2023 GoodData Corporation
-import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,6 +13,7 @@ import {
     IExecutionConfig,
     LocalIdRef,
     ISortItem,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import {
     ChartType,

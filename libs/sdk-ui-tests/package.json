@@ -60,7 +60,6 @@
         "@gooddata/experimental-workspace": "^8.12.2",
         "@gooddata/live-examples-workspace": "^8.12.2",
         "@gooddata/mock-handling": "^8.12.2",
-        "@gooddata/numberjs": "^4.0.3",
         "@gooddata/reference-workspace": "^8.12.2",
         "@gooddata/sdk-backend-base": "^8.12.2",
         "@gooddata/sdk-backend-mockingbird": "^8.12.2",

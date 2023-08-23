@@ -62,7 +62,7 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.3",
+        "@gooddata/number-formatter": "1.0.0",
         "@gooddata/sdk-backend-spi": "^8.12.2",
         "@gooddata/sdk-model": "^8.12.2",
         "@gooddata/sdk-ui": "^8.12.2",

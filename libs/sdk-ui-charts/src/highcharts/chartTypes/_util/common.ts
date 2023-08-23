@@ -3,7 +3,7 @@ import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import setWith from "lodash/setWith";
-import { numberFormat } from "@gooddata/numberjs";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import escape from "lodash/escape";
 import isEqual from "lodash/fp/isEqual";
 import unescape from "lodash/unescape";
@@ -134,7 +134,7 @@ export function formatLegendLabel(
     numericSymbols: string[],
 ): string {
     if (format?.includes("%")) {
-        return numberFormat(value, "#,#0%");
+        return ClientFormatterFacade.formatValue(value, "#,#0%", undefined).formattedValue;
     }
 
     const sign = Math.sign(value) === -1 ? "-" : "";
@@ -153,7 +153,14 @@ export function formatLegendLabel(
     const b = `[<10000000000]#.#,,,${numericSymbols[2]};[<999500000000]#,,,${numericSymbols[2]};`;
     const t = `[<10000000000000]#.#,,,${numericSymbols[3]};[>=10000000000000]#,,,${numericSymbols[3]}`;
     formattingString += k + m + b + t;
-    return sign + numberFormat(positiveValue, formattingString);
+
+    const formatted = ClientFormatterFacade.formatValue(
+        positiveValue,
+        formattingString,
+        undefined,
+    ).formattedValue;
+
+    return sign + formatted;
 }
 
 export const getPrimaryChartType = (chartOptions: IChartOptions): string => {

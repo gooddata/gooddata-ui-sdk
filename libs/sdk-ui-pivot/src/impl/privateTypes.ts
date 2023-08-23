@@ -1,7 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
+import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths";
-import { ISeparators } from "@gooddata/numberjs";
 import { ColumnResizedCallback, DefaultColumnWidth, IMenu } from "../publicTypes";
 import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
 import { IScrollPosition } from "./stickyRowHandler";
