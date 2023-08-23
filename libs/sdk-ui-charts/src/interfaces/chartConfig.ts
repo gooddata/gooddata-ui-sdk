@@ -1,6 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import { ISeparators } from "@gooddata/numberjs";
-import { IColorPalette, Identifier } from "@gooddata/sdk-model";
+// (C) 2020-2023 GoodData Corporation
+import { IColorPalette, Identifier, ISeparators } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 

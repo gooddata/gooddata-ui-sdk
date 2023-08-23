@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import merge from "lodash/merge";
@@ -9,8 +9,8 @@ import compact from "lodash/compact";
 import every from "lodash/every";
 import isNil from "lodash/isNil";
 import pickBy from "lodash/pickBy";
-import numberJS from "@gooddata/numberjs";
 import cx from "classnames";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -69,8 +69,6 @@ import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
 import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 
-const { stripColors, numberFormat }: any = numberJS;
-
 const EMPTY_DATA: IChartOptionsData = { categories: [], series: [] };
 
 const ALIGN_LEFT = "left";
@@ -97,7 +95,9 @@ export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
 
 const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
-const escapeAngleBrackets = (str: any) => str?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escapeAngleBrackets = (str: any) => {
+    return str?.replace(/</g, "&lt;")?.replace(/>/g, "&gt;");
+};
 
 function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: IAxis): T {
     return (
@@ -372,9 +372,19 @@ function formatLabel(value: any, format: string, config: IChartConfig = {}) {
         return null;
     }
 
-    const stripped = stripColors(format || "");
     const { separators } = config;
-    return escapeAngleBrackets(String(numberFormat(value, stripped, undefined, separators)));
+
+    const parsedNumber: number | null =
+        value === null || undefined ? null : typeof value === "string" ? parseFloat(value) : value;
+
+    // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
+    // Additionally, the test necessitates that the value should remain unformatted.
+    if (!isEmpty(format)) {
+        const formatted = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+        return escapeAngleBrackets(formatted.formattedValue);
+    }
+
+    return parsedNumber.toString();
 }
 
 function labelFormatter(config?: IChartConfig) {

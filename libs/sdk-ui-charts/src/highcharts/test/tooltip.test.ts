@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import { ISeparators } from "@gooddata/numberjs";
+// (C) 2007-2023 GoodData Corporation
+import { ISeparators } from "@gooddata/sdk-model";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "../chartTypes/_chartOptions/tooltip";
 
 const testFormat: string = "#,##0.00";

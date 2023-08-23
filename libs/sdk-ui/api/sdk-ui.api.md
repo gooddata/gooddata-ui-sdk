@@ -53,7 +53,6 @@ import { IResultMeasureHeader } from '@gooddata/sdk-model';
 import { IResultTotalHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
-import { ISeparators as ISeparators_2 } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
@@ -230,7 +229,7 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 
 // @public
-export function createNumberJsFormatter(separators?: ISeparators_2): ValueFormatter;
+export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter;
 
 // @public (undocumented)
 export type DataAccessConfig = {
@@ -1067,7 +1066,7 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     locale?: string;
     measure: IMeasure;
-    separators?: ISeparators_2;
+    separators?: ISeparators;
     workspace?: string;
 }
 
