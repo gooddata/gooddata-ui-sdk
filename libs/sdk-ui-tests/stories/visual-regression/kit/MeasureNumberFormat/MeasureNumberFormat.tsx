@@ -17,7 +17,7 @@ import { ISeparators } from "@gooddata/sdk-ui";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const documentationLink =
-    "https://help.gooddata.com/doc/en/reporting-and-dashboards/reports/working-with-reports/formatting-numbers-in-reports";
+    "https://help.gooddata.com/doc/growth/en/dashboards-and-insights/analytical-designer/work-with-metrics/format-numbers/";
 
 const presets: IFormatPreset[] = [
     {

@@ -1,7 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
-import { DataValue } from "@gooddata/sdk-model";
-import NumberJs from "@gooddata/numberjs";
-import isEmpty from "lodash/isEmpty.js";
+import { DataValue, ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import escape from "lodash/escape.js";
 import unescape from "lodash/unescape.js";
 
@@ -18,7 +17,7 @@ export type ValueFormatter = (value: DataValue, format: string) => string;
 export type HeaderTranslator = (value: string | null) => string;
 
 /**
- * Creates value formatter that uses `@gooddata/numberjs` to format raw measure values according
+ * Creates value formatter that uses `@gooddata/number-formatter` to format raw measure values according
  * to the format string.
  *
  * @remarks
@@ -28,19 +27,16 @@ export type HeaderTranslator = (value: string | null) => string;
  * @param separators - number separators to use. if not specified then `numberjs` defaults will be used
  * @public
  */
-export function createNumberJsFormatter(separators?: NumberJs.ISeparators): ValueFormatter {
+export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter {
     return (value: DataValue, format: string) => {
-        const valueToFormat = value === null && !isEmpty(format) ? "" : parseFloat(value as string);
-
-        const formattedValue = NumberJs.numberFormat(valueToFormat, format, undefined, separators);
-        const formattedObject: NumberJs.INumberObject = NumberJs.colors2Object(formattedValue);
-
-        return customEscape(formattedObject.label);
+        const valueToFormat = ClientFormatterFacade.convertValue(value);
+        const { formattedValue } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
+        return customEscape(formattedValue);
     };
 }
 
 /**
- * Default configuration for the data access methods. Uses default `@gooddata/numberjs` formatter and no result formatting.
+ * Default configuration for the data access methods. Uses default `@gooddata/number-formatter` formatter and no result formatting.
  *
  * @public
  */

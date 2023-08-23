@@ -117,7 +117,7 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
             return NO_DATA_PLACEHOLDER;
         }
 
-        return formatMetric(this.props.value ?? null, this.props.format, this.props.separators);
+        return formatMetric(this.props.value, this.props.format, this.props.separators);
     }
 
     isValueUnhandledNull() {

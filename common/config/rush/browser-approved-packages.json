@@ -127,7 +127,7 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "@gooddata/numberjs",
+      "name": "@gooddata/number-formatter",
       "allowedCategories": [ "production" ]
     },
     {

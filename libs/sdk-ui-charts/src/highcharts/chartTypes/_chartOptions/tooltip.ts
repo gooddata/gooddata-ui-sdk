@@ -1,16 +1,30 @@
 // (C) 2007-2022 GoodData Corporation
-import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { ISeparators } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty.js";
 import { customEscape, percentFormatter } from "../_util/common.js";
 import isNil from "lodash/isNil.js";
 import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 
 export function formatValueForTooltip(
-    val: string | number,
+    value: string | number,
     format: string,
     separators?: ISeparators,
 ): string {
-    const formattedObject: INumberObject = colors2Object(numberFormat(val, format, undefined, separators));
-    return customEscape(formattedObject.label);
+    const parsedNumber = ClientFormatterFacade.convertValue(value);
+
+    // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
+    // Additionally, the test necessitates that the value should remain unformatted.
+    if (!isEmpty(format)) {
+        const result = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+        return customEscape(result.formattedValue);
+    }
+
+    if (parsedNumber === null || parsedNumber === undefined) {
+        return "";
+    } else {
+        return parsedNumber.toString();
+    }
 }
 
 export function getFormattedValueForTooltip(

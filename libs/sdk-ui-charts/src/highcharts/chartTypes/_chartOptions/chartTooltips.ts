@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import { IChartConfig } from "../../../interfaces/index.js";
-import { colors2Object, numberFormat } from "@gooddata/numberjs";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe.js";
 import {
     customEscape,
@@ -217,12 +217,16 @@ export function generateTooltipHeatmapFn(
 ): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
+        if (val === null) {
+            return "-";
+        }
+
+        return ClientFormatterFacade.formatValue(val, format, separators).formattedValue;
     };
 
     return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
         const formattedValue = customEscape(
-            formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
+            formatValue(point.value, point.series.userOptions.dataLabels.formatGD),
         );
         const textData = [];
 

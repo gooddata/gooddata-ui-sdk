@@ -51,18 +51,18 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.3",
+        "@gooddata/number-formatter": "^1.0.0",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "classnames": "^2.3.1",
+        "default-import": "^1.1.5",
         "lodash": "^4.17.19",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",
-        "tslib": "^2.5.0",
-        "default-import": "^1.1.5"
+        "tslib": "^2.5.0"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",

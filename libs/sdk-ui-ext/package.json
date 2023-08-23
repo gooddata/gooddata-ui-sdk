@@ -60,7 +60,6 @@
         "validate-locales-ci": "i18n-toolkit"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.3",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-embedding": "workspace:*",
@@ -76,6 +75,7 @@
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
+        "default-import": "^1.1.5",
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.19",
         "lru-cache": "^9.1.1",
@@ -86,8 +86,7 @@
         "react-transition-group": "^4.4.2",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0",
-        "uuid": "^8.3.2",
-        "default-import": "^1.1.5"
+        "uuid": "^8.3.2"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",

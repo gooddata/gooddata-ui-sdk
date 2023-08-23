@@ -1053,7 +1053,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1114,7 +1114,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/util': link:../util
@@ -1242,7 +1242,7 @@ importers:
   ../../libs/sdk-ui-charts:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -1306,7 +1306,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -1376,7 +1376,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1458,7 +1458,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
@@ -1548,7 +1548,6 @@ importers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
       '@gooddata/live-examples-workspace': workspace:*
-      '@gooddata/numberjs': ^4.0.3
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1624,7 +1623,6 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-embedding': link:../sdk-embedding
@@ -1707,7 +1705,6 @@ importers:
   ../../libs/sdk-ui-filters:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/numberjs': ^4.0.3
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -1775,7 +1772,6 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -1849,7 +1845,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/live-examples-workspace': workspace:*
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-model': workspace:*
@@ -1905,7 +1901,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -1968,7 +1964,7 @@ importers:
     specifiers:
       '@aaronhayes/react-use-hubspot-form': ^2.0.1
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2055,7 +2051,7 @@ importers:
       vitest-dom: 0.1.0
     dependencies:
       '@aaronhayes/react-use-hubspot-form': 2.1.1_biqbaboplfbrettd7655fr4n2y
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2236,7 +2232,7 @@ importers:
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2295,7 +2291,7 @@ importers:
       '@ag-grid-community/all-modules': 27.3.0
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0_ynmsds3wz3224xgdrl3ds7i2jm
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2366,7 +2362,6 @@ importers:
       '@gooddata/experimental-workspace': workspace:*
       '@gooddata/live-examples-workspace': workspace:*
       '@gooddata/mock-handling': workspace:*
-      '@gooddata/numberjs': ^4.0.3
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -2455,7 +2450,6 @@ importers:
       '@gooddata/experimental-workspace': link:../../tools/experimental-workspace
       '@gooddata/live-examples-workspace': link:../../tools/live-examples-workspace
       '@gooddata/mock-handling': link:../../tools/mock-handling
-      '@gooddata/numberjs': 4.0.3
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-mockingbird': link:../sdk-backend-mockingbird
@@ -2809,7 +2803,7 @@ importers:
   ../../libs/sdk-ui-vis-commons:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/numberjs': ^4.0.3
+      '@gooddata/number-formatter': ^1.0.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2861,7 +2855,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/numberjs': 4.0.3
+      '@gooddata/number-formatter': 1.0.0
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -6111,9 +6105,11 @@ packages:
       - debug
       - encoding
 
-  /@gooddata/numberjs/4.0.3:
-    resolution: {integrity: sha512-QiSWTu4z7ZmIYta+KRsPHE1gM6UcoiBn6EIQyryTyOLNd3JSBJ/dywXT5BplQAetTxXsXMwyEQWl4IIK8x39cA==}
-    engines: {node: '>=0.6.0'}
+  /@gooddata/number-formatter/1.0.0:
+    resolution: {integrity: sha512-PUMNaX7crTLvUkb7GIwerwzGQyaj7sZaZVW0ATQut/GiBdOeS3lsDGMylbX31xCVXCqBDy8aay9niHe53Abigg==}
+    dependencies:
+      ts-invariant: 0.7.5
+      tslib: 2.5.0
     dev: false
 
   /@gooddata/sdk-model/8.12.1:
