@@ -9,8 +9,8 @@ import compact from "lodash/compact.js";
 import every from "lodash/every.js";
 import isNil from "lodash/isNil.js";
 import pickBy from "lodash/pickBy.js";
-import numberJS from "@gooddata/numberjs";
 import cx from "classnames";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
 import { styleVariables } from "./styles/variables.js";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -72,8 +72,6 @@ import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 
-const { stripColors, numberFormat }: any = numberJS;
-
 const EMPTY_DATA: IChartOptionsData = { categories: [], series: [] };
 
 const ALIGN_LEFT = "left";
@@ -100,7 +98,9 @@ export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
 
 const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
-const escapeAngleBrackets = (str: any) => str?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escapeAngleBrackets = (str: any) => {
+    return str?.replace(/</g, "&lt;")?.replace(/>/g, "&gt;");
+};
 
 function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: IAxis): T {
     return (
@@ -379,9 +379,19 @@ function formatLabel(value: any, format: string, config: IChartConfig = {}) {
         return null;
     }
 
-    const stripped = stripColors(format || "");
     const { separators } = config;
-    return escapeAngleBrackets(String(numberFormat(value, stripped, undefined, separators)));
+
+    const parsedNumber: number | null =
+        value === null || undefined ? null : typeof value === "string" ? parseFloat(value) : value;
+
+    // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
+    // Additionally, the test necessitates that the value should remain unformatted.
+    if (!isEmpty(format)) {
+        const formatted = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+        return escapeAngleBrackets(formatted.formattedValue);
+    }
+
+    return parsedNumber.toString();
 }
 
 function labelFormatter(config?: IChartConfig) {

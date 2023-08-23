@@ -29,7 +29,7 @@
     "pnpmVersion": "7.32.0",
 
     // "npmVersion": "4.5.0",
-    // "yarnVersion": "1.9.4",   
+    // "yarnVersion": "1.9.4",
 
     /**
      * Older releases of the Node.js engine may be missing features required by your system.

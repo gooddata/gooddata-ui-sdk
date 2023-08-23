@@ -1,18 +1,25 @@
 // (C) 2007-2020 GoodData Corporation
-import { ISeparators } from "@gooddata/sdk-ui";
-import { stripColors, numberFormat, containsNullConditionalFormat } from "@gooddata/numberjs";
+import { ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import isNull from "lodash/isNull.js";
 
 export const HYPHEN = "–"; // EN DASH (not usual 'minus')
 
 export function formatMetric(
-    number: string | number | null,
-    format = "#,##0.00",
-    separators: ISeparators | undefined,
+    number: string | number | null | undefined,
+    format?: string,
+    separators?: ISeparators,
 ): string {
-    return numberFormat(isNull(number) ? "" : number, stripColors(format), undefined, separators);
+    const convertedValue = ClientFormatterFacade.convertValue(number);
+
+    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, separators);
+
+    return formattedValue;
 }
 
-export function isValueUnhandledNull(value: unknown, format: string): boolean {
-    return isNull(value) && !containsNullConditionalFormat(format);
+export function isValueUnhandledNull(value: string | number | null | undefined, format: string): boolean {
+    const convertedValue = ClientFormatterFacade.convertValue(value);
+    const { nullConditionFormatter } = ClientFormatterFacade.formatValue(convertedValue, format);
+
+    return isNull(value) && !nullConditionFormatter;
 }

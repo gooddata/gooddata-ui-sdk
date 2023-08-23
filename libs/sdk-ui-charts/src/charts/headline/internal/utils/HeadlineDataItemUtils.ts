@@ -3,9 +3,9 @@ import { RefObject } from "react";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 import isNaN from "lodash/isNaN.js";
-
+import { ISeparators } from "@gooddata/sdk-model";
 import { getHeadlineResponsiveClassName } from "@gooddata/sdk-ui-vis-commons";
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
 
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../interfaces/Headlines.js";
@@ -14,16 +14,20 @@ const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
 const PERCENTAGE_VALUE_LIMIT = 999;
 
-function processStringForNumberJs(value: string | null, format: string) {
-    return value === null && !isEmpty(format)
-        ? "" // return empty string for null value for number.js to apply [=null] format
-        : parseFloat(value as string);
-}
-
 function formatValueToLabelWithColors(value: string | null, format: string, separators?: ISeparators) {
-    const processedValue = processStringForNumberJs(value, format);
-    const formattedValue = numberFormat(processedValue, format, undefined, separators);
-    return colors2Object(formattedValue);
+    const parsedNumber = ClientFormatterFacade.convertValue(value);
+
+    // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
+    // Additionally, the test necessitates that the value should remain unformatted.
+    if (!isEmpty(format)) {
+        return ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+    }
+
+    if (parsedNumber === null || parsedNumber === undefined) {
+        return { formattedValue: "", colors: {} };
+    } else {
+        return { formattedValue: parsedNumber.toString(), colors: {} };
+    }
 }
 
 function buildCssStyle(color?: string, backgroundColor?: string) {
@@ -58,15 +62,19 @@ export function formatItemValue(
     config: IChartConfig = {},
 ): IFormattedHeadlineDataItem {
     const { separators } = config;
-    const { label, color, backgroundColor } = formatValueToLabelWithColors(
+    const { formattedValue: label, colors } = formatValueToLabelWithColors(
         item.value,
         item.format,
         separators,
     );
+
     const isValueEmpty = label === INVALID_VALUE || label === "";
     const value = isValueEmpty ? DEFAULT_VALUE_WHEN_EMPTY : label;
+
+    const usedColors: ClientColors = isValueEmpty ? {} : colors;
+
     return {
-        cssStyle: buildCssStyle(color, backgroundColor),
+        cssStyle: buildCssStyle(usedColors.color, usedColors.backgroundColor),
         value,
         isValueEmpty,
     };

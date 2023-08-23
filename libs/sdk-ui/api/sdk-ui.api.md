@@ -57,7 +57,6 @@ import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
-import NumberJs from '@gooddata/numberjs';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
@@ -189,7 +188,7 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 
 // @public
-export function createNumberJsFormatter(separators?: NumberJs.ISeparators): ValueFormatter;
+export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter;
 
 // @public (undocumented)
 export type DataAccessConfig = {
@@ -976,7 +975,7 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     locale?: string;
     measure: IMeasure;
-    separators?: NumberJs.ISeparators;
+    separators?: ISeparators;
     workspace?: string;
 }
 

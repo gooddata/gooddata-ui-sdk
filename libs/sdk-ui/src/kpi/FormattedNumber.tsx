@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import NumberJs from "@gooddata/numberjs";
+import { ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
 /**
  * @internal
@@ -9,10 +10,8 @@ export interface IFormattedNumberProps {
     className?: string;
     value: number | string;
     format?: string;
-    separators?: NumberJs.ISeparators;
+    separators?: ISeparators;
 }
-
-const DEFAULT_FORMAT = "#,#.##";
 
 /**
  * @internal
@@ -20,11 +19,19 @@ const DEFAULT_FORMAT = "#,#.##";
 export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
     className,
     value,
-    format = DEFAULT_FORMAT,
+    format,
     separators,
 }) => {
-    const formattedNumber = NumberJs.numberFormat(value, format, undefined, separators);
-    const { label, color, backgroundColor } = NumberJs.colors2Object(formattedNumber);
+    const valueToFormat = ClientFormatterFacade.convertValue(value);
+
+    const { formattedValue: label, colors } = ClientFormatterFacade.formatValue(
+        valueToFormat,
+        format,
+        separators,
+    );
+
+    const { color, backgroundColor } = colors;
+
     return (
         <span className={className} style={{ color, backgroundColor }}>
             {label}

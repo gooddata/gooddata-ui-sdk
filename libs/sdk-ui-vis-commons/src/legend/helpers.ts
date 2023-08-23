@@ -4,10 +4,10 @@ import head from "lodash/head.js";
 import last from "lodash/last.js";
 import inRange from "lodash/inRange.js";
 import isEqual from "lodash/isEqual.js";
-import { numberFormat } from "@gooddata/numberjs";
 import { IColorLegendItem, IColorLegendSize } from "./types.js";
 import { LEFT, RIGHT } from "./PositionTypes.js";
 import { ITheme } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { parseRGBString } from "../coloring/color.js";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
@@ -581,6 +581,11 @@ export function getColorLegendConfiguration(
 export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
 export const LEGEND_SEPARATOR = "legendSeparator";
 
+function getFormattedNumber(value: number | null, format: string): string {
+    const result = ClientFormatterFacade.formatValue(value, format);
+    return result.formattedValue;
+}
+
 /**
  * @internal
  */
@@ -591,7 +596,7 @@ export function formatLegendLabel(
     numericSymbols: string[],
 ): string {
     if (format?.includes("%")) {
-        return numberFormat(value, "#,#0%");
+        return getFormattedNumber(value, "#,#0%");
     }
 
     const sign = Math.sign(value) === -1 ? "-" : "";
@@ -610,7 +615,7 @@ export function formatLegendLabel(
     const b = `[<10000000000]#.#,,,${numericSymbols[2]};[<999500000000]#,,,${numericSymbols[2]};`;
     const t = `[<10000000000000]#.#,,,${numericSymbols[3]};[>=10000000000000]#,,,${numericSymbols[3]}`;
     formattingString += k + m + b + t;
-    return sign + numberFormat(positiveValue, formattingString);
+    return sign + getFormattedNumber(positiveValue, formattingString);
 }
 
 /**
