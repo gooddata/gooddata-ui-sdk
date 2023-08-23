@@ -92,6 +92,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private readonly settings?: ISettings;
     private readonly renderFun: RenderFunction;
     private readonly unmountFun: UnmountFunction;
+    private keepPrimaryDerivedMeasureOnly = false;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -128,6 +129,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         if (mappedReferencePoint) {
             newReferencePoint = mappedReferencePoint;
+            const primaryMeasure = mappedReferencePoint.buckets[0].items[0];
+            this.keepPrimaryDerivedMeasureOnly =
+                !primaryMeasure || !hasDerivedBucketItems(primaryMeasure, mappedReferencePoint.buckets);
         } else {
             const numberOfSecondaryMeasure =
                 newReferencePoint.uiConfig.buckets[BucketNames.SECONDARY_MEASURES].itemsLimit;
@@ -138,13 +142,19 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             );
             const allMeasures = getAllItemsByType(limitedBuckets, [METRIC]);
             const primaryMeasure = allMeasures.length > 0 ? allMeasures[0] : null;
-            const secondaryMeasure =
+            let secondaryMeasures =
                 allMeasures.length > 1 ? allMeasures.slice(1, numberOfSecondaryMeasure + 1) : null;
+
+            const primaryDerivedMeasure = findDerivedBucketItem(primaryMeasure, allMeasures);
+            if (this.keepPrimaryDerivedMeasureOnly && primaryDerivedMeasure) {
+                secondaryMeasures = [primaryDerivedMeasure];
+            }
+            this.keepPrimaryDerivedMeasureOnly = !primaryDerivedMeasure;
 
             newReferencePoint = setHeadlineRefPointBuckets(
                 newReferencePoint,
                 primaryMeasure,
-                secondaryMeasure,
+                secondaryMeasures,
             );
         }
 
