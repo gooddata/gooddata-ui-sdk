@@ -24,9 +24,12 @@ export { Headline, IHeadlineProps, IHeadlineBucketProps } from "./headline/Headl
 export { CoreHeadline, ICoreHeadlineExtendedProps } from "./headline/CoreHeadline.js";
 export { createHeadlineProvider } from "./headline/HeadlineProviderFactory.js";
 export {
+    DEFAULT_COMPARISON_PALETTE,
     ICalculationDefaultValue,
+    ComparisonColorType,
     getCalculationValuesDefault,
     getComparisonFormat,
+    getComparisonRgbColor,
 } from "./headline/headlineHelper.js";
 export {
     IHeadlineProvider,

@@ -28,6 +28,7 @@ const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryItem, cu
         <div className={classNames} style={customStyle}>
             <BaseHeadlineDataItem
                 dataItem={primaryItem.data}
+                evaluationType={primaryItem.evaluationType}
                 elementType={primaryItem.elementType}
                 shouldHideTitle={true}
             />

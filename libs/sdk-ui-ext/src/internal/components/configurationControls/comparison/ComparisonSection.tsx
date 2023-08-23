@@ -2,6 +2,8 @@
 import React from "react";
 
 import { PushDataCallback, ISeparators } from "@gooddata/sdk-ui";
+import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 import { comparisonMessages } from "../../../../locales.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "./ComparisonValuePath.js";
@@ -10,8 +12,8 @@ import { IComparisonControlProperties } from "../../../interfaces/ControlPropert
 import ConfigSection from "../ConfigSection.js";
 import CalculationControl from "./calculation/CalculationControl.js";
 import ValueSubSection from "./values/ValueSubSection.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
 import { getComparisonDefaultFormat } from "../../../utils/comparisonHelper.js";
+import IndicatorSubSection from "./indicators/IndicatorSubSection.js";
 
 interface IComparisonSectionProps {
     comparisonDisabled: boolean;
@@ -19,6 +21,7 @@ interface IComparisonSectionProps {
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     propertiesMeta: Record<string, { collapsed: boolean }>;
+    colorPalette: IColorPalette;
     pushData: PushDataCallback;
 }
 
@@ -28,6 +31,7 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     separators,
     properties,
     propertiesMeta,
+    colorPalette,
     pushData,
 }) => {
     const toggledOn = properties.controls?.comparison?.enabled;
@@ -58,6 +62,12 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
                 defaultFormat={defaultFormat}
                 separators={separators}
                 properties={properties}
+                pushData={pushData}
+            />
+            <IndicatorSubSection
+                sectionDisabled={sectionDisabled}
+                properties={properties}
+                colorPalette={colorPalette}
                 pushData={pushData}
             />
         </ConfigSection>

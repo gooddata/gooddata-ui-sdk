@@ -3,7 +3,7 @@ import React from "react";
 import { afterAll, beforeEach, describe, expect, it, SpyInstance, vi } from "vitest";
 import { render } from "@testing-library/react";
 import BaseHeadline from "../BaseHeadline.js";
-import { TEST_BASE_HEADLINE_ITEM } from "./TestData.fixtures.js";
+import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import * as PrimarySection from "../PrimarySection.js";
 import * as CompareSection from "../CompareSection.js";

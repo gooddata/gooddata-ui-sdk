@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 
 import { withTitle } from "../withTitle.js";
 import { IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
-import { TEST_DATA_ITEM, HEADLINE_TITLE_WRAPPER_SELECTOR } from "../../tests/TestData.fixtures.js";
+import { TEST_DATA_ITEM, HEADLINE_TITLE_WRAPPER_SELECTOR } from "../../../../tests/TestData.fixtures.js";
 
 describe("withTitle", () => {
     const WrappedComponent = vi.fn();

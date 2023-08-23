@@ -7,9 +7,16 @@ export type BaseHeadlineDataItemComponentType = ComponentType<
     IBaseHeadlineDataItemProps & IWithDrillableItemProps & IWithTitleProps
 >;
 
+export enum EvaluationType {
+    NEGATIVE_VALUE = "negative",
+    EQUALS_VALUE = "equals",
+    POSITIVE_VALUE = "positive",
+}
+
 export interface IBaseHeadlineItem {
     data: IHeadlineDataItem;
     baseHeadlineDataItemComponent: BaseHeadlineDataItemComponentType;
+    evaluationType?: EvaluationType;
     elementType?: HeadlineElementType;
 }
 
@@ -21,6 +28,7 @@ export interface IBaseHeadlineData {
 
 export interface IBaseHeadlineDataItemProps {
     dataItem: IHeadlineDataItem;
+    evaluationType: EvaluationType;
 }
 
 export interface IWithDrillableItemProps {

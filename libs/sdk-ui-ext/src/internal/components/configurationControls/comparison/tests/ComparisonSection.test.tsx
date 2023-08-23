@@ -3,7 +3,7 @@ import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculationType, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
 import ComparisonSection from "../ComparisonSection.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
@@ -33,6 +33,7 @@ describe("ComparisonSection", () => {
             defaultCalculationType: CalculationType.RATIO,
             separators: TEST_DEFAULT_SEPARATOR,
             pushData,
+            colorPalette: DEFAULT_COMPARISON_PALETTE,
             ...params,
         };
 

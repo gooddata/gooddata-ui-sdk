@@ -1,5 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
+import { IBucket, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import { CalculationType, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import {
     buildHeadlineVisualizationConfig,
@@ -9,9 +14,6 @@ import {
     isComparisonEnabled,
 } from "../headlineUiConfigHelper.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
-import { describe, expect, it } from "vitest";
-import { IBucket, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
-import { CalculationType, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
@@ -172,6 +174,7 @@ describe("headlineUiConfigHelper", () => {
             expect(buildHeadlineVisualizationConfig(properties, {}, { config })).toEqual({
                 ...config,
                 ...properties.controls,
+                colorPalette: DEFAULT_COMPARISON_PALETTE,
             });
         });
     });

@@ -197,4 +197,17 @@
             white-space: nowrap;
         }
     }
+
+    .comparison-headline-value-wrapper {
+        .comparison-headline-value {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &::before {
+                font-size: 80%;
+                font-weight: 900;
+            }
+        }
+    }
 }

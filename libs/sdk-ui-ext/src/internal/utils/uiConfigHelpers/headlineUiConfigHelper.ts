@@ -16,14 +16,15 @@ import {
 } from "@gooddata/sdk-model";
 import {
     CalculationType,
+    DEFAULT_COMPARISON_PALETTE,
     IChartConfig,
     IComparison,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 
 import {
-    IUiConfig,
     IReferencePoint,
+    IUiConfig,
     IVisProps,
     IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
@@ -32,7 +33,7 @@ import { BUCKETS } from "../../constants/bucket.js";
 
 import { hasNoMeasures, hasNoSecondaryMeasures } from "../bucketRules.js";
 
-import { setBucketTitles, getItemsCount } from "../bucketHelper.js";
+import { getItemsCount, setBucketTitles } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
 import { messages } from "../../../locales.js";
 import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
@@ -105,9 +106,10 @@ export function buildHeadlineVisualizationConfig(
     const { config, customVisualizationConfig } = options;
 
     const supportedProperties = getHeadlineSupportedProperties(visualizationProperties);
-    const fullConfig = {
+    const fullConfig: IChartConfig = {
         ...config,
         ...supportedProperties.controls,
+        colorPalette: DEFAULT_COMPARISON_PALETTE,
     };
 
     return updateConfigWithSettings({ ...fullConfig, ...customVisualizationConfig }, settings);

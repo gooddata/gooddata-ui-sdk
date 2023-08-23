@@ -2,6 +2,7 @@
 import { AxisType } from "./AxisType.js";
 import { IVisualizationProperties } from "./Visualization.js";
 import { IPushData, ISeparators } from "@gooddata/sdk-ui";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 export interface IConfigItemSubsection {
     disabled: boolean;
@@ -13,4 +14,5 @@ export interface IConfigItemSubsection {
 
 export interface IHeadlinePanelConfig {
     separators: ISeparators;
+    comparisonColorPalette: IColorPalette;
 }
