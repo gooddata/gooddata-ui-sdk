@@ -6,6 +6,7 @@ import {
     getCalculationValuesDefault,
     getComparisonFormat,
     IColorConfig,
+    ICalculationDefaultValue,
 } from "@gooddata/sdk-ui-charts";
 import { IFormatPreset, IFormatTemplate } from "@gooddata/sdk-ui-kit";
 
@@ -15,12 +16,12 @@ import { comparisonMessages } from "../../locales.js";
 
 const NUMBER_FORMAT_PRESET_INHERIT = "inherit";
 
-export function getComparisonDefaultFormat(
+export function getComparisonDefaultValues(
     defaultCalculationType: CalculationType,
     properties: IVisualizationProperties<HeadlineControlProperties>,
-): string {
+): ICalculationDefaultValue {
     const calculationType = properties?.controls?.comparison?.calculationType || defaultCalculationType;
-    return getCalculationValuesDefault(calculationType)?.defaultFormat;
+    return getCalculationValuesDefault(calculationType);
 }
 
 export function getNumberFormat(

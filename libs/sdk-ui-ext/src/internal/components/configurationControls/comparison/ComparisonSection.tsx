@@ -12,8 +12,9 @@ import { IComparisonControlProperties } from "../../../interfaces/ControlPropert
 import ConfigSection from "../ConfigSection.js";
 import CalculationControl from "./calculation/CalculationControl.js";
 import ValueSubSection from "./values/ValueSubSection.js";
-import { getComparisonDefaultFormat } from "../../../utils/comparisonHelper.js";
+import { getComparisonDefaultValues } from "../../../utils/comparisonHelper.js";
 import IndicatorSubSection from "./indicators/IndicatorSubSection.js";
+import LabelSubSection from "./label/LabelSubSection.js";
 
 interface IComparisonSectionProps {
     comparisonDisabled: boolean;
@@ -37,7 +38,7 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     const toggledOn = properties.controls?.comparison?.enabled;
     const sectionDisabled = comparisonDisabled || !toggledOn;
 
-    const defaultFormat = getComparisonDefaultFormat(defaultCalculationType, properties);
+    const { defaultFormat, defaultLabelKey } = getComparisonDefaultValues(defaultCalculationType, properties);
 
     return (
         <ConfigSection
@@ -68,6 +69,12 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
                 sectionDisabled={sectionDisabled}
                 properties={properties}
                 colorPalette={colorPalette}
+                pushData={pushData}
+            />
+            <LabelSubSection
+                sectionDisabled={sectionDisabled}
+                defaultLabelKey={defaultLabelKey}
+                properties={properties}
                 pushData={pushData}
             />
         </ConfigSection>

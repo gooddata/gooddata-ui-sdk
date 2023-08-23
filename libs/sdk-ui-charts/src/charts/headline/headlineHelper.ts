@@ -2,7 +2,7 @@
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { CalculationType } from "../../interfaces/index.js";
+import { CalculationType, ILabelConfig } from "../../interfaces/index.js";
 
 /**
  * @internal
@@ -75,6 +75,10 @@ const getComparisonFormat = (providedFormat: string, defaultFormat: string): str
     return providedFormat === undefined ? defaultFormat : providedFormat;
 };
 
+const getComparisonTitle = (labelConfig: ILabelConfig, defaultLabel: string): string => {
+    return labelConfig?.unconditionalValue || defaultLabel;
+};
+
 /**
  * Method to retrieve default values corresponding to the calculation type.
  *
@@ -125,6 +129,7 @@ export {
     DEFAULT_COMPARISON_PALETTE,
     getCalculationValuesDefault,
     getComparisonFormat,
+    getComparisonTitle,
     getComparisonRgbColor,
     ICalculationDefaultValue,
     ComparisonColorType,

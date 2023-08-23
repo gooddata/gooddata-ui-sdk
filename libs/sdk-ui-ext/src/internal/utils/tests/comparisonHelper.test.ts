@@ -3,46 +3,93 @@
 import { describe, expect, it } from "vitest";
 import { CalculationType } from "@gooddata/sdk-ui-charts";
 import {
-    getComparisonDefaultFormat,
+    getComparisonDefaultValues,
     getPresets,
     getTemplates,
     isComparisonDefaultColors,
 } from "../comparisonHelper.js";
-import { createTestProperties } from "../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../interfaces/ControlProperties.js";
 import { createIntlMock } from "../../tests/testIntlProvider.js";
 import { IColor } from "@gooddata/sdk-model";
+import { createTestProperties } from "../../tests/testDataProvider.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 describe("comparisonHelper", () => {
-    describe("getComparisonDefaultFormat", () => {
+    describe("getComparisonDefaultValues", () => {
         const PERCENT_ROUNDED_FORMAT = "#,##0%";
-
-        it("Should use default calculation type to get default format in case calculation is empty", () => {
-            expect(getComparisonDefaultFormat(CalculationType.DIFFERENCE, {})).toEqual(null);
-            expect(getComparisonDefaultFormat(CalculationType.CHANGE, {})).toEqual(PERCENT_ROUNDED_FORMAT);
-            expect(getComparisonDefaultFormat(CalculationType.RATIO, {})).toEqual(PERCENT_ROUNDED_FORMAT);
+        const CHANGE_LABEL_KEY = "visualizations.headline.comparison.title.change";
+        const RATIO_LABEL_KEY = "visualizations.headline.comparison.title.ratio";
+        const DIFFERENCE_LABEL_KEY = "visualizations.headline.comparison.title.difference";
+        const differenceProperties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                calculationType: CalculationType.DIFFERENCE,
+            },
         });
+        const changeProperties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                calculationType: CalculationType.CHANGE,
+            },
+        });
+        const ratioProperties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                calculationType: CalculationType.RATIO,
+            },
+        });
+        const SPECS: any = [
+            [
+                "Should use default calculation type [DIFFERENCE]",
+                { calculationType: CalculationType.DIFFERENCE, props: {} },
+                { format: null, label: DIFFERENCE_LABEL_KEY },
+            ],
+            [
+                "Should use default calculation type [CHANGE]",
+                { calculationType: CalculationType.CHANGE, props: {} },
+                { format: PERCENT_ROUNDED_FORMAT, label: CHANGE_LABEL_KEY },
+            ],
+            [
+                "Should use default calculation type [RATIO]",
+                { calculationType: CalculationType.RATIO, props: {} },
+                { format: PERCENT_ROUNDED_FORMAT, label: RATIO_LABEL_KEY },
+            ],
+            [
+                "Should use provided calculation type [DIFFERENCE]",
+                { calculationType: null, props: differenceProperties },
+                { format: null, label: DIFFERENCE_LABEL_KEY },
+            ],
+            [
+                "Should use provided calculation type [CHANGE]",
+                { calculationType: null, props: changeProperties },
+                { format: PERCENT_ROUNDED_FORMAT, label: CHANGE_LABEL_KEY },
+            ],
+            [
+                "Should use provided calculation type [RATIO]",
+                { calculationType: null, props: ratioProperties },
+                { format: PERCENT_ROUNDED_FORMAT, label: RATIO_LABEL_KEY },
+            ],
+        ];
 
-        it("Should use provided calculation type to get default format", () => {
-            const properties = createTestProperties<IComparisonControlProperties>({
-                comparison: {
-                    enabled: true,
+        it.each(SPECS)(
+            "%s",
+            (
+                _condition: string,
+                data: {
+                    calculationType: CalculationType;
+                    props: IVisualizationProperties<IComparisonControlProperties>;
                 },
-            });
+                expected: { format: string; label: string },
+            ) => {
+                const { defaultFormat, defaultLabelKey } = getComparisonDefaultValues(
+                    data.calculationType,
+                    data.props,
+                );
 
-            properties.controls.comparison.calculationType = CalculationType.CHANGE;
-            expect(getComparisonDefaultFormat(CalculationType.DIFFERENCE, properties)).toEqual(
-                PERCENT_ROUNDED_FORMAT,
-            );
-
-            properties.controls.comparison.calculationType = CalculationType.RATIO;
-            expect(getComparisonDefaultFormat(CalculationType.DIFFERENCE, properties)).toEqual(
-                PERCENT_ROUNDED_FORMAT,
-            );
-
-            properties.controls.comparison.calculationType = CalculationType.DIFFERENCE;
-            expect(getComparisonDefaultFormat(CalculationType.RATIO, properties)).toEqual(null);
-        });
+                expect(defaultFormat).toEqual(expected.format);
+                expect(defaultLabelKey).toEqual(expected.label);
+            },
+        );
     });
 
     describe("getPresets", () => {
