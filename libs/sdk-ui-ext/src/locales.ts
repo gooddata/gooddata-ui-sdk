@@ -299,4 +299,6 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     colorsConfigNegative: {
         id: "properties.comparison.indicator.colorConfig.negative",
     },
+    labelSubSectionTitle: { id: "properties.comparison.labelSubSection.title" },
+    labelNameTitle: { id: "properties.comparison.labelName.title" },
 });

@@ -1145,6 +1145,58 @@ describe("PluggableHeadline2", () => {
                         },
                     ]);
                 });
+
+                it("should pick first master to primary and its derived to secondary bucket when adding derived measure in the first time", async () => {
+                    const headline = createComponent();
+                    const referencePoint = createReferencePointWithDateFilter([
+                        {
+                            localIdentifier: "measures",
+                            items: [
+                                referencePointMocks.masterMeasureItems[0],
+                                referencePointMocks.masterMeasureItems[1],
+                            ],
+                        },
+                    ]);
+                    const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
+
+                    expect(extendedReferencePoint.buckets).toEqual([
+                        {
+                            localIdentifier: "measures",
+                            items: [referencePointMocks.masterMeasureItems[0]],
+                        },
+                        {
+                            localIdentifier: "secondary_measures",
+                            items: [referencePointMocks.masterMeasureItems[1]],
+                        },
+                    ]);
+
+                    const referencePoint2 = createReferencePointWithDateFilter([
+                        {
+                            localIdentifier: "measures",
+                            items: [
+                                referencePointMocks.masterMeasureItems[0],
+                                referencePointMocks.derivedMeasureItems[0],
+                            ],
+                        },
+                        {
+                            localIdentifier: "secondary_measures",
+                            items: [referencePointMocks.masterMeasureItems[1]],
+                        },
+                    ]);
+
+                    const extendedReferencePoint2 = await headline.getExtendedReferencePoint(referencePoint2);
+
+                    expect(extendedReferencePoint2.buckets).toEqual([
+                        {
+                            localIdentifier: "measures",
+                            items: [referencePointMocks.masterMeasureItems[0]],
+                        },
+                        {
+                            localIdentifier: "secondary_measures",
+                            items: [referencePointMocks.derivedMeasureItems[0]],
+                        },
+                    ]);
+                });
             });
 
             describe("mixed known and unknown buckets", () => {

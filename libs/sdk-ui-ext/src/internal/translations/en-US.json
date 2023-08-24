@@ -1622,5 +1622,15 @@
         "value": "Primary < Secondary",
         "comment": "The label of the color item will be set when the primary value is less than the secondary value.",
         "limit": 0
+    },
+    "properties.comparison.labelSubSection.title": {
+        "value": "Label",
+        "comment": "The label of comparison label sub section.",
+        "limit": 0
+    },
+    "properties.comparison.labelName.title": {
+        "value": "Name",
+        "comment": "The label of name input control.",
+        "limit": 0
     }
 }

@@ -31,7 +31,7 @@ import {
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
 import { BUCKETS } from "../../constants/bucket.js";
 
-import { hasNoMeasures, hasNoSecondaryMeasures } from "../bucketRules.js";
+import { hasNoMeasures, hasNoSecondaryMeasures, noDerivedMeasurePresent } from "../bucketRules.js";
 
 import { getItemsCount, setBucketTitles } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
@@ -91,7 +91,11 @@ export function getHeadlineUiConfig(
 
     if (settings?.enableNewHeadline) {
         set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
-        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
+        set(
+            uiConfig,
+            [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"],
+            noDerivedMeasurePresent(buckets) ? 2 : 1,
+        );
         set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
     }
 
