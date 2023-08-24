@@ -1,0 +1,37 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1272"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                                    "name": "m_m_acugFHNJgsBy_closed.year"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00%",
+                                    "localIdentifier": "m_33ed22617c38389dc2484e53eb5ac672",
+                                    "name": "m_33ed22617c38389dc2484e53eb5ac672"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

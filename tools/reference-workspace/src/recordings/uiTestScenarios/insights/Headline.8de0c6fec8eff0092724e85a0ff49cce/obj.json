@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.8de0c6fec8eff0092724e85a0ff49cce",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "enabled": true,
+                    "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+                    "isArrowEnabled": true
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with positive arrow",
+        "uri": "Headline.8de0c6fec8eff0092724e85a0ff49cce",
+        "visualizationUrl": "local:headline"
+    }
+}

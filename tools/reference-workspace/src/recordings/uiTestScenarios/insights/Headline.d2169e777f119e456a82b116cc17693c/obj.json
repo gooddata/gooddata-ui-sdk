@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Custom Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "custom_amount_local_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.d2169e777f119e456a82b116cc17693c",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "colorConfig": {
+                        "equals": { "type": "guid", "value": "any-value" },
+                        "negative": { "type": "guid", "value": "positive" },
+                        "positive": { "type": "rgb", "value": { "b": 191, "g": 64, "r": 191 } }
+                    },
+                    "enabled": true,
+                    "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+                    "isArrowEnabled": true
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with equals arrow and color",
+        "uri": "Headline.d2169e777f119e456a82b116cc17693c",
+        "visualizationUrl": "local:headline"
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1272"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
+                                    "name": "m_916f5387caf8737c37c4a2206c3471d2"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

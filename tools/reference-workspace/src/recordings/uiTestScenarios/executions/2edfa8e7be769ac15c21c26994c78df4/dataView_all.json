@@ -1,0 +1,15 @@
+{
+    "count": [3],
+    "data": ["38310753.45", "116625456.54", "-78314703.09"],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Won", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_916f5387caf8737c37c4a2206c3471d2", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [3]
+}

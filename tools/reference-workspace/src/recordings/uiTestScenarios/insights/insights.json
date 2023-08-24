@@ -2652,9 +2652,34 @@
         "scenarioName": "single measure with viewBy sorted by attribute",
         "visName": "FunnelChart"
     },
+    "Headline.07812c19181ddb13069cad9383766cde": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with default config.",
+        "scenarioName": "comparison with default config",
+        "visName": "Headline"
+    },
+    "Headline.0ae91ea68160e9bcfd8fb88354a0aeca": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with negative arrow.",
+        "scenarioName": "comparison with negative arrow",
+        "visName": "Headline"
+    },
+    "Headline.1751ae10589de44b7a6a686b5290ef8d": {
+        "comment": "Auto-generated insight for test scenario Headline - two measures with comparison.",
+        "scenarioName": "two measures with comparison",
+        "visName": "Headline"
+    },
+    "Headline.277492aa430856258a8794b54cfbc491": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with default config with secondary measure is PoP.",
+        "scenarioName": "comparison with default config with secondary measure is PoP",
+        "visName": "Headline"
+    },
     "Headline.346303855acfc20de32fcfcef4a77a57": {
         "comment": "Auto-generated insight for test scenario Headline - two measures.",
         "scenarioName": "two measures",
+        "visName": "Headline"
+    },
+    "Headline.516de9bcf869125bfe4ce739c07ac3c7": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with custom format.",
+        "scenarioName": "comparison with custom format",
         "visName": "Headline"
     },
     "Headline.5a15a98985dbd7379cf2d185cc65f229": {
@@ -2662,9 +2687,29 @@
         "scenarioName": "font",
         "visName": "Headline"
     },
+    "Headline.6785d8782cd6d73e898229a9288ed030": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with calculate as different and default format.",
+        "scenarioName": "comparison with calculate as different and default format",
+        "visName": "Headline"
+    },
+    "Headline.7435cc39b3c420f1520203588890c3fa": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with decimal-1 format.",
+        "scenarioName": "comparison with decimal-1 format",
+        "visName": "Headline"
+    },
+    "Headline.8de0c6fec8eff0092724e85a0ff49cce": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with positive arrow.",
+        "scenarioName": "comparison with positive arrow",
+        "visName": "Headline"
+    },
     "Headline.90d166ce3513a8ecb3abf8f0737f9965": {
         "comment": "Auto-generated insight for test scenario Headline - themed.",
         "scenarioName": "themed",
+        "visName": "Headline"
+    },
+    "Headline.9e2b08d3f47d4630064417c2f1b42ba4": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with equals arrow.",
+        "scenarioName": "comparison with equals arrow",
         "visName": "Headline"
     },
     "Headline.c73ecf1483cf081dfceb7661de46ef40": {
@@ -2672,9 +2717,29 @@
         "scenarioName": "two measures with german separators",
         "visName": "Headline"
     },
+    "Headline.d2169e777f119e456a82b116cc17693c": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with equals arrow and color.",
+        "scenarioName": "comparison with equals arrow and color",
+        "visName": "Headline"
+    },
+    "Headline.d8d4d65095b13543eddc9a64b10e308f": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with positive arrow and color.",
+        "scenarioName": "comparison with positive arrow and color",
+        "visName": "Headline"
+    },
+    "Headline.dd278ab1110359f77ca456169542d74b": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with custom label.",
+        "scenarioName": "comparison with custom label",
+        "visName": "Headline"
+    },
     "Headline.edcc7ebea5a250c5e311f9f243545471": {
         "comment": "Auto-generated insight for test scenario Headline - two measures one PoP.",
         "scenarioName": "two measures one PoP",
+        "visName": "Headline"
+    },
+    "Headline.f8596cd01e9bd7fcb1478441a026ab35": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with negative arrow and color.",
+        "scenarioName": "comparison with negative arrow and color",
         "visName": "Headline"
     },
     "Headline.f8d7e425a7cbfce667963e56ed6ab517": {

@@ -1,0 +1,15 @@
+{
+    "count": [3],
+    "data": ["38310753.45", "38310753.45", "0"],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Won", "order": 0 } },
+                { "measureHeaderItem": { "name": "m_m_acugFHNJgsBy_closed.year", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_33ed22617c38389dc2484e53eb5ac672", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [3]
+}

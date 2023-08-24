@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Won Last Year",
+                            "definition": {
+                                "popMeasureDefinition": {
+                                    "measureIdentifier": "m_acugFHNJgsBy",
+                                    "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                                }
+                            },
+                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.277492aa430856258a8794b54cfbc491",
+        "properties": { "controls": { "comparison": { "enabled": true } } },
+        "sorts": [],
+        "title": "Headline - comparison with default config with secondary measure is PoP",
+        "uri": "Headline.277492aa430856258a8794b54cfbc491",
+        "visualizationUrl": "local:headline"
+    }
+}

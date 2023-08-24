@@ -4,6 +4,7 @@ import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { comparisonEnabled, HeadlinePositiveComparisonMeasures } from "./comparison.js";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)
@@ -30,5 +31,24 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
         drillableItems: [WonMeasurePredicate, AmountMeasurePredicate],
         config: {
             disableDrillUnderline: true,
+        },
+    })
+    .withDefaultBackendSettings({
+        enableNewHeadline: true,
+    })
+    .withDefaultTestTypes("visual")
+    .addScenario("comparison with drilling on two measures", {
+        ...HeadlinePositiveComparisonMeasures,
+        drillableItems: [WonMeasurePredicate, AmountMeasurePredicate],
+        config: {
+            comparison: comparisonEnabled,
+        },
+    })
+    .addScenario("comparison with drilling on two measures with underlining disabled", {
+        ...HeadlinePositiveComparisonMeasures,
+        drillableItems: [WonMeasurePredicate, AmountMeasurePredicate],
+        config: {
+            disableDrillUnderline: true,
+            comparison: comparisonEnabled,
         },
     });
