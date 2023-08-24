@@ -986,7 +986,7 @@ export interface ILoadingInjectedProps {
     // (undocumented)
     intl: IntlShape;
     isLoading: boolean;
-    onDataTooLarge(): void;
+    onDataTooLarge(data: any, errorMessage?: string): void;
     onExportReady(exportFunction: IExportFunction): void;
     onNegativeValues(): void;
 }

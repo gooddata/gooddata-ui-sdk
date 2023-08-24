@@ -108,3 +108,60 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
         hasNegativeValue: cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data.series),
     };
 }
+
+/**
+ * Creates a message for onDataTooLarge error, which contains the limits which were exceeded.
+ */
+export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: IChartOptions) {
+    const { type, isViewByTwoAttributes } = chartOptions;
+    const {
+        series: seriesLimit,
+        categories: categoriesLimit,
+        nodes: nodesLimit,
+        dataPoints: dataPointsLimit,
+    } = limits || getChartLimits(type);
+    const dataToValidate = isTreemap(type)
+        ? getTreemapDataForValidation(chartOptions.data)
+        : chartOptions.data;
+
+    const limitLog = (name: string, limit: number, actual: number) => {
+        return actual > limit ? `${name} limit: ${limit} actual: ${actual}` : "";
+    };
+
+    const result: string[] = [];
+
+    if (seriesLimit !== undefined) {
+        result.push(limitLog("Series", seriesLimit, dataToValidate.series.length));
+    }
+
+    if (categoriesLimit !== undefined) {
+        if (isViewByTwoAttributes) {
+            const categoriesLength = dataToValidate.categories.reduce((result: number, category: any) => {
+                return result + category.categories.length;
+            }, 0);
+            result.push(limitLog("Categories", categoriesLimit, categoriesLength));
+        } else {
+            result.push(limitLog("Categories", categoriesLimit, dataToValidate.categories.length));
+        }
+    }
+
+    if (nodesLimit !== undefined && Array.isArray(dataToValidate?.series)) {
+        const nodesMax = Math.max(
+            ...dataToValidate.series.map((serie: any) => {
+                return Array.isArray(serie?.nodes) ? serie.nodes.length : 0;
+            }),
+        );
+        result.push(limitLog("NodesMax", nodesLimit, nodesMax));
+    }
+
+    if (dataPointsLimit !== undefined && Array.isArray(dataToValidate?.series)) {
+        const dataPointsMax = Math.max(
+            ...dataToValidate.series.map((serie: any) => {
+                return Array.isArray(serie?.data) ? serie.data.length : 0;
+            }),
+        );
+        result.push(limitLog("DataPointsMax", dataPointsLimit, dataPointsMax));
+    }
+
+    return result.join(" ");
+}
