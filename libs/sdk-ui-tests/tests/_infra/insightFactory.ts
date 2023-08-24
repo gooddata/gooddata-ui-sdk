@@ -1,6 +1,14 @@
 // (C) 2020 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
 
-import { IInsightDefinition, newInsightDefinition, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    IBucket,
+    IInsightDefinition,
+    isVirtualArithmeticMeasure,
+    newInsightDefinition,
+    VisualizationProperties,
+} from "@gooddata/sdk-model";
+
 import { ChartInteractions } from "./backendWithCapturing.js";
 import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps.js";
 import { geoExecutionToInsightBuckets } from "./executionToInsightBuckets.js";
@@ -38,6 +46,15 @@ function createVisProperties(visClass: string, config: any) {
     }
 }
 
+function removeVirtualMeasures(originalBuckets?: IBucket[]): IBucket[] {
+    const buckets: IBucket[] = cloneDeep(originalBuckets ?? []);
+    buckets.forEach((bucket) => {
+        bucket.items = bucket.items.filter((it) => !isVirtualArithmeticMeasure(it));
+    });
+
+    return buckets;
+}
+
 export function createInsightDefinitionForChart(
     name: string,
     scenario: string,
@@ -50,7 +67,9 @@ export function createInsightDefinitionForChart(
     const properties: VisualizationProperties = createVisProperties(visClassUri, chartConfig);
 
     const insightBuckets =
-        visClassUri === "local:pushpin" ? geoExecutionToInsightBuckets(execution) : execution?.buckets ?? [];
+        visClassUri === "local:pushpin"
+            ? geoExecutionToInsightBuckets(execution)
+            : removeVirtualMeasures(execution?.buckets);
 
     return newInsightDefinition(visClassUri, (b) => {
         return b

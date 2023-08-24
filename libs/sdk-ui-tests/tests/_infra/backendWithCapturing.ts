@@ -2,9 +2,15 @@
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { NormalizationState, withEventing, withNormalization } from "@gooddata/sdk-backend-base";
+import { IExecutionDefinition, ISettings } from "@gooddata/sdk-model";
+import {
+    NormalizationState,
+    withCustomWorkspaceSettings,
+    withEventing,
+    withNormalization,
+} from "@gooddata/sdk-backend-base";
 import { DataViewRequests } from "@gooddata/mock-handling";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Recorded chart interactions
@@ -35,6 +41,7 @@ export type ChartInteractions = {
  */
 export function backendWithCapturing(
     normalize: boolean = false,
+    backendSetting?: ISettings,
 ): [IAnalyticalBackend, Promise<ChartInteractions>] {
     const interactions: ChartInteractions = {
         dataViewRequests: {},
@@ -72,6 +79,17 @@ export function backendWithCapturing(
         backend = withNormalization(backend, {
             normalizationStatus: (state: NormalizationState) => {
                 interactions.normalizationState = state;
+            },
+        });
+    }
+
+    if (!isEmpty(backendSetting)) {
+        backend = withCustomWorkspaceSettings(backend, {
+            commonSettingsWrapper: (settings: ISettings) => {
+                return {
+                    ...settings,
+                    ...backendSetting,
+                };
             },
         });
     }
