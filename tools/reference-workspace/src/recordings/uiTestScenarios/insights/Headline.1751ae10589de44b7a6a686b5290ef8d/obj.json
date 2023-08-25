@@ -1,0 +1,44 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.1751ae10589de44b7a6a686b5290ef8d",
+        "properties": { "controls": { "comparison": { "enabled": true } } },
+        "sorts": [],
+        "title": "Headline - two measures with comparison",
+        "uri": "Headline.1751ae10589de44b7a6a686b5290ef8d",
+        "visualizationUrl": "local:headline"
+    }
+}

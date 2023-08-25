@@ -1,0 +1,59 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Custom Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "custom_amount_local_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.9e2b08d3f47d4630064417c2f1b42ba4",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "colorConfig": {
+                        "disabled": true,
+                        "equals": { "type": "guid", "value": "any-value" },
+                        "negative": { "type": "guid", "value": "positive" },
+                        "positive": { "type": "rgb", "value": { "b": 191, "g": 64, "r": 191 } }
+                    },
+                    "enabled": true,
+                    "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+                    "isArrowEnabled": true
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with equals arrow",
+        "uri": "Headline.9e2b08d3f47d4630064417c2f1b42ba4",
+        "visualizationUrl": "local:headline"
+    }
+}

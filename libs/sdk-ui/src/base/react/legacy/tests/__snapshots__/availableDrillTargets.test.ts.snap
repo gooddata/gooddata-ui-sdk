@@ -13073,6 +13073,458 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with calculate as different and default format 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with custom format 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with custom label 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with decimal-1 format 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with default config 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with default config with secondary measure is PoP 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+          "name": "Won Last Year",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with equals arrow 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "custom_amount_local_id",
+          "name": "Custom Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with equals arrow and color 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "custom_amount_local_id",
+          "name": "Custom Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with negative arrow 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with negative arrow and color 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with positive arrow 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - comparison with positive arrow and color 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - font 1`] = `
 {
   "attributes": [],
@@ -13237,6 +13689,44 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
           "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
           "name": "Won Last Year",
           "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - two measures with comparison 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },

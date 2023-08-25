@@ -1,18 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
 import React from "react";
-import allScenarios from "../../../scenarios/index.js";
-import { ScenarioGroup } from "../../../src/index.js";
+import groupBy from "lodash/groupBy.js";
+import sortBy from "lodash/sortBy.js";
+import values from "lodash/values.js";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
+import { ISettings } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
+
+import allScenarios from "../../../scenarios/index.js";
+import { ScenarioGroup } from "../../../src/index.js";
 import { StorybookBackend } from "../../_infra/backend.js";
 import { storyGroupFor } from "./storyGroupFactory.js";
-import groupBy from "lodash/groupBy.js";
-import sortBy from "lodash/sortBy.js";
 import { ScenarioStories } from "../../_infra/storyGroups.js";
-import values from "lodash/values.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
@@ -41,7 +45,10 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
             <ScreenshotReadyWrapper resolver={createElementCountResolver(scenarios.length)}>
                 {scenarios.map(([name, scenario], idx) => {
                     const { propsFactory, workspaceType, component: Component } = scenario;
-                    const props = propsFactory(backend, workspaceType);
+                    const props = propsFactory(
+                        withCustomSetting(backend, scenario.backendSettings),
+                        workspaceType,
+                    );
 
                     return (
                         <div key={idx}>
@@ -55,6 +62,17 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
             </ScreenshotReadyWrapper>
         );
     };
+}
+
+function withCustomSetting(backend: IAnalyticalBackend, customSettings: ISettings) {
+    return withCustomWorkspaceSettings(backend, {
+        commonSettingsWrapper: (settings: ISettings) => {
+            return {
+                ...settings,
+                ...(customSettings ? customSettings : {}),
+            };
+        },
+    });
 }
 
 ScenarioGroupsByVis.forEach((groups) => {
@@ -88,7 +106,10 @@ ScenarioGroupsByVis.forEach((groups) => {
 
             scenarios.forEach(([name, scenario]) => {
                 const { propsFactory, workspaceType, component: Component } = scenario;
-                const props = propsFactory(backend, workspaceType);
+                const props = propsFactory(
+                    withCustomSetting(backend, scenario.backendSettings),
+                    workspaceType,
+                );
 
                 storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags), {
                     screenshot: true,

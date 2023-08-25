@@ -26,8 +26,8 @@ async function _mountChartAndCapture<T extends VisProps>(
     normalize: boolean,
     effectivePropsExtractor?: EffectivePropsExtractor,
 ): Promise<ChartInteractions> {
-    const [backend, promisedInteractions] = backendWithCapturing(normalize);
-    const { propsFactory, component: Component, workspaceType } = scenario;
+    const { propsFactory, component: Component, workspaceType, backendSettings } = scenario;
+    const [backend, promisedInteractions] = backendWithCapturing(normalize, backendSettings);
 
     const props = propsFactory(backend, workspaceType);
     const customErrorHandler = props.onError;

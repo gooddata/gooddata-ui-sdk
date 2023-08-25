@@ -1,0 +1,86 @@
+{
+    "attributes": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "localIdentifier": "secondary_measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_acugFHNJgsBy", "m_aangOxLSeztu"],
+                                "operator": "ratio"
+                            },
+                            "virtual": true
+                        },
+                        "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2"
+                    }
+                }
+            ],
+            "localIdentifier": "comparison_virtual_arithmetic_bucket"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_acugFHNJgsBy", "m_aangOxLSeztu"],
+                        "operator": "ratio"
+                    },
+                    "virtual": true
+                },
+                "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

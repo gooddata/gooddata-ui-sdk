@@ -1,0 +1,39 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu_1",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_c19f3a01eb26bc19f64735a06a09654d",
+                                    "name": "m_c19f3a01eb26bc19f64735a06a09654d"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

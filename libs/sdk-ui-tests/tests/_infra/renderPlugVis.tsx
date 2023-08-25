@@ -42,7 +42,7 @@ export async function mountInsight(
     insight: IInsightDefinition,
     normalize: boolean = false,
 ): Promise<ChartInteractions> {
-    const [backend, promisedInteractions] = backendWithCapturing(normalize);
+    const [backend, promisedInteractions] = backendWithCapturing(normalize, scenario.backendSettings);
     const persistedInsight: IInsight = {
         insight: {
             identifier: "test",

@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.dd278ab1110359f77ca456169542d74b",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "colorConfig": {
+                        "equals": { "type": "guid", "value": "any-value" },
+                        "negative": { "type": "guid", "value": "positive" },
+                        "positive": { "type": "rgb", "value": { "b": 191, "g": 64, "r": 191 } }
+                    },
+                    "enabled": true,
+                    "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+                    "isArrowEnabled": true,
+                    "labelConfig": { "unconditionalValue": "Custom label" }
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with custom label",
+        "uri": "Headline.dd278ab1110359f77ca456169542d74b",
+        "visualizationUrl": "local:headline"
+    }
+}

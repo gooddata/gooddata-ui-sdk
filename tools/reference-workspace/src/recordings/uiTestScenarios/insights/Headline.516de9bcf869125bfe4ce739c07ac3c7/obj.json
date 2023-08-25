@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.516de9bcf869125bfe4ce739c07ac3c7",
+        "properties": {
+            "controls": {
+                "comparison": { "enabled": true, "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00" }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with custom format",
+        "uri": "Headline.516de9bcf869125bfe4ce739c07ac3c7",
+        "visualizationUrl": "local:headline"
+    }
+}

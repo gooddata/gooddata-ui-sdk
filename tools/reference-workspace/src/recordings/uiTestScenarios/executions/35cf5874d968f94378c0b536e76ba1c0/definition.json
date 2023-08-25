@@ -1,0 +1,90 @@
+{
+    "attributes": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                            }
+                        },
+                        "localIdentifier": "m_m_acugFHNJgsBy_closed.year"
+                    }
+                }
+            ],
+            "localIdentifier": "secondary_measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_acugFHNJgsBy", "m_m_acugFHNJgsBy_closed.year"],
+                                "operator": "change"
+                            },
+                            "virtual": true
+                        },
+                        "localIdentifier": "m_33ed22617c38389dc2484e53eb5ac672"
+                    }
+                }
+            ],
+            "localIdentifier": "comparison_virtual_arithmetic_bucket"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": { "identifier": "closed.year", "type": "attribute" }
+                    }
+                },
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_acugFHNJgsBy", "m_m_acugFHNJgsBy_closed.year"],
+                        "operator": "change"
+                    },
+                    "virtual": true
+                },
+                "localIdentifier": "m_33ed22617c38389dc2484e53eb5ac672"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

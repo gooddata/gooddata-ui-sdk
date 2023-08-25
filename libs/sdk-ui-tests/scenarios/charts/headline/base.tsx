@@ -4,6 +4,7 @@ import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { GermanNumberFormat } from "../../_infra/formatting.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { comparisonEnabled, HeadlinePositiveComparisonMeasures } from "./comparison.js";
 
 export const HeadlineWithTwoMeasures = {
     primaryMeasure: ReferenceMd.Won,
@@ -25,4 +26,14 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .addScenario("two measures one PoP", {
         primaryMeasure: ReferenceMd.Won,
         secondaryMeasure: ReferenceMdExt.WonPopClosedYear,
+    })
+    .withDefaultBackendSettings({
+        enableNewHeadline: true,
+    })
+    .withDefaultTestTypes("visual")
+    .addScenario("two measures with comparison", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: comparisonEnabled,
+        },
     });

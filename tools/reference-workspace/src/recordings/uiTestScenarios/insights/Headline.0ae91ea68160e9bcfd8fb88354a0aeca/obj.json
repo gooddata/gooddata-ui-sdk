@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.0ae91ea68160e9bcfd8fb88354a0aeca",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "colorConfig": {
+                        "disabled": true,
+                        "equals": { "type": "guid", "value": "any-value" },
+                        "negative": { "type": "guid", "value": "positive" },
+                        "positive": { "type": "rgb", "value": { "b": 191, "g": 64, "r": 191 } }
+                    },
+                    "enabled": true,
+                    "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
+                    "isArrowEnabled": true
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with negative arrow",
+        "uri": "Headline.0ae91ea68160e9bcfd8fb88354a0aeca",
+        "visualizationUrl": "local:headline"
+    }
+}

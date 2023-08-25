@@ -972,6 +972,114 @@ exports[`createDataAccessDigest > should find slices and series for: FunnelChart
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with calculate as different and default format 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with custom format 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with custom label 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with decimal-1 format 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with default config 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with default config with secondary measure is PoP 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with equals arrow 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with equals arrow and color 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with negative arrow 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with negative arrow and color 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with positive arrow 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with positive arrow and color 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: Headline - font 1`] = `
 {
   "seriesCount": 2,
@@ -1011,6 +1119,15 @@ exports[`createDataAccessDigest > should find slices and series for: Headline - 
 exports[`createDataAccessDigest > should find slices and series for: Headline - two measures one PoP 1`] = `
 {
   "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - two measures with comparison 1`] = `
+{
+  "seriesCount": 3,
   "seriesIdx": 0,
   "slicesCount": 0,
   "slicesIdx": undefined,
