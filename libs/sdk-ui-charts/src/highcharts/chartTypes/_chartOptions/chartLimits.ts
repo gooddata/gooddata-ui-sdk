@@ -125,7 +125,7 @@ export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: 
         : chartOptions.data;
 
     const limitLog = (name: string, limit: number, actual: number) => {
-        return actual > limit ? `${name} limit: ${limit} actual: ${actual}` : "";
+        return actual > limit ? `${name} limit: ${limit} actual: ${actual}.` : "";
     };
 
     const result: string[] = [];
@@ -163,5 +163,8 @@ export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: 
         result.push(limitLog("DataPointsMax", dataPointsLimit, dataPointsMax));
     }
 
-    return result.join(" ");
+    return result
+        .filter((el) => el !== "")
+        .join(" ")
+        .trim();
 }
