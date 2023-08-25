@@ -7,12 +7,10 @@ import isEmpty from "lodash/isEmpty.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsCount,
-    attributeElementsIsEmpty,
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
     IAttributeElement,
     IAttributeFilter,
-    isNegativeAttributeFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
@@ -33,20 +31,6 @@ export const throwMissingCallbackError =
     (..._args: any[]): any => {
         throw new UnexpectedSdkError(`Callback: ${callbackName} is missing in the ${providerName}.`);
     };
-
-/**
- * @internal
- */
-export function isLimitingAttributeFiltersEmpty(limitingAttributeFilters: IElementsQueryAttributeFilter[]) {
-    return (
-        isEmpty(limitingAttributeFilters) ||
-        limitingAttributeFilters.every((limitingAttributeFilter) =>
-            isNegativeAttributeFilter(limitingAttributeFilter.attributeFilter)
-                ? attributeElementsIsEmpty(filterAttributeElements(limitingAttributeFilter.attributeFilter))
-                : false,
-        )
-    );
-}
 
 /**
  * @internal

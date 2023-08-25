@@ -37,7 +37,7 @@ export function* loadNextElementsPageSaga(
         actions.loadNextElementsPageCancelRequest.match(action) ||
         actions.loadInitialElementsPageRequest.match(action)
     ) {
-        // Saga was triggered by cancel request - do nothing, just jump to finally statement
+        // Saga was triggered by cancel request - do nothing, finally statement was already called, because takeLatest can run only one saga at a time === the previous one was canceled
         return;
     }
 

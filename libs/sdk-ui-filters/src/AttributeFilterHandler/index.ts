@@ -7,3 +7,5 @@ export {
     IMultiSelectAttributeFilterHandlerOptions,
     ISingleSelectAttributeFilterHandlerOptions,
 } from "./factory.js";
+
+export { isLimitingAttributeFiltersEmpty } from "./utils.js";
