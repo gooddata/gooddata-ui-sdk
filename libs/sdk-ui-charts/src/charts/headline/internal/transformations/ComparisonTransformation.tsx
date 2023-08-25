@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import BaseHeadline from "../headlines/baseHeadline/BaseHeadline.js";
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
-import { getComparisonBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js";
+import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
 
 const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     dataView,
