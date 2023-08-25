@@ -34,6 +34,7 @@ export {
 export {
     ComparisonPositionType,
     CalculationType,
+    ComparisonFormat,
     ILabelConfig,
     IComparison,
     IColorConfig,

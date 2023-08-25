@@ -96,6 +96,9 @@ export enum ComparisonColorType {
     POSITIVE = "positive"
 }
 
+// @public
+export type ComparisonFormat = string | null;
+
 // @public (undocumented)
 export enum ComparisonPositionType {
     LEFT = "left",
@@ -359,12 +362,12 @@ export interface IComparison {
     calculationType?: CalculationType;
     colorConfig?: IColorConfig;
     enabled: boolean;
-    format?: string;
+    format?: ComparisonFormat;
     isArrowEnabled?: boolean;
     isSignEnabled?: boolean;
     labelConfig?: ILabelConfig;
     position?: ComparisonPositionType;
-    subFormat?: string;
+    subFormat?: ComparisonFormat;
 }
 
 // @public
