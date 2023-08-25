@@ -12,7 +12,7 @@ default:
 
 variables:
   AWS_ECR_URL: '441851189095.dkr.ecr.eu-central-1.amazonaws.com'
-  BUILD_IMAGE_VERSION: "3.3.1"
+  BUILD_IMAGE_VERSION: "3.4.1"
 
 stages:
   - build
