@@ -58,6 +58,16 @@ export enum ComparisonPositionType {
 }
 
 /**
+ * comparison format type
+ *
+ * @remarks
+ * Providing a null value will configure the format to inherit from the format of primary measure.
+ *
+ * @public
+ */
+export type ComparisonFormat = string | null;
+
+/**
  * @public
  */
 export interface IColorConfig {
@@ -196,13 +206,21 @@ export interface IComparison {
 
     /**
      * This property Defines number format of the comparison value
+     *
+     * See {@link ComparisonFormat} to knows the supported format
+     *
+     * @defaultValue based on calculation type
      */
-    format?: string;
+    format?: ComparisonFormat;
 
     /**
      * This property defines the number format of the comparison sub-value when using {@link CalculationType.CHANGE_DIFFERENCE}.
+     *
+     * See {@link ComparisonFormat} to knows the supported format
+     *
+     * @defaultValue based on calculation type
      */
-    subFormat?: string;
+    subFormat?: ComparisonFormat;
 
     /**
      * This property controls Indicator/Arrow visibility of arrow trend indicator
