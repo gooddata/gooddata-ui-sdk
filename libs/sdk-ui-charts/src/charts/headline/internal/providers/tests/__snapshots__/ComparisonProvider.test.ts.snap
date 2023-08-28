@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is difference 1`] = `
+exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is change 1`] = `
 {
   "definition": {
     "attributes": [],
@@ -52,7 +52,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
                     "m_aangOxLSeztu",
                     "m_fact.opportunitysnapshot.amount_sum",
                   ],
-                  "operator": "difference",
+                  "operator": "change",
                 },
                 "virtual": true,
               },
@@ -119,7 +119,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
                 "m_aangOxLSeztu",
                 "m_fact.opportunitysnapshot.amount_sum",
               ],
-              "operator": "difference",
+              "operator": "change",
             },
             "virtual": true,
           },
@@ -426,7 +426,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with diff
 }
 `;
 
-exports[`ComparisonProvider > createExecution > Should build execution with ratio operator when provided calculation is difference 1`] = `
+exports[`ComparisonProvider > createExecution > Should build execution with ratio operator when provided calculation is ratio 1`] = `
 {
   "definition": {
     "attributes": [],
@@ -478,7 +478,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with rati
                     "m_aangOxLSeztu",
                     "m_fact.opportunitysnapshot.amount_sum",
                   ],
-                  "operator": "difference",
+                  "operator": "ratio",
                 },
                 "virtual": true,
               },
@@ -545,7 +545,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with rati
                 "m_aangOxLSeztu",
                 "m_fact.opportunitysnapshot.amount_sum",
               ],
-              "operator": "difference",
+              "operator": "ratio",
             },
             "virtual": true,
           },

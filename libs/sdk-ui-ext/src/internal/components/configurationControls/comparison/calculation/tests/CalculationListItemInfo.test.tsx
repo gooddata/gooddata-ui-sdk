@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import CalculationListItemInfo from "../CalculationListItemInfo.js";
 import * as CalculationListItemInfoSection from "../CalculationListItemInfoSection.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 
 describe("CalculationListItemInfo", () => {
     const renderCalculationListItemInfo = (props: { title: string; calculationType: CalculationType }) => {
@@ -18,14 +18,14 @@ describe("CalculationListItemInfo", () => {
 
     it("Should render title correctly", () => {
         const title = "Info change title";
-        const props = { title, calculationType: CalculationType.CHANGE };
+        const props = { title, calculationType: CalculateAs.CHANGE };
         const { getByText } = renderCalculationListItemInfo(props);
         expect(getByText(title)).toBeInTheDocument();
     });
 
     it("Should render item info sections correctly", () => {
         const MockInfoSection = vi.spyOn(CalculationListItemInfoSection, "default");
-        const calculationType = CalculationType.CHANGE;
+        const calculationType = CalculateAs.CHANGE;
         const props = { title: "Change", calculationType };
         renderCalculationListItemInfo(props);
         expect(MockInfoSection).toHaveBeenCalledTimes(3);

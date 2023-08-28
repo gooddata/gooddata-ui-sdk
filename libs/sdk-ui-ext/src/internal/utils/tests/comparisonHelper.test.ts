@@ -23,35 +23,35 @@ describe("comparisonHelper", () => {
         const differenceProperties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
-                calculationType: CalculationType.DIFFERENCE,
+                calculationType: CalculateAs.DIFFERENCE,
             },
         });
         const changeProperties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
-                calculationType: CalculationType.CHANGE,
+                calculationType: CalculateAs.CHANGE,
             },
         });
         const ratioProperties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
-                calculationType: CalculationType.RATIO,
+                calculationType: CalculateAs.RATIO,
             },
         });
         const SPECS: any = [
             [
                 "Should use default calculation type [DIFFERENCE]",
-                { calculationType: CalculationType.DIFFERENCE, props: {} },
+                { calculationType: CalculateAs.DIFFERENCE, props: {} },
                 { format: null, label: DIFFERENCE_LABEL_KEY },
             ],
             [
                 "Should use default calculation type [CHANGE]",
-                { calculationType: CalculationType.CHANGE, props: {} },
+                { calculationType: CalculateAs.CHANGE, props: {} },
                 { format: PERCENT_ROUNDED_FORMAT, label: CHANGE_LABEL_KEY },
             ],
             [
                 "Should use default calculation type [RATIO]",
-                { calculationType: CalculationType.RATIO, props: {} },
+                { calculationType: CalculateAs.RATIO, props: {} },
                 { format: PERCENT_ROUNDED_FORMAT, label: RATIO_LABEL_KEY },
             ],
             [

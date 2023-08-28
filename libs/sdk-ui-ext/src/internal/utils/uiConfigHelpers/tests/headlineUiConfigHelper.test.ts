@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 import { IBucket, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
-import { CalculationType, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import {
@@ -140,7 +140,7 @@ describe("headlineUiConfigHelper", () => {
             const visualizationProperties = createTestProperties<HeadlineControlProperties>({
                 comparison: {
                     enabled: false,
-                    calculationType: CalculationType.DIFFERENCE,
+                    calculationType: CalculateAs.DIFFERENCE,
                 },
             });
             const properties: IVisualizationProperties<HeadlineControlProperties> = {
@@ -160,7 +160,7 @@ describe("headlineUiConfigHelper", () => {
             const properties = createTestProperties<HeadlineControlProperties>({
                 comparison: {
                     enabled: false,
-                    calculationType: CalculationType.DIFFERENCE,
+                    calculationType: CalculateAs.DIFFERENCE,
                 },
             });
 
@@ -187,7 +187,7 @@ describe("headlineUiConfigHelper", () => {
                     items: [newPopMeasure("foo", "attr")],
                 },
             ]);
-            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.CHANGE);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculateAs.CHANGE);
         });
 
         it("Should return calculation type as change in case secondary measure is previous period measure", () => {
@@ -197,7 +197,7 @@ describe("headlineUiConfigHelper", () => {
                     items: [newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])],
                 },
             ]);
-            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.CHANGE);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculateAs.CHANGE);
         });
 
         it("Should return calculation type as ratio in case secondary measure is not a derived measure", () => {
@@ -207,7 +207,7 @@ describe("headlineUiConfigHelper", () => {
                     items: [newMeasure("foo")],
                 },
             ]);
-            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculationType.RATIO);
+            expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculateAs.RATIO);
         });
     });
 });

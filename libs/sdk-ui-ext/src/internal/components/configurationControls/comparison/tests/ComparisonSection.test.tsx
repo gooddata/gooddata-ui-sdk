@@ -3,7 +3,7 @@ import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 
-import { CalculationType, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, CalculationType, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
 import ComparisonSection from "../ComparisonSection.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
@@ -30,7 +30,7 @@ describe("ComparisonSection", () => {
             comparisonDisabled: DEFAULT_COMPARISON_DISABLED,
             properties: {},
             propertiesMeta: {},
-            defaultCalculationType: CalculationType.RATIO,
+            defaultCalculationType: CalculateAs.RATIO,
             separators: TEST_DEFAULT_SEPARATOR,
             pushData,
             colorPalette: DEFAULT_COMPARISON_PALETTE,
@@ -53,7 +53,7 @@ describe("ComparisonSection", () => {
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
-                calculationType: CalculationType.RATIO,
+                calculationType: CalculateAs.RATIO,
             },
         });
 

@@ -6,7 +6,7 @@ import {
     ExplicitDrill,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { CalculationType, IComparison } from "../../../../interfaces/index.js";
+import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
 import { IntlShape } from "react-intl";
 import { EvaluationType, IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
@@ -112,7 +112,7 @@ function createComparisonDataItem(
     const { value, measureHeaderItem } = executionData;
     const { localIdentifier } = measureHeaderItem;
 
-    const defaultCalculationType = isSecondaryDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO;
+    const defaultCalculationType = isSecondaryDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
     const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(
         calculationType ?? defaultCalculationType,
     );

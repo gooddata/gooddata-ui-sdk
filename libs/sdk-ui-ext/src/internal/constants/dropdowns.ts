@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 import { comparisonMessages, messages } from "../../locales.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 export const pushpinSizeDropdownItems: IDropdownItem[] = [
     { title: messages.autoDefault.id, value: "default" },
@@ -132,20 +132,20 @@ export const columnHeadersPositionDropdownItems: IDropdownItem[] = [
 export const calculationDropdownItems: IDropdownItem[] = [
     {
         title: comparisonMessages.calculatedAsChange.id,
-        value: CalculationType.CHANGE,
-        info: CalculationType.CHANGE,
+        value: CalculateAs.CHANGE,
+        info: CalculateAs.CHANGE,
         icon: "gd-dropdown-icon-calculated-as-change",
     },
     {
         title: comparisonMessages.calculatedAsRatio.id,
-        value: CalculationType.RATIO,
-        info: CalculationType.RATIO,
+        value: CalculateAs.RATIO,
+        info: CalculateAs.RATIO,
         icon: "gd-dropdown-icon-calculated-as-ratio",
     },
     {
         title: comparisonMessages.calculatedAsDifference.id,
-        value: CalculationType.DIFFERENCE,
-        info: CalculationType.DIFFERENCE,
+        value: CalculateAs.DIFFERENCE,
+        info: CalculateAs.DIFFERENCE,
         icon: "gd-dropdown-icon-calculated-as-difference",
     },
 ];
