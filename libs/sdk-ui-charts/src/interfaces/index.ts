@@ -32,7 +32,7 @@ export {
 } from "./chartProps.js";
 
 export {
-    ComparisonPositionType,
+    CalculateAs,
     CalculationType,
     ComparisonFormat,
     ILabelConfig,

@@ -8,7 +8,7 @@ import {
     TEST_FILTERS,
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
-import { CalculationType, IComparison } from "../../../../../interfaces/index.js";
+import { CalculateAs, CalculationType, IComparison } from "../../../../../interfaces/index.js";
 import ComparisonProvider from "../ComparisonProvider.js";
 
 describe("ComparisonProvider", () => {
@@ -19,9 +19,9 @@ describe("ComparisonProvider", () => {
     describe("createExecution", () => {
         const specs = [
             ["change", undefined],
-            ["change", CalculationType.DIFFERENCE],
-            ["ratio", CalculationType.DIFFERENCE],
-            ["difference", CalculationType.DIFFERENCE],
+            ["change", CalculateAs.CHANGE],
+            ["ratio", CalculateAs.RATIO],
+            ["difference", CalculateAs.DIFFERENCE],
         ];
 
         it.each(specs)(

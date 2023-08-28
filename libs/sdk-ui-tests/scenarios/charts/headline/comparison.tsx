@@ -1,12 +1,6 @@
 // (C) 2023 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import {
-    Headline,
-    IHeadlineProps,
-    CalculationType,
-    IColorConfig,
-    IComparison,
-} from "@gooddata/sdk-ui-charts";
+import { Headline, IHeadlineProps, CalculateAs, IColorConfig, IComparison } from "@gooddata/sdk-ui-charts";
 import { IColorPalette, modifyMeasure } from "@gooddata/sdk-model";
 
 import { scenariosFor } from "../../../src/index.js";
@@ -100,7 +94,7 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
         config: {
             comparison: {
                 ...comparisonEnabled,
-                calculationType: CalculationType.DIFFERENCE,
+                calculationType: CalculateAs.DIFFERENCE,
             },
         },
     })
