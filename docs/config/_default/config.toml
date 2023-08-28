@@ -129,6 +129,18 @@ navbar_logo = true
 # Set to true to disable the About link in the site footer
 footer_about_disable = false
 
+[params.404]
+title = "Page not found"
+[[params.404.links]]
+title = "Home"
+link = "/latest/"
+[[params.404.links]]
+title = "Introduction"
+link = "/latest/introduction/"
+[[params.404.links]]
+title = "Quick Start"
+link = "/latest/quick_start/"
+
 [params.mermaid]
 enable = true
 [deployment]

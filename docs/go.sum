@@ -8,6 +8,8 @@ github.com/gooddata/gooddata-docs-theme v0.0.0-20230726124044-9bb5d5fc63ba h1:Ts
 github.com/gooddata/gooddata-docs-theme v0.0.0-20230726124044-9bb5d5fc63ba/go.mod h1:HNpQXBayQI9lMsJbfXao4UxVNu8q5cTuYvUMCKt4i30=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20230816134948-8f1bbd41f5f1 h1:XE0oCvlcsZsZf1ByDYSfyREhSmQ4rNiFxR0qalSqhIw=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20230816134948-8f1bbd41f5f1/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20230821090954-9dadd85c39d9 h1:vlirQ2WeLgRgmkjcO6mEayzMq1vPTWaIAIg5MCxSDzI=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20230821090954-9dadd85c39d9/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
 github.com/google/docsy v0.7.1 h1:DUriA7Nr3lJjNi9Ulev1SfiG1sUYmvyDeU4nTp7uDxY=
 github.com/google/docsy v0.7.1/go.mod h1:JCmE+c+izhE0Rvzv3y+AzHhz1KdwlA9Oj5YBMklJcfc=
 github.com/google/docsy/dependencies v0.7.1 h1:NbzYKJYMin2q50xdWSUzR2c9gCp7zR/XHDBcxklEcTQ=
@@ -15,4 +17,5 @@ github.com/google/docsy/dependencies v0.7.1/go.mod h1:gihhs5gmgeO+wuoay4FwOzob+j
 github.com/twbs/bootstrap v5.2.3+incompatible/go.mod h1:fZTSrkpSf0/HkL0IIJzvVspTt1r9zuf7XlZau8kpcY0=
 github.com/twbs/bootstrap v5.3.0+incompatible h1:4+staADO0OrqUv77m+XL+vHYojLH9oxb4Vxi9mnIJWg=
 github.com/twbs/bootstrap v5.3.0+incompatible/go.mod h1:fZTSrkpSf0/HkL0IIJzvVspTt1r9zuf7XlZau8kpcY0=
+github.com/twbs/bootstrap v5.3.1+incompatible h1:VZq/ulwa2CvsK7F9LFzkCVLzaCkTYOVyW5c3FBICUsM=
 github.com/twbs/bootstrap v5.3.1+incompatible/go.mod h1:fZTSrkpSf0/HkL0IIJzvVspTt1r9zuf7XlZau8kpcY0=
