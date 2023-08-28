@@ -64,7 +64,7 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 
 | Major Version | Status              | GA               | EOD               | EOS               | Last Minor Version |
 |:--------------|:--------------------|:-----------------|:------------------|:------------------|:-------------------|
-| 9             | Generally available | July 27, 2023    | _Not yet defined_ | _Not yet defined_ | 9.0                |
+| 9             | Generally available | July 27, 2023    | _Not yet defined_ | _Not yet defined_ | 9.1                |
 | 8             | Generally available | October 8, 2020  | July 27, 2023     | _Not yet defined_ | 8.12               |
 | 7             | End-of-Support      | May 21, 2019     | October 8, 2020   | March 31, 2022    | 7.9                |
 
@@ -73,15 +73,15 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 Since there are not many changes at the API level between v8 and v9, we believe that read [what is new in version 9](whats_new_9) should be sufficient to process the migration.
 
 
-<</style>
 <table class="tg">
 <thead>
   <tr>
     <th class="tg-0lax" colspan="2" rowspan="2" style="background-color:#fff;border-top-color:#fff;border-left-color:#fff"></th>
-    <th class="tg-0lax2" colspan="12">GoodData.UI</th>
+    <th class="tg-0lax2" colspan="13">GoodData.UI</th>
   </tr>
   <tr style="background-color:#fff">
-    <th class="tg-kftd">9.0.0</th>
+    <th class="tg-kftd">9.1.0</th>
+    <th class="tg-kftd">9.0.1</th>
     <th class="tg-kftd">8.12.0</th>
     <th class="tg-kftd">8.11.0</th>
     <th class="tg-kftd">8.10.0</th>
@@ -97,8 +97,25 @@ Since there are not many changes at the API level between v8 and v9, we believe 
 </thead>
 <tbody>
   <tr>
-    <td class="tg-cly1" rowspan="13" >GoodData.CN</td>
+    <td class="tg-cly1" rowspan="14" >GoodData.CN</td>
+    <td class="tg-kftd" style="background-color:#fff">2.5</td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">✓</td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+  </tr>
+   <tr>
     <td class="tg-kftd" style="background-color:#fff">2.4</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -114,6 +131,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">2.3</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -131,6 +149,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-kftd" style="background-color:#fff">2.2</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -144,6 +163,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">2.1</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
@@ -162,6 +182,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -174,6 +195,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.7</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -194,6 +216,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -204,6 +227,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.5</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -226,6 +250,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -234,6 +259,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.3</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -256,6 +282,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
@@ -271,6 +298,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
@@ -279,6 +307,7 @@ Since there are not many changes at the API level between v8 and v9, we believe 
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.0</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
