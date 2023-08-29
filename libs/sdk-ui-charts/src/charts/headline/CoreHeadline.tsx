@@ -22,7 +22,10 @@ interface ICoreHeadlineExtendedProps {
 type CoreHeadlineProps = ICoreChartProps & ILoadingInjectedProps & ICoreHeadlineExtendedProps;
 
 export class HeadlineStateless extends React.Component<CoreHeadlineProps> {
-    public static defaultProps = defaultCoreChartProps;
+    public static defaultProps = {
+        ...defaultCoreChartProps,
+        config: {},
+    };
 
     private errorMap: IErrorDescriptors;
 
