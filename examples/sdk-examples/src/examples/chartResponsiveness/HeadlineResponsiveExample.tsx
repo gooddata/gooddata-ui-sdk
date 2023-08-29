@@ -1,14 +1,18 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
-import { Headline } from "@gooddata/sdk-ui-charts";
+import { Headline, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 
-const config = {
+const config: IChartConfig = {
     enableCompactSize: true,
+    comparison: {
+        enabled: true,
+        isArrowEnabled: true,
+    },
 };
 
 interface SizeButtonProps {
@@ -63,7 +67,7 @@ export const HeadlineResponsiveExample: React.FC = () => {
                 />
                 <SizeButton
                     callback={resize}
-                    width={180}
+                    width={250}
                     height={220}
                     currentWidth={width}
                     currentHeight={height}
@@ -72,7 +76,7 @@ export const HeadlineResponsiveExample: React.FC = () => {
                 <div style={divStyle}>
                     <Headline
                         primaryMeasure={FranchiseFees}
-                        secondaryMeasure={FranchiseFeesAdRoyalty}
+                        secondaryMeasures={[FranchiseFeesAdRoyalty]}
                         config={config}
                     />
                 </div>
