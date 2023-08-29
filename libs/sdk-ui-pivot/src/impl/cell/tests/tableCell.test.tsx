@@ -150,7 +150,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style for number with color in format when applyColor=true", () => {
             expect(getMeasureCellStyle("123456789", "[red]$#,##0.00", undefined, true).color).toEqual(
-                "#FF0000",
+                "#ff0000",
             );
         });
 
@@ -166,7 +166,7 @@ describe("Table utils - Cell", () => {
                 getMeasureCellStyle("123456789", "[backgroundColor=ffff00][red]$#,##0.00", undefined, true),
             ).toMatchObject({
                 backgroundColor: "#ffff00",
-                color: "#FF0000",
+                color: "#ff0000",
             });
         });
 

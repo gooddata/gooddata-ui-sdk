@@ -588,7 +588,7 @@ importers:
       eslint-plugin-tsdoc: ^0.2.14
       json-stable-stringify: ^1.0.1
       lodash: ^4.17.19
-      lru-cache: ^9.1.1
+      lru-cache: ^10.0.1
       prettier: ~2.5.0
       spark-md5: ^3.0.0
       ts-invariant: ^0.7.3
@@ -603,7 +603,7 @@ importers:
       '@gooddata/util': link:../util
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
-      lru-cache: 9.1.1
+      lru-cache: 10.0.1
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       tslib: 2.5.0
@@ -1053,7 +1053,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1114,7 +1114,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/util': link:../util
@@ -1242,7 +1242,7 @@ importers:
   ../../libs/sdk-ui-charts:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -1306,7 +1306,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -1376,7 +1376,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1430,7 +1430,7 @@ importers:
       jsdom: ^22.1.0
       json-stable-stringify: ^1.0.1
       lodash: ^4.17.19
-      lru-cache: ^9.1.1
+      lru-cache: ^10.0.1
       prettier: ~2.5.0
       raf: ^3.4.1
       react: ^18.2.0
@@ -1458,7 +1458,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
@@ -1477,7 +1477,7 @@ importers:
       immer: 9.0.21
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
-      lru-cache: 9.1.1
+      lru-cache: 10.0.1
       react-dnd: 14.0.5_u3shqvyrwf4hz652pzkkzivaka
       react-dnd-html5-backend: 14.1.0
       react-grid-system: 8.1.9_react@18.2.0
@@ -1601,7 +1601,7 @@ importers:
       full-icu: ^1.3.0
       jsdom: ^22.1.0
       lodash: ^4.17.19
-      lru-cache: ^9.1.1
+      lru-cache: ^10.0.1
       prettier: ~2.5.0
       raf: ^3.4.1
       react: ^18.2.0
@@ -1641,7 +1641,7 @@ importers:
       default-import: 1.1.5
       fixed-data-table-2: 1.2.17_biqbaboplfbrettd7655fr4n2y
       lodash: 4.17.21
-      lru-cache: 9.1.1
+      lru-cache: 10.0.1
       react-intl: 6.4.1_odn5rdmyrxuyfnlhepsb7fjnvi
       react-lines-ellipsis: 0.15.3_biqbaboplfbrettd7655fr4n2y
       react-measure: 2.5.2_biqbaboplfbrettd7655fr4n2y
@@ -1845,7 +1845,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/live-examples-workspace': workspace:*
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-model': workspace:*
@@ -1901,7 +1901,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -1964,7 +1964,7 @@ importers:
     specifiers:
       '@aaronhayes/react-use-hubspot-form': ^2.0.1
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2051,7 +2051,7 @@ importers:
       vitest-dom: 0.1.0
     dependencies:
       '@aaronhayes/react-use-hubspot-form': 2.1.1_biqbaboplfbrettd7655fr4n2y
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2232,7 +2232,7 @@ importers:
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2291,7 +2291,7 @@ importers:
       '@ag-grid-community/all-modules': 27.3.0
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0_ynmsds3wz3224xgdrl3ds7i2jm
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2803,7 +2803,7 @@ importers:
   ../../libs/sdk-ui-vis-commons:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.0
+      '@gooddata/number-formatter': ^1.0.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2855,7 +2855,7 @@ importers:
       vitest: 0.31.4
       vitest-dom: 0.1.0
     dependencies:
-      '@gooddata/number-formatter': 1.0.0
+      '@gooddata/number-formatter': 1.0.1
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -6105,9 +6105,10 @@ packages:
       - debug
       - encoding
 
-  /@gooddata/number-formatter/1.0.0:
-    resolution: {integrity: sha512-PUMNaX7crTLvUkb7GIwerwzGQyaj7sZaZVW0ATQut/GiBdOeS3lsDGMylbX31xCVXCqBDy8aay9niHe53Abigg==}
+  /@gooddata/number-formatter/1.0.1:
+    resolution: {integrity: sha512-TJUfmuevAfpzO2hmMs03RElnu6S1c3q1DOda4Wj7n+zEeeWpKQKIyVQA6Rij/PQubv3h/PnlEF5SOlbGn768LA==}
     dependencies:
+      lru-cache: 10.0.1
       ts-invariant: 0.7.5
       tslib: 2.5.0
     dev: false
@@ -8905,19 +8906,19 @@ packages:
   /@types/blessed/0.1.21:
     resolution: {integrity: sha512-nlJHCM/wDUtvhDF7FBW2fWTP1JIPMm16xKXTdaAgOaqXiT4VkB/GIc7LAX5BxhTR09BVeNF2JzxszHC9Tres2w==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/bonjour/3.5.10:
     resolution: {integrity: sha512-p7ienRMiS41Nu2/igbJxxLDWrSZ0WxM8UQgCeO9KhoVF7cOVFkrKsiDr1EsJIla8vV3oEEjGcz11jc5yimhzZw==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
@@ -8943,17 +8944,17 @@ packages:
     resolution: {integrity: sha512-h8QJa8xSb1WD4fpKBDcATDNGXghFj6/3GRWG6dhmRcu0RX1Ubasur2Uvx5aeEwlf0MwblEC2bMzzMQntxnw/Cw==}
     dependencies:
       '@types/express-serve-static-core': 4.17.33
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/cross-spawn/6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/d3-array/3.0.4:
@@ -9051,7 +9052,7 @@ packages:
   /@types/express-serve-static-core/4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
 
@@ -9074,7 +9075,7 @@ packages:
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/geojson/7946.0.10:
     resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
@@ -9084,14 +9085,14 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/glob/8.1.0:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/hast/2.3.4:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
@@ -9115,7 +9116,7 @@ packages:
   /@types/http-proxy/1.17.10:
     resolution: {integrity: sha512-Qs5aULi+zV1bwKAg5z1PWnDXWmsn+LxIvUGv6E2+OOMYhclZMO+OXd9pYVf2gLykf2I7IV2u7oTHwChPNsvJ7g==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/inquirer/8.2.6:
     resolution: {integrity: sha512-3uT88kxg8lNzY8ay2ZjP44DKcRaTGztqeIvN2zHvhzIBH/uAPaL75aBtdNRKbA7xXoMbBt5kX0M00VKAnfOYlA==}
@@ -9152,7 +9153,7 @@ packages:
   /@types/kefir/3.8.7:
     resolution: {integrity: sha512-2flvlUgAgLmMUje9dGmvQ2jNzNCc3aKm912z1qrjxrRWQT6iglAq28f7m9xcScHjV1QPH6LosRvR4bTUAgAO2w==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/lodash/4.14.194:
@@ -9188,7 +9189,7 @@ packages:
   /@types/node-fetch/2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       form-data: 3.0.1
 
   /@types/node/14.18.42:
@@ -9197,6 +9198,7 @@ packages:
 
   /@types/node/16.18.23:
     resolution: {integrity: sha512-XAMpaw1s1+6zM+jn2tmw8MyaRDIJfXxqmIQIS0HfoGYPuf7dUWeiUKopwq13KFX9lEp1+THGtlaaYx39Nxr58g==}
+    dev: false
 
   /@types/node/18.17.6:
     resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
@@ -9345,7 +9347,7 @@ packages:
     resolution: {integrity: sha512-YyP+VfeaqAyFmXoTh3HChxOQMyjByRMsHU7kc5KOJkSlXudhMhQIALbYV7rHh/l8d2lX3VUQzprrcAgWdRuU8g==}
     dependencies:
       '@types/glob': 8.1.0
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/scheduler/0.16.3:
@@ -9367,7 +9369,7 @@ packages:
     resolution: {integrity: sha512-NUo5XNiAdULrJENtJXZZ3fHtfMolzZwczzBbnAeBbqBwG+LaG6YaJtuwzwGSQZ2wsCrxjEhNNjAkKigy3n8teQ==}
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/sinonjs__fake-timers/8.1.1:
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -9380,7 +9382,7 @@ packages:
   /@types/sockjs/0.3.33:
     resolution: {integrity: sha512-f0KEEe05NvUnat+boPTZ0dgaLZ4SfSouXUgv5noUiefG2ajgKjmETo9ZJyuqsl7dfl2aHlLJUiki6B4ZYldiiw==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/spark-md5/3.0.2:
     resolution: {integrity: sha512-82E/lVRaqelV9qmRzzJ1PKTpyrpnT7mwdneKNJB9hUtypZDMggloDfFUCIqRRx3lYRxteCwXSq9c+W71Vf0QnQ==}
@@ -9393,7 +9395,7 @@ packages:
   /@types/tar/6.1.4:
     resolution: {integrity: sha512-Cp4oxpfIzWt7mr2pbhHT2OTXGMAL0szYCzuf8lRWyIMCgsx6/Hfc3ubztuhvzXHXgraTQxyOCmmg7TDGIMIJJQ==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       minipass: 4.2.8
     dev: true
 
@@ -9406,7 +9408,7 @@ packages:
   /@types/through/0.0.30:
     resolution: {integrity: sha512-FvnCJljyxhPM3gkRgWmxmDZyAQSiBQQWLI0A0VFL0K7W1oRUrPJSqNO0NvTnLkBcotdlp3lKvaT0JrnyRDkzOg==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
 
   /@types/tinycolor2/1.4.3:
@@ -9430,13 +9432,13 @@ packages:
   /@types/ws/8.5.4:
     resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
 
   /@types/yauzl/2.10.0:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
     dev: true
     optional: true
 
@@ -16097,7 +16099,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -16687,6 +16689,11 @@ packages:
     dependencies:
       fault: 1.0.4
       highlight.js: 10.7.3
+    dev: false
+
+  /lru-cache/10.0.1:
+    resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
+    engines: {node: 14 || >=16.14}
     dev: false
 
   /lru-cache/5.1.1:
@@ -22152,7 +22159,7 @@ packages:
       d3-timer: 3.0.1
     dev: false
 
-  /vite-node/0.31.4_@types+node@16.18.23:
+  /vite-node/0.31.4_@types+node@18.17.6:
     resolution: {integrity: sha512-uzL377GjJtTbuc5KQxVbDu2xfU/x0wVjUtXQR2ihS21q/NK6ROr4oG0rsSkBBddZUVCwzfx22in76/0ZZHXgkQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -22162,7 +22169,7 @@ packages:
       mlly: 1.3.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.9_@types+node@16.18.23
+      vite: 4.3.9_@types+node@18.17.6
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -22173,7 +22180,7 @@ packages:
       - terser
     dev: true
 
-  /vite-node/0.31.4_kj4j5skeuxgmfvgpdcnc4zrrqe:
+  /vite-node/0.31.4_ico5mydlztnxnlt7wmpx75gt7q:
     resolution: {integrity: sha512-uzL377GjJtTbuc5KQxVbDu2xfU/x0wVjUtXQR2ihS21q/NK6ROr4oG0rsSkBBddZUVCwzfx22in76/0ZZHXgkQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -22183,7 +22190,7 @@ packages:
       mlly: 1.3.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.9_kj4j5skeuxgmfvgpdcnc4zrrqe
+      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -22194,7 +22201,7 @@ packages:
       - terser
     dev: true
 
-  /vite/4.3.9_@types+node@16.18.23:
+  /vite/4.3.9_@types+node@18.17.6:
     resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -22219,7 +22226,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       esbuild: 0.17.18
       postcss: 8.4.24
       rollup: 3.23.0
@@ -22227,7 +22234,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.3.9_kj4j5skeuxgmfvgpdcnc4zrrqe:
+  /vite/4.3.9_ico5mydlztnxnlt7wmpx75gt7q:
     resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -22252,7 +22259,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       esbuild: 0.17.18
       postcss: 8.4.24
       rollup: 3.23.0
@@ -22308,7 +22315,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22328,8 +22335,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@16.18.23
-      vite-node: 0.31.4_@types+node@16.18.23
+      vite: 4.3.9_@types+node@18.17.6
+      vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -22373,7 +22380,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22394,8 +22401,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_kj4j5skeuxgmfvgpdcnc4zrrqe
-      vite-node: 0.31.4_kj4j5skeuxgmfvgpdcnc4zrrqe
+      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -22439,7 +22446,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22460,8 +22467,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@16.18.23
-      vite-node: 0.31.4_@types+node@16.18.23
+      vite: 4.3.9_@types+node@18.17.6
+      vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -22505,7 +22512,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22526,8 +22533,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@16.18.23
-      vite-node: 0.31.4_@types+node@16.18.23
+      vite: 4.3.9_@types+node@18.17.6
+      vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -22571,7 +22578,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22592,8 +22599,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_kj4j5skeuxgmfvgpdcnc4zrrqe
-      vite-node: 0.31.4_kj4j5skeuxgmfvgpdcnc4zrrqe
+      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -22637,7 +22644,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.18.23
+      '@types/node': 18.17.6
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -22657,8 +22664,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_kj4j5skeuxgmfvgpdcnc4zrrqe
-      vite-node: 0.31.4_kj4j5skeuxgmfvgpdcnc4zrrqe
+      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

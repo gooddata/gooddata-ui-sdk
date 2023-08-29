@@ -50,7 +50,7 @@
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2",
-        "lru-cache": "^9.1.1"
+        "lru-cache": "^10.0.1"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
