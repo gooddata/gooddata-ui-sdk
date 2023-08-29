@@ -64,13 +64,11 @@ export const BubbleChart: (props: IBubbleChartProps) => JSX.Element;
 // @public
 export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 
-// @public (undocumented)
-export enum CalculationType {
-    CHANGE = "change",
-    CHANGE_DIFFERENCE = "change_difference",
-    DIFFERENCE = "difference",
-    RATIO = "ratio"
-}
+// @internal (undocumented)
+export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
+
+// @public
+export type CalculationType = "change" | "ratio" | "difference";
 
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
@@ -98,13 +96,6 @@ export enum ComparisonColorType {
 
 // @public
 export type ComparisonFormat = string | null;
-
-// @public (undocumented)
-export enum ComparisonPositionType {
-    LEFT = "left",
-    RIGHT = "right",
-    TOP = "top"
-}
 
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
@@ -366,8 +357,6 @@ export interface IComparison {
     isArrowEnabled?: boolean;
     isSignEnabled?: boolean;
     labelConfig?: ILabelConfig;
-    position?: ComparisonPositionType;
-    subFormat?: ComparisonFormat;
 }
 
 // @public
@@ -517,10 +506,6 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 
 // @public (undocumented)
 export interface ILabelConfig {
-    equals?: string;
-    isConditional?: boolean;
-    negative?: string;
-    positive?: string;
     unconditionalValue?: string;
 }
 

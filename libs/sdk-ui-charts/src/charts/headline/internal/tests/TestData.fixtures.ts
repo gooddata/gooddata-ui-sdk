@@ -6,7 +6,7 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import { IBaseHeadlineItem, EvaluationType } from "../interfaces/BaseHeadlines.js";
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
-import { CalculationType, IColorConfig, IComparison } from "../../../../interfaces/index.js";
+import { CalculateAs, IColorConfig, IComparison } from "../../../../interfaces/index.js";
 import { ComparisonColorType } from "../../headlineHelper.js";
 
 export const createComparison = (customConfig: Omit<IComparison, "enabled"> = {}) => {
@@ -210,7 +210,7 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
     [
         "comparison with calculate as different and default format",
         ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
-        createComparison({ calculationType: CalculationType.DIFFERENCE }),
+        createComparison({ calculationType: CalculateAs.DIFFERENCE }),
     ],
     [
         "comparison with decimal-1 format",

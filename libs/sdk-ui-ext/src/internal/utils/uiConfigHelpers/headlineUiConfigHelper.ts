@@ -15,7 +15,7 @@ import {
     isPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
 import {
-    CalculationType,
+    CalculateAs,
     DEFAULT_COMPARISON_PALETTE,
     IChartConfig,
     IComparison,
@@ -148,7 +148,7 @@ export function getComparisonDefaultCalculationType(insight: IInsightDefinition)
     const secondaryIsDerivedMeasure =
         isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure);
 
-    return secondaryIsDerivedMeasure ? CalculationType.CHANGE : CalculationType.RATIO;
+    return secondaryIsDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
 }
 
 function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure {

@@ -3,59 +3,23 @@
 import { IColor } from "@gooddata/sdk-model";
 
 /**
+ * Algorithm
+ *  change: (Primary - Secondary) / Secondary
+ *  difference: Primary - Secondary
+ *  ratio: Primary / Secondary
+ *
  * @public
  */
-export enum CalculationType {
-    /**
-     * (Primary - Secondary) / Secondary
-     */
-    CHANGE = "change",
-
-    /**
-     * Primary - Secondary
-     */
-    DIFFERENCE = "difference",
-
-    /**
-     * Primary / Secondary
-     */
-    RATIO = "ratio",
-
-    /**
-     * Change: (Primary - Secondary) / Secondary
-     * Difference: Primary - Secondary
-     */
-    CHANGE_DIFFERENCE = "change_difference",
-}
+export type CalculationType = "change" | "ratio" | "difference";
 
 /**
- * @public
+ * @internal
  */
-export enum ComparisonPositionType {
-    /**
-     * <table border="1">
-     *     <tr><td style="text-align: center;" colspan="3">Primary</td></tr>
-     *     <tr><td> Comparison </td><td>|</td><td> Secondary </td></tr>
-     * </table>
-     */
-    LEFT = "left",
-
-    /**
-     * <table border="1">
-     *    <tr><td style="text-align: center;" colspan="3">Primary</td></tr>
-     *    <tr><td> Secondary </td><td>|</td><td> Comparison </td></tr>
-     * </table>
-     */
-    RIGHT = "right",
-
-    /**
-     * <table border="1">
-     *    <tr><td style="text-align: center;" colspan="3">Comparison</td></tr>
-     *    <tr><td> Primary </td><td>|</td><td> Secondary </td></tr>
-     * </table>
-     */
-    TOP = "top",
-}
+export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = {
+    RATIO: "ratio" as const,
+    CHANGE: "change" as const,
+    DIFFERENCE: "difference" as const,
+};
 
 /**
  * comparison format type
@@ -112,66 +76,9 @@ export interface IColorConfig {
  */
 export interface ILabelConfig {
     /**
-     * This property specifies whether to use the unconditional value for all conditions
-     * or separate values for each condition.
-     *
-     * @defaultValue false
-     */
-    isConditional?: boolean;
-
-    /**
      * This property specify the label for all conditions in cases flag isConditional is on
      */
     unconditionalValue?: string;
-
-    /**
-     * This property specify the label of the positive comparison value
-     * <br/>
-     * Primary &gt; Secondary
-     *
-     * @defaultValue based on {@link CalculationType}
-     *
-     * <table border="1">
-     *     <tr><td>Calculation type</td><td>Default label</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE}</td><td>Increase</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE_DIFFERENCE}</td><td>Increase</td></tr>
-     *     <tr><td>{@link CalculationType.DIFFERENCE}</td><td>Increase</td></tr>
-     *     <tr><td>{@link CalculationType.RATIO}</td><td>(Not applicable)</td></tr>
-     * </table>
-     */
-    positive?: string;
-
-    /**
-     * This property specify the label of the negative comparison
-     * <br/>
-     * Primary &lt; Secondary
-     *
-     * @defaultValue based on {@link CalculationType}
-     *
-     * <table border="1">
-     *     <tr><td>Calculation type</td><td>Default label</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE}</td><td>Decrease</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE_DIFFERENCE}</td><td>Decrease</td></tr>
-     *     <tr><td>{@link CalculationType.DIFFERENCE}</td><td>Decrease</td></tr>
-     *     <tr><td>{@link CalculationType.RATIO}</td><td>(Not applicable)</td></tr>
-     * </table>
-     */
-    negative?: string;
-
-    /**
-     * This property specify the label of the equals comparison value
-     * <br/>
-     * Primary = Secondary
-     *
-     * <table border="1">
-     *     <tr><td>Calculation type</td><td>Default label</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE}</td><td>No change</td></tr>
-     *     <tr><td>{@link CalculationType.CHANGE_DIFFERENCE}</td><td>No change</td></tr>
-     *     <tr><td>{@link CalculationType.DIFFERENCE}</td><td>No difference</td></tr>
-     *     <tr><td>{@link CalculationType.RATIO}</td><td>(Not applicable)</td></tr>
-     * </table>
-     */
-    equals?: string;
 }
 
 /**
@@ -195,16 +102,6 @@ export interface IComparison {
     calculationType?: CalculationType;
 
     /**
-     * This property defines how the comparison value will be placed.
-     * <br/>
-     *
-     * See {@link ComparisonPositionType} to know the supported positions
-     *
-     * @defaultValue {@link ComparisonPositionType.LEFT}
-     */
-    position?: ComparisonPositionType;
-
-    /**
      * This property Defines number format of the comparison value
      *
      * See {@link ComparisonFormat} to knows the supported format
@@ -212,15 +109,6 @@ export interface IComparison {
      * @defaultValue based on calculation type
      */
     format?: ComparisonFormat;
-
-    /**
-     * This property defines the number format of the comparison sub-value when using {@link CalculationType.CHANGE_DIFFERENCE}.
-     *
-     * See {@link ComparisonFormat} to knows the supported format
-     *
-     * @defaultValue based on calculation type
-     */
-    subFormat?: ComparisonFormat;
 
     /**
      * This property controls Indicator/Arrow visibility of arrow trend indicator

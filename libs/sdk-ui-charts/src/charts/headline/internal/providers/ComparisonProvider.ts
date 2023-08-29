@@ -18,7 +18,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import AbstractProvider from "./AbstractProvider.js";
 import ComparisonTransformation from "../transformations/ComparisonTransformation.js";
-import { CalculationType, IComparison } from "../../../../interfaces/index.js";
+import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
@@ -64,13 +64,13 @@ class ComparisonProvider extends AbstractProvider {
         };
 
         switch (this.comparison.calculationType) {
-            case CalculationType.DIFFERENCE:
+            case CalculateAs.DIFFERENCE:
                 return [createVirtualArithmeticMeasure("difference")];
 
-            case CalculationType.RATIO:
+            case CalculateAs.RATIO:
                 return [createVirtualArithmeticMeasure("ratio")];
 
-            case CalculationType.CHANGE:
+            case CalculateAs.CHANGE:
                 return [createVirtualArithmeticMeasure("change")];
 
             default:

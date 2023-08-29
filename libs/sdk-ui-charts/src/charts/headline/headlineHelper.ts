@@ -2,7 +2,7 @@
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { CalculationType, ILabelConfig } from "../../interfaces/index.js";
+import { CalculateAs, CalculationType, ILabelConfig } from "../../interfaces/index.js";
 
 /**
  * @internal
@@ -22,15 +22,15 @@ enum ComparisonColorType {
 }
 
 const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefaultValue } = {
-    [CalculationType.CHANGE]: {
+    [CalculateAs.CHANGE]: {
         defaultLabelKey: "visualizations.headline.comparison.title.change",
         defaultFormat: "#,##0%",
     },
-    [CalculationType.RATIO]: {
+    [CalculateAs.RATIO]: {
         defaultLabelKey: "visualizations.headline.comparison.title.ratio",
         defaultFormat: "#,##0%",
     },
-    [CalculationType.DIFFERENCE]: {
+    [CalculateAs.DIFFERENCE]: {
         defaultLabelKey: "visualizations.headline.comparison.title.difference",
         defaultFormat: null,
     },
@@ -85,7 +85,7 @@ const getComparisonTitle = (labelConfig: ILabelConfig, defaultLabel: string): st
  * @internal
  */
 const getCalculationValuesDefault = (
-    calculationType: CalculationType = CalculationType.CHANGE,
+    calculationType: CalculationType = CalculateAs.CHANGE,
 ): ICalculationDefaultValue => {
     return CALCULATION_VALUES_DEFAULT[calculationType];
 };

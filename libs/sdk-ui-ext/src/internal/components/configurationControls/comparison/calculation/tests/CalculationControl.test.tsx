@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import CalculationControl from "../CalculationControl.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 import * as DropdownControl from "../../../DropdownControl.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
@@ -46,7 +46,7 @@ describe("CalculationControl", () => {
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
-                calculationType: CalculationType.CHANGE,
+                calculationType: CalculateAs.CHANGE,
             },
         });
 
@@ -65,11 +65,11 @@ describe("CalculationControl", () => {
 
     it("Should select provided calculation-type", () => {
         const { container } = renderCalculationControl({
-            defaultCalculationType: CalculationType.DIFFERENCE,
+            defaultCalculationType: CalculateAs.DIFFERENCE,
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {
                     enabled: true,
-                    calculationType: CalculationType.RATIO,
+                    calculationType: CalculateAs.RATIO,
                 },
             }),
         });
@@ -79,7 +79,7 @@ describe("CalculationControl", () => {
 
     it("Should select default calculation-type while calculation-type is empty", () => {
         const { container } = renderCalculationControl({
-            defaultCalculationType: CalculationType.DIFFERENCE,
+            defaultCalculationType: CalculateAs.DIFFERENCE,
         });
         expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
             DIFFERENCE_ITEM_TEXT_QUERY,
@@ -138,7 +138,7 @@ describe("CalculationControl", () => {
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({
-                    comparison: { enabled: true, calculationType: CalculationType.RATIO },
+                    comparison: { enabled: true, calculationType: CalculateAs.RATIO },
                 }),
             }),
         );
@@ -148,7 +148,7 @@ describe("CalculationControl", () => {
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({
-                    comparison: { enabled: true, calculationType: CalculationType.DIFFERENCE },
+                    comparison: { enabled: true, calculationType: CalculateAs.DIFFERENCE },
                 }),
             }),
         );
@@ -158,7 +158,7 @@ describe("CalculationControl", () => {
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({
-                    comparison: { enabled: true, calculationType: CalculationType.CHANGE },
+                    comparison: { enabled: true, calculationType: CalculateAs.CHANGE },
                 }),
             }),
         );

@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { CalculationType } from "../../../interfaces/index.js";
+import { CalculateAs, CalculationType } from "../../../interfaces/index.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,
@@ -25,21 +25,21 @@ describe("headlineHelper", () => {
                 },
             ],
             [
-                CalculationType.RATIO,
+                CalculateAs.RATIO,
                 {
                     defaultLabelKey: "visualizations.headline.comparison.title.ratio",
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
                 },
             ],
             [
-                CalculationType.CHANGE,
+                CalculateAs.CHANGE,
                 {
                     defaultLabelKey: "visualizations.headline.comparison.title.change",
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
                 },
             ],
             [
-                CalculationType.DIFFERENCE,
+                CalculateAs.DIFFERENCE,
                 {
                     defaultLabelKey: "visualizations.headline.comparison.title.difference",
                     defaultFormat: null,
