@@ -22,16 +22,19 @@ const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps> = ({ dataItem, ev
         ...(color ? { color } : {}),
     };
 
-    const valueClassNames = cx(["comparison-headline-value", "headline-value", "s-headline-value"], {
-        "headline-value--empty": formattedItem.isValueEmpty && !color,
-        "s-headline-value--empty": formattedItem.isValueEmpty && !color,
-        "gd-icon-arrow-up": isArrowEnabled && evaluationType === EvaluationType.POSITIVE_VALUE,
-        "gd-icon-arrow-down": isArrowEnabled && evaluationType === EvaluationType.NEGATIVE_VALUE,
-    });
+    const valueClassNames = cx(
+        ["comparison-headline-value", "s-comparison-headline-value", "headline-value", "s-headline-value"],
+        {
+            "headline-value--empty": formattedItem.isValueEmpty && !color,
+            "s-headline-value--empty": formattedItem.isValueEmpty && !color,
+            "gd-icon-arrow-up": isArrowEnabled && evaluationType === EvaluationType.POSITIVE_VALUE,
+            "gd-icon-arrow-down": isArrowEnabled && evaluationType === EvaluationType.NEGATIVE_VALUE,
+        },
+    );
 
     return (
         <div
-            className="comparison-headline-value-wrapper headline-value-wrapper s-headline-value-wrapper"
+            className="comparison-headline-value-wrapper s-comparison-headline-value-wrapper headline-value-wrapper s-headline-value-wrapper"
             style={cssStyle}
         >
             <ResponsiveText>
