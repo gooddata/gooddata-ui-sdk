@@ -4,6 +4,7 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import {
     IBucketOfFun,
+    ICustomProps,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
@@ -12,7 +13,7 @@ import {
 
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
 import { IDrillableItem, OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep from "lodash/cloneDeep.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
@@ -80,12 +81,12 @@ describe("PluggableHeadline2", () => {
                 },
             });
 
-            expect(pushData).toHaveBeenCalledTimes(1);
+            expect(pushData).not.toHaveBeenCalled();
         });
     });
 
     describe("update", () => {
-        function getTestOptions(): IVisProps {
+        function getTestOptions(customProps: ICustomProps = {}): IVisProps {
             const drillableItems: IDrillableItem[] = [];
             return {
                 dimensions: {
@@ -94,6 +95,7 @@ describe("PluggableHeadline2", () => {
                 },
                 custom: {
                     drillableItems,
+                    ...customProps,
                 },
                 locale: "en-US",
             };
@@ -203,6 +205,64 @@ describe("PluggableHeadline2", () => {
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl.type).toBe(CoreHeadline);
             expect(renderEl.props.config.disableDrillUnderline).toEqual(true);
+        });
+
+        it("should correctly set default comparison configuration", () => {
+            const headline = createComponent({
+                featureFlags: {
+                    enableNewHeadline: true,
+                },
+            });
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:columns",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+            });
+        });
+
+        it("should correctly set default comparison configuration for migration", () => {
+            const headline = createComponent({
+                featureFlags: {
+                    enableNewHeadline: true,
+                },
+            });
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                format: "#,##0%",
+                colorConfig: {
+                    disabled: true,
+                },
+                labelConfig: {
+                    unconditionalValue: "Versus",
+                },
+            });
         });
     });
 

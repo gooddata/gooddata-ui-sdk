@@ -56,7 +56,8 @@ const isComparisonType = (
     secondaryMeasures: IMeasure[],
     comparison: IComparison,
 ): boolean => {
-    return primaryMeasure && secondaryMeasures?.length === 1 && comparison?.enabled;
+    const isComparisonEnabled = comparison?.enabled ?? true;
+    return primaryMeasure && secondaryMeasures?.length === 1 && isComparisonEnabled;
 };
 
 /**

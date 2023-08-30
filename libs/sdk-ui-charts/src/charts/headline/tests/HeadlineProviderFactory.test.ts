@@ -21,10 +21,12 @@ describe("HeadlineProviderFactory", () => {
             ];
         };
 
-        const createConfig = (enabledComparison: boolean): IChartConfig => {
-            return {
-                comparison: { enabled: enabledComparison },
-            };
+        const createConfig = (enabledComparison?: boolean): IChartConfig => {
+            return enabledComparison === undefined
+                ? {}
+                : {
+                      comparison: { enabled: enabledComparison },
+                  };
         };
 
         it("should create LegacyProvider in case enableNewHeadline is off", () => {
@@ -70,6 +72,13 @@ describe("HeadlineProviderFactory", () => {
             const config = createConfig(false);
 
             expect(createHeadlineProvider(buckets, config, true)).toBeInstanceOf(MultiMeasuresProvider);
+        });
+
+        it("should create ComparisonProvider in case comparison is undefined", () => {
+            const buckets = createBuckets(ReferenceMd.Amount, [ReferenceMd.Amount_1.Sum]);
+            const config = createConfig();
+
+            expect(createHeadlineProvider(buckets, config, true)).toBeInstanceOf(ComparisonProvider);
         });
     });
 });

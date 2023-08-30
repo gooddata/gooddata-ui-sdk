@@ -10,8 +10,11 @@ import {
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
+    insightId,
+    insightProperties,
     insightSorts,
     ISettings,
+    isInsight,
     MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
@@ -27,7 +30,6 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-    IVisualizationProperties,
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
@@ -43,10 +45,7 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
-import {
-    getReferencePointWithSupportedProperties,
-    getSupportedPropertiesControls,
-} from "../../../utils/propertiesHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import {
     buildHeadlineVisualizationConfig,
@@ -60,8 +59,10 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
 import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
 import {
     HEADLINE_DEFAULT_CONTROL_PROPERTIES,
+    HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES,
     HEADLINE_SUPPORTED_PROPERTIES,
 } from "../../../constants/supportedProperties.js";
+import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 
 /**
  * PluggableHeadline
@@ -102,9 +103,6 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.unmountFun = props.unmountFun;
 
         this.supportedPropertiesList = HEADLINE_SUPPORTED_PROPERTIES;
-        if (props.featureFlags?.enableNewHeadline) {
-            this.initializeProperties(props.visualizationProperties);
-        }
     }
 
     public unmount(): void {
@@ -299,21 +297,53 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }, []);
     }
 
-    private initializeProperties(visualizationProperties: IVisualizationProperties): void {
-        const controls = visualizationProperties?.controls;
+    protected updateInstanceProperties(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        insightPropertiesMeta: any,
+    ): void {
+        super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
-        const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
-        const initialProperties = {
-            supportedProperties: {
+        const hasComparisonProperties = insightProperties(insight).controls?.comparison;
+        if (!hasComparisonProperties) {
+            const defaultComparisonProperties = this.getDefaultPropertiesForComparison(options, insight);
+            this.visualizationProperties = {
                 controls: {
-                    ...supportedProperties,
-                    ...HEADLINE_DEFAULT_CONTROL_PROPERTIES,
+                    ...defaultComparisonProperties,
+                },
+            };
+            this.pushData({
+                properties: {
+                    controls: {
+                        ...defaultComparisonProperties,
+                    },
+                },
+            });
+        }
+    }
+
+    private getDefaultPropertiesForComparison(
+        options: IVisProps,
+        insight: IInsightDefinition,
+    ): HeadlineControlProperties {
+        const isInsightOpened = isInsight(insight) && insightId(insight);
+        const hasVisClassChanged = options.custom?.lastSavedVisClassUrl !== "local:headline";
+        const useDefaultMigrationProperties = isInsightOpened && !hasVisClassChanged;
+        return useDefaultMigrationProperties
+            ? this.buildDefaultMigrationProperties()
+            : HEADLINE_DEFAULT_CONTROL_PROPERTIES;
+    }
+
+    private buildDefaultMigrationProperties(): HeadlineControlProperties {
+        return {
+            comparison: {
+                ...HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES.comparison,
+                labelConfig: {
+                    unconditionalValue: this.intl.formatMessage({
+                        id: "visualizations.headline.tertiary.title",
+                    }),
                 },
             },
         };
-
-        this.pushData({
-            initialProperties,
-        });
     }
 }

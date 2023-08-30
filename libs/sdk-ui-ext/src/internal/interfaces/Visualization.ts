@@ -58,6 +58,7 @@ export interface IVisConstruct {
 export interface ICustomProps {
     drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
+    lastSavedVisClassUrl?: string;
 }
 
 export interface IDimensions {

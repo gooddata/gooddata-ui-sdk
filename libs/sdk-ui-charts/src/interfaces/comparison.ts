@@ -89,7 +89,7 @@ export interface IComparison {
      * enable/disable comparison
      * <br/>
      *
-     * @defaultValue false
+     * @defaultValue true
      */
     enabled: boolean;
 
