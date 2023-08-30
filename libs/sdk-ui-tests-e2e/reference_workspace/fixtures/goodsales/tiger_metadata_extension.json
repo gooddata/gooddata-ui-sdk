@@ -1761,6 +1761,108 @@
                 "description": "",
                 "id": "5c8244eb-6c86-488c-9df1-37d46e5450ed",
                 "title": "KD with table has many rows/columns"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "fe0c65ba-a85d-4def-9aa1-e8f19469324e",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "a40866ab-5272-4f2c-9b5a-dd255b1e5d42",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Column chart",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_oppcreated_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "d44ccdf0-01b4-4faf-a4e1-2a7c5fc05ad1",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Column with two measures by date",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-09-05 15:20",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "51ab79db-d7aa-44fe-ba93-404d83f071d3",
+                "modifiedAt": "2023-09-05 17:05",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard Testing"
             }
         ],
         "dashboardPlugins": [],
@@ -3613,6 +3715,31 @@
                 },
                 "description": "",
                 "id": "def1b968-bf39-48c3-9a54-0bdfddd098a5",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["Adam Bradley", "Alejandro Vabiano", "Alexsandr Fyodr", "Antony"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_owner.salesrep.ownername",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "74232c7af89646459ad867f232dcb65b",
+                                "negativeSelection": false
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "fe0c65ba-a85d-4def-9aa1-e8f19469324e",
                 "title": "filterContext"
             }
         ],
