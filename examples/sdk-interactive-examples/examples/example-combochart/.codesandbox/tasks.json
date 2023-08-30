@@ -1,0 +1,27 @@
+{
+    "$schema": "https://codesandbox.io/schemas/tasks.json",
+    // These tasks will run in order when initializing your CodeSandbox project.
+    "setupTasks": [
+        {
+            "name": "Update Workspace Version",
+            "command": "npm run update-version"
+        },
+        {
+            "name": "Install Dependencies",
+            "command": "npm install"
+        }
+    ],
+
+    // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+    "tasks": {
+        "start": {
+            "name": "Start Dev Server",
+            "command": "npm start",
+            "runAtStart": true,
+            "preview": {
+                "port": 8080,
+                "prLink": "direct"
+            }
+        }
+    }
+}
