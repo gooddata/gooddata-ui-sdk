@@ -18,9 +18,12 @@ const CalculationListItem: React.FC<ISingleSelectListItemProps> = ({
     isSelected,
     onClick,
 }) => {
-    const classNames = cx(["gd-list-item", "calculation-list-item", "s-calculation-list-item"], {
-        "is-selected": isSelected,
-    });
+    const classNames = cx(
+        ["gd-list-item", "calculation-list-item", "s-calculation-list-item", `s-${title}`],
+        {
+            "is-selected": isSelected,
+        },
+    );
 
     return (
         <div className={classNames} onClick={onClick}>
