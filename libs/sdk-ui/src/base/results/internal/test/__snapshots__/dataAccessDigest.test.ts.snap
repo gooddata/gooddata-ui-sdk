@@ -1089,6 +1089,51 @@ exports[`createDataAccessDigest > should find slices and series for: Headline - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: Headline - multi measures with only primary measure 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - multi measures with three measures 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - multi measures with two measures 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - multi measures with two measures one PoP 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - multi measures with two measures with german separators 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: Headline - single measure 1`] = `
 {
   "seriesCount": 1,

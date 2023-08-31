@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "secondary_measures" }
+        ],
+        "filters": [],
+        "identifier": "Headline.25f8ead2829912864230dd6f4bcb9a1f",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Headline - multi measures with only primary measure",
+        "uri": "Headline.25f8ead2829912864230dd6f4bcb9a1f",
+        "visualizationUrl": "local:headline"
+    }
+}

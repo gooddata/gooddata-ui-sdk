@@ -31451,6 +31451,114 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for Headline - multi measures with only primary measure 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Headline - multi measures with three measures 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Headline - multi measures with two measures 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Headline - multi measures with two measures one PoP 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newPopMeasure(\\"m_acugFHNJgsBy\\", idRef(\\"closed.year\\", \\"attribute\\"), m => m.alias(\\"Won Last Year\\").localId(\\"m_m_acugFHNJgsBy_closed.year\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Headline - multi measures with two measures with german separators 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for Headline - single measure 1`] = `
 "import React from \\"react\\";
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";

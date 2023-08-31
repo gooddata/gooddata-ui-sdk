@@ -8,7 +8,10 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 
 import "../insightStories.css";
 import { storiesOf } from "../../../_infra/storyRepository.js";
-import { HeadlineWithTwoMeasures } from "../../../../scenarios/charts/headline/base.js";
+import {
+    HeadlineWithThreeMeasures,
+    HeadlineWithTwoMeasures,
+} from "../../../../scenarios/charts/headline/base.js";
 import { CustomStories } from "../../../_infra/storyGroups.js";
 import {
     ScreenshotReadyWrapper,
@@ -92,6 +95,30 @@ storiesOf(`${CustomStories}/Headline`)
         { screenshot: true },
     )
     .add(
+        "responsive with multi measures",
+        () => (
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
+                <div style={{ width: 250, border: "1px solid black" }}>
+                    <Headline
+                        backend={enabledNewHeadlineBackend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                        secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
+                    />
+                </div>
+                <div style={{ width: 150, border: "1px solid black" }}>
+                    <Headline
+                        backend={enabledNewHeadlineBackend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                        secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>
+        ),
+        { screenshot: true },
+    )
+    .add(
         "themed",
         () =>
             wrapWithTheme(
@@ -119,6 +146,24 @@ storiesOf(`${CustomStories}/Headline`)
                             workspace={ReferenceWorkspaceId}
                             primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                             secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
+                            config={configWithComparisonEnabled}
+                        />
+                    </div>
+                </ScreenshotReadyWrapper>,
+            ),
+        { screenshot: true },
+    )
+    .add(
+        "themed with multi measure",
+        () =>
+            wrapWithTheme(
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <div className="dashboard-like-6">
+                        <Headline
+                            backend={enabledNewHeadlineBackend}
+                            workspace={ReferenceWorkspaceId}
+                            primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                            secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
                             config={configWithComparisonEnabled}
                         />
                     </div>
@@ -223,6 +268,41 @@ storiesOf(`${CustomStories}/Headline`)
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
                         config={{ ...config, ...configWithComparisonEnabled }}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>
+        ),
+        { screenshot: true },
+    )
+    .add(
+        "compactSize with multi measure",
+        () => (
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(3)}>
+                <div style={{ width: 150, height: 120, border: "1px solid black" }}>
+                    <Headline
+                        backend={enabledNewHeadlineBackend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                        secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
+                        config={config}
+                    />
+                </div>
+                <div style={{ width: 180, height: 160, border: "1px solid black" }}>
+                    <Headline
+                        backend={enabledNewHeadlineBackend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                        secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
+                        config={config}
+                    />
+                </div>
+                <div style={{ width: 150, height: 260, border: "1px solid black" }}>
+                    <Headline
+                        backend={enabledNewHeadlineBackend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
+                        secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
+                        config={config}
                     />
                 </div>
             </ScreenshotReadyWrapper>

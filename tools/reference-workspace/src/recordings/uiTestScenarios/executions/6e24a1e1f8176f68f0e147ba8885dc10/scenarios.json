@@ -1,48 +1,10 @@
 [
     {
-        "n2oMap": { "m_acugFHNJgsBy": "m_acugFHNJgsBy" },
-        "originalExecution": {
-            "attributes": [],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_acugFHNJgsBy"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                }
-            ],
-            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_acugFHNJgsBy"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
+        "n2oMap": {
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_abEgMnq5hyJQ": "m_abEgMnq5hyJQ",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
         },
-        "scenario": "single measure",
-        "vis": "Headline"
-    },
-    {
-        "n2oMap": { "m_acugFHNJgsBy": "m_acugFHNJgsBy" },
         "originalExecution": {
             "attributes": [],
             "buckets": [
@@ -61,7 +23,31 @@
                     ],
                     "localIdentifier": "measures"
                 },
-                { "items": [], "localIdentifier": "secondary_measures" }
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "secondary_measures"
+                }
             ],
             "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
             "filters": [],
@@ -75,13 +61,33 @@
                         },
                         "localIdentifier": "m_acugFHNJgsBy"
                     }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_abEgMnq5hyJQ"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
                 }
             ],
             "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "multi measures with only primary measure",
+        "scenario": "multi measures with three measures",
         "vis": "Headline"
     }
 ]

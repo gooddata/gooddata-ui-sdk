@@ -3306,6 +3306,106 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with only primary measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with three measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Probability",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures one PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Won Last Year",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - multi measures with two measures with german separators 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - single measure 1`] = `
 {
   "seriesDigest": {

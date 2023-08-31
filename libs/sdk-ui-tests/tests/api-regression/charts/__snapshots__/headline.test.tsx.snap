@@ -1,306 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Headline > with comparison with drilling on two measures > should create expected execution definition 1`] = `
-{
-  "attributes": [],
-  "buckets": [
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "arithmeticMeasure": {
-                "measureIdentifiers": [
-                  "m_acugFHNJgsBy",
-                  "m_aangOxLSeztu",
-                ],
-                "operator": "ratio",
-              },
-              "virtual": true,
-            },
-            "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-          },
-        },
-      ],
-      "localIdentifier": "comparison_virtual_arithmetic_bucket",
-    },
-  ],
-  "dimensions": [
-    {
-      "itemIdentifiers": [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": [],
-  "measures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "arithmeticMeasure": {
-            "measureIdentifiers": [
-              "m_acugFHNJgsBy",
-              "m_aangOxLSeztu",
-            ],
-            "operator": "ratio",
-          },
-          "virtual": true,
-        },
-        "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-      },
-    },
-  ],
-  "postProcessing": {},
-  "sortBy": [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline > with comparison with drilling on two measures > should create expected props for core chart 1`] = `
-{
-  "config": {
-    "comparison": {
-      "enabled": true,
-    },
-  },
-  "drillableItems": [
-    [Function],
-    [Function],
-  ],
-  "exportTitle": "Headline",
-  "headlineTransformation": [Function],
-  "secondaryMeasures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline > with comparison with drilling on two measures with underlining disabled > should create expected execution definition 1`] = `
-{
-  "attributes": [],
-  "buckets": [
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "arithmeticMeasure": {
-                "measureIdentifiers": [
-                  "m_acugFHNJgsBy",
-                  "m_aangOxLSeztu",
-                ],
-                "operator": "ratio",
-              },
-              "virtual": true,
-            },
-            "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-          },
-        },
-      ],
-      "localIdentifier": "comparison_virtual_arithmetic_bucket",
-    },
-  ],
-  "dimensions": [
-    {
-      "itemIdentifiers": [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": [],
-  "measures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "arithmeticMeasure": {
-            "measureIdentifiers": [
-              "m_acugFHNJgsBy",
-              "m_aangOxLSeztu",
-            ],
-            "operator": "ratio",
-          },
-          "virtual": true,
-        },
-        "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-      },
-    },
-  ],
-  "postProcessing": {},
-  "sortBy": [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline > with comparison with drilling on two measures with underlining disabled > should create expected props for core chart 1`] = `
-{
-  "config": {
-    "comparison": {
-      "enabled": true,
-    },
-    "disableDrillUnderline": true,
-  },
-  "drillableItems": [
-    [Function],
-    [Function],
-  ],
-  "exportTitle": "Headline",
-  "headlineTransformation": [Function],
-  "secondaryMeasures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`Headline > with drilling on single measure > should create expected execution definition 1`] = `
 {
   "attributes": [],
@@ -631,6 +330,1199 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
 }
 `;
 
+exports[`Headline > with multi measures with drilling on single measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on single measure > should create expected props for core chart 1`] = `
+{
+  "drillableItems": [
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on single measure with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on single measure with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "disableDrillUnderline": true,
+  },
+  "drillableItems": [
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on three measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "abEgMnq5hyJQ",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_abEgMnq5hyJQ",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on three measures > should create expected props for core chart 1`] = `
+{
+  "drillableItems": [
+    [Function],
+    [Function],
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on three measures with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "abEgMnq5hyJQ",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_abEgMnq5hyJQ",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on three measures with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "disableDrillUnderline": true,
+  },
+  "drillableItems": [
+    [Function],
+    [Function],
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on two measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on two measures > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "comparison": {
+      "enabled": false,
+    },
+  },
+  "drillableItems": [
+    [Function],
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on two measures with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with drilling on two measures with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "comparison": {
+      "enabled": false,
+    },
+    "disableDrillUnderline": true,
+  },
+  "drillableItems": [
+    [Function],
+    [Function],
+  ],
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with only primary measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with only primary measure > should create expected props for core chart 1`] = `
+{
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with three measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "abEgMnq5hyJQ",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_abEgMnq5hyJQ",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with three measures > should create expected props for core chart 1`] = `
+{
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abEgMnq5hyJQ",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abEgMnq5hyJQ",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "comparison": {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures one PoP > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "alias": "Won Last Year",
+            "definition": {
+              "popMeasureDefinition": {
+                "measureIdentifier": "m_acugFHNJgsBy",
+                "popAttribute": {
+                  "identifier": "closed.year",
+                  "type": "attribute",
+                },
+              },
+            },
+            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "alias": "Won Last Year",
+        "definition": {
+          "popMeasureDefinition": {
+            "measureIdentifier": "m_acugFHNJgsBy",
+            "popAttribute": {
+              "identifier": "closed.year",
+              "type": "attribute",
+            },
+          },
+        },
+        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures one PoP > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "comparison": {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "secondaryMeasures": [
+    {
+      "measure": {
+        "alias": "Won Last Year",
+        "definition": {
+          "popMeasureDefinition": {
+            "measureIdentifier": "m_acugFHNJgsBy",
+            "popAttribute": {
+              "identifier": "closed.year",
+              "type": "attribute",
+            },
+          },
+        },
+        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures with german separators > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with multi measures with two measures with german separators > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "comparison": {
+      "enabled": false,
+    },
+    "separators": {
+      "decimal": ",",
+      "thousand": ".",
+    },
+  },
+  "exportTitle": "Headline",
+  "headlineTransformation": [Function],
+  "workspace": "reference-workspace",
+}
+`;
+
 exports[`Headline > with single measure > should create expected execution definition 1`] = `
 {
   "attributes": [],
@@ -877,152 +1769,6 @@ exports[`Headline > with two measures one PoP > should create expected props for
 {
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline > with two measures with comparison > should create expected execution definition 1`] = `
-{
-  "attributes": [],
-  "buckets": [
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "measureDefinition": {
-                "item": {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    {
-      "items": [
-        {
-          "measure": {
-            "definition": {
-              "arithmeticMeasure": {
-                "measureIdentifiers": [
-                  "m_acugFHNJgsBy",
-                  "m_aangOxLSeztu",
-                ],
-                "operator": "ratio",
-              },
-              "virtual": true,
-            },
-            "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-          },
-        },
-      ],
-      "localIdentifier": "comparison_virtual_arithmetic_bucket",
-    },
-  ],
-  "dimensions": [
-    {
-      "itemIdentifiers": [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": [],
-  "measures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    {
-      "measure": {
-        "definition": {
-          "arithmeticMeasure": {
-            "measureIdentifiers": [
-              "m_acugFHNJgsBy",
-              "m_aangOxLSeztu",
-            ],
-            "operator": "ratio",
-          },
-          "virtual": true,
-        },
-        "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-      },
-    },
-  ],
-  "postProcessing": {},
-  "sortBy": [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline > with two measures with comparison > should create expected props for core chart 1`] = `
-{
-  "config": {
-    "comparison": {
-      "enabled": true,
-    },
-  },
-  "exportTitle": "Headline",
-  "headlineTransformation": [Function],
-  "secondaryMeasures": [
-    {
-      "measure": {
-        "definition": {
-          "measureDefinition": {
-            "item": {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
   "workspace": "reference-workspace",
 }
 `;

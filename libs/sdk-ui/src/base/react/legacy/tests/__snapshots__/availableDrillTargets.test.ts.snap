@@ -13563,6 +13563,192 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - multi measures with only primary measure 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - multi measures with three measures 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0.0%",
+          "identifier": "abEgMnq5hyJQ",
+          "localIdentifier": "m_abEgMnq5hyJQ",
+          "name": "Probability",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1273",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1273",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - multi measures with two measures 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - multi measures with two measures one PoP 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+          "name": "Won Last Year",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - multi measures with two measures with german separators 1`] = `
+{
+  "attributes": [],
+  "measures": [
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+    {
+      "attributes": [],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - single measure 1`] = `
 {
   "attributes": [],
