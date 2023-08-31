@@ -1,4 +1,7 @@
 // (C) 2023 GoodData Corporation
+import { IntlShape } from "react-intl";
+import isNil from "lodash/isNil.js";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     convertDrillableItemsToPredicates,
@@ -6,8 +9,8 @@ import {
     ExplicitDrill,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+
 import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
-import { IntlShape } from "react-intl";
 import { EvaluationType, IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
@@ -119,7 +122,7 @@ function createComparisonDataItem(
 
     return {
         title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
-        value: String(value),
+        value: isNil(value) ? value : String(value),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
         localIdentifier,
     };
