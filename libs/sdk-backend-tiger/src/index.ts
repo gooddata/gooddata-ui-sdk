@@ -107,5 +107,11 @@ export {
 } from "./backend/tigerSpecificFunctions.js";
 
 export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
-export { isTigerType, isTigerCompatibleType } from "./types/refTypeMapping.js";
+export {
+    isTigerType,
+    isTigerCompatibleType,
+    tigerIdTypeToObjectType,
+    objectTypeToTigerIdType,
+    TigerCompatibleObjectType,
+} from "./types/refTypeMapping.js";
 export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";

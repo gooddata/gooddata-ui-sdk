@@ -38,6 +38,7 @@ import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
 import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
+import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
@@ -268,6 +269,22 @@ export const isTigerType: (obj: unknown) => obj is TigerObjectType;
 // @alpha
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
+// @alpha (undocumented)
+export const objectTypeToTigerIdType: {
+    measure: TigerObjectType;
+    fact: TigerObjectType;
+    attribute: TigerObjectType;
+    displayForm: TigerObjectType;
+    dataSet: TigerObjectType;
+    insight: TigerObjectType;
+    variable: TigerObjectType;
+    analyticalDashboard: TigerObjectType;
+    theme: TigerObjectType;
+    colorPalette: TigerObjectType;
+    filterContext: TigerObjectType;
+    dashboardPlugin: TigerObjectType;
+};
+
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
@@ -339,9 +356,17 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     protected principal: IAuthenticatedPrincipal | undefined;
 }
 
+// @alpha (undocumented)
+export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
+
 // @public
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 export default tigerFactory;
+
+// @alpha (undocumented)
+export const tigerIdTypeToObjectType: {
+    [tigerType in TigerObjectType]: TigerCompatibleObjectType;
+};
 
 // @alpha
 export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
