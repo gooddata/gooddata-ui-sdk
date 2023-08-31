@@ -1,7 +1,7 @@
 {
-  "name": "tiger-docs",
-  "version": "1.0.0",
-  "description": "Documentation website for Tiger project",
+  "name": "gd-ui-docs",
+  "version": "9.0.0",
+  "description": "Documentation for GD.UI project",
   "dependencies": {
     "autoprefixer": "^10.2.4",
     "postcss": "^8.2.5",
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/gooddata/gdc-tiger-docs.git"
+    "url": "git+ssh://git@github.com/gooddata/gooddata-ui-sdk.git"
   },
-  "author": "Tiger Team",
-  "homepage": "https://gitlab.com/gooddata/gdc-tiger-docs#readme",
+  "author": "Mara3l",
+  "homepage": "https://www.gooddata.com/docs/gooddata-ui/",
   "devDependencies": {
     "hugo-extended": "^0.115.4"
   },

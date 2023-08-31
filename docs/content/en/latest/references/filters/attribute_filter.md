@@ -55,7 +55,7 @@ export const AttributeFilterExample = () => {
 
 ## Attribute Filter component vs. Attribute Filter Button component
 
-The Attribute Filter component is functionally similar to the [Attribute Filter Button component](../atribute_filter_button_component/). You can use either of them. The only difference is what the filter dropdown button looks like.
+The Attribute Filter component is functionally similar to the [Attribute Filter Button component](../attribute_filter_button_component/). You can use either of them. The only difference is what the filter dropdown button looks like.
 
 ![Filter Dropdown Button](gd-ui/attribute_filter_new_top_visual.png "Filter Dropdown Button")
 
