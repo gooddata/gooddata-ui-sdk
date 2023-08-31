@@ -72,7 +72,7 @@
         "@babel/polyfill": "^7.7.2",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/fixtures": "^1.24.0",
+        "@gooddata/fixtures": "^1.27.0",
         "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
