@@ -1,0 +1,413 @@
+{
+    "data": [
+        {
+            "id": "negative_metric",
+            "type": "metric",
+            "attributes": {
+                "title": "Negative Metric",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": { "format": "#,##0.00", "maql": "SELECT SUM({metric/amount_bop} * -1 )" }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/negative_metric"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+            "type": "metric",
+            "attributes": {
+                "title": "_Timeline [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/6b1411d5-e253-418e-8fd3-137a9f56ea92"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+            "type": "metric",
+            "attributes": {
+                "title": "# Of Opportunities",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/768414e1-4bbe-4f01-b125-0cdc6305dc76"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+            "type": "metric",
+            "attributes": {
+                "title": "Amount",
+                "description": "Amount metric description",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/87a053b0-3947-49f3-b0c5-de53fd01f050"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+            "type": "metric",
+            "attributes": {
+                "title": "# Of Opportunities Won",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/8d33a0b1-cfdf-4074-a26a-4c4357774967"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+            "type": "metric",
+            "attributes": {
+                "title": "Win Rate",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/973a14c4-acb1-45fb-ba52-5d96fa02f7ba"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "amount_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "Amount [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/amount_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "avg._amount",
+            "type": "metric",
+            "attributes": {
+                "title": "Avg. Amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/avg._amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+            "type": "metric",
+            "attributes": {
+                "title": "Probability",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "best_case",
+            "type": "metric",
+            "attributes": {
+                "title": "Best Case",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT SUM(\n    SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n      WHERE {label/f_stage.status_id} = \"Open\")"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/best_case"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
+            "type": "metric",
+            "attributes": {
+                "title": "_Snapshot [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/c5ee7836-126c-41aa-bd69-1873d379a065"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "close_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Close [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/close_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "close_eop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Close [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/close_eop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+            "type": "metric",
+            "attributes": {
+                "title": "Parent metric",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": { "format": "#,##0", "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})" }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/e519fa2a-86c3-4e32-8313-0c03061626b1"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+            "type": "metric",
+            "attributes": {
+                "title": "Won",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n  WHERE {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/e519fa2a-86c3-4e32-8313-0c03062348j3"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "metric_has_null_value",
+            "type": "metric",
+            "attributes": {
+                "title": "Metric has null value",
+                "description": "Metric has null value",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\"\", NULL, \"East Coast\", \"West Coast\" )"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/metric_has_null_value"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "of_activities",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Activities",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": { "format": "#,##0", "maql": "SELECT COUNT({label/f_activity.id})" }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/of_activities"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "of_lost_opps.",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Lost Opps.",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}\n  WHERE {label/f_stage.status_id} = \"Lost\""
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/of_lost_opps."
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "of_won_opps.",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Won Opps.",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/of_won_opps."
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "opp._first_snapshot",
+            "type": "metric",
+            "attributes": {
+                "title": "_Opp. First Snapshot",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/opp._first_snapshot"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "snapshot_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Snapshot [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} >= {metric/timeline_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/snapshot_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "timeline_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Timeline [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_timeline.timelinedate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/timeline_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "type": "metric",
+            "attributes": {
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                "description": "Metric with long name",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        }
+    ],
+    "links": {
+        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics?page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics?page=1&size=250"
+    }
+}

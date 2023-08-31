@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-07-24T09:57:12.873Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-08-31T10:40:22.237Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -136,14 +136,14 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const Account = {
     /**
-     * Display Form Title: Name
-     * Display Form ID: label.f_account.account.name
-     */
-    Name: newAttribute("label.f_account.account.name"),
-    /**
      * Display Form Title: Account
      * Display Form ID: attr.f_account.account
-     */ Default: newAttribute("attr.f_account.account"),
+     */
+    Default: newAttribute("attr.f_account.account"),
+    /**
+     * Display Form Title: Name
+     * Display Form ID: label.f_account.account.name
+     */ Name: newAttribute("label.f_account.account.name"),
 };
 /**
  * Attribute Title: Activity
@@ -166,26 +166,10 @@ export const Activity = {
  */
 export const City = {
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */
-    Default: newAttribute("f_city.id"),
-    /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
-    /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
-    /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+     */
+    ShortName: newAttribute("f_city.id.cityshortname"),
     /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
@@ -194,6 +178,22 @@ export const City = {
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
      */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
 };
 /**
  * Attribute Title: State
@@ -216,14 +216,14 @@ export const State = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: Opportunity
-     * Display Form ID: attr.f_opportunity.opportunity
-     */
-    Default: newAttribute("attr.f_opportunity.opportunity"),
-    /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+     */
+    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+    /**
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
+     */ Default: newAttribute("attr.f_opportunity.opportunity"),
     /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
@@ -250,14 +250,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */
-    Default: newAttribute("attr.f_product.product"),
-    /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */ Name: newAttribute("label.f_product.product.name"),
+     */
+    Name: newAttribute("label.f_product.product.name"),
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
 };
 /**
  * Attribute Title: Stage Name
@@ -265,51 +265,19 @@ export const Product = {
  */
 export const StageName = {
     /**
-     * Display Form Title: Order
-     * Display Form ID: label.f_stage.stagename.order
+     * Display Form Title: Stage Name
+     * Display Form ID: label.f_stage.stagename.stagename
      */
-    Order: newAttribute("label.f_stage.stagename.order"),
+    Default: newAttribute("label.f_stage.stagename.stagename"),
     /**
      * Display Form Title: Stage Name
      * Display Form ID: attr.f_stage.stagename
-     */ Default: newAttribute("attr.f_stage.stagename"),
+     */ _1: newAttribute("attr.f_stage.stagename"),
     /**
-     * Display Form Title: Stage Name
-     * Display Form ID: label.f_stage.stagename.stagename
-     */ _1: newAttribute("label.f_stage.stagename.stagename"),
+     * Display Form Title: Order
+     * Display Form ID: label.f_stage.stagename.order
+     */ Order: newAttribute("label.f_stage.stagename.order"),
 };
-/**
- * Metric Title: _Opp. First Snapshot
- * Metric ID: opp._first_snapshot
- * Metric Type: MAQL Metric
- */
-export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("opp._first_snapshot", "measure"),
-);
-/**
- * Metric Title: _Snapshot [BOP]
- * Metric ID: snapshot_bop
- * Metric Type: MAQL Metric
- */
-export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
-/**
- * Metric Title: _Timeline [BOP]
- * Metric ID: timeline_bop
- * Metric Type: MAQL Metric
- */
-export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
-/**
- * Metric Title: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i
- * Metric ID: lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i
- * Metric Type: MAQL Metric
- */
-export const LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorI: IMeasure<IMeasureDefinition> =
-    newMeasure(
-        idRef(
-            "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
-            "measure",
-        ),
-    );
 /**
  * Metric Title: Negative Metric
  * Metric ID: negative_metric
@@ -444,6 +412,38 @@ export const NrOfLostOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_l
  * Metric Type: MAQL Metric
  */
 export const NrOfWonOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_won_opps.", "measure"));
+/**
+ * Metric Title: _Opp. First Snapshot
+ * Metric ID: opp._first_snapshot
+ * Metric Type: MAQL Metric
+ */
+export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("opp._first_snapshot", "measure"),
+);
+/**
+ * Metric Title: _Snapshot [BOP]
+ * Metric ID: snapshot_bop
+ * Metric Type: MAQL Metric
+ */
+export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
+/**
+ * Metric Title: _Timeline [BOP]
+ * Metric ID: timeline_bop
+ * Metric Type: MAQL Metric
+ */
+export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
+/**
+ * Metric Title: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i
+ * Metric ID: lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i
+ * Metric Type: MAQL Metric
+ */
+export const LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorI: IMeasure<IMeasureDefinition> =
+    newMeasure(
+        idRef(
+            "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "measure",
+        ),
+    );
 /**
  * Fact Title: Activity (Date)
  * Fact ID: fact.f_activity.activitydate

@@ -6,6 +6,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({label/f_activity.id})",
         "format": "#,##0",
@@ -24,6 +25,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
   WHERE {label/f_stage.status_id} = \\"Lost\\"",
@@ -43,6 +45,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -61,6 +64,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0.00",
@@ -79,6 +83,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0",
@@ -117,6 +122,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Amount metric description",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -155,6 +161,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
         "format": "$#,##0.00",
@@ -173,6 +180,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
@@ -192,6 +200,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
@@ -272,6 +281,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric with long name",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -290,6 +300,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -308,6 +319,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({metric/amount_bop} * -1 )",
         "format": "#,##0.00",
@@ -386,6 +398,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})",
         "format": "#,##0",
@@ -424,6 +437,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.0%",
@@ -502,6 +516,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}",
         "format": "#,##0.0%",
@@ -520,6 +535,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
   WHERE {label/f_stage.status_id} = \\"Won\\"",
@@ -539,6 +555,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
@@ -558,6 +575,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -576,6 +594,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}",
         "format": "#,##0.00",
@@ -594,6 +613,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}
@@ -614,6 +634,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}",
         "format": "#,##0.00",
@@ -632,6 +653,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_timeline.timelinedate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
@@ -651,6 +673,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
         "format": "#,##0",
@@ -743,6 +766,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({label/f_activity.id})",
         "format": "#,##0",
@@ -761,6 +785,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
   WHERE {label/f_stage.status_id} = \\"Lost\\"",
@@ -780,6 +805,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -798,6 +824,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0.00",
@@ -816,6 +843,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0",
@@ -1264,6 +1292,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Amount metric description",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -1302,6 +1331,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
         "format": "$#,##0.00",
@@ -1320,6 +1350,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
@@ -1339,6 +1370,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
@@ -2266,6 +2298,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric with long name",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -2284,6 +2317,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -2302,6 +2336,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({metric/amount_bop} * -1 )",
         "format": "#,##0.00",
@@ -2792,6 +2827,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})",
         "format": "#,##0",
@@ -2900,6 +2936,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.0%",
@@ -3968,6 +4005,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}",
         "format": "#,##0.0%",
@@ -3986,6 +4024,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
   WHERE {label/f_stage.status_id} = \\"Won\\"",
@@ -4005,6 +4044,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
@@ -4024,6 +4064,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -4042,6 +4083,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}",
         "format": "#,##0.00",
@@ -4060,6 +4102,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}
@@ -4080,6 +4123,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}",
         "format": "#,##0.00",
@@ -4098,6 +4142,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_timeline.timelinedate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
@@ -4117,6 +4162,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
         "format": "#,##0",
@@ -7829,6 +7875,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({label/f_activity.id})",
         "format": "#,##0",
@@ -7847,6 +7894,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
   WHERE {label/f_stage.status_id} = \\"Lost\\"",
@@ -7866,6 +7914,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -7884,6 +7933,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0.00",
@@ -7902,6 +7952,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
         "format": "#,##0",
@@ -8350,6 +8401,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Amount metric description",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -8388,6 +8440,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
         "format": "$#,##0.00",
@@ -8406,6 +8459,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
@@ -8425,6 +8479,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
@@ -9352,6 +9407,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric with long name",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -9370,6 +9426,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -9388,6 +9445,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({metric/amount_bop} * -1 )",
         "format": "#,##0.00",
@@ -9878,6 +9936,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})",
         "format": "#,##0",
@@ -9986,6 +10045,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.0%",
@@ -11054,6 +11114,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}",
         "format": "#,##0.0%",
@@ -11072,6 +11133,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
   WHERE {label/f_stage.status_id} = \\"Won\\"",
@@ -11091,6 +11153,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}",
@@ -11110,6 +11173,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "#,##0.00",
@@ -11128,6 +11192,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}",
         "format": "#,##0.00",
@@ -11146,6 +11211,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}
@@ -11166,6 +11232,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}",
         "format": "#,##0.00",
@@ -11184,6 +11251,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MIN({fact/fact.f_timeline.timelinedate})
   BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
@@ -11203,6 +11271,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "created": "2023-08-31 10:37",
         "description": "",
         "expression": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}",
         "format": "#,##0",
@@ -14775,7 +14844,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "dateDataset",
     ],
   },
-  "workspace": "c87f6d4b58d44bec856b4b446f6e82ba",
+  "workspace": "00d48e50c5e0442abc2181a7afd0f66b",
 }
 `;
 
@@ -18349,6 +18418,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "c87f6d4b58d44bec856b4b446f6e82ba",
+  "workspace": "00d48e50c5e0442abc2181a7afd0f66b",
 }
 `;
