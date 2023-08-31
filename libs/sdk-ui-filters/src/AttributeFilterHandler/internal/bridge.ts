@@ -139,6 +139,14 @@ export class AttributeFilterReduxBridge {
         return this.callbacks.registerCallback(cb, this.callbacks.registrations.initCancel);
     };
 
+    initTotalCount = (correlation: Correlation): void => {
+        this.redux.dispatch(
+            actions.initTotalCount({
+                correlation,
+            }),
+        );
+    };
+
     //
     // Attribute
     //

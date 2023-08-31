@@ -308,6 +308,7 @@ function refreshByType(handler: IMultiSelectAttributeFilterHandler, change: Upda
         if (handler.getInitStatus() !== "success") {
             handler.init(PARENT_FILTERS_CORRELATION);
         } else {
+            handler.initTotalCount(PARENT_FILTERS_CORRELATION);
             handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
         }
     }

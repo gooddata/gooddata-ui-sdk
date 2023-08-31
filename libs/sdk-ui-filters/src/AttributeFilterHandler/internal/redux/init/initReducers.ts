@@ -27,11 +27,15 @@ const initCancel: AttributeFilterReducer<PayloadAction<{ correlation: Correlatio
     state.initialization.status = "canceled";
 };
 
+const initTotalCount: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
+
+
 /**
  * @internal
  */
 export const initReducers = {
     init,
+    initTotalCount,
     initStart,
     initSuccess,
     initError,

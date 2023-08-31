@@ -8,6 +8,7 @@ import {
     loadInitialElementsPageWorker,
     loadNextElementsPageWorker,
     loadCustomElementsWorker,
+    initTotalCountWorker
 } from "./sagas.js";
 
 export function* rootSaga(): SagaIterator<void> {
@@ -19,6 +20,7 @@ export function* rootSaga(): SagaIterator<void> {
                 loadNextElementsPageWorker,
                 loadCustomElementsWorker,
                 initWorker,
+                initTotalCountWorker,
             ].map((worker) => fork(worker)),
         );
     } catch (e) {

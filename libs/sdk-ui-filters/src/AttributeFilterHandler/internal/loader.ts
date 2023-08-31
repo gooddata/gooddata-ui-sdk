@@ -101,6 +101,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getInitError();
     };
 
+    initTotalCount = (correlation: Correlation = uuid()): void => {
+        this.bridge.initTotalCount(correlation);
+    };
+
     //
     // Attribute
     //
