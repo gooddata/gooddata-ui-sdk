@@ -6,8 +6,14 @@ import isEmpty from "lodash/isEmpty.js";
 import values from "lodash/values.js";
 import { TigerObjectType } from "./index.js";
 
+/**
+ * @alpha
+ */
 export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
 
+/**
+ * @alpha
+ */
 export const tigerIdTypeToObjectType: {
     [tigerType in TigerObjectType]: TigerCompatibleObjectType;
 } = {
@@ -23,6 +29,9 @@ export const tigerIdTypeToObjectType: {
     dashboardPlugin: "dashboardPlugin",
 };
 
+/**
+ * @alpha
+ */
 export const objectTypeToTigerIdType = invert(tigerIdTypeToObjectType) as {
     [objectType in TigerCompatibleObjectType]: TigerObjectType;
 };
