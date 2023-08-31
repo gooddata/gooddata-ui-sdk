@@ -106,4 +106,6 @@ export {
     WorkspaceEntitiesDatasets,
 } from "./backend/tigerSpecificFunctions.js";
 
+export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
+export { isTigerType, isTigerCompatibleType } from "./types/refTypeMapping.js";
 export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";

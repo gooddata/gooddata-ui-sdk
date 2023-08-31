@@ -259,6 +259,12 @@ export interface IInvitationUserResponse {
     successful?: boolean;
 }
 
+// @alpha (undocumented)
+export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
+
+// @alpha (undocumented)
+export const isTigerType: (obj: unknown) => obj is TigerObjectType;
+
 // @alpha
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
@@ -317,6 +323,9 @@ export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallRem
 export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
 
 // @public
+export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
+
+// @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
     abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
@@ -341,6 +350,12 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
     initializeClient(client: ITigerClient): void;
     updateJwt: (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 }
+
+// @public
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext" | "dashboardPlugin";
+
+// @public
+export type TigerObjectType = TigerAfmType | TigerMetadataType;
 
 // @internal
 export type TigerSpecificFunctions = {
