@@ -1,8 +1,8 @@
 {
-    "id": "2f6fef1d-7e15-4ea4-915f-4e58791e416b",
-    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_visualizationobjects",
+    "id": "2d3a05d0-d77a-453f-8358-a668df39f2f5",
+    "name": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_attributes",
     "request": {
-        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/visualizationObjects?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_visualizationobjects-2f6fef1d-7e15-4ea4-915f-4e58791e416b.json",
+        "bodyFileName": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_attributes-2d3a05d0-d77a-453f-8358-a668df39f2f5.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -24,18 +24,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "2f6fef1d-7e15-4ea4-915f-4e58791e416b",
+    "uuid": "2d3a05d0-d77a-453f-8358-a668df39f2f5",
     "persistent": true,
-    "insertionIndex": 6
+    "insertionIndex": 9
 }

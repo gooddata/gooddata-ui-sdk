@@ -1,5 +1,5 @@
 {
-    "id": "f165b05f-8047-477f-94db-a8f341d63842",
+    "id": "5fc680f7-ecaa-4475-a3b2-dc5406a8a9de",
     "name": "api_v1_actions_resolveentitlements",
     "request": {
         "url": "/api/v1/actions/resolveEntitlements",
@@ -20,18 +20,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "f165b05f-8047-477f-94db-a8f341d63842",
+    "uuid": "5fc680f7-ecaa-4475-a3b2-dc5406a8a9de",
     "persistent": true,
-    "insertionIndex": 4
+    "insertionIndex": 3
 }

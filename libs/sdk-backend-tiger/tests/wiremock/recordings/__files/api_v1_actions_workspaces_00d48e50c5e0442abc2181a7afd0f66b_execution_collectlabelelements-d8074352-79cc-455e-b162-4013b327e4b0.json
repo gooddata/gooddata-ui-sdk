@@ -109,6 +109,6 @@
         "total": 4846,
         "count": 100,
         "offset": 0,
-        "next": "https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/execution/collectLabelElements?limit=100&offset=100"
+        "next": "https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?limit=100&offset=100"
     }
 }

@@ -1,8 +1,8 @@
 {
-    "id": "7c819833-fabc-4908-b16a-933957292061",
-    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_attributes",
+    "id": "b1801e91-697b-4e2a-aae7-b622292c781a",
+    "name": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_metrics",
     "request": {
-        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
+        "url": "/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_attributes-7c819833-fabc-4908-b16a-933957292061.json",
+        "bodyFileName": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_metrics-b1801e91-697b-4e2a-aae7-b622292c781a.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -24,18 +24,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "7c819833-fabc-4908-b16a-933957292061",
+    "uuid": "b1801e91-697b-4e2a-aae7-b622292c781a",
     "persistent": true,
-    "insertionIndex": 5
+    "insertionIndex": 6
 }

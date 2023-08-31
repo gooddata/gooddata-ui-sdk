@@ -851,7 +851,7 @@ importers:
       '@gooddata/api-client-tiger': workspace:*
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.24.0
+      '@gooddata/fixtures': ^1.27.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -901,7 +901,7 @@ importers:
     devDependencies:
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.24.0
+      '@gooddata/fixtures': 1.27.0
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@microsoft/api-documenter': 7.21.7
       '@microsoft/api-extractor': 7.36.0
@@ -2548,7 +2548,7 @@ importers:
       '@cypress/grep': ^3.1.5
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.24.0
+      '@gooddata/fixtures': ^1.27.0
       '@gooddata/sdk-backend-bear': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-backend-tiger': workspace:*
@@ -2626,7 +2626,7 @@ importers:
       '@babel/polyfill': 7.12.1
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.24.0
+      '@gooddata/fixtures': 1.27.0
       '@gooddata/sdk-backend-bear': link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-backend-tiger': link:../sdk-backend-tiger
@@ -6087,13 +6087,14 @@ packages:
       - supports-color
       - typescript
 
-  /@gooddata/fixtures/1.24.0:
-    resolution: {integrity: sha512-UCNDm61YJ9VgGng70eYBqOd6zy3NbUF1jyncC9LSGP3lIwhKyFMnKJlMlSEMnLg9GSFfbsAxhKGCHPtomOmgJw==}
+  /@gooddata/fixtures/1.27.0:
+    resolution: {integrity: sha512-3szu4Yx3IKUIPAwqv4emo+5mN/sXq5aGbF5/CBmh11FDya+J5qN5XY+63cgJoSOsHmZYbDgkDB0QupAmu/Cgeg==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.1
       '@gooddata/api-client-tiger': 8.12.1
       '@gooddata/sdk-model': 8.12.1
       archiver: 2.0.0
+      csv-writer: 1.6.0
       get-stream: 3.0.0
       json-stable-stringify: 1.0.2
       mustache: 2.3.0
@@ -12121,6 +12122,9 @@ packages:
 
   /csstype/3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+
+  /csv-writer/1.6.0:
+    resolution: {integrity: sha512-NOx7YDFWEsM/fTRAJjRpPp8t+MKRVvniAg9wQlUKx20MFrPs73WLJhFf5iteqrxNYnsy924K3Iroh3yNHeYd2g==}
 
   /currently-unhandled/0.4.1:
     resolution: {integrity: sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==}

@@ -1,0 +1,32 @@
+{
+    "id": "537e2290-c5e8-4050-bbd6-6627c2d89096",
+    "name": "api_v1_profile",
+    "request": {
+        "url": "/api/v1/profile",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"telemetryConfig\":{\"context\":{\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"services\":{\"matomo\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2},\"openTelemetry\":{\"host\":\"https://collector.anywhere.gooddata.com\"}}},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/v1/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/v1/entities/users/first.last\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://flags.panther.intgdc.com\",\"key\":\"default/f0352b97-5e76-4139-9059-4bea366cc2f9/q9yyvCPq957AR7T5GqfbIHaLZXAwqRtSzKt2Rtuv\"},\"context\":{\"earlyAccess\":\"\"}}}}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "537e2290-c5e8-4050-bbd6-6627c2d89096",
+    "persistent": true,
+    "insertionIndex": 2
+}

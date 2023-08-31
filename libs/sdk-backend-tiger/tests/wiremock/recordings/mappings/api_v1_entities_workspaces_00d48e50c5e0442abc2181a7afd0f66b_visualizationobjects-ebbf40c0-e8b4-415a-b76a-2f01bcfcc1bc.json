@@ -1,8 +1,8 @@
 {
-    "id": "17c09d73-095c-4bf0-aa17-4e0abfe4e65b",
-    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_metrics",
+    "id": "ebbf40c0-e8b4-415a-b76a-2f01bcfcc1bc",
+    "name": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_visualizationobjects",
     "request": {
-        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/metrics?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_metrics-17c09d73-095c-4bf0-aa17-4e0abfe4e65b.json",
+        "bodyFileName": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_visualizationobjects-ebbf40c0-e8b4-415a-b76a-2f01bcfcc1bc.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -24,18 +24,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "17c09d73-095c-4bf0-aa17-4e0abfe4e65b",
+    "uuid": "ebbf40c0-e8b4-415a-b76a-2f01bcfcc1bc",
     "persistent": true,
-    "insertionIndex": 9
+    "insertionIndex": 7
 }

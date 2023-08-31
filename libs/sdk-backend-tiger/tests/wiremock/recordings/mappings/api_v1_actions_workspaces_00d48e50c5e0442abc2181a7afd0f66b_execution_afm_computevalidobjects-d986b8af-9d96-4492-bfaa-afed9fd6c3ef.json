@@ -1,8 +1,8 @@
 {
-    "id": "ea158314-e22f-422e-919a-df751349e07c",
-    "name": "api_v1_actions_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_execution_afm_computevalidobjects",
+    "id": "d986b8af-9d96-4492-bfaa-afed9fd6c3ef",
+    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_afm_computevalidobjects",
     "request": {
-        "url": "/api/v1/actions/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/execution/afm/computeValidObjects",
+        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/afm/computeValidObjects",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -31,18 +31,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "ea158314-e22f-422e-919a-df751349e07c",
+    "uuid": "d986b8af-9d96-4492-bfaa-afed9fd6c3ef",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 15
 }
