@@ -30,10 +30,16 @@ export const objectTypeToTigerIdType = invert(tigerIdTypeToObjectType) as {
 const validTigerTypes = Object.keys(tigerIdTypeToObjectType);
 const validCompatibleTypes = values(tigerIdTypeToObjectType);
 
+/**
+ * @alpha
+ */
 export const isTigerCompatibleType = (obj: unknown): obj is TigerObjectType => {
     return !isEmpty(obj) && validCompatibleTypes.some((type) => type === obj);
 };
 
+/**
+ * @alpha
+ */
 export const isTigerType = (obj: unknown): obj is TigerObjectType => {
     return !isEmpty(obj) && validTigerTypes.some((type) => type === obj);
 };
