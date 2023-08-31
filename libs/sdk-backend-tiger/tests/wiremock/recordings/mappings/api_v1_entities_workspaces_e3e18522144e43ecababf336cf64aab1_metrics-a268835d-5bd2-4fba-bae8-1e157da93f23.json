@@ -1,8 +1,8 @@
 {
-    "id": "2f6fef1d-7e15-4ea4-915f-4e58791e416b",
-    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_visualizationobjects",
+    "id": "a268835d-5bd2-4fba-bae8-1e157da93f23",
+    "name": "api_v1_entities_workspaces_e3e18522144e43ecababf336cf64aab1_metrics",
     "request": {
-        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/visualizationObjects?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/e3e18522144e43ecababf336cf64aab1/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_visualizationobjects-2f6fef1d-7e15-4ea4-915f-4e58791e416b.json",
+        "bodyFileName": "api_v1_entities_workspaces_e3e18522144e43ecababf336cf64aab1_metrics-a268835d-5bd2-4fba-bae8-1e157da93f23.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -24,18 +24,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "2f6fef1d-7e15-4ea4-915f-4e58791e416b",
+    "uuid": "a268835d-5bd2-4fba-bae8-1e157da93f23",
     "persistent": true,
     "insertionIndex": 6
 }
