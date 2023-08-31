@@ -8,6 +8,35 @@ describe("Pivot Table Aggregations menu and add row totals", { tags: ["pre-merge
         Navigation.visit("visualizations/pivot-table/pivot-table-aggregations-menu");
     });
 
+    it("hovering over menu does not show sorting icon (SEPARATE)", () => {
+        const table = new Table(".s-pivot-table-aggregations-menu");
+        table.waitLoaded();
+
+        //check exist sort icon
+        table.getMeasureCellHeader(0, 2).realHover().find(".s-sort-direction-arrow").should("exist");
+
+        //check exist menu
+        table
+            .getMeasureCellHeader(0, 2)
+            .realHover()
+            .find(".s-table-header-menu")
+            .should("exist")
+            .should("have.class", "gd-pivot-table-header-menu--show");
+
+        //do menu hover
+        table.getMeasureCellHeader(0, 2).realHover().find(".s-table-header-menu").realHover();
+
+        //check exist sort icon
+        table.getMeasureCellHeader(0, 2).find(".s-sort-direction-arrow").should("not.exist");
+
+        //check exist sort icon
+        table
+            .getMeasureCellHeader(0, 2)
+            .find(".s-table-header-menu")
+            .should("exist")
+            .should("have.class", "gd-pivot-table-header-menu--show");
+    });
+
     it("should show menu toggler button when mouse hovers over the cell (SEPARATE)", () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
@@ -36,35 +65,6 @@ describe("Pivot Table Aggregations menu and add row totals", { tags: ["pre-merge
             .find(".s-table-header-menu")
             .should("exist")
             .should("have.class", "gd-pivot-table-header-menu--hide");
-    });
-
-    it("hovering over menu does not show sorting icon (SEPARATE)", () => {
-        const table = new Table(".s-pivot-table-aggregations-menu");
-        table.waitLoaded();
-
-        //check exist sort icon
-        table.getMeasureCellHeader(0, 2).realHover().find(".s-sort-direction-arrow").should("exist");
-
-        //check exist menu
-        table
-            .getMeasureCellHeader(0, 2)
-            .realHover()
-            .find(".s-table-header-menu")
-            .should("exist")
-            .should("have.class", "gd-pivot-table-header-menu--show");
-
-        //do menu hover
-        table.getMeasureCellHeader(0, 2).realHover().find(".s-table-header-menu").realHover();
-
-        //check exist sort icon
-        table.getMeasureCellHeader(0, 2).find(".s-sort-direction-arrow").should("not.exist");
-
-        //check exist sort icon
-        table
-            .getMeasureCellHeader(0, 2)
-            .find(".s-table-header-menu")
-            .should("exist")
-            .should("have.class", "gd-pivot-table-header-menu--show");
     });
 
     it("should add row totals for one measure (SEPARATE)", () => {
