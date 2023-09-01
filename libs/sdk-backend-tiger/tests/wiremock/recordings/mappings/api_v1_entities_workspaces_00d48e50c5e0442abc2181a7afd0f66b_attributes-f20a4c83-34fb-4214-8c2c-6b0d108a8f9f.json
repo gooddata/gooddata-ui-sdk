@@ -1,29 +1,22 @@
 {
-    "id": "0cdfdc7b-af5b-4037-bf6e-3ad48bc0cd4f",
-    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "id": "f20a4c83-34fb-4214-8c2c-6b0d108a8f9f",
+    "name": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_attributes",
     "request": {
-        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=5000&limit=100",
-        "method": "POST",
+        "url": "/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
+        "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
             },
             "Content-Type": {
-                "equalTo": "application/json",
+                "equalTo": "application/vnd.gooddata.api+json",
                 "caseInsensitive": true
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":5000,\"next\":null}}",
+        "bodyFileName": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_attributes-f20a4c83-34fb-4214-8c2c-6b0d108a8f9f.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -34,10 +27,10 @@
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
-            "Content-Type": "application/json"
+            "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "0cdfdc7b-af5b-4037-bf6e-3ad48bc0cd4f",
+    "uuid": "f20a4c83-34fb-4214-8c2c-6b0d108a8f9f",
     "persistent": true,
     "insertionIndex": 11
 }

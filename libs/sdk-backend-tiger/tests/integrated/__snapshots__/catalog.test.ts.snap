@@ -7792,6 +7792,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure",
       "fact",
       "dateDataset",
+      "attributeHierarchy",
     ],
   },
 }

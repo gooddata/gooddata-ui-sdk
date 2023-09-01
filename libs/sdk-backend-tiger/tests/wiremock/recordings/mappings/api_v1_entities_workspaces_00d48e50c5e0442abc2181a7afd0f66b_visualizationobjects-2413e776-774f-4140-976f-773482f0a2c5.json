@@ -1,18 +1,22 @@
 {
-    "id": "5fc680f7-ecaa-4475-a3b2-dc5406a8a9de",
-    "name": "api_v1_actions_resolveentitlements",
+    "id": "2413e776-774f-4140-976f-773482f0a2c5",
+    "name": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_visualizationobjects",
     "request": {
-        "url": "/api/v1/actions/resolveEntitlements",
+        "url": "/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
             }
         }
     },
     "response": {
         "status": 200,
-        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
+        "bodyFileName": "api_v1_entities_workspaces_00d48e50c5e0442abc2181a7afd0f66b_visualizationobjects-2413e776-774f-4140-976f-773482f0a2c5.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -23,10 +27,10 @@
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
-            "Content-Type": "application/json"
+            "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "5fc680f7-ecaa-4475-a3b2-dc5406a8a9de",
+    "uuid": "2413e776-774f-4140-976f-773482f0a2c5",
     "persistent": true,
-    "insertionIndex": 3
+    "insertionIndex": 9
 }

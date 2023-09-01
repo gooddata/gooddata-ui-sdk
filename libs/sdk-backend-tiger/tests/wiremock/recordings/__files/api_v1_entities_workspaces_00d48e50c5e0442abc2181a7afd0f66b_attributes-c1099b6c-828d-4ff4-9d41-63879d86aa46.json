@@ -1713,13 +1713,13 @@
                 "dataset": { "data": { "id": "f_city", "type": "dataset" } },
                 "labels": {
                     "data": [
+                        { "id": "f_city.id.longitude", "type": "label" },
+                        { "id": "f_city.id", "type": "label" },
                         { "id": "f_city.id.cityshortname", "type": "label" },
                         { "id": "f_city.id.latitude", "type": "label" },
-                        { "id": "f_city.id.longitude", "type": "label" },
-                        { "id": "f_city.id.cityasciiname", "type": "label" },
                         { "id": "f_city.id.cityname", "type": "label" },
                         { "id": "f_city.id.location", "type": "label" },
-                        { "id": "f_city.id", "type": "label" }
+                        { "id": "f_city.id.cityasciiname", "type": "label" }
                     ]
                 }
             },
@@ -1742,8 +1742,8 @@
                 "dataset": { "data": { "id": "f_city", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "state_id", "type": "label" },
-                        { "id": "state_id.statename", "type": "label" }
+                        { "id": "state_id.statename", "type": "label" },
+                        { "id": "state_id", "type": "label" }
                     ]
                 }
             },
@@ -1766,8 +1766,8 @@
                 "dataset": { "data": { "id": "f_opportunity", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_opportunity.opportunity.sfdcurl", "type": "label" },
                         { "id": "attr.f_opportunity.opportunity", "type": "label" },
+                        { "id": "label.f_opportunity.opportunity.sfdcurl", "type": "label" },
                         { "id": "label.f_opportunity.opportunity.name", "type": "label" }
                     ]
                 }
@@ -1815,8 +1815,8 @@
                 "dataset": { "data": { "id": "f_product", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_product.product.name", "type": "label" },
-                        { "id": "attr.f_product.product", "type": "label" }
+                        { "id": "attr.f_product.product", "type": "label" },
+                        { "id": "label.f_product.product.name", "type": "label" }
                     ]
                 }
             },
@@ -1842,8 +1842,8 @@
                 "labels": {
                     "data": [
                         { "id": "label.f_stage.stagename.stagename", "type": "label" },
-                        { "id": "attr.f_stage.stagename", "type": "label" },
-                        { "id": "label.f_stage.stagename.order", "type": "label" }
+                        { "id": "label.f_stage.stagename.order", "type": "label" },
+                        { "id": "attr.f_stage.stagename", "type": "label" }
                     ]
                 }
             },
@@ -2017,31 +2017,35 @@
                 "title": "Activity",
                 "description": "",
                 "tags": ["Activity"],
-                "grain": [{ "id": "f_activity.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_activity.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
                         "identifier": { "id": "f_account", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["accountid_id"],
-                        "sourceColumnDataTypes": []
-                    },
-                    {
-                        "identifier": { "id": "f_owner", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["ownerid_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     },
                     {
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["opportunityid_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_owner", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["ownerid_id"],
+                        "sourceColumnDataTypes": null
                     },
                     {
                         "identifier": { "id": "dt_activity_timestamp", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["dt_activity_timestamp"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_activity",
@@ -2215,7 +2219,7 @@
                 "title": "Account",
                 "description": "",
                 "tags": ["Account"],
-                "grain": [{ "id": "f_account.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_account.id", "type": "attribute" }],
                 "dataSourceTableId": "vertica_staging-goodsales:f_account",
                 "type": "NORMAL"
             },
@@ -2924,13 +2928,14 @@
                 "title": "owner",
                 "description": "",
                 "tags": ["owner"],
-                "grain": [{ "id": "f_owner.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_owner.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
                         "identifier": { "id": "f_city", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["city_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_owner",
@@ -3220,7 +3225,7 @@
                 "title": "product",
                 "description": "",
                 "tags": ["product"],
-                "grain": [{ "id": "f_product.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_product.id", "type": "attribute" }],
                 "dataSourceTableId": "vertica_staging-goodsales:f_product",
                 "type": "NORMAL"
             },
@@ -3328,13 +3333,14 @@
                 "title": "Opportunity",
                 "description": "",
                 "tags": ["Opportunity"],
-                "grain": [{ "id": "f_opportunity.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_opportunity.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
                         "identifier": { "id": "dt_oppcreated_timestamp", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["dt_oppcreated_timestamp"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_opportunity",
@@ -3494,7 +3500,7 @@
                 "title": "Stage",
                 "description": "",
                 "tags": ["Stage"],
-                "grain": [{ "id": "f_stage.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_stage.id", "type": "attribute" }],
                 "dataSourceTableId": "vertica_staging-goodsales:f_stage",
                 "type": "NORMAL"
             },
@@ -3538,13 +3544,14 @@
                 "title": "Timeline",
                 "description": "",
                 "tags": ["Timeline"],
-                "grain": [{ "id": "f_timeline.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_timeline.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
                         "identifier": { "id": "dt_timeline_timestamp", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["dt_timeline_timestamp"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_timeline",
@@ -3561,7 +3568,7 @@
                 "title": "City",
                 "description": "City",
                 "tags": ["City"],
-                "grain": [{ "id": "f_city.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_city.id", "type": "attribute" }],
                 "dataSourceTableId": "vertica_staging-goodsales:f_city",
                 "type": "NORMAL"
             },
@@ -3663,49 +3670,56 @@
                 "title": "OpportunitySnapshot",
                 "description": "",
                 "tags": ["OpportunitySnapshot"],
-                "grain": [{ "id": "f_opportunitysnapshot.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_opportunitysnapshot.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
-                        "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" },
+                        "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
-                        "sourceColumns": ["dt_closedate_timestamp"],
-                        "sourceColumnDataTypes": []
-                    },
-                    {
-                        "identifier": { "id": "f_stage", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["stage_id"],
-                        "sourceColumnDataTypes": []
+                        "sources": null,
+                        "sourceColumns": ["opportunityid_id"],
+                        "sourceColumnDataTypes": null
                     },
                     {
                         "identifier": { "id": "f_owner", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["ownerid_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     },
                     {
-                        "identifier": { "id": "f_opportunity", "type": "dataset" },
+                        "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" },
                         "multivalue": false,
-                        "sourceColumns": ["opportunityid_id"],
-                        "sourceColumnDataTypes": []
-                    },
-                    {
-                        "identifier": { "id": "f_product", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["productid_id"],
-                        "sourceColumnDataTypes": []
-                    },
-                    {
-                        "identifier": { "id": "f_account", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["accountid_id"],
-                        "sourceColumnDataTypes": []
+                        "sources": null,
+                        "sourceColumns": ["dt_closedate_timestamp"],
+                        "sourceColumnDataTypes": null
                     },
                     {
                         "identifier": { "id": "dt_snapshotdate_timestamp", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["dt_snapshotdate_timestamp"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["accountid_id"],
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_stage", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["stage_id"],
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["productid_id"],
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_opportunitysnapshot",
@@ -3774,31 +3788,35 @@
                 "title": "stagehistory",
                 "description": "",
                 "tags": ["stagehistory"],
-                "grain": [{ "id": "f_stagehistory.id", "type": "attribute", "order": 0 }],
+                "grain": [{ "id": "f_stagehistory.id", "type": "attribute" }],
                 "referenceProperties": [
-                    {
-                        "identifier": { "id": "f_product", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["productid_id"],
-                        "sourceColumnDataTypes": []
-                    },
                     {
                         "identifier": { "id": "f_account", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["accountid_id"],
-                        "sourceColumnDataTypes": []
-                    },
-                    {
-                        "identifier": { "id": "f_stage", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["stage_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
                     },
                     {
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
+                        "sources": null,
                         "sourceColumns": ["opportunityid_id"],
-                        "sourceColumnDataTypes": []
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_stage", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["stage_id"],
+                        "sourceColumnDataTypes": null
+                    },
+                    {
+                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "multivalue": false,
+                        "sources": null,
+                        "sourceColumns": ["productid_id"],
+                        "sourceColumnDataTypes": null
                     }
                 ],
                 "dataSourceTableId": "vertica_staging-goodsales:f_stagehistory",
@@ -4040,7 +4058,7 @@
         }
     ],
     "links": {
-        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset&page=0&size=250",
-        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset&page=1&size=250"
+        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&page=1&size=250"
     }
 }
