@@ -93,6 +93,11 @@ export interface IDrillDownDefinition {
      * Target attribute display form for drill down.
      */
     target: ObjRef;
+
+    /**
+     * Title for the target attribute.
+     */
+    title?: string;
 }
 
 /**

@@ -4,10 +4,14 @@ import flatMap from "lodash/flatMap.js";
 import {
     IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
+    ICatalogAttributeHierarchy,
     ICatalogDateAttribute,
     ICatalogDateDataset,
     ICatalogFact,
     ICatalogMeasure,
+    ObjRef,
+    areObjRefsEqual,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
@@ -122,6 +126,14 @@ export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribut
 );
 
 /**
+ * @beta
+ */
+export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttributeHierarchy[]> =
+    createSelector(selectSelf, (state) => {
+        return state.attributeHierarchies ?? [];
+    });
+
+/**
  * @alpha
  */
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]> =
@@ -129,6 +141,52 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
         [selectCatalogAttributes, selectCatalogDateAttributes],
         (attributes = [], dateAttributes = []) => {
             return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
+        },
+    );
+
+/**
+ * Returns map of catalog attribute keys with all their descendants based on attribute hierarchies.
+ *
+ * This selector does descendant lookup for each existing catalog attribute. If an attribute is in any attribute hierarchy
+ * and has at least one descendant, the attribute key is added to the map together with the descendant reference.
+ *
+ * @beta
+ */
+export const selectAttributesWithHierarchyDescendants: DashboardSelector<Record<string, ObjRef[]>> =
+    createSelector(
+        [selectCatalogAttributes, selectCatalogDateAttributes, selectCatalogAttributeHierarchies],
+        (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
+            const allCatalogAttributes = [...attributes, ...dateAttributes];
+            const attributeDescendants: Record<string, ObjRef[]> = {};
+
+            allCatalogAttributes.forEach((attribute) => {
+                const attributeRef = attribute.attribute.ref;
+                attributeHierarchies.forEach((hierarchy) => {
+                    const hierarchyAttributes = hierarchy.attributeHierarchy.attributes;
+                    const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
+                        areObjRefsEqual(ref, attributeRef),
+                    );
+
+                    if (foundAttributeIndex < 0) {
+                        return;
+                    }
+
+                    const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
+
+                    if (!foundDescendant) {
+                        return;
+                    }
+
+                    const attributeRefAsString = objRefToString(attributeRef);
+                    if (attributeDescendants[attributeRefAsString]) {
+                        attributeDescendants[attributeRefAsString].push(foundDescendant);
+                    } else {
+                        attributeDescendants[attributeRefAsString] = [foundDescendant];
+                    }
+                });
+            });
+
+            return attributeDescendants;
         },
     );
 

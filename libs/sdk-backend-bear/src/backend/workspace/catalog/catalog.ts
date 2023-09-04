@@ -16,6 +16,8 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IUriMappings } from "../../../types/catalog.js";
@@ -54,6 +56,10 @@ export class BearWorkspaceCatalog implements IWorkspaceCatalog {
 
     public dateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
+    }
+
+    public attributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.items.filter(isCatalogAttributeHierarchy);
     }
 
     public availableItems(): IWorkspaceCatalogAvailableItemsFactory {

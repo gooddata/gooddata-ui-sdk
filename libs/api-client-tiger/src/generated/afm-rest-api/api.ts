@@ -376,6 +376,32 @@ export type AfmObjectIdentifierLabelIdentifierTypeEnum =
     typeof AfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
 
 /**
+ * Entity describing the valid descendants request.
+ * @export
+ * @interface AfmValidDescendantsQuery
+ */
+export interface AfmValidDescendantsQuery {
+    /**
+     * List of identifiers of the attributes to get the valid descendants for.
+     * @type {Array<AfmObjectIdentifierAttribute>}
+     * @memberof AfmValidDescendantsQuery
+     */
+    attributes: Array<AfmObjectIdentifierAttribute>;
+}
+/**
+ * Entity describing the valid descendants response.
+ * @export
+ * @interface AfmValidDescendantsResponse
+ */
+export interface AfmValidDescendantsResponse {
+    /**
+     * Map of attribute identifiers to list of valid descendants identifiers.
+     * @type {{ [key: string]: Array<AfmObjectIdentifierAttribute>; }}
+     * @memberof AfmValidDescendantsResponse
+     */
+    validDescendants: { [key: string]: Array<AfmObjectIdentifierAttribute> };
+}
+/**
  * Entity holding AFM and list of object types whose validity should be computed.
  * @export
  * @interface AfmValidObjectsQuery
@@ -795,7 +821,7 @@ export interface Element {
      */
     title: string | null;
     /**
-     * Title of primary label of attribute owning requested label or null if the primary label is excluded
+     * Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded
      * @type {string}
      * @memberof Element
      */
@@ -2214,6 +2240,63 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidDescendants: async (
+            workspaceId: string,
+            afmValidDescendantsQuery: AfmValidDescendantsQuery,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
+            // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
+            assertParamExists(
+                "computeValidDescendants",
+                "afmValidDescendantsQuery",
+                afmValidDescendantsQuery,
+            );
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmValidDescendantsQuery !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
+                : afmValidDescendantsQuery || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
@@ -2508,6 +2591,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computeValidDescendants(
+            workspaceId: string,
+            afmValidDescendantsQuery: AfmValidDescendantsQuery,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidDescendants(
+                workspaceId,
+                afmValidDescendantsQuery,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
@@ -2667,6 +2770,25 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidDescendants(
+            requestParameters: ActionsApiComputeValidDescendantsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AfmValidDescendantsResponse> {
+            return localVarFp
+                .computeValidDescendants(
+                    requestParameters.workspaceId,
+                    requestParameters.afmValidDescendantsQuery,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {ActionsApiComputeValidObjectsRequest} requestParameters Request parameters.
@@ -2776,6 +2898,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiComputeReportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AfmExecutionResponse>;
+
+    /**
+     * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+     * @summary (BETA) Valid descendants
+     * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeValidDescendants(
+        requestParameters: ActionsApiComputeValidDescendantsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmValidDescendantsResponse>;
 
     /**
      * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
@@ -2905,6 +3040,27 @@ export interface ActionsApiComputeReportRequest {
      * @memberof ActionsApiComputeReport
      */
     readonly timestamp?: string;
+}
+
+/**
+ * Request parameters for computeValidDescendants operation in ActionsApi.
+ * @export
+ * @interface ActionsApiComputeValidDescendantsRequest
+ */
+export interface ActionsApiComputeValidDescendantsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiComputeValidDescendants
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmValidDescendantsQuery}
+     * @memberof ActionsApiComputeValidDescendants
+     */
+    readonly afmValidDescendantsQuery: AfmValidDescendantsQuery;
 }
 
 /**
@@ -3075,6 +3231,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.afmExecution,
                 requestParameters.skipCache,
                 requestParameters.timestamp,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+     * @summary (BETA) Valid descendants
+     * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeValidDescendants(
+        requestParameters: ActionsApiComputeValidDescendantsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .computeValidDescendants(
+                requestParameters.workspaceId,
+                requestParameters.afmValidDescendantsQuery,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -3294,6 +3471,63 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
                 : afmExecution || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidDescendants: async (
+            workspaceId: string,
+            afmValidDescendantsQuery: AfmValidDescendantsQuery,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
+            // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
+            assertParamExists(
+                "computeValidDescendants",
+                "afmValidDescendantsQuery",
+                afmValidDescendantsQuery,
+            );
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmValidDescendantsQuery !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
+                : afmValidDescendantsQuery || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3595,6 +3829,26 @@ export const ComputationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computeValidDescendants(
+            workspaceId: string,
+            afmValidDescendantsQuery: AfmValidDescendantsQuery,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidDescendants(
+                workspaceId,
+                afmValidDescendantsQuery,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
@@ -3754,6 +4008,25 @@ export const ComputationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+         * @summary (BETA) Valid descendants
+         * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidDescendants(
+            requestParameters: ComputationApiComputeValidDescendantsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AfmValidDescendantsResponse> {
+            return localVarFp
+                .computeValidDescendants(
+                    requestParameters.workspaceId,
+                    requestParameters.afmValidDescendantsQuery,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
@@ -3863,6 +4136,19 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiComputeReportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AfmExecutionResponse>;
+
+    /**
+     * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+     * @summary (BETA) Valid descendants
+     * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    computeValidDescendants(
+        requestParameters: ComputationApiComputeValidDescendantsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmValidDescendantsResponse>;
 
     /**
      * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
@@ -3992,6 +4278,27 @@ export interface ComputationApiComputeReportRequest {
      * @memberof ComputationApiComputeReport
      */
     readonly timestamp?: string;
+}
+
+/**
+ * Request parameters for computeValidDescendants operation in ComputationApi.
+ * @export
+ * @interface ComputationApiComputeValidDescendantsRequest
+ */
+export interface ComputationApiComputeValidDescendantsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiComputeValidDescendants
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmValidDescendantsQuery}
+     * @memberof ComputationApiComputeValidDescendants
+     */
+    readonly afmValidDescendantsQuery: AfmValidDescendantsQuery;
 }
 
 /**
@@ -4165,6 +4472,27 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.afmExecution,
                 requestParameters.skipCache,
                 requestParameters.timestamp,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+     * @summary (BETA) Valid descendants
+     * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public computeValidDescendants(
+        requestParameters: ComputationApiComputeValidDescendantsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .computeValidDescendants(
+                requestParameters.workspaceId,
+                requestParameters.afmValidDescendantsQuery,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

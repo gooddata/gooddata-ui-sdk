@@ -32,6 +32,7 @@ import {
     isMeasure,
     measurePopAttribute,
     modifyPopMeasure,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import {
     convertItemType,
@@ -53,6 +54,8 @@ const catalogItemUri = (catalogItem: CatalogItem): string => {
         return catalogItem.measure.uri;
     } else if (isCatalogFact(catalogItem)) {
         return catalogItem.fact.uri;
+    } else if (isCatalogAttributeHierarchy(catalogItem)) {
+        return catalogItem.attributeHierarchy.uri;
     }
 
     return catalogItem.dataSet.uri;
@@ -65,7 +68,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         private readonly groups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly options: IWorkspaceCatalogWithAvailableItemsFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -164,7 +167,11 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             }),
         );
 
-        return this.items.filter((item) => availableItemUris.includes(catalogItemUri(item)));
+        const allAvailableItemUris = types.includes("attributeHierarchy")
+            ? [...availableItemUris, ...this.items.filter(isCatalogAttributeHierarchy)]
+            : [...availableItemUris];
+
+        return this.items.filter((item) => allAvailableItemUris.includes(catalogItemUri(item)));
     };
 
     private loadAvailableDateDatasets = async (

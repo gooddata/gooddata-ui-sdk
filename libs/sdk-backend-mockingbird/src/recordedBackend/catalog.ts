@@ -23,6 +23,8 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity.js";
 
@@ -37,7 +39,7 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         private readonly recordings: RecordingIndex = {},
         private readonly config: RecordedBackendConfig = {},
         public readonly options: IWorkspaceCatalogFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -136,6 +138,10 @@ class RecordedCatalogBase {
     public groups(): ICatalogGroup[] {
         return this.catalogGroups;
     }
+
+    public attributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.items.filter(isCatalogAttributeHierarchy);
+    }
 }
 
 class RecordedCatalog extends RecordedCatalogBase implements IWorkspaceCatalog {
@@ -165,7 +171,7 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         private readonly groups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         public readonly options: IWorkspaceCatalogWithAvailableItemsFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -244,6 +250,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
     private readonly filteredMeasures: ICatalogMeasure[];
     private readonly filteredFacts: ICatalogFact[];
     private readonly filteredDateDatasets: ICatalogDateDataset[];
+    private readonly filteredAttributeHierarchies: ICatalogAttributeHierarchy[];
 
     constructor(
         public readonly workspace: string,
@@ -260,12 +267,14 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
             availableMeasures = typedIdentity,
             availableFacts = typedIdentity,
             availableDateDatasets = typedIdentity,
+            availableAttributeHierarchies = typedIdentity,
         } = this.config.catalogAvailability ?? {};
 
         this.filteredAttributes = availableAttributes(this.attributes());
         this.filteredMeasures = availableMeasures(this.measures());
         this.filteredFacts = availableFacts(this.facts());
         this.filteredDateDatasets = availableDateDatasets(this.dateDatasets());
+        this.filteredAttributeHierarchies = availableAttributeHierarchies(this.attributeHierarchies());
     }
 
     public allAvailableItems = (): CatalogItem[] => {
@@ -274,6 +283,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
             ...this.filteredMeasures,
             ...this.filteredFacts,
             ...this.filteredDateDatasets,
+            ...this.filteredAttributeHierarchies,
         ];
     };
     public availableAttributes = (): ICatalogAttribute[] => {
@@ -287,5 +297,8 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
     }
     public availableDateDatasets(): ICatalogDateDataset[] {
         return this.filteredDateDatasets;
+    }
+    public availableAttributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.filteredAttributeHierarchies;
     }
 }

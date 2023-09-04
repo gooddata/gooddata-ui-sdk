@@ -53,7 +53,15 @@ export interface IDashboardWithReferences {
  */
 export type SupportedWidgetReferenceTypes = Exclude<
     ObjectType,
-    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette"
+    | "fact"
+    | "attribute"
+    | "displayForm"
+    | "dataSet"
+    | "tag"
+    | "insight"
+    | "variable"
+    | "colorPalette"
+    | "attributeHierarchy"
 >;
 
 //

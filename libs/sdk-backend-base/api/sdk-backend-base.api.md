@@ -24,6 +24,7 @@ import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
@@ -442,6 +443,8 @@ export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
     protected constructor(decorated: IWorkspaceCatalog);
     // (undocumented)
     allItems(): CatalogItem[];
+    // (undocumented)
+    attributeHierarchies(): ICatalogAttributeHierarchy[];
     // (undocumented)
     attributes(): ICatalogAttribute[];
     // (undocumented)

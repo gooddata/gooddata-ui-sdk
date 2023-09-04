@@ -16,6 +16,8 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory.js";
@@ -52,6 +54,10 @@ export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
 
     public dateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
+    }
+
+    public attributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.items.filter(isCatalogAttributeHierarchy);
     }
 
     public availableItems(): IWorkspaceCatalogAvailableItemsFactory {

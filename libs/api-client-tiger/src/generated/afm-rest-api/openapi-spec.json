@@ -283,6 +283,52 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants": {
+            "post": {
+                "tags": ["Computation", "actions"],
+                "summary": "(BETA) Valid descendants",
+                "description": "(BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.",
+                "operationId": "computeValidDescendants",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmValidDescendantsQuery"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Map of lists of attributes valid as descendants of the given attributes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmValidDescendantsResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["ANALYZE"],
+                    "description": "Permissions required to analyze data."
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata": {
             "get": {
                 "tags": ["Computation", "actions"],
@@ -453,7 +499,7 @@
                     },
                     "primaryTitle": {
                         "type": "string",
-                        "description": "Title of primary label of attribute owning requested label or null if the primary label is excluded",
+                        "description": "Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded",
                         "nullable": true
                     }
                 },
@@ -891,8 +937,7 @@
                         "example": ["value1", "value2"],
                         "items": {
                             "type": "string",
-                            "description": "Set of label values.",
-                            "example": "[\"value1\",\"value2\"]"
+                            "nullable": true
                         }
                     }
                 },
@@ -1798,6 +1843,38 @@
                     }
                 },
                 "description": "All objects of specified types valid with respect to given AFM."
+            },
+            "AfmValidDescendantsQuery": {
+                "required": ["attributes"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "description": "List of identifiers of the attributes to get the valid descendants for.",
+                        "items": {
+                            "$ref": "#/components/schemas/AfmObjectIdentifierAttribute"
+                        }
+                    }
+                },
+                "description": "Entity describing the valid descendants request."
+            },
+            "AfmValidDescendantsResponse": {
+                "required": ["validDescendants"],
+                "type": "object",
+                "properties": {
+                    "validDescendants": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "description": "Map of attribute identifiers to list of valid descendants identifiers.",
+                            "items": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierAttribute"
+                            }
+                        },
+                        "description": "Map of attribute identifiers to list of valid descendants identifiers."
+                    }
+                },
+                "description": "Entity describing the valid descendants response."
             },
             "ResultCacheMetadata": {
                 "required": ["afm", "executionResponse", "resultSize", "resultSpec"],

@@ -133,6 +133,7 @@ import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
@@ -472,6 +473,8 @@ export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
 
 // @public (undocumented)
 export interface CatalogState {
+    // @beta (undocumented)
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
     // @beta (undocumented)
     attributes?: ICatalogAttribute[];
     // @beta (undocumented)
@@ -3757,6 +3760,7 @@ export interface IDrillDownContext {
 export interface IDrillDownDefinition {
     origin: LocalIdRef;
     target: ObjRef;
+    title?: string;
     // (undocumented)
     type: "drillDown";
 }
@@ -6106,6 +6110,9 @@ export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefine
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableAttributeHierarchies: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 
@@ -6282,6 +6289,9 @@ export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDraggingWidget: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsDrillDownEnabled: DashboardSelector<boolean>;
 
 // @public
 export const selectIsEmbedded: DashboardSelector<boolean>;

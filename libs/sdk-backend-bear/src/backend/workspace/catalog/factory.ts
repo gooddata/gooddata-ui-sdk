@@ -12,6 +12,10 @@ import {
     ICatalogGroup,
     isCatalogFact,
     isCatalogMeasure,
+    isCatalogAttribute,
+    ICatalogAttributeHierarchy,
+    ICatalogDateDataset,
+    uriRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -33,18 +37,19 @@ import {
     IDateDataSet,
     IDateDataSetAttribute,
     CatalogItem as BearCatalogItem,
-    isCatalogAttribute,
+    isCatalogAttribute as isBearCatalogAttribute,
     isCatalogMetric,
     isWrappedAttribute,
     ILoadCatalogItemsParams,
 } from "@gooddata/api-model-bear";
+import { v4 } from "uuid";
 
 type BearDisplayFormOrAttribute = IWrappedAttributeDisplayForm | IWrappedAttribute;
 
 const bearCatalogItemToCatalogItem =
     (displayForms: IDisplayFormByKey, attributes: IAttributeByKey) =>
     (item: BearCatalogItem): CatalogItem => {
-        if (isCatalogAttribute(item)) {
+        if (isBearCatalogAttribute(item)) {
             return convertAttribute(item, displayForms, attributes);
         } else if (isCatalogMetric(item)) {
             return convertMeasure(item);
@@ -116,7 +121,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         private readonly authCall: BearAuthenticatedCallGuard,
         public readonly workspace: string,
         public readonly options: IWorkspaceCatalogFactoryOptions = {
-            types: ["attribute", "measure", "fact", "dateDataset"],
+            types: ["attribute", "measure", "fact", "dateDataset", "attributeHierarchy"],
             excludeTags: [],
             includeTags: [],
             loadGroups: true,
@@ -199,8 +204,11 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const dateDatasets = bearDateDatasets.map((dd) => convertDateDataset(dd, attributeById));
+        const attributeHierarchies = this.options.types.includes("attributeHierarchy")
+            ? extractAttributeHierarchiesFromCatalogItems(catalogItems, dateDatasets)
+            : [];
 
-        const allCatalogItems = catalogItems.concat(dateDatasets);
+        const allCatalogItems = catalogItems.concat(dateDatasets, attributeHierarchies);
 
         const measureById: IMeasureByKey = keyBy(
             catalogItems.filter(isCatalogMeasure).map((el) => el.measure),
@@ -350,4 +358,39 @@ function extractDisplayFormsFromBearAttributes(
             (df): IWrappedAttributeDisplayForm => ({ attributeDisplayForm: df }),
         ),
     ]);
+}
+
+function extractAttributeHierarchiesFromCatalogItems(
+    items: CatalogItem[],
+    dateDatasets: ICatalogDateDataset[],
+): ICatalogAttributeHierarchy[] {
+    const attributesWithDrillDownStep = items
+        .filter(isCatalogAttribute)
+        .filter((attr) => attr.attribute.drillDownStep);
+    const dateAttributesWithDrillDownStep = dateDatasets.flatMap((dateDataset) =>
+        dateDataset.dateAttributes.filter((attr) => attr.attribute.drillDownStep),
+    );
+
+    return [...attributesWithDrillDownStep, ...dateAttributesWithDrillDownStep].map(
+        (attr): ICatalogAttributeHierarchy => {
+            const { attribute } = attr;
+            const uri = v4(); // create a new uri for identification as this object is not a real Bear MD object
+
+            return {
+                type: "attributeHierarchy",
+                attributeHierarchy: {
+                    type: "attributeHierarchy",
+                    id: uri,
+                    uri,
+                    ref: uriRef(uri),
+                    title: `Attribute hierarchy for ${attribute.title}`,
+                    description: "",
+                    production: true,
+                    deprecated: false,
+                    unlisted: false,
+                    attributes: [attribute.ref, attribute.drillDownStep!],
+                },
+            };
+        },
+    );
 }

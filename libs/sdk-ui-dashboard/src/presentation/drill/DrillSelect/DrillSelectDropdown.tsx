@@ -97,12 +97,13 @@ export const createDrillSelectItems = (
         );
 
         if (isDrillDownDefinition(drillDefinition)) {
+            const { title: drillTitle } = drillDefinition;
             const drillDownOrigin = getDrillOriginLocalIdentifier(drillDefinition);
             const title = getDrillDownAttributeTitle(drillDownOrigin, drillEvent);
 
             return {
                 type: DrillType.DRILL_DOWN,
-                name: title ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
+                name: drillTitle ?? title ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
                 drillDefinition,
                 id: stringify(drillDefinition),
             };

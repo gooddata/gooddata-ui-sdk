@@ -19,6 +19,7 @@ import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
@@ -764,6 +765,7 @@ export interface IWorkspaceCatalogFactoryOptions {
 // @public
 export interface IWorkspaceCatalogMethods {
     allItems(): CatalogItem[];
+    attributeHierarchies(): ICatalogAttributeHierarchy[];
     attributes(): ICatalogAttribute[];
     dateDatasets(): ICatalogDateDataset[];
     facts(): ICatalogFact[];
@@ -774,6 +776,7 @@ export interface IWorkspaceCatalogMethods {
 // @public
 export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
     allAvailableItems(): CatalogItem[];
+    availableAttributeHierarchies(): ICatalogAttributeHierarchy[];
     availableAttributes(): ICatalogAttribute[];
     availableDateDatasets(): ICatalogDateDataset[];
     availableFacts(): ICatalogFact[];
@@ -1002,7 +1005,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 // @alpha
-export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette">;
+export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette" | "attributeHierarchy">;
 
 // @public
 export class TimeoutError extends AnalyticalBackendError {

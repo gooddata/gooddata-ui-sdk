@@ -1,0 +1,43 @@
+{
+    "id": "73ef0777-9549-4a90-9499-695bd9b6df90",
+    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=0&limit=100",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements-73ef0777-9549-4a90-9499-695bd9b6df90.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "73ef0777-9549-4a90-9499-695bd9b6df90",
+    "persistent": true,
+    "insertionIndex": 13
+}

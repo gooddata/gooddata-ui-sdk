@@ -10,8 +10,15 @@ import {
     JsonApiLabelOutWithLinks,
     MetadataUtilities,
     JsonApiLabelOutAttributesValueTypeEnum,
+    JsonApiAttributeOutIncludes,
+    JsonApiAttributeHierarchyOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
+import {
+    CatalogItem,
+    ICatalogAttribute,
+    ICatalogAttributeHierarchy,
+    ICatalogDateDataset,
+} from "@gooddata/sdk-model";
 import values from "lodash/values.js";
 import {
     convertAttribute,
@@ -19,12 +26,9 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
+import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
-function lookupRelatedObject(
-    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
-    id: string,
-    type: string,
-) {
+function lookupRelatedObject(included: JsonApiAttributeOutIncludes[] | undefined, id: string, type: string) {
     if (!included) {
         return;
     }
@@ -34,7 +38,7 @@ function lookupRelatedObject(
 
 function getAttributeLabels(
     attribute: JsonApiAttributeOutWithLinks,
-    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
+    included: JsonApiAttributeOutIncludes[] | undefined,
 ): JsonApiLabelOutWithLinks[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
     return labelsRefs
@@ -81,7 +85,7 @@ type DatasetWithAttributes = {
 
 function identifyDateDatasets(
     dateAttributes: JsonApiAttributeOutWithLinks[],
-    included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,
+    included: JsonApiAttributeOutIncludes[] | undefined,
 ) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
 
@@ -126,16 +130,28 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
         .sort((a, b) => a.dataSet.title.localeCompare(b.dataSet.title));
 }
 
-export async function loadAttributesAndDateDatasets(
+function createAttributeHierarchies(attributes: JsonApiAttributeOutList): ICatalogAttributeHierarchy[] {
+    const included = attributes.included ?? [];
+    const outAttributeHierarchies = included.filter(
+        (item) => item.type === "attributeHierarchy",
+    ) as JsonApiAttributeHierarchyOutWithLinks[];
+    return outAttributeHierarchies.map(convertAttributeHierarchy);
+}
+
+export async function loadAttributesAndDateDatasetsAndHierarchies(
     client: ITigerClient,
     workspaceId: string,
     rsqlFilter: string,
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
+    loadAttributeHierarchies?: boolean,
 ): Promise<CatalogItem[]> {
     const includeObjects: EntitiesApiGetAllEntitiesAttributesRequest["include"] = ["labels", "defaultView"];
     if (loadDateDatasets) {
         includeObjects.push("dataset");
+    }
+    if (loadAttributeHierarchies) {
+        includeObjects.push("attributeHierarchies");
     }
     const params = addRsqlFilterToParams<EntitiesApiGetAllEntitiesAttributesRequest>(
         { workspaceId, include: includeObjects },
@@ -157,6 +173,10 @@ export async function loadAttributesAndDateDatasets(
     if (loadDateDatasets) {
         const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
         catalogItems.push(...dateDatasets);
+    }
+    if (loadAttributeHierarchies) {
+        const attributeHierarchies = createAttributeHierarchies(attributes);
+        catalogItems.push(...attributeHierarchies);
     }
 
     return catalogItems;

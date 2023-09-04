@@ -294,6 +294,11 @@ export interface ISettings {
      */
     metadataTimeZone?: string;
 
+    /**
+     * Enable attribute hierarchies.
+     */
+    enableAttributeHierarchies?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

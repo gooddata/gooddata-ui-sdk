@@ -29,7 +29,7 @@ export type BucketItem = IVisualizationObjectMeasure | IVisualizationObjectAttri
 export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
 
 // @public (undocumented)
-export type CatalogItemType = "attribute" | "metric" | "fact";
+export type CatalogItemType = "attribute" | "metric" | "fact" | "attributeHierarchy";
 
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
@@ -3333,7 +3333,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
 export type NumberAsString = string;
 
 // @public (undocumented)
-export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette";
+export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette" | "attributeHierarchy";
 
 // @public (undocumented)
 export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;

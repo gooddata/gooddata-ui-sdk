@@ -8,6 +8,10 @@ import {
     attributeDisplayFormMetadataObjectTitle,
     AttributeDisplayFormType,
 } from "./attributeDisplayForm/index.js";
+import {
+    IAttributeHierarchyMetadataObject,
+    isAttributeHierarchyMetadataObject,
+} from "./attributeHierarchy/index.js";
 import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
 import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
 import { IFactMetadataObject, isFactMetadataObject } from "./fact/index.js";
@@ -49,6 +53,8 @@ export {
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
+    IAttributeHierarchyMetadataObject,
+    isAttributeHierarchyMetadataObject,
 };
 
 /**
@@ -63,7 +69,8 @@ export type MetadataObject =
     | IMeasureMetadataObject
     | IDataSetMetadataObject
     | IVariableMetadataObject
-    | IDashboardMetadataObject;
+    | IDashboardMetadataObject
+    | IAttributeHierarchyMetadataObject;
 
 /**
  * Get metadata object identifier

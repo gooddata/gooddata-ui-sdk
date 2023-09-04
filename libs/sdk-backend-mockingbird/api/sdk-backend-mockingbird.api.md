@@ -17,6 +17,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
@@ -205,6 +206,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableMeasures?: (measures: ICatalogMeasure[]) => ICatalogMeasure[];
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
+        availableAttributeHierarchies?: (attributeHierarchies: ICatalogAttributeHierarchy[]) => ICatalogAttributeHierarchy[];
     };
     userManagement?: IUserManagement;
     attributeElementsFiltering?: AttributeElementsFiltering;

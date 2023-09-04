@@ -15,6 +15,8 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 
 export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
@@ -50,6 +52,10 @@ export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalog
         return this.items.filter(isCatalogDateDataset);
     }
 
+    public attributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.items.filter(isCatalogAttributeHierarchy);
+    }
+
     public allAvailableItems(): CatalogItem[] {
         return this.availableItems;
     }
@@ -68,5 +74,9 @@ export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalog
 
     public availableDateDatasets(): ICatalogDateDataset[] {
         return this.availableItems.filter(isCatalogDateDataset);
+    }
+
+    public availableAttributeHierarchies(): ICatalogAttributeHierarchy[] {
+        return this.availableItems.filter(isCatalogAttributeHierarchy);
     }
 }

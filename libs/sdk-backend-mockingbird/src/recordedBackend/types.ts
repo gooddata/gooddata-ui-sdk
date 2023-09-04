@@ -32,6 +32,7 @@ import {
     IMeasure,
     Identifier,
     IAvailableAccessGrantee,
+    ICatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 
 /**
@@ -117,6 +118,9 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableMeasures?: (measures: ICatalogMeasure[]) => ICatalogMeasure[];
         availableFacts?: (facts: ICatalogFact[]) => ICatalogFact[];
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
+        availableAttributeHierarchies?: (
+            attributeHierarchies: ICatalogAttributeHierarchy[],
+        ) => ICatalogAttributeHierarchy[];
     };
 
     /**
