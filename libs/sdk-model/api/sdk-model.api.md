@@ -2298,6 +2298,7 @@ export interface ISettings {
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
+    enableUnavailableItemsVisible?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     formatLocale?: string;

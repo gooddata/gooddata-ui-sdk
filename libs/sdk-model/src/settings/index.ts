@@ -104,6 +104,11 @@ export interface ISettings {
     enableAlternativeDisplayFormSelection?: boolean;
 
     /**
+     * Indicates whether unavailable data items are visible
+     */
+    enableUnavailableItemsVisible?: boolean;
+
+    /**
      * Indicates whether dashboard scheduled mails are enabled.
      */
     enableKPIDashboardSchedule?: boolean;

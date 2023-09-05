@@ -53,6 +53,8 @@ export enum TigerFeaturesNames {
     EnableNewHeadline = "enableNewHeadline",
     //boolean + possible values: enabled, disabled
     EnableAttributeHierarchies = "enableAttributeHierarchies",
+    //boolean + possible values: enabled, disabled
+    EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
 }
 
 export type ITigerFeatureFlags = {
@@ -79,6 +81,7 @@ export type ITigerFeatureFlags = {
     enableColumnHeadersPosition: typeof FeatureFlagsValues["enableColumnHeadersPosition"][number];
     enableNewHeadline: typeof FeatureFlagsValues["enableNewHeadline"][number];
     enableAttributeHierarchies: typeof FeatureFlagsValues["enableAttributeHierarchies"][number];
+    enableUnavailableItemsVisible: typeof FeatureFlagsValues["enableUnavailableItemsVisible"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -105,6 +108,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableColumnHeadersPosition: true,
     enableNewHeadline: false,
     enableAttributeHierarchies: false,
+    enableUnavailableItemsVisible: false,
 };
 
 export const FeatureFlagsValues = {
@@ -135,4 +139,5 @@ export const FeatureFlagsValues = {
     enableColumnHeadersPosition: [true, false] as const,
     enableNewHeadline: [true, false] as const,
     enableAttributeHierarchies: [true, false] as const,
+    enableUnavailableItemsVisible: [true, false] as const,
 };
