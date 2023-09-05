@@ -235,6 +235,7 @@ export { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 export {
     selectExecutionResult,
     selectExecutionResultByRef,
+    selectExecutionResultById,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,

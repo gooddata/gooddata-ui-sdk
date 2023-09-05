@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { isIdentifierRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { DashboardSelector, DashboardState } from "../types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -28,6 +28,31 @@ const selectExecutionResultEntities = adapterSelectors.selectEntities;
  * @alpha
  */
 export const selectExecutionResult = adapterSelectors.selectById;
+
+/**
+ * @alpha
+ */
+export const selectExecutionResultById: (
+    id: string,
+) => DashboardSelector<IExecutionResultEnvelope | undefined> = createMemoizedSelector((id: string) =>
+    createSelector(
+        selectExecutionResultEntities,
+        (executionResults): IExecutionResultEnvelope | undefined => {
+            const foundKey = Object.keys(executionResults).find((key) => {
+                try {
+                    const objRef = JSON.parse(key) as ObjRef;
+                    if (!isIdentifierRef(objRef)) {
+                        return false;
+                    }
+                    return objRef.identifier === id;
+                } catch (_e) {
+                    return false;
+                }
+            });
+            return foundKey ? executionResults[foundKey] : undefined;
+        },
+    ),
+);
 
 /**
  * @alpha

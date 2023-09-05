@@ -67,7 +67,13 @@ export function setExecutionResultError(
         id,
         {
             isLoading: false,
-            error,
+            error: {
+                ...error,
+                getMessage: error.getMessage,
+                getCause: error.getCause,
+                getErrorCode: error.getErrorCode,
+                message: error.getMessage(),
+            },
             warnings: undefined,
         },
         correlationId,

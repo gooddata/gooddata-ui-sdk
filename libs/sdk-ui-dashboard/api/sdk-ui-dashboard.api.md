@@ -6168,6 +6168,9 @@ export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescripto
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)
+export const selectExecutionResultById: (id: string) => DashboardSelector<IExecutionResultEnvelope | undefined>;
+
+// @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
 // @alpha (undocumented)
