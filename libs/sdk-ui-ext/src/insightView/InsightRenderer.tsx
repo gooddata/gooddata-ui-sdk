@@ -14,6 +14,7 @@ import {
     insightTitle,
     ITheme,
     insightSetProperties,
+    insightVisualizationUrl,
 } from "@gooddata/sdk-model";
 
 import {
@@ -122,6 +123,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             dateFormat: responsiveUiDateFormat,
             custom: {
                 drillableItems: this.props.drillableItems,
+                lastSavedVisClassUrl: insightVisualizationUrl(this.props.insight),
             },
             config: {
                 separators: config.separators,

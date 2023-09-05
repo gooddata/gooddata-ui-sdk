@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
 //
 // Test insight definitions
@@ -32,6 +32,57 @@ export const dummyInsight: IInsightDefinition = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single attribute",
+    },
+};
+
+export const insightWithSinglePrimaryAndSecondaryMeasure: IInsight = {
+    insight: {
+        visualizationUrl: "local:headline",
+        buckets: [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1269",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.SECONDARY_MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        identifier: "dummy_insight",
+        uri: "/gdc/md/project/obj/1234",
+        ref: {
+            identifier: "dummy_insight",
+        },
+        title: "Dummy insight with single primary and secondary measure",
     },
 };
 

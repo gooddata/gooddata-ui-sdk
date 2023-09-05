@@ -1,6 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import { AXIS } from "./axis.js";
 import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
+import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 const BASE_PROPERTIES = [
     "dataLabels.visible",
@@ -297,5 +298,16 @@ export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison"];
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {
     comparison: {
         enabled: true,
+    },
+};
+
+export const HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES: HeadlineControlProperties = {
+    comparison: {
+        enabled: true,
+        calculationType: CalculateAs.CHANGE,
+        format: "#,##0%",
+        colorConfig: {
+            disabled: true,
+        },
     },
 };
