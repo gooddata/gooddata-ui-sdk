@@ -5,4 +5,4 @@ export * from "../loadAttribute/loadAttributeSaga.js";
 export * from "../loadInitialElementsPage/loadInitialElementsPageSaga.js";
 export * from "../loadNextElementsPage/loadNextElementsPageSaga.js";
 export * from "../loadCustomElements/loadCustomElementsSaga.js";
-export * from "../init/initTotalCountSaga.js";
+export * from "../elements/initTotalCountSaga.js";

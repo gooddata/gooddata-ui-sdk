@@ -10,10 +10,11 @@ import {
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
 
-import { ILoadElementsOptions } from "../../../types/index.js";
+import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
 import { selectState } from "../common/selectors.js";
 import { FilterSelector } from "../common/types.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * Get the elements specified by the keys.
@@ -60,6 +61,22 @@ export const selectElements: FilterSelector<IAttributeElement[]> = createSelecto
 export const selectElementsTotalCount: FilterSelector<number> = createSelector(
     selectState,
     (state) => state.elements.totalCount,
+);
+
+/**
+ * @internal
+ */
+export const selectInitTotalCountStatus: FilterSelector<AsyncOperationStatus> = createSelector(
+    selectState,
+    (state) => state.elements.totalCountInitialization?.status,
+);
+
+/**
+ * @internal
+ */
+export const selectInitTotalCountError: FilterSelector<GoodDataSdkError> = createSelector(
+    selectState,
+    (state) => state.elements.totalCountInitialization?.error,
 );
 
 /**

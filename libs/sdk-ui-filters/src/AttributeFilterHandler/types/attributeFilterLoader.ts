@@ -36,8 +36,6 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      */
     init(correlation?: Correlation): void;
 
-    initTotalCount(correlation?: Correlation): void;
-
     /**
      * Returns the current status of the initialization.
      */

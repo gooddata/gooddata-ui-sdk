@@ -40,6 +40,10 @@ import {
     OnLoadCustomElementsCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
+    OnInitTotalCountStartCallbackPayload,
+    OnInitTotalCountCancelCallbackPayload,
+    OnInitTotalCountErrorCallbackPayload,
+    OnInitTotalCountSuccessCallbackPayload,
 } from "../types/index.js";
 import {
     actions,
@@ -75,6 +79,8 @@ import {
     selectOffset,
     selectIsLoadElementsOptionsChanged,
     selectLimitingAttributeFiltersAttributes,
+    selectInitTotalCountStatus,
+    selectInitTotalCountError,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -139,12 +145,38 @@ export class AttributeFilterReduxBridge {
         return this.callbacks.registerCallback(cb, this.callbacks.registrations.initCancel);
     };
 
+    // total count init
+
     initTotalCount = (correlation: Correlation): void => {
         this.redux.dispatch(
             actions.initTotalCount({
                 correlation,
             }),
         );
+    };
+
+    getInitTotalCountStatus = (): AsyncOperationStatus => {
+        return this.redux.select(selectInitTotalCountStatus);
+    };
+
+    getInitTotalCountError = (): GoodDataSdkError | undefined => {
+        return this.redux.select(selectInitTotalCountError);
+    };
+
+    onInitTotalCountStart: CallbackRegistration<OnInitTotalCountStartCallbackPayload> = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initTotalCountStart);
+    };
+
+    onInitTotalCountSuccess: CallbackRegistration<OnInitTotalCountSuccessCallbackPayload> = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initTotalCountSuccess);
+    };
+
+    onInitTotalCountError: CallbackRegistration<OnInitTotalCountErrorCallbackPayload> = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initTotalCountError);
+    };
+
+    onInitTotalCountCancel: CallbackRegistration<OnInitTotalCountCancelCallbackPayload> = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initTotalCountCancel);
     };
 
     //

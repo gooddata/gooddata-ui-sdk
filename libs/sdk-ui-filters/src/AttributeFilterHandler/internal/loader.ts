@@ -38,6 +38,10 @@ import {
     OnLoadCustomElementsSuccessCallbackPayload,
     OnLoadCustomElementsErrorCallbackPayload,
     OnLoadCustomElementsCancelCallbackPayload,
+    OnInitTotalCountCancelCallbackPayload,
+    OnInitTotalCountErrorCallbackPayload,
+    OnInitTotalCountStartCallbackPayload,
+    OnInitTotalCountSuccessCallbackPayload,
 } from "../types/index.js";
 import { AttributeFilterReduxBridge } from "./bridge.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -101,8 +105,35 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getInitError();
     };
 
+    //
+    // Init total count
+    //
     initTotalCount = (correlation: Correlation = uuid()): void => {
         this.bridge.initTotalCount(correlation);
+    };
+
+    getInitTotalCountStatus = (): AsyncOperationStatus => {
+        return this.bridge.getInitTotalCountStatus();
+    };
+
+    getInitTotalCountError = (): GoodDataSdkError | undefined => {
+        return this.bridge.getInitTotalCountError();
+    };
+
+    onInitTotalCountStart: CallbackRegistration<OnInitTotalCountStartCallbackPayload> = (cb) => {
+        return this.bridge.onInitTotalCountStart(cb);
+    };
+
+    onInitTotalCountSuccess: CallbackRegistration<OnInitTotalCountSuccessCallbackPayload> = (cb) => {
+        return this.bridge.onInitTotalCountSuccess(cb);
+    };
+
+    onInitTotalCountError: CallbackRegistration<OnInitTotalCountErrorCallbackPayload> = (cb) => {
+        return this.bridge.onInitTotalCountError(cb);
+    };
+
+    onInitTotalCountCancel: CallbackRegistration<OnInitTotalCountCancelCallbackPayload> = (cb) => {
+        return this.bridge.onInitTotalCountCancel(cb);
     };
 
     //

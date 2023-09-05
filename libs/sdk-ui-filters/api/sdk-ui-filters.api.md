@@ -292,6 +292,8 @@ export interface IAttributeElementLoader {
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;
+    getInitTotalCountError(): GoodDataSdkError | undefined;
+    getInitTotalCountStatus(): AsyncOperationStatus;
     getLimit(): number;
     getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
     getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
@@ -304,9 +306,14 @@ export interface IAttributeElementLoader {
     getSearch(): string;
     getTotalElementsCount(): number;
     getTotalElementsCountWithCurrentSettings(): number;
+    initTotalCount(correlation?: Correlation): void;
     loadCustomElements(options: ILoadElementsOptions, correlation?: Correlation): void;
     loadInitialElementsPage(correlation?: Correlation): void;
     loadNextElementsPage(correlation?: Correlation): void;
+    onInitTotalCountCancel: CallbackRegistration<OnInitTotalCountCancelCallbackPayload>;
+    onInitTotalCountError: CallbackRegistration<OnInitTotalCountErrorCallbackPayload>;
+    onInitTotalCountStart: CallbackRegistration<OnInitTotalCountStartCallbackPayload>;
+    onInitTotalCountSuccess: CallbackRegistration<OnInitTotalCountSuccessCallbackPayload>;
     onLoadCustomElementsCancel: CallbackRegistration<OnLoadCustomElementsCancelCallbackPayload>;
     onLoadCustomElementsError: CallbackRegistration<OnLoadCustomElementsErrorCallbackPayload>;
     onLoadCustomElementsStart: CallbackRegistration<OnLoadCustomElementsStartCallbackPayload>;
@@ -1010,6 +1017,20 @@ export type OnInitStartCallbackPayload = CallbackPayloadWithCorrelation;
 
 // @public
 export type OnInitSuccessCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @public
+export type OnInitTotalCountCancelCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @public
+export type OnInitTotalCountErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+// @public
+export type OnInitTotalCountStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @public
+export type OnInitTotalCountSuccessCallbackPayload = CallbackPayloadWithCorrelation;
 
 // @public
 export type OnLoadAttributeCancelCallbackPayload = CallbackPayloadWithCorrelation;

@@ -32,6 +32,10 @@ import {
     OnLoadCustomElementsCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
+    OnInitTotalCountCancelCallbackPayload,
+    OnInitTotalCountErrorCallbackPayload,
+    OnInitTotalCountStartCallbackPayload,
+    OnInitTotalCountSuccessCallbackPayload,
 } from "../types/index.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -42,6 +46,12 @@ const newCallbackRegistrations = () => {
         initSuccess: newCallbackHandler<OnInitSuccessCallbackPayload>(),
         initError: newCallbackHandler<OnInitErrorCallbackPayload>(),
         initCancel: newCallbackHandler<OnInitCancelCallbackPayload>(),
+
+        // InitTotalCount
+        initTotalCountStart: newCallbackHandler<OnInitTotalCountStartCallbackPayload>(),
+        initTotalCountSuccess: newCallbackHandler<OnInitTotalCountSuccessCallbackPayload>(),
+        initTotalCountError: newCallbackHandler<OnInitTotalCountErrorCallbackPayload>(),
+        initTotalCountCancel: newCallbackHandler<OnInitTotalCountCancelCallbackPayload>(),
 
         // Attribute
         loadAttributeStart: newCallbackHandler<OnLoadAttributeStartCallbackPayload>(),
@@ -130,6 +140,18 @@ export const newAttributeFilterCallbacks = () => {
             registrations.initError.invoke(action.payload);
         } else if (actions.initCancel.match(action)) {
             registrations.initCancel.invoke(action.payload);
+        }
+
+        // InitTotalCount
+        if (actions.initTotalCountStart.match(action)) {
+            registrations.initTotalCountStart.invoke(action.payload);
+        } else if (actions.initTotalCountSuccess.match(action)) {
+            registrations.initTotalCountSuccess.invoke(action.payload);
+        } else if (actions.initTotalCountError.match(action)) {
+            logError("initializing total count", action.payload.error);
+            registrations.initTotalCountError.invoke(action.payload);
+        } else if (actions.initTotalCountCancel.match(action)) {
+            registrations.initTotalCountCancel.invoke(action.payload);
         }
 
         // Attribute
