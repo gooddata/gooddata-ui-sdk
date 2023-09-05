@@ -38,6 +38,7 @@ import {
     findDerivedBucketItem,
     getAllItemsByType,
     hasDerivedBucketItems,
+    isArithmeticBucketItem,
     isDerivedBucketItem,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
@@ -144,7 +145,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 allMeasures.length > 1 ? allMeasures.slice(1, numberOfSecondaryMeasure + 1) : null;
 
             const primaryDerivedMeasure = findDerivedBucketItem(primaryMeasure, allMeasures);
-            if (this.keepPrimaryDerivedMeasureOnly && primaryDerivedMeasure) {
+            if (
+                this.keepPrimaryDerivedMeasureOnly &&
+                primaryDerivedMeasure &&
+                !isArithmeticBucketItem(primaryMeasure)
+            ) {
                 secondaryMeasures = [primaryDerivedMeasure];
             }
             this.keepPrimaryDerivedMeasureOnly = !primaryDerivedMeasure;

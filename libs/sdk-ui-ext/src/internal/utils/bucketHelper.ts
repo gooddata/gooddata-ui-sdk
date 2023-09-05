@@ -150,7 +150,7 @@ export function isDerivedBucketItem(measureItem: IBucketItem): boolean {
     return !!measureItem.masterLocalIdentifier;
 }
 
-function isArithmeticBucketItem(bucketItem: IBucketItem): boolean {
+export function isArithmeticBucketItem(bucketItem: IBucketItem): boolean {
     return !!bucketItem.operandLocalIdentifiers;
 }
 

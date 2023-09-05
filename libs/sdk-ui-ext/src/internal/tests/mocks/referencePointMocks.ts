@@ -102,6 +102,16 @@ export const derivedMeasureItems: IBucketItem[] = [
         masterLocalIdentifier: "m4",
         overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
     },
+    {
+        localIdentifier: "m6_pop",
+        type: "metric",
+        aggregation: null,
+        attribute: "acfWntEMcom0",
+        showInPercent: null,
+        showOnSecondaryAxis: null,
+        masterLocalIdentifier: "am3",
+        overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+    },
 ];
 
 export const arithmeticMeasureItems: IBucketItem[] = [
