@@ -25,10 +25,11 @@ const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps> = ({ dataItem, ev
     const valueClassNames = cx(
         ["comparison-headline-value", "s-comparison-headline-value", "headline-value", "s-headline-value"],
         {
-            "headline-value--empty": formattedItem.isValueEmpty && !color,
-            "s-headline-value--empty": formattedItem.isValueEmpty && !color,
-            "gd-icon-arrow-up": isArrowEnabled && evaluationType === EvaluationType.POSITIVE_VALUE,
-            "gd-icon-arrow-down": isArrowEnabled && evaluationType === EvaluationType.NEGATIVE_VALUE,
+            "headline-value--empty s-headline-value--empty": formattedItem.isValueEmpty && !color,
+            "gd-icon-trend-up s-indicator-up":
+                isArrowEnabled && evaluationType === EvaluationType.POSITIVE_VALUE,
+            "gd-icon-trend-down s-indicator-down":
+                isArrowEnabled && evaluationType === EvaluationType.NEGATIVE_VALUE,
         },
     );
 

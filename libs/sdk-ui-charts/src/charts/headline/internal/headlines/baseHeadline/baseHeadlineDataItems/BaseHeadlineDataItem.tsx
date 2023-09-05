@@ -15,10 +15,8 @@ const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps> = ({ dataItem }
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 
     const valueClassNames = cx(["headline-value", "s-headline-value"], {
-        "headline-value--empty": formattedItem.isValueEmpty,
-        "s-headline-value--empty": formattedItem.isValueEmpty,
-        "headline-link-style-underline": !config?.disableDrillUnderline,
-        "s-headline-link-style-underline": !config.disableDrillUnderline,
+        "headline-value--empty s-headline-value--empty": formattedItem.isValueEmpty,
+        "headline-link-style-underline s-headline-link-style-underline": !config?.disableDrillUnderline,
     });
 
     return (
