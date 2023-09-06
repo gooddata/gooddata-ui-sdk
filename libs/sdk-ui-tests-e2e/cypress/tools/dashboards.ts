@@ -50,7 +50,7 @@ export class Dashboard {
             .eq(toIndex)
             .parents(".gd-fluidlayout-column-container")
             .find(dropzone)
-            .trigger("dragover", "center", { dataTransfer })
+            .trigger("dragover", { dataTransfer })
             .trigger("drop", { dataTransfer });
         return this;
     }
