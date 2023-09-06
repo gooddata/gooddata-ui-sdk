@@ -27,12 +27,12 @@ export function usePagedResource<TParams, TItem>(
     fetchParams: TParams[],
     fetchDeps: React.DependencyList,
     resetDeps: React.DependencyList,
-    preventResetPromises?: boolean,
     getCacheKey?: (params: TParams) => string,
     initialState: IUsePagedResourceState<TItem> = {
         totalItemsCount: undefined,
         items: [],
     },
+    preventResetPromises?: boolean,
 ): IUsePagedResourceResult<TItem> {
     const [state, setState] = useState<IUsePagedResourceState<TItem>>(initialState);
 
@@ -56,8 +56,8 @@ export function usePagedResource<TParams, TItem>(
         fetchParams,
         fetchDeps,
         resetDeps,
-        preventResetPromises,
         getCacheKey,
+        preventResetPromises,
     );
 
     useEffect(() => {
