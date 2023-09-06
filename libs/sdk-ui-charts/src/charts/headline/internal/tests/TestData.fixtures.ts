@@ -308,3 +308,45 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
         ],
     ],
 ];
+
+export const TEST_MULTI_MEASURE_TRANSFORMATION: any = [
+    [
+        "multi measure with only primary measure",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithOnlyPrimaryMeasure,
+    ],
+    ["multi measure with two measures", ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasures],
+    [
+        "multi measure with two measures (one derived measure)",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasuresOnePoP,
+    ],
+    [
+        "multi measure with two measures (german separator)",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasuresWithGermanSeparators,
+    ],
+    [
+        "multi measure with three measures",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithThreeMeasures,
+    ],
+    [
+        "multi measure with three measure (drilling)",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithThreeMeasures,
+        [HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!)],
+    ],
+    [
+        "multi measure with three measure (drilling on primary)",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithThreeMeasures,
+        [
+            HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!),
+            HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Amount)!),
+        ],
+    ],
+    [
+        "multi measure with three measure (drilling on second and third measures)",
+        ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithThreeMeasures,
+        [
+            HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!),
+            HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Amount)!),
+            HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Probability)!),
+        ],
+    ],
+];
