@@ -11,9 +11,9 @@ jobs:
         with:
           submodules: recursive
       - name: Hugo Build
-        uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-build-action@master
+        uses: ./.github/actions/hugo-build-versioned-action
         with:
-          base-url: https://www.gooddata.com/docs/gooddata-ui-sdk
+          base-url: https://www.gooddata.com/docs/gooddata-ui
       - name: Publish
         uses: netlify/actions/cli@master
         with:
