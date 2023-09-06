@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "Sdk-backend-tiger now supports JWT authentication.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}
