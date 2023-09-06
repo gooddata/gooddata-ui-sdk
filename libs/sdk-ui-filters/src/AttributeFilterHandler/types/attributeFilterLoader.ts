@@ -23,7 +23,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
 
     /**
      * Loads all the required data to initialize the attribute filter handler:
-     * attribute, selected attribute elements, initial elements page and elements total count.
+     * attribute, selected attribute elements, initial elements page and optionally elements total count (for filters with parent).
      *
      * @remarks
      * Cancels the running initialization, if any, and starts it again.

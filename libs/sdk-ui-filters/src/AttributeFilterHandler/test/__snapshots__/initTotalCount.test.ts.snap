@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttributeFilterHandler > initTotalCount() should call cancel callback > with parameters 1`] = `
+[
+  {
+    "correlation": "start",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler > initTotalCount() should call success callback > with parameters 1`] = `
+[
+  {
+    "correlation": "start",
+  },
+]
+`;

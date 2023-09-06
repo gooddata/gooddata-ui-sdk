@@ -239,8 +239,58 @@ export interface IAttributeElementLoader {
 
     /**
      * Returns the total count of the attribute elements.
+     * Total elements count is loaded by default only for child filters.
      */
     getTotalElementsCount(): number;
+
+    /**
+     * Starts load of total count
+     * @param correlation - correlation that will be included in all callbacks fired by this method
+     */
+    initTotalCount(correlation?: Correlation): void;
+
+    /**
+     * Returns the current status of the total count initialization.
+     */
+    getInitTotalCountStatus(): AsyncOperationStatus;
+
+    /**
+     * Returns error, if it was thrown during the total count initialization, undefined otherwise.
+     */
+    getInitTotalCountError(): GoodDataSdkError | undefined;
+
+    /**
+     * Registers a callback that will be fired when the initialization of total count starts.
+     * Returns unsubscribe function, that will unregister it, once called.
+     *
+     * @param callback - callback to run
+     */
+    onInitTotalCountStart: CallbackRegistration<OnInitTotalCountStartCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when the initialization of total count
+     * is successfully completed.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @param callback - callback to run
+     */
+    onInitTotalCountSuccess: CallbackRegistration<OnInitTotalCountSuccessCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when error is thrown during the total count initialization.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @param callback - callback to run
+     */
+    onInitTotalCountError: CallbackRegistration<OnInitTotalCountErrorCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when the initialization of total count was canceled.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @param callback - callback to run
+     */
+    onInitTotalCountCancel: CallbackRegistration<OnInitTotalCountCancelCallbackPayload>;
 
     /**
      * Returns the total count of the attribute elements with currently set options.
@@ -497,3 +547,33 @@ export type OnLoadCustomElementsErrorCallbackPayload = Partial<CallbackPayloadWi
  * @public
  */
 export type OnLoadCustomElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+/**
+ * Payload of the onInitTotalCountStart callback.
+ *
+ * @public
+ */
+export type OnInitTotalCountStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+/**
+ * Payload of the onInitTotalCountSuccess callback.
+ *
+ * @public
+ */
+export type OnInitTotalCountSuccessCallbackPayload = CallbackPayloadWithCorrelation;
+
+/**
+ * Payload of the onInitTotalCountError callback.
+ *
+ * @public
+ */
+export type OnInitTotalCountErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+/**
+ * Payload of the onInitTotalCountCancel callback.
+ *
+ * @public
+ */
+export type OnInitTotalCountCancelCallbackPayload = CallbackPayloadWithCorrelation;

@@ -96,6 +96,10 @@ export {
     OnLoadNextElementsPageErrorCallbackPayload,
     OnLoadNextElementsPageStartCallbackPayload,
     OnLoadNextElementsPageSuccessCallbackPayload,
+    OnInitTotalCountStartCallbackPayload,
+    OnInitTotalCountSuccessCallbackPayload,
+    OnInitTotalCountErrorCallbackPayload,
+    OnInitTotalCountCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
     // Options

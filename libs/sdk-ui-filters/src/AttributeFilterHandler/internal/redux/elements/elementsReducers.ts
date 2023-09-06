@@ -1,9 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
+import identity from "lodash/identity.js";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IAttributeMetadataObject, IMeasure, IRelativeDateFilter, SortDirection } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { AttributeFilterReducer } from "../store/state.js";
+import { Correlation } from "../../../types/index.js";
 
 const setElementsTotalCount: AttributeFilterReducer<
     PayloadAction<{
@@ -11,6 +14,29 @@ const setElementsTotalCount: AttributeFilterReducer<
     }>
 > = (state, action) => {
     state.elements.totalCount = action.payload.totalCount;
+};
+
+const initTotalCount: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
+
+const initTotalCountStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
+    state.elements.totalCountInitialization.status = "loading";
+};
+
+const initTotalCountSuccess: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
+    state,
+) => {
+    state.elements.totalCountInitialization.status = "success";
+};
+
+const initTotalCountError: AttributeFilterReducer<
+    PayloadAction<{ error: GoodDataSdkError; correlation: Correlation }>
+> = (state, action) => {
+    state.elements.totalCountInitialization.status = "error";
+    state.elements.totalCountInitialization.error = action.payload.error;
+};
+
+const initTotalCountCancel: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
+    state.elements.totalCountInitialization.status = "canceled";
 };
 
 const setElementsTotalCountWithCurrentSettings: AttributeFilterReducer<
@@ -68,6 +94,11 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
  */
 export const elementsReducers = {
     setElementsTotalCount,
+    initTotalCount,
+    initTotalCountStart,
+    initTotalCountSuccess,
+    initTotalCountError,
+    initTotalCountCancel,
     setElementsTotalCountWithCurrentSettings,
     setOffset,
     setLimit,

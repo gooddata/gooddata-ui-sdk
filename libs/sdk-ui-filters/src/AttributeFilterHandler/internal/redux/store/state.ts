@@ -23,6 +23,10 @@ export interface AttributeFilterState {
     elements: {
         data?: string[];
         totalCount?: number;
+        totalCountInitialization: {
+            status: AsyncOperationStatus;
+            error?: GoodDataSdkError;
+        };
         totalCountWithCurrentSettings?: number;
         cache: Record<string, IAttributeElement>;
         initialPageLoad: {
@@ -81,6 +85,9 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
         },
         limitingAttributeFiltersAttributes: [],
         lastLoadedOptions: {},
+        totalCountInitialization: {
+            status: "pending",
+        },
     },
     config: {},
     selection: {
