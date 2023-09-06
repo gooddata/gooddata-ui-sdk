@@ -22,6 +22,11 @@ export const AmountMeasurePredicate = HeaderPredicates.identifierMatch(
     measureIdentifier(ReferenceMd.Amount)!,
 );
 export const WonMeasurePredicate = HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!);
+
+export const ProbabilityMeasurePredicate = HeaderPredicates.identifierMatch(
+    measureIdentifier(ReferenceMd.Probability)!,
+);
+
 export const SampleXirrMeasurePredicate = HeaderPredicates.identifierMatch(
     measureIdentifier(ReferenceMd.SampleXIRR)!,
 );

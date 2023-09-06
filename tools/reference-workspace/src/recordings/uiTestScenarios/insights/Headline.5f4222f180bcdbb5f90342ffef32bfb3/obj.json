@@ -1,0 +1,43 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            }
+        ],
+        "filters": [],
+        "identifier": "Headline.5f4222f180bcdbb5f90342ffef32bfb3",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Headline - multi measures with two measures",
+        "uri": "Headline.5f4222f180bcdbb5f90342ffef32bfb3",
+        "visualizationUrl": "local:headline"
+    }
+}

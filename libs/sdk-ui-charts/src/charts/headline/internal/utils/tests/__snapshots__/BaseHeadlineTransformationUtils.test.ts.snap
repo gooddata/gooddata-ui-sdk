@@ -1,0 +1,269 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BaseHeadlineTransformationUtils > createBaseHeadlineItem > Should return base headline item correctly 1`] = `
+{
+  "baseHeadlineDataItemComponent": [Function],
+  "data": {
+    "format": "$#,##0.00",
+    "isDrillable": false,
+    "localIdentifier": "m_acugFHNJgsBy",
+    "title": "Won",
+    "value": "38310753.45",
+  },
+  "elementType": "primaryValue",
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with only primary measure' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": null,
+  "tertiaryItem": null,
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with three measure (drilling on primary)' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0.0%",
+      "isDrillable": false,
+      "localIdentifier": "m_abEgMnq5hyJQ",
+      "title": "Probability",
+      "value": "0.597501249375312",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with three measure (drilling on second and third measures)' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0.0%",
+      "isDrillable": true,
+      "localIdentifier": "m_abEgMnq5hyJQ",
+      "title": "Probability",
+      "value": "0.597501249375312",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with three measure (drilling)' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": true,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0.0%",
+      "isDrillable": false,
+      "localIdentifier": "m_abEgMnq5hyJQ",
+      "title": "Probability",
+      "value": "0.597501249375312",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with three measures' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0.0%",
+      "isDrillable": false,
+      "localIdentifier": "m_abEgMnq5hyJQ",
+      "title": "Probability",
+      "value": "0.597501249375312",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with two measures (german separator)' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": null,
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with two measures (one derived measure)' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+      "title": "Won Last Year",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": null,
+}
+`;
+
+exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transform 'multi measure with two measures' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": null,
+}
+`;

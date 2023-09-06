@@ -1,0 +1,43 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            }
+        ],
+        "filters": [],
+        "identifier": "Headline.ec44537832680c571aee801b49a8d829",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Headline - multi measures with two measures with german separators",
+        "uri": "Headline.ec44537832680c571aee801b49a8d829",
+        "visualizationUrl": "local:headline"
+    }
+}

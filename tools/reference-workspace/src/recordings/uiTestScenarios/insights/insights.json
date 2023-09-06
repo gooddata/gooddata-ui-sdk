@@ -2662,9 +2662,19 @@
         "scenarioName": "comparison with negative arrow",
         "visName": "Headline"
     },
+    "Headline.0c397a87524b15d4156d4902c93b32f8": {
+        "comment": "Auto-generated insight for test scenario Headline - multi measures with three measures.",
+        "scenarioName": "multi measures with three measures",
+        "visName": "Headline"
+    },
     "Headline.1751ae10589de44b7a6a686b5290ef8d": {
         "comment": "Auto-generated insight for test scenario Headline - two measures with comparison.",
         "scenarioName": "two measures with comparison",
+        "visName": "Headline"
+    },
+    "Headline.25f8ead2829912864230dd6f4bcb9a1f": {
+        "comment": "Auto-generated insight for test scenario Headline - multi measures with only primary measure.",
+        "scenarioName": "multi measures with only primary measure",
         "visName": "Headline"
     },
     "Headline.277492aa430856258a8794b54cfbc491": {
@@ -2685,6 +2695,11 @@
     "Headline.5a15a98985dbd7379cf2d185cc65f229": {
         "comment": "Auto-generated insight for test scenario Headline - font.",
         "scenarioName": "font",
+        "visName": "Headline"
+    },
+    "Headline.5f4222f180bcdbb5f90342ffef32bfb3": {
+        "comment": "Auto-generated insight for test scenario Headline - multi measures with two measures.",
+        "scenarioName": "multi measures with two measures",
         "visName": "Headline"
     },
     "Headline.6785d8782cd6d73e898229a9288ed030": {
@@ -2712,6 +2727,11 @@
         "scenarioName": "comparison with equals arrow",
         "visName": "Headline"
     },
+    "Headline.b97b4ab7af6223fd9aa8e57ec7192c1c": {
+        "comment": "Auto-generated insight for test scenario Headline - multi measures with two measures one PoP.",
+        "scenarioName": "multi measures with two measures one PoP",
+        "visName": "Headline"
+    },
     "Headline.c73ecf1483cf081dfceb7661de46ef40": {
         "comment": "Auto-generated insight for test scenario Headline - two measures with german separators.",
         "scenarioName": "two measures with german separators",
@@ -2730,6 +2750,11 @@
     "Headline.dd278ab1110359f77ca456169542d74b": {
         "comment": "Auto-generated insight for test scenario Headline - comparison with custom label.",
         "scenarioName": "comparison with custom label",
+        "visName": "Headline"
+    },
+    "Headline.ec44537832680c571aee801b49a8d829": {
+        "comment": "Auto-generated insight for test scenario Headline - multi measures with two measures with german separators.",
+        "scenarioName": "multi measures with two measures with german separators",
         "visName": "Headline"
     },
     "Headline.edcc7ebea5a250c5e311f9f243545471": {

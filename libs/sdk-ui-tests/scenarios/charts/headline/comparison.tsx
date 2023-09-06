@@ -70,6 +70,10 @@ export const comparisonEnabled: IComparison = {
     enabled: true,
 };
 
+export const comparisonDisabled: IComparison = {
+    enabled: false,
+};
+
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames("comparison")
     .withDefaultTestTypes("visual")
