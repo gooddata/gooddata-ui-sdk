@@ -88,5 +88,5 @@ apidocs
 # Documentation
 
 docs/resources/_gen
-docs/multidocs
 docs/.hugo_build.lock
+docs/versioned_docs
