@@ -20,12 +20,29 @@ import { IColor } from "@gooddata/sdk-model";
 export type CalculationType = "change" | "ratio" | "difference";
 
 /**
+ * Defines how the comparison value will be placed.
+ *
+ * @public
+ */
+export type ComparisonPosition = "top" | "left" | "right" | "auto";
+
+/**
  * @internal
  */
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = {
     RATIO: "ratio" as const,
     CHANGE: "change" as const,
     DIFFERENCE: "difference" as const,
+};
+
+/**
+ * @internal
+ */
+export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition> = {
+    LEFT: "left" as const,
+    RIGHT: "right" as const,
+    TOP: "top" as const,
+    AUTO: "auto" as const,
 };
 
 /**
@@ -126,6 +143,15 @@ export interface IComparison {
      * @defaultValue Based on the secondary measure.
      */
     calculationType?: CalculationType;
+
+    /**
+     * Defines how the comparison value will be placed.
+     *
+     * @see {@link ComparisonPosition} for supported positions
+     *
+     * @defaultValue auto
+     */
+    position?: ComparisonPosition;
 
     /**
      * Defines the number format of the comparison value.

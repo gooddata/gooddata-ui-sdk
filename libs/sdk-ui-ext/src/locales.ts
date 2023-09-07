@@ -300,5 +300,10 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
         id: "properties.comparison.indicator.colorConfig.negative",
     },
     labelSubSectionTitle: { id: "properties.comparison.labelSubSection.title" },
+    labelPositionOnTopDisabled: { id: "properties.comparison.labelSubSection.positionOnTop.disabled" },
     labelNameTitle: { id: "properties.comparison.labelName.title" },
+    positionTitle: { id: "properties.comparison.position.title" },
+    positionTop: { id: "properties.comparison.position.top" },
+    positionRight: { id: "properties.comparison.position.right" },
+    positionLeft: { id: "properties.comparison.position.left" },
 });

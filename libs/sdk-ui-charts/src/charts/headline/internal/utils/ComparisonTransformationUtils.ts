@@ -10,7 +10,7 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
+import { CalculateAs, ComparisonPositionValues, IComparison } from "../../../../interfaces/index.js";
 import { EvaluationType, IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
@@ -48,7 +48,7 @@ export function getComparisonBaseHeadlineData(
     );
 
     const comparisonEvaluationType = getComparisonEvaluationType(executionData);
-    const tertiaryItem = createComparisonItem(
+    const comparisonItem = createComparisonItem(
         tertiaryItemData,
         dv.meta().isDerivedMeasure(secondaryItemHeader),
         comparisonEvaluationType,
@@ -57,11 +57,39 @@ export function getComparisonBaseHeadlineData(
         intl,
     );
 
-    return {
+    const baseHeadlineData: IBaseHeadlineData = {
         primaryItem,
         secondaryItem,
-        tertiaryItem,
+        tertiaryItem: comparisonItem,
     };
+
+    return positionBaseHeadlineItems(baseHeadlineData, comparison);
+}
+
+function positionBaseHeadlineItems(
+    baseHeadlineData: IBaseHeadlineData,
+    comparison: IComparison,
+): IBaseHeadlineData {
+    switch (comparison?.position) {
+        case ComparisonPositionValues.TOP:
+            return {
+                primaryItem: baseHeadlineData.tertiaryItem,
+                secondaryItem: baseHeadlineData.secondaryItem,
+                tertiaryItem: baseHeadlineData.primaryItem,
+            };
+
+        case ComparisonPositionValues.RIGHT:
+            return {
+                primaryItem: baseHeadlineData.primaryItem,
+                secondaryItem: baseHeadlineData.tertiaryItem,
+                tertiaryItem: baseHeadlineData.secondaryItem,
+            };
+
+        case ComparisonPositionValues.LEFT:
+        case ComparisonPositionValues.AUTO:
+        default:
+            return baseHeadlineData;
+    }
 }
 
 function createComparisonItem(

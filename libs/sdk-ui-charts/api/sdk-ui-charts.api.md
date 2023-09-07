@@ -97,6 +97,12 @@ export enum ComparisonColorType {
 // @public
 export type ComparisonFormat = string | null;
 
+// @public
+export type ComparisonPosition = "top" | "left" | "right" | "auto";
+
+// @internal (undocumented)
+export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
+
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
 
@@ -356,6 +362,7 @@ export interface IComparison {
     format?: ComparisonFormat;
     isArrowEnabled?: boolean;
     labelConfig?: ILabelConfig;
+    position?: ComparisonPosition;
 }
 
 // @public

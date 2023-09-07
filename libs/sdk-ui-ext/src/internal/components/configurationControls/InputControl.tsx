@@ -21,6 +21,7 @@ export interface IInputControlProps {
     step?: number;
     disabled?: boolean;
     showDisabledMessage?: boolean;
+    disabledMessageId?: string;
     hasWarning?: boolean;
     pushData?(data: any): void;
     validateAndPushDataCallback?(value: string): void;
@@ -77,11 +78,20 @@ export class InputControl extends React.Component<
     }
 
     public render() {
-        const { disabled, labelText, placeholder, showDisabledMessage, intl, type, maxLength } = this.props;
+        const {
+            disabled,
+            labelText,
+            placeholder,
+            showDisabledMessage,
+            disabledMessageId,
+            intl,
+            type,
+            maxLength,
+        } = this.props;
 
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
-                <label className="adi-bucket-inputfield gd-input gd-input-small">
+            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
+                <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <input
                         ref={(input) => (this.inputRef = input)}

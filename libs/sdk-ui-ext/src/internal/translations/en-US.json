@@ -1628,9 +1628,34 @@
         "comment": "The label of comparison label sub section.",
         "limit": 0
     },
+    "properties.comparison.labelSubSection.positionOnTop.disabled": {
+        "value": "Labels not applicable for value position top.",
+        "comment": "Disable tooltip message when the comparison position is set to top.",
+        "limit": 0
+    },
     "properties.comparison.labelName.title": {
         "value": "Name",
         "comment": "The label of name input control.",
+        "limit": 0
+    },
+    "properties.comparison.position.title": {
+        "value": "Position",
+        "comment": "The label of comparison position control.",
+        "limit": 0
+    },
+    "properties.comparison.position.top": {
+        "value": "Top",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on top.",
+        "limit": 0
+    },
+    "properties.comparison.position.right": {
+        "value": "Right",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on right.",
+        "limit": 0
+    },
+    "properties.comparison.position.left": {
+        "value": "Left",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on left.",
         "limit": 0
     }
 }

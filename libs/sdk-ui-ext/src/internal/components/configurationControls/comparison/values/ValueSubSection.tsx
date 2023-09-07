@@ -6,6 +6,7 @@ import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
 import NumberFormatControl from "./numberFormat/NumberFormatControl.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import ComparisonPositionControl from "./ComparisonPositionControl.js";
 
 interface IValueSubSectionProps {
     sectionDisabled: boolean;
@@ -28,6 +29,11 @@ const ValueSubSection: React.FC<IValueSubSectionProps> = ({
                 disabled={sectionDisabled}
                 defaultFormat={defaultFormat}
                 separators={separators}
+                properties={properties}
+                pushData={pushData}
+            />
+            <ComparisonPositionControl
+                disabled={sectionDisabled}
                 properties={properties}
                 pushData={pushData}
             />
