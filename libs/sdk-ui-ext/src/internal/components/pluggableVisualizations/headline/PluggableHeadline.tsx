@@ -310,7 +310,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
         const hasComparisonProperties = insightProperties(insight).controls?.comparison;
-        if (!hasComparisonProperties) {
+        if (!hasComparisonProperties && this.settings?.enableNewHeadline) {
             const defaultComparisonProperties = this.getDefaultPropertiesForComparison(options, insight);
             this.visualizationProperties = {
                 controls: {
