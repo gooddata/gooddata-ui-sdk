@@ -97,9 +97,15 @@ function sanitizeWorkspaceId(result: object) {
     return result;
 }
 
-export function sanitizeWorkspace(result: object, key: string, newValue: string) {
-    const newResult = sanitizeKeyWithNewValue(result, key, newValue);
-    return sanitizeWorkspaceId(newResult);
+export function sanitizeWorkspace(result: object) {
+    const commonResult = doSanitizeCommon(result);
+    return sanitizeWorkspaceId(commonResult);
+}
+
+export function doSanitizeCommon(result: object) {
+    const newURIResult = sanitizeKeyWithNewValue(result, "uri", "sanitize_uri");
+    const newCreatedResult = sanitizeKeyWithNewValue(newURIResult, "created", "sanitize_created");
+    return newCreatedResult;
 }
 
 export function sortToOrder(json: any) {

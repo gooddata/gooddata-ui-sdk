@@ -14,7 +14,7 @@ beforeAll(async () => {
 describe("tiger catalog", () => {
     it("should read catalog for reference workspace", async () => {
         const result = await backend.workspace(testWorkspace()).catalog().load();
-        const sanitizedResult = sanitizeWorkspace(result, "uri", "sanitize_uri");
+        const sanitizedResult = sanitizeWorkspace(result);
         expect(sortToOrder(sanitizedResult)).toMatchSnapshot();
     });
 
@@ -39,7 +39,7 @@ describe("tiger catalog", () => {
             })
             .load();
 
-        const sanitizedResult = sanitizeWorkspace(result, "uri", "sanitize_uri");
+        const sanitizedResult = sanitizeWorkspace(result);
         expect(sortToOrder(sanitizedResult)).toMatchSnapshot();
     });
 
@@ -68,7 +68,7 @@ describe("tiger catalog", () => {
             ])
             .load();
 
-        const sanitizedResult = sanitizeWorkspace(availability, "uri", "sanitize_uri");
+        const sanitizedResult = sanitizeWorkspace(availability);
         expect(sortToOrder(sanitizedResult)).toMatchSnapshot();
     });
 });
