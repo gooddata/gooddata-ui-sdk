@@ -6,7 +6,12 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import { IBaseHeadlineItem, EvaluationType } from "../interfaces/BaseHeadlines.js";
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
-import { CalculateAs, IColorConfig, IComparison } from "../../../../interfaces/index.js";
+import {
+    CalculateAs,
+    ComparisonPositionValues,
+    IColorConfig,
+    IComparison,
+} from "../../../../interfaces/index.js";
 import { ComparisonColorType } from "../../headlineHelper.js";
 
 export const createComparison = (customConfig: Omit<IComparison, "enabled"> = {}) => {
@@ -297,7 +302,6 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
             },
         }),
     ],
-
     [
         "comparison with drilling on 2 measures",
         ReferenceRecordings.Scenarios.Headline.ComparisonWithDefaultConfig,
@@ -306,6 +310,24 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
             HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Won)!),
             HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Amount)!),
         ],
+    ],
+    [
+        "comparison with position on top",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnTop,
+        createComparison({
+            format: "$#,##0.00",
+            isArrowEnabled: true,
+            position: ComparisonPositionValues.TOP,
+        }),
+    ],
+    [
+        "comparison with position on right",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnRight,
+        createComparison({
+            format: "$#,##0.00",
+            isArrowEnabled: true,
+            position: ComparisonPositionValues.RIGHT,
+        }),
     ],
 ];
 
