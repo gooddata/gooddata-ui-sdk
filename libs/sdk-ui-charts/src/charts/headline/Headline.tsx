@@ -40,7 +40,7 @@ export interface IHeadlineBucketProps {
     secondaryMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Specify secondary measures whose values will be shown for comparison with the primary measure.
+     * Specify secondary measures whose values will be shown as the compare values.
      */
     secondaryMeasures?: MeasureOrPlaceholder[];
 

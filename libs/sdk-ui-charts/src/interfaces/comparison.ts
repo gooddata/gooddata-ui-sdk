@@ -3,10 +3,17 @@
 import { IColor } from "@gooddata/sdk-model";
 
 /**
- * Algorithm
- *  change: (Primary - Secondary) / Secondary
- *  difference: Primary - Secondary
- *  ratio: Primary / Secondary
+ * Defines the calculation types for an algorithm.
+ *
+ * @remarks
+ * The table below summarizes the available calculation types:
+ *
+ * <table>
+ *     <tr><th width="150">Type</th><th width="350">Algorithm</th></tr>
+ *     <tr><td>change</td><td>(Primary - Secondary) / Secondary</td></tr>
+ *     <tr><td>difference</td><td>Primary - Secondary</td></tr>
+ *     <tr><td>ratio</td><td>Primary / Secondary</td></tr>
+ * </table>
  *
  * @public
  */
@@ -22,7 +29,7 @@ export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = 
 };
 
 /**
- * comparison format type
+ * Comparison format type
  *
  * @remarks
  * Providing a null value will configure the format to inherit from the format of primary measure.
@@ -32,39 +39,37 @@ export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = 
 export type ComparisonFormat = string | null;
 
 /**
+ * Configuration options for color settings.
+ *
  * @public
  */
 export interface IColorConfig {
     /**
-     * Disable comparison color
-     * <br/>
+     * Determines whether to disable the comparison color.
      *
      * @defaultValue false
      */
     disabled?: boolean;
 
     /**
-     * Specify the color from colorPalette or provide custom color as RGB code
-     * <br/>
-     * Primary &gt; Secondary
+     * Specifies the color to use, which can be selected from the color palette or provided as an RGB code.
+     * This color is used when the primary measure greater than the secondary measure.
      *
      * @defaultValue rgb(0, 193, 141)
      */
     positive?: IColor;
 
     /**
-     * Specify the color from colorPalette or provide custom color as RGB code
-     * <br/>
-     * Primary &lt; Secondary
+     * Specifies the color to use, which can be selected from the color palette or provided as an RGB code.
+     * This color is used when the primary measure less than the secondary measure.
      *
      * @defaultValue rgb(229, 77, 64)
      */
     negative?: IColor;
 
     /**
-     * Specify the color from colorPalette or provide custom color as RGB code
-     * <br/>
-     * Primary = Secondary
+     * Specifies the color to use, which can be selected from the color palette or provided as an RGB code.
+     * This color is used when the primary measure equal to the secondary measure.
      *
      * @defaultValue rgb(148, 161, 173)
      */
@@ -72,84 +77,100 @@ export interface IColorConfig {
 }
 
 /**
+ * Configuration options for labeling conditions.
+ *
  * @public
  */
 export interface ILabelConfig {
     /**
-     * This property specify the label for all conditions in cases flag isConditional is on
+     * Specifies the label to be used for the comparison value.
+     *
+     * @remarks
+     * The default value is based on the calculation type:
+     * <table>
+     *     <tr><th width="150">Calculation Type</th><th width="350">Default value</th></tr>
+     *     <tr><td>change</td><td>Change</td></tr>
+     *     <tr><td>ratio</td><td>of</td></tr>
+     *     <tr><td>difference</td><td>Difference</td></tr>
+     * </table>
      */
     unconditionalValue?: string;
 }
 
 /**
+ * Configuration options for comparing values.
+ *
  * @public
  */
 export interface IComparison {
     /**
-     * enable/disable comparison
-     * <br/>
+     * Enables or disables the comparison.
      *
      * @defaultValue true
      */
     enabled: boolean;
 
     /**
-     * This property defines how the comparison value will be calculated.
-     * <br/>
+     * Defines how the comparison value will be calculated.
      *
-     * See {@link CalculationType} to understand the calculation method
+     * @remarks
+     * The default value is determined by the type of secondary measure:
+     * <table>
+     *     <tr><th width="250">Type of secondary measure</th><th width="250">Default value</th></tr>
+     *     <tr><td>Derived measure</td><td>change</td></tr>
+     *     <tr><td>Non-derived measure</td><td>ratio</td></tr>
+     * </table>
+     *
+     * @see {@link CalculationType} for available calculation methods.
+     *
+     * @defaultValue Based on the secondary measure.
      */
     calculationType?: CalculationType;
 
     /**
-     * This property Defines number format of the comparison value
+     * Defines the number format of the comparison value.
      *
-     * See {@link ComparisonFormat} to knows the supported format
+     * @remarks
+     * The default value is based on the calculation type:
+     * <table>
+     *     <tr><th width="150">Calculation Type</th><th width="350">Default format</th></tr>
+     *     <tr><td>change</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>ratio</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>difference</td><td>Inherit</td></tr>
+     * </table>
      *
-     * @defaultValue based on calculation type
+     * @see {@link ComparisonFormat} for supported formats.
+     *
+     * @defaultValue Based on the calculation type.
      */
     format?: ComparisonFormat;
 
     /**
-     * This property controls Indicator/Arrow visibility of arrow trend indicator
+     * Controls the visibility of the arrow trend indicator and its direction based on conditions.
      *
-     * <table border="1">
-     *     <tr><td width="60%">Condition</td><td>Direction</td></tr>
-     *     <tr><td>Primary &gt; Secondary</td><td>Up</td></tr>
-     *     <tr><td>Primary &lt; Secondary</td><td>Down</td></tr>
-     *     <tr><td>Primary = Secondary</td><td>No direction, arrow is hidden</td></tr>
+     * @remarks
+     * The arrow direction is determined as follows:
+     *
+     * <table>
+     *     <tr><th width="300">Condition</th><th width="200">Direction</th></tr>
+     *     <tr><td>Primary greater than Secondary</td><td>Up</td></tr>
+     *     <tr><td>Primary less than Secondary</td><td>Down</td></tr>
+     *     <tr><td>Primary equal to Secondary</td><td>No direction, arrow hidden</td></tr>
      * </table>
      */
     isArrowEnabled?: boolean;
 
     /**
-     * This property controls plus and minus sign before the number
+     * Controls the application of conditional colors.
      *
-     * <table border="1">
-     *     <tr><td width="60%">Condition</td><td>Sign</td></tr>
-     *     <tr><td>Primary &gt; Secondary</td><td>+</td></tr>
-     *     <tr><td>Primary &lt; Secondary</td><td>-</td></tr>
-     *     <tr><td>Primary = Secondary</td><td>Sign is hidden</td></tr>
-     * </table>
-     */
-    isSignEnabled?: boolean;
-
-    /**
-     * This property controls application of conditional colors
-     * <br/>
-     *
-     * See {@link IColorConfig} to understand config details
-     *
-     * @remarks
-     * Note: this property has priority over colors defined within number format
+     * @see {@link IColorConfig} for configuration details.
      */
     colorConfig?: IColorConfig;
 
     /**
-     * This property controls string under the comparison value
-     * <br/>
+     * Controls the label displayed beneath the comparison value.
      *
-     * See {@link ILabelConfig} to understand config details
+     * @see {@link ILabelConfig} for configuration details.
      */
     labelConfig?: ILabelConfig;
 }

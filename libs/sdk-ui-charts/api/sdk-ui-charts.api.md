@@ -302,7 +302,7 @@ export interface IChartLimits {
     series?: number;
 }
 
-// @public (undocumented)
+// @public
 export interface IColorConfig {
     disabled?: boolean;
     equals?: IColor;
@@ -348,14 +348,13 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     width?: number;
 }
 
-// @public (undocumented)
+// @public
 export interface IComparison {
     calculationType?: CalculationType;
     colorConfig?: IColorConfig;
     enabled: boolean;
     format?: ComparisonFormat;
     isArrowEnabled?: boolean;
-    isSignEnabled?: boolean;
     labelConfig?: ILabelConfig;
 }
 
@@ -504,7 +503,7 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 }
 
-// @public (undocumented)
+// @public
 export interface ILabelConfig {
     unconditionalValue?: string;
 }
