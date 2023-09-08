@@ -24,7 +24,8 @@ const RATIO_EXAMPLE_CONTENT_TEXT_QUERY = "Sales this year compared to a quota = 
 const DIFFERENCE_USE_IN_CONTENT_TEXT_QUERY =
     "To calculate absolute difference between primary and secondary measures values.";
 const DIFFERENCE_FORMULA_CONTENT_TEXT_QUERY = "Primary - Secondary";
-const DIFFERENCE_EXAMPLE_CONTENT_TEXT_QUERY = "...";
+const DIFFERENCE_EXAMPLE_CONTENT_TEXT_QUERY =
+    "Sales difference compared to last year = This year sales - Last year sales";
 
 describe("CalculationListItemInfoSection", () => {
     const renderCalculationListItemInfoSection = (props: {
