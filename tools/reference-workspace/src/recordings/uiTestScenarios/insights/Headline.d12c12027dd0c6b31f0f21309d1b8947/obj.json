@@ -30,14 +30,24 @@
                     }
                 ],
                 "localIdentifier": "secondary_measures"
-            }
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
         ],
         "filters": [],
-        "identifier": "Headline.5f4222f180bcdbb5f90342ffef32bfb3",
-        "properties": { "controls": { "comparison": { "enabled": false } } },
+        "identifier": "Headline.d12c12027dd0c6b31f0f21309d1b8947",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "enabled": true,
+                    "format": "$#,##0.00",
+                    "isArrowEnabled": true,
+                    "position": "top"
+                }
+            }
+        },
         "sorts": [],
-        "title": "Headline - multi measures with two measures",
-        "uri": "Headline.5f4222f180bcdbb5f90342ffef32bfb3",
+        "title": "Headline - comparison with position on top",
+        "uri": "Headline.d12c12027dd0c6b31f0f21309d1b8947",
         "visualizationUrl": "local:headline"
     }
 }
