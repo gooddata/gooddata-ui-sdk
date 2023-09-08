@@ -1459,7 +1459,7 @@
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.example": {
-        "value": "...",
+        "value": "Sales difference compared to last year = This year sales - Last year sales",
         "comment": "The example illustrating the difference calculation.",
         "limit": 0
     },
