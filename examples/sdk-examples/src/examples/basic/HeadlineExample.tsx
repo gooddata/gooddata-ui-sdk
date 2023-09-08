@@ -130,6 +130,21 @@ export const HeadlineExample: React.FC = () => {
                         onError={onError}
                     />
                 </div>
+                <div className="headline-column">
+                    <span>Positive comparison with top position</span>
+                    <Headline
+                        primaryMeasure={FranchiseFees}
+                        secondaryMeasures={[FranchiseFeesAdRoyalty]}
+                        config={{
+                            comparison: {
+                                ...comparisonConfig,
+                                position: "top",
+                            },
+                        }}
+                        onLoadingChanged={onLoadingChanged}
+                        onError={onError}
+                    />
+                </div>
             </div>
         </div>
     );
