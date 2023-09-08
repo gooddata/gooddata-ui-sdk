@@ -2,6 +2,33 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.1.0",
+      "tag": "@gooddata/sdk-ui-all_v9.1.0",
+      "date": "Fri, 08 Sep 2023 07:19:23 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Added support for pivot tables, allowing you to transpose column headers to rows for more flexible data analysis."
+          },
+          {
+            "comment": "The pivot table allows metrics to be placed in rows instead of columns."
+          },
+          {
+            "comment": "Optimized attribute filter to fetch element counts only for child filters, reducing overhead and improving performance by not fetching the total count of elements by default."
+          },
+          {
+            "comment": "Sdk-backend-tiger now supports the following entity properties: createdAt, createdBy, modifiedAt, modifedBy for the following analytical objects: insight, analytical dashboard, dashboard plugin, metric."
+          },
+          {
+            "comment": "Sdk-backend-tiger now supports JWT authentication."
+          },
+          {
+            "comment": "Added support for Waterfall chart visualizations."
+          }
+        ]
+      }
+    },
+    {
       "version": "9.0.1",
       "tag": "@gooddata/sdk-ui-all_v9.0.1",
       "date": "Thu, 17 Aug 2023 13:20:29 GMT",

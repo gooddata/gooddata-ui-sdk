@@ -1,6 +1,18 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 17 Aug 2023 13:20:29 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Sep 2023 07:19:23 GMT and should not be manually modified.
+
+## 9.1.0
+Fri, 08 Sep 2023 07:19:23 GMT
+
+### Updates
+
+- Added support for pivot tables, allowing you to transpose column headers to rows for more flexible data analysis.
+- The pivot table allows metrics to be placed in rows instead of columns.
+- Optimized attribute filter to fetch element counts only for child filters, reducing overhead and improving performance by not fetching the total count of elements by default.
+- Sdk-backend-tiger now supports the following entity properties: createdAt, createdBy, modifiedAt, modifedBy for the following analytical objects: insight, analytical dashboard, dashboard plugin, metric.
+- Sdk-backend-tiger now supports JWT authentication.
+- Added support for Waterfall chart visualizations.
 
 ## 9.0.1
 Thu, 17 Aug 2023 13:20:29 GMT
