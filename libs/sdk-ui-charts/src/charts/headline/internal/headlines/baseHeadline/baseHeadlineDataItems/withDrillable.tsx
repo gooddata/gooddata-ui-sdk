@@ -4,8 +4,9 @@ import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 import { IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
+import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 
-export const withDrillable = <T extends IWithDrillableItemProps>(
+export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
     BaseHeadlineValueItem: React.ComponentType<T>,
 ): React.ComponentType<T> => {
     const WithDrillable: React.FC<T> = (props) => {
@@ -22,7 +23,10 @@ export const withDrillable = <T extends IWithDrillableItemProps>(
         );
 
         return dataItem?.isDrillable ? (
-            <div className="headline-item-link s-headline-item-link" onClick={handleDrillable}>
+            <div
+                className="is-drillable s-is-drillable headline-item-link s-headline-item-link"
+                onClick={handleDrillable}
+            >
                 <BaseHeadlineValueItem {...props} />
             </div>
         ) : (

@@ -4,10 +4,10 @@ import React from "react";
 import PrimarySectionContent from "./PrimarySectionContent.js";
 import PrimarySectionCompactContent from "./PrimarySectionCompactContent.js";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
-import { IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionProps {
-    primaryItem: IBaseHeadlineItem;
+    primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
     isOnlyPrimaryItem: boolean;
 }
 
