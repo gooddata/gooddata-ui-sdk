@@ -1,5 +1,6 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
@@ -7,10 +8,10 @@ import { withDrillable } from "./withDrillable.js";
 import { withTitle } from "./withTitle.js";
 import { IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
-import cx from "classnames";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
+import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 
-const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps> = ({ dataItem }) => {
+const BaseHeadlineDataItem: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({ dataItem }) => {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 

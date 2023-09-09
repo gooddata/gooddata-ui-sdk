@@ -2,12 +2,12 @@
 import React, { ComponentType } from "react";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
-import { IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";
+import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";
 
-export const withTitle = <T,>(
+export const withTitle = <T, H extends IBaseHeadlineTitle>(
     BaseHeadlineDataItem: ComponentType<T>,
-): React.ComponentType<T & IWithTitleProps> => {
-    const WithTitle: React.FC<T & IWithTitleProps> = (props) => {
+): React.ComponentType<T & IWithTitleProps<H>> => {
+    const WithTitle: React.FC<T & IWithTitleProps<H>> = (props) => {
         const { shouldHideTitle, titleRef, dataItem } = props;
         return (
             <>

@@ -15,12 +15,13 @@ import {
 } from "../../../../tests/TestData.fixtures.js";
 import { IColorConfig } from "../../../../../../../interfaces/index.js";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 
 const INDICATOR_UP_CLASSNAME = "s-indicator-up";
 const INDICATOR_DOWN_CLASSNAME = "s-indicator-down";
 
 describe("ComparisonDataItem", () => {
-    const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps) => {
+    const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
         return render(<ComparisonDataItem {...props} />);
     };
 

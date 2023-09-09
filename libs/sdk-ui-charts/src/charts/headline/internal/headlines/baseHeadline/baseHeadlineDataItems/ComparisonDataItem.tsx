@@ -4,13 +4,20 @@ import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
-import { IBaseHeadlineDataItemProps, EvaluationType } from "../../../interfaces/BaseHeadlines.js";
+import {
+    IBaseHeadlineDataItemProps,
+    EvaluationType,
+    IComparisonDataItem,
+} from "../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
 import { withTitle } from "./withTitle.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { getComparisonColor } from "../../../utils/ComparisonDataItemUtils.js";
 
-const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps> = ({ dataItem, evaluationType }) => {
+const ComparisonDataItem: React.FC<IBaseHeadlineDataItemProps<IComparisonDataItem>> = ({
+    dataItem,
+    evaluationType,
+}) => {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 

@@ -19,12 +19,16 @@ import {
     IComparison,
     ILabelConfig,
 } from "../../../../interfaces/index.js";
-import { EvaluationType, IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
+import {
+    EvaluationType,
+    IBaseHeadlineData,
+    IBaseHeadlineItem,
+    IComparisonDataItem,
+} from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
-import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 import { getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
-import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/ComparisonDataItem.js";
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
+import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/ComparisonDataItem.js";
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,
@@ -100,7 +104,7 @@ function createComparisonItem(
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
-): IBaseHeadlineItem {
+): IBaseHeadlineItem<IComparisonDataItem> {
     const data = createComparisonDataItem(
         executionData,
         isSecondaryDerivedMeasure,
@@ -142,12 +146,8 @@ function createComparisonDataItem(
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
-): IHeadlineDataItem {
+): IComparisonDataItem {
     const { calculationType, format, labelConfig } = comparison;
-    const [, , tertiaryItemData] = executionData;
-
-    const { measureHeaderItem } = tertiaryItemData;
-    const { localIdentifier } = measureHeaderItem;
 
     const defaultCalculationType = isSecondaryDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
     const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(
@@ -158,7 +158,6 @@ function createComparisonDataItem(
         title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
         value: getComparisonValue(executionData),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
-        localIdentifier,
     };
 }
 
