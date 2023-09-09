@@ -12,9 +12,10 @@ import {
     TEST_DATA_ITEM,
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
+import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 
 describe("BaseHeadlineDataItem", () => {
-    const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps) => {
+    const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {
         return render(<BaseHeadlineDataItem {...props} />);
     };
 

@@ -9,6 +9,7 @@ import { ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter"
 
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../interfaces/Headlines.js";
+import { IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
@@ -57,8 +58,8 @@ function isShortenedLabel(titleRef: RefObject<HTMLDivElement>): boolean {
  * The method processes the provided item and returns object with value that can be rendered as it is and 'cssStyle'
  * object that can be passed into the react element 'style' attribute.
  */
-export function formatItemValue(
-    item: IHeadlineDataItem,
+export function formatItemValue<T extends IBaseHeadlineValueItem>(
+    item: T,
     config: IChartConfig = {},
 ): IFormattedHeadlineDataItem {
     const { separators } = config;
