@@ -21,6 +21,7 @@ import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.
 import { RenderModeState } from "./renderMode/renderModeState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
+import { IPredictionState } from "./prediction/predictionState.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { IPredictionState } from "./prediction/predictionState.js";
 

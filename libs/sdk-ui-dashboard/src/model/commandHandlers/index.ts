@@ -72,6 +72,7 @@ import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNe
 import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler.js";
 import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler.js";
 import { changeInsightWidgetInsightHandler } from "./widgets/changeInsightWidgetInsightHandler.js";
+import { predictionHandler } from "./prediction/predictionHandler.js";
 import { setDashboardDateFilterConfigModeHandler } from "./dashboard/dateFilterConfigHandler.js";
 import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFilterModeHandler.js";
 import { removeDrillDownForInsightWidgetHandler } from "./widgets/removeDrillDownForInsightWidgetHandler.js";
