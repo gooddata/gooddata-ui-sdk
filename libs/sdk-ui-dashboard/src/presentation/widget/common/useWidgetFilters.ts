@@ -11,11 +11,7 @@ import {
     attributeElementsIsEmpty,
 } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact.js";
-import first from "lodash/first.js";
-import flow from "lodash/flow.js";
 import isEqual from "lodash/isEqual.js";
-import sortBy from "lodash/fp/sortBy.js";
 
 import {
     ExtendedDashboardWidget,
@@ -61,11 +57,11 @@ export function useWidgetFilters(
         result: nonIgnoredFilters,
     } = useNonIgnoredFilters(widget);
 
-    const {
-        run: runFiltersQuery,
-        status,
-        error,
-    } = useDashboardQueryProcessing<QueryWidgetFilters, IFilter[], Parameters<typeof queryWidgetFilters>>({
+    const { run: runFiltersQuery, error } = useDashboardQueryProcessing<
+        QueryWidgetFilters,
+        IFilter[],
+        Parameters<typeof queryWidgetFilters>
+    >({
         queryCreator: queryWidgetFilters,
         onSuccess: (filters) => {
             setEffectiveFiltersState({
@@ -115,7 +111,6 @@ export function useWidgetFilters(
         status: combineQueryProcessingStatuses(
             nonIgnoredFiltersStatus,
             effectiveFiltersState.filterQueryStatus,
-            status,
         ),
         error: nonIgnoredFiltersError ?? error,
     } as QueryProcessingState<IFilter[]>;
@@ -131,7 +126,14 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const widgetIgnoresDateFilter = !widget?.dateDataSet;
 
-    const [nonIgnoredFilterRefs, setNonIgnoredFilterRefs] = useState<ObjRef[]>([]);
+    // usage of state object for filters and status makes changes more atomic and in sync
+    const [nonIgnoredFilterState, setNonIgnoredFilterState] = useState<{
+        nonIgnoredFilterRefs: ObjRef[];
+        nonIgnoredFilterStatus: QueryProcessingStatus;
+    }>({
+        nonIgnoredFilterRefs: [],
+        nonIgnoredFilterStatus: "pending",
+    });
 
     /**
      * This handles cases where:
@@ -140,16 +142,41 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
      *
      * Those are the only ways how the set of non-ignored filters can change.
      */
-    const { run, status, error } = useDashboardQueryProcessing({
+    const { run, error } = useDashboardQueryProcessing({
         queryCreator: queryWidgetFilters,
         onSuccess: (result) => {
-            setNonIgnoredFilterRefs((prevValue) => {
-                // only set state if the values really changed
-                // this prevents the full query from running unnecessarily
-                if (!isEqual(prevValue, result)) {
-                    return (result as IFilter[]).map(filterObjRef) as ObjRef[];
-                }
-                return prevValue;
+            setNonIgnoredFilterState((prevValue) => {
+                const getNewRefs = () => {
+                    // only set state if the values really changed
+                    // this prevents the full query from running unnecessarily
+                    if (!isEqual(prevValue.nonIgnoredFilterRefs, result)) {
+                        return (result as IFilter[]).map(filterObjRef) as ObjRef[];
+                    }
+                    return prevValue.nonIgnoredFilterRefs;
+                };
+                const newRefs = getNewRefs();
+                return {
+                    nonIgnoredFilterStatus: "success",
+                    nonIgnoredFilterRefs: newRefs,
+                };
+            });
+        },
+        onBeforeRun: () => {
+            setNonIgnoredFilterState({
+                nonIgnoredFilterRefs: [],
+                nonIgnoredFilterStatus: "running",
+            });
+        },
+        onRejected: () => {
+            setNonIgnoredFilterState({
+                nonIgnoredFilterRefs: [],
+                nonIgnoredFilterStatus: "rejected",
+            });
+        },
+        onError: () => {
+            setNonIgnoredFilterState({
+                nonIgnoredFilterRefs: [],
+                nonIgnoredFilterStatus: "error",
             });
         },
     });
@@ -169,40 +196,37 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
         () =>
             dashboardFilters.filter((filter) => {
                 if (isDashboardAttributeFilter(filter)) {
-                    return nonIgnoredFilterRefs.some((validRef) =>
+                    return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
                         areObjRefsEqual(validRef, filter.attributeFilter.displayForm),
                     );
                 } else {
                     return !widgetIgnoresDateFilter;
                 }
             }),
-        [dashboardFilters, nonIgnoredFilterRefs, widgetIgnoresDateFilter],
+        [dashboardFilters, nonIgnoredFilterState.nonIgnoredFilterRefs, widgetIgnoresDateFilter],
     );
 
     return {
         error,
-        status,
+        status: nonIgnoredFilterState.nonIgnoredFilterStatus,
         result: nonIgnoredFilters,
     };
 }
 
-// the lower the number, the more priority the status has
-const statusPriorities: { [S in QueryProcessingStatus]: number } = {
-    error: 0,
-    rejected: 1,
-    running: 2,
-    success: 3,
-    pending: 4,
-};
-
-function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): QueryProcessingStatus {
-    return (
-        flow(
-            compact,
-            sortBy<QueryProcessingStatus>((status) => statusPriorities[status]),
-            first,
-        )(statuses) ?? "pending"
-    );
+/**
+ * Prioritize statuses of two following queries into single one
+ * @param firstStatus - first query status
+ * @param secondStatus  - second query status
+ * @returns status of whole queue
+ */
+function combineQueryProcessingStatuses(
+    firstStatus: QueryProcessingStatus,
+    secondStatus: QueryProcessingStatus,
+): QueryProcessingStatus {
+    if (firstStatus === "error" || firstStatus === "rejected" || firstStatus === "running") {
+        return firstStatus;
+    }
+    return secondStatus;
 }
 
 /**
