@@ -77,7 +77,7 @@ done
 
 if [ "$keep_master" != "keep_master" ] ; then
     echo "master docs will not be published, removing"
-    rm -rf "${content_dir}/docs"
+    rm -rf "${content_dir}/latest"
   ## Moving the highest version to latest
   highest_version=$(ls -vr1 ./versioned_docs/ | grep -E '^[0-9]+.[0-9]+$' | head -n 1)
   if [ "$highest_version" != "" ];then
