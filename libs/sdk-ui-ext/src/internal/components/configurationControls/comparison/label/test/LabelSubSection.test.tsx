@@ -1,7 +1,9 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
@@ -13,6 +15,7 @@ import { IVisualizationProperties } from "../../../../../interfaces/Visualizatio
 
 const TITLE_TEXT_QUERY = "Label";
 const DEFAULT_LABEL_KEY = "visualizations.headline.comparison.title.ratio";
+const DISABLED_POSITION_ON_TOP_KEY = "properties.comparison.labelSubSection.positionOnTop.disabled";
 
 describe("LabelSubSection", () => {
     const mockPushData = vi.fn();
@@ -30,6 +33,7 @@ describe("LabelSubSection", () => {
 
     const renderValueSubSection = (
         params: {
+            sectionDisabled?: boolean;
             properties?: IVisualizationProperties<IComparisonControlProperties>;
         } = {},
     ) => {
@@ -86,5 +90,50 @@ describe("LabelSubSection", () => {
         });
 
         expect(container.querySelector(".gd-input-field").getAttribute("value")).toEqual("test");
+    });
+
+    it("Should disabled label input when position on top", () => {
+        const MockInputControl = vi.spyOn(InputControl, "default");
+        const properties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                position: ComparisonPositionValues.TOP,
+            },
+        });
+        renderValueSubSection({
+            sectionDisabled: false,
+            properties,
+        });
+
+        expect(MockInputControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                disabled: true,
+                showDisabledMessage: true,
+                disabledMessageId: DISABLED_POSITION_ON_TOP_KEY,
+            }),
+            expect.anything(),
+        );
+    });
+
+    it("Should not show disabled message in case position is not on top", () => {
+        const MockInputControl = vi.spyOn(InputControl, "default");
+        const properties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                position: ComparisonPositionValues.RIGHT,
+            },
+        });
+        renderValueSubSection({
+            sectionDisabled: true,
+            properties,
+        });
+
+        expect(MockInputControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                disabled: true,
+                showDisabledMessage: false,
+            }),
+            expect.anything(),
+        );
     });
 });

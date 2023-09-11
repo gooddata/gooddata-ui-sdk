@@ -31385,6 +31385,50 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for Headline - comparison with position on right 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Headline - comparison with position on top 1`] = `
+"import React from \\"react\\";
+import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Headline } from \\"@gooddata/sdk-ui-charts\\";
+
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Headline
+                primaryMeasure={primaryMeasure}
+                secondaryMeasure={secondaryMeasure}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for Headline - comparison with positive arrow 1`] = `
 "import React from \\"react\\";
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";

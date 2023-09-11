@@ -31,7 +31,7 @@ const createHeadlineProvider = (
 
     const headlineType = getHeadlineType(buckets, config);
     if (headlineType === HeadlineType.COMPARISON) {
-        return new ComparisonProvider(config.comparison);
+        return new ComparisonProvider(config?.comparison);
     }
 
     return new MultiMeasuresProvider();

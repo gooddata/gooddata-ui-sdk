@@ -2712,6 +2712,11 @@
         "scenarioName": "comparison with decimal-1 format",
         "visName": "Headline"
     },
+    "Headline.8d42114ef836bf623dc40b51a45dab6e": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with position on right.",
+        "scenarioName": "comparison with position on right",
+        "visName": "Headline"
+    },
     "Headline.8de0c6fec8eff0092724e85a0ff49cce": {
         "comment": "Auto-generated insight for test scenario Headline - comparison with positive arrow.",
         "scenarioName": "comparison with positive arrow",
@@ -2735,6 +2740,11 @@
     "Headline.c73ecf1483cf081dfceb7661de46ef40": {
         "comment": "Auto-generated insight for test scenario Headline - two measures with german separators.",
         "scenarioName": "two measures with german separators",
+        "visName": "Headline"
+    },
+    "Headline.d12c12027dd0c6b31f0f21309d1b8947": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with position on top.",
+        "scenarioName": "comparison with position on top",
         "visName": "Headline"
     },
     "Headline.d2169e777f119e456a82b116cc17693c": {

@@ -407,6 +407,80 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
 }
 `;
 
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with position on right' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
+      "title": "of",
+      "value": "0.328493920509201",
+    },
+    "evaluationType": "positive",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with position on top' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
+      "title": "of",
+      "value": "0.328493920509201",
+    },
+    "evaluationType": "positive",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+}
+`;
+
 exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with positive arrow and color' correctly 1`] = `
 {
   "primaryItem": {

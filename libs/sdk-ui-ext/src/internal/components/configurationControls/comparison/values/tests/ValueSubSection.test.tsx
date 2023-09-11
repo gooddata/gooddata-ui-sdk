@@ -12,6 +12,7 @@ import {
 } from "../../../../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
+import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
 
 const TITLE_TEXT_QUERY = "Value";
 
@@ -61,6 +62,20 @@ describe("ValueSubSection", () => {
             expect.objectContaining({
                 ...expected,
                 disabled: sectionDisabled,
+            }),
+            expect.anything(),
+        );
+    });
+
+    it("Should render comparison position control", () => {
+        const MockComparisonPositionControl = vi.spyOn(ComparisonPositionControl, "default");
+        renderValueSubSection();
+
+        expect(MockComparisonPositionControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                disabled: DEFAULT_PROPS.sectionDisabled,
+                properties: DEFAULT_PROPS.properties,
+                pushData: DEFAULT_PROPS.pushData,
             }),
             expect.anything(),
         );

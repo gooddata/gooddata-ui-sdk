@@ -3244,6 +3244,48 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on right 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on top 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow 1`] = `
 {
   "seriesDigest": {

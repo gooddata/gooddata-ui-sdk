@@ -34,7 +34,7 @@
         ],
         "filters": [],
         "identifier": "Headline.ec44537832680c571aee801b49a8d829",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "comparison": { "enabled": false } } },
         "sorts": [],
         "title": "Headline - multi measures with two measures with german separators",
         "uri": "Headline.ec44537832680c571aee801b49a8d829",

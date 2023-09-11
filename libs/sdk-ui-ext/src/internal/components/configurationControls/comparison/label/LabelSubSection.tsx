@@ -10,6 +10,7 @@ import { IVisualizationProperties } from "../../../../interfaces/Visualization.j
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import InputControl from "../../InputControl.js";
 import { COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH } from "../ComparisonValuePath.js";
+import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 export interface ILabelSubSectionProps {
     sectionDisabled: boolean;
@@ -26,6 +27,10 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
 }) => {
     const { formatMessage } = useIntl();
 
+    const isPositionOnTop = properties?.controls?.comparison?.position === ComparisonPositionValues.TOP;
+    const disabled = sectionDisabled || isPositionOnTop;
+    const showDisabledMessage = !sectionDisabled && isPositionOnTop;
+
     const defaultValue =
         properties?.controls?.comparison?.labelConfig?.unconditionalValue ||
         formatMessage({ id: defaultLabelKey });
@@ -37,7 +42,9 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
                 valuePath={COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH}
                 properties={properties}
                 labelText={comparisonMessages.labelNameTitle.id}
-                disabled={sectionDisabled}
+                disabled={disabled}
+                showDisabledMessage={showDisabledMessage}
+                disabledMessageId={comparisonMessages.labelPositionOnTopDisabled.id}
                 placeholder={defaultLabelKey}
                 pushData={pushData}
                 value={defaultValue}

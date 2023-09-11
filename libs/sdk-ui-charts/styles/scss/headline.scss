@@ -14,6 +14,14 @@
         &.gd-flex-container {
             justify-content: center;
         }
+
+        .comparison-headline-value-wrapper .comparison-headline-value {
+            align-items: baseline;
+
+            &::before {
+                font-size: 60%;
+            }
+        }
     }
 
     .headline-primary-item {
@@ -200,7 +208,7 @@
 
     .comparison-headline-value-wrapper {
         .comparison-headline-value {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
             gap: 5px;

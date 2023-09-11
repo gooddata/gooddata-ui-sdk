@@ -1062,6 +1062,24 @@ exports[`createDataAccessDigest > should find slices and series for: Headline - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with position on right 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with position on top 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with positive arrow 1`] = `
 {
   "seriesCount": 3,

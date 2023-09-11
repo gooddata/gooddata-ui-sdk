@@ -1,6 +1,13 @@
 // (C) 2023 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { Headline, IHeadlineProps, CalculateAs, IColorConfig, IComparison } from "@gooddata/sdk-ui-charts";
+import {
+    Headline,
+    IHeadlineProps,
+    CalculateAs,
+    ComparisonPositionValues,
+    IColorConfig,
+    IComparison,
+} from "@gooddata/sdk-ui-charts";
 import { IColorPalette, modifyMeasure } from "@gooddata/sdk-model";
 
 import { scenariosFor } from "../../../src/index.js";
@@ -207,6 +214,28 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
                 labelConfig: {
                     unconditionalValue: "Custom label",
                 },
+            },
+        },
+    })
+    .addScenario("comparison with position on top", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                format: "$#,##0.00",
+                isArrowEnabled: true,
+                position: ComparisonPositionValues.TOP,
+            },
+        },
+    })
+    .addScenario("comparison with position on right", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                format: "$#,##0.00",
+                isArrowEnabled: true,
+                position: ComparisonPositionValues.RIGHT,
             },
         },
     });

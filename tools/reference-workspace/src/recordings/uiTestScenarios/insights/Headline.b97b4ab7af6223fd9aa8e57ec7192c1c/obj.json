@@ -36,7 +36,7 @@
         ],
         "filters": [],
         "identifier": "Headline.b97b4ab7af6223fd9aa8e57ec7192c1c",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "comparison": { "enabled": false } } },
         "sorts": [],
         "title": "Headline - multi measures with two measures one PoP",
         "uri": "Headline.b97b4ab7af6223fd9aa8e57ec7192c1c",
