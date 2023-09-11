@@ -397,6 +397,8 @@ export interface IExecutionResult {
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
+    // (undocumented)
+    getResultId(): string;
     readAll(): Promise<IDataView>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     transform(): IPreparedExecution;

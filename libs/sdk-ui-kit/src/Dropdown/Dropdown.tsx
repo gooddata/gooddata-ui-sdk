@@ -82,6 +82,7 @@ export interface IDropdownProps {
 
     overlayPositionType?: OverlayPositionType;
     overlayZIndex?: number;
+    overlayClassName?: string;
 
     /**
      * Should the dropdown body be fullscreen on smaller screens? Defaults to true.
@@ -128,6 +129,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
         fullscreenOnMobile = true,
         enableEventPropagation = false,
+        overlayClassName,
     } = props;
     const [{ isOpen, dropdownId }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
@@ -215,6 +217,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 onMouseOver={enableEventPropagation ? noop : undefined}
                 onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
+                className={overlayClassName}
             >
                 <div className="overlay dropdown-body">
                     {renderBody({

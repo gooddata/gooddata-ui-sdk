@@ -12,7 +12,7 @@ for d in libs/*
 for d in tools/*    
     do    
         package=$(basename $d)
-        [[ $package =~ ^(app-toolkit|applink|dashboard-plugin-template|experimental-workspace|i18n-toolkit|live-examples-workspace|mock-handling|plugin-toolkit|react-app-template|reference-workspace-mgmt)$ ]] && continue
+        [[ $package =~ ^(app-toolkit|applink|dashboard-plugin-template|experimental-workspace|live-examples-workspace|mock-handling|plugin-toolkit|react-app-template|reference-workspace-mgmt)$ ]] && continue
         echo bundling $package
         cd tools/$package
         npm pack

@@ -182,6 +182,11 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     public fingerprint(): string {
         return this.decorated.fingerprint();
     }
+
+
+    public getResultId(): string {
+        return this.decorated.getResultId();
+    }
 }
 
 /**

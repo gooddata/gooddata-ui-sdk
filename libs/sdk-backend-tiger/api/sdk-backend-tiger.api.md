@@ -5,11 +5,13 @@
 ```ts
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
+import { AnomalyDetectionResult } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { AxiosRequestConfig } from 'axios';
+import { ClusteringResult } from '@gooddata/api-client-tiger';
 import { DataSourceParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
@@ -19,6 +21,7 @@ import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { EntityIdentifier } from '@gooddata/api-client-tiger';
+import { ForecastResult } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -27,6 +30,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IMeasure } from '@gooddata/sdk-model';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
@@ -102,6 +106,9 @@ export type GenerateLogicalModelRequest = GenerateLdmRequest;
 export function getIdOrigin(id: string): OriginInfoWithId;
 
 // @internal (undocumented)
+export type IAnomalyDetectionCacheResult = AnomalyDetectionResult;
+
+// @internal (undocumented)
 export interface IApiToken {
     // (undocumented)
     id: string;
@@ -112,6 +119,9 @@ export interface IApiTokenExtended extends IApiToken {
     // (undocumented)
     bearerToken: string | undefined;
 }
+
+// @internal (undocumented)
+export type IClusteringCacheResult = ClusteringResult;
 
 // @internal (undocumented)
 export interface ICSPDirective {
@@ -256,11 +266,22 @@ export interface IDataSourceUpsertRequest {
 }
 
 // @internal (undocumented)
+export type IForecastCacheResult = ForecastResult;
+
+// @internal (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
     // (undocumented)
     successful?: boolean;
+}
+
+// @internal (undocumented)
+export interface IKeyDriverAnalysis {
+    // (undocumented)
+    effects: number[];
+    // (undocumented)
+    labels: string[];
 }
 
 // @alpha (undocumented)
@@ -453,6 +474,19 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
+    computeKeyDrivers?: (workspaceId: string, metric: IMeasure, sortDirection: "ASC" | "DESC") => Promise<IKeyDriverAnalysis>;
+    processForecastResult?: (workspaceId: string, executionResultId: string, forecastPeriod: number) => Promise<IForecastCacheResult>;
+    processClusterResult?: (workspaceId: string, executionResultId: string, numberOfClusters: number) => Promise<IClusteringCacheResult>;
+    processAnomalyDetection?: (workspaceId: string, executionResultId: string, sensitivity: number) => Promise<IAnomalyDetectionCacheResult>;
+    getForecastResult?: (workspaceId: string, resultId: string) => Promise<IForecastCacheResult>;
+    setForecastResult?: (workspaceId: string, resultId: string, forecastResult: IForecastCacheResult) => Promise<void>;
+    deleteForecastResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    getClusterResult?: (workspaceId: string, resultId: string) => Promise<IClusteringCacheResult>;
+    setClusterResult?: (workspaceId: string, resultId: string, clusteringResult: IClusteringCacheResult) => Promise<void>;
+    deleteClusterResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    getAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<IAnomalyDetectionCacheResult>;
+    setAnomalyDetectionResult?: (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult) => Promise<void>;
+    deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
 };
 
 // @public

@@ -291,6 +291,10 @@ class RecordedExecutionResult implements IExecutionResult {
     public fingerprint = (): string => {
         return this._fp;
     };
+
+    public getResultId(): string {
+        throw Error("Not supported by this implementation");
+    }
 }
 
 class RecordedDataView implements IDataView {

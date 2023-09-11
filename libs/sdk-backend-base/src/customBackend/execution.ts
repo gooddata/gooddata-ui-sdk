@@ -187,6 +187,10 @@ class CustomExecutionResult implements IExecutionResult {
         return this._fingerprint;
     };
 
+    public getResultId(): string {
+        throw Error("Not supported by this implementation");
+    }
+
     public export = (_options: IExportConfig): Promise<IExportResult> => {
         throw new NotSupported("exports from custom backend are not supported");
     };

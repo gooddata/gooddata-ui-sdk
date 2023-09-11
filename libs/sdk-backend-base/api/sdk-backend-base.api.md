@@ -395,6 +395,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    getResultId(): string;
+    // (undocumented)
     readAll(): Promise<IDataView>;
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
