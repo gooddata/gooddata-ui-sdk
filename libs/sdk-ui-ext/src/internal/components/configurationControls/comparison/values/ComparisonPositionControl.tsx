@@ -15,11 +15,17 @@ import { getTranslatedDropdownItems } from "../../../../utils/translations.js";
 
 interface IPositionControlProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
 }
 
-const ComparisonPositionControl: React.FC<IPositionControlProps> = ({ disabled, properties, pushData }) => {
+const ComparisonPositionControl: React.FC<IPositionControlProps> = ({
+    disabled,
+    showDisabledMessage,
+    properties,
+    pushData,
+}) => {
     const intl = useIntl();
     const position = properties?.controls?.comparison?.position || ComparisonPositionValues.AUTO;
 
@@ -32,6 +38,7 @@ const ComparisonPositionControl: React.FC<IPositionControlProps> = ({ disabled, 
                 valuePath={COMPARISON_POSITION_VALUE_PATH}
                 labelText={comparisonMessages.positionTitle.id}
                 disabled={disabled}
+                showDisabledMessage={showDisabledMessage}
                 items={items}
                 properties={properties}
                 pushData={pushData}

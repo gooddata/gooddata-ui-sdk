@@ -29,7 +29,7 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
         const { insight, propertiesMeta, properties, pushData, panelConfig } = this.props;
 
         const controlDisabled = this.isControlDisabled();
-        const comparisonDisabled = controlDisabled || !isComparisonEnabled(insight);
+        const comparisonDisabled = !isComparisonEnabled(insight);
         const defaultCalculationType = getComparisonDefaultCalculationType(insight);
 
         const bubbleClassNames = cx("bubble-primary", { invisible: !controlDisabled });
@@ -38,7 +38,8 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     <ComparisonSection
-                        comparisonDisabled={comparisonDisabled}
+                        controlDisabled={controlDisabled}
+                        disabledByVisualization={comparisonDisabled}
                         defaultCalculationType={defaultCalculationType}
                         separators={panelConfig.separators}
                         colorPalette={panelConfig.comparisonColorPalette}

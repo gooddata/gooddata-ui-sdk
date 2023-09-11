@@ -7,6 +7,7 @@ import {
     DropdownButton,
     SingleSelectListItem,
     ISingleSelectListItemProps,
+    IAlignPoint,
 } from "@gooddata/sdk-ui-kit";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -25,6 +26,7 @@ export interface IDropdownControlProps {
     disabled?: boolean;
     width?: number;
     showDisabledMessage?: boolean;
+    disabledMessageAlignPoints?: IAlignPoint[];
     customListItem?: React.ComponentType<ISingleSelectListItemProps>;
 
     pushData(data: any): void;
@@ -58,13 +60,17 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
             width,
             items,
             showDisabledMessage,
+            disabledMessageAlignPoints,
             customListItem: ListItem,
             intl,
         } = this.props;
         const selectedItem = this.getSelectedItem(value) || {};
 
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+            <DisabledBubbleMessage
+                showDisabledMessage={showDisabledMessage}
+                alignPoints={disabledMessageAlignPoints}
+            >
                 <div className="adi-properties-dropdown-container">
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <label className="adi-bucket-inputfield gd-input gd-input-small">

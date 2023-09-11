@@ -10,6 +10,7 @@ import ComparisonPositionControl from "./ComparisonPositionControl.js";
 
 interface IValueSubSectionProps {
     sectionDisabled: boolean;
+    showDisabledMessage?: boolean;
     defaultFormat: string;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
@@ -18,6 +19,7 @@ interface IValueSubSectionProps {
 
 const ValueSubSection: React.FC<IValueSubSectionProps> = ({
     sectionDisabled,
+    showDisabledMessage,
     defaultFormat,
     separators,
     properties,
@@ -27,6 +29,7 @@ const ValueSubSection: React.FC<IValueSubSectionProps> = ({
         <ConfigSubsection title={comparisonMessages.valueSubSectionTitle.id} canBeToggled={false}>
             <NumberFormatControl
                 disabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 defaultFormat={defaultFormat}
                 separators={separators}
                 properties={properties}
@@ -34,6 +37,7 @@ const ValueSubSection: React.FC<IValueSubSectionProps> = ({
             />
             <ComparisonPositionControl
                 disabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 properties={properties}
                 pushData={pushData}
             />

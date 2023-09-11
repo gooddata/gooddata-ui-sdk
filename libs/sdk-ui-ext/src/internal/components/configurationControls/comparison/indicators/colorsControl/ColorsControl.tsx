@@ -19,21 +19,34 @@ import ColorResetButton from "./ColorResetButton.js";
 
 interface IColorControlProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     colorPalette: IColorPalette;
     pushData: PushDataCallback;
 }
 
-const ColorsControl: React.FC<IColorControlProps> = ({ disabled, properties, colorPalette, pushData }) => {
+const ColorsControl: React.FC<IColorControlProps> = ({
+    disabled,
+    showDisabledMessage,
+    properties,
+    colorPalette,
+    pushData,
+}) => {
     const colorConfig = properties?.controls?.comparison?.colorConfig;
     const isColorDisabled = disabled || colorConfig?.disabled;
 
     return (
         <div className="comparison-color-control s-comparison-color-control">
-            <ColorCheckbox disabled={disabled} properties={properties} pushData={pushData} />
+            <ColorCheckbox
+                disabled={disabled}
+                showDisabledMessage={showDisabledMessage}
+                properties={properties}
+                pushData={pushData}
+            />
             <div className="comparison-color-list-item s-comparison-color-list-item">
                 <ColorItem
                     disabled={isColorDisabled}
+                    showDisabledMessage={showDisabledMessage}
                     color={colorConfig?.positive}
                     colorType={ComparisonColorType.POSITIVE}
                     colorPalette={colorPalette}
@@ -44,6 +57,7 @@ const ColorsControl: React.FC<IColorControlProps> = ({ disabled, properties, col
                 />
                 <ColorItem
                     disabled={isColorDisabled}
+                    showDisabledMessage={showDisabledMessage}
                     color={colorConfig?.negative}
                     colorType={ComparisonColorType.NEGATIVE}
                     colorPalette={colorPalette}
@@ -54,6 +68,7 @@ const ColorsControl: React.FC<IColorControlProps> = ({ disabled, properties, col
                 />
                 <ColorItem
                     disabled={isColorDisabled}
+                    showDisabledMessage={showDisabledMessage}
                     color={colorConfig?.equals}
                     colorType={ComparisonColorType.EQUALS}
                     colorPalette={colorPalette}

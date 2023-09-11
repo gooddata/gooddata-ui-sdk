@@ -11,14 +11,21 @@ import { comparisonMessages } from "../../../../../../locales.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { COMPARISON_COLOR_CONFIG_DISABLED } from "../../ComparisonValuePath.js";
+import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
 
 interface IColorItemProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
 }
 
-const ColorCheckbox: React.FC<IColorItemProps> = ({ disabled, properties, pushData }) => {
+const ColorCheckbox: React.FC<IColorItemProps> = ({
+    disabled,
+    showDisabledMessage,
+    properties,
+    pushData,
+}) => {
     const { formatMessage } = useIntl();
 
     const checked = !properties?.controls?.comparison?.colorConfig?.disabled;
@@ -31,7 +38,11 @@ const ColorCheckbox: React.FC<IColorItemProps> = ({ disabled, properties, pushDa
         pushData({ properties: clonedProperties });
     };
 
-    return <Checkbox text={label} value={checked} disabled={disabled} onChange={handleChange} />;
+    return (
+        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+            <Checkbox text={label} value={checked} disabled={disabled} onChange={handleChange} />
+        </DisabledBubbleMessage>
+    );
 };
 
 export default ColorCheckbox;

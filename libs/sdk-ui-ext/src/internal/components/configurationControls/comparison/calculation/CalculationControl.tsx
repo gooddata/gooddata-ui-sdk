@@ -15,6 +15,7 @@ import { IVisualizationProperties } from "../../../../interfaces/Visualization.j
 
 interface ICalculationControlProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     defaultCalculationType: CalculationType;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
@@ -22,10 +23,13 @@ interface ICalculationControlProps {
 
 const CALCULATION_DROPDOWN_WIDTH = 194;
 
+const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
+
 const CalculationControl: React.FC<ICalculationControlProps> = ({
     disabled,
     defaultCalculationType,
     properties,
+    showDisabledMessage,
     pushData,
 }) => {
     const { formatMessage } = useIntl();
@@ -48,6 +52,8 @@ const CalculationControl: React.FC<ICalculationControlProps> = ({
                 valuePath={COMPARISON_CALCULATION_TYPE_VALUE_PATH}
                 labelText={comparisonMessages.calculationTypeTitle.id}
                 disabled={disabled}
+                showDisabledMessage={showDisabledMessage}
+                disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}
                 width={CALCULATION_DROPDOWN_WIDTH}
                 items={items}
                 customListItem={CalculationListItem}
