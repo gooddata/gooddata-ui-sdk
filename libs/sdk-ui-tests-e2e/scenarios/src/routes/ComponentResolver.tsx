@@ -67,6 +67,7 @@ import { ShortenMetricNameChartScenario } from "../components/Scenarios/Visualiz
 import { ShortenMetricNameTableScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameTableScenario";
 import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dashboard/DashboardShortenMetricNameScenario";
 import { DashboardForDateFilterScenario } from "../components/Scenarios/Dashboard/DashboardForDateFilterScenario";
+import { DashboardDateFilteringOnInsightScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringOnInsightScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -139,6 +140,7 @@ export const SCENARIO_KEYS = {
     VIS_SHORTEN_METRIC_NAME_CHART: "visualizations/shortenmetricname/shorten-metric-name-chart-scenario",
     VIS_SHORTEN_METRIC_NAME_TABLE: "visualizations/shortenmetricname/shorten-metric-name-table-scenario",
     DASHBOARD_SHORTEN_METRIC_NAME: "dashboard/shorten-metric-name",
+    DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO: "dashboard/dashboard-date-filtering-on-insight-scenario",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -219,6 +221,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_CHART, ShortenMetricNameChartScenario],
     [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_TABLE, ShortenMetricNameTableScenario],
     [SCENARIO_KEYS.DASHBOARD_SHORTEN_METRIC_NAME, DashboardShortenMetricNameScenario],
+    [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO, DashboardDateFilteringOnInsightScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

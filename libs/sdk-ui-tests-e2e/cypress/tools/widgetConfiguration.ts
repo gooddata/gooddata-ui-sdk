@@ -113,6 +113,29 @@ export class WidgetConfiguration {
         return this;
     }
 
+    enableDateFilter() {
+        cy.get("body").then((body) => {
+            if (body.find(".s-filter-date-dropdown").length == 0) {
+                this.toggleDateFilter();
+            }
+        });
+        return this;
+    }
+
+    disableDateFilter() {
+        cy.get("body").then((body) => {
+            if (body.find(".s-filter-date-dropdown").length > 0) {
+                this.toggleDateFilter();
+            }
+        });
+        return this;
+    }
+
+    isDateDatasetDropdownExist(exist = true) {
+        cy.get(".s-date-dataset-button").should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
     toggleDateFilter() {
         this.getElement().find(".s-date-filter-by-item").click();
         return this;
