@@ -22,7 +22,7 @@ export class DrillToModal {
     }
 
     close() {
-        this.getElement().find(".s-drill-close-button").click();
+        this.getElement().find(".s-drill-close-button").should("be.visible").click();
         this.getElement().should("not.exist");
     }
 
@@ -65,6 +65,15 @@ export class DrillToModal {
 
     back() {
         this.getElement().find(".s-drill-reset-button").click();
+        return this;
+    }
+
+    selectDropdownAttribute(attr: string) {
+        cy.get(".gd-drill-modal-picker-dropdown")
+            .find(".s-drill-down")
+            .should("be.visible")
+            .contains(`${attr}`)
+            .click();
         return this;
     }
 }
