@@ -1,16 +1,36 @@
 // (C) 2021 GoodData Corporation
-
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
 import { DrillToModal } from "../../tools/drillToModal";
-import { getBackend, getHost, getProjectId } from "../../support/constants";
+import { DateFilter } from "../../tools/dateFilter";
+import { DateFilterValue } from "../../tools/enum/DateFilterValue";
+import { Api } from "../../tools/api";
 
-//!!!!!!!!!!! this constant could be shifted check gray pages if test failed before each or after hook
 const DEPARTMENT_ID = "1090";
-//!!!!!!!!!!! this constant could be shifted check gray pages if test failed before each or after hook
-const PRODUCT_ID = "1056";
+const PRODUCT_ID = "1057";
 const drillModal = new DrillToModal();
+const api = new Api();
+const firstWidget = new Widget(0);
+
+const dashboardTable = [
+    {
+        title: "table has row column measure",
+        values: ["CompuSci", "$4,163,871.80", "$11,418,823.89"],
+    },
+    {
+        title: "table only row and column",
+        values: ["CompuSci"],
+    },
+    {
+        title: "table only rows and measures",
+        values: ["CompuSci", "$15,582,695.69"],
+    },
+    {
+        title: "table only rows",
+        values: ["CompuSci"],
+    },
+];
 
 /**
  *
@@ -18,49 +38,99 @@ const drillModal = new DrillToModal();
  * If test failed in before each or after each hook DEPARTMENT_ID, PRODUCT_ID could be shifted
  * @returns
  */
-const postDrillDownStepAttributeDF = (value?: string) => {
-    if (getBackend() !== "BEAR") {
-        return;
-    }
-    const uri = `/gdc/md/${getProjectId()}/obj/${DEPARTMENT_ID}`;
-    const url = `${getHost()}${uri}`;
-    const headers = { accept: "application/json" };
 
-    cy.request({ method: "GET", url, headers }).then((getResponse) => {
-        cy.wrap(getResponse.status).should("equal", 200);
-        cy.wrap(getResponse.body?.attribute?.meta?.uri).should("equal", uri);
-        cy.wrap(getResponse.body?.attribute?.content).should("exist");
+describe("Drilling", () => {
+    beforeEach(() => {
+        // Sets drilling on Department attribute into Product attribute
+        api.setUpDrillDownAttribute(DEPARTMENT_ID, PRODUCT_ID);
+    });
 
-        const body = {
-            ...getResponse.body,
-            attribute: {
-                ...getResponse.body.attribute,
-                content: {
-                    ...getResponse.body.attribute.content,
-                    drillDownStepAttributeDF: value,
-                },
-            },
-        };
+    afterEach(() => {
+        // Removes drilling from Department attribute
+        api.setUpDrillDownAttribute(DEPARTMENT_ID);
+    });
 
-        cy.request({ method: "POST", url, headers, body }).then((postResponse) => {
-            cy.wrap(postResponse.status).should("equal", 200);
-            cy.wrap(postResponse.body?.uri).should("equal", uri);
+    describe("Basic drill down", { tags: ["checklist_integrated_bear"] }, () => {
+        it("Should drill down on table with one drillable", () => {
+            Navigation.visit("dashboard/dashboard-table-drill-down");
+            dashboardTable.forEach((insight, index) => {
+                new Widget(index).waitTableLoaded().getTable().click(0, 0);
+                drillModal.getTitleElement().should("have.text", insight.title + " › Direct Sales");
+                insight.values.forEach((assertValue, index) => {
+                    drillModal.getTable().hasCellValue(0, index, assertValue);
+                });
+                drillModal.close();
+            });
+        });
+
+        it("Should drill down on charts that have two drillable attributes", () => {
+            const firstDrillValue = [
+                "617.00",
+                "1,903.00",
+                "3,526.00",
+                "2,046.00",
+                "41.00",
+                "220.10",
+                "386.70",
+                "281.00",
+            ];
+            const secondDrillValue = ["125.00", "492.00", "0.00", "41.00"];
+            const thirdDrillValue = ["125.00", "0.00"];
+
+            Navigation.visit("dashboard/drill-to-insight");
+            firstWidget.scrollIntoView().waitChartLoaded().getChart().clickSeriesPoint(0);
+            drillModal
+                .selectDropdownAttribute("2008")
+                .getTitleElement()
+                .should("have.text", "Combo chart › 2008");
+            drillModal.getChart().hasDataLabelValues(firstDrillValue).clickSeriesPoint(0);
+            drillModal.getTitleElement().should("have.text", "Combo chart › 2008 › Q1/2008");
+            drillModal.getChart().hasDataLabelValues(secondDrillValue).clickSeriesPoint(0);
+            drillModal.getTitleElement().should("have.text", "Combo chart › 2008 › Q1/2008 › Feb 2008");
+            drillModal.getChart().hasDataLabelValues(thirdDrillValue);
+            drillModal.close();
+        });
+
+        it("Should drill down on charts that have two drillable attributes on the difference bucket", () => {
+            const valueAttribute = ["81.14%", "18.86%"];
+            const assertInsightValues = ["69.6%", "68.22%", "71.1%", "30.4%", "31.78%", "28.9%"];
+
+            Navigation.visit("dashboard/insight");
+            firstWidget.scrollIntoView().waitChartLoaded().getChart().waitLoaded();
+            new DateFilter()
+                .openAndSelectDateFilterByName(DateFilterValue.ALL_TIME)
+                .apply()
+                .subtitleHasValue(DateFilterValue.ALL_TIME);
+            firstWidget.getChart().hasDataLabelValues(assertInsightValues);
+            firstWidget
+                .waitChartLoaded()
+                .getChart()
+                .getTooltipContents(0)
+                .should("deep.equal", ["Year (Closed)", "Department", "Won"]);
+            firstWidget.getChart().clickSeriesPoint(1, 0);
+            drillModal
+                .selectDropdownAttribute("Inside Sales")
+                .getTitleElement()
+                .should("have.text", "Column chart with years › Inside Sales");
+            drillModal.getChart().clickSeriesPoint(0);
+            drillModal.getTitleElement().should("have.text", "Column chart with years › Inside Sales › 2010");
+            drillModal.close();
+
+            firstWidget.waitChartLoaded().getChart().clickSeriesPoint(1, 0);
+            drillModal
+                .selectDropdownAttribute("2010")
+                .getTitleElement()
+                .should("have.text", "Column chart with years › 2010");
+            drillModal.getChart().clickSeriesPoint(0);
+            drillModal
+                .selectDropdownAttribute("Q2/2010")
+                .getTitleElement()
+                .should("have.text", "Column chart with years › 2010 › Q2/2010");
+            drillModal.getChart().hasDataLabelValues(valueAttribute);
         });
     });
-};
 
-describe("Drilling", { tags: ["post-merge_integrated_bear"] }, () => {
-    before(() => {
-        // Sets drilling on Department attribute into Product attribute
-        postDrillDownStepAttributeDF(`/gdc/md/${getProjectId()}/obj/${PRODUCT_ID}`);
-    });
-
-    after(() => {
-        // Removes drilling from Department attribute
-        postDrillDownStepAttributeDF();
-    });
-
-    describe("implicit drill to attribute url", () => {
+    describe("implicit drill to attribute url", { tags: ["post-merge_integrated_bear"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/implicit-drill-to-attribute-url");
         });
@@ -94,7 +164,7 @@ describe("Drilling", { tags: ["post-merge_integrated_bear"] }, () => {
         });
     });
 
-    describe("Advanced drill down", () => {
+    describe("Advanced drill down", { tags: ["post-merge_integrated_bear"] }, () => {
         it("Drill down on column with one drillable on drill to insight", () => {
             Navigation.visit("dashboard/drill-to-insight");
             new Widget(2).waitTableLoaded().getTable().click(0, 0);

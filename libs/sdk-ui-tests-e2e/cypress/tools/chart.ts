@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-
 export const YAXIS_LABELS_SELECTOR =
     ".highcharts-yaxis-labels text[text-anchor = 'middle'], .highcharts-yaxis-labels text[text-anchor = 'end']";
 export const XAXIS_LABELS_SELECTOR =
@@ -46,7 +45,7 @@ export class Chart {
         this.getHighchartsContainer()
             .find(`.highcharts-series.highcharts-series-${seriesIndex} .highcharts-point`)
             .eq(pointIndex)
-            .click();
+            .click({ force: true });
         return this;
     }
 
@@ -139,5 +138,20 @@ export class Chart {
                 cy.wrap(widthValue).should("equal", width);
             });
         return this;
+    }
+
+    getTooltipContents(index: number) {
+        cy.get(`.highcharts-series-${index}.highcharts-tracker rect`)
+            .first()
+            .trigger("mouseover", { force: true });
+
+        cy.wait(500);
+        const result: string[] = [];
+        cy.get(".gd-viz-tooltip-content")
+            .find(".gd-viz-tooltip-title")
+            .each(($li) => {
+                return result.push($li.text());
+            });
+        return cy.wrap(result);
     }
 }
