@@ -39,7 +39,8 @@ export class PromiseCache<TParams, TResult, TError = any> {
     public getPromise = (params: TParams): Promise<TResult> | undefined => {
         const cacheKey = this.getCacheKey(params);
         const cachedPromise = this.promises[cacheKey];
-        if (cachedPromise) {
+        const cachedPromiseError = this.errors[cacheKey];
+        if (cachedPromise && !cachedPromiseError) {
             return cachedPromise.promise;
         }
     };

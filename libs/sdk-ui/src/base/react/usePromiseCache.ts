@@ -29,8 +29,8 @@ export function usePromiseCache<TParams, TResult, TError>(
     fetchParams: TParams[],
     fetchDeps: React.DependencyList,
     resetDeps: React.DependencyList,
-    preventResetPromises?: boolean,
     getCacheKey?: (params: TParams) => string,
+    preventResetPromises?: boolean,
 ): IUsePromiseCacheState<TResult, TError> {
     const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>(
         new PromiseCache(promiseFactory, getCacheKey),

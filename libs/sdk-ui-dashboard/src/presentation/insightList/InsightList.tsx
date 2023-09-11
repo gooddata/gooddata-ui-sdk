@@ -123,6 +123,8 @@ export const InsightList: React.FC<IInsightListProps> = ({
         params,
         [backend, pagesToLoad, search, selectedTabId, insightListLastUpdateRequested],
         [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
+        undefined,
+        undefined,
         true,
     );
 
