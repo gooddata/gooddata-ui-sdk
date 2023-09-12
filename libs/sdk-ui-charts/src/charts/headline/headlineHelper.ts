@@ -10,6 +10,7 @@ import { CalculateAs, CalculationType, ILabelConfig } from "../../interfaces/ind
 interface ICalculationDefaultValue {
     defaultLabelKey: string;
     defaultFormat: string;
+    defaultSubFormat?: string;
 }
 
 /**
@@ -29,6 +30,11 @@ const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefau
     [CalculateAs.RATIO]: {
         defaultLabelKey: "visualizations.headline.comparison.title.ratio",
         defaultFormat: "#,##0%",
+    },
+    [CalculateAs.CHANGE_DIFFERENCE]: {
+        defaultLabelKey: "visualizations.headline.comparison.title.change",
+        defaultFormat: "#,##0%",
+        defaultSubFormat: null,
     },
     [CalculateAs.DIFFERENCE]: {
         defaultLabelKey: "visualizations.headline.comparison.title.difference",

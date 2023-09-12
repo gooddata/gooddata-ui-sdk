@@ -13,11 +13,19 @@ import { IColor } from "@gooddata/sdk-model";
  *     <tr><td>change</td><td>(Primary - Secondary) / Secondary</td></tr>
  *     <tr><td>difference</td><td>Primary - Secondary</td></tr>
  *     <tr><td>ratio</td><td>Primary / Secondary</td></tr>
+ *     <tr>
+ *         <td>change_difference</td>
+ *         <td>
+ *              Change: (Primary - Secondary) / Secondary
+ *              <br/>
+ *              Difference: Primary - Secondary
+ *         </td>
+ *     </tr>
  * </table>
  *
  * @public
  */
-export type CalculationType = "change" | "ratio" | "difference";
+export type CalculationType = "change" | "ratio" | "difference" | "change_difference";
 
 /**
  * Defines how the comparison value will be placed.
@@ -33,6 +41,7 @@ export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = 
     RATIO: "ratio" as const,
     CHANGE: "change" as const,
     DIFFERENCE: "difference" as const,
+    CHANGE_DIFFERENCE: "change_difference" as const,
 };
 
 /**
@@ -109,6 +118,7 @@ export interface ILabelConfig {
      *     <tr><td>change</td><td>Change</td></tr>
      *     <tr><td>ratio</td><td>of</td></tr>
      *     <tr><td>difference</td><td>Difference</td></tr>
+     *     <tr><td>change_difference</td><td>Change</td></tr>
      * </table>
      */
     unconditionalValue?: string;
@@ -170,6 +180,24 @@ export interface IComparison {
      * @defaultValue Based on the calculation type.
      */
     format?: ComparisonFormat;
+
+    /**
+     * Defines the number format of the comparison sub value.
+     *
+     * @remarks
+     * The default value is based on the calculation subtype:
+     * <table>
+     *     <tr><th width="150">Calculation Type</th><th width="350">Default format</th></tr>
+     *     <tr><td>change</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>ratio</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>difference</td><td>Inherit</td></tr>
+     * </table>
+     *
+     * @see {@link ComparisonFormat} for supported formats.
+     *
+     * @defaultValue Based on the calculation subtype.
+     */
+    subFormat?: ComparisonFormat;
 
     /**
      * Controls the visibility of the arrow trend indicator and its direction based on conditions.

@@ -46,7 +46,12 @@ export interface IBaseHeadlineItem<T> {
 
 export interface IComparisonDataItem extends IBaseHeadlineValueItem, IBaseHeadlineTitle {}
 
-export type BaseHeadlineItemAccepted = IHeadlineDataItem | IComparisonDataItem;
+export interface IComparisonDataWithSubItem extends IBaseHeadlineTitle {
+    item: IBaseHeadlineValueItem;
+    subItem: IBaseHeadlineValueItem;
+}
+
+export type BaseHeadlineItemAccepted = IHeadlineDataItem | IComparisonDataItem | IComparisonDataWithSubItem;
 
 export interface IBaseHeadlineData {
     primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
