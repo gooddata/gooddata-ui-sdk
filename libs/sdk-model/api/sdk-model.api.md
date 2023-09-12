@@ -42,6 +42,8 @@ export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
     // @internal
     constructor(input: ArithmeticMeasureBuilderInput);
+    // @internal (undocumented)
+    protected readonly arithmeticMeasure: IArithmeticMeasureDefinition["arithmeticMeasure"];
     // (undocumented)
     protected buildDefinition(): IArithmeticMeasureDefinition;
     // (undocumented)
@@ -3405,6 +3407,10 @@ export function userFullName(user: IUser): string | undefined;
 export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
     // (undocumented)
     protected buildDefinition(): IVirtualArithmeticMeasureDefinition;
+    // (undocumented)
+    combineLocalIdWithOperator(): this;
+    // (undocumented)
+    protected generateLocalId(): string;
 }
 
 // @public

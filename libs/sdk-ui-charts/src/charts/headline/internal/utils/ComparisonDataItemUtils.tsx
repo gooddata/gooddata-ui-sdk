@@ -1,4 +1,5 @@
 // (C) 2023 GoodData Corporation
+import React from "react";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
@@ -23,6 +24,18 @@ export const getComparisonColor = (
     const rgbColor = getComparisonRgbColor(providedColor, colorType, colorPalette);
 
     return rgbColor && getRgbStringFromRGB(rgbColor);
+};
+
+export const getIndicator = (isArrowEnabled: boolean, evaluationType: EvaluationType) => {
+    if (isArrowEnabled && evaluationType === EvaluationType.POSITIVE_VALUE) {
+        return <i className="gd-icon-trend-up s-indicator-up" />;
+    }
+
+    if (isArrowEnabled && evaluationType === EvaluationType.NEGATIVE_VALUE) {
+        return <i className="gd-icon-trend-down s-indicator-down" />;
+    }
+
+    return null;
 };
 
 const getProvidedColorByEvaluationType = (colorConfig: IColorConfig, evaluationType: EvaluationType) => {

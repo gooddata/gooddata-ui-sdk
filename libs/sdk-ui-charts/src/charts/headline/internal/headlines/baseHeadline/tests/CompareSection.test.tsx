@@ -11,11 +11,12 @@ import {
     HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
     TEST_BASE_HEADLINE_ITEM,
 } from "../../../tests/TestData.fixtures.js";
+import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 
 describe("CompareSection", () => {
     let MockCompareItem: SpyInstance;
-    const secondaryItem: IBaseHeadlineItem<IComparisonDataItem> = TEST_BASE_HEADLINE_ITEM;
-    const tertiaryItem: IBaseHeadlineItem<IComparisonDataItem> = {
+    const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
+    const tertiaryItem: IBaseHeadlineItem<IHeadlineDataItem> = {
         ...TEST_BASE_HEADLINE_ITEM,
         elementType: null,
         data: {
