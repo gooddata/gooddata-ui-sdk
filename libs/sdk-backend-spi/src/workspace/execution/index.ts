@@ -194,6 +194,15 @@ export interface IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
 
     /**
+     * Configures buckets of the resulting data.  Any dimension settings accumulated so far WILL be wiped out.
+     *
+     * @param buckets - buckets to set
+     * @returns new execution with the updated buckets
+     * @internal
+     */
+    withBuckets(...buckets: IBucket[]): IPreparedExecution;
+
+    /**
      * Adds the desired date format to the postProcessing of an IPreparedExecution.
      *
      * @param dateFormat - Format to be applied to the dates in an AFM execution response.
