@@ -2,12 +2,13 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import cx from "classnames";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { getTranslation } from "../utils/translations.js";
 import { messages } from "../../locales.js";
 
 export interface IBubbleMessageOwnProps {
     showDisabledMessage: boolean;
+    alignPoints?: IAlignPoint[];
     messageId?: string;
     className?: string;
     children?: React.ReactNode;
@@ -16,12 +17,16 @@ export interface IBubbleMessageOwnProps {
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
 
 export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
+    public static defaultProps = {
+        alignPoints: [{ align: "cr cl" }],
+    };
+
     public render() {
-        const { className, children, intl, messageId = messages.notApplicable.id } = this.props;
+        const { className, alignPoints, children, intl, messageId = messages.notApplicable.id } = this.props;
         return (
             <BubbleHoverTrigger className={className}>
                 {children}
-                <Bubble className={this.getBubbleClassNames()} alignPoints={[{ align: "cr cl" }]}>
+                <Bubble className={this.getBubbleClassNames()} alignPoints={alignPoints}>
                     {getTranslation(messageId, intl)}
                 </Bubble>
             </BubbleHoverTrigger>

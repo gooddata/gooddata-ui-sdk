@@ -16,18 +16,21 @@ import { createTestProperties, TEST_DEFAULT_SEPARATOR } from "../../../../tests/
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";
 
 describe("ComparisonSection", () => {
-    const DEFAULT_COMPARISON_DISABLED: boolean = false;
+    const DEFAULT_CONTROL_DISABLED: boolean = false;
+    const DEFAULT_DISABLED_BY_VISUALIZATION: boolean = false;
     const pushData = vi.fn();
 
     const mockConfigSection = () => vi.spyOn(ConfigSection, "default");
 
     const renderComparisonSection = (params?: {
-        comparisonDisabled?: boolean;
+        controlDisabled?: boolean;
+        disabledByVisualization?: boolean;
         defaultCalculationType?: CalculationType;
         properties?: IVisualizationProperties<IComparisonControlProperties>;
     }) => {
         const props = {
-            comparisonDisabled: DEFAULT_COMPARISON_DISABLED,
+            controlDisabled: DEFAULT_CONTROL_DISABLED,
+            disabledByVisualization: DEFAULT_DISABLED_BY_VISUALIZATION,
             properties: {},
             propertiesMeta: {},
             defaultCalculationType: CalculateAs.RATIO,
@@ -63,21 +66,21 @@ describe("ComparisonSection", () => {
                 valuePath: COMPARISON_ENABLED_VALUE_PATH,
                 properties,
                 pushData,
-                toggleDisabled: DEFAULT_COMPARISON_DISABLED,
+                toggleDisabled: DEFAULT_DISABLED_BY_VISUALIZATION,
                 toggledOn: properties.controls.comparison.enabled,
             }),
             expect.anything(),
         );
     });
 
-    it("Should disabled toggle when comparisonDisabled is true", () => {
+    it("Should disabled toggle when disabledByVisualization is true", () => {
         const MockConfigSection = mockConfigSection();
-        const comparisonDisabled = true;
+        const disabledByVisualization = true;
 
-        renderComparisonSection({ comparisonDisabled });
+        renderComparisonSection({ disabledByVisualization });
         expect(MockConfigSection).toHaveBeenCalledWith(
             expect.objectContaining({
-                toggleDisabled: comparisonDisabled,
+                toggleDisabled: disabledByVisualization,
             }),
             expect.anything(),
         );

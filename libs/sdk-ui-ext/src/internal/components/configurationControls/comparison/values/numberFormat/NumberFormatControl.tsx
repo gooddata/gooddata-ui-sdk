@@ -8,6 +8,7 @@ import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
 
 import NumberFormatToggleButton from "./NumberFormatToggleButton.js";
+import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { COMPARISON_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
@@ -16,6 +17,7 @@ import { getNumberFormat, getPresets, getTemplates } from "../../../../../utils/
 
 interface INumberFormatControlProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     defaultFormat: string;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
@@ -24,6 +26,7 @@ interface INumberFormatControlProps {
 
 const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
     disabled,
+    showDisabledMessage,
     defaultFormat,
     separators,
     properties,
@@ -44,24 +47,26 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
     const templates = useMemo(() => getTemplates(intl), [intl]);
 
     return (
-        <div className="adi-properties-dropdown-container measure-number-format-control">
-            <span className="input-label-text">
-                <FormattedMessage id={comparisonMessages.formatTitle.id} />
-            </span>
-            <label className="adi-bucket-inputfield gd-input gd-input-small measure-number-format-control-dropdown">
-                <MeasureNumberFormat
-                    disabled={disabled}
-                    toggleButton={NumberFormatToggleButton}
-                    presets={presets}
-                    templates={templates}
-                    separators={separators}
-                    selectedFormat={format}
-                    setFormat={selectFormat}
-                    locale={intl.locale}
-                    key={format}
-                />
-            </label>
-        </div>
+        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+            <div className="adi-properties-dropdown-container measure-number-format-control">
+                <span className="input-label-text">
+                    <FormattedMessage id={comparisonMessages.formatTitle.id} />
+                </span>
+                <label className="adi-bucket-inputfield gd-input gd-input-small measure-number-format-control-dropdown">
+                    <MeasureNumberFormat
+                        disabled={disabled}
+                        toggleButton={NumberFormatToggleButton}
+                        presets={presets}
+                        templates={templates}
+                        separators={separators}
+                        selectedFormat={format}
+                        setFormat={selectFormat}
+                        locale={intl.locale}
+                        key={format}
+                    />
+                </label>
+            </div>
+        </DisabledBubbleMessage>
     );
 };
 

@@ -15,7 +15,7 @@ export const getComparisonColor = (
     evaluationType: EvaluationType,
     colorPalette: IColorPalette = DEFAULT_COMPARISON_PALETTE,
 ) => {
-    if (colorConfig?.disabled) {
+    if (colorConfig?.disabled || !evaluationType) {
         return null;
     }
 

@@ -11,11 +11,17 @@ import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";
 
 interface IArrowControlProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
 }
 
-const ArrowControl: React.FC<IArrowControlProps> = ({ disabled, properties, pushData }) => {
+const ArrowControl: React.FC<IArrowControlProps> = ({
+    disabled,
+    showDisabledMessage,
+    properties,
+    pushData,
+}) => {
     const isArrowEnabled = properties?.controls?.comparison?.isArrowEnabled;
 
     return (
@@ -26,6 +32,7 @@ const ArrowControl: React.FC<IArrowControlProps> = ({ disabled, properties, push
                 properties={properties}
                 checked={isArrowEnabled}
                 disabled={disabled}
+                showDisabledMessage={showDisabledMessage}
                 pushData={pushData}
             />
         </div>

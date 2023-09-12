@@ -17,7 +17,8 @@ import IndicatorSubSection from "./indicators/IndicatorSubSection.js";
 import LabelSubSection from "./label/LabelSubSection.js";
 
 interface IComparisonSectionProps {
-    comparisonDisabled: boolean;
+    controlDisabled: boolean;
+    disabledByVisualization: boolean;
     defaultCalculationType: CalculationType;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
@@ -27,7 +28,8 @@ interface IComparisonSectionProps {
 }
 
 const ComparisonSection: React.FC<IComparisonSectionProps> = ({
-    comparisonDisabled,
+    controlDisabled,
+    disabledByVisualization,
     defaultCalculationType,
     separators,
     properties,
@@ -36,7 +38,10 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     pushData,
 }) => {
     const toggledOn = properties.controls?.comparison?.enabled;
+
+    const comparisonDisabled = controlDisabled || disabledByVisualization;
     const sectionDisabled = comparisonDisabled || !toggledOn;
+    const showDisabledMessage = !controlDisabled && disabledByVisualization;
 
     const { defaultFormat, defaultLabelKey } = getComparisonDefaultValues(defaultCalculationType, properties);
 
@@ -50,16 +55,19 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             pushData={pushData}
             canBeToggled={true}
             toggleDisabled={comparisonDisabled}
+            showDisabledMessage={showDisabledMessage}
             toggledOn={toggledOn}
         >
             <CalculationControl
                 disabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 defaultCalculationType={defaultCalculationType}
                 properties={properties}
                 pushData={pushData}
             />
             <ValueSubSection
                 sectionDisabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 defaultFormat={defaultFormat}
                 separators={separators}
                 properties={properties}
@@ -67,12 +75,14 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             />
             <IndicatorSubSection
                 sectionDisabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 properties={properties}
                 colorPalette={colorPalette}
                 pushData={pushData}
             />
             <LabelSubSection
                 sectionDisabled={sectionDisabled}
+                showDisabledMessage={showDisabledMessage}
                 defaultLabelKey={defaultLabelKey}
                 properties={properties}
                 pushData={pushData}

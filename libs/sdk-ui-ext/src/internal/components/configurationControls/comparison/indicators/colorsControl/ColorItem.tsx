@@ -10,11 +10,13 @@ import { ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-cha
 
 import ColoredItemContent from "../../../colors/coloredItemsList/ColoredItemContent.js";
 import ColorDropdown from "../../../colors/colorDropdown/ColorDropdown.js";
+import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 
 interface IColorItemProps {
     disabled: boolean;
+    showDisabledMessage?: boolean;
     color: IColor;
     colorType: ComparisonColorType;
     colorPalette: IColorPalette;
@@ -26,6 +28,7 @@ interface IColorItemProps {
 
 const ColorItem: React.FC<IColorItemProps> = ({
     disabled,
+    showDisabledMessage,
     color,
     colorType,
     colorPalette,
@@ -47,15 +50,17 @@ const ColorItem: React.FC<IColorItemProps> = ({
     };
 
     return (
-        <ColorDropdown
-            colorPalette={colorPalette}
-            onColorSelected={handleColorSelected}
-            selectedColorItem={color}
-            showCustomPicker={true}
-            disabled={disabled}
-        >
-            <ColoredItemContent text={label} color={rgbColor} />
-        </ColorDropdown>
+        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+            <ColorDropdown
+                colorPalette={colorPalette}
+                onColorSelected={handleColorSelected}
+                selectedColorItem={color}
+                showCustomPicker={true}
+                disabled={disabled}
+            >
+                <ColoredItemContent text={label} color={rgbColor} />
+            </ColorDropdown>
+        </DisabledBubbleMessage>
     );
 };
 

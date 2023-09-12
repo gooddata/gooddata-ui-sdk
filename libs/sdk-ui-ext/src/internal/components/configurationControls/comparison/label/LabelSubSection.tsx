@@ -14,6 +14,7 @@ import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 export interface ILabelSubSectionProps {
     sectionDisabled: boolean;
+    showDisabledMessage?: boolean;
     defaultLabelKey: string;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
@@ -21,6 +22,7 @@ export interface ILabelSubSectionProps {
 
 const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
     sectionDisabled,
+    showDisabledMessage,
     defaultLabelKey,
     properties,
     pushData,
@@ -29,7 +31,8 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
 
     const isPositionOnTop = properties?.controls?.comparison?.position === ComparisonPositionValues.TOP;
     const disabled = sectionDisabled || isPositionOnTop;
-    const showDisabledMessage = !sectionDisabled && isPositionOnTop;
+    const shouldShowDisabledMessage = showDisabledMessage || isPositionOnTop;
+    const disabledMessageId = isPositionOnTop ? comparisonMessages.labelPositionOnTopDisabled.id : undefined;
 
     const defaultValue =
         properties?.controls?.comparison?.labelConfig?.unconditionalValue ||
@@ -43,8 +46,8 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
                 properties={properties}
                 labelText={comparisonMessages.labelNameTitle.id}
                 disabled={disabled}
-                showDisabledMessage={showDisabledMessage}
-                disabledMessageId={comparisonMessages.labelPositionOnTopDisabled.id}
+                showDisabledMessage={shouldShowDisabledMessage}
+                disabledMessageId={disabledMessageId}
                 placeholder={defaultLabelKey}
                 pushData={pushData}
                 value={defaultValue}

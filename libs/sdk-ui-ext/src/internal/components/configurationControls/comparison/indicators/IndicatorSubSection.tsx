@@ -13,6 +13,7 @@ import ColorsControl from "./colorsControl/ColorsControl.js";
 
 interface IIndicatorSubSectionProps {
     sectionDisabled: boolean;
+    showDisabledMessage?: boolean;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     colorPalette: IColorPalette;
     pushData: PushDataCallback;
@@ -20,6 +21,7 @@ interface IIndicatorSubSectionProps {
 
 const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
     sectionDisabled,
+    showDisabledMessage,
     properties,
     colorPalette,
     pushData,
@@ -27,9 +29,15 @@ const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
     return (
         <ConfigSubsection title={comparisonMessages.indicatorSubSectionTitle.id} canBeToggled={false}>
             <div className="comparison-indicator-sub-section s-comparison-indicator-sub-section">
-                <ArrowControl disabled={sectionDisabled} properties={properties} pushData={pushData} />
+                <ArrowControl
+                    disabled={sectionDisabled}
+                    showDisabledMessage={showDisabledMessage}
+                    properties={properties}
+                    pushData={pushData}
+                />
                 <ColorsControl
                     disabled={sectionDisabled}
+                    showDisabledMessage={showDisabledMessage}
                     properties={properties}
                     colorPalette={colorPalette}
                     pushData={pushData}

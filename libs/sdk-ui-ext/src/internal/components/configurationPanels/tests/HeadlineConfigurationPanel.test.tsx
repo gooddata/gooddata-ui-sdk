@@ -76,7 +76,7 @@ describe("HeadlineComparisonPanel", () => {
         renderHeadlineComparisonPanel({ insight: newInsight([]) });
         expect(MockComparisonSection).toHaveBeenCalledWith(
             expect.objectContaining({
-                comparisonDisabled: true,
+                controlDisabled: true,
             }),
             expect.anything(),
         );
@@ -88,7 +88,8 @@ describe("HeadlineComparisonPanel", () => {
         renderHeadlineComparisonPanel();
         expect(MockComparisonSection).toHaveBeenCalledWith(
             expect.objectContaining({
-                comparisonDisabled: true,
+                controlDisabled: false,
+                disabledByVisualization: true,
             }),
             expect.anything(),
         );
@@ -111,7 +112,8 @@ describe("HeadlineComparisonPanel", () => {
         renderHeadlineComparisonPanel({ insight: newInsight(buckets) });
         expect(MockComparisonSection).toHaveBeenCalledWith(
             expect.objectContaining({
-                comparisonDisabled: true,
+                controlDisabled: false,
+                disabledByVisualization: true,
             }),
             expect.anything(),
         );
@@ -134,7 +136,8 @@ describe("HeadlineComparisonPanel", () => {
         renderHeadlineComparisonPanel({ insight: newInsight(buckets) });
         expect(MockComparisonSection).toHaveBeenCalledWith(
             expect.objectContaining({
-                comparisonDisabled: false,
+                controlDisabled: false,
+                disabledByVisualization: false,
             }),
             expect.anything(),
         );
