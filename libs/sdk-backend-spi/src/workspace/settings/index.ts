@@ -29,4 +29,22 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Sets color palette for current workspace.
+     *
+     * @param colorPaletteId - ID of the color palette to apply to charts in workspace.
+     *
+     * @returns promise
+     */
+    setColorPalette(colorPaletteId: string): Promise<void>;
+
+    /**
+     * Sets theme for current workspace.
+     *
+     * @param themeId - ID of the theme to apply to the current workspace.
+     *
+     * @returns promise
+     */
+    setTheme(themeId: string): Promise<void>;
 }

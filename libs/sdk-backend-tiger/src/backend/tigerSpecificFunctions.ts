@@ -41,6 +41,10 @@ import {
     IdentifierDuplications,
     JsonApiCustomApplicationSettingOut,
     JsonApiDatasetOutList,
+    JsonApiWorkspaceDataFilterInDocument,
+    JsonApiWorkspaceDataFilterOutDocument,
+    JsonApiWorkspaceDataFilterSettingOutDocument,
+    JsonApiWorkspaceDataFilterSettingInDocument,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -305,6 +309,26 @@ export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 /**
  * @internal
  */
+export type WorkspaceDataFilterResult = JsonApiWorkspaceDataFilterOutDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilterSettingResult = JsonApiWorkspaceDataFilterSettingOutDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilterSetting = JsonApiWorkspaceDataFilterSettingInDocument;
+
+/**
+ * @internal
+ */
 export type ScanSqlResult = ScanSqlResponse;
 
 /**
@@ -379,6 +403,16 @@ export type TigerSpecificFunctions = {
     ) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getWorkspaceDataFilter?: (workspaceId: string, objectId: string) => Promise<WorkspaceDataFilterResult>;
+    setWorkspaceDataFilter?: (workspaceId: string, workspaceDataFilter: WorkspaceDataFilter) => Promise<void>;
+    getWorkspaceDataFilterSetting?: (
+        workspaceId: string,
+        objectId: string,
+    ) => Promise<WorkspaceDataFilterSettingResult>;
+    setWorkspaceDataFilterSetting?: (
+        workspaceId: string,
+        workspaceDataFilterSetting: WorkspaceDataFilterSetting,
+    ) => Promise<void>;
     getAllCSPDirectives?: () => Promise<Array<ICSPDirective>>;
     getCSPDirective?: (directiveId: string) => Promise<ICSPDirective>;
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
@@ -1210,6 +1244,65 @@ export const buildTigerSpecificFunctions = (
             });
         });
     },
+
+    getWorkspaceDataFilter: async (
+        workspaceId: string,
+        objectId: string,
+    ): Promise<WorkspaceDataFilterResult> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityWorkspaceDataFilters({
+                    workspaceId,
+                    objectId,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFilter: async (
+        workspaceId: string,
+        workspaceDataFilter: WorkspaceDataFilter,
+    ): Promise<void> => {
+        return authApiCall(async (sdk) => {
+            await sdk.entities.createEntityWorkspaceDataFilters({
+                workspaceId,
+                jsonApiWorkspaceDataFilterInDocument: workspaceDataFilter,
+            });
+        });
+    },
+
+    getWorkspaceDataFilterSetting: async (
+        workspaceId: string,
+        objectId: string,
+    ): Promise<WorkspaceDataFilterSettingResult> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityWorkspaceDataFilterSettings({
+                    workspaceId,
+                    objectId,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFilterSetting: async (
+        workspaceId: string,
+        workspaceDataFilterSetting: WorkspaceDataFilterSetting,
+    ): Promise<void> => {
+        return await authApiCall(async (sdk) => {
+            await sdk.entities.createEntityWorkspaceDataFilterSettings({
+                workspaceId,
+                jsonApiWorkspaceDataFilterSettingInDocument: workspaceDataFilterSetting,
+            });
+        });
+    },
+
     getAllCSPDirectives: async (): Promise<Array<ICSPDirective>> => {
         try {
             return await authApiCall(async (sdk) => {
