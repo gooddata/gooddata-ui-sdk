@@ -1,18 +1,22 @@
 {
-    "id": "f165b05f-8047-477f-94db-a8f341d63842",
-    "name": "api_v1_actions_resolveentitlements",
+    "id": "ad6a071e-7e17-4d7a-a405-4f1cb6d7bab1",
+    "name": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_facts",
     "request": {
-        "url": "/api/v1/actions/resolveEntitlements",
+        "url": "/api/v1/entities/workspaces/c87f6d4b58d44bec856b4b446f6e82ba/facts?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
             }
         }
     },
     "response": {
         "status": 200,
-        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
+        "bodyFileName": "api_v1_entities_workspaces_c87f6d4b58d44bec856b4b446f6e82ba_facts-ad6a071e-7e17-4d7a-a405-4f1cb6d7bab1.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -20,18 +24,13 @@
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
-            "Content-Type": "application/json"
+            "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "f165b05f-8047-477f-94db-a8f341d63842",
+    "uuid": "ad6a071e-7e17-4d7a-a405-4f1cb6d7bab1",
     "persistent": true,
     "insertionIndex": 4
 }
