@@ -165,6 +165,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "execute": [Function],
   "explain": [Function],
   "fingerprint": [Function],
+  "withBuckets": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
