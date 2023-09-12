@@ -421,6 +421,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    withBuckets(...buckets: IBucket[]): IPreparedExecution;
+    // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
     // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;

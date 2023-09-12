@@ -23,6 +23,7 @@ import {
     IExecutionDefinition,
     IExecutionConfig,
     IPostProcessing,
+    defSetBuckets,
 } from "./index.js";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
@@ -234,6 +235,26 @@ export function defWithDateFormat(
         dateFormat,
     };
     return defWithPostProcessing(definition, postProcessing);
+}
+
+/**
+ * Configures buckets in the exec definition.
+ *
+ * @remarks
+ * Any bucket settings accumulated so far WILL be wiped out.
+ *
+ * This function MUST be used to implement IPreparedExecution.withBuckets();
+ *
+ * @param definition - execution definition to alter
+ * @param buckets - buckets to set
+ * @returns new execution with the updated buckets
+ * @internal
+ */
+export function defWithBuckets(
+    definition: IExecutionDefinition,
+    ...buckets: IBucket[]
+): IExecutionDefinition {
+    return defSetBuckets(definition, buckets);
 }
 
 /**

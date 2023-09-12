@@ -348,6 +348,9 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
 
+// @internal
+export function defSetBuckets(def: IExecutionDefinition, buckets?: IBucket[]): IExecutionDefinition;
+
 // @public
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
 
@@ -362,6 +365,9 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: ISortItem[]): IE
 
 // @public
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
+
+// @internal
+export function defWithBuckets(definition: IExecutionDefinition, ...buckets: IBucket[]): IExecutionDefinition;
 
 // @public
 export function defWithDateFormat(definition: IExecutionDefinition, dateFormat: string): IExecutionDefinition;

@@ -38,6 +38,8 @@ import {
     bucketsFind,
     isAttribute,
     isTotalDescriptor,
+    IBucket,
+    defWithBuckets,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import {
@@ -120,6 +122,9 @@ function recordedPreparedExecution(
         },
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
+        },
+        withBuckets(...buckets: IBucket[]) {
+            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));

@@ -10,6 +10,7 @@ import isEqual from "lodash/isEqual.js";
 import {
     attributeLocalId,
     bucketAttribute,
+    bucketSetTotals,
     defTotals,
     dimensionSetTotals,
     isAttributeSort,
@@ -147,13 +148,22 @@ export class AgGridDatasource implements IDatasource {
          */
         this.resetGroupingProvider(sortModel);
 
-        const transformedExecution = result
+        let transformedExecution = result
             .transform()
             .withSorting(...(desiredSorts ?? []))
             .withDimensions(
                 dimensionSetTotals(definition.dimensions[0], desiredTotals),
                 dimensionSetTotals(definition.dimensions[1], desiredRowTotals),
             );
+
+        // Update buckets property only when totals/subtotals for columns change. So table is updated properly.
+        if (desiredRowTotals.length > 0) {
+            transformedExecution = transformedExecution.withBuckets(
+                definition.buckets[0],
+                bucketSetTotals(definition.buckets[1], desiredTotals),
+                bucketSetTotals(definition.buckets[2], desiredRowTotals),
+            );
+        }
 
         this.config.onExecutionTransformed(transformedExecution);
         this.driveExecutionAndUpdateDatasource(transformedExecution, params);
