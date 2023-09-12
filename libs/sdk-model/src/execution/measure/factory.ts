@@ -501,7 +501,10 @@ export type ArithmeticMeasureBuilderInput =
  * @public
  */
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
-    private readonly arithmeticMeasure: IArithmeticMeasureDefinition["arithmeticMeasure"];
+    /**
+     * @internal
+     */
+    protected readonly arithmeticMeasure: IArithmeticMeasureDefinition["arithmeticMeasure"];
 
     /**
      * @internal
@@ -565,12 +568,28 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
  * @internal
  */
 export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
+    private shouldCombineLocalIdWithOperator: boolean = false;
+
+    public combineLocalIdWithOperator() {
+        this.shouldCombineLocalIdWithOperator = true;
+        return this;
+    }
+
     protected buildDefinition(): IVirtualArithmeticMeasureDefinition {
         const arithmeticDefinition = super.buildDefinition();
         return {
             ...arithmeticDefinition,
             virtual: true,
         };
+    }
+
+    protected generateLocalId(): string {
+        const localId = super.generateLocalId();
+        if (this.shouldCombineLocalIdWithOperator) {
+            return `${localId}_${this.arithmeticMeasure.operator}`;
+        } else {
+            return localId;
+        }
     }
 }
 
