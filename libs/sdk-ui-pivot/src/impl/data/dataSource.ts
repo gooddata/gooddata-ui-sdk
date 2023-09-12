@@ -156,8 +156,8 @@ export class AgGridDatasource implements IDatasource {
                 dimensionSetTotals(definition.dimensions[1], desiredRowTotals),
             );
 
-        // Update buckets property only when totals/subtotals for columns change. So table is updated properly.
-        if (desiredRowTotals.length > 0) {
+        // Update buckets property only when adding or removing columns totals/subtotals. So table is updated properly.
+        if (desiredRowTotals.length > 0 || (desiredRowTotals && definition.buckets[2].totals !== undefined)) {
             transformedExecution = transformedExecution.withBuckets(
                 definition.buckets[0],
                 bucketSetTotals(definition.buckets[1], desiredTotals),
