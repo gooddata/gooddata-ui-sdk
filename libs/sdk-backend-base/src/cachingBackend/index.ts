@@ -411,6 +411,14 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return super.setLocale(locale);
     }
 
+    public async setColorPalette(colorPaletteId: string): Promise<void> {
+        return super.setColorPalette(colorPaletteId);
+    }
+
+    public async setTheme(themeId: string): Promise<void> {
+        return super.setTheme(themeId);
+    }
+
     private getOrCreateWorkspaceEntry = (workspace: string): WorkspaceSettingsCacheEntry => {
         const cache = this.ctx.caches.workspaceSettings!;
         let cacheEntry = cache.get(workspace);

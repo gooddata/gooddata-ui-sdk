@@ -927,7 +927,9 @@ export interface IWorkspaceSettings extends ISettings {
 export interface IWorkspaceSettingsService {
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setColorPalette(colorPaletteId: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setTheme(themeId: string): Promise<void>;
 }
 
 // @public

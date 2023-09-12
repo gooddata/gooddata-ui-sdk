@@ -38,4 +38,12 @@ export class BearUserSettingsService implements IUserSettingsService {
     public setLocale(_locale: string): Promise<void> {
         throw new NotSupported("Backend does not support user locale setup");
     }
+
+    public setTheme(_themeId: string): Promise<void> {
+        throw new NotSupported("Backend does not support user theme setup");
+    }
+
+    public setColorPalette(_colorPaletteId: string): Promise<void> {
+        throw new NotSupported("Backend does not support user color palette setup");
+    }
 }

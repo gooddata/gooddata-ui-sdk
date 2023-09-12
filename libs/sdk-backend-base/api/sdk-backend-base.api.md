@@ -563,7 +563,11 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     // (undocumented)
+    setColorPalette(colorPaletteId: string): Promise<void>;
+    // (undocumented)
     setLocale(locale: string): Promise<void>;
+    // (undocumented)
+    setTheme(themeId: string): Promise<void>;
 }
 
 // @alpha

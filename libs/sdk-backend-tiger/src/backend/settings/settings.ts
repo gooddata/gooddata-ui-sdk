@@ -16,6 +16,14 @@ export class TigerSettingsService<T> {
         return this.setSetting("LOCALE", { value: locale });
     }
 
+    public async setTheme(themeId: string): Promise<void> {
+        return this.setSetting("ACTIVE_THEME", { value: themeId });
+    }
+
+    public async setColorPalette(colorPaletteId: string): Promise<void> {
+        return this.setSetting("ACTIVE_COLOR_PALETTE", { value: colorPaletteId });
+    }
+
     protected async setSetting(type: TigerSettingsType, content: any): Promise<void> {
         try {
             const { data } = await this.getSettingByType(type);

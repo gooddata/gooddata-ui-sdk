@@ -41,6 +41,10 @@ import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
+import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
+import { JsonApiWorkspaceDataFilterSettingInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiWorkspaceDataFilterSettingOutDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceInDocument } from '@gooddata/api-client-tiger';
 import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
 import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
@@ -462,6 +466,10 @@ export type TigerSpecificFunctions = {
     inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getWorkspaceDataFilter?: (workspaceId: string, objectId: string) => Promise<WorkspaceDataFilterResult>;
+    setWorkspaceDataFilter?: (workspaceId: string, workspaceDataFilter: WorkspaceDataFilter) => Promise<void>;
+    getWorkspaceDataFilterSetting?: (workspaceId: string, objectId: string) => Promise<WorkspaceDataFilterSettingResult>;
+    setWorkspaceDataFilterSetting?: (workspaceId: string, workspaceDataFilterSetting: WorkspaceDataFilterSetting) => Promise<void>;
     getAllCSPDirectives?: () => Promise<Array<ICSPDirective>>;
     getCSPDirective?: (directiveId: string) => Promise<ICSPDirective>;
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
@@ -517,6 +525,18 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     updateApiToken: (apiToken: string) => void;
 }
+
+// @internal (undocumented)
+export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
+
+// @internal (undocumented)
+export type WorkspaceDataFilterResult = JsonApiWorkspaceDataFilterOutDocument;
+
+// @internal (undocumented)
+export type WorkspaceDataFilterSetting = JsonApiWorkspaceDataFilterSettingInDocument;
+
+// @internal (undocumented)
+export type WorkspaceDataFilterSettingResult = JsonApiWorkspaceDataFilterSettingOutDocument;
 
 // @internal (undocumented)
 export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;

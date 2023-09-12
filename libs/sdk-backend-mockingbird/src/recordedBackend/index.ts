@@ -215,6 +215,12 @@ function recordedWorkspace(
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setColorPalette(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setTheme(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {

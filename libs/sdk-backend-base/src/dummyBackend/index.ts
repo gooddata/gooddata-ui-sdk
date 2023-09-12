@@ -793,6 +793,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         return Promise.resolve();
     }
 
+    setTheme(_themeId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setColorPalette(_colorPaletteId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
     setTimezone(_timezone: string): Promise<void> {
         return Promise.resolve();
     }
