@@ -71,7 +71,7 @@
     "gs.list.cannotSelectMoreValues": "您不能选择超过 {limit} 个值。",
     "gs.list.noItemsFound": "未找到任何项。",
     "gs.list.noResultsMatch": "没有匹配结果",
-    "gs.list.error": "加载列表项时出错",
+    "gs.list.error": "加载筛选值时出错。",
     "gs.header.upsellButtonText": "升级",
     "gs.header.invite": "邀请",
     "gs.header.countdown.numberOfDaysLeft": "剩余 {number} 天",
