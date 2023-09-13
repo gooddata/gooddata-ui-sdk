@@ -71,7 +71,7 @@
     "gs.list.cannotSelectMoreValues": "U kunt niet meer dan {limit} waarden selecteren.",
     "gs.list.noItemsFound": "Geen items gevonden.",
     "gs.list.noResultsMatch": "Geen overeenkomende resultaten",
-    "gs.list.error": "Fout bij inlezen lijstitems",
+    "gs.list.error": "Fout bij het uploaden van filterwaarden.",
     "gs.header.upsellButtonText": "Upgrade",
     "gs.header.invite": "Uitnodigen",
     "gs.header.countdown.numberOfDaysLeft": "Nog {number} dagen",
