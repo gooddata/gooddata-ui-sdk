@@ -89,6 +89,18 @@ export interface IGranularUserGroupAccess extends IGranteeGranularity {
 }
 
 /**
+ * Rules access specification with granular permissions.
+ *
+ * @alpha
+ */
+export interface IGranularRulesAccess extends IGranteeGranularity {
+    /**
+     * Access type
+     */
+    type: "allWorkspaceUsers";
+}
+
+/**
  * Tests whether the provided object is an instance of {@link IGranularUserAccess}.
  *
  * @param obj - object to test
@@ -127,7 +139,8 @@ export type AccessGranteeDetail =
     | IUserAccess
     | IUserGroupAccess
     | IGranularUserAccess
-    | IGranularUserGroupAccess;
+    | IGranularUserGroupAccess
+    | IGranularRulesAccess;
 
 /**
  * User access grantee specification.
@@ -237,6 +250,18 @@ export interface IGranularUserGroupAccessGrantee extends IGranteeGranularity {
 }
 
 /**
+ * All workspace user access grantee specification with granular permissions.
+ *
+ * @public
+ */
+export interface IGranularRulesAccessGrantee extends IGranteeGranularity {
+    /**
+     * Access grantee type
+     */
+    type: "allWorkspaceUsers";
+}
+
+/**
  * Tests whether the provided object is an instance of {@link IGranularUserAccessGrantee}.
  *
  * @param obj - object to test
@@ -267,11 +292,24 @@ export const isGranularAccessGrantee = (obj: unknown): obj is IGranularAccessGra
 };
 
 /**
+ * Tests whether the provided object is an instance of {@link IGranularUserGroupAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isGranularRulesAccessGrantee = (obj: unknown): obj is IGranularUserGroupAccessGrantee => {
+    return !isEmpty(obj) && (obj as IGranularRulesAccessGrantee).type === "allWorkspaceUsers";
+};
+
+/**
  * Access grantee with granular permission.
  *
  * @public
  */
-export type IGranularAccessGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee;
+export type IGranularAccessGrantee =
+    | IGranularUserAccessGrantee
+    | IGranularUserGroupAccessGrantee
+    | IGranularRulesAccessGrantee;
 
 /**
  * Access grantee specification.

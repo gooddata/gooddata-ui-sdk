@@ -12,7 +12,7 @@ import { IInsightDefinition as IInsightDefinition_2 } from './index.js';
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
 // @alpha
-export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess;
+export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess | IGranularRulesAccess;
 
 // @public
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
@@ -1319,7 +1319,17 @@ export interface IGranteeGranularity {
 }
 
 // @public
-export type IGranularAccessGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee;
+export type IGranularAccessGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee | IGranularRulesAccessGrantee;
+
+// @alpha
+export interface IGranularRulesAccess extends IGranteeGranularity {
+    type: "allWorkspaceUsers";
+}
+
+// @public
+export interface IGranularRulesAccessGrantee extends IGranteeGranularity {
+    type: "allWorkspaceUsers";
+}
 
 // @alpha
 export interface IGranularUserAccess extends IGranteeGranularity {
@@ -2414,6 +2424,9 @@ export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IG
 
 // @alpha
 export const isGranularAccessGrantee: (obj: unknown) => obj is IGranularAccessGrantee;
+
+// @alpha
+export const isGranularRulesAccessGrantee: (obj: unknown) => obj is IGranularUserGroupAccessGrantee;
 
 // @alpha
 export const isGranularUserAccess: (obj: unknown) => obj is IGranularUserAccess;
