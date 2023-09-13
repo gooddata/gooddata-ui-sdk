@@ -236,6 +236,23 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
         createComparison({ calculationType: CalculateAs.DIFFERENCE }),
     ],
     [
+        "comparison with calculate as change (different) and default format",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
+        createComparison({ calculationType: CalculateAs.CHANGE_DIFFERENCE }),
+    ],
+    [
+        "comparison with calculate as change (different) and custom format",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
+        createComparison({
+            calculationType: CalculateAs.CHANGE_DIFFERENCE,
+            colorConfig: {
+                disabled: true,
+            },
+            format: "[color=d2ccde]#,##0.0",
+            subFormat: "[color=9c46b5]#,##0.00",
+        }),
+    ],
+    [
         "comparison with decimal-1 format",
         ReferenceRecordings.Scenarios.Headline.ComparisonWithDecimal1Format,
         createComparison({ format: "#,##0.0" }),
