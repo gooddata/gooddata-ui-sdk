@@ -11,14 +11,14 @@ import NumberFormatToggleButton from "./NumberFormatToggleButton.js";
 import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { COMPARISON_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
-import { comparisonMessages } from "../../../../../../locales.js";
-import { getNumberFormat, getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
+import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
 
 interface INumberFormatControlProps {
     disabled: boolean;
+    valuePath: string;
+    labelText: string;
+    format: string;
     showDisabledMessage?: boolean;
-    defaultFormat: string;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
@@ -26,19 +26,19 @@ interface INumberFormatControlProps {
 
 const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
     disabled,
+    valuePath,
+    labelText,
+    format,
     showDisabledMessage,
-    defaultFormat,
     separators,
     properties,
     pushData,
 }) => {
     const intl = useIntl();
 
-    const format = getNumberFormat(properties, defaultFormat);
-
     const selectFormat = (format: string) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties.controls, COMPARISON_FORMAT_VALUE_PATH, format);
+        set(clonedProperties.controls, valuePath, format);
 
         pushData({ properties: clonedProperties });
     };
@@ -50,7 +50,7 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
         <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
             <div className="adi-properties-dropdown-container measure-number-format-control">
                 <span className="input-label-text">
-                    <FormattedMessage id={comparisonMessages.formatTitle.id} />
+                    <FormattedMessage id={labelText} />
                 </span>
                 <label className="adi-bucket-inputfield gd-input gd-input-small measure-number-format-control-dropdown">
                     <MeasureNumberFormat

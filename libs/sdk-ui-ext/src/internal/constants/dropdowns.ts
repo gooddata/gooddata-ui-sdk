@@ -149,6 +149,12 @@ export const calculationDropdownItems: IDropdownItem[] = [
         info: CalculateAs.DIFFERENCE,
         icon: "gd-dropdown-icon-calculated-as-difference",
     },
+    {
+        title: comparisonMessages.calculatedAsChangeDifference.id,
+        value: CalculateAs.CHANGE_DIFFERENCE,
+        info: CalculateAs.CHANGE_DIFFERENCE,
+        icon: "gd-dropdown-icon-calculated-as-change-difference",
+    },
 ];
 
 export const comparisonPositionDropdownItems: IDropdownItem[] = [

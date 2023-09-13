@@ -2,7 +2,7 @@
 import React from "react";
 
 import CalculationListItemInfoSection from "./CalculationListItemInfoSection.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 
 interface ICalculationItemInfoProps {
     title: string;
@@ -14,7 +14,22 @@ const CalculationListItemInfo: React.FC<ICalculationItemInfoProps> = ({ title, c
         <div className="calculation-item-info">
             <h3 className="calculation-item-info-header">{title}</h3>
             <CalculationListItemInfoSection calculationType={calculationType} section="useIn" />
-            <CalculationListItemInfoSection calculationType={calculationType} section="formula" />
+            {calculationType === CalculateAs.CHANGE_DIFFERENCE ? (
+                <>
+                    <CalculationListItemInfoSection
+                        calculationType={CalculateAs.CHANGE}
+                        section="formula"
+                        isSectionCombineCalculationType={true}
+                    />
+                    <CalculationListItemInfoSection
+                        calculationType={CalculateAs.DIFFERENCE}
+                        section="formula"
+                        isSectionCombineCalculationType={true}
+                    />
+                </>
+            ) : (
+                <CalculationListItemInfoSection calculationType={calculationType} section="formula" />
+            )}
             <CalculationListItemInfoSection calculationType={calculationType} section="example" />
         </div>
     );

@@ -1388,6 +1388,11 @@
         "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
         "limit": 0
     },
+    "properties.comparison.calculationType.as.changeDifference": {
+        "value": "Change (difference)",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values.",
+        "limit": 0
+    },
     "properties.comparison.calculationType.tooltip.useIn.section": {
         "value": "When to use",
         "comment": "The title of the section that describes the pertinent scenarios for the calculation.",
@@ -1423,9 +1428,29 @@
         "comment": "The content describes the pertinent scenarios for the difference calculation.",
         "limit": 0
     },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._metric": {
+        "value": "To calculate both relative and absolute change between primary and secondary metric.",
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._measure": {
+        "value": "To calculate both relative and absolute change between primary and secondary measure.",
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
+        "limit": 0
+    },
     "properties.comparison.calculationType.tooltip.formula.section": {
         "value": "Formula",
         "comment": "The title of the section that describes the formula for the calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.formulaChange.section": {
+        "value": "Formula change",
+        "comment": "The title of the section that describes the formula for the change calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.formulaDifference.section": {
+        "value": "Formula difference",
+        "comment": "The title of the section that describes the formula for the formula calculation",
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.formula": {
@@ -1461,6 +1486,11 @@
     "properties.comparison.calculationType.as.difference.tooltip.example": {
         "value": "Sales difference compared to last year = This year sales - Last year sales",
         "comment": "The example illustrating the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.example": {
+        "value": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales \nand (This year sales - last year sales)",
+        "comment": "The example illustrating the change (difference) calculation.",
         "limit": 0
     },
     "properties.comparison.measureNumber.format.preset.inherit": {
@@ -1591,6 +1621,11 @@
     "properties.comparison.format.title": {
         "value": "Format",
         "comment": "The label of comparison format control.",
+        "limit": 0
+    },
+    "properties.comparison.subFormat.title": {
+        "value": "(Format)",
+        "comment": "The label of comparison sub format control.",
         "limit": 0
     },
     "properties.comparison.indicator.title": {
