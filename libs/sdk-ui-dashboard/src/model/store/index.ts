@@ -248,6 +248,7 @@ export {
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
     selectIsKpiAlertOpenedByWidgetRef,
+    selectIsInsightAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogDefaultAttachment,

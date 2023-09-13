@@ -2,7 +2,12 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { usePrevious } from "@gooddata/sdk-ui";
-import { filterObjRef, IAttributeElement, IAttributeFilter, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import {
+    filterObjRef,
+    IAttributeElement,
+    IAttributeFilter,
+    IAttributeMetadataObject,
+} from "@gooddata/sdk-model";
 
 import {
     IMultiSelectAttributeFilterHandler,

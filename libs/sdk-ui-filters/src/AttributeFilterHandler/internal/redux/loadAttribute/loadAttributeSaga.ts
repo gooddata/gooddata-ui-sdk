@@ -46,15 +46,11 @@ export function* loadAttributeSaga(
 
         let attribute: PromiseFnReturnType<typeof loadAttributeByDisplayForm>;
         const preloadedAttribute = yield select(selectAttribute);
-    
+
         if (preloadedAttribute) {
             attribute = preloadedAttribute;
         } else {
-            attribute = yield call(
-                loadAttributeByDisplayForm,
-                context,
-                displayFormRef,
-            );
+            attribute = yield call(loadAttributeByDisplayForm, context, displayFormRef);
         }
 
         yield put(actions.loadAttributeSuccess({ attribute, correlation }));

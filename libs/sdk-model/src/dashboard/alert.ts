@@ -44,6 +44,11 @@ export interface IWidgetAlertBase {
      * Rule to apply
      */
     readonly whenTriggered: "underThreshold" | "aboveThreshold";
+
+    /**
+     * Action to trigger when the alert is triggered.
+     */
+    readonly actionName?: string;
 }
 
 /**

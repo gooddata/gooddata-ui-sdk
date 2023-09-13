@@ -50,7 +50,8 @@ export type ObjectType =
     | "colorPalette"
     | "filterContext"
     | "dashboardPlugin"
-    | "attributeHierarchy";
+    | "attributeHierarchy"
+    | "widgetAlert";
 
 /**
  * Model object reference using object's unique identifier.

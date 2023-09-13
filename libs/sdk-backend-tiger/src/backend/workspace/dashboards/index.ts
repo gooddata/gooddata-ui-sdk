@@ -3,6 +3,7 @@ import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
     isVisualizationObjectsItem,
+    ITigerClient,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiDashboardPluginInTypeEnum,
@@ -10,50 +11,51 @@ import {
     jsonApiHeaders,
     MetadataUtilities,
     ValidateRelationsHeader,
-    ITigerClient,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
     IDashboardWithReferences,
+    IExportResult,
     IGetDashboardOptions,
+    IGetDashboardPluginOptions,
     IWorkspaceDashboardsService,
     NotSupported,
     SupportedDashboardReferenceTypes,
-    UnexpectedError,
     TimeoutError,
-    IExportResult,
-    IGetDashboardPluginOptions,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
-    IFilter,
-    ObjRef,
+    FilterContextItem,
+    IDashboard,
+    IDashboardDefinition,
+    IDashboardPermissions,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
     idRef,
+    IFilter,
     IFilterContext,
     IFilterContextDefinition,
-    ITempFilterContext,
+    IListedDashboard,
+    isAllTimeDashboardDateFilter,
     isFilterContext,
     isFilterContextDefinition,
     isTempFilterContext,
+    ITempFilterContext,
     IWidget,
-    IDashboard,
-    IDashboardDefinition,
-    IListedDashboard,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardPermissions,
-    FilterContextItem,
-    isAllTimeDashboardDateFilter,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
-    convertFilterContextFromBackend,
-    getFilterContextFromIncluded,
     convertDashboardPluginFromBackend,
     convertDashboardPluginWithLinksFromBackend,
+    convertFilterContextFromBackend,
+    getFilterContextFromIncluded,
 } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import {
@@ -69,6 +71,8 @@ import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashb
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
+import { convertWidgetAlert } from "../../../convertors/fromBackend/analyticalDashboards/WidgetAlertConverter.js";
+import { convertWidgetAlert as convertWidgetAlertToBackend } from "../../../convertors/toBackend/WidgetAlertConverter.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -427,13 +431,50 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return 0;
     };
 
-    public getAllWidgetAlertsForCurrentUser = async () => {
-        // FIXME Not supported
-        return [];
+    public getAllWidgetAlertsForCurrentUser = async (): Promise<IWidgetAlert[]> => {
+        const alerts = await this.authCall(async (client) =>
+            client.entities.getAllEntitiesWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
+                    // TODO current user
+                },
+                { headers: jsonApiHeaders },
+            ),
+        );
+
+        return alerts.data.data.map((a) =>
+            convertWidgetAlert(
+                a,
+                alerts.data.included?.find(
+                    (i) => i.type === "filterContext" && i.id === a.relationships!.filterContext?.data?.id,
+                ) as any,
+            ),
+        );
     };
 
-    public getDashboardWidgetAlertsForCurrentUser = async () => {
-        throw new NotSupported("Tiger backend does not support alerting.");
+    public getDashboardWidgetAlertsForCurrentUser = async (ref: ObjRef): Promise<IWidgetAlert[]> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const alerts = await this.authCall(async (client) =>
+            client.entities.getAllEntitiesWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
+                    filter: `analyticalDashboard.id==${id}`,
+                    // TODO current user
+                },
+                { headers: jsonApiHeaders },
+            ),
+        );
+
+        return alerts.data.data.map((a) =>
+            convertWidgetAlert(
+                a,
+                alerts.data.included?.find(
+                    (i) => i.type === "filterContext" && i.id === a.relationships!.filterContext?.data?.id,
+                ) as any,
+            ),
+        );
     };
 
     public getWidgetAlertsCountForWidgets = async () => {
@@ -441,20 +482,96 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return [];
     };
 
-    public createWidgetAlert = async () => {
-        throw new NotSupported("Tiger backend does not support alerting.");
+    public createWidgetAlert = async (alert: IWidgetAlertDefinition): Promise<IWidgetAlert> => {
+        const filterContext = isFilterContextDefinition(alert.filterContext)
+            ? await this.createFilterContext(alert.filterContext)
+            : undefined;
+        const res = await this.authCall((client) => {
+            return client.entities.createEntityWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["filterContext", "visualizationObject"],
+                    jsonApiWidgetAlertInDocument: convertWidgetAlertToBackend({
+                        ...alert,
+                        filterContext,
+                    }),
+                },
+                { headers: jsonApiHeaders },
+            );
+        });
+        return convertWidgetAlert(
+            res.data.data,
+            res.data.included?.find(
+                (i) =>
+                    i.type === "filterContext" &&
+                    i.id === res.data.data.relationships!.filterContext?.data?.id,
+            ) as any,
+        );
     };
 
-    public updateWidgetAlert = async () => {
-        throw new NotSupported("Tiger backend does not support alerting.");
+    public updateWidgetAlert = async (updatedAlert: IWidgetAlert): Promise<IWidgetAlert> => {
+        const savedFilterContext = await this.createOrUpdateWidgetAlertFilterContext(updatedAlert);
+        const alertWithSavedFilterContext: IWidgetAlert = {
+            ...updatedAlert,
+            filterContext: savedFilterContext,
+        };
+
+        const id = await objRefToIdentifier(updatedAlert.ref, this.authCall);
+
+        const res = await this.authCall((client) =>
+            client.entities.updateEntityWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["filterContext", "visualizationObject"],
+                    objectId: id,
+                    jsonApiWidgetAlertInDocument: convertWidgetAlertToBackend(alertWithSavedFilterContext),
+                },
+                { headers: jsonApiHeaders },
+            ),
+        );
+
+        return convertWidgetAlert(
+            res.data.data,
+            res.data.included?.find(
+                (i) =>
+                    i.type === "filterContext" &&
+                    i.id === res.data.data.relationships!.filterContext?.data?.id,
+            ) as any,
+        );
     };
 
-    public deleteWidgetAlert = async () => {
-        throw new NotSupported("Tiger backend does not support alerting.");
+    private createOrUpdateWidgetAlertFilterContext = async (
+        alert: IWidgetAlertDefinition,
+    ): Promise<IFilterContext> => {
+        const { filterContext } = alert;
+        const emptyFilterContextDefinition: IFilterContextDefinition = {
+            title: `Filter context for ${objRefToString(alert.widget)}`,
+            description: "",
+            filters: [],
+        };
+
+        return isFilterContext(filterContext)
+            ? this.updateFilterContext(filterContext)
+            : // Create a new filter context, or create implicit filter context, when not provided
+              this.createFilterContext(filterContext || emptyFilterContextDefinition);
     };
 
-    public deleteWidgetAlerts = async () => {
-        throw new NotSupported("Tiger backend does not support alerting.");
+    public deleteWidgetAlert = async (ref: ObjRef): Promise<void> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        // should also remove filter contexts, fine for now...
+        await this.authCall((client) =>
+            client.entities.deleteEntityWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    objectId: id,
+                },
+                { headers: jsonApiHeaders },
+            ),
+        );
+    };
+
+    public deleteWidgetAlerts = async (refs: ObjRef[]): Promise<void> => {
+        await Promise.all(refs.map((ref) => this.deleteWidgetAlert(ref)));
     };
 
     public getWidgetReferencedObjects = async () => {
