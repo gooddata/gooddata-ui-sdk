@@ -1973,6 +1973,21 @@ export interface DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest {
 }
 
 // @public
+export interface DatasetGrain {
+    id: string;
+    type: DatasetGrainTypeEnum;
+}
+
+// @public (undocumented)
+export const DatasetGrainTypeEnum: {
+    readonly ATTRIBUTE: "attribute";
+    readonly DATE: "date";
+};
+
+// @public (undocumented)
+export type DatasetGrainTypeEnum = typeof DatasetGrainTypeEnum[keyof typeof DatasetGrainTypeEnum];
+
+// @public
 export interface DatasetReferenceIdentifier {
     id: string;
     type: DatasetReferenceIdentifierTypeEnum;
@@ -2763,8 +2778,8 @@ export interface DeclarativeRsaSpecification {
     kty: DeclarativeRsaSpecificationKtyEnum;
     n: string;
     use: DeclarativeRsaSpecificationUseEnum;
-    x5c: Array<string>;
-    x5t: string;
+    x5c?: Array<string>;
+    x5t?: string;
 }
 
 // @public (undocumented)
@@ -2810,6 +2825,8 @@ export const DeclarativeSettingTypeEnum: {
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
     readonly WEEK_START: "WEEK_START";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+    readonly ZAPIER_TOKEN: "ZAPIER_TOKEN";
 };
 
 // @public (undocumented)
@@ -3269,6 +3286,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    createEntityWidgetAlerts(requestParameters: EntitiesApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
@@ -3291,6 +3309,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    deleteEntityWidgetAlerts(requestParameters: EntitiesApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -3322,6 +3341,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesUsers(requestParameters?: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any>>;
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any>>;
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any>>;
+    getAllEntitiesWidgetAlerts(requestParameters: EntitiesApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutList, any>>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any>>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any>>;
     getAllEntitiesWorkspaces(requestParameters?: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any>>;
@@ -3359,6 +3379,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    getEntityWidgetAlerts(requestParameters: EntitiesApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
@@ -3382,6 +3403,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    patchEntityWidgetAlerts(requestParameters: EntitiesApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
@@ -3406,6 +3428,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    updateEntityWidgetAlerts(requestParameters: EntitiesApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
@@ -3432,6 +3455,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     createEntityUserSettings: (userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUsers: (jsonApiUserInDocument: JsonApiUserInDocument, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWidgetAlerts: (workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceDataFilterSettings: (workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceDataFilters: (workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3454,6 +3478,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     deleteEntityUserSettings: (userId: string, id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityUsers: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3484,6 +3509,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getAllEntitiesUserSettings: (userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUsers: (filter?: string, include?: Array<"userGroups" | "ALL">, page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWidgetAlerts: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilterSettings: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilters: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceSettings: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3518,6 +3544,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getEntityUserSettings: (userId: string, id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityUsers: (id: string, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3541,6 +3568,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     patchEntityUserGroups: (id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string, include?: Array<"userGroups" | "parents" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityUsers: (id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingPatchDocument: JsonApiWorkspaceDataFilterSettingPatchDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3565,6 +3593,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     updateEntityUserSettings: (userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityUsers: (id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -3685,6 +3714,14 @@ export interface EntitiesApiCreateEntityUsersRequest {
 export interface EntitiesApiCreateEntityVisualizationObjectsRequest {
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiCreateEntityWidgetAlertsRequest {
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
     readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
@@ -3836,6 +3873,13 @@ export interface EntitiesApiDeleteEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiDeleteEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly objectId: string;
@@ -3882,6 +3926,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWidgetAlerts(requestParameters: EntitiesApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -3904,6 +3949,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWidgetAlerts(requestParameters: EntitiesApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -3934,6 +3980,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
     getAllEntitiesUsers(requestParameters: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWidgetAlerts(requestParameters: EntitiesApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
@@ -3970,6 +4017,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWidgetAlerts(requestParameters: EntitiesApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -3993,6 +4041,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: EntitiesApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -4017,6 +4066,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: EntitiesApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -4043,6 +4093,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     createEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     createEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutDocument>>;
     createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    createEntityWidgetAlerts(workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     createEntityWorkspaceDataFilterSettings(workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     createEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -4065,6 +4116,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     deleteEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityUsers(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -4095,6 +4147,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     getAllEntitiesUserSettings(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutList>>;
     getAllEntitiesUsers(filter?: string, include?: Array<"userGroups" | "ALL">, page?: number, size?: number, sort?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutList>>;
     getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
+    getAllEntitiesWidgetAlerts(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutList>>;
     getAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>>;
     getAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutList>>;
     getAllEntitiesWorkspaceSettings(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutList>>;
@@ -4131,6 +4184,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     getEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     getEntityUsers(id: string, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutDocument>>;
     getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    getEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     getEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     getEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     getEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -4154,6 +4208,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     patchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string, include?: Array<"userGroups" | "parents" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     patchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutDocument>>;
     patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    patchEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     patchEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingPatchDocument: JsonApiWorkspaceDataFilterSettingPatchDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     patchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     patchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -4178,6 +4233,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     updateEntityUserSettings(userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     updateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string, include?: Array<"userGroups" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutDocument>>;
     updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    updateEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     updateEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     updateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     updateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -4459,6 +4515,19 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
@@ -4729,6 +4798,16 @@ export interface EntitiesApiGetEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
@@ -4788,6 +4867,7 @@ export interface EntitiesApiInterface {
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWidgetAlerts(requestParameters: EntitiesApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
@@ -4810,6 +4890,7 @@ export interface EntitiesApiInterface {
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWidgetAlerts(requestParameters: EntitiesApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -4841,6 +4922,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesUsers(requestParameters: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWidgetAlerts(requestParameters: EntitiesApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaces(requestParameters: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
@@ -4878,6 +4960,7 @@ export interface EntitiesApiInterface {
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWidgetAlerts(requestParameters: EntitiesApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
@@ -4901,6 +4984,7 @@ export interface EntitiesApiInterface {
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: EntitiesApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
@@ -4925,6 +5009,7 @@ export interface EntitiesApiInterface {
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: EntitiesApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
@@ -5071,6 +5156,15 @@ export interface EntitiesApiPatchEntityVisualizationObjectsRequest {
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -5265,6 +5359,15 @@ export interface EntitiesApiUpdateEntityVisualizationObjectsRequest {
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -5606,7 +5709,7 @@ export interface GrainIdentifier {
 // @public (undocumented)
 export const GrainIdentifierTypeEnum: {
     readonly ATTRIBUTE: "attribute";
-    readonly DATASET: "dataset";
+    readonly DATE: "date";
 };
 
 // @public (undocumented)
@@ -5994,7 +6097,7 @@ export const JSON_API_HEADER_VALUE = "application/vnd.gooddata.api+json";
 
 // @public
 export interface JsonApiAnalyticalDashboardIn {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiAnalyticalDashboardInTypeEnum;
 }
@@ -6181,9 +6284,18 @@ export type JsonApiAnalyticalDashboardOutWithLinksTypeEnum = typeof JsonApiAnaly
 
 // @public
 export interface JsonApiAnalyticalDashboardPatch {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiAnalyticalDashboardPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiAnalyticalDashboardPatchAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -6201,18 +6313,9 @@ export type JsonApiAnalyticalDashboardPatchTypeEnum = typeof JsonApiAnalyticalDa
 
 // @public
 export interface JsonApiAnalyticalDashboardPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id?: string;
     type: JsonApiAnalyticalDashboardPostOptionalIdTypeEnum;
-}
-
-// @public
-export interface JsonApiAnalyticalDashboardPostOptionalIdAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -6297,18 +6400,9 @@ export type JsonApiApiTokenOutWithLinksTypeEnum = typeof JsonApiApiTokenOutWithL
 
 // @public
 export interface JsonApiAttributeHierarchyIn {
-    attributes?: JsonApiAttributeHierarchyInAttributes;
+    attributes?: JsonApiAttributeHierarchyPatchAttributes;
     id: string;
     type: JsonApiAttributeHierarchyInTypeEnum;
-}
-
-// @public
-export interface JsonApiAttributeHierarchyInAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -6420,9 +6514,18 @@ export type JsonApiAttributeHierarchyOutWithLinksTypeEnum = typeof JsonApiAttrib
 
 // @public
 export interface JsonApiAttributeHierarchyPatch {
-    attributes?: JsonApiAttributeHierarchyInAttributes;
+    attributes?: JsonApiAttributeHierarchyPatchAttributes;
     id: string;
     type: JsonApiAttributeHierarchyPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiAttributeHierarchyPatchAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -6590,9 +6693,15 @@ export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
 
 // @public
 export interface JsonApiColorPaletteIn {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiColorPaletteInTypeEnum;
+}
+
+// @public
+export interface JsonApiColorPaletteInAttributes {
+    content: object;
+    name: string;
 }
 
 // @public
@@ -6610,15 +6719,9 @@ export type JsonApiColorPaletteInTypeEnum = typeof JsonApiColorPaletteInTypeEnum
 
 // @public
 export interface JsonApiColorPaletteOut {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiColorPaletteOutTypeEnum;
-}
-
-// @public
-export interface JsonApiColorPaletteOutAttributes {
-    content: object;
-    name: string;
 }
 
 // @public
@@ -6643,7 +6746,7 @@ export type JsonApiColorPaletteOutTypeEnum = typeof JsonApiColorPaletteOutTypeEn
 
 // @public
 export interface JsonApiColorPaletteOutWithLinks {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiColorPaletteOutWithLinksTypeEnum;
@@ -6752,9 +6855,14 @@ export type JsonApiCookieSecurityConfigurationPatchTypeEnum = typeof JsonApiCook
 
 // @public
 export interface JsonApiCspDirectiveIn {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     type: JsonApiCspDirectiveInTypeEnum;
+}
+
+// @public
+export interface JsonApiCspDirectiveInAttributes {
+    sources: Array<string>;
 }
 
 // @public
@@ -6772,14 +6880,9 @@ export type JsonApiCspDirectiveInTypeEnum = typeof JsonApiCspDirectiveInTypeEnum
 
 // @public
 export interface JsonApiCspDirectiveOut {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     type: JsonApiCspDirectiveOutTypeEnum;
-}
-
-// @public
-export interface JsonApiCspDirectiveOutAttributes {
-    sources: Array<string>;
 }
 
 // @public
@@ -6804,7 +6907,7 @@ export type JsonApiCspDirectiveOutTypeEnum = typeof JsonApiCspDirectiveOutTypeEn
 
 // @public
 export interface JsonApiCspDirectiveOutWithLinks {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiCspDirectiveOutWithLinksTypeEnum;
@@ -6845,7 +6948,7 @@ export type JsonApiCspDirectivePatchTypeEnum = typeof JsonApiCspDirectivePatchTy
 
 // @public
 export interface JsonApiCustomApplicationSettingIn {
-    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    attributes: JsonApiCustomApplicationSettingOutAttributes;
     id: string;
     type: JsonApiCustomApplicationSettingInTypeEnum;
 }
@@ -6865,10 +6968,16 @@ export type JsonApiCustomApplicationSettingInTypeEnum = typeof JsonApiCustomAppl
 
 // @public
 export interface JsonApiCustomApplicationSettingOut {
-    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    attributes: JsonApiCustomApplicationSettingOutAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     type: JsonApiCustomApplicationSettingOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCustomApplicationSettingOutAttributes {
+    applicationName: string;
+    content: object;
 }
 
 // @public
@@ -6893,7 +7002,7 @@ export type JsonApiCustomApplicationSettingOutTypeEnum = typeof JsonApiCustomApp
 
 // @public
 export interface JsonApiCustomApplicationSettingOutWithLinks {
-    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    attributes: JsonApiCustomApplicationSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -6936,15 +7045,9 @@ export type JsonApiCustomApplicationSettingPatchTypeEnum = typeof JsonApiCustomA
 
 // @public
 export interface JsonApiCustomApplicationSettingPostOptionalId {
-    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    attributes: JsonApiCustomApplicationSettingOutAttributes;
     id?: string;
     type: JsonApiCustomApplicationSettingPostOptionalIdTypeEnum;
-}
-
-// @public
-export interface JsonApiCustomApplicationSettingPostOptionalIdAttributes {
-    applicationName: string;
-    content: object;
 }
 
 // @public
@@ -6962,7 +7065,7 @@ export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = typeof JsonA
 
 // @public
 export interface JsonApiDashboardPluginIn {
-    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
     id: string;
     type: JsonApiDashboardPluginInTypeEnum;
 }
@@ -7062,9 +7165,18 @@ export type JsonApiDashboardPluginOutWithLinksTypeEnum = typeof JsonApiDashboard
 
 // @public
 export interface JsonApiDashboardPluginPatch {
-    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
     id: string;
     type: JsonApiDashboardPluginPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiDashboardPluginPatchAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -7082,18 +7194,9 @@ export type JsonApiDashboardPluginPatchTypeEnum = typeof JsonApiDashboardPluginP
 
 // @public
 export interface JsonApiDashboardPluginPostOptionalId {
-    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
     id?: string;
     type: JsonApiDashboardPluginPostOptionalIdTypeEnum;
-}
-
-// @public
-export interface JsonApiDashboardPluginPostOptionalIdAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -7151,14 +7254,13 @@ export interface JsonApiDatasetOutAttributes {
 // @public
 export interface JsonApiDatasetOutAttributesGrain {
     id: string;
-    order: number;
     type: JsonApiDatasetOutAttributesGrainTypeEnum;
 }
 
 // @public (undocumented)
 export const JsonApiDatasetOutAttributesGrainTypeEnum: {
     readonly ATTRIBUTE: "attribute";
-    readonly DATASET: "dataset";
+    readonly DATE: "date";
 };
 
 // @public (undocumented)
@@ -7169,7 +7271,8 @@ export interface JsonApiDatasetOutAttributesReferenceProperties {
     identifier: DatasetReferenceIdentifier;
     multivalue: boolean;
     sourceColumnDataTypes?: Array<JsonApiDatasetOutAttributesReferencePropertiesSourceColumnDataTypesEnum>;
-    sourceColumns: Array<string>;
+    sourceColumns?: Array<string>;
+    sources?: Array<ReferenceSourceColumn>;
 }
 
 // @public (undocumented)
@@ -7305,7 +7408,7 @@ export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
 export interface JsonApiDataSourceIdentifierOut {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
@@ -7349,20 +7452,6 @@ export interface JsonApiDataSourceIdentifierOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiDataSourceIdentifierOutMeta {
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-// @public (undocumented)
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly USE: "USE";
-};
-
-// @public (undocumented)
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
 // @public (undocumented)
 export const JsonApiDataSourceIdentifierOutTypeEnum: {
     readonly DATA_SOURCE_IDENTIFIER: "dataSourceIdentifier";
@@ -7376,7 +7465,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
 }
 
@@ -7400,13 +7489,19 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     password?: string;
     schema: string;
     token?: string;
     type: JsonApiDataSourceInAttributesTypeEnum;
     url?: string;
     username?: string;
+}
+
+// @public
+export interface JsonApiDataSourceInAttributesParameters {
+    name: string;
+    value: string;
 }
 
 // @public (undocumented)
@@ -7447,27 +7542,21 @@ export type JsonApiDataSourceInTypeEnum = typeof JsonApiDataSourceInTypeEnum[key
 export interface JsonApiDataSourceOut {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutTypeEnum;
 }
 
 // @public
 export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
-    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourceInAttributesParameters>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     schema: string;
     type: JsonApiDataSourceOutAttributesTypeEnum;
     url?: string;
     username?: string;
-}
-
-// @public
-export interface JsonApiDataSourceOutAttributesParameters {
-    name: string;
-    value: string;
 }
 
 // @public (undocumented)
@@ -7503,6 +7592,20 @@ export interface JsonApiDataSourceOutList {
     links?: ListLinks;
 }
 
+// @public
+export interface JsonApiDataSourceOutMeta {
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+// @public (undocumented)
+export const JsonApiDataSourceOutMetaPermissionsEnum: {
+    readonly MANAGE: "MANAGE";
+    readonly USE: "USE";
+};
+
+// @public (undocumented)
+export type JsonApiDataSourceOutMetaPermissionsEnum = typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
 // @public (undocumented)
 export const JsonApiDataSourceOutTypeEnum: {
     readonly DATA_SOURCE: "dataSource";
@@ -7516,7 +7619,7 @@ export interface JsonApiDataSourceOutWithLinks {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutWithLinksTypeEnum;
 }
 
@@ -7540,7 +7643,7 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name?: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     password?: string;
     schema?: string;
     token?: string;
@@ -7809,7 +7912,7 @@ export type JsonApiFactOutWithLinksTypeEnum = typeof JsonApiFactOutWithLinksType
 
 // @public
 export interface JsonApiFilterContextIn {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiFilterContextInTypeEnum;
 }
@@ -7843,7 +7946,7 @@ export type JsonApiFilterContextLinkageTypeEnum = typeof JsonApiFilterContextLin
 
 // @public
 export interface JsonApiFilterContextOut {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     relationships?: JsonApiFilterContextOutRelationships;
@@ -7884,7 +7987,7 @@ export type JsonApiFilterContextOutTypeEnum = typeof JsonApiFilterContextOutType
 
 // @public
 export interface JsonApiFilterContextOutWithLinks {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -7902,7 +8005,7 @@ export type JsonApiFilterContextOutWithLinksTypeEnum = typeof JsonApiFilterConte
 
 // @public
 export interface JsonApiFilterContextPatch {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiFilterContextPatchTypeEnum;
 }
@@ -7922,7 +8025,7 @@ export type JsonApiFilterContextPatchTypeEnum = typeof JsonApiFilterContextPatch
 
 // @public
 export interface JsonApiFilterContextPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id?: string;
     type: JsonApiFilterContextPostOptionalIdTypeEnum;
 }
@@ -7940,6 +8043,9 @@ export const JsonApiFilterContextPostOptionalIdTypeEnum: {
 // @public (undocumented)
 export type JsonApiFilterContextPostOptionalIdTypeEnum = typeof JsonApiFilterContextPostOptionalIdTypeEnum[keyof typeof JsonApiFilterContextPostOptionalIdTypeEnum];
 
+// @public
+export type JsonApiFilterContextToOneLinkage = JsonApiFilterContextLinkage;
+
 // @public (undocumented)
 export const jsonApiHeaders: {
     Accept: string;
@@ -7948,9 +8054,14 @@ export const jsonApiHeaders: {
 
 // @public
 export interface JsonApiJwkIn {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkInAttributes;
     id: string;
     type: JsonApiJwkInTypeEnum;
+}
+
+// @public
+export interface JsonApiJwkInAttributes {
+    content?: RsaSpecification;
 }
 
 // @public
@@ -7968,14 +8079,9 @@ export type JsonApiJwkInTypeEnum = typeof JsonApiJwkInTypeEnum[keyof typeof Json
 
 // @public
 export interface JsonApiJwkOut {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkInAttributes;
     id: string;
     type: JsonApiJwkOutTypeEnum;
-}
-
-// @public
-export interface JsonApiJwkOutAttributes {
-    content?: RsaSpecification;
 }
 
 // @public
@@ -8000,7 +8106,7 @@ export type JsonApiJwkOutTypeEnum = typeof JsonApiJwkOutTypeEnum[keyof typeof Js
 
 // @public
 export interface JsonApiJwkOutWithLinks {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiJwkOutWithLinksTypeEnum;
@@ -8016,7 +8122,7 @@ export type JsonApiJwkOutWithLinksTypeEnum = typeof JsonApiJwkOutWithLinksTypeEn
 
 // @public
 export interface JsonApiJwkPatch {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkInAttributes;
     id: string;
     type: JsonApiJwkPatchTypeEnum;
 }
@@ -8150,9 +8256,18 @@ export type JsonApiLabelToOneLinkage = JsonApiLabelLinkage;
 
 // @public
 export interface JsonApiMetricIn {
-    attributes: JsonApiMetricPostOptionalIdAttributes;
+    attributes: JsonApiMetricInAttributes;
     id: string;
     type: JsonApiMetricInTypeEnum;
+}
+
+// @public
+export interface JsonApiMetricInAttributes {
+    areRelationsValid?: boolean;
+    content: JsonApiMetricPatchAttributesContent;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -8194,7 +8309,7 @@ export interface JsonApiMetricOut {
 // @public
 export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
-    content: JsonApiMetricPostOptionalIdAttributesContent;
+    content: JsonApiMetricPatchAttributesContent;
     createdAt?: string;
     description?: string;
     modifiedAt?: string;
@@ -8271,10 +8386,16 @@ export interface JsonApiMetricPatch {
 // @public
 export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
-    content?: JsonApiMetricPostOptionalIdAttributesContent;
+    content?: JsonApiMetricPatchAttributesContent;
     description?: string;
     tags?: Array<string>;
     title?: string;
+}
+
+// @public
+export interface JsonApiMetricPatchAttributesContent {
+    format?: string;
+    maql: string;
 }
 
 // @public
@@ -8292,24 +8413,9 @@ export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof
 
 // @public
 export interface JsonApiMetricPostOptionalId {
-    attributes: JsonApiMetricPostOptionalIdAttributes;
+    attributes: JsonApiMetricInAttributes;
     id?: string;
     type: JsonApiMetricPostOptionalIdTypeEnum;
-}
-
-// @public
-export interface JsonApiMetricPostOptionalIdAttributes {
-    areRelationsValid?: boolean;
-    content: JsonApiMetricPostOptionalIdAttributesContent;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
-}
-
-// @public
-export interface JsonApiMetricPostOptionalIdAttributesContent {
-    format?: string;
-    maql: string;
 }
 
 // @public
@@ -8420,18 +8526,8 @@ export type JsonApiOrganizationOutMetaPermissionsEnum = typeof JsonApiOrganizati
 
 // @public
 export interface JsonApiOrganizationOutRelationships {
-    bootstrapUser?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-    bootstrapUserGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
-}
-
-// @public
-export interface JsonApiOrganizationOutRelationshipsBootstrapUser {
-    data: JsonApiUserToOneLinkage | null;
-}
-
-// @public
-export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
-    data: JsonApiUserGroupToOneLinkage | null;
+    bootstrapUser?: JsonApiUserDataFilterPatchRelationshipsUser;
+    bootstrapUserGroup?: JsonApiUserDataFilterPatchRelationshipsUserGroup;
 }
 
 // @public (undocumented)
@@ -8464,10 +8560,33 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
+
+// @public
+export interface JsonApiOrganizationSettingInAttributes {
+    content?: object;
+    type?: JsonApiOrganizationSettingInAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiOrganizationSettingInAttributesTypeEnum: {
+    readonly TIMEZONE: "TIMEZONE";
+    readonly ACTIVE_THEME: "ACTIVE_THEME";
+    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
+    readonly WHITE_LABELING: "WHITE_LABELING";
+    readonly LOCALE: "LOCALE";
+    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
+    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+    readonly ZAPIER_TOKEN: "ZAPIER_TOKEN";
+};
+
+// @public (undocumented)
+export type JsonApiOrganizationSettingInAttributesTypeEnum = typeof JsonApiOrganizationSettingInAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingInAttributesTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingInDocument {
@@ -8484,7 +8603,7 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
@@ -8511,7 +8630,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -8527,7 +8646,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -8547,7 +8666,7 @@ export type JsonApiOrganizationSettingPatchTypeEnum = typeof JsonApiOrganization
 
 // @public
 export interface JsonApiThemeIn {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiThemeInTypeEnum;
 }
@@ -8567,7 +8686,7 @@ export type JsonApiThemeInTypeEnum = typeof JsonApiThemeInTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiThemeOut {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiThemeOutTypeEnum;
 }
@@ -8594,7 +8713,7 @@ export type JsonApiThemeOutTypeEnum = typeof JsonApiThemeOutTypeEnum[keyof typeo
 
 // @public
 export interface JsonApiThemeOutWithLinks {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiThemeOutWithLinksTypeEnum;
@@ -8630,9 +8749,9 @@ export type JsonApiThemePatchTypeEnum = typeof JsonApiThemePatchTypeEnum[keyof t
 
 // @public
 export interface JsonApiUserDataFilterIn {
-    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
+    attributes: JsonApiUserDataFilterOutAttributes;
     id: string;
-    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    relationships?: JsonApiUserDataFilterPatchRelationships;
     type: JsonApiUserDataFilterInTypeEnum;
 }
 
@@ -8651,11 +8770,20 @@ export type JsonApiUserDataFilterInTypeEnum = typeof JsonApiUserDataFilterInType
 
 // @public
 export interface JsonApiUserDataFilterOut {
-    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
+    attributes: JsonApiUserDataFilterOutAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     relationships?: JsonApiUserDataFilterOutRelationships;
     type: JsonApiUserDataFilterOutTypeEnum;
+}
+
+// @public
+export interface JsonApiUserDataFilterOutAttributes {
+    areRelationsValid?: boolean;
+    description?: string;
+    maql: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -8682,8 +8810,8 @@ export interface JsonApiUserDataFilterOutRelationships {
     facts?: JsonApiMetricOutRelationshipsFacts;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-    userGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
+    user?: JsonApiUserDataFilterPatchRelationshipsUser;
+    userGroup?: JsonApiUserDataFilterPatchRelationshipsUserGroup;
 }
 
 // @public (undocumented)
@@ -8696,7 +8824,7 @@ export type JsonApiUserDataFilterOutTypeEnum = typeof JsonApiUserDataFilterOutTy
 
 // @public
 export interface JsonApiUserDataFilterOutWithLinks {
-    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
+    attributes: JsonApiUserDataFilterOutAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -8716,7 +8844,7 @@ export type JsonApiUserDataFilterOutWithLinksTypeEnum = typeof JsonApiUserDataFi
 export interface JsonApiUserDataFilterPatch {
     attributes: JsonApiUserDataFilterPatchAttributes;
     id: string;
-    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    relationships?: JsonApiUserDataFilterPatchRelationships;
     type: JsonApiUserDataFilterPatchTypeEnum;
 }
 
@@ -8734,6 +8862,22 @@ export interface JsonApiUserDataFilterPatchDocument {
     data: JsonApiUserDataFilterPatch;
 }
 
+// @public
+export interface JsonApiUserDataFilterPatchRelationships {
+    user?: JsonApiUserDataFilterPatchRelationshipsUser;
+    userGroup?: JsonApiUserDataFilterPatchRelationshipsUserGroup;
+}
+
+// @public
+export interface JsonApiUserDataFilterPatchRelationshipsUser {
+    data: JsonApiUserToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiUserDataFilterPatchRelationshipsUserGroup {
+    data: JsonApiUserGroupToOneLinkage | null;
+}
+
 // @public (undocumented)
 export const JsonApiUserDataFilterPatchTypeEnum: {
     readonly USER_DATA_FILTER: "userDataFilter";
@@ -8744,30 +8888,15 @@ export type JsonApiUserDataFilterPatchTypeEnum = typeof JsonApiUserDataFilterPat
 
 // @public
 export interface JsonApiUserDataFilterPostOptionalId {
-    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
+    attributes: JsonApiUserDataFilterOutAttributes;
     id?: string;
-    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    relationships?: JsonApiUserDataFilterPatchRelationships;
     type: JsonApiUserDataFilterPostOptionalIdTypeEnum;
-}
-
-// @public
-export interface JsonApiUserDataFilterPostOptionalIdAttributes {
-    areRelationsValid?: boolean;
-    description?: string;
-    maql: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
 export interface JsonApiUserDataFilterPostOptionalIdDocument {
     data: JsonApiUserDataFilterPostOptionalId;
-}
-
-// @public
-export interface JsonApiUserDataFilterPostOptionalIdRelationships {
-    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-    userGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
 }
 
 // @public (undocumented)
@@ -8780,15 +8909,30 @@ export type JsonApiUserDataFilterPostOptionalIdTypeEnum = typeof JsonApiUserData
 
 // @public
 export interface JsonApiUserGroupIn {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupInTypeEnum;
+}
+
+// @public
+export interface JsonApiUserGroupInAttributes {
+    name?: string;
 }
 
 // @public
 export interface JsonApiUserGroupInDocument {
     data: JsonApiUserGroupIn;
+}
+
+// @public
+export interface JsonApiUserGroupInRelationships {
+    parents?: JsonApiUserGroupInRelationshipsParents;
+}
+
+// @public
+export interface JsonApiUserGroupInRelationshipsParents {
+    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -8815,15 +8959,10 @@ export type JsonApiUserGroupLinkageTypeEnum = typeof JsonApiUserGroupLinkageType
 
 // @public
 export interface JsonApiUserGroupOut {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserGroupOutAttributes {
-    name?: string;
 }
 
 // @public
@@ -8840,16 +8979,6 @@ export interface JsonApiUserGroupOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserGroupOutRelationships {
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-
-// @public
-export interface JsonApiUserGroupOutRelationshipsParents {
-    data: Array<JsonApiUserGroupLinkage>;
-}
-
 // @public (undocumented)
 export const JsonApiUserGroupOutTypeEnum: {
     readonly USER_GROUP: "userGroup";
@@ -8860,10 +8989,10 @@ export type JsonApiUserGroupOutTypeEnum = typeof JsonApiUserGroupOutTypeEnum[key
 
 // @public
 export interface JsonApiUserGroupOutWithLinks {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupOutWithLinksTypeEnum;
 }
 
@@ -8877,9 +9006,9 @@ export type JsonApiUserGroupOutWithLinksTypeEnum = typeof JsonApiUserGroupOutWit
 
 // @public
 export interface JsonApiUserGroupPatch {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupPatchTypeEnum;
 }
 
@@ -8968,15 +9097,28 @@ export type JsonApiUserIdentifierToOneLinkage = JsonApiUserIdentifierLinkage;
 
 // @public
 export interface JsonApiUserIn {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserInTypeEnum;
+}
+
+// @public
+export interface JsonApiUserInAttributes {
+    authenticationId?: string;
+    email?: string;
+    firstname?: string;
+    lastname?: string;
 }
 
 // @public
 export interface JsonApiUserInDocument {
     data: JsonApiUserIn;
+}
+
+// @public
+export interface JsonApiUserInRelationships {
+    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 
 // @public (undocumented)
@@ -9003,18 +9145,10 @@ export type JsonApiUserLinkageTypeEnum = typeof JsonApiUserLinkageTypeEnum[keyof
 
 // @public
 export interface JsonApiUserOut {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserOutAttributes {
-    authenticationId?: string;
-    email?: string;
-    firstname?: string;
-    lastname?: string;
 }
 
 // @public
@@ -9031,11 +9165,6 @@ export interface JsonApiUserOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserOutRelationships {
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
-}
-
 // @public (undocumented)
 export const JsonApiUserOutTypeEnum: {
     readonly USER: "user";
@@ -9046,10 +9175,10 @@ export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiUserOutWithLinks {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserOutWithLinksTypeEnum;
 }
 
@@ -9063,9 +9192,9 @@ export type JsonApiUserOutWithLinksTypeEnum = typeof JsonApiUserOutWithLinksType
 
 // @public
 export interface JsonApiUserPatch {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserPatchTypeEnum;
 }
 
@@ -9084,7 +9213,7 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
@@ -9104,7 +9233,7 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
 }
@@ -9131,7 +9260,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -9150,7 +9279,7 @@ export type JsonApiUserToOneLinkage = JsonApiUserLinkage;
 
 // @public
 export interface JsonApiVisualizationObjectIn {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiVisualizationObjectInTypeEnum;
 }
@@ -9233,7 +9362,7 @@ export type JsonApiVisualizationObjectOutWithLinksTypeEnum = typeof JsonApiVisua
 
 // @public
 export interface JsonApiVisualizationObjectPatch {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id: string;
     type: JsonApiVisualizationObjectPatchTypeEnum;
 }
@@ -9253,7 +9382,7 @@ export type JsonApiVisualizationObjectPatchTypeEnum = typeof JsonApiVisualizatio
 
 // @public
 export interface JsonApiVisualizationObjectPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     id?: string;
     type: JsonApiVisualizationObjectPostOptionalIdTypeEnum;
 }
@@ -9272,33 +9401,161 @@ export const JsonApiVisualizationObjectPostOptionalIdTypeEnum: {
 export type JsonApiVisualizationObjectPostOptionalIdTypeEnum = typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum[keyof typeof JsonApiVisualizationObjectPostOptionalIdTypeEnum];
 
 // @public
-export interface JsonApiWorkspaceDataFilterIn {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+export type JsonApiVisualizationObjectToOneLinkage = JsonApiVisualizationObjectLinkage;
+
+// @public
+export interface JsonApiWidgetAlertIn {
+    attributes?: JsonApiWidgetAlertPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
-    type: JsonApiWorkspaceDataFilterInTypeEnum;
+    relationships?: JsonApiWidgetAlertPatchRelationships;
+    type: JsonApiWidgetAlertInTypeEnum;
 }
 
 // @public
-export interface JsonApiWorkspaceDataFilterInAttributes {
-    columnName?: string;
+export interface JsonApiWidgetAlertInDocument {
+    data: JsonApiWidgetAlertIn;
+}
+
+// @public (undocumented)
+export const JsonApiWidgetAlertInTypeEnum: {
+    readonly WIDGET_ALERT: "widgetAlert";
+};
+
+// @public (undocumented)
+export type JsonApiWidgetAlertInTypeEnum = typeof JsonApiWidgetAlertInTypeEnum[keyof typeof JsonApiWidgetAlertInTypeEnum];
+
+// @public
+export interface JsonApiWidgetAlertOut {
+    attributes?: JsonApiWidgetAlertOutAttributes;
+    id: string;
+    meta?: JsonApiAttributeHierarchyOutMeta;
+    relationships?: JsonApiWidgetAlertOutRelationships;
+    type: JsonApiWidgetAlertOutTypeEnum;
+}
+
+// @public
+export interface JsonApiWidgetAlertOutAttributes {
+    actionName?: string;
+    areRelationsValid?: boolean;
+    createdAt?: string;
     description?: string;
+    modifiedAt?: string;
+    tags?: Array<string>;
+    threshold?: number;
     title?: string;
+    whenTriggered?: string;
+}
+
+// @public
+export interface JsonApiWidgetAlertOutDocument {
+    data: JsonApiWidgetAlertOut;
+    included?: Array<JsonApiWidgetAlertOutIncludes>;
+    links?: ObjectLinks;
+}
+
+// @public
+export type JsonApiWidgetAlertOutIncludes = JsonApiFilterContextOutWithLinks | JsonApiUserIdentifierOutWithLinks | JsonApiVisualizationObjectOutWithLinks;
+
+// @public
+export interface JsonApiWidgetAlertOutList {
+    data: Array<JsonApiWidgetAlertOutWithLinks>;
+    included?: Array<JsonApiWidgetAlertOutIncludes>;
+    links?: ListLinks;
+}
+
+// @public
+export interface JsonApiWidgetAlertOutRelationships {
+    createdBy?: JsonApiAnalyticalDashboardOutRelationshipsCreatedBy;
+    filterContext?: JsonApiWidgetAlertPatchRelationshipsFilterContext;
+    modifiedBy?: JsonApiAnalyticalDashboardOutRelationshipsCreatedBy;
+    visualizationObject?: JsonApiWidgetAlertPatchRelationshipsVisualizationObject;
+}
+
+// @public (undocumented)
+export const JsonApiWidgetAlertOutTypeEnum: {
+    readonly WIDGET_ALERT: "widgetAlert";
+};
+
+// @public (undocumented)
+export type JsonApiWidgetAlertOutTypeEnum = typeof JsonApiWidgetAlertOutTypeEnum[keyof typeof JsonApiWidgetAlertOutTypeEnum];
+
+// @public
+export interface JsonApiWidgetAlertOutWithLinks {
+    attributes?: JsonApiWidgetAlertOutAttributes;
+    id: string;
+    links?: ObjectLinks;
+    meta?: JsonApiAttributeHierarchyOutMeta;
+    relationships?: JsonApiWidgetAlertOutRelationships;
+    type: JsonApiWidgetAlertOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiWidgetAlertOutWithLinksTypeEnum: {
+    readonly WIDGET_ALERT: "widgetAlert";
+};
+
+// @public (undocumented)
+export type JsonApiWidgetAlertOutWithLinksTypeEnum = typeof JsonApiWidgetAlertOutWithLinksTypeEnum[keyof typeof JsonApiWidgetAlertOutWithLinksTypeEnum];
+
+// @public
+export interface JsonApiWidgetAlertPatch {
+    attributes?: JsonApiWidgetAlertPatchAttributes;
+    id: string;
+    relationships?: JsonApiWidgetAlertPatchRelationships;
+    type: JsonApiWidgetAlertPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWidgetAlertPatchAttributes {
+    actionName?: string;
+    areRelationsValid?: boolean;
+    description?: string;
+    tags?: Array<string>;
+    threshold?: number;
+    title?: string;
+    whenTriggered?: string;
+}
+
+// @public
+export interface JsonApiWidgetAlertPatchDocument {
+    data: JsonApiWidgetAlertPatch;
+}
+
+// @public
+export interface JsonApiWidgetAlertPatchRelationships {
+    filterContext?: JsonApiWidgetAlertPatchRelationshipsFilterContext;
+    visualizationObject?: JsonApiWidgetAlertPatchRelationshipsVisualizationObject;
+}
+
+// @public
+export interface JsonApiWidgetAlertPatchRelationshipsFilterContext {
+    data: JsonApiFilterContextToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiWidgetAlertPatchRelationshipsVisualizationObject {
+    data: JsonApiVisualizationObjectToOneLinkage | null;
+}
+
+// @public (undocumented)
+export const JsonApiWidgetAlertPatchTypeEnum: {
+    readonly WIDGET_ALERT: "widgetAlert";
+};
+
+// @public (undocumented)
+export type JsonApiWidgetAlertPatchTypeEnum = typeof JsonApiWidgetAlertPatchTypeEnum[keyof typeof JsonApiWidgetAlertPatchTypeEnum];
+
+// @public
+export interface JsonApiWorkspaceDataFilterIn {
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    id: string;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    type: JsonApiWorkspaceDataFilterInTypeEnum;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterInDocument {
     data: JsonApiWorkspaceDataFilterIn;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterInRelationships {
-    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 
 // @public (undocumented)
@@ -9325,9 +9582,9 @@ export type JsonApiWorkspaceDataFilterLinkageTypeEnum = typeof JsonApiWorkspaceD
 
 // @public
 export interface JsonApiWorkspaceDataFilterOut {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
     type: JsonApiWorkspaceDataFilterOutTypeEnum;
 }
 
@@ -9355,10 +9612,10 @@ export type JsonApiWorkspaceDataFilterOutTypeEnum = typeof JsonApiWorkspaceDataF
 
 // @public
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
     type: JsonApiWorkspaceDataFilterOutWithLinksTypeEnum;
 }
 
@@ -9372,15 +9629,32 @@ export type JsonApiWorkspaceDataFilterOutWithLinksTypeEnum = typeof JsonApiWorks
 
 // @public
 export interface JsonApiWorkspaceDataFilterPatch {
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
     type: JsonApiWorkspaceDataFilterPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterPatchAttributes {
+    columnName?: string;
+    description?: string;
+    title?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterPatchDocument {
     data: JsonApiWorkspaceDataFilterPatch;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterPatchRelationships {
+    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 
 // @public (undocumented)
@@ -9393,32 +9667,15 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum = typeof JsonApiWorkspaceDat
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingIn {
-    attributes?: JsonApiWorkspaceDataFilterSettingInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterSettingInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingInTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterSettingInAttributes {
-    description?: string;
-    filterValues?: Array<string>;
-    title?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingInDocument {
     data: JsonApiWorkspaceDataFilterSettingIn;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterSettingInRelationships {
-    workspaceDataFilter?: JsonApiWorkspaceDataFilterSettingInRelationshipsWorkspaceDataFilter;
-}
-
-// @public
-export interface JsonApiWorkspaceDataFilterSettingInRelationshipsWorkspaceDataFilter {
-    data: JsonApiWorkspaceDataFilterToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -9445,9 +9702,9 @@ export type JsonApiWorkspaceDataFilterSettingLinkageTypeEnum = typeof JsonApiWor
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOut {
-    attributes?: JsonApiWorkspaceDataFilterSettingInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterSettingInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingOutTypeEnum;
 }
 
@@ -9475,10 +9732,10 @@ export type JsonApiWorkspaceDataFilterSettingOutTypeEnum = typeof JsonApiWorkspa
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceDataFilterSettingInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiWorkspaceDataFilterSettingInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum;
 }
 
@@ -9492,15 +9749,32 @@ export type JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum = typeof JsonA
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingPatch {
-    attributes?: JsonApiWorkspaceDataFilterSettingInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceDataFilterSettingInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
     type: JsonApiWorkspaceDataFilterSettingPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchAttributes {
+    description?: string;
+    filterValues?: Array<string>;
+    title?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceDataFilterSettingPatchDocument {
     data: JsonApiWorkspaceDataFilterSettingPatch;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationships {
+    workspaceDataFilter?: JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter;
+}
+
+// @public
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter {
+    data: JsonApiWorkspaceDataFilterToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -9516,15 +9790,34 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
 
 // @public
 export interface JsonApiWorkspaceIn {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceInTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceInAttributes {
+    cacheExtraLimit?: number;
+    description?: string;
+    earlyAccess?: string;
+    name?: string;
+    prefix?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceInDocument {
     data: JsonApiWorkspaceIn;
+}
+
+// @public
+export interface JsonApiWorkspaceInRelationships {
+    parent?: JsonApiWorkspaceInRelationshipsParent;
+}
+
+// @public
+export interface JsonApiWorkspaceInRelationshipsParent {
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -9551,20 +9844,11 @@ export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageType
 
 // @public
 export interface JsonApiWorkspaceOut {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceOutTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceOutAttributes {
-    cacheExtraLimit?: number;
-    description?: string;
-    earlyAccess?: string;
-    name?: string;
-    prefix?: string;
 }
 
 // @public
@@ -9607,16 +9891,6 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum: {
 // @public (undocumented)
 export type JsonApiWorkspaceOutMetaPermissionsEnum = typeof JsonApiWorkspaceOutMetaPermissionsEnum[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
 
-// @public
-export interface JsonApiWorkspaceOutRelationships {
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-
-// @public
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-
 // @public (undocumented)
 export const JsonApiWorkspaceOutTypeEnum: {
     readonly WORKSPACE: "workspace";
@@ -9627,11 +9901,11 @@ export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[key
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
 }
 
@@ -9645,9 +9919,9 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWit
 
 // @public
 export interface JsonApiWorkspacePatch {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspacePatchTypeEnum;
 }
 
@@ -9666,7 +9940,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -9686,7 +9960,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -9714,7 +9988,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -9731,7 +10005,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -9751,31 +10025,10 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettin
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     id?: string;
     type: JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
-
-// @public
-export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
-    content?: object;
-    type?: JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export const JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum: {
-    readonly TIMEZONE: "TIMEZONE";
-    readonly ACTIVE_THEME: "ACTIVE_THEME";
-    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
-    readonly WHITE_LABELING: "WHITE_LABELING";
-    readonly LOCALE: "LOCALE";
-    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
-    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
-    readonly WEEK_START: "WEEK_START";
-};
-
-// @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = typeof JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -12012,6 +12265,27 @@ export const ReferenceIdentifierTypeEnum: {
 export type ReferenceIdentifierTypeEnum = typeof ReferenceIdentifierTypeEnum[keyof typeof ReferenceIdentifierTypeEnum];
 
 // @public
+export interface ReferenceSourceColumn {
+    column: string;
+    dataType?: ReferenceSourceColumnDataTypeEnum;
+    target: DatasetGrain;
+}
+
+// @public (undocumented)
+export const ReferenceSourceColumnDataTypeEnum: {
+    readonly INT: "INT";
+    readonly STRING: "STRING";
+    readonly DATE: "DATE";
+    readonly NUMERIC: "NUMERIC";
+    readonly TIMESTAMP: "TIMESTAMP";
+    readonly TIMESTAMP_TZ: "TIMESTAMP_TZ";
+    readonly BOOLEAN: "BOOLEAN";
+};
+
+// @public (undocumented)
+export type ReferenceSourceColumnDataTypeEnum = typeof ReferenceSourceColumnDataTypeEnum[keyof typeof ReferenceSourceColumnDataTypeEnum];
+
+// @public
 export interface RelativeDateFilter {
     relativeDateFilter: RelativeDateFilterRelativeDateFilter;
 }
@@ -12100,6 +12374,8 @@ export const ResolvedSettingTypeEnum: {
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
     readonly WEEK_START: "WEEK_START";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+    readonly ZAPIER_TOKEN: "ZAPIER_TOKEN";
 };
 
 // @public (undocumented)
@@ -12147,8 +12423,8 @@ export interface RsaSpecification {
     kty: RsaSpecificationKtyEnum;
     n: string;
     use: RsaSpecificationUseEnum;
-    x5c: Array<string>;
-    x5t: string;
+    x5c?: Array<string>;
+    x5t?: string;
 }
 
 // @public (undocumented)
@@ -13371,6 +13647,112 @@ declare namespace VisualizationObjectModelV2 {
 export { VisualizationObjectModelV2 }
 
 // @public
+export class WidgetAlertsApi extends MetadataBaseApi implements WidgetAlertsApiInterface {
+    createEntityWidgetAlerts(requestParameters: WidgetAlertsApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
+    deleteEntityWidgetAlerts(requestParameters: WidgetAlertsApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getAllEntitiesWidgetAlerts(requestParameters: WidgetAlertsApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutList, any>>;
+    getEntityWidgetAlerts(requestParameters: WidgetAlertsApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
+    patchEntityWidgetAlerts(requestParameters: WidgetAlertsApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
+    updateEntityWidgetAlerts(requestParameters: WidgetAlertsApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
+}
+
+// @public
+export const WidgetAlertsApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
+    createEntityWidgetAlerts: (workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWidgetAlerts: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface WidgetAlertsApiCreateEntityWidgetAlertsRequest {
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WidgetAlertsApiDeleteEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const WidgetAlertsApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createEntityWidgetAlerts(requestParameters: WidgetAlertsApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    deleteEntityWidgetAlerts(requestParameters: WidgetAlertsApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWidgetAlerts(requestParameters: WidgetAlertsApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
+    getEntityWidgetAlerts(requestParameters: WidgetAlertsApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: WidgetAlertsApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: WidgetAlertsApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+};
+
+// @public
+export const WidgetAlertsApiFp: (configuration?: MetadataConfiguration) => {
+    createEntityWidgetAlerts(workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
+    deleteEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getAllEntitiesWidgetAlerts(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutList>>;
+    getEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
+    patchEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
+    updateEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
+};
+
+// @public
+export interface WidgetAlertsApiGetAllEntitiesWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WidgetAlertsApiGetEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WidgetAlertsApiInterface {
+    createEntityWidgetAlerts(requestParameters: WidgetAlertsApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    deleteEntityWidgetAlerts(requestParameters: WidgetAlertsApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWidgetAlerts(requestParameters: WidgetAlertsApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
+    getEntityWidgetAlerts(requestParameters: WidgetAlertsApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: WidgetAlertsApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: WidgetAlertsApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
+}
+
+// @public
+export interface WidgetAlertsApiPatchEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WidgetAlertsApiUpdateEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface WorkspaceIdentifier {
     id: string;
     type: WorkspaceIdentifierTypeEnum;
@@ -13394,6 +13776,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
     createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    createEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     createEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
@@ -13405,6 +13788,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    deleteEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -13420,6 +13804,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any>>;
     getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any>>;
     getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any>>;
+    getAllEntitiesWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutList, any>>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any>>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any>>;
     getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any>>;
@@ -13435,6 +13820,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
     getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    getEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
@@ -13446,6 +13832,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
     patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    patchEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
@@ -13457,6 +13844,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
     updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
     updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    updateEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWidgetAlertOutDocument, any>>;
     updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
     updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
@@ -13472,6 +13860,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     createEntityMetrics: (workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUserDataFilters: (workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWidgetAlerts: (workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceDataFilterSettings: (workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceDataFilters: (workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13483,6 +13872,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     deleteEntityMetrics: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13498,6 +13888,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     getAllEntitiesMetrics: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUserDataFilters: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWidgetAlerts: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilterSettings: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilters: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceSettings: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13513,6 +13904,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     getEntityMetrics: (workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWidgetAlerts: (workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13524,6 +13916,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingPatchDocument: JsonApiWorkspaceDataFilterSettingPatchDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13535,6 +13928,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
     updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWidgetAlerts: (workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13599,6 +13993,14 @@ export interface WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest 
 export interface WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest {
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityWidgetAlertsRequest {
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
     readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
@@ -13681,6 +14083,13 @@ export interface WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsReq
 }
 
 // @public
+export interface WorkspaceObjectControllerApiDeleteEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly objectId: string;
@@ -13711,6 +14120,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -13722,6 +14132,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13737,6 +14148,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
     getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
@@ -13752,6 +14164,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -13763,6 +14176,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -13774,6 +14188,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
     updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -13789,6 +14204,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     createEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     createEntityUserDataFilters(workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    createEntityWidgetAlerts(workspaceId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     createEntityWorkspaceDataFilterSettings(workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     createEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -13800,6 +14216,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     deleteEntityMetrics(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -13815,6 +14232,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     getAllEntitiesMetrics(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutList>>;
     getAllEntitiesUserDataFilters(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserDataFilterOutList>>;
     getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
+    getAllEntitiesWidgetAlerts(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutList>>;
     getAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>>;
     getAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutList>>;
     getAllEntitiesWorkspaceSettings(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutList>>;
@@ -13830,6 +14248,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     getEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     getEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    getEntityWidgetAlerts(workspaceId: string, objectId: string, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     getEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     getEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     getEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -13841,6 +14260,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     patchEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    patchEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     patchEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingPatchDocument: JsonApiWorkspaceDataFilterSettingPatchDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     patchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     patchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -13852,6 +14272,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
     updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     updateEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string, include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    updateEntityWidgetAlerts(workspaceId: string, objectId: string, jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument, filter?: string, include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWidgetAlertOutDocument>>;
     updateEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, filter?: string, include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     updateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string, include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     updateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
@@ -14003,6 +14424,19 @@ export interface WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersReques
 export interface WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest {
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
     readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly origin?: "ALL" | "PARENTS" | "NATIVE";
     readonly page?: number;
@@ -14168,6 +14602,16 @@ export interface WorkspaceObjectControllerApiGetEntityVisualizationObjectsReques
 }
 
 // @public
+export interface WorkspaceObjectControllerApiGetEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
@@ -14204,6 +14648,7 @@ export interface WorkspaceObjectControllerApiInterface {
     createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiCreateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -14215,6 +14660,7 @@ export interface WorkspaceObjectControllerApiInterface {
     deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiDeleteEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -14230,6 +14676,7 @@ export interface WorkspaceObjectControllerApiInterface {
     getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
     getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
@@ -14245,6 +14692,7 @@ export interface WorkspaceObjectControllerApiInterface {
     getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiGetEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -14256,6 +14704,7 @@ export interface WorkspaceObjectControllerApiInterface {
     patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiPatchEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -14267,6 +14716,7 @@ export interface WorkspaceObjectControllerApiInterface {
     updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWidgetAlerts(requestParameters: WorkspaceObjectControllerApiUpdateEntityWidgetAlertsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWidgetAlertOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
@@ -14339,6 +14789,15 @@ export interface WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequ
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertPatchDocument: JsonApiWidgetAlertPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -14436,6 +14895,15 @@ export interface WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsReq
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityWidgetAlertsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "filterContexts" | "userIdentifiers" | "visualizationObject" | "filterContext" | "createdBy" | "modifiedBy" | "ALL">;
+    readonly jsonApiWidgetAlertInDocument: JsonApiWidgetAlertInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }

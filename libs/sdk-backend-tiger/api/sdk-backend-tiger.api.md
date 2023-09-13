@@ -284,6 +284,7 @@ export const objectTypeToTigerIdType: {
     filterContext: TigerObjectType;
     dashboardPlugin: TigerObjectType;
     attributeHierarchy: TigerObjectType;
+    widgetAlert: TigerObjectType;
 };
 
 // @internal (undocumented)
