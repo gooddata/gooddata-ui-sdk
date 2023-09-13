@@ -71,7 +71,7 @@
     "gs.list.cannotSelectMoreValues": "Нельзя выбрать более {limit} значений.",
     "gs.list.noItemsFound": "Ничего не найдено.",
     "gs.list.noResultsMatch": "Ничего не найдено",
-    "gs.list.error": "Ошибка при загрузке элементов списка",
+    "gs.list.error": "Ошибка при загрузке значений фильтра.",
     "gs.header.upsellButtonText": "Улучшить",
     "gs.header.invite": "Пригласить",
     "gs.header.countdown.numberOfDaysLeft": "осталось {number} {number, plural, one {день} few {дня} many {дней} other {дней}}",

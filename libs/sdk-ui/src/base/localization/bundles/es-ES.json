@@ -71,7 +71,7 @@
     "gs.list.cannotSelectMoreValues": "No puede seleccionar más de {limit} valores.",
     "gs.list.noItemsFound": "No se ha encontrado ningún elemento.",
     "gs.list.noResultsMatch": "Ningún resultado coincide",
-    "gs.list.error": "Error al cargar los elementos de la lista",
+    "gs.list.error": "Error al cargar los valores del filtro.",
     "gs.header.upsellButtonText": "Actualizar",
     "gs.header.invite": "Invitar",
     "gs.header.countdown.numberOfDaysLeft": "Quedan {number} días",

@@ -71,7 +71,7 @@
     "gs.list.cannotSelectMoreValues": "{limit} より多くの値を選択できません。",
     "gs.list.noItemsFound": "アイテムが見つかりません。",
     "gs.list.noResultsMatch": "一致する結果がありません",
-    "gs.list.error": "リストの読み込みエラー",
+    "gs.list.error": "フィルタ値のロード時にエラーが発生しました。",
     "gs.header.upsellButtonText": "アップグレード",
     "gs.header.invite": "招待する",
     "gs.header.countdown.numberOfDaysLeft": "残り {number} 日",
