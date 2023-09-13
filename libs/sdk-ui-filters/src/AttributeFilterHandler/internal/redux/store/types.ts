@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Action, AnyAction } from "@reduxjs/toolkit";
-import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement, IAttributeFilter, IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { AttributeFilterState } from "./state.js";
 
 /**
@@ -39,4 +39,5 @@ export interface AttributeFilterHandlerStoreContext {
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     eventListener: AttributeFilterHandlerEventListener;
+    attribute?: IAttributeMetadataObject;
 }

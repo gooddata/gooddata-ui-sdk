@@ -358,6 +358,7 @@ export type IAttributeFilterContext = AttributeFilterController & Pick<IAttribut
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
+    attribute?: IAttributeMetadataObject;
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
@@ -535,6 +536,8 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
+    // (undocumented)
+    attribute?: IAttributeMetadataObject;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
 }
@@ -953,6 +956,8 @@ export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps,
 
 // @beta
 export interface IUseAttributeFilterHandlerProps {
+    // (undocumented)
+    attribute?: IAttributeMetadataObject;
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)

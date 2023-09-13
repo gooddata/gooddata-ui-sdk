@@ -12,7 +12,6 @@ const loadAttributeRequest: AttributeFilterReducer<PayloadAction<{ correlation: 
 const loadAttributeStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.attribute.status = "loading";
     state.attribute.error = undefined;
-    state.attribute.data = undefined;
 };
 
 const loadAttributeSuccess: AttributeFilterReducer<

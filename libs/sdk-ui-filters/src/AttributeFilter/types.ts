@@ -4,6 +4,7 @@ import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
     IAttributeFilter,
+    IAttributeMetadataObject,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -198,6 +199,11 @@ export interface IAttributeFilterCoreProps {
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Provide pre-loaded attribute so its load can be omitted during the initialization.
+     */
+    attribute?: IAttributeMetadataObject;
 }
 
 /**

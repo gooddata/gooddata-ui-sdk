@@ -7,6 +7,7 @@ import { actions } from "../store/slice.js";
 import { getAttributeFilterContext, PromiseFnReturnType } from "../common/sagas.js";
 import { selectAttributeFilterDisplayForm } from "../filter/filterSelectors.js";
 import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
+import { selectAttribute } from "./loadAttributeSelectors.js";
 
 /**
  * @internal
@@ -43,11 +44,18 @@ export function* loadAttributeSaga(
 
         yield put(actions.loadAttributeStart({ correlation }));
 
-        const attribute: PromiseFnReturnType<typeof loadAttributeByDisplayForm> = yield call(
-            loadAttributeByDisplayForm,
-            context,
-            displayFormRef,
-        );
+        let attribute: PromiseFnReturnType<typeof loadAttributeByDisplayForm>;
+        const preloadedAttribute = yield select(selectAttribute);
+    
+        if (preloadedAttribute) {
+            attribute = preloadedAttribute;
+        } else {
+            attribute = yield call(
+                loadAttributeByDisplayForm,
+                context,
+                displayFormRef,
+            );
+        }
 
         yield put(actions.loadAttributeSuccess({ attribute, correlation }));
 

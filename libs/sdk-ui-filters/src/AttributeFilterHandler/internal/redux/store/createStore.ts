@@ -66,6 +66,10 @@ export function createAttributeFilterHandlerStore(
     const store = configureStore({
         preloadedState: {
             ...initialState,
+            attribute: {
+                data: context.attribute,
+                status: "success",
+            },
             displayFormRef,
             elementsForm,
             selection: {
