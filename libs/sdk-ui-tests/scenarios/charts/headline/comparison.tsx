@@ -109,6 +109,29 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
             },
         },
     })
+    .addScenario("comparison with calculate as change (difference) and default sub format", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                calculationType: CalculateAs.CHANGE_DIFFERENCE,
+            },
+        },
+    })
+    .addScenario("comparison with calculate as change (difference) and custom format", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                colorConfig: {
+                    disabled: true,
+                },
+                calculationType: CalculateAs.CHANGE_DIFFERENCE,
+                format: "[color=d2ccde]#,##0.0",
+                subFormat: "[color=9c46b5]#,##0.00",
+            },
+        },
+    })
     .addScenario("comparison with decimal-1 format", {
         ...HeadlinePositiveComparisonMeasures,
         config: {
