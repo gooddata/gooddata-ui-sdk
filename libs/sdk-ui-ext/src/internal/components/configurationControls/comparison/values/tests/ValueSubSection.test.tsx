@@ -13,6 +13,10 @@ import {
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
 import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { CalculateAs } from "@gooddata/sdk-ui-charts";
+import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
+import { comparisonMessages } from "../../../../../../locales.js";
 
 const TITLE_TEXT_QUERY = "Value";
 
@@ -32,9 +36,14 @@ describe("ValueSubSection", () => {
         pushData: mockPushData,
     };
 
-    const renderValueSubSection = () => {
+    const renderValueSubSection = (
+        params: {
+            properties?: IVisualizationProperties<IComparisonControlProperties>;
+        } = {},
+    ) => {
         const props = {
             ...DEFAULT_PROPS,
+            ...params,
         };
 
         return render(
@@ -57,11 +66,15 @@ describe("ValueSubSection", () => {
         const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
         renderValueSubSection();
 
-        const { sectionDisabled, ...expected } = DEFAULT_PROPS;
         expect(MockNumberFormatControl).toHaveBeenCalledWith(
             expect.objectContaining({
-                ...expected,
-                disabled: sectionDisabled,
+                disabled: DEFAULT_PROPS.sectionDisabled,
+                separators: DEFAULT_PROPS.separators,
+                properties: DEFAULT_PROPS.properties,
+                valuePath: COMPARISON_FORMAT_VALUE_PATH,
+                labelText: comparisonMessages.formatTitle.id,
+                format: TEST_DECIMAL_FORMAT_PRESET.format,
+                pushData: mockPushData,
             }),
             expect.anything(),
         );
@@ -76,6 +89,60 @@ describe("ValueSubSection", () => {
                 disabled: DEFAULT_PROPS.sectionDisabled,
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
+            }),
+            expect.anything(),
+        );
+    });
+
+    it("Should select default format while format is empty ", () => {
+        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
+        renderValueSubSection({
+            properties: createTestProperties<IComparisonControlProperties>({
+                comparison: {
+                    enabled: true,
+                },
+            }),
+        });
+
+        expect(MockNumberFormatControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
+            }),
+            expect.anything(),
+        );
+    });
+
+    it("Should render sub-format when calculation type is change (difference)", () => {
+        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
+        renderValueSubSection({
+            properties: createTestProperties<IComparisonControlProperties>({
+                comparison: {
+                    enabled: true,
+                    calculationType: CalculateAs.CHANGE_DIFFERENCE,
+                    format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
+                    subFormat: TEST_DECIMAL_FORMAT_PRESET.format,
+                },
+            }),
+        });
+
+        expect(MockNumberFormatControl).toHaveBeenCalledTimes(2);
+
+        expect(MockNumberFormatControl).toHaveBeenNthCalledWith(
+            1,
+            expect.objectContaining({
+                valuePath: COMPARISON_FORMAT_VALUE_PATH,
+                labelText: comparisonMessages.formatTitle.id,
+                format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
+            }),
+            expect.anything(),
+        );
+
+        expect(MockNumberFormatControl).toHaveBeenNthCalledWith(
+            2,
+            expect.objectContaining({
+                valuePath: COMPARISON_SUB_FORMAT_VALUE_PATH,
+                labelText: comparisonMessages.subFormatTitle.id,
+                format: TEST_DECIMAL_FORMAT_PRESET.format,
             }),
             expect.anything(),
         );

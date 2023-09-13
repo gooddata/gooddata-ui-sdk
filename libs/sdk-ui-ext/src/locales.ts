@@ -214,8 +214,15 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },
     calculatedAsRatio: { id: "properties.comparison.calculationType.as.ratio" },
     calculatedAsDifference: { id: "properties.comparison.calculationType.as.difference" },
+    calculatedAsChangeDifference: { id: "properties.comparison.calculationType.as.changeDifference" },
     calculationTooltipExampleSection: { id: "properties.comparison.calculationType.tooltip.example.section" },
     calculationTooltipFormulaSection: { id: "properties.comparison.calculationType.tooltip.formula.section" },
+    calculationTooltipFormulaChangeSection: {
+        id: "properties.comparison.calculationType.tooltip.formulaChange.section",
+    },
+    calculationTooltipFormulaDifferenceSection: {
+        id: "properties.comparison.calculationType.tooltip.formulaDifference.section",
+    },
     calculationTooltipUseInSection: { id: "properties.comparison.calculationType.tooltip.useIn.section" },
     calculatedAsChangeTooltipExample: {
         id: "properties.comparison.calculationType.as.change.tooltip.example",
@@ -236,9 +243,15 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     calculatedAsDifferenceTooltipFormula: {
         id: "properties.comparison.calculationType.as.difference.tooltip.formula",
     },
-
+    calculatedAsChangeDifferenceTooltipExample: {
+        id: "properties.comparison.calculationType.as.changeDifference.tooltip.example",
+    },
+    calculatedAsChangeDifferenceTooltipUseIn: {
+        id: "properties.comparison.calculationType.as.changeDifference.tooltip.formula",
+    },
     valueSubSectionTitle: { id: "properties.comparison.valueSubSection.title" },
     formatTitle: { id: "properties.comparison.format.title" },
+    subFormatTitle: { id: "properties.comparison.subFormat.title" },
     formatPresetRounded: { id: "properties.comparison.measureNumber.format.preset.rounded" },
     formatPresetDecimal1: { id: "properties.comparison.measureNumber.format.preset.decimal1" },
     formatPresetDecimal2: { id: "properties.comparison.measureNumber.format.preset.decimal2" },
