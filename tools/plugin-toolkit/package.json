@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "9.2.0-alpha.15",
+    "version": "0.0.0-dev.0",
     "author": "GoodData",
     "description": "GoodData Set of Tools for working with Plugins",
     "repository": {
