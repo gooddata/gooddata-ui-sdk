@@ -5,10 +5,11 @@ import { DashboardContext } from "../../../types/commonTypes.js";
 export function loadDashboardAlerts(ctx: DashboardContext): Promise<IWidgetAlert[]> {
     const { backend, workspace, dashboardRef } = ctx;
 
+    // SKIPPING THIS FOR FAST TRACK
     // no need to load anything if the backend does not support setting the alerts in the first place
-    if (!backend.capabilities.supportsKpiWidget) {
-        return Promise.resolve([]);
-    }
+    // if (!backend.capabilities.supportsKpiWidget) {
+    //     return Promise.resolve([]);
+    // }
 
     return backend.workspace(workspace).dashboards().getDashboardWidgetAlertsForCurrentUser(dashboardRef!);
 }

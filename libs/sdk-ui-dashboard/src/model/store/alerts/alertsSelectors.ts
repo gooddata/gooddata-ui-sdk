@@ -5,9 +5,19 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import compact from "lodash/compact.js";
 import memoize from "lodash/memoize.js";
-import { Identifier, ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
+import {
+    Identifier,
+    ObjRef,
+    serializeObjRef,
+    IWidgetAlert,
+    isIdentifierRef,
+    insightId,
+    insightUri,
+    insightRef,
+} from "@gooddata/sdk-model";
 
 import { selectWidgetsMap } from "../layout/layoutSelectors.js";
+import { selectInsightsMap } from "../insights/insightsSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -35,32 +45,54 @@ interface IWidgetAlertMapItem {
  *
  * @internal
  */
-const selectAlertsMapByWidgetRefs = createSelector(selectAlerts, selectWidgetsMap, (alerts, widgetsMap) => {
-    const mappedItems = compact(
-        alerts.map((alert) => {
-            const widget = widgetsMap.get(alert.widget);
-            if (!widget) {
-                /**
-                 * Ignore widgets that are no longer available, this can naturally happen in edit mode when
-                 * a KPI widget is deleted by the user: the alerts are not removed from redux in case the edit
-                 * mode is cancelled (to avoid having to load the dashboard again from the backend).
-                 */
-                return undefined;
-            }
+const selectAlertsMapByWidgetRefs = createSelector(
+    selectAlerts,
+    selectWidgetsMap,
+    selectInsightsMap,
+    (alerts, widgetsMap, insightsMap) => {
+        const mappedItems = compact(
+            alerts.map((alert) => {
+                if (isIdentifierRef(alert.widget) && alert.widget.type === "insight") {
+                    const insight = insightsMap.get(alert.widget);
+                    if (!insight) {
+                        //ignore
+                        return undefined;
+                    }
 
-            const result: IWidgetAlertMapItem = {
-                identifier: widget.identifier,
-                uri: widget.uri,
-                ref: widget.ref,
-                alert,
-            };
+                    const result: IWidgetAlertMapItem = {
+                        identifier: insightId(insight),
+                        uri: insightUri(insight),
+                        ref: insightRef(insight),
+                        alert,
+                    };
 
-            return result;
-        }),
-    );
+                    return result;
+                }
 
-    return newMapForObjectWithIdentity(mappedItems);
-});
+                const widget = widgetsMap.get(alert.widget);
+                if (!widget) {
+                    /**
+                     * Ignore widgets that are no longer available, this can naturally happen in edit mode when
+                     * a KPI widget is deleted by the user: the alerts are not removed from redux in case the edit
+                     * mode is cancelled (to avoid having to load the dashboard again from the backend).
+                     */
+                    return undefined;
+                }
+
+                const result: IWidgetAlertMapItem = {
+                    identifier: widget.identifier,
+                    uri: widget.uri,
+                    ref: widget.ref,
+                    alert,
+                };
+
+                return result;
+            }),
+        );
+
+        return newMapForObjectWithIdentity(mappedItems);
+    },
+);
 
 /**
  * Selects alert or undefined by widget ref
