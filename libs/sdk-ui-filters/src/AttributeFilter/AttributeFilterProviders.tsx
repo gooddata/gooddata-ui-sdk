@@ -28,6 +28,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         fullscreenOnMobile = false,
         selectionMode = "multi",
         selectFirst = false,
+        attribute,
         disabled,
         customIcon,
         attribute,
