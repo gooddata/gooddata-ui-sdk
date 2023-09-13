@@ -2201,6 +2201,11 @@
         "translate": false,
         "limit": 0
     },
+    "fastTrack.alert.success": {
+        "value": "<b>Success.</b> You have set the alert.",
+        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
+        "limit": 0
+    },
     "filter.visibilityMode.tooltip.hidden": {
         "value": "This filter is hidden. It can be accessed only via the Edit mode.",
         "comment": "The tooltip serves as a warning to the user that the filter will be hidden in view mode.",

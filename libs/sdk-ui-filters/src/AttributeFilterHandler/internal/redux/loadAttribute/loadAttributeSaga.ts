@@ -50,11 +50,7 @@ export function* loadAttributeSaga(
         if (preloadedAttribute) {
             attribute = preloadedAttribute;
         } else {
-            attribute = yield call(
-                loadAttributeByDisplayForm,
-                context,
-                displayFormRef,
-            );
+            attribute = yield call(loadAttributeByDisplayForm, context, displayFormRef);
         }
 
         yield put(actions.loadAttributeSuccess({ attribute, correlation }));
