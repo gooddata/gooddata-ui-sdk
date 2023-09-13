@@ -2677,6 +2677,11 @@
         "scenarioName": "multi measures with only primary measure",
         "visName": "Headline"
     },
+    "Headline.2684d22379d29955bdda6db62e97468c": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with calculate as change (difference) and custom format.",
+        "scenarioName": "comparison with calculate as change (difference) and custom format",
+        "visName": "Headline"
+    },
     "Headline.277492aa430856258a8794b54cfbc491": {
         "comment": "Auto-generated insight for test scenario Headline - comparison with default config with secondary measure is PoP.",
         "scenarioName": "comparison with default config with secondary measure is PoP",
@@ -2685,6 +2690,11 @@
     "Headline.346303855acfc20de32fcfcef4a77a57": {
         "comment": "Auto-generated insight for test scenario Headline - two measures.",
         "scenarioName": "two measures",
+        "visName": "Headline"
+    },
+    "Headline.46b65c0a984c50faa7af9759267296d5": {
+        "comment": "Auto-generated insight for test scenario Headline - comparison with calculate as change (difference) and default sub format.",
+        "scenarioName": "comparison with calculate as change (difference) and default sub format",
         "visName": "Headline"
     },
     "Headline.516de9bcf869125bfe4ce739c07ac3c7": {
