@@ -16,6 +16,7 @@ const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";
 const CHANGE_ITEM_TEXT_QUERY = "Change";
 const RATIO_ITEM_TEXT_QUERY = "Ratio";
 const DIFFERENCE_ITEM_TEXT_QUERY = "Difference";
+const CHANGE_DIFFERENCE_ITEM_TEXT_QUERY = "Change (difference)";
 const DROPDOWN_BUTTON_SELECTOR = ".button-dropdown";
 
 describe("CalculationControl", () => {
@@ -123,10 +124,20 @@ describe("CalculationControl", () => {
             }),
             expect.anything(),
         );
+        expect(MockCalculationListItem).toHaveBeenNthCalledWith(
+            4,
+            expect.objectContaining({
+                info: calculationDropdownItems[3].info,
+                icon: calculationDropdownItems[3].icon,
+                title: expect.anything(),
+            }),
+            expect.anything(),
+        );
 
         expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
         expect(screen.getByText(RATIO_ITEM_TEXT_QUERY)).toBeInTheDocument();
         expect(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        expect(screen.getByText(CHANGE_DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
     });
 
     it("Should update property calculation-type when select an item", () => {

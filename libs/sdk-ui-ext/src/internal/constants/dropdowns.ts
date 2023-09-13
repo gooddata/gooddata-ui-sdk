@@ -138,6 +138,12 @@ export const calculationDropdownItems: IDropdownItem[] = [
         icon: "gd-dropdown-icon-calculated-as-change",
     },
     {
+        title: comparisonMessages.calculatedAsChangeDifference.id,
+        value: CalculateAs.CHANGE_DIFFERENCE,
+        info: CalculateAs.CHANGE_DIFFERENCE,
+        icon: "gd-dropdown-icon-calculated-as-change-difference",
+    },
+    {
         title: comparisonMessages.calculatedAsRatio.id,
         value: CalculateAs.RATIO,
         info: CalculateAs.RATIO,

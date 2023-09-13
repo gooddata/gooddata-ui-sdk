@@ -12,6 +12,9 @@ import {
 import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
 import { IVisualizationProperties } from "../../../../../../interfaces/Visualization.js";
+import { COMPARISON_FORMAT_VALUE_PATH } from "../../../ComparisonValuePath.js";
+import { comparisonMessages } from "../../../../../../../locales.js";
+import set from "lodash/set.js";
 
 const DROPDOWN_BUTTON_SELECTOR = ".s-number-format-toggle-button button";
 const TITLE_TEXT_QUERY = "Format";
@@ -21,7 +24,9 @@ describe("NumberFormatControl", () => {
 
     const DEFAULT_PROPS = {
         disabled: false,
-        defaultFormat: "",
+        valuePath: COMPARISON_FORMAT_VALUE_PATH,
+        labelText: comparisonMessages.formatTitle.id,
+        format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
         separators: TEST_DEFAULT_SEPARATOR,
         properties: createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -34,7 +39,7 @@ describe("NumberFormatControl", () => {
     const renderNumberFormatControl = (
         params: {
             disabled?: boolean;
-            defaultFormat?: string;
+            format?: string;
             properties?: IVisualizationProperties<IComparisonControlProperties>;
         } = {},
     ) => {
@@ -61,41 +66,27 @@ describe("NumberFormatControl", () => {
         fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
         fireEvent.click(screen.getByText(TEST_DECIMAL_FORMAT_PRESET.name));
 
+        const expectedProperties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+            },
+        });
+        set(expectedProperties.controls, DEFAULT_PROPS.valuePath, TEST_DECIMAL_FORMAT_PRESET.format);
+
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
-                properties: createTestProperties<IComparisonControlProperties>({
-                    comparison: {
-                        enabled: true,
-                        format: TEST_DECIMAL_FORMAT_PRESET.format,
-                    },
-                }),
+                properties: expectedProperties,
             }),
         );
     });
 
     it("Should select provided format ", () => {
         const { container } = renderNumberFormatControl({
-            defaultFormat: TEST_DECIMAL_FORMAT_PRESET.format,
-            properties: createTestProperties<IComparisonControlProperties>({
-                comparison: {
-                    enabled: true,
-                    format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
-                },
-            }),
+            format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
         });
 
         expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
             TEST_PERCENT_ROUNDED_FORMAT_PRESET.name,
-        );
-    });
-
-    it("Should select default format while format is empty ", () => {
-        const { container } = renderNumberFormatControl({
-            defaultFormat: TEST_DECIMAL_FORMAT_PRESET.format,
-        });
-
-        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
-            TEST_DECIMAL_FORMAT_PRESET.name,
         );
     });
 });

@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import capitalize from "lodash/capitalize.js";
+import startCase from "lodash/startCase.js";
 
 import { CalculationType } from "@gooddata/sdk-ui-charts";
 
@@ -12,12 +12,15 @@ type SectionType = "example" | "useIn" | "formula";
 interface ICalculationItemInfoSectionProps {
     calculationType: CalculationType;
     section: SectionType;
+    isSectionCombineCalculationType?: boolean;
 }
 
-const SECTION_TITLE_KEYS: Record<SectionType, string> = {
+const SECTION_TITLE_KEYS: Record<string, string> = {
     example: comparisonMessages.calculationTooltipExampleSection.id,
     useIn: comparisonMessages.calculationTooltipUseInSection.id,
     formula: comparisonMessages.calculationTooltipFormulaSection.id,
+    formulaChange: comparisonMessages.calculationTooltipFormulaChangeSection.id,
+    formulaDifference: comparisonMessages.calculationTooltipFormulaDifferenceSection.id,
 };
 
 const SECTION_CONTENT_KEYS: Record<string, string> = {
@@ -30,22 +33,35 @@ const SECTION_CONTENT_KEYS: Record<string, string> = {
     exampleDifference: comparisonMessages.calculatedAsDifferenceTooltipExample.id,
     useInDifference: comparisonMessages.calculatedAsDifferenceTooltipUseIn.id,
     formulaDifference: comparisonMessages.calculatedAsDifferenceTooltipFormula.id,
+    exampleChangeDifference: comparisonMessages.calculatedAsChangeDifferenceTooltipExample.id,
+    useInChangeDifference: comparisonMessages.calculatedAsChangeDifferenceTooltipUseIn.id,
 };
 
-const getSectionTitleKey = (section: SectionType): string => {
-    return SECTION_TITLE_KEYS[section];
+const toPascalCase = (value: string): string => {
+    return startCase(value).replace(/\s/g, "");
+};
+
+const getSectionTitleKey = (
+    section: SectionType,
+    calculationType: CalculationType,
+    isSectionCombineCalculationType: boolean,
+): string => {
+    const property = isSectionCombineCalculationType ? `${section}${toPascalCase(calculationType)}` : section;
+
+    return SECTION_TITLE_KEYS[property];
 };
 
 const getSectionContentKey = (section: SectionType, calculationType: CalculationType): string => {
-    const property = `${section}${capitalize(calculationType)}`;
+    const property = `${section}${toPascalCase(calculationType)}`;
     return SECTION_CONTENT_KEYS[property];
 };
 
 const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps> = ({
     calculationType,
     section,
+    isSectionCombineCalculationType,
 }) => {
-    const titleKey = getSectionTitleKey(section);
+    const titleKey = getSectionTitleKey(section, calculationType, isSectionCombineCalculationType);
     const contentKey = getSectionContentKey(section, calculationType);
 
     return (
