@@ -485,7 +485,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         type,
         name,
         schema,
-        username,
+        username: username ?? undefined,
         url,
         permissions: meta?.permissions ?? [],
         parameters,
