@@ -2,6 +2,11 @@
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IHeadlineDataItem } from "./Headlines.js";
 import { ComponentType, RefObject } from "react";
+import { IComparison } from "../../../../interfaces/index.js";
+
+export const COMPARISON_DEFAULT_OBJECT: IComparison = {
+    enabled: true,
+};
 
 export type BaseHeadlineDataItemComponentType<T> = ComponentType<
     IBaseHeadlineDataItemProps<T> & IWithTitleProps<T> & IWithDrillableItemProps<T>
