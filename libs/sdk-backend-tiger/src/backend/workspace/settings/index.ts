@@ -39,6 +39,18 @@ export class TigerWorkspaceSettings
         });
     }
 
+    public async setLocale(locale: string): Promise<void> {
+        return this.setSetting("LOCALE", { value: locale });
+    }
+
+    public async setTheme(activeThemeId: string): Promise<void> {
+        return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
+    }
+
+    public async setColorPalette(activeColorPaletteId: string): Promise<void> {
+        return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
+    }
+
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return getSettingsForCurrentUser(this.authCall, this.workspace);
     }
@@ -72,13 +84,14 @@ export class TigerWorkspaceSettings
         );
     }
 
-    protected async createSetting(type: TigerSettingsType, content: any): Promise<any> {
+    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.createEntityWorkspaceSettings({
                 workspaceId: this.workspace,
                 jsonApiWorkspaceSettingPostOptionalIdDocument: {
                     data: {
                         type: "workspaceSetting",
+                        id,
                         attributes: {
                             content,
                             type,

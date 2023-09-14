@@ -20,6 +20,8 @@ describe("UserWorkspaceSettingsDataLoader", () => {
                 getSettingsForCurrentUser,
                 getSettings: noop as any,
                 setLocale: (_locale: string) => Promise.resolve(),
+                setTheme: (_themeId: string) => Promise.resolve(),
+                setColorPalette: (_colorPaletteId: string) => Promise.resolve(),
             }),
         }),
     });
