@@ -1393,48 +1393,43 @@
         "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values.",
         "limit": 0
     },
-    "properties.comparison.calculationType.tooltip.useIn.section": {
-        "value": "When to use",
-        "comment": "The title of the section that describes the pertinent scenarios for the calculation.",
-        "limit": 0
-    },
     "properties.comparison.calculationType.as.change.tooltip.useIn._metric": {
-        "value": "To calculate relative change between primary and secondary metric values.",
+        "value": "Calculates the relative change between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn._measure": {
-        "value": "To calculate relative change between primary and secondary measure values.",
+        "value": "Calculates the relative change between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._metric": {
-        "value": "To calculate what part of secondary metric value is primary metric value.",
+        "value": "Quantifies the share of the primary metric value in the secondary metric value.",
         "comment": "The content describes the pertinent scenarios for the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._measure": {
-        "value": "To calculate what part of secondary metric value is primary measure value.",
+        "value": "Quantifies the share of the primary measure value in the secondary measure value.",
         "comment": "The content describes the pertinent scenarios for the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._metric": {
-        "value": "To calculate absolute difference between primary and secondary metrics values.",
+        "value": "Calculates the absolute difference between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the difference calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._measure": {
-        "value": "To calculate absolute difference between primary and secondary measures values.",
+        "value": "Calculates the absolute difference between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the difference calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._metric": {
-        "value": "To calculate both relative and absolute change between primary and secondary metric.",
+        "value": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._measure": {
-        "value": "To calculate both relative and absolute change between primary and secondary measure.",
+        "value": "Calculates both the relative change and absolute difference between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
         "limit": 0
     },
@@ -1444,12 +1439,12 @@
         "limit": 0
     },
     "properties.comparison.calculationType.tooltip.formulaChange.section": {
-        "value": "Formula change",
+        "value": "Formula (relative change)",
         "comment": "The title of the section that describes the formula for the change calculation",
         "limit": 0
     },
     "properties.comparison.calculationType.tooltip.formulaDifference.section": {
-        "value": "Formula difference",
+        "value": "Formula (absolute difference)",
         "comment": "The title of the section that describes the formula for the difference calculation",
         "limit": 0
     },
@@ -1474,22 +1469,22 @@
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.example": {
-        "value": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales",
+        "value": "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
         "comment": "The example illustrating the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.example": {
-        "value": "Sales this year compared to a quota = This year sales / quota",
+        "value": "Current sales compared to a quota = current sales / quota",
         "comment": "The example illustrating the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.example": {
-        "value": "Sales difference compared to last year = This year sales - Last year sales",
+        "value": "Year-over-year sales difference = the current year's sales - the previous year's sales",
         "comment": "The example illustrating the difference calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.example": {
-        "value": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales \nand (This year sales - last year sales)",
+        "value": "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
         "comment": "The example illustrating the change (difference) calculation.",
         "limit": 0
     },

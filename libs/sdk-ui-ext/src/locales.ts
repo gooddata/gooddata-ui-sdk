@@ -223,7 +223,6 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     calculationTooltipFormulaDifferenceSection: {
         id: "properties.comparison.calculationType.tooltip.formulaDifference.section",
     },
-    calculationTooltipUseInSection: { id: "properties.comparison.calculationType.tooltip.useIn.section" },
     calculatedAsChangeTooltipExample: {
         id: "properties.comparison.calculationType.as.change.tooltip.example",
     },
@@ -247,7 +246,7 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
         id: "properties.comparison.calculationType.as.changeDifference.tooltip.example",
     },
     calculatedAsChangeDifferenceTooltipUseIn: {
-        id: "properties.comparison.calculationType.as.changeDifference.tooltip.formula",
+        id: "properties.comparison.calculationType.as.changeDifference.tooltip.useIn",
     },
     valueSubSectionTitle: { id: "properties.comparison.valueSubSection.title" },
     formatTitle: { id: "properties.comparison.format.title" },

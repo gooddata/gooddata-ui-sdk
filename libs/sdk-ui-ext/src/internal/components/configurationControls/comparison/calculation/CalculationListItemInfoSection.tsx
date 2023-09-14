@@ -12,12 +12,13 @@ type SectionType = "example" | "useIn" | "formula";
 interface ICalculationItemInfoSectionProps {
     calculationType: CalculationType;
     section: SectionType;
+    contentClassNames?: string;
+    shouldHideTitle?: boolean;
     isSectionCombineCalculationType?: boolean;
 }
 
 const SECTION_TITLE_KEYS: Record<string, string> = {
     example: comparisonMessages.calculationTooltipExampleSection.id,
-    useIn: comparisonMessages.calculationTooltipUseInSection.id,
     formula: comparisonMessages.calculationTooltipFormulaSection.id,
     formulaChange: comparisonMessages.calculationTooltipFormulaChangeSection.id,
     formulaDifference: comparisonMessages.calculationTooltipFormulaDifferenceSection.id,
@@ -59,6 +60,8 @@ const getSectionContentKey = (section: SectionType, calculationType: Calculation
 const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps> = ({
     calculationType,
     section,
+    contentClassNames,
+    shouldHideTitle,
     isSectionCombineCalculationType,
 }) => {
     const titleKey = getSectionTitleKey(section, calculationType, isSectionCombineCalculationType);
@@ -66,8 +69,10 @@ const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps>
 
     return (
         <>
-            <FormattedMessage id={titleKey} tagName="h4" />
-            <FormattedMessage id={contentKey} tagName="p" />
+            {!shouldHideTitle ? <FormattedMessage id={titleKey} tagName="h4" /> : null}
+            <p className={contentClassNames}>
+                <FormattedMessage id={contentKey} />
+            </p>
         </>
     );
 };
