@@ -68,7 +68,7 @@ export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
 
 // @public
-export type CalculationType = "change" | "ratio" | "difference";
+export type CalculationType = "change" | "ratio" | "difference" | "change_difference";
 
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
@@ -239,6 +239,8 @@ export interface ICalculationDefaultValue {
     defaultFormat: string;
     // (undocumented)
     defaultLabelKey: string;
+    // (undocumented)
+    defaultSubFormat?: string;
 }
 
 // @public
@@ -363,6 +365,7 @@ export interface IComparison {
     isArrowEnabled?: boolean;
     labelConfig?: ILabelConfig;
     position?: ComparisonPosition;
+    subFormat?: ComparisonFormat;
 }
 
 // @public

@@ -59,8 +59,15 @@ class ComparisonProvider extends AbstractProvider {
     ): IMeasure<IArithmeticMeasureDefinition>[] {
         const createVirtualArithmeticMeasure = (
             operator: ArithmeticMeasureOperator,
+            shouldCombineLocalIdAndOperator?: boolean,
         ): IMeasure<IArithmeticMeasureDefinition> => {
-            return newVirtualArithmeticMeasure([primaryMeasure, secondaryMeasure], operator);
+            return newVirtualArithmeticMeasure([primaryMeasure, secondaryMeasure], operator, (builder) => {
+                if (shouldCombineLocalIdAndOperator) {
+                    builder.combineLocalIdWithOperator();
+                }
+
+                return builder;
+            });
         };
 
         switch (this.comparison.calculationType) {
@@ -72,6 +79,12 @@ class ComparisonProvider extends AbstractProvider {
 
             case CalculateAs.CHANGE:
                 return [createVirtualArithmeticMeasure("change")];
+
+            case CalculateAs.CHANGE_DIFFERENCE:
+                return [
+                    createVirtualArithmeticMeasure("change", true),
+                    createVirtualArithmeticMeasure("difference", true),
+                ];
 
             default:
                 if (isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure)) {

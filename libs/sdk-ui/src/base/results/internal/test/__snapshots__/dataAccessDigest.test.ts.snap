@@ -972,6 +972,24 @@ exports[`createDataAccessDigest > should find slices and series for: FunnelChart
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with calculate as change (difference) and custom format 1`] = `
+{
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with calculate as change (difference) and default sub format 1`] = `
+{
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: Headline - comparison with calculate as different and default format 1`] = `
 {
   "seriesCount": 3,

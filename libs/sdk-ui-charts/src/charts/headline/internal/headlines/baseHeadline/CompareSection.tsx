@@ -6,11 +6,11 @@ import { HeadlinePagination, shouldRenderPagination } from "@gooddata/sdk-ui-vis
 import CompareSectionItem from "./CompareSectionItem.js";
 import { getCompareSectionClasses } from "../../utils/HeadlineDataItemUtils.js";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
-import { IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface ICompareSectionProps {
-    secondaryItem: IBaseHeadlineItem;
-    tertiaryItem?: IBaseHeadlineItem;
+    secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
+    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
 }
 
 const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiaryItem }) => {

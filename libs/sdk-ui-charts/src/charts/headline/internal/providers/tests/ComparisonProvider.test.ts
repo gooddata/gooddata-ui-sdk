@@ -22,6 +22,7 @@ describe("ComparisonProvider", () => {
             ["change", CalculateAs.CHANGE],
             ["ratio", CalculateAs.RATIO],
             ["difference", CalculateAs.DIFFERENCE],
+            ["change (difference)", CalculateAs.CHANGE_DIFFERENCE],
         ];
 
         it.each(specs)(

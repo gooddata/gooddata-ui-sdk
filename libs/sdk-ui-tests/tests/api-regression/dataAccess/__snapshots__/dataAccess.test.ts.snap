@@ -3034,6 +3034,50 @@ exports[`DataAccess > should correctly identify series and slices for: FunnelCha
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and custom format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_916f5387caf8737c37c4a2206c3471d2_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and default sub format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_916f5387caf8737c37c4a2206c3471d2_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as different and default format 1`] = `
 {
   "seriesDigest": {

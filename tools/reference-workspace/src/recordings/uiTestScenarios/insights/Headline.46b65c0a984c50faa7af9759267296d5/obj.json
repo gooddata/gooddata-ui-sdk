@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.46b65c0a984c50faa7af9759267296d5",
+        "properties": {
+            "controls": { "comparison": { "calculationType": "change_difference", "enabled": true } }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with calculate as change (difference) and default sub format",
+        "uri": "Headline.46b65c0a984c50faa7af9759267296d5",
+        "visualizationUrl": "local:headline"
+    }
+}

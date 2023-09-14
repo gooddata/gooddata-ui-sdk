@@ -13,18 +13,23 @@ import {
 } from "@gooddata/sdk-ui";
 import { DataValue } from "@gooddata/sdk-model";
 
+import { CalculateAs, ComparisonPositionValues, IComparison } from "../../../../interfaces/index.js";
 import {
-    CalculateAs,
-    ComparisonPositionValues,
-    IComparison,
-    ILabelConfig,
-} from "../../../../interfaces/index.js";
-import { EvaluationType, IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
+    EvaluationType,
+    IBaseHeadlineData,
+    IBaseHeadlineItem,
+    IComparisonDataItem,
+    IComparisonDataWithSubItem,
+} from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
-import { IHeadlineDataItem } from "../interfaces/Headlines.js";
-import { getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
-import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/ComparisonDataItem.js";
+import {
+    getCalculationValuesDefault,
+    getComparisonFormat,
+    getComparisonTitle,
+} from "../../headlineHelper.js";
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
+import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
+import ComparisonDataWithSubItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,
@@ -100,25 +105,37 @@ function createComparisonItem(
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
-): IBaseHeadlineItem {
-    const data = createComparisonDataItem(
-        executionData,
-        isSecondaryDerivedMeasure,
-        inheritFormat,
-        comparison,
-        intl,
-    );
+): IBaseHeadlineItem<IComparisonDataItem | IComparisonDataWithSubItem> {
+    const [, , , quaternaryItem] = executionData;
 
-    return {
-        data,
-        baseHeadlineDataItemComponent: ComparisonDataItem,
-        evaluationType: getComparisonEvaluationType(executionData),
-    };
+    if (quaternaryItem) {
+        return {
+            data: createComparisonDataWithSubItem(executionData, inheritFormat, comparison, intl),
+            baseHeadlineDataItemComponent: ComparisonDataWithSubItem,
+            evaluationType: getComparisonEvaluationType(executionData),
+        };
+    } else {
+        return {
+            data: createComparisonDataItem(
+                executionData,
+                isSecondaryDerivedMeasure,
+                inheritFormat,
+                comparison,
+                intl,
+            ),
+            baseHeadlineDataItemComponent: ComparisonDataItem,
+            evaluationType: getComparisonEvaluationType(executionData),
+        };
+    }
 }
 
 function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): EvaluationType {
-    const [primaryItem, secondaryItem, tertiaryItem] = executionData;
-    if (!isNumeric(primaryItem.value) || !isNumeric(secondaryItem.value) || !isNumeric(tertiaryItem.value)) {
+    const [primaryItem, secondaryItem, tertiaryItem, quaternaryItem] = executionData;
+    if (
+        !isNumeric(primaryItem.value) ||
+        !isNumeric(secondaryItem.value) ||
+        (!isNumeric(tertiaryItem.value) && !isNumeric(quaternaryItem.value))
+    ) {
         return null;
     }
 
@@ -142,12 +159,8 @@ function createComparisonDataItem(
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
-): IHeadlineDataItem {
+): IComparisonDataItem {
     const { calculationType, format, labelConfig } = comparison;
-    const [, , tertiaryItemData] = executionData;
-
-    const { measureHeaderItem } = tertiaryItemData;
-    const { localIdentifier } = measureHeaderItem;
 
     const defaultCalculationType = isSecondaryDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
     const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(
@@ -158,24 +171,41 @@ function createComparisonDataItem(
         title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
         value: getComparisonValue(executionData),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
-        localIdentifier,
     };
 }
 
-function getComparisonValue(executionData: IHeadlineExecutionData[]): string {
-    const [primaryItem, secondaryItem, tertiaryItem] = executionData;
+function createComparisonDataWithSubItem(
+    executionData: IHeadlineExecutionData[],
+    inheritFormat: string,
+    comparison: IComparison,
+    intl: IntlShape,
+): IComparisonDataWithSubItem {
+    const { calculationType, format, subFormat, labelConfig } = comparison;
+    const { defaultFormat, defaultSubFormat, defaultLabelKey } = getCalculationValuesDefault(calculationType);
+
+    return {
+        title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
+        item: {
+            value: getComparisonValue(executionData),
+            format: getComparisonFormat(format, defaultFormat) || inheritFormat,
+        },
+        subItem: {
+            value: getComparisonValue(executionData, true),
+            format: getComparisonFormat(subFormat, defaultSubFormat) || inheritFormat,
+        },
+    };
+}
+
+function getComparisonValue(executionData: IHeadlineExecutionData[], isSubValue?: boolean): string {
+    const [primaryItem, secondaryItem, tertiaryItem, quaternaryItem] = executionData;
     if (!isNumeric(primaryItem.value) || !isNumeric(secondaryItem.value)) {
         return null;
     }
 
-    const { value } = tertiaryItem;
+    const { value } = isSubValue ? quaternaryItem : tertiaryItem;
     return isNil(value) ? value : String(value);
 }
 
 function isNumeric(value: DataValue): boolean {
     return (isNumber(value) || (isString(value) && value.trim())) && !isNaN(value as number);
-}
-
-function getComparisonTitle(labelConfig: ILabelConfig, defaultLabel: string): string {
-    return labelConfig?.unconditionalValue || defaultLabel;
 }
