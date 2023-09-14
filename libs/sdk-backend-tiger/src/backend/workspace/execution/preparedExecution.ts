@@ -14,6 +14,7 @@ import {
     defWithDimensions,
     defWithSorting,
     defWithExecConfig,
+    defWithBuckets,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
@@ -22,6 +23,7 @@ import {
     IExecutionConfig,
     isPositiveAttributeFilter,
     filterIsEmpty,
+    IBucket,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { AxiosRequestConfig } from "axios";
@@ -98,6 +100,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
+    }
+
+    public withBuckets(...buckets: IBucket[]): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets));
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {

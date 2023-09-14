@@ -136,6 +136,23 @@ export function defWithFilters(
 }
 
 /**
+ * Creates new execution definition by merging new buckets into an existing definition.
+ *
+ * @param def - existing definition
+ * @param buckets - array of buckets to add to definition
+ * @returns always new instance
+ * @internal
+ */
+export function defSetBuckets(def: IExecutionDefinition, buckets: IBucket[] = []): IExecutionDefinition {
+    invariant(def, "execution definition to set buckets to must be defined");
+
+    return {
+        ...def,
+        buckets,
+    };
+}
+
+/**
  * Creates new execution definition by merging new sort items into an existing definition.
  *
  * @param def - existing definition

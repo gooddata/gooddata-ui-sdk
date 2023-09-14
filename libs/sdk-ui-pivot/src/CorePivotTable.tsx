@@ -219,6 +219,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             rowTotals: getTotalsForColumnsBucket(execution.definition),
             desiredHeight: config!.maxHeight,
             resized: false,
+            tempExecution: execution,
         };
 
         this.errorMap = newErrorMapping(props.intl);
@@ -308,6 +309,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
+        // reinit in progress
+        if (!this.state.readyToRender) {
+            return;
+        }
+
         if (this.isReinitNeeded(prevProps)) {
             /*
              * This triggers when execution changes (new measures / attributes). In that case,
@@ -740,14 +746,22 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      *
      * Once transformation finishes - indicated by call to onPageLoaded, table can re-instance the sticky row.
      *
-     * @param _newExecution - the new execution which is being run and will be used to populate the table
+     * @param newExecution - the new execution which is being run and will be used to populate the table
      */
-    private onExecutionTransformed = (_newExecution: IPreparedExecution): void => {
+    private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
         if (!this.internal.table) {
             return;
         }
 
         this.internal.table.clearStickyRow();
+
+        // Force double execution only when totals/subtotals for columns change, so table is render properly.
+        if (!isEqual(this.state.tempExecution.definition.buckets[2], newExecution.definition.buckets[2])) {
+            this.setState({
+                tempExecution: newExecution,
+            });
+            this.reinitialize(newExecution);
+        }
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
