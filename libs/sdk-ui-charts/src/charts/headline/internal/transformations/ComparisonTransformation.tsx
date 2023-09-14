@@ -6,6 +6,8 @@ import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import BaseHeadline from "../headlines/baseHeadline/BaseHeadline.js";
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
 const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     dataView,
@@ -14,7 +16,15 @@ const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     onAfterRender,
     onDrill,
 }) => {
-    const { comparison } = config;
+    const baseHeadlineConfig: IChartConfig = config?.comparison
+        ? config
+        : {
+              ...config,
+              comparison: COMPARISON_DEFAULT_OBJECT,
+          };
+
+    const { comparison } = baseHeadlineConfig;
+
     const intl = useIntl();
     const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill);
 
@@ -26,7 +36,7 @@ const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     return (
         <BaseHeadline
             data={data}
-            config={config}
+            config={baseHeadlineConfig}
             onDrill={handleFiredDrillEvent}
             onAfterRender={onAfterRender}
         />
