@@ -2930,6 +2930,7 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
 
 // @alpha
 export interface IWidgetAlertBase {
+    readonly actionName?: string;
     readonly dashboard: ObjRef;
     readonly description: string;
     readonly isTriggered: boolean;
@@ -3270,7 +3271,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "widgetAlert";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

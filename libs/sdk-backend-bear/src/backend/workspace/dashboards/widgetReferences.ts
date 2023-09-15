@@ -22,6 +22,9 @@ const objectTypeToObjectCategory = (type: SupportedWidgetReferenceTypes): Object
     if (type === "measure") {
         return "metric";
     }
+    if (type === "widgetAlert") {
+        return "kpiAlert";
+    }
     return type;
 };
 

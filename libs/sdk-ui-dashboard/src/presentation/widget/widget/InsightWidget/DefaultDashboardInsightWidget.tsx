@@ -2,7 +2,7 @@
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { IInsight, insightRef, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
@@ -11,6 +11,9 @@ import {
     useDashboardScheduledEmails,
     selectCanExportTabular,
     selectSettings,
+    selectIsInViewMode,
+    selectAlertByWidgetRef,
+    selectIsInsightAlertOpenedByWidgetRef,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -25,6 +28,7 @@ import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
+import { InsightWidgetAlert } from "./InsightWidgetAlert.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -51,6 +55,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
     const canExportTabular = useDashboardSelector(selectCanExportTabular);
+    const isViewMode = useDashboardSelector(selectIsInViewMode);
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widgetRef);
@@ -88,6 +93,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     );
 
     const settings = useDashboardSelector(selectSettings);
+    const hasAlert = !!useDashboardSelector(selectAlertByWidgetRef(insightRef(insight)));
+    const hasAlertDialogOpened = useDashboardSelector(
+        selectIsInsightAlertOpenedByWidgetRef(insightRef(insight)),
+    );
 
     return (
         <DashboardItem
@@ -121,6 +130,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             onClick={openMenu}
                             items={menuItems}
                         />
+                        {visType === "headline" && isViewMode ? (
+                            <InsightWidgetAlert insightRef={insightRef(insight)} />
+                        ) : undefined}
                     </div>
                 )}
                 renderAfterContent={() => {
@@ -138,6 +150,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         />
                     );
                 }}
+                contentClassName={cx({
+                    "has-set-alert": hasAlert,
+                    "is-alert-dialog": hasAlertDialogOpened,
+                })}
             >
                 {({ clientHeight, clientWidth }) => (
                     <DashboardInsight

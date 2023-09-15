@@ -130,6 +130,21 @@ export const selectIsKpiAlertOpenedByWidgetRef = createMemoizedSelector(
 );
 
 /**
+ * @internal
+ */
+export const selectIsInsightAlertOpenedByWidgetRef = createMemoizedSelector(
+    (ref: ObjRef | undefined): ((state: DashboardState) => boolean) => {
+        return createSelector(selectOpenedKpiWidgetRef, (openedWidgetRef) => {
+            if (!ref) {
+                return false;
+            }
+
+            return areObjRefsEqual(ref, openedWidgetRef);
+        });
+    },
+);
+
+/**
  * @alpha
  */
 export const selectIsKpiAlertHighlightedByWidgetRef = createMemoizedSelector(

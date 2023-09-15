@@ -6315,6 +6315,9 @@ export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 export const selectIsInEditMode: DashboardSelector<boolean>;
 
 // @internal (undocumented)
+export const selectIsInsightAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
+// @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
