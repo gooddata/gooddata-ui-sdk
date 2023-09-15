@@ -62,6 +62,9 @@ export const convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee = (
 export const convertGranularAccessGranteeToAcessGrantee = (
     grantee: IGranularAccessGrantee,
 ): IAccessGrantee => {
+    if (grantee.type === "allWorkspaceUsers") {
+        return grantee;
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { permissions, inheritedPermissions, ...rest } = grantee;
     const type = isGranularUserAccessGrantee(grantee) ? "user" : "group";

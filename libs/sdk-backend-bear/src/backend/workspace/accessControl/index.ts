@@ -12,6 +12,9 @@ import {
     IAccessGrantee,
     IAvailableAccessGrantee,
     IGranularAccessGrantee,
+    IUserAccessGrantee,
+    IUserGroupAccessGrantee,
+    isGranularRulesAccessGrantee,
 } from "@gooddata/sdk-model";
 import {
     convertGranteeEntry,
@@ -21,6 +24,12 @@ import {
 } from "../../../convertors/fromBackend/AccessControlConverter.js";
 import { BearWorkspaceUsersQuery } from "../users/index.js";
 import { BearWorkspaceUserGroupsQuery } from "../userGroups/index.js";
+
+type AvailableAccessGrantee =
+    | IUserGroupAccessGrantee
+    | IUserAccessGrantee
+    | IUserGroupAccessGrantee
+    | IUserAccessGrantee;
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {
     private users: BearWorkspaceUsersQuery;
@@ -40,18 +49,24 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
         return items.map(convertGranteeEntry);
     }
 
+    private getUserOrGroupAccessGrantee(grantees: IAccessGrantee[]) {
+        // The rules access is only supported on Tiger backend, filter out these items.
+        return grantees.filter((item) => !isGranularRulesAccessGrantee(item));
+    }
     public async grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void> {
+        const granteesList = this.getUserOrGroupAccessGrantee(grantees) as AvailableAccessGrantee[];
         const objectUri = await objRefToUri(sharedObject, this.workspace, this.authCall);
         const granteeUris = await Promise.all(
-            grantees.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
+            granteesList.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
         );
         return this.authCall((sdk) => sdk.project.addGrantees(objectUri, granteeUris));
     }
 
     public async revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void> {
+        const granteesList = this.getUserOrGroupAccessGrantee(grantees) as AvailableAccessGrantee[];
         const objectUri = await objRefToUri(sharedObject, this.workspace, this.authCall);
         const granteeUris = await Promise.all(
-            grantees.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
+            granteesList.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
         );
         return this.authCall((sdk) => sdk.project.removeGrantees(objectUri, granteeUris));
     }

@@ -790,8 +790,10 @@ export {
     IAvailableUserGroupAccessGrantee,
     IGranularUserAccess,
     IGranularUserGroupAccess,
+    IGranularRulesAccess,
     IGranularUserAccessGrantee,
     IGranularUserGroupAccessGrantee,
+    IGranularRulesAccessGrantee,
     isGranularAccess,
     isAvailableUserGroupAccessGrantee,
     isAvailableUserAccessGrantee,
@@ -800,6 +802,7 @@ export {
     isGranularUserGroupAccessGrantee,
     isGranularUserAccess,
     isGranularUserGroupAccess,
+    isGranularRulesAccessGrantee,
 } from "./accessControl/index.js";
 
 export { IOrganizationDescriptor } from "./organization/index.js";
