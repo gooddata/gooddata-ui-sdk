@@ -20,7 +20,7 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }]
 export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
     props,
 ) => {
-    const { item, isSelected, onSelect, onSelectOnly, onDeselect } = props;
+    const { item, isSelected, onSelect, onSelectOnly, onDeselect, renderSelectOnly } = props;
     const intl = useIntl();
 
     const onItemClick = useCallback(() => {
@@ -80,9 +80,13 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
                     </BubbleHoverTrigger>
                 </div>
             )}
-            <span className="gd-list-item-only" onClick={onOnlyItemClick}>
-                <FormattedMessage id="gs.list.only" />
-            </span>
+            {renderSelectOnly ? (
+                renderSelectOnly
+            ) : (
+                <span className="gd-list-item-only" onClick={onOnlyItemClick}>
+                    <FormattedMessage id="gs.list.only" />
+                </span>
+            )}
         </div>
     );
 };

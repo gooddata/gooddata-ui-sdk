@@ -47,6 +47,11 @@ export class MeasureMetadataObjectBuilder<
         this.item.updatedBy = updatedBy;
         return this;
     }
+
+    public tags(tags?: string[]): this {
+        this.item.tags = tags;
+        return this;
+    }
 }
 
 /**

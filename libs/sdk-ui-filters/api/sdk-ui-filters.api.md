@@ -479,6 +479,8 @@ export interface IAttributeFilterElementsSelectItemProps {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    // @internal
+    renderSelectOnly?: JSX.Element;
 }
 
 // @beta
