@@ -1,0 +1,88 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`headlineUiConfigHelper > getComparisonColorPalette > should return a color palette with default colors when theme values are missing 1`] = `
+[
+  {
+    "fill": {
+      "b": 141,
+      "g": 193,
+      "r": 0,
+    },
+    "guid": "positive",
+  },
+  {
+    "fill": {
+      "b": 64,
+      "g": 77,
+      "r": 229,
+    },
+    "guid": "negative",
+  },
+  {
+    "fill": {
+      "b": 173,
+      "g": 161,
+      "r": 148,
+    },
+    "guid": "equals",
+  },
+]
+`;
+
+exports[`headlineUiConfigHelper > getComparisonColorPalette > should return a color palette with positive, negative, and equals colors 1`] = `
+[
+  {
+    "fill": {
+      "b": 0,
+      "g": 255,
+      "r": 0,
+    },
+    "guid": "positive",
+  },
+  {
+    "fill": {
+      "b": 0,
+      "g": 0,
+      "r": 255,
+    },
+    "guid": "negative",
+  },
+  {
+    "fill": {
+      "b": 255,
+      "g": 0,
+      "r": 0,
+    },
+    "guid": "equals",
+  },
+]
+`;
+
+exports[`headlineUiConfigHelper > getComparisonColorPalette > should return a color palette with positive, negative, and equals colors when kpi.secondaryInfoColor is empty 1`] = `
+[
+  {
+    "fill": {
+      "b": 0,
+      "g": 255,
+      "r": 0,
+    },
+    "guid": "positive",
+  },
+  {
+    "fill": {
+      "b": 0,
+      "g": 0,
+      "r": 255,
+    },
+    "guid": "negative",
+  },
+  {
+    "fill": {
+      "b": 204,
+      "g": 204,
+      "r": 204,
+    },
+    "guid": "equals",
+  },
+]
+`;
