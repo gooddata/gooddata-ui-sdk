@@ -19,6 +19,7 @@ import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import AbstractProvider from "./AbstractProvider.js";
 import ComparisonTransformation from "../transformations/ComparisonTransformation.js";
 import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
+import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
@@ -28,7 +29,7 @@ class ComparisonProvider extends AbstractProvider {
     constructor(comparison: IComparison) {
         super();
 
-        this.comparison = comparison;
+        this.comparison = comparison || COMPARISON_DEFAULT_OBJECT;
     }
 
     public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {

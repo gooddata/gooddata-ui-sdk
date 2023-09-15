@@ -13,7 +13,12 @@ const CalculationListItemInfo: React.FC<ICalculationItemInfoProps> = ({ title, c
     return (
         <div className="calculation-item-info">
             <h3 className="calculation-item-info-header">{title}</h3>
-            <CalculationListItemInfoSection calculationType={calculationType} section="useIn" />
+            <CalculationListItemInfoSection
+                calculationType={calculationType}
+                section="useIn"
+                contentClassNames="calculation-item-info-use-in-content"
+                shouldHideTitle={true}
+            />
             {calculationType === CalculateAs.CHANGE_DIFFERENCE ? (
                 <>
                     <CalculationListItemInfoSection

@@ -1,11 +1,12 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import CalculationListItemInfo from "../CalculationListItemInfo.js";
-import * as CalculationListItemInfoSection from "../CalculationListItemInfoSection.js";
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+
+const CALCULATION_INFO_SELECTOR = ".calculation-item-info";
 
 describe("CalculationListItemInfo", () => {
     const renderCalculationListItemInfo = (props: { title: string; calculationType: CalculationType }) => {
@@ -23,35 +24,56 @@ describe("CalculationListItemInfo", () => {
         expect(getByText(title)).toBeInTheDocument();
     });
 
-    it("Should render item info sections correctly", () => {
-        const MockInfoSection = vi.spyOn(CalculationListItemInfoSection, "default");
-        const calculationType = CalculateAs.CHANGE;
-        const props = { title: "Change", calculationType };
-        renderCalculationListItemInfo(props);
-        expect(MockInfoSection).toHaveBeenCalledTimes(3);
-        expect(MockInfoSection).toHaveBeenNthCalledWith(
-            1,
-            expect.objectContaining({
-                calculationType,
-                section: "useIn",
-            }),
-            expect.anything(),
-        );
-        expect(MockInfoSection).toHaveBeenNthCalledWith(
-            2,
-            expect.objectContaining({
-                calculationType,
-                section: "formula",
-            }),
-            expect.anything(),
-        );
-        expect(MockInfoSection).toHaveBeenNthCalledWith(
-            3,
-            expect.objectContaining({
-                calculationType,
-                section: "example",
-            }),
-            expect.anything(),
-        );
+    it.each([
+        [
+            CalculateAs.CHANGE,
+            "Change",
+            "Calculates the relative change between primary and secondary measure values.",
+            "Formula",
+            "(Primary - Secondary) / Secondary",
+            "Example",
+            "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
+        ],
+        [
+            CalculateAs.CHANGE_DIFFERENCE,
+            "Change (difference)",
+            "Calculates both the relative change and absolute difference between primary and secondary measure values.",
+            "Formula (relative change)",
+            "(Primary - Secondary) / Secondary",
+            "Formula (absolute difference)",
+            "Primary - Secondary",
+            "Example",
+            "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
+        ],
+        [
+            CalculateAs.RATIO,
+            "Ratio",
+            "Quantifies the share of the primary measure value in the secondary measure value.",
+            "Formula",
+            "Primary / Secondary",
+            "Example",
+            "Current sales compared to a quota = current sales / quota",
+        ],
+        [
+            CalculateAs.DIFFERENCE,
+            "Difference",
+            "Calculates the absolute difference between primary and secondary measure values.",
+            "Formula",
+            "Primary - Secondary",
+            "Example",
+            "Year-over-year sales difference = the current year's sales - the previous year's sales",
+        ],
+    ])("Should render item info correctly for '%' item", (...params) => {
+        const [calculationType, ...infos] = params;
+        const { container } = renderCalculationListItemInfo({
+            title: infos[0],
+            calculationType,
+        });
+
+        const tooltip = container.querySelector(CALCULATION_INFO_SELECTOR);
+        expect(tooltip.children.length).toBe(infos.length);
+        infos.forEach((expected, index) => {
+            expect(tooltip.children[index].innerHTML).toEqual(expected);
+        });
     });
 });
