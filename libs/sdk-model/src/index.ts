@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities.js";
-export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
+export { IAuditable, IAuditableDates, IAuditableUsers, IObjectInteractions } from "./base/metadata.js";
 export { ComparatorDirection, IComparator } from "./base/comparators.js";
 
 export {

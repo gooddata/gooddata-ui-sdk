@@ -161,6 +161,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             visualizationObject.attributes?.modifiedAt,
             convertUserIdentifier(createdBy, included),
             convertUserIdentifier(modifiedBy, included),
+            visualizationObject.attributes?.interactions,
         );
 
         if (!insight) {
@@ -203,6 +204,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.data.attributes?.modifiedAt,
             convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
             convertUserIdentifier(insightData.data.relationships?.modifiedBy, insightData.included),
+            undefined,
         );
     };
 

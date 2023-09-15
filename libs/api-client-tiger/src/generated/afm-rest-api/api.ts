@@ -445,6 +445,69 @@ export interface AfmValidObjectsResponse {
     items: Array<RestApiIdentifier>;
 }
 /**
+ *
+ * @export
+ * @interface AnomalyDetectionRequest
+ */
+export interface AnomalyDetectionRequest {
+    /**
+     *
+     * @type {number}
+     * @memberof AnomalyDetectionRequest
+     */
+    sensitivity: number;
+}
+/**
+ *
+ * @export
+ * @interface AnomalyDetectionResult
+ */
+export interface AnomalyDetectionResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AnomalyDetectionResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof AnomalyDetectionResult
+     */
+    values: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResult
+     */
+    anomalyFlag: Array<boolean>;
+}
+/**
+ *
+ * @export
+ * @interface AnomalyDetectionResultAllOf
+ */
+export interface AnomalyDetectionResultAllOf {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AnomalyDetectionResultAllOf
+     */
+    attribute?: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof AnomalyDetectionResultAllOf
+     */
+    values?: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResultAllOf
+     */
+    anomalyFlag?: Array<boolean>;
+}
+/**
  * Metric representing arithmetics between metrics.
  * @export
  * @interface ArithmeticMeasureDefinition
@@ -674,6 +737,64 @@ export interface AttributeResultHeader {
      */
     primaryLabelValue: string;
 }
+/**
+ *
+ * @export
+ * @interface CacheResponse
+ */
+export interface CacheResponse {
+    /**
+     *
+     * @type {string}
+     * @memberof CacheResponse
+     */
+    flightPath: string;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringRequest
+ */
+export interface ClusteringRequest {
+    /**
+     *
+     * @type {number}
+     * @memberof ClusteringRequest
+     */
+    numberOfClusters: number;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringResult
+ */
+export interface ClusteringResult {
+    /**
+     *
+     * @type {Array<Array<Array<ClusteringResultValue>>>}
+     * @memberof ClusteringResult
+     */
+    clusters: Array<Array<Array<ClusteringResultValue>>>;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringResultAllOf
+ */
+export interface ClusteringResultAllOf {
+    /**
+     *
+     * @type {Array<Array<Array<ClusteringResultValue>>>}
+     * @memberof ClusteringResultAllOf
+     */
+    clusters?: Array<Array<Array<ClusteringResultValue>>>;
+}
+/**
+ * @type ClusteringResultValue
+ * @export
+ */
+export type ClusteringResultValue = boolean | number | string;
+
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  * @export
@@ -1131,6 +1252,69 @@ export type FilterDefinition =
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 /**
+ *
+ * @export
+ * @interface ForecastRequest
+ */
+export interface ForecastRequest {
+    /**
+     *
+     * @type {number}
+     * @memberof ForecastRequest
+     */
+    forecastPeriod: number;
+}
+/**
+ *
+ * @export
+ * @interface ForecastResult
+ */
+export interface ForecastResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ForecastResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    origin: Array<number>;
+    /**
+     *
+     * @type {Array<Array<number>>}
+     * @memberof ForecastResult
+     */
+    predictions: Array<Array<number>>;
+}
+/**
+ *
+ * @export
+ * @interface ForecastResultAllOf
+ */
+export interface ForecastResultAllOf {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ForecastResultAllOf
+     */
+    attribute?: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResultAllOf
+     */
+    origin?: Array<number>;
+    /**
+     *
+     * @type {Array<Array<number>>}
+     * @memberof ForecastResultAllOf
+     */
+    predictions?: Array<Array<number>>;
+}
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
  * @interface HeaderGroup
@@ -1200,6 +1384,150 @@ export interface InlineMeasureDefinitionInline {
      * @memberof InlineMeasureDefinitionInline
      */
     maql: string;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversDimension
+ */
+export interface KeyDriversDimension {
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    label: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    labelName: string;
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    attribute: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    attributeName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    granularity?: KeyDriversDimensionGranularityEnum;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof KeyDriversDimension
+     */
+    format?: AttributeFormat;
+}
+
+export const KeyDriversDimensionGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type KeyDriversDimensionGranularityEnum =
+    typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversRequest
+ */
+export interface KeyDriversRequest {
+    /**
+     *
+     * @type {MeasureItem}
+     * @memberof KeyDriversRequest
+     */
+    metric: MeasureItem;
+    /**
+     *
+     * @type {Array<MeasureItem>}
+     * @memberof KeyDriversRequest
+     */
+    auxMetrics?: Array<MeasureItem>;
+    /**
+     * Sorting elements - ascending/descending order.
+     * @type {string}
+     * @memberof KeyDriversRequest
+     */
+    sortDirection?: KeyDriversRequestSortDirectionEnum;
+}
+
+export const KeyDriversRequestSortDirectionEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type KeyDriversRequestSortDirectionEnum =
+    typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversResponse
+ */
+export interface KeyDriversResponse {
+    /**
+     *
+     * @type {Array<KeyDriversDimension>}
+     * @memberof KeyDriversResponse
+     */
+    dimensionality: Array<KeyDriversDimension>;
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof KeyDriversResponse
+     */
+    links: ExecutionLinks;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversResult
+ */
+export interface KeyDriversResult {
+    /**
+     *
+     * @type {object}
+     * @memberof KeyDriversResult
+     */
+    data: object;
+}
+/**
+ *
+ * @export
+ * @interface MachineLearningResponse
+ */
+export interface MachineLearningResponse {
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof MachineLearningResponse
+     */
+    links: ExecutionLinks;
 }
 /**
  * @type MeasureDefinition
@@ -2105,6 +2433,172 @@ export interface TotalResultHeader {
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionResult} anomalyDetectionResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheAnomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionResult: AnomalyDetectionResult,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("cacheAnomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("cacheAnomalyDetectionResult", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionResult' is not null or undefined
+            assertParamExists(
+                "cacheAnomalyDetectionResult",
+                "anomalyDetectionResult",
+                anomalyDetectionResult,
+            );
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/anomalyDetection/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionResult !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionResult !== undefined ? anomalyDetectionResult : {})
+                : anomalyDetectionResult || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringResult} clusteringResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheClusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringResult: ClusteringResult,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("cacheClusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("cacheClusteringResult", "resultId", resultId);
+            // verify required parameter 'clusteringResult' is not null or undefined
+            assertParamExists("cacheClusteringResult", "clusteringResult", clusteringResult);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/clustering/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringResult !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringResult !== undefined ? clusteringResult : {})
+                : clusteringResult || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastResult} forecastResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheForecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            forecastResult: ForecastResult,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("cacheForecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("cacheForecastResult", "resultId", resultId);
+            // verify required parameter 'forecastResult' is not null or undefined
+            assertParamExists("cacheForecastResult", "forecastResult", forecastResult);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/forecast/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastResult !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastResult !== undefined ? forecastResult : {})
+                : forecastResult || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
@@ -2350,6 +2844,132 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAnomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("deleteAnomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("deleteAnomalyDetectionResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/anomalyDetection/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteClusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("deleteClusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("deleteClusteringResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/clustering/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteForecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("deleteForecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("deleteForecastResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/forecast/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
@@ -2411,6 +3031,615 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
                 : afmExecution || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchAnomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("fetchAnomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("fetchAnomalyDetectionResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/anomalyDetection/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchClusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("fetchClusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("fetchClusteringResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/clustering/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchForecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("fetchForecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("fetchForecastResult", "resultId", resultId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/cache/forecast/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getAnomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getAnomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getClusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getClusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getForecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getForecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getForecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAnomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processAnomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processAnomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("processAnomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processClusteringRequest: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processClusteringRequest", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processClusteringRequest", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("processClusteringRequest", "clusteringRequest", clusteringRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/ml/clustering/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processForecastRequest: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processForecastRequest", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processForecastRequest", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("processForecastRequest", "forecastRequest", forecastRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/ml/forecast/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processKeyDriversRequest: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processKeyDriversRequest", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("processKeyDriversRequest", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2536,6 +3765,72 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionResult} anomalyDetectionResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cacheAnomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionResult: AnomalyDetectionResult,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cacheAnomalyDetectionResult(
+                workspaceId,
+                resultId,
+                anomalyDetectionResult,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringResult} clusteringResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cacheClusteringResult(
+            workspaceId: string,
+            resultId: string,
+            clusteringResult: ClusteringResult,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cacheClusteringResult(
+                workspaceId,
+                resultId,
+                clusteringResult,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastResult} forecastResult
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cacheForecastResult(
+            workspaceId: string,
+            resultId: string,
+            forecastResult: ForecastResult,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cacheForecastResult(
+                workspaceId,
+                resultId,
+                forecastResult,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
@@ -2631,6 +3926,63 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAnomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnomalyDetectionResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteClusteringResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteClusteringResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteForecastResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteForecastResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
@@ -2659,6 +4011,287 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 afmExecution,
                 explainType,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fetchAnomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fetchAnomalyDetectionResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fetchClusteringResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fetchClusteringResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fetchForecastResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fetchForecastResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAnomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getForecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getForecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processAnomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processAnomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processClusteringRequest(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processClusteringRequest(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processForecastRequest(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processForecastRequest(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processKeyDriversRequest(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processKeyDriversRequest(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                debugArrow,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2726,6 +4359,63 @@ export const ActionsApiFactory = function (
 ) {
     const localVarFp = ActionsApiFp(configuration);
     return {
+        /**
+         *
+         * @param {ActionsApiCacheAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheAnomalyDetectionResult(
+            requestParameters: ActionsApiCacheAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<CacheResponse> {
+            return localVarFp
+                .cacheAnomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionResult,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiCacheClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheClusteringResult(
+            requestParameters: ActionsApiCacheClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<CacheResponse> {
+            return localVarFp
+                .cacheClusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringResult,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiCacheForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cacheForecastResult(
+            requestParameters: ActionsApiCacheForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<CacheResponse> {
+            return localVarFp
+                .cacheForecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastResult,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -2808,6 +4498,52 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         *
+         * @param {ActionsApiDeleteAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAnomalyDetectionResult(
+            requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteAnomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiDeleteClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteClusteringResult(
+            requestParameters: ActionsApiDeleteClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteClusteringResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiDeleteForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteForecastResult(
+            requestParameters: ActionsApiDeleteForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteForecastResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
          * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -2823,6 +4559,215 @@ export const ActionsApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.afmExecution,
                     requestParameters.explainType,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiFetchAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchAnomalyDetectionResult(
+            requestParameters: ActionsApiFetchAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult> {
+            return localVarFp
+                .fetchAnomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiFetchClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchClusteringResult(
+            requestParameters: ActionsApiFetchClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult> {
+            return localVarFp
+                .fetchClusteringResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiFetchForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchForecastResult(
+            requestParameters: ActionsApiFetchForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult> {
+            return localVarFp
+                .fetchForecastResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnomalyDetectionResult(
+            requestParameters: ActionsApiGetAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .getAnomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiGetClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusteringResult(
+            requestParameters: ActionsApiGetClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .getClusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiGetForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getForecastResult(
+            requestParameters: ActionsApiGetForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .getForecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiGetResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult(
+            requestParameters: ActionsApiGetResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .getResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAnomalyDetection(
+            requestParameters: ActionsApiProcessAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processAnomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiProcessClusteringRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processClusteringRequest(
+            requestParameters: ActionsApiProcessClusteringRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processClusteringRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiProcessForecastRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processForecastRequest(
+            requestParameters: ActionsApiProcessForecastRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processForecastRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ActionsApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processKeyDriversRequest(
+            requestParameters: ActionsApiProcessKeyDriversRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .processKeyDriversRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -2873,6 +4818,42 @@ export const ActionsApiFactory = function (
  * @interface ActionsApi
  */
 export interface ActionsApiInterface {
+    /**
+     *
+     * @param {ActionsApiCacheAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cacheAnomalyDetectionResult(
+        requestParameters: ActionsApiCacheAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<CacheResponse>;
+
+    /**
+     *
+     * @param {ActionsApiCacheClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cacheClusteringResult(
+        requestParameters: ActionsApiCacheClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<CacheResponse>;
+
+    /**
+     *
+     * @param {ActionsApiCacheForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cacheForecastResult(
+        requestParameters: ActionsApiCacheForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<CacheResponse>;
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -2926,6 +4907,42 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
+     *
+     * @param {ActionsApiDeleteAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    deleteAnomalyDetectionResult(
+        requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {ActionsApiDeleteClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    deleteClusteringResult(
+        requestParameters: ActionsApiDeleteClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {ActionsApiDeleteForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    deleteForecastResult(
+        requestParameters: ActionsApiDeleteForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
      * @summary AFM explain resource.
      * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -2937,6 +4954,138 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     *
+     * @param {ActionsApiFetchAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    fetchAnomalyDetectionResult(
+        requestParameters: ActionsApiFetchAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+
+    /**
+     *
+     * @param {ActionsApiFetchClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    fetchClusteringResult(
+        requestParameters: ActionsApiFetchClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+
+    /**
+     *
+     * @param {ActionsApiFetchForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    fetchForecastResult(
+        requestParameters: ActionsApiFetchForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+
+    /**
+     *
+     * @param {ActionsApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getAnomalyDetectionResult(
+        requestParameters: ActionsApiGetAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
+     *
+     * @param {ActionsApiGetClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getClusteringResult(
+        requestParameters: ActionsApiGetClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
+    /**
+     *
+     * @param {ActionsApiGetForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getForecastResult(
+        requestParameters: ActionsApiGetForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
+
+    /**
+     *
+     * @param {ActionsApiGetResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getResult(
+        requestParameters: ActionsApiGetResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
+
+    /**
+     *
+     * @param {ActionsApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    processAnomalyDetection(
+        requestParameters: ActionsApiProcessAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ActionsApiProcessClusteringRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    processClusteringRequest(
+        requestParameters: ActionsApiProcessClusteringRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ActionsApiProcessForecastRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    processForecastRequest(
+        requestParameters: ActionsApiProcessForecastRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ActionsApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    processKeyDriversRequest(
+        requestParameters: ActionsApiProcessKeyDriversRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -2963,6 +5112,90 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for cacheAnomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCacheAnomalyDetectionResultRequest
+ */
+export interface ActionsApiCacheAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCacheAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiCacheAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionResult}
+     * @memberof ActionsApiCacheAnomalyDetectionResult
+     */
+    readonly anomalyDetectionResult: AnomalyDetectionResult;
+}
+
+/**
+ * Request parameters for cacheClusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCacheClusteringResultRequest
+ */
+export interface ActionsApiCacheClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCacheClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiCacheClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringResult}
+     * @memberof ActionsApiCacheClusteringResult
+     */
+    readonly clusteringResult: ClusteringResult;
+}
+
+/**
+ * Request parameters for cacheForecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCacheForecastResultRequest
+ */
+export interface ActionsApiCacheForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCacheForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiCacheForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastResult}
+     * @memberof ActionsApiCacheForecastResult
+     */
+    readonly forecastResult: ForecastResult;
 }
 
 /**
@@ -3085,6 +5318,69 @@ export interface ActionsApiComputeValidObjectsRequest {
 }
 
 /**
+ * Request parameters for deleteAnomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiDeleteAnomalyDetectionResultRequest
+ */
+export interface ActionsApiDeleteAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteAnomalyDetectionResult
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for deleteClusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiDeleteClusteringResultRequest
+ */
+export interface ActionsApiDeleteClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteClusteringResult
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for deleteForecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiDeleteForecastResultRequest
+ */
+export interface ActionsApiDeleteForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteForecastResult
+     */
+    readonly resultId: string;
+}
+
+/**
  * Request parameters for explainAFM operation in ActionsApi.
  * @export
  * @interface ActionsApiExplainAFMRequest
@@ -3120,6 +5416,370 @@ export interface ActionsApiExplainAFMRequest {
         | "OPT_QT_SVG"
         | "SQL"
         | "SETTINGS";
+}
+
+/**
+ * Request parameters for fetchAnomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiFetchAnomalyDetectionResultRequest
+ */
+export interface ActionsApiFetchAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiFetchAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiFetchAnomalyDetectionResult
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for fetchClusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiFetchClusteringResultRequest
+ */
+export interface ActionsApiFetchClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiFetchClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiFetchClusteringResult
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for fetchForecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiFetchForecastResultRequest
+ */
+export interface ActionsApiFetchForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiFetchForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiFetchForecastResult
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for getAnomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetAnomalyDetectionResultRequest
+ */
+export interface ActionsApiGetAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ActionsApiGetAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetAnomalyDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getClusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetClusteringResultRequest
+ */
+export interface ActionsApiGetClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ActionsApiGetClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetClusteringResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getForecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetForecastResultRequest
+ */
+export interface ActionsApiGetForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ActionsApiGetForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetResultRequest
+ */
+export interface ActionsApiGetResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiGetResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiGetResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for processAnomalyDetection operation in ActionsApi.
+ * @export
+ * @interface ActionsApiProcessAnomalyDetectionRequest
+ */
+export interface ActionsApiProcessAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiProcessAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiProcessAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof ActionsApiProcessAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessAnomalyDetection
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processClusteringRequest operation in ActionsApi.
+ * @export
+ * @interface ActionsApiProcessClusteringRequestRequest
+ */
+export interface ActionsApiProcessClusteringRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiProcessClusteringRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiProcessClusteringRequest
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof ActionsApiProcessClusteringRequest
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessClusteringRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessClusteringRequest
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processForecastRequest operation in ActionsApi.
+ * @export
+ * @interface ActionsApiProcessForecastRequestRequest
+ */
+export interface ActionsApiProcessForecastRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiProcessForecastRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ActionsApiProcessForecastRequest
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof ActionsApiProcessForecastRequest
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessForecastRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessForecastRequest
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processKeyDriversRequest operation in ActionsApi.
+ * @export
+ * @interface ActionsApiProcessKeyDriversRequestRequest
+ */
+export interface ActionsApiProcessKeyDriversRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiProcessKeyDriversRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ActionsApiProcessKeyDriversRequest
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiProcessKeyDriversRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsApiProcessKeyDriversRequest
+     */
+    readonly debugArrow?: boolean;
 }
 
 /**
@@ -3192,6 +5852,69 @@ export interface ActionsApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     *
+     * @param {ActionsApiCacheAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cacheAnomalyDetectionResult(
+        requestParameters: ActionsApiCacheAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .cacheAnomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionResult,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiCacheClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cacheClusteringResult(
+        requestParameters: ActionsApiCacheClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .cacheClusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringResult,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiCacheForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cacheForecastResult(
+        requestParameters: ActionsApiCacheForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .cacheForecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastResult,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -3279,6 +6002,54 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     *
+     * @param {ActionsApiDeleteAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public deleteAnomalyDetectionResult(
+        requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .deleteAnomalyDetectionResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiDeleteClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public deleteClusteringResult(
+        requestParameters: ActionsApiDeleteClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .deleteClusteringResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiDeleteForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public deleteForecastResult(
+        requestParameters: ActionsApiDeleteForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .deleteForecastResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
      * @summary AFM explain resource.
      * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -3292,6 +6063,230 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.afmExecution,
                 requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiFetchAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public fetchAnomalyDetectionResult(
+        requestParameters: ActionsApiFetchAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .fetchAnomalyDetectionResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiFetchClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public fetchClusteringResult(
+        requestParameters: ActionsApiFetchClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .fetchClusteringResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiFetchForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public fetchForecastResult(
+        requestParameters: ActionsApiFetchForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .fetchForecastResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getAnomalyDetectionResult(
+        requestParameters: ActionsApiGetAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getAnomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiGetClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getClusteringResult(
+        requestParameters: ActionsApiGetClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getClusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiGetForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getForecastResult(
+        requestParameters: ActionsApiGetForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getForecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiGetResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getResult(requestParameters: ActionsApiGetResultRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public processAnomalyDetection(
+        requestParameters: ActionsApiProcessAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .processAnomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiProcessClusteringRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public processClusteringRequest(
+        requestParameters: ActionsApiProcessClusteringRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .processClusteringRequest(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiProcessForecastRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public processForecastRequest(
+        requestParameters: ActionsApiProcessForecastRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .processForecastRequest(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ActionsApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public processKeyDriversRequest(
+        requestParameters: ActionsApiProcessKeyDriversRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .processKeyDriversRequest(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -3656,6 +6651,489 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getAnomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getAnomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getClusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getClusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getForecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getForecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getForecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("getResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAnomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processAnomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processAnomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("processAnomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/ml/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processClusteringRequest: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processClusteringRequest", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processClusteringRequest", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("processClusteringRequest", "clusteringRequest", clusteringRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/ml/clustering/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processForecastRequest: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processForecastRequest", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("processForecastRequest", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("processForecastRequest", "forecastRequest", forecastRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/ml/forecast/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processKeyDriversRequest: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("processKeyDriversRequest", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("processKeyDriversRequest", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (debugArrow !== undefined && debugArrow !== null) {
+                localVarHeaderParameter["debug-arrow"] = String(JSON.stringify(debugArrow));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -3902,6 +7380,215 @@ export const ComputationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAnomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result identifier
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getForecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getForecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processAnomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processAnomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processClusteringRequest(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processClusteringRequest(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result identifier
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache]
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processForecastRequest(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processForecastRequest(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {boolean} [debugArrow]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processKeyDriversRequest(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            debugArrow?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processKeyDriversRequest(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                debugArrow,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -4066,6 +7753,169 @@ export const ComputationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         *
+         * @param {ComputationApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnomalyDetectionResult(
+            requestParameters: ComputationApiGetAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .getAnomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiGetClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusteringResult(
+            requestParameters: ComputationApiGetClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .getClusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiGetForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getForecastResult(
+            requestParameters: ComputationApiGetForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .getForecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiGetResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult(
+            requestParameters: ComputationApiGetResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .getResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAnomalyDetection(
+            requestParameters: ComputationApiProcessAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processAnomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiProcessClusteringRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processClusteringRequest(
+            requestParameters: ComputationApiProcessClusteringRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processClusteringRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiProcessForecastRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processForecastRequest(
+            requestParameters: ComputationApiProcessForecastRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MachineLearningResponse> {
+            return localVarFp
+                .processForecastRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {ComputationApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processKeyDriversRequest(
+            requestParameters: ComputationApiProcessKeyDriversRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .processKeyDriversRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    requestParameters.debugArrow,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -4175,6 +8025,102 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     *
+     * @param {ComputationApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    getAnomalyDetectionResult(
+        requestParameters: ComputationApiGetAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
+     *
+     * @param {ComputationApiGetClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    getClusteringResult(
+        requestParameters: ComputationApiGetClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
+    /**
+     *
+     * @param {ComputationApiGetForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    getForecastResult(
+        requestParameters: ComputationApiGetForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
+
+    /**
+     *
+     * @param {ComputationApiGetResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    getResult(
+        requestParameters: ComputationApiGetResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
+
+    /**
+     *
+     * @param {ComputationApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    processAnomalyDetection(
+        requestParameters: ComputationApiProcessAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ComputationApiProcessClusteringRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    processClusteringRequest(
+        requestParameters: ComputationApiProcessClusteringRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ComputationApiProcessForecastRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    processForecastRequest(
+        requestParameters: ComputationApiProcessForecastRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MachineLearningResponse>;
+
+    /**
+     *
+     * @param {ComputationApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    processKeyDriversRequest(
+        requestParameters: ComputationApiProcessKeyDriversRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -4361,6 +8307,307 @@ export interface ComputationApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for getAnomalyDetectionResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiGetAnomalyDetectionResultRequest
+ */
+export interface ComputationApiGetAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiGetAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ComputationApiGetAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetAnomalyDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getClusteringResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiGetClusteringResultRequest
+ */
+export interface ComputationApiGetClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiGetClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ComputationApiGetClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetClusteringResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getForecastResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiGetForecastResultRequest
+ */
+export interface ComputationApiGetForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiGetForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result identifier
+     * @type {string}
+     * @memberof ComputationApiGetForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for getResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiGetResultRequest
+ */
+export interface ComputationApiGetResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiGetResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiGetResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiGetResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for processAnomalyDetection operation in ComputationApi.
+ * @export
+ * @interface ComputationApiProcessAnomalyDetectionRequest
+ */
+export interface ComputationApiProcessAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiProcessAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ComputationApiProcessAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof ComputationApiProcessAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessAnomalyDetection
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processClusteringRequest operation in ComputationApi.
+ * @export
+ * @interface ComputationApiProcessClusteringRequestRequest
+ */
+export interface ComputationApiProcessClusteringRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiProcessClusteringRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ComputationApiProcessClusteringRequest
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof ComputationApiProcessClusteringRequest
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessClusteringRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessClusteringRequest
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processForecastRequest operation in ComputationApi.
+ * @export
+ * @interface ComputationApiProcessForecastRequestRequest
+ */
+export interface ComputationApiProcessForecastRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiProcessForecastRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result identifier
+     * @type {string}
+     * @memberof ComputationApiProcessForecastRequest
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof ComputationApiProcessForecastRequest
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessForecastRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessForecastRequest
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
+ * Request parameters for processKeyDriversRequest operation in ComputationApi.
+ * @export
+ * @interface ComputationApiProcessKeyDriversRequestRequest
+ */
+export interface ComputationApiProcessKeyDriversRequestRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiProcessKeyDriversRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ComputationApiProcessKeyDriversRequest
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiProcessKeyDriversRequest
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComputationApiProcessKeyDriversRequest
+     */
+    readonly debugArrow?: boolean;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ComputationApi.
  * @export
  * @interface ComputationApiRetrieveExecutionMetadataRequest
@@ -4533,6 +8780,182 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.afmExecution,
                 requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiGetAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public getAnomalyDetectionResult(
+        requestParameters: ComputationApiGetAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .getAnomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiGetClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public getClusteringResult(
+        requestParameters: ComputationApiGetClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .getClusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiGetForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public getForecastResult(
+        requestParameters: ComputationApiGetForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .getForecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiGetResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public getResult(requestParameters: ComputationApiGetResultRequest, options?: AxiosRequestConfig) {
+        return ComputationApiFp(this.configuration)
+            .getResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiProcessAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public processAnomalyDetection(
+        requestParameters: ComputationApiProcessAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .processAnomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiProcessClusteringRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public processClusteringRequest(
+        requestParameters: ComputationApiProcessClusteringRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .processClusteringRequest(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiProcessForecastRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public processForecastRequest(
+        requestParameters: ComputationApiProcessForecastRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .processForecastRequest(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {ComputationApiProcessKeyDriversRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public processKeyDriversRequest(
+        requestParameters: ComputationApiProcessKeyDriversRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .processKeyDriversRequest(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                requestParameters.debugArrow,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

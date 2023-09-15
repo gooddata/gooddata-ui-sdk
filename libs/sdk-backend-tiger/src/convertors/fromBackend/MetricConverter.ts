@@ -21,7 +21,7 @@ export function convertMetricFromBackend(
     data: JsonApiMetricOutDocument | JsonApiMetricOutWithLinks,
     included: JsonApiMetricOutIncludes[] = [],
 ): IMeasureMetadataObject {
-    const { id, attributes, object, createdAt, createdBy, modifiedAt, modifiedBy, tags } =
+    const { id, attributes, object, createdAt, createdBy, modifiedAt, modifiedBy, tags, interactions } =
         getPropertiesFromData(data);
     const ref = idRef(id, "measure");
 
@@ -38,6 +38,7 @@ export function convertMetricFromBackend(
             .updated(modifiedAt)
             .updatedBy(convertUserIdentifier(modifiedBy, included))
             .tags(tags)
+            .interactions(interactions),
     );
 }
 
@@ -52,6 +53,7 @@ function getPropertiesFromData(data: JsonApiMetricOutDocument | JsonApiMetricOut
             createdBy: data.data.relationships?.createdBy,
             modifiedBy: data.data.relationships?.modifiedBy,
             tags: data.data.attributes.tags,
+            interactions: data.data.attributes.interactions,
         };
     }
     return {
@@ -63,5 +65,6 @@ function getPropertiesFromData(data: JsonApiMetricOutDocument | JsonApiMetricOut
         createdBy: data.relationships?.createdBy,
         modifiedBy: data.relationships?.modifiedBy,
         tags: data.attributes.tags,
+        interactions: data.attributes.interactions,
     };
 }

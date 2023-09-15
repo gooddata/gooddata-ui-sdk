@@ -1336,6 +1336,7 @@ export type IInsight = IInsightDefinition & {
         uri: string;
         ref: ObjRef;
         isLocked?: boolean;
+        interactions?: IObjectInteractions;
     };
 };
 
@@ -1350,6 +1351,7 @@ export type IInsightDefinition = {
         filters: IFilter[];
         sorts: ISortItem[];
         properties: VisualizationProperties;
+        interactions?: IObjectInteractions;
     };
 };
 
@@ -1464,6 +1466,8 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly availability: ListedDashboardAvailability;
     readonly description: string;
     readonly identifier: string;
+    // (undocumented)
+    readonly interactions?: IObjectInteractions;
     readonly ref: ObjRef;
     readonly tags?: string[];
     readonly title: string;
@@ -1556,7 +1560,9 @@ export interface IMeasureLocatorItemBody {
 }
 
 // @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable & {
+    interactions?: IObjectInteractions;
+};
 
 // @public (undocumented)
 export interface IMeasureMetadataObjectBase {
@@ -1812,6 +1818,19 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 // @public
 export type INullableFilter = IFilter | undefined | null;
+
+// @public (undocumented)
+export interface IObjectInteractions {
+    // (undocumented)
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe")[];
+    // (undocumented)
+    statistics?: {
+        like?: number;
+        dislike?: number;
+        favorite?: number;
+        subscribe?: number;
+    };
+}
 
 // @public
 export interface IOrganizationDescriptor {

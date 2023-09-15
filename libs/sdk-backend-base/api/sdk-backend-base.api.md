@@ -73,6 +73,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IObjectInteractions } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -807,6 +808,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     expression(maql: string): this;
     // (undocumented)
     format(format: string): this;
+    // (undocumented)
+    interactions(interactions?: IObjectInteractions): this;
     // (undocumented)
     isLocked(isLocked: boolean): this;
     // (undocumented)
