@@ -813,7 +813,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const { onExportReady } = this.props;
 
         if (this.props.execution.fingerprint() === execution.fingerprint()) {
-            this.setState({ error: error.getMessage() });
+            this.setState({ error: error.getMessage(), readyToRender: true });
 
             // update loading state when an error occurs
             this.onLoadingChanged({ isLoading: false });
