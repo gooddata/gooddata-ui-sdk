@@ -25,7 +25,9 @@ export { CoreHeadline, ICoreHeadlineExtendedProps } from "./headline/CoreHeadlin
 export { createHeadlineProvider } from "./headline/HeadlineProviderFactory.js";
 export {
     DEFAULT_COMPARISON_PALETTE,
+    CALCULATION_VALUES_DEFAULT,
     ICalculationDefaultValue,
+    IDefaultLabelKeys,
     ComparisonColorType,
     getCalculationValuesDefault,
     getComparisonFormat,

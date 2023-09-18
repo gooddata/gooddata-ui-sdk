@@ -3,26 +3,49 @@ import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { render } from "@testing-library/react";
-import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
+import {
+    CalculateAs,
+    CalculationType,
+    ComparisonPositionValues,
+    IDefaultLabelKeys,
+} from "@gooddata/sdk-ui-charts";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import LabelSubSection from "../LabelSubSection.js";
 import * as InputControl from "../../../InputControl.js";
-import { COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH } from "../../ComparisonValuePath.js";
+import * as CheckboxControl from "../../../CheckboxControl.js";
+import {
+    COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
+    COMPARISON_LABEL_POSITIVE_VALUE_PATH,
+    COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
+} from "../../ComparisonValuePath.js";
 import { comparisonMessages } from "../../../../../../locales.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 
 const TITLE_TEXT_QUERY = "Label";
-const DEFAULT_LABEL_KEY = "visualizations.headline.comparison.title.ratio";
+
+const DEFAULT_RATIO_LABEL_KEYS = {
+    nonConditionalKey: "visualizations.headline.comparison.title.ratio",
+};
+const DEFAULT_CHANGE_LABEL_KEYS = {
+    nonConditionalKey: "visualizations.headline.comparison.title.change",
+    positiveKey: "visualizations.headline.comparison.title.change.positive",
+    negativeKey: "visualizations.headline.comparison.title.change.negative",
+    equalsKey: "visualizations.headline.comparison.title.change.equals",
+};
 const DISABLED_POSITION_ON_TOP_KEY = "properties.comparison.labelSubSection.positionOnTop.disabled";
+const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
 
 describe("LabelSubSection", () => {
     const mockPushData = vi.fn();
 
     const DEFAULT_PROPS = {
         sectionDisabled: false,
-        defaultLabelKey: DEFAULT_LABEL_KEY,
+        showDisabledMessage: false,
+        defaultLabelKeys: DEFAULT_RATIO_LABEL_KEYS,
+        calculationType: CalculateAs.RATIO,
+        disabledMessageAlignPoints: DISABLED_MESSAGE_ALIGN_POINTS,
         properties: createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -31,9 +54,11 @@ describe("LabelSubSection", () => {
         pushData: mockPushData,
     };
 
-    const renderValueSubSection = (
+    const renderLabelSubSection = (
         params: {
             sectionDisabled?: boolean;
+            defaultLabelKeys?: IDefaultLabelKeys;
+            calculationType?: CalculationType;
             properties?: IVisualizationProperties<IComparisonControlProperties>;
         } = {},
     ) => {
@@ -54,31 +79,93 @@ describe("LabelSubSection", () => {
     });
 
     it("Should render title correctly", () => {
-        const { getByText } = renderValueSubSection();
+        const { getByText } = renderLabelSubSection();
         expect(getByText(TITLE_TEXT_QUERY)).toBeInTheDocument();
     });
 
-    it("Should render label input control", () => {
+    it("Should render label input control with ratio calculation", () => {
         const MockInputControl = vi.spyOn(InputControl, "default");
-        renderValueSubSection();
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+        renderLabelSubSection();
 
-        const { sectionDisabled, defaultLabelKey, ...expected } = DEFAULT_PROPS;
-        expect(MockInputControl).toHaveBeenCalledWith(
+        expect(MockCheckboxControl).toHaveBeenCalledWith(
             expect.objectContaining({
-                ...expected,
-                disabled: sectionDisabled,
+                disabled: true,
+                checked: false,
+                showDisabledMessage: true,
+                disabledMessageId: comparisonMessages.labelConditionalDisabledByRatio.id,
+                valuePath: COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
+                labelText: comparisonMessages.labelConditionalTitle.id,
+            }),
+            expect.anything(),
+        );
+
+        expect(MockInputControl).toHaveBeenNthCalledWith(
+            1,
+            expect.objectContaining({
+                disabled: false,
+                showDisabledMessage: false,
+                disabledMessageId: comparisonMessages.labelConditionalDisabledByRatio.id,
                 type: "text",
                 valuePath: COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
                 labelText: comparisonMessages.labelNameTitle.id,
-                placeholder: defaultLabelKey,
+                placeholder: DEFAULT_RATIO_LABEL_KEYS.nonConditionalKey,
                 value: "of",
             }),
             expect.anything(),
         );
     });
 
+    it("Should render label input control with change calculation", () => {
+        const MockInputControl = vi.spyOn(InputControl, "default");
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+
+        const properties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                labelConfig: {
+                    isConditional: true,
+                    positive: "test",
+                },
+            },
+        });
+        renderLabelSubSection({
+            defaultLabelKeys: DEFAULT_CHANGE_LABEL_KEYS,
+            calculationType: CalculateAs.CHANGE,
+            properties,
+        });
+
+        expect(MockCheckboxControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                disabled: false,
+                checked: true,
+                showDisabledMessage: false,
+                disabledMessageId: undefined,
+                valuePath: COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
+                labelText: comparisonMessages.labelConditionalTitle.id,
+            }),
+            expect.anything(),
+        );
+
+        expect(MockInputControl).toHaveBeenNthCalledWith(
+            1,
+            expect.objectContaining({
+                disabled: false,
+                showDisabledMessage: false,
+                disabledMessageId: undefined,
+                type: "text",
+                valuePath: COMPARISON_LABEL_POSITIVE_VALUE_PATH,
+                labelText: comparisonMessages.labelPositiveTitle.id,
+                placeholder: DEFAULT_CHANGE_LABEL_KEYS.positiveKey,
+                value: "test",
+            }),
+            expect.anything(),
+        );
+    });
+
     it("Should render label input control with value in label config", () => {
-        const { container } = renderValueSubSection({
+        const { container } = renderLabelSubSection({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {
                     enabled: true,
@@ -100,7 +187,7 @@ describe("LabelSubSection", () => {
                 position: ComparisonPositionValues.TOP,
             },
         });
-        renderValueSubSection({
+        renderLabelSubSection({
             sectionDisabled: false,
             properties,
         });
@@ -123,7 +210,7 @@ describe("LabelSubSection", () => {
                 position: ComparisonPositionValues.RIGHT,
             },
         });
-        renderValueSubSection({
+        renderLabelSubSection({
             sectionDisabled: true,
             properties,
         });

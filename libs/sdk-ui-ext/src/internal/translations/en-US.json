@@ -1663,9 +1663,34 @@
         "comment": "Disable tooltip message when the comparison position is set to top.",
         "limit": 0
     },
+    "properties.comparison.labelSubSection.conditional.disabled": {
+        "value": "Conditional labels are not applicable to ratio calculations.",
+        "comment": "Disable tooltip message when the calculation is ratio.",
+        "limit": 0
+    },
     "properties.comparison.labelName.title": {
         "value": "Name",
         "comment": "The label of name input control.",
+        "limit": 0
+    },
+    "properties.comparison.labelConditional.title": {
+        "value": "Conditional",
+        "comment": "The label of conditional checkbox control.",
+        "limit": 0
+    },
+    "properties.comparison.labelPositive.title": {
+        "value": "Primary > Secondary",
+        "comment": "The label of the input control will be set when the primary value is greater than the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.labelNegative.title": {
+        "value": "Primary < Secondary",
+        "comment": "The label of the input control will be set when the primary value is less than the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.labelEquals.title": {
+        "value": "Primary = Secondary",
+        "comment": "The label of the input control will be set when the primary value is equal the secondary value.",
         "limit": 0
     },
     "properties.comparison.position.title": {
