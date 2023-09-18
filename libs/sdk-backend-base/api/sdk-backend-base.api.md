@@ -810,6 +810,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     // (undocumented)
     isLocked(isLocked: boolean): this;
     // (undocumented)
+    tags(tags?: string[]): this;
+    // (undocumented)
     updated(updatedAt?: string): this;
     // (undocumented)
     updatedBy(updatedBy?: IUser): this;

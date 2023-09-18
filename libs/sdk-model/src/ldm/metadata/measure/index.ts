@@ -23,6 +23,11 @@ export interface IMeasureMetadataObjectBase {
      * Measure is locked for editing
      */
     isLocked?: boolean;
+
+    /**
+     * Measure tags.
+     */
+    tags?: string[];
 }
 
 /**

@@ -25,7 +25,11 @@ import flatten from "lodash/flatten.js";
 import flatMap from "lodash/flatMap.js";
 import uniqBy from "lodash/uniqBy.js";
 import sortBy from "lodash/sortBy.js";
-import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApiGetAllEntitiesMetricsRequest,
+    MetadataUtilities,
+    ValidateRelationsHeader,
+} from "@gooddata/api-client-tiger";
 import { addRsqlFilterToParams, tagsToRsqlFilter } from "./rsqlFilter.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
@@ -146,7 +150,10 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
-        const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
+        const params: EntitiesApiGetAllEntitiesMetricsRequest = addRsqlFilterToParams(
+            { workspaceId: this.workspace, include: ["createdBy"] },
+            rsqlTagFilter,
+        );
 
         const measures = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, params, {
