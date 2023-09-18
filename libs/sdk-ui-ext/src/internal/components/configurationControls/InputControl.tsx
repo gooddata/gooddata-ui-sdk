@@ -8,6 +8,7 @@ import cx from "classnames";
 import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
+import { IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 export interface IInputControlProps {
     valuePath: string;
@@ -23,6 +24,7 @@ export interface IInputControlProps {
     showDisabledMessage?: boolean;
     disabledMessageId?: string;
     hasWarning?: boolean;
+    disabledMessageAlignPoints?: IAlignPoint[];
     pushData?(data: any): void;
     validateAndPushDataCallback?(value: string): void;
     maxLength?: number;
@@ -84,13 +86,18 @@ export class InputControl extends React.Component<
             placeholder,
             showDisabledMessage,
             disabledMessageId,
+            disabledMessageAlignPoints,
             intl,
             type,
             maxLength,
         } = this.props;
 
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
+            <DisabledBubbleMessage
+                showDisabledMessage={showDisabledMessage}
+                messageId={disabledMessageId}
+                alignPoints={disabledMessageAlignPoints}
+            >
                 <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <input

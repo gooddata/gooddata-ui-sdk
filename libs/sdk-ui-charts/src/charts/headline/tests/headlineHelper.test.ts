@@ -16,32 +16,62 @@ describe("headlineHelper", () => {
     const DECIMAL_FORMAT = "#,##0.0";
 
     describe("getCalculationValuesDefault", () => {
-        const specs = [
+        const specs: Array<[CalculationType, ICalculationDefaultValue]> = [
             [
                 undefined,
                 {
-                    defaultLabelKey: "visualizations.headline.comparison.title.change",
+                    defaultLabelKeys: {
+                        nonConditionalKey: "visualizations.headline.comparison.title.change",
+                        positiveKey: "visualizations.headline.comparison.title.change.positive",
+                        negativeKey: "visualizations.headline.comparison.title.change.negative",
+                        equalsKey: "visualizations.headline.comparison.title.change.equals",
+                    },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
                 },
             ],
             [
                 CalculateAs.RATIO,
                 {
-                    defaultLabelKey: "visualizations.headline.comparison.title.ratio",
+                    defaultLabelKeys: {
+                        nonConditionalKey: "visualizations.headline.comparison.title.ratio",
+                    },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
                 },
             ],
             [
                 CalculateAs.CHANGE,
                 {
-                    defaultLabelKey: "visualizations.headline.comparison.title.change",
+                    defaultLabelKeys: {
+                        nonConditionalKey: "visualizations.headline.comparison.title.change",
+                        positiveKey: "visualizations.headline.comparison.title.change.positive",
+                        negativeKey: "visualizations.headline.comparison.title.change.negative",
+                        equalsKey: "visualizations.headline.comparison.title.change.equals",
+                    },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
+                },
+            ],
+            [
+                CalculateAs.CHANGE_DIFFERENCE,
+                {
+                    defaultLabelKeys: {
+                        nonConditionalKey: "visualizations.headline.comparison.title.change",
+                        positiveKey: "visualizations.headline.comparison.title.change.positive",
+                        negativeKey: "visualizations.headline.comparison.title.change.negative",
+                        equalsKey: "visualizations.headline.comparison.title.change.equals",
+                    },
+                    defaultFormat: PERCENT_ROUNDED_FORMAT,
+                    defaultSubFormat: null,
                 },
             ],
             [
                 CalculateAs.DIFFERENCE,
                 {
-                    defaultLabelKey: "visualizations.headline.comparison.title.difference",
+                    defaultLabelKeys: {
+                        nonConditionalKey: "visualizations.headline.comparison.title.difference",
+                        positiveKey: "visualizations.headline.comparison.title.difference.positive",
+                        negativeKey: "visualizations.headline.comparison.title.difference.negative",
+                        equalsKey: "visualizations.headline.comparison.title.difference.equals",
+                    },
                     defaultFormat: null,
                 },
             ],

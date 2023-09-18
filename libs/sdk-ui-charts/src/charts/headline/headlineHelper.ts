@@ -2,15 +2,25 @@
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { CalculateAs, CalculationType, ILabelConfig } from "../../interfaces/index.js";
+import { CalculateAs, CalculationType } from "../../interfaces/index.js";
 
 /**
  * @internal
  */
 interface ICalculationDefaultValue {
-    defaultLabelKey: string;
+    defaultLabelKeys: IDefaultLabelKeys;
     defaultFormat: string;
     defaultSubFormat?: string;
+}
+
+/**
+ * @internal
+ */
+interface IDefaultLabelKeys {
+    nonConditionalKey: string;
+    positiveKey?: string;
+    negativeKey?: string;
+    equalsKey?: string;
 }
 
 /**
@@ -22,22 +32,42 @@ enum ComparisonColorType {
     EQUALS = "equals",
 }
 
+/**
+ * @internal
+ */
 const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefaultValue } = {
     [CalculateAs.CHANGE]: {
-        defaultLabelKey: "visualizations.headline.comparison.title.change",
+        defaultLabelKeys: {
+            nonConditionalKey: "visualizations.headline.comparison.title.change",
+            positiveKey: "visualizations.headline.comparison.title.change.positive",
+            negativeKey: "visualizations.headline.comparison.title.change.negative",
+            equalsKey: "visualizations.headline.comparison.title.change.equals",
+        },
         defaultFormat: "#,##0%",
     },
     [CalculateAs.RATIO]: {
-        defaultLabelKey: "visualizations.headline.comparison.title.ratio",
+        defaultLabelKeys: {
+            nonConditionalKey: "visualizations.headline.comparison.title.ratio",
+        },
         defaultFormat: "#,##0%",
     },
     [CalculateAs.CHANGE_DIFFERENCE]: {
-        defaultLabelKey: "visualizations.headline.comparison.title.change",
+        defaultLabelKeys: {
+            nonConditionalKey: "visualizations.headline.comparison.title.change",
+            positiveKey: "visualizations.headline.comparison.title.change.positive",
+            negativeKey: "visualizations.headline.comparison.title.change.negative",
+            equalsKey: "visualizations.headline.comparison.title.change.equals",
+        },
         defaultFormat: "#,##0%",
         defaultSubFormat: null,
     },
     [CalculateAs.DIFFERENCE]: {
-        defaultLabelKey: "visualizations.headline.comparison.title.difference",
+        defaultLabelKeys: {
+            nonConditionalKey: "visualizations.headline.comparison.title.difference",
+            positiveKey: "visualizations.headline.comparison.title.difference.positive",
+            negativeKey: "visualizations.headline.comparison.title.difference.negative",
+            equalsKey: "visualizations.headline.comparison.title.difference.equals",
+        },
         defaultFormat: null,
     },
 };
@@ -79,10 +109,6 @@ const DEFAULT_COMPARISON_PALETTE: IColorPalette = [
  */
 const getComparisonFormat = (providedFormat: string, defaultFormat: string): string => {
     return providedFormat === undefined ? defaultFormat : providedFormat;
-};
-
-const getComparisonTitle = (labelConfig: ILabelConfig, defaultLabel: string): string => {
-    return labelConfig?.unconditionalValue || defaultLabel;
 };
 
 /**
@@ -132,11 +158,12 @@ const getComparisonRgbColor = (
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
  */
 export {
+    CALCULATION_VALUES_DEFAULT,
     DEFAULT_COMPARISON_PALETTE,
     getCalculationValuesDefault,
     getComparisonFormat,
-    getComparisonTitle,
     getComparisonRgbColor,
     ICalculationDefaultValue,
+    IDefaultLabelKeys,
     ComparisonColorType,
 };
