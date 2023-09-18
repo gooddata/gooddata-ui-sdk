@@ -120,6 +120,8 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     showWebComponentsTab?: boolean;
     // (undocumented)
+    theme?: ITheme;
+    // (undocumented)
     webComponentIntegrationDocLink?: string;
     // (undocumented)
     workspaceId?: string;
