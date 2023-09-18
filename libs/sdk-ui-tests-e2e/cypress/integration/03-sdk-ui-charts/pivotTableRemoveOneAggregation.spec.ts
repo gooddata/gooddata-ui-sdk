@@ -8,14 +8,14 @@ describe("Pivot Table Aggregations remove one row totals", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-one-total-aggregations-menu");
     });
 
-    it("should remove row totals for one measure (SEPARATE)", { tags: ["pre-merge_isolated_bear"] }, () => {
+    it("(SEPARATE) should remove row totals for one measure", { tags: ["pre-merge_isolated_bear"] }, () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 
         const element = table.getMeasureCellHeader(0, 2);
         table.addOrRemoveRowTotal(element, TotalTypes.SUM);
 
-        table.waitRowColumnLoaded();
+        table.waitRowColumnLoaded().waitLoaded();
 
         table.existPivotTableFooterRow(0, false);
     });
