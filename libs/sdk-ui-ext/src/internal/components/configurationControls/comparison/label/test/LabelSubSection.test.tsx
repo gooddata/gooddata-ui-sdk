@@ -35,6 +35,7 @@ const DEFAULT_CHANGE_LABEL_KEYS = {
     equalsKey: "visualizations.headline.comparison.title.change.equals",
 };
 const DISABLED_POSITION_ON_TOP_KEY = "properties.comparison.labelSubSection.positionOnTop.disabled";
+const DISABLED_BY_CONFIG__KEY = "properties.not_applicable";
 const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
 
 describe("LabelSubSection", () => {
@@ -57,6 +58,7 @@ describe("LabelSubSection", () => {
     const renderLabelSubSection = (
         params: {
             sectionDisabled?: boolean;
+            showDisabledMessage?: boolean;
             defaultLabelKeys?: IDefaultLabelKeys;
             calculationType?: CalculationType;
             properties?: IVisualizationProperties<IComparisonControlProperties>;
@@ -219,6 +221,30 @@ describe("LabelSubSection", () => {
             expect.objectContaining({
                 disabled: true,
                 showDisabledMessage: false,
+            }),
+            expect.anything(),
+        );
+    });
+
+    it("Should show disabled message in case position is on top and control is disabled by configuration", () => {
+        const MockInputControl = vi.spyOn(InputControl, "default");
+        const properties = createTestProperties<IComparisonControlProperties>({
+            comparison: {
+                enabled: true,
+                position: ComparisonPositionValues.TOP,
+            },
+        });
+        renderLabelSubSection({
+            sectionDisabled: true,
+            showDisabledMessage: true,
+            properties,
+        });
+
+        expect(MockInputControl).toHaveBeenCalledWith(
+            expect.objectContaining({
+                disabled: true,
+                showDisabledMessage: true,
+                disabledMessageId: DISABLED_BY_CONFIG__KEY,
             }),
             expect.anything(),
         );
