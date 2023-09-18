@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import sortBy from "lodash/sortBy.js";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import {
     isStacked,
@@ -167,6 +168,7 @@ export function toggleStackedLabelsForAxis() {
         const areOverlapping = areLabelsOverlappingColumns(
             getStackedLabels(stacks),
             getDataPointsOfVisibleSeries(this),
+            VisualizationTypes.BAR,
         );
 
         stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) =>
