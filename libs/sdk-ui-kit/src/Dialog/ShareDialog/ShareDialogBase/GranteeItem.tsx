@@ -16,6 +16,7 @@ import {
     isGranteeGroupAll,
     isGranularGranteeUser,
     isGranularGranteeGroup,
+    isGranteeRules,
 } from "./types.js";
 import { getGranteeLabel, getGranteeItemTestId } from "./utils.js";
 import {
@@ -184,7 +185,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 mode={mode}
             />
         );
-    } else if (isGranularGranteeGroup(grantee)) {
+    } else if (isGranularGranteeGroup(grantee) || isGranteeRules(grantee)) {
         return (
             <GranularGranteeGroupItem
                 currentUserPermissions={currentUserPermissions}

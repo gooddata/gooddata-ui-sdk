@@ -12,8 +12,10 @@ import {
 import { stringUtils } from "@gooddata/util";
 import {
     GranteeItem,
+    IGranteeRules,
     IGranteeGroupAll,
     IGranteeInactiveOwner,
+    isGranteeRules,
     isGranteeGroup,
     isGranteeGroupAll,
     isGranularGranteeGroup,
@@ -21,6 +23,23 @@ import {
 import differenceWith from "lodash/differenceWith.js";
 import partition from "lodash/partition.js";
 import { CurrentUserPermissions } from "../types.js";
+
+/**
+ * @internal
+ */
+export const ALL_WORKSPACE_USERS = "allWorkspaceUsers";
+
+/**
+ * @internal
+ */
+export const GranteeRules: IGranteeRules = {
+    type: ALL_WORKSPACE_USERS,
+    id: {
+        identifier: ALL_WORKSPACE_USERS,
+    },
+    permissions: ["VIEW"],
+    inheritedPermissions: [],
+};
 
 /**
  * @internal
@@ -69,7 +88,7 @@ export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string =
         return grantee.name;
     } else if (grantee.type === "group" || grantee.type === "granularGroup") {
         return grantee.name;
-    } else if (grantee.type === "groupAll") {
+    } else if (grantee.type === "groupAll" || grantee.type === "allWorkspaceUsers") {
         return intl.formatMessage({ id: "shareDialog.share.grantee.item.user.all" });
     } else if (grantee.type === "inactive_owner") {
         return intl.formatMessage({ id: "shareDialog.share.grantee.item.user.inactive" });
@@ -94,8 +113,11 @@ export const sortGranteeList = (grantees: GranteeItem[], intl: IntlShape): Grant
     const granteeSort = sortGranteesByName(intl);
 
     const hasAllGroup = hasGroupAll(grantees);
+    const granteeRules = grantees.find((g) => isGranteeRules(g));
 
-    const granteesWithNoAllGroup: GranteeItem[] = grantees.filter((g) => !isGranteeGroupAll(g));
+    const granteesWithNoAllGroup: GranteeItem[] = grantees.filter(
+        (g) => !(isGranteeGroupAll(g) || isGranteeRules(g)),
+    );
 
     const [groups, users] = partition(
         granteesWithNoAllGroup,
@@ -106,6 +128,10 @@ export const sortGranteeList = (grantees: GranteeItem[], intl: IntlShape): Grant
 
     if (hasAllGroup) {
         return [GranteeGroupAll, ...sorted];
+    }
+
+    if (granteeRules) {
+        return [granteeRules, ...sorted];
     }
 
     return sorted;
@@ -123,6 +149,13 @@ export const notInArrayFilter = (array: GranteeItem[], notInArray: GranteeItem[]
  */
 export const hasGroupAll = (array: GranteeItem[]): boolean => {
     return array.some((g) => areObjRefsEqual(g.id, GranteeGroupAll.id));
+};
+
+/**
+ * @internal
+ */
+export const hasGranteeRules = (array: GranteeItem[]): boolean => {
+    return array.some((g) => isGranteeRules(g));
 };
 
 /**

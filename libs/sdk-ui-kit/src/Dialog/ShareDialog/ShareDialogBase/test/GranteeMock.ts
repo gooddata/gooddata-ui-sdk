@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     GranteeItem,
+    IGranteeRules,
     IGranteeGroup,
     IGranteeGroupAll,
     IGranteeUser,
@@ -121,6 +122,15 @@ export const granularUser: IGranularGranteeUser = {
 export const granularGroup: IGranularGranteeGroup = {
     ...group,
     type: "granularGroup",
+    permissions: ["EDIT"],
+    inheritedPermissions: [],
+};
+
+export const granularRule: IGranteeRules = {
+    id: {
+        identifier: "allWorkspaceUsers",
+    },
+    type: "allWorkspaceUsers",
     permissions: ["EDIT"],
     inheritedPermissions: [],
 };
