@@ -1,5 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
-import { tigerExecutionClientFactory } from "./execution.js";
+import {
+    tigerExecutionClientFactory,
+    tigerPredictionCacheClientFactory,
+    tigerKeyDriversClientFactory,
+} from "./execution.js";
 import { tigerExecutionResultClientFactory } from "./executionResult.js";
 import {
     LabelElementsConfiguration,
@@ -61,6 +65,8 @@ export {
     tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
     tigerExportClientFactory,
+    tigerPredictionCacheClientFactory,
+    tigerKeyDriversClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -99,6 +105,8 @@ export interface ITigerClient {
     authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     export: ReturnType<typeof tigerExportClientFactory>;
+    predictionCache: ReturnType<typeof tigerPredictionCacheClientFactory>;
+    keyDrivers: ReturnType<typeof tigerKeyDriversClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -127,6 +135,8 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
     const exportFactory = tigerExportClientFactory(axios);
+    const predictionCache = tigerPredictionCacheClientFactory(axios);
+    const keyDrivers = tigerKeyDriversClientFactory(axios);
 
     return {
         axios,
@@ -145,5 +155,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
             setAxiosAuthorizationToken(axios, token);
         },
         export: exportFactory,
+        predictionCache,
+        keyDrivers,
     };
 };

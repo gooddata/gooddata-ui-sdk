@@ -44,6 +44,7 @@ import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
 import { defaultImport } from "default-import";
+import { predictionSliceReducer } from "./prediction/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -313,6 +314,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
+        prediction: predictionSliceReducer,
     });
 
     const store = configureStore({

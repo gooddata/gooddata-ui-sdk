@@ -131,6 +131,10 @@ export class BearExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
+    public getResultId(): string {
+        throw Error("Not supported by this implementation");
+    }
+
     private asDataView: DataViewFactory = (promisedRes) => {
         return promisedRes.then((res) => {
             if (!res) {

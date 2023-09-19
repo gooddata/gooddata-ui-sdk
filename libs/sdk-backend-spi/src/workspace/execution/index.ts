@@ -337,6 +337,8 @@ export interface IExecutionResult {
      * Thus, two results with the same data and same execution definition will have the same fingerprint.
      */
     fingerprint(): string;
+
+    getResultId(): string;
 }
 
 /**

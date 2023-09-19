@@ -67,6 +67,9 @@ export {
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
 
+export { IPredictionState, IPredictionResult } from "./prediction/predictionState.js";
+export { selectPredictionResult } from "./prediction/predictionSelectors.js";
+
 export { PermissionsState } from "./permissions/permissionsState.js";
 export {
     selectPermissions,

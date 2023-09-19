@@ -1497,6 +1497,8 @@ export interface IDropdownProps {
     // (undocumented)
     openOnInit?: boolean;
     // (undocumented)
+    overlayClassName?: string;
+    // (undocumented)
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
     overlayZIndex?: number;

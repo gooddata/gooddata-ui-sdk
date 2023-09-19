@@ -104,6 +104,10 @@ export {
     ICustomApplicationSetting,
     ScanSqlResult,
     WorkspaceEntitiesDatasets,
+    IKeyDriverAnalysis,
+    IForecastCacheResult,
+    IClusteringCacheResult,
+    IAnomalyDetectionCacheResult,
 } from "./backend/tigerSpecificFunctions.js";
 
 export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";

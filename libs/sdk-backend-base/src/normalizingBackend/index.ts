@@ -159,6 +159,11 @@ class DenormalizingExecutionResult implements IExecutionResult {
         return this._fingerprint;
     };
 
+
+    public getResultId(): string {
+        return this.normalizedResult.getResultId();
+    }
+
     private handleDataViewError = (error: unknown): never => {
         // make sure that errors with dataViews are repackaged with the dataView denormalized as well
         // otherwise the dataViews will not make sense to the caller

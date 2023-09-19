@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isWidget, isInsightWidget, isDashboardWidget, widgetRef } from "@gooddata/sdk-model";
+import { isWidget, isInsightWidget, isDashboardWidget, widgetRef, objRefToString } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
@@ -15,6 +15,7 @@ import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
+import { stringUtils } from '@gooddata/util';
 
 /**
  * @internal
@@ -75,7 +76,8 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         });
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
-    const dashboardItemClasses = `s-dash-item-${index}`;
+    const widgetRefAsString = objRefToString(widgetRef(widget));
+    const dashboardItemClasses = `s-dash-item-${index} widget-${stringUtils.simplifyText(widgetRefAsString)}`;
 
     if (isWidget(widget)) {
         return (

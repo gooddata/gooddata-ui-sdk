@@ -21,6 +21,7 @@ import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.
 import { RenderModeState } from "./renderMode/renderModeState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
+import { IPredictionState } from "./prediction/predictionState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -102,6 +103,12 @@ export interface DashboardState {
     _queryCache: {
         [queryName: string]: any;
     };
+
+    /**
+     * Prediction features related data
+     * @internal
+     */
+    prediction: IPredictionState;
 }
 
 /**

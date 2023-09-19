@@ -147,6 +147,10 @@ export class TigerExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
+    public getResultId(): string {
+        return this.resultId;
+    }
+
     private asDataView = (promisedRes: Promise<ExecutionResult>): Promise<IDataView> => {
         return promisedRes.then((result) => {
             if (!result) {

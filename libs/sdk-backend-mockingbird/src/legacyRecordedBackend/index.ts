@@ -341,6 +341,9 @@ function recordedExecutionResult(
         transform(): IPreparedExecution {
             return executionFactory.forDefinition(definition);
         },
+        getResultId(): string {
+            throw Error("Not supported by this implementation");
+        }
     };
 
     return result;

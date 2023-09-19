@@ -10,6 +10,7 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
+    selectPredictionResult,
 } from "../../../../model/index.js";
 
 type UseEditableInsightMenuConfig = {
@@ -33,6 +34,8 @@ export const useEditableInsightMenu = (
         enableKPIDashboardDrillToInsight,
     } = settings;
 
+    const prediction = useDashboardSelector(selectPredictionResult(widget.ref));
+
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const someDrillingEnabled =
         enableKPIDashboardDrillToURL ||
@@ -51,9 +54,9 @@ export const useEditableInsightMenu = (
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
-            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "edit")
+            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "edit", prediction)
             : defaultMenuItems;
-    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu, prediction]);
 
     return { menuItems };
 };

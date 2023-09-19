@@ -72,6 +72,7 @@ import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNe
 import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler.js";
 import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler.js";
 import { changeInsightWidgetInsightHandler } from "./widgets/changeInsightWidgetInsightHandler.js";
+import { predictionHandler } from "./prediction/predictionHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -149,4 +150,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE": resolveAsyncRenderHandler,
+    "GDC.DASH/CMD.PREDICTION.RESULT": predictionHandler,
 };
