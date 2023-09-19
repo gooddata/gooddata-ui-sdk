@@ -490,7 +490,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.entities.createEntityWidgetAlerts(
                 {
                     workspaceId: this.workspace,
-                    include: ["filterContext", "visualizationObject"],
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
                     jsonApiWidgetAlertInDocument: convertWidgetAlertToBackend({
                         ...alert,
                         filterContext,
@@ -522,7 +522,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             client.entities.updateEntityWidgetAlerts(
                 {
                     workspaceId: this.workspace,
-                    include: ["filterContext", "visualizationObject"],
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
                     objectId: id,
                     jsonApiWidgetAlertInDocument: convertWidgetAlertToBackend(alertWithSavedFilterContext),
                 },
