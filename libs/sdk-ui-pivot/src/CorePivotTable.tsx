@@ -220,6 +220,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             desiredHeight: config!.maxHeight,
             resized: false,
             tempExecution: execution,
+            isLoading: false,
         };
 
         this.errorMap = newErrorMapping(props.intl);
@@ -310,7 +311,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
         // reinit in progress
-        if (!this.state.readyToRender) {
+        if (!this.state.readyToRender && this.state.isLoading) {
             return;
         }
 
@@ -806,6 +807,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         if (onLoadingChanged) {
             onLoadingChanged(loadingState);
+
+            this.setState({ isLoading: loadingState.isLoading });
         }
     };
 
