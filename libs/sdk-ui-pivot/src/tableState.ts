@@ -11,9 +11,10 @@ export interface ICorePivotTableState {
     columnTotals: ITotal[];
     rowTotals: ITotal[];
     desiredHeight: number | undefined;
-    error?: string;
     resized: boolean;
     tempExecution: IPreparedExecution;
+    isLoading: boolean;
+    error?: string;
 }
 
 /**
