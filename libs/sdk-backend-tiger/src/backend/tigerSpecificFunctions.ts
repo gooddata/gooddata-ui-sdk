@@ -43,6 +43,7 @@ import {
     JsonApiDatasetOutList,
     Recommendation,
     RecentAnalyticalObject,
+    EntityIdentifier,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -407,6 +408,9 @@ export type TigerSpecificFunctions = {
     ) => Promise<void>;
     findRecommendations?: (workspaceId: string) => Promise<Recommendation[]>;
     findRecentAnalytics?: (workspaceId: string) => Promise<RecentAnalyticalObject[]>;
+    subscribeToTag?: (workspaceId: string, tag: string) => Promise<void>;
+    unsubscribeFromTag?: (workspaceId: string, tag: string) => Promise<void>;
+    listSubscriptions?: (workspaceId: string) => Promise<EntityIdentifier[]>;
 
     /**
      * Return all custom setting of a workspace.
@@ -1594,6 +1598,40 @@ export const buildTigerSpecificFunctions = (
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.actions.findRecentAnalytics({ workspaceId }).then((response) => response.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    subscribeToTag: async (workspaceId, tag) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions
+                    .subscribeToTag({ workspaceId, objectId: tag })
+                    .then((response) => response.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    unsubscribeFromTag: async (workspaceId, tag) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions
+                    .unsubscribeFromTag({ workspaceId, objectId: tag })
+                    .then((response) => response.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    listSubscriptions: async (workspaceId) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions.listSubscriptions({ workspaceId }).then((response) => response.data);
             });
         } catch (error: any) {
             throw convertApiError(error);
