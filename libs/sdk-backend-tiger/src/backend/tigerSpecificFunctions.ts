@@ -41,6 +41,8 @@ import {
     IdentifierDuplications,
     JsonApiCustomApplicationSettingOut,
     JsonApiDatasetOutList,
+    Recommendation,
+    RecentAnalyticalObject,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -385,6 +387,26 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    setFavorite?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    setLike?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    setDislike?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    findRecommendations?: (workspaceId: string) => Promise<Recommendation[]>;
+    findRecentAnalytics?: (workspaceId: string) => Promise<RecentAnalyticalObject[]>;
 
     /**
      * Return all custom setting of a workspace.
@@ -1408,6 +1430,170 @@ export const buildTigerSpecificFunctions = (
                     .then((response) => {
                         return response.data as Array<IdentifierDuplications>;
                     });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setFavorite: async (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                if (objectType === "Dashboard") {
+                    isDelete
+                        ? await sdk.actions.unfavoriteAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.favoriteAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Insight") {
+                    isDelete
+                        ? await sdk.actions.unfavoriteVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.favoriteVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Metric") {
+                    isDelete
+                        ? await sdk.actions.unfavoriteMetric({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.favoriteMetric({
+                              workspaceId,
+                              objectId,
+                          });
+                }
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setLike: async (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                if (objectType === "Dashboard") {
+                    isDelete
+                        ? await sdk.actions.unlikeAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.likeAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Insight") {
+                    isDelete
+                        ? await sdk.actions.unlikeVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.likeVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Metric") {
+                    isDelete
+                        ? await sdk.actions.unlikeMetric({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.likeMetric({
+                              workspaceId,
+                              objectId,
+                          });
+                }
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setDislike: async (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                if (objectType === "Dashboard") {
+                    isDelete
+                        ? await sdk.actions.undislikeAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.dislikeAnalyticalDashboard({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Insight") {
+                    isDelete
+                        ? await sdk.actions.undislikeVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.dislikeVisualizationObject({
+                              workspaceId,
+                              objectId,
+                          });
+                } else if (objectType === "Metric") {
+                    isDelete
+                        ? await sdk.actions.undislikeMetric({
+                              workspaceId,
+                              objectId,
+                          })
+                        : await sdk.actions.dislikeMetric({
+                              workspaceId,
+                              objectId,
+                          });
+                }
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    findRecommendations: async (workspaceId) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions
+                    .findRecommendations(
+                        { workspaceId },
+                        {
+                            // this somehow makes sure that no request body is sent to avoid
+                            // including required props we do not have at the moment
+                            transformRequest: () => {},
+                        },
+                    )
+                    .then((response) => response.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    findRecentAnalytics: async (workspaceId) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions.findRecentAnalytics({ workspaceId }).then((response) => response.data);
             });
         } catch (error: any) {
             throw convertApiError(error);

@@ -40,6 +40,8 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
+import { RecentAnalyticalObject } from '@gooddata/api-client-tiger';
+import { Recommendation } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
@@ -435,6 +437,11 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    setFavorite?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    setLike?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    setDislike?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    findRecommendations?: (workspaceId: string) => Promise<Recommendation[]>;
+    findRecentAnalytics?: (workspaceId: string) => Promise<RecentAnalyticalObject[]>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     getWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<ICustomApplicationSetting>;
     createWorkspaceCustomAppSetting?: (workspaceId: string, applicationName: string, content: object, settingId?: string) => Promise<ICustomApplicationSetting>;

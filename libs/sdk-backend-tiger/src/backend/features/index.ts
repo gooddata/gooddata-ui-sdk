@@ -4,7 +4,7 @@ import {
     IUserProfile,
     ILiveFeatures,
     FeatureContext,
-    JsonApiWorkspaceOutAttributes,
+    JsonApiWorkspacePatchAttributes,
 } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures.js";
@@ -56,7 +56,7 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
 }
 
 export function pickContext(
-    attributes: JsonApiWorkspaceOutAttributes | undefined,
+    attributes: JsonApiWorkspacePatchAttributes | undefined,
     organizationId: string | undefined,
 ): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};

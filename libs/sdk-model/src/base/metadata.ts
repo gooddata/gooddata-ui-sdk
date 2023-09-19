@@ -38,3 +38,16 @@ export interface IAuditableUsers {
  * @public
  */
 export type IAuditable = IAuditableDates & IAuditableUsers;
+
+/**
+ * @public
+ */
+export interface IObjectInteractions {
+    statistics?: {
+        like?: number;
+        dislike?: number;
+        favorite?: number;
+        subscribe?: number;
+    };
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe")[];
+}

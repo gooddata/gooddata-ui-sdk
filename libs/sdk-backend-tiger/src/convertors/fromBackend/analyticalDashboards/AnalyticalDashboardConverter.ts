@@ -45,7 +45,7 @@ export const convertAnalyticalDashboard = (
 ): IListedDashboard => {
     const { id, links, attributes = {}, meta, relationships = {} } = analyticalDashboard;
     const { createdBy, modifiedBy } = relationships;
-    const { createdAt, modifiedAt } = attributes;
+    const { createdAt, modifiedAt, interactions } = attributes;
     const isPrivate = meta?.accessInfo?.private ?? false;
 
     return {
@@ -63,6 +63,7 @@ export const convertAnalyticalDashboard = (
         shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         availability: "full",
+        interactions,
     };
 };
 

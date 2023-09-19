@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { IAuditableDates, IAuditableUsers, IAuditable } from "../base/metadata.js";
+import { IAuditableDates, IAuditableUsers, IAuditable, IObjectInteractions } from "../base/metadata.js";
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
@@ -338,6 +338,8 @@ export interface IListedDashboard
      * States if dashboard is shared with the user and fully accessible or if it is hidden but accessible via link if user knows it.
      */
     readonly availability: ListedDashboardAvailability;
+
+    readonly interactions?: IObjectInteractions;
 }
 
 /**

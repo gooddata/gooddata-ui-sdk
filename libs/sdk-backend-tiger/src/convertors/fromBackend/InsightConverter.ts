@@ -6,7 +6,7 @@ import {
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiMetricOutIncludes,
 } from "@gooddata/api-client-tiger";
-import { idRef, IInsight, IInsightDefinition, IUser } from "@gooddata/sdk-model";
+import { idRef, IInsight, IInsightDefinition, IObjectInteractions, IUser } from "@gooddata/sdk-model";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -21,6 +21,7 @@ export const insightFromInsightDefinition = (
     updated: string | undefined,
     createdBy: IUser | undefined,
     updatedBy: IUser | undefined,
+    interactions: IObjectInteractions | undefined,
 ): IInsight => {
     return {
         insight: {
@@ -34,6 +35,7 @@ export const insightFromInsightDefinition = (
             createdBy,
             updated,
             updatedBy,
+            interactions,
         },
     };
 };
@@ -44,7 +46,7 @@ export const visualizationObjectsItemToInsight = (
 ): IInsight => {
     const { id, attributes, links, relationships = {} } = visualizationObject;
     const { createdBy, modifiedBy } = relationships;
-    const { content, title, description, tags, createdAt, modifiedAt } = attributes!;
+    const { content, title, description, tags, createdAt, modifiedAt, interactions } = attributes!;
 
     return insightFromInsightDefinition(
         convertVisualizationObject(
@@ -64,5 +66,6 @@ export const visualizationObjectsItemToInsight = (
         modifiedAt,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
+        interactions,
     );
 };

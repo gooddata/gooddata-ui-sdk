@@ -39,11 +39,33 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AvailableAssignees, any>>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DashboardPermissions, any>>;
+    // (undocumented)
+    dislikeAnalyticalDashboard(requestParameters: ActionsApiDislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    dislikeMetric(requestParameters: ActionsApiDislikeMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    dislikeVisualizationObject(requestParameters: ActionsApiDislikeVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    favoriteAnalyticalDashboard(requestParameters: ActionsApiFavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    favoriteMetric(requestParameters: ActionsApiFavoriteMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    favoriteVisualizationObject(requestParameters: ActionsApiFavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    findRecentAnalytics(requestParameters: ActionsApiFindRecentAnalyticsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<RecentAnalyticalObject[], any>>;
+    // (undocumented)
+    findRecommendations(requestParameters: ActionsApiFindRecommendationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Recommendation[], any>>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
     inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
     inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any>>;
+    // (undocumented)
+    likeAnalyticalDashboard(requestParameters: ActionsApiLikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    likeMetric(requestParameters: ActionsApiLikeMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    likeVisualizationObject(requestParameters: ActionsApiLikeVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
@@ -52,6 +74,28 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
     resolveRequestedEntitlements(requestParameters: ActionsApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any>>;
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
+    // (undocumented)
+    subscribeToTag(requestParameters: ActionsApiSubscribeToTagRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    undislikeAnalyticalDashboard(requestParameters: ActionsApiUndislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    undislikeMetric(requestParameters: ActionsApiUndislikeMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    undislikeVisualizationObject(requestParameters: ActionsApiUndislikeVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unfavoriteAnalyticalDashboard(requestParameters: ActionsApiUnfavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unfavoriteMetric(requestParameters: ActionsApiUnfavoriteMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unfavoriteVisualizationObject(requestParameters: ActionsApiUnfavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unlikeAnalyticalDashboard(requestParameters: ActionsApiUnlikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unlikeMetric(requestParameters: ActionsApiUnlikeMetricRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unlikeVisualizationObject(requestParameters: ActionsApiUnlikeVisualizationObjectRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    unsubscribeFromTag(requestParameters: ActionsApiUnsubscribeFromTagRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
 }
@@ -68,11 +112,22 @@ export const ActionsApiAxiosParamCreator: (configuration?: MetadataConfiguration
     availableAssignees: (workspaceId: string, dashboardId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     checkEntityOverrides: (workspaceId: string, hierarchyObjectIdentification: Array<HierarchyObjectIdentification>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     dashboardPermissions: (workspaceId: string, dashboardId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    dislikeAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    dislikeMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    dislikeVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    favoriteAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    favoriteMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    favoriteVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    findRecentAnalytics: (workspaceId: string, limit?: number, subscribedOnly?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    findRecommendations: (workspaceId: string, limit?: number, findRecommendationsRequest?: FindRecommendationsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     generateLogicalModel: (dataSourceId: string, generateLdmRequest: GenerateLdmRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getDependentEntitiesGraph: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getDependentEntitiesGraphFromEntryPoints: (workspaceId: string, dependentEntitiesRequest: DependentEntitiesRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     inheritedEntityConflicts: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     inheritedEntityPrefixes: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    likeAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    likeMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    likeVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     manageDashboardPermissions: (workspaceId: string, dashboardId: string, permissionsForAssignee: Array<PermissionsForAssignee>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     overriddenChildEntities: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     particularPlatformUsage: (platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -81,14 +136,52 @@ export const ActionsApiAxiosParamCreator: (configuration?: MetadataConfiguration
     resolveAllSettingsWithoutWorkspace: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     resolveRequestedEntitlements: (entitlementsRequest: EntitlementsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     resolveSettingsWithoutWorkspace: (resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    subscribeToTag: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    undislikeAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    undislikeMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    undislikeVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unfavoriteAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unfavoriteMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unfavoriteVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unlikeAnalyticalDashboard: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unlikeMetric: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unlikeVisualizationObject: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    unsubscribeFromTag: (workspaceId: string, objectId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     workspaceResolveAllSettings: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     workspaceResolveSettings: (workspaceId: string, resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
 };
 
 // @public
+export interface ActionsApiCacheAnomalyDetectionResultRequest {
+    readonly anomalyDetectionResult: AnomalyDetectionResult;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiCacheClusteringResultRequest {
+    readonly clusteringResult: ClusteringResult;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiCacheForecastResultRequest {
+    readonly forecastResult: ForecastResult;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiCheckEntityOverridesRequest {
     readonly hierarchyObjectIdentification: Array<HierarchyObjectIdentification>;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiComputeColumnStatisticsRequest {
+    readonly columnStatisticsRequest: ColumnStatisticsRequest;
+    readonly dataSourceId: string;
 }
 
 // @public
@@ -139,6 +232,42 @@ export interface ActionsApiDashboardPermissionsRequest {
 }
 
 // @public
+export interface ActionsApiDeleteAnomalyDetectionResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDeleteClusteringResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDeleteForecastResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDislikeAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDislikeMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDislikeVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
     readonly explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS";
@@ -151,11 +280,22 @@ export const ActionsApiFactory: (configuration?: MetadataConfiguration, basePath
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
+    dislikeAnalyticalDashboard(requestParameters: ActionsApiDislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    dislikeMetric(requestParameters: ActionsApiDislikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    dislikeVisualizationObject(requestParameters: ActionsApiDislikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    favoriteAnalyticalDashboard(requestParameters: ActionsApiFavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    favoriteMetric(requestParameters: ActionsApiFavoriteMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    favoriteVisualizationObject(requestParameters: ActionsApiFavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    findRecentAnalytics(requestParameters: ActionsApiFindRecentAnalyticsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<RecentAnalyticalObject>>;
+    findRecommendations(requestParameters: ActionsApiFindRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Recommendation>>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<string>>;
+    likeAnalyticalDashboard(requestParameters: ActionsApiLikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    likeMetric(requestParameters: ActionsApiLikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    likeVisualizationObject(requestParameters: ActionsApiLikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
@@ -164,9 +304,70 @@ export const ActionsApiFactory: (configuration?: MetadataConfiguration, basePath
     resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     resolveRequestedEntitlements(requestParameters: ActionsApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+    subscribeToTag(requestParameters: ActionsApiSubscribeToTagRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    undislikeAnalyticalDashboard(requestParameters: ActionsApiUndislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    undislikeMetric(requestParameters: ActionsApiUndislikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    undislikeVisualizationObject(requestParameters: ActionsApiUndislikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unfavoriteAnalyticalDashboard(requestParameters: ActionsApiUnfavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unfavoriteMetric(requestParameters: ActionsApiUnfavoriteMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unfavoriteVisualizationObject(requestParameters: ActionsApiUnfavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unlikeAnalyticalDashboard(requestParameters: ActionsApiUnlikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unlikeMetric(requestParameters: ActionsApiUnlikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unlikeVisualizationObject(requestParameters: ActionsApiUnlikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    unsubscribeFromTag(requestParameters: ActionsApiUnsubscribeFromTagRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
 };
+
+// @public
+export interface ActionsApiFavoriteAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFavoriteMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFavoriteVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFetchAnomalyDetectionResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFetchClusteringResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFetchForecastResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFindRecentAnalyticsRequest {
+    readonly limit?: number;
+    readonly subscribedOnly?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiFindRecommendationsRequest {
+    readonly findRecommendationsRequest?: FindRecommendationsRequest;
+    readonly limit?: number;
+    readonly workspaceId: string;
+}
 
 // @public
 export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
@@ -174,11 +375,22 @@ export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
     availableAssignees(workspaceId: string, dashboardId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableAssignees>>;
     checkEntityOverrides(workspaceId: string, hierarchyObjectIdentification: Array<HierarchyObjectIdentification>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentifierDuplications>>>;
     dashboardPermissions(workspaceId: string, dashboardId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardPermissions>>;
+    dislikeAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    dislikeMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    dislikeVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    favoriteAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    favoriteMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    favoriteVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    findRecentAnalytics(workspaceId: string, limit?: number, subscribedOnly?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RecentAnalyticalObject>>>;
+    findRecommendations(workspaceId: string, limit?: number, findRecommendationsRequest?: FindRecommendationsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Recommendation>>>;
     generateLogicalModel(dataSourceId: string, generateLdmRequest: GenerateLdmRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeModel>>;
     getDependentEntitiesGraph(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DependentEntitiesResponse>>;
     getDependentEntitiesGraphFromEntryPoints(workspaceId: string, dependentEntitiesRequest: DependentEntitiesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DependentEntitiesResponse>>;
     inheritedEntityConflicts(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentifierDuplications>>>;
     inheritedEntityPrefixes(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>>;
+    likeAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    likeMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    likeVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     manageDashboardPermissions(workspaceId: string, dashboardId: string, permissionsForAssignee: Array<PermissionsForAssignee>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     overriddenChildEntities(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentifierDuplications>>>;
     particularPlatformUsage(platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformUsage>>>;
@@ -187,6 +399,17 @@ export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
     resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>>;
     resolveRequestedEntitlements(entitlementsRequest: EntitlementsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ApiEntitlement>>>;
     resolveSettingsWithoutWorkspace(resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>>;
+    subscribeToTag(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    undislikeAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    undislikeMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    undislikeVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unfavoriteAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unfavoriteMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unfavoriteVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unlikeAnalyticalDashboard(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unlikeMetric(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unlikeVisualizationObject(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    unsubscribeFromTag(workspaceId: string, objectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     workspaceResolveAllSettings(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>>;
     workspaceResolveSettings(workspaceId: string, resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>>;
 };
@@ -195,6 +418,22 @@ export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
 export interface ActionsApiGenerateLogicalModelRequest {
     readonly dataSourceId: string;
     readonly generateLdmRequest: GenerateLdmRequest;
+}
+
+// @public
+export interface ActionsApiGetAnomalyDetectionResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGetClusteringResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -220,8 +459,24 @@ export interface ActionsApiGetExportedFileRequest {
 }
 
 // @public
+export interface ActionsApiGetForecastResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGetMetadataRequest {
     readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGetResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
     readonly workspaceId: string;
 }
 
@@ -247,11 +502,33 @@ export interface ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
+    // (undocumented)
+    dislikeAnalyticalDashboard(requestParameters: ActionsApiDislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    dislikeMetric(requestParameters: ActionsApiDislikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    dislikeVisualizationObject(requestParameters: ActionsApiDislikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    favoriteAnalyticalDashboard(requestParameters: ActionsApiFavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    favoriteMetric(requestParameters: ActionsApiFavoriteMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    favoriteVisualizationObject(requestParameters: ActionsApiFavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    findRecentAnalytics(requestParameters: ActionsApiFindRecentAnalyticsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<RecentAnalyticalObject>>;
+    // (undocumented)
+    findRecommendations(requestParameters: ActionsApiFindRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Recommendation>>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<string>>;
+    // (undocumented)
+    likeAnalyticalDashboard(requestParameters: ActionsApiLikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    likeMetric(requestParameters: ActionsApiLikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    likeVisualizationObject(requestParameters: ActionsApiLikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
@@ -260,8 +537,48 @@ export interface ActionsApiInterface {
     resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     resolveRequestedEntitlements(requestParameters: ActionsApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
     resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+    // (undocumented)
+    subscribeToTag(requestParameters: ActionsApiSubscribeToTagRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    undislikeAnalyticalDashboard(requestParameters: ActionsApiUndislikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    undislikeMetric(requestParameters: ActionsApiUndislikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    undislikeVisualizationObject(requestParameters: ActionsApiUndislikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unfavoriteAnalyticalDashboard(requestParameters: ActionsApiUnfavoriteAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unfavoriteMetric(requestParameters: ActionsApiUnfavoriteMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unfavoriteVisualizationObject(requestParameters: ActionsApiUnfavoriteVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unlikeAnalyticalDashboard(requestParameters: ActionsApiUnlikeAnalyticalDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unlikeMetric(requestParameters: ActionsApiUnlikeMetricRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unlikeVisualizationObject(requestParameters: ActionsApiUnlikeVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    unsubscribeFromTag(requestParameters: ActionsApiUnsubscribeFromTagRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+}
+
+// @public
+export interface ActionsApiLikeAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiLikeMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiLikeVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -282,8 +599,43 @@ export interface ActionsApiParticularPlatformUsageRequest {
 }
 
 // @public
+export interface ActionsApiProcessAnomalyDetectionRequest {
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+    readonly debugArrow?: boolean;
+    readonly resultId: string;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiProcessClusteringRequestRequest {
+    readonly clusteringRequest: ClusteringRequest;
+    readonly debugArrow?: boolean;
+    readonly resultId: string;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiProcessForecastRequestRequest {
+    readonly debugArrow?: boolean;
+    readonly forecastRequest: ForecastRequest;
+    readonly resultId: string;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiProcessInvitationRequest {
     readonly invitation: Invitation;
+}
+
+// @public
+export interface ActionsApiProcessKeyDriversRequestRequest {
+    readonly debugArrow?: boolean;
+    readonly keyDriversRequest: KeyDriversRequest;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -329,6 +681,12 @@ export interface ActionsApiScanSqlRequest {
 }
 
 // @public
+export interface ActionsApiSubscribeToTagRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiTestDataSourceDefinitionRequest {
     readonly testDefinitionRequest: TestDefinitionRequest;
 }
@@ -337,6 +695,66 @@ export interface ActionsApiTestDataSourceDefinitionRequest {
 export interface ActionsApiTestDataSourceRequest {
     readonly dataSourceId: string;
     readonly testRequest: TestRequest;
+}
+
+// @public
+export interface ActionsApiUndislikeAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUndislikeMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUndislikeVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnfavoriteAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnfavoriteMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnfavoriteVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnlikeAnalyticalDashboardRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnlikeMetricRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnlikeVisualizationObjectRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUnsubscribeFromTagRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -360,55 +778,174 @@ export interface AFM {
 
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
+    // (undocumented)
+    cacheAnomalyDetectionResult(requestParameters: ActionsApiCacheAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<CacheResponse, any>>;
+    // (undocumented)
+    cacheClusteringResult(requestParameters: ActionsApiCacheClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<CacheResponse, any>>;
+    // (undocumented)
+    cacheForecastResult(requestParameters: ActionsApiCacheForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<CacheResponse, any>>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ElementsResponse, any>>;
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmExecutionResponse, any>>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidDescendantsResponse, any>>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidObjectsResponse, any>>;
+    // (undocumented)
+    deleteAnomalyDetectionResult(requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    deleteClusteringResult(requestParameters: ActionsApiDeleteClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    // (undocumented)
+    deleteForecastResult(requestParameters: ActionsApiDeleteForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<any, any>>;
+    // (undocumented)
+    fetchAnomalyDetectionResult(requestParameters: ActionsApiFetchAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult | ClusteringResult | ForecastResult, any>>;
+    // (undocumented)
+    fetchClusteringResult(requestParameters: ActionsApiFetchClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult | ClusteringResult | ForecastResult, any>>;
+    // (undocumented)
+    fetchForecastResult(requestParameters: ActionsApiFetchForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult | ClusteringResult | ForecastResult, any>>;
+    // (undocumented)
+    getAnomalyDetectionResult(requestParameters: ActionsApiGetAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult, any>>;
+    // (undocumented)
+    getClusteringResult(requestParameters: ActionsApiGetClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ClusteringResult, any>>;
+    // (undocumented)
+    getForecastResult(requestParameters: ActionsApiGetForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ForecastResult, any>>;
+    // (undocumented)
+    getResult(requestParameters: ActionsApiGetResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResult, any>>;
+    // (undocumented)
+    processAnomalyDetection(requestParameters: ActionsApiProcessAnomalyDetectionRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MachineLearningResponse, any>>;
+    // (undocumented)
+    processClusteringRequest(requestParameters: ActionsApiProcessClusteringRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MachineLearningResponse, any>>;
+    // (undocumented)
+    processForecastRequest(requestParameters: ActionsApiProcessForecastRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MachineLearningResponse, any>>;
+    // (undocumented)
+    processKeyDriversRequest(requestParameters: ActionsApiProcessKeyDriversRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResponse, any>>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any>>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any>>;
 }
 
 // @public
 export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfiguration) => {
+    cacheAnomalyDetectionResult: (workspaceId: string, resultId: string, anomalyDetectionResult: AnomalyDetectionResult, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    cacheClusteringResult: (workspaceId: string, resultId: string, clusteringResult: ClusteringResult, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    cacheForecastResult: (workspaceId: string, resultId: string, forecastResult: ForecastResult, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeLabelElementsPost: (workspaceId: string, elementsRequest: ElementsRequest, offset?: number, limit?: number, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeReport: (workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidDescendants: (workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidObjects: (workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    deleteAnomalyDetectionResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    deleteClusteringResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    deleteForecastResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     explainAFM: (workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS", options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    fetchAnomalyDetectionResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    fetchClusteringResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    fetchForecastResult: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    getAnomalyDetectionResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    getClusteringResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    getForecastResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    getResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    processAnomalyDetection: (workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    processClusteringRequest: (workspaceId: string, resultId: string, clusteringRequest: ClusteringRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    processForecastRequest: (workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    processKeyDriversRequest: (workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveExecutionMetadata: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveResult: (workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
 };
 
 // @public
 export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    cacheAnomalyDetectionResult(requestParameters: ActionsApiCacheAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
+    cacheClusteringResult(requestParameters: ActionsApiCacheClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
+    cacheForecastResult(requestParameters: ActionsApiCacheForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): AxiosPromise<ElementsResponse>;
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    deleteAnomalyDetectionResult(requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteClusteringResult(requestParameters: ActionsApiDeleteClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteForecastResult(requestParameters: ActionsApiDeleteForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    fetchAnomalyDetectionResult(requestParameters: ActionsApiFetchAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    fetchClusteringResult(requestParameters: ActionsApiFetchClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    fetchForecastResult(requestParameters: ActionsApiFetchForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    getAnomalyDetectionResult(requestParameters: ActionsApiGetAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
+    getClusteringResult(requestParameters: ActionsApiGetClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<ClusteringResult>;
+    getForecastResult(requestParameters: ActionsApiGetForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    getResult(requestParameters: ActionsApiGetResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    processAnomalyDetection(requestParameters: ActionsApiProcessAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    processClusteringRequest(requestParameters: ActionsApiProcessClusteringRequestRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    processForecastRequest(requestParameters: ActionsApiProcessForecastRequestRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    processKeyDriversRequest(requestParameters: ActionsApiProcessKeyDriversRequestRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
 };
 
 // @public
 export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
+    cacheAnomalyDetectionResult(workspaceId: string, resultId: string, anomalyDetectionResult: AnomalyDetectionResult, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>>;
+    cacheClusteringResult(workspaceId: string, resultId: string, clusteringResult: ClusteringResult, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>>;
+    cacheForecastResult(workspaceId: string, resultId: string, forecastResult: ForecastResult, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheResponse>>;
     computeLabelElementsPost(workspaceId: string, elementsRequest: ElementsRequest, offset?: number, limit?: number, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse>>;
     computeReport(workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>>;
     computeValidDescendants(workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>>;
     computeValidObjects(workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>>;
+    deleteAnomalyDetectionResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteClusteringResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteForecastResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     explainAFM(workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS", options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>>;
+    fetchAnomalyDetectionResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>>;
+    fetchClusteringResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>>;
+    fetchForecastResult(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>>;
+    getAnomalyDetectionResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>>;
+    getClusteringResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>>;
+    getForecastResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>>;
+    getResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>>;
+    processAnomalyDetection(workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>>;
+    processClusteringRequest(workspaceId: string, resultId: string, clusteringRequest: ClusteringRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>>;
+    processForecastRequest(workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineLearningResponse>>;
+    processKeyDriversRequest(workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, debugArrow?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>>;
     retrieveExecutionMetadata(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>>;
     retrieveResult(workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>>;
 };
 
 // @public
 export interface AfmActionsApiInterface {
+    // (undocumented)
+    cacheAnomalyDetectionResult(requestParameters: ActionsApiCacheAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
+    // (undocumented)
+    cacheClusteringResult(requestParameters: ActionsApiCacheClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
+    // (undocumented)
+    cacheForecastResult(requestParameters: ActionsApiCacheForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<CacheResponse>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): AxiosPromise<ElementsResponse>;
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    // (undocumented)
+    deleteAnomalyDetectionResult(requestParameters: ActionsApiDeleteAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteClusteringResult(requestParameters: ActionsApiDeleteClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteForecastResult(requestParameters: ActionsApiDeleteForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    // (undocumented)
+    fetchAnomalyDetectionResult(requestParameters: ActionsApiFetchAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    // (undocumented)
+    fetchClusteringResult(requestParameters: ActionsApiFetchClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    // (undocumented)
+    fetchForecastResult(requestParameters: ActionsApiFetchForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult | ClusteringResult | ForecastResult>;
+    // (undocumented)
+    getAnomalyDetectionResult(requestParameters: ActionsApiGetAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
+    // (undocumented)
+    getClusteringResult(requestParameters: ActionsApiGetClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<ClusteringResult>;
+    // (undocumented)
+    getForecastResult(requestParameters: ActionsApiGetForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    // (undocumented)
+    getResult(requestParameters: ActionsApiGetResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    // (undocumented)
+    processAnomalyDetection(requestParameters: ActionsApiProcessAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    // (undocumented)
+    processClusteringRequest(requestParameters: ActionsApiProcessClusteringRequestRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    // (undocumented)
+    processForecastRequest(requestParameters: ActionsApiProcessForecastRequestRequest, options?: AxiosRequestConfig): AxiosPromise<MachineLearningResponse>;
+    // (undocumented)
+    processKeyDriversRequest(requestParameters: ActionsApiProcessKeyDriversRequestRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
 }
@@ -638,6 +1175,18 @@ export interface AnalyticsModelApiInterface {
 export interface AnalyticsModelApiSetAnalyticsModelRequest {
     readonly declarativeAnalytics: DeclarativeAnalytics;
     readonly workspaceId: string;
+}
+
+// @public
+export interface AnomalyDetectionRequest {
+    sensitivity: number;
+}
+
+// @public
+export interface AnomalyDetectionResult {
+    anomalyFlag: Array<boolean>;
+    attribute: Array<string>;
+    values: Array<number>;
 }
 
 // @public
@@ -1222,6 +1771,87 @@ export interface AvailableDriversApiInterface {
     getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+}
+
+// @public
+export interface CacheResponse {
+    flightPath: string;
+}
+
+// @public
+export interface ClusteringRequest {
+    numberOfClusters: number;
+}
+
+// @public
+export interface ClusteringResult {
+    clusters: Array<Array<Array<ClusteringResultValue>>>;
+}
+
+// @public
+export type ClusteringResultValue = boolean | number | string;
+
+// @public
+export interface ColumnStatistic {
+    type: ColumnStatisticTypeEnum;
+    value?: string;
+}
+
+// @public
+export interface ColumnStatisticsRequest {
+    columnName: string;
+    frequency?: FrequencyProperties;
+    from: SqlQuery | Table;
+    histogram?: HistogramProperties;
+    statistics?: Array<ColumnStatisticsRequestStatisticsEnum>;
+}
+
+// @public (undocumented)
+export const ColumnStatisticsRequestStatisticsEnum: {
+    readonly COUNT: "COUNT";
+    readonly COUNT_NULL: "COUNT_NULL";
+    readonly COUNT_UNIQUE: "COUNT_UNIQUE";
+    readonly AVG: "AVG";
+    readonly STDDEV: "STDDEV";
+    readonly MIN: "MIN";
+    readonly MAX: "MAX";
+    readonly PERCENTILE_25: "PERCENTILE_25";
+    readonly PERCENTILE_50: "PERCENTILE_50";
+    readonly PERCENTILE_75: "PERCENTILE_75";
+};
+
+// @public (undocumented)
+export type ColumnStatisticsRequestStatisticsEnum = typeof ColumnStatisticsRequestStatisticsEnum[keyof typeof ColumnStatisticsRequestStatisticsEnum];
+
+// @public
+export interface ColumnStatisticsResponse {
+    frequency?: Frequency;
+    histogram?: Histogram;
+    statistics?: Array<ColumnStatistic>;
+    warnings?: Array<ColumnStatisticWarning>;
+}
+
+// @public (undocumented)
+export const ColumnStatisticTypeEnum: {
+    readonly COUNT: "COUNT";
+    readonly COUNT_NULL: "COUNT_NULL";
+    readonly COUNT_UNIQUE: "COUNT_UNIQUE";
+    readonly AVG: "AVG";
+    readonly STDDEV: "STDDEV";
+    readonly MIN: "MIN";
+    readonly MAX: "MAX";
+    readonly PERCENTILE_25: "PERCENTILE_25";
+    readonly PERCENTILE_50: "PERCENTILE_50";
+    readonly PERCENTILE_75: "PERCENTILE_75";
+};
+
+// @public (undocumented)
+export type ColumnStatisticTypeEnum = typeof ColumnStatisticTypeEnum[keyof typeof ColumnStatisticTypeEnum];
+
+// @public
+export interface ColumnStatisticWarning {
+    action: string;
+    message: string;
 }
 
 // @public
@@ -5649,6 +6279,41 @@ export type FilterDefinition = AbsoluteDateFilter | ComparisonMeasureValueFilter
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 // @public
+export interface FindRecommendationsRequest {
+    weights: {
+        [key: string]: number;
+    };
+}
+
+// @public
+export interface ForecastRequest {
+    forecastPeriod: number;
+}
+
+// @public
+export interface ForecastResult {
+    attribute: Array<string>;
+    origin: Array<number>;
+    predictions: Array<Array<number>>;
+}
+
+// @public
+export interface Frequency {
+    buckets: Array<FrequencyBucket>;
+}
+
+// @public
+export interface FrequencyBucket {
+    count: number;
+    value?: string;
+}
+
+// @public
+export interface FrequencyProperties {
+    valueLimit?: number;
+}
+
+// @public
 export interface GenerateLdmRequest {
     dateGranularities?: string;
     denormPrefix?: string;
@@ -5756,6 +6421,23 @@ export const HierarchyObjectIdentificationTypeEnum: {
 
 // @public (undocumented)
 export type HierarchyObjectIdentificationTypeEnum = typeof HierarchyObjectIdentificationTypeEnum[keyof typeof HierarchyObjectIdentificationTypeEnum];
+
+// @public
+export interface Histogram {
+    buckets: Array<HistogramBucket>;
+}
+
+// @public
+export interface HistogramBucket {
+    count: number;
+    lowerBound: number;
+    upperBound: number;
+}
+
+// @public
+export interface HistogramProperties {
+    bucketCount: number;
+}
 
 // @public @deprecated (undocumented)
 interface IAnalyticalDashboard {
@@ -6097,18 +6779,9 @@ export const JSON_API_HEADER_VALUE = "application/vnd.gooddata.api+json";
 
 // @public
 export interface JsonApiAnalyticalDashboardIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiAnalyticalDashboardInTypeEnum;
-}
-
-// @public
-export interface JsonApiAnalyticalDashboardInAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -6153,10 +6826,30 @@ export interface JsonApiAnalyticalDashboardOutAttributes {
     content?: object;
     createdAt?: string;
     description?: string;
+    interactions?: JsonApiAnalyticalDashboardOutAttributesInteractions;
     modifiedAt?: string;
     tags?: Array<string>;
     title?: string;
 }
+
+// @public
+export interface JsonApiAnalyticalDashboardOutAttributesInteractions {
+    byUser?: Array<JsonApiAnalyticalDashboardOutAttributesInteractionsByUserEnum>;
+    statistics?: {
+        [key: string]: number;
+    };
+}
+
+// @public (undocumented)
+export const JsonApiAnalyticalDashboardOutAttributesInteractionsByUserEnum: {
+    readonly LIKE: "like";
+    readonly DISLIKE: "dislike";
+    readonly FAVORITE: "favorite";
+    readonly SUBSCRIBE: "subscribe";
+};
+
+// @public (undocumented)
+export type JsonApiAnalyticalDashboardOutAttributesInteractionsByUserEnum = typeof JsonApiAnalyticalDashboardOutAttributesInteractionsByUserEnum[keyof typeof JsonApiAnalyticalDashboardOutAttributesInteractionsByUserEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardOutDocument {
@@ -6293,7 +6986,7 @@ export type JsonApiAnalyticalDashboardOutWithLinksTypeEnum = typeof JsonApiAnaly
 
 // @public
 export interface JsonApiAnalyticalDashboardPatch {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiAnalyticalDashboardPatchTypeEnum;
 }
@@ -6313,9 +7006,18 @@ export type JsonApiAnalyticalDashboardPatchTypeEnum = typeof JsonApiAnalyticalDa
 
 // @public
 export interface JsonApiAnalyticalDashboardPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id?: string;
     type: JsonApiAnalyticalDashboardPostOptionalIdTypeEnum;
+}
+
+// @public
+export interface JsonApiAnalyticalDashboardPostOptionalIdAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -6791,7 +7493,7 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -6811,9 +7513,15 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -6832,15 +7540,9 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -6951,15 +7653,9 @@ export type JsonApiCspDirectivePatchTypeEnum = typeof JsonApiCspDirectivePatchTy
 
 // @public
 export interface JsonApiCustomApplicationSettingIn {
-    attributes: JsonApiCustomApplicationSettingInAttributes;
+    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiCustomApplicationSettingInTypeEnum;
-}
-
-// @public
-export interface JsonApiCustomApplicationSettingInAttributes {
-    applicationName: string;
-    content: object;
 }
 
 // @public
@@ -6977,7 +7673,7 @@ export type JsonApiCustomApplicationSettingInTypeEnum = typeof JsonApiCustomAppl
 
 // @public
 export interface JsonApiCustomApplicationSettingOut {
-    attributes: JsonApiCustomApplicationSettingInAttributes;
+    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     type: JsonApiCustomApplicationSettingOutTypeEnum;
@@ -7005,7 +7701,7 @@ export type JsonApiCustomApplicationSettingOutTypeEnum = typeof JsonApiCustomApp
 
 // @public
 export interface JsonApiCustomApplicationSettingOutWithLinks {
-    attributes: JsonApiCustomApplicationSettingInAttributes;
+    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -7048,9 +7744,15 @@ export type JsonApiCustomApplicationSettingPatchTypeEnum = typeof JsonApiCustomA
 
 // @public
 export interface JsonApiCustomApplicationSettingPostOptionalId {
-    attributes: JsonApiCustomApplicationSettingInAttributes;
+    attributes: JsonApiCustomApplicationSettingPostOptionalIdAttributes;
     id?: string;
     type: JsonApiCustomApplicationSettingPostOptionalIdTypeEnum;
+}
+
+// @public
+export interface JsonApiCustomApplicationSettingPostOptionalIdAttributes {
+    applicationName: string;
+    content: object;
 }
 
 // @public
@@ -7068,18 +7770,9 @@ export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = typeof JsonA
 
 // @public
 export interface JsonApiDashboardPluginIn {
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
     id: string;
     type: JsonApiDashboardPluginInTypeEnum;
-}
-
-// @public
-export interface JsonApiDashboardPluginInAttributes {
-    areRelationsValid?: boolean;
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
@@ -7177,7 +7870,7 @@ export type JsonApiDashboardPluginOutWithLinksTypeEnum = typeof JsonApiDashboard
 
 // @public
 export interface JsonApiDashboardPluginPatch {
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
     id: string;
     type: JsonApiDashboardPluginPatchTypeEnum;
 }
@@ -7197,9 +7890,18 @@ export type JsonApiDashboardPluginPatchTypeEnum = typeof JsonApiDashboardPluginP
 
 // @public
 export interface JsonApiDashboardPluginPostOptionalId {
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginPostOptionalIdAttributes;
     id?: string;
     type: JsonApiDashboardPluginPostOptionalIdTypeEnum;
+}
+
+// @public
+export interface JsonApiDashboardPluginPostOptionalIdAttributes {
+    areRelationsValid?: boolean;
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -7411,7 +8113,7 @@ export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
 export interface JsonApiDataSourceIdentifierOut {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
@@ -7455,20 +8157,6 @@ export interface JsonApiDataSourceIdentifierOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiDataSourceIdentifierOutMeta {
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-// @public (undocumented)
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly USE: "USE";
-};
-
-// @public (undocumented)
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
 // @public (undocumented)
 export const JsonApiDataSourceIdentifierOutTypeEnum: {
     readonly DATA_SOURCE_IDENTIFIER: "dataSourceIdentifier";
@@ -7482,7 +8170,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
 }
 
@@ -7506,7 +8194,7 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
     password?: string;
     schema: string;
     token?: string;
@@ -7553,27 +8241,21 @@ export type JsonApiDataSourceInTypeEnum = typeof JsonApiDataSourceInTypeEnum[key
 export interface JsonApiDataSourceOut {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutTypeEnum;
 }
 
 // @public
 export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
-    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
     schema: string;
     type: JsonApiDataSourceOutAttributesTypeEnum;
     url?: string;
     username?: string;
-}
-
-// @public
-export interface JsonApiDataSourceOutAttributesParameters {
-    name: string;
-    value: string;
 }
 
 // @public (undocumented)
@@ -7609,6 +8291,20 @@ export interface JsonApiDataSourceOutList {
     links?: ListLinks;
 }
 
+// @public
+export interface JsonApiDataSourceOutMeta {
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+// @public (undocumented)
+export const JsonApiDataSourceOutMetaPermissionsEnum: {
+    readonly MANAGE: "MANAGE";
+    readonly USE: "USE";
+};
+
+// @public (undocumented)
+export type JsonApiDataSourceOutMetaPermissionsEnum = typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
 // @public (undocumented)
 export const JsonApiDataSourceOutTypeEnum: {
     readonly DATA_SOURCE: "dataSource";
@@ -7622,7 +8318,7 @@ export interface JsonApiDataSourceOutWithLinks {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutWithLinksTypeEnum;
 }
 
@@ -7646,13 +8342,19 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name?: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
     password?: string;
     schema?: string;
     token?: string;
     type?: JsonApiDataSourcePatchAttributesTypeEnum;
     url?: string;
     username?: string;
+}
+
+// @public
+export interface JsonApiDataSourcePatchAttributesParameters {
+    name: string;
+    value: string;
 }
 
 // @public (undocumented)
@@ -7915,7 +8617,7 @@ export type JsonApiFactOutWithLinksTypeEnum = typeof JsonApiFactOutWithLinksType
 
 // @public
 export interface JsonApiFilterContextIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiFilterContextInTypeEnum;
 }
@@ -7949,7 +8651,7 @@ export type JsonApiFilterContextLinkageTypeEnum = typeof JsonApiFilterContextLin
 
 // @public
 export interface JsonApiFilterContextOut {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     relationships?: JsonApiFilterContextOutRelationships;
@@ -7990,7 +8692,7 @@ export type JsonApiFilterContextOutTypeEnum = typeof JsonApiFilterContextOutType
 
 // @public
 export interface JsonApiFilterContextOutWithLinks {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -8008,7 +8710,7 @@ export type JsonApiFilterContextOutWithLinksTypeEnum = typeof JsonApiFilterConte
 
 // @public
 export interface JsonApiFilterContextPatch {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiFilterContextPatchTypeEnum;
 }
@@ -8028,7 +8730,7 @@ export type JsonApiFilterContextPatchTypeEnum = typeof JsonApiFilterContextPatch
 
 // @public
 export interface JsonApiFilterContextPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id?: string;
     type: JsonApiFilterContextPostOptionalIdTypeEnum;
 }
@@ -8057,7 +8759,7 @@ export const jsonApiHeaders: {
 
 // @public
 export interface JsonApiJwkIn {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkInTypeEnum;
 }
@@ -8077,14 +8779,9 @@ export type JsonApiJwkInTypeEnum = typeof JsonApiJwkInTypeEnum[keyof typeof Json
 
 // @public
 export interface JsonApiJwkOut {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkOutTypeEnum;
-}
-
-// @public
-export interface JsonApiJwkOutAttributes {
-    content?: RsaSpecification;
 }
 
 // @public
@@ -8109,7 +8806,7 @@ export type JsonApiJwkOutTypeEnum = typeof JsonApiJwkOutTypeEnum[keyof typeof Js
 
 // @public
 export interface JsonApiJwkOutWithLinks {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiJwkOutWithLinksTypeEnum;
@@ -8125,9 +8822,14 @@ export type JsonApiJwkOutWithLinksTypeEnum = typeof JsonApiJwkOutWithLinksTypeEn
 
 // @public
 export interface JsonApiJwkPatch {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiJwkPatchAttributes {
+    content?: RsaSpecification;
 }
 
 // @public
@@ -8259,24 +8961,9 @@ export type JsonApiLabelToOneLinkage = JsonApiLabelLinkage;
 
 // @public
 export interface JsonApiMetricIn {
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricPostOptionalIdAttributes;
     id: string;
     type: JsonApiMetricInTypeEnum;
-}
-
-// @public
-export interface JsonApiMetricInAttributes {
-    areRelationsValid?: boolean;
-    content: JsonApiMetricInAttributesContent;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
-}
-
-// @public
-export interface JsonApiMetricInAttributesContent {
-    format?: string;
-    maql: string;
 }
 
 // @public
@@ -8318,9 +9005,10 @@ export interface JsonApiMetricOut {
 // @public
 export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
-    content: JsonApiMetricInAttributesContent;
+    content: JsonApiMetricPostOptionalIdAttributesContent;
     createdAt?: string;
     description?: string;
+    interactions?: JsonApiAnalyticalDashboardOutAttributesInteractions;
     modifiedAt?: string;
     tags?: Array<string>;
     title?: string;
@@ -8395,7 +9083,7 @@ export interface JsonApiMetricPatch {
 // @public
 export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
-    content?: JsonApiMetricInAttributesContent;
+    content?: JsonApiMetricPostOptionalIdAttributesContent;
     description?: string;
     tags?: Array<string>;
     title?: string;
@@ -8416,9 +9104,24 @@ export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof
 
 // @public
 export interface JsonApiMetricPostOptionalId {
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricPostOptionalIdAttributes;
     id?: string;
     type: JsonApiMetricPostOptionalIdTypeEnum;
+}
+
+// @public
+export interface JsonApiMetricPostOptionalIdAttributes {
+    areRelationsValid?: boolean;
+    content: JsonApiMetricPostOptionalIdAttributesContent;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface JsonApiMetricPostOptionalIdAttributesContent {
+    format?: string;
+    maql: string;
 }
 
 // @public
@@ -8436,9 +9139,22 @@ export type JsonApiMetricPostOptionalIdTypeEnum = typeof JsonApiMetricPostOption
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationInAttributes {
+    allowedOrigins?: Array<string>;
+    earlyAccess?: string;
+    hostname?: string;
+    name?: string;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
+    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -8516,8 +9232,8 @@ export type JsonApiOrganizationOutMetaPermissionsEnum = typeof JsonApiOrganizati
 
 // @public
 export interface JsonApiOrganizationOutRelationships {
-    bootstrapUser?: JsonApiUserDataFilterInRelationshipsUser;
-    bootstrapUserGroup?: JsonApiUserDataFilterInRelationshipsUserGroup;
+    bootstrapUser?: JsonApiUserDataFilterPostOptionalIdRelationshipsUser;
+    bootstrapUserGroup?: JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup;
 }
 
 // @public (undocumented)
@@ -8530,22 +9246,9 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationPatchAttributes {
-    allowedOrigins?: Array<string>;
-    earlyAccess?: string;
-    hostname?: string;
-    name?: string;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerId?: string;
-    oauthIssuerLocation?: string;
-    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -8563,7 +9266,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -8583,7 +9286,7 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
@@ -8610,7 +9313,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -8626,7 +9329,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -8729,40 +9432,15 @@ export type JsonApiThemePatchTypeEnum = typeof JsonApiThemePatchTypeEnum[keyof t
 
 // @public
 export interface JsonApiUserDataFilterIn {
-    attributes: JsonApiUserDataFilterInAttributes;
+    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
     id: string;
-    relationships?: JsonApiUserDataFilterInRelationships;
+    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
     type: JsonApiUserDataFilterInTypeEnum;
-}
-
-// @public
-export interface JsonApiUserDataFilterInAttributes {
-    areRelationsValid?: boolean;
-    description?: string;
-    maql: string;
-    tags?: Array<string>;
-    title?: string;
 }
 
 // @public
 export interface JsonApiUserDataFilterInDocument {
     data: JsonApiUserDataFilterIn;
-}
-
-// @public
-export interface JsonApiUserDataFilterInRelationships {
-    user?: JsonApiUserDataFilterInRelationshipsUser;
-    userGroup?: JsonApiUserDataFilterInRelationshipsUserGroup;
-}
-
-// @public
-export interface JsonApiUserDataFilterInRelationshipsUser {
-    data: JsonApiUserToOneLinkage | null;
-}
-
-// @public
-export interface JsonApiUserDataFilterInRelationshipsUserGroup {
-    data: JsonApiUserGroupToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -8775,7 +9453,7 @@ export type JsonApiUserDataFilterInTypeEnum = typeof JsonApiUserDataFilterInType
 
 // @public
 export interface JsonApiUserDataFilterOut {
-    attributes: JsonApiUserDataFilterInAttributes;
+    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     relationships?: JsonApiUserDataFilterOutRelationships;
@@ -8806,8 +9484,8 @@ export interface JsonApiUserDataFilterOutRelationships {
     facts?: JsonApiMetricOutRelationshipsFacts;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    user?: JsonApiUserDataFilterInRelationshipsUser;
-    userGroup?: JsonApiUserDataFilterInRelationshipsUserGroup;
+    user?: JsonApiUserDataFilterPostOptionalIdRelationshipsUser;
+    userGroup?: JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup;
 }
 
 // @public (undocumented)
@@ -8820,7 +9498,7 @@ export type JsonApiUserDataFilterOutTypeEnum = typeof JsonApiUserDataFilterOutTy
 
 // @public
 export interface JsonApiUserDataFilterOutWithLinks {
-    attributes: JsonApiUserDataFilterInAttributes;
+    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -8840,7 +9518,7 @@ export type JsonApiUserDataFilterOutWithLinksTypeEnum = typeof JsonApiUserDataFi
 export interface JsonApiUserDataFilterPatch {
     attributes: JsonApiUserDataFilterPatchAttributes;
     id: string;
-    relationships?: JsonApiUserDataFilterInRelationships;
+    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
     type: JsonApiUserDataFilterPatchTypeEnum;
 }
 
@@ -8868,15 +9546,40 @@ export type JsonApiUserDataFilterPatchTypeEnum = typeof JsonApiUserDataFilterPat
 
 // @public
 export interface JsonApiUserDataFilterPostOptionalId {
-    attributes: JsonApiUserDataFilterInAttributes;
+    attributes: JsonApiUserDataFilterPostOptionalIdAttributes;
     id?: string;
-    relationships?: JsonApiUserDataFilterInRelationships;
+    relationships?: JsonApiUserDataFilterPostOptionalIdRelationships;
     type: JsonApiUserDataFilterPostOptionalIdTypeEnum;
+}
+
+// @public
+export interface JsonApiUserDataFilterPostOptionalIdAttributes {
+    areRelationsValid?: boolean;
+    description?: string;
+    maql: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
 export interface JsonApiUserDataFilterPostOptionalIdDocument {
     data: JsonApiUserDataFilterPostOptionalId;
+}
+
+// @public
+export interface JsonApiUserDataFilterPostOptionalIdRelationships {
+    user?: JsonApiUserDataFilterPostOptionalIdRelationshipsUser;
+    userGroup?: JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup;
+}
+
+// @public
+export interface JsonApiUserDataFilterPostOptionalIdRelationshipsUser {
+    data: JsonApiUserToOneLinkage | null;
+}
+
+// @public
+export interface JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup {
+    data: JsonApiUserGroupToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -8889,9 +9592,9 @@ export type JsonApiUserDataFilterPostOptionalIdTypeEnum = typeof JsonApiUserData
 
 // @public
 export interface JsonApiUserGroupIn {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupInTypeEnum;
 }
 
@@ -8924,15 +9627,10 @@ export type JsonApiUserGroupLinkageTypeEnum = typeof JsonApiUserGroupLinkageType
 
 // @public
 export interface JsonApiUserGroupOut {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserGroupOutAttributes {
-    name?: string;
 }
 
 // @public
@@ -8949,16 +9647,6 @@ export interface JsonApiUserGroupOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserGroupOutRelationships {
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-
-// @public
-export interface JsonApiUserGroupOutRelationshipsParents {
-    data: Array<JsonApiUserGroupLinkage>;
-}
-
 // @public (undocumented)
 export const JsonApiUserGroupOutTypeEnum: {
     readonly USER_GROUP: "userGroup";
@@ -8969,10 +9657,10 @@ export type JsonApiUserGroupOutTypeEnum = typeof JsonApiUserGroupOutTypeEnum[key
 
 // @public
 export interface JsonApiUserGroupOutWithLinks {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupOutWithLinksTypeEnum;
 }
 
@@ -8986,15 +9674,30 @@ export type JsonApiUserGroupOutWithLinksTypeEnum = typeof JsonApiUserGroupOutWit
 
 // @public
 export interface JsonApiUserGroupPatch {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiUserGroupPatchAttributes {
+    name?: string;
 }
 
 // @public
 export interface JsonApiUserGroupPatchDocument {
     data: JsonApiUserGroupPatch;
+}
+
+// @public
+export interface JsonApiUserGroupPatchRelationships {
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+
+// @public
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -9077,9 +9780,9 @@ export type JsonApiUserIdentifierToOneLinkage = JsonApiUserIdentifierLinkage;
 
 // @public
 export interface JsonApiUserIn {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserInTypeEnum;
 }
 
@@ -9112,18 +9815,10 @@ export type JsonApiUserLinkageTypeEnum = typeof JsonApiUserLinkageTypeEnum[keyof
 
 // @public
 export interface JsonApiUserOut {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserOutAttributes {
-    authenticationId?: string;
-    email?: string;
-    firstname?: string;
-    lastname?: string;
 }
 
 // @public
@@ -9140,11 +9835,6 @@ export interface JsonApiUserOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserOutRelationships {
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
-}
-
 // @public (undocumented)
 export const JsonApiUserOutTypeEnum: {
     readonly USER: "user";
@@ -9155,10 +9845,10 @@ export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiUserOutWithLinks {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserOutWithLinksTypeEnum;
 }
 
@@ -9172,15 +9862,28 @@ export type JsonApiUserOutWithLinksTypeEnum = typeof JsonApiUserOutWithLinksType
 
 // @public
 export interface JsonApiUserPatch {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiUserPatchAttributes {
+    authenticationId?: string;
+    email?: string;
+    firstname?: string;
+    lastname?: string;
 }
 
 // @public
 export interface JsonApiUserPatchDocument {
     data: JsonApiUserPatch;
+}
+
+// @public
+export interface JsonApiUserPatchRelationships {
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 
 // @public (undocumented)
@@ -9193,7 +9896,7 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
@@ -9213,7 +9916,7 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
 }
@@ -9240,7 +9943,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -9259,7 +9962,7 @@ export type JsonApiUserToOneLinkage = JsonApiUserLinkage;
 
 // @public
 export interface JsonApiVisualizationObjectIn {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiVisualizationObjectInTypeEnum;
 }
@@ -9342,7 +10045,7 @@ export type JsonApiVisualizationObjectOutWithLinksTypeEnum = typeof JsonApiVisua
 
 // @public
 export interface JsonApiVisualizationObjectPatch {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id: string;
     type: JsonApiVisualizationObjectPatchTypeEnum;
 }
@@ -9362,7 +10065,7 @@ export type JsonApiVisualizationObjectPatchTypeEnum = typeof JsonApiVisualizatio
 
 // @public
 export interface JsonApiVisualizationObjectPostOptionalId {
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     id?: string;
     type: JsonApiVisualizationObjectPostOptionalIdTypeEnum;
 }
@@ -9777,9 +10480,9 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
 
 // @public
 export interface JsonApiWorkspaceIn {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceInTypeEnum;
 }
 
@@ -9812,20 +10515,11 @@ export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageType
 
 // @public
 export interface JsonApiWorkspaceOut {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceOutAttributes {
-    cacheExtraLimit?: number;
-    description?: string;
-    earlyAccess?: string;
-    name?: string;
-    prefix?: string;
 }
 
 // @public
@@ -9868,16 +10562,6 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum: {
 // @public (undocumented)
 export type JsonApiWorkspaceOutMetaPermissionsEnum = typeof JsonApiWorkspaceOutMetaPermissionsEnum[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
 
-// @public
-export interface JsonApiWorkspaceOutRelationships {
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-
-// @public
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-
 // @public (undocumented)
 export const JsonApiWorkspaceOutTypeEnum: {
     readonly WORKSPACE: "workspace";
@@ -9888,11 +10572,11 @@ export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[key
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
 }
 
@@ -9906,15 +10590,34 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWit
 
 // @public
 export interface JsonApiWorkspacePatch {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspacePatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspacePatchAttributes {
+    cacheExtraLimit?: number;
+    description?: string;
+    earlyAccess?: string;
+    name?: string;
+    prefix?: string;
 }
 
 // @public
 export interface JsonApiWorkspacePatchDocument {
     data: JsonApiWorkspacePatch;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationships {
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -9927,33 +10630,10 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
-
-// @public
-export interface JsonApiWorkspaceSettingInAttributes {
-    content?: object;
-    type?: JsonApiWorkspaceSettingInAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export const JsonApiWorkspaceSettingInAttributesTypeEnum: {
-    readonly TIMEZONE: "TIMEZONE";
-    readonly ACTIVE_THEME: "ACTIVE_THEME";
-    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
-    readonly WHITE_LABELING: "WHITE_LABELING";
-    readonly LOCALE: "LOCALE";
-    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
-    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
-    readonly WEEK_START: "WEEK_START";
-    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
-    readonly ZAPIER_TOKEN: "ZAPIER_TOKEN";
-};
-
-// @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = typeof JsonApiWorkspaceSettingInAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingInAttributesTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingInDocument {
@@ -9970,7 +10650,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -9998,7 +10678,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -10015,7 +10695,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -10035,10 +10715,33 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettin
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     id?: string;
     type: JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
+
+// @public
+export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
+    content?: object;
+    type?: JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum: {
+    readonly TIMEZONE: "TIMEZONE";
+    readonly ACTIVE_THEME: "ACTIVE_THEME";
+    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
+    readonly WHITE_LABELING: "WHITE_LABELING";
+    readonly LOCALE: "LOCALE";
+    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
+    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+    readonly ZAPIER_TOKEN: "ZAPIER_TOKEN";
+};
+
+// @public (undocumented)
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = typeof JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -10055,6 +10758,65 @@ export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = typeof JsonApiWorksp
 
 // @public
 export type JsonApiWorkspaceToOneLinkage = JsonApiWorkspaceLinkage;
+
+// @public
+export interface KeyDriversDimension {
+    attribute: RestApiIdentifier;
+    attributeName: string;
+    format?: AttributeFormat;
+    granularity?: KeyDriversDimensionGranularityEnum;
+    label: RestApiIdentifier;
+    labelName: string;
+}
+
+// @public (undocumented)
+export const KeyDriversDimensionGranularityEnum: {
+    readonly MINUTE: "MINUTE";
+    readonly HOUR: "HOUR";
+    readonly DAY: "DAY";
+    readonly WEEK: "WEEK";
+    readonly MONTH: "MONTH";
+    readonly QUARTER: "QUARTER";
+    readonly YEAR: "YEAR";
+    readonly MINUTE_OF_HOUR: "MINUTE_OF_HOUR";
+    readonly HOUR_OF_DAY: "HOUR_OF_DAY";
+    readonly DAY_OF_WEEK: "DAY_OF_WEEK";
+    readonly DAY_OF_MONTH: "DAY_OF_MONTH";
+    readonly DAY_OF_YEAR: "DAY_OF_YEAR";
+    readonly WEEK_OF_YEAR: "WEEK_OF_YEAR";
+    readonly MONTH_OF_YEAR: "MONTH_OF_YEAR";
+    readonly QUARTER_OF_YEAR: "QUARTER_OF_YEAR";
+};
+
+// @public (undocumented)
+export type KeyDriversDimensionGranularityEnum = typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+
+// @public
+export interface KeyDriversRequest {
+    auxMetrics?: Array<MeasureItem>;
+    metric: MeasureItem;
+    sortDirection?: KeyDriversRequestSortDirectionEnum;
+}
+
+// @public (undocumented)
+export const KeyDriversRequestSortDirectionEnum: {
+    readonly ASC: "ASC";
+    readonly DESC: "DESC";
+};
+
+// @public (undocumented)
+export type KeyDriversRequestSortDirectionEnum = typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+
+// @public
+export interface KeyDriversResponse {
+    dimensionality: Array<KeyDriversDimension>;
+    links: ExecutionLinks;
+}
+
+// @public
+export interface KeyDriversResult {
+    data: object;
+}
 
 // @public
 export class LabelElementsBaseApi {
@@ -10534,6 +11296,11 @@ export interface ListLinks {
 // @public
 export interface ListLinksAllOf {
     next?: string;
+}
+
+// @public
+export interface MachineLearningResponse {
+    links: ExecutionLinks;
 }
 
 // @public
@@ -12261,6 +13028,74 @@ export const RankingFilterRankingFilterOperatorEnum: {
 export type RankingFilterRankingFilterOperatorEnum = typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
 
 // @public
+export interface RecentAnalyticalObject {
+    createdAt?: string;
+    createdBy?: DeclarativeUserIdentifier;
+    description?: string;
+    id: string;
+    interactionsByUser?: Array<RecentAnalyticalObjectInteractionsByUserEnum>;
+    modifiedAt?: string;
+    modifiedBy?: DeclarativeUserIdentifier;
+    tags?: Array<string>;
+    title?: string;
+    type: RecentAnalyticalObjectTypeEnum;
+}
+
+// @public (undocumented)
+export const RecentAnalyticalObjectInteractionsByUserEnum: {
+    readonly LIKE: "like";
+    readonly DISLIKE: "dislike";
+    readonly FAVORITE: "favorite";
+    readonly SUBSCRIBE: "subscribe";
+};
+
+// @public (undocumented)
+export type RecentAnalyticalObjectInteractionsByUserEnum = typeof RecentAnalyticalObjectInteractionsByUserEnum[keyof typeof RecentAnalyticalObjectInteractionsByUserEnum];
+
+// @public (undocumented)
+export const RecentAnalyticalObjectTypeEnum: {
+    readonly ANALYTICAL_DASHBOARD: "analyticalDashboard";
+    readonly ATTRIBUTE: "attribute";
+    readonly ATTRIBUTE_HIERARCHY: "attributeHierarchy";
+    readonly DASHBOARD_PLUGIN: "dashboardPlugin";
+    readonly DATASET: "dataset";
+    readonly FACT: "fact";
+    readonly LABEL: "label";
+    readonly METRIC: "metric";
+    readonly USER_DATA_FILTER: "userDataFilter";
+    readonly PROMPT: "prompt";
+    readonly VISUALIZATION_OBJECT: "visualizationObject";
+    readonly FILTER_CONTEXT: "filterContext";
+    readonly WORKSPACE_SETTINGS: "workspaceSettings";
+    readonly CUSTOM_APPLICATION_SETTING: "customApplicationSetting";
+    readonly WORKSPACE_DATA_FILTER: "workspaceDataFilter";
+    readonly WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting";
+    readonly WIDGET_ALERT: "widgetAlert";
+    readonly TAG: "tag";
+};
+
+// @public (undocumented)
+export type RecentAnalyticalObjectTypeEnum = typeof RecentAnalyticalObjectTypeEnum[keyof typeof RecentAnalyticalObjectTypeEnum];
+
+// @public
+export interface Recommendation {
+    identifier: EntityIdentifier;
+    interactionsByUser: Array<RecommendationInteractionsByUserEnum>;
+    score: number;
+}
+
+// @public (undocumented)
+export const RecommendationInteractionsByUserEnum: {
+    readonly LIKE: "like";
+    readonly DISLIKE: "dislike";
+    readonly FAVORITE: "favorite";
+    readonly SUBSCRIBE: "subscribe";
+};
+
+// @public (undocumented)
+export type RecommendationInteractionsByUserEnum = typeof RecommendationInteractionsByUserEnum[keyof typeof RecommendationInteractionsByUserEnum];
+
+// @public
 export interface ReferenceIdentifier {
     id: string;
     type: ReferenceIdentifierTypeEnum;
@@ -12485,6 +13320,8 @@ export type ScanApiSqlColumnDataTypeEnum = typeof ScanApiSqlColumnDataTypeEnum[k
 
 // @public
 export interface ScanModelActionsApiInterface {
+    // (undocumented)
+    computeColumnStatistics(requestParameters: ActionsApiComputeColumnStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<ColumnStatisticsResponse>;
     getDataSourceSchemata(requestParameters: ActionsApiGetDataSourceSchemataRequest, options?: AxiosRequestConfig): AxiosPromise<DataSourceSchemata>;
     scanDataSource(requestParameters: ActionsApiScanDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<ScanResultPdm>;
     scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig): AxiosPromise<ScanSqlResponse>;
@@ -12744,6 +13581,16 @@ export const SqlColumnDataTypeEnum: {
 
 // @public (undocumented)
 export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
+
+// @public
+export interface SqlQuery {
+    sql: string;
+}
+
+// @public
+export interface Table {
+    tableName: string;
+}
 
 // @public
 export interface TableWarning {
