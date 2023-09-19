@@ -170,6 +170,7 @@ export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boole
 export function areLabelsOverlappingColumns(
     labels: Highcharts.Point[],
     visiblePoints: Highcharts.Point[],
+    chartType?: string,
 ): boolean {
     return labels.some((label: UnsafeInternals) => {
         if (isEmpty(label)) {
@@ -192,7 +193,8 @@ export function areLabelsOverlappingColumns(
                 // supportedDualAxesChartTypes is including AREA and LINE
                 // won't hide the stacked label if it overlaps with points of AREA and LINE
                 seriesType === VisualizationTypes.AREA ||
-                seriesType === VisualizationTypes.LINE
+                seriesType === VisualizationTypes.LINE ||
+                (chartType === VisualizationTypes.BAR && labelAttr.width === 0)
             ) {
                 return false;
             }
