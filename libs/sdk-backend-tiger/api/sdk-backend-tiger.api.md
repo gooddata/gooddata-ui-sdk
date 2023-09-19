@@ -18,6 +18,7 @@ import { DeclarativeTables } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
+import { EntityIdentifier } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -442,6 +443,9 @@ export type TigerSpecificFunctions = {
     setDislike?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
     findRecommendations?: (workspaceId: string) => Promise<Recommendation[]>;
     findRecentAnalytics?: (workspaceId: string) => Promise<RecentAnalyticalObject[]>;
+    subscribeToTag?: (workspaceId: string, tag: string) => Promise<void>;
+    unsubscribeFromTag?: (workspaceId: string, tag: string) => Promise<void>;
+    listSubscriptions?: (workspaceId: string) => Promise<EntityIdentifier[]>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     getWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<ICustomApplicationSetting>;
     createWorkspaceCustomAppSetting?: (workspaceId: string, applicationName: string, content: object, settingId?: string) => Promise<ICustomApplicationSetting>;
