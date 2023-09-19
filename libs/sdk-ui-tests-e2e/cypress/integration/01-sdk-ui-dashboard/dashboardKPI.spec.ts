@@ -103,6 +103,7 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Check no matching message", () => {
         editMode.edit();
         new InsightsCatalog().waitForCatalogLoad();
+        cy.wait(1000);
         widget.getKPI().clickValue();
         kpiConfiguration.toggleMeasureDropdown();
         kpiMeasureDropdown.find("abc").noMatchingData();
