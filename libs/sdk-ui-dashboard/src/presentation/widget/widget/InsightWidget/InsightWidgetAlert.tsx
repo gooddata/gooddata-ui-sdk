@@ -20,15 +20,19 @@ import { kpiAlertDialogAlignPoints } from "../../kpi/ViewModeDashboardKpi/KpiAle
 import { KpiAlertDialogWhenTriggeredPicker } from "../../kpi/ViewModeDashboardKpi/KpiAlerts/KpiAlertDialog/KpiAlertDialogWhenTriggeredPicker.js";
 import { IWidgetAlertDefinition, ObjRef } from "@gooddata/sdk-model";
 import {
+    createAlert,
+    removeAlerts,
     selectAlertByWidgetRef,
     selectDashboardIdRef,
     selectFilterContextDefinition,
     selectIsInsightAlertOpenedByWidgetRef,
     uiActions,
+    updateAlert,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { useKpiAlertOperations } from "../../kpi/ViewModeDashboardKpi/useKpiAlertOperations.js";
+import isNil from "lodash/isNil.js";
 
 const enabledBubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }, { align: "tc br" }];
 
@@ -72,15 +76,37 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
     const closeAlertDialog = useCallback(() => {
         dispatch(uiActions.closeKpiAlertDialog());
     }, [dispatch]);
-    const onSaveFinish = useCallback(() => {
-        closeAlertDialog();
+
+    const onCreated = useCallback(() => {
         addSuccess(
             { id: "fastTrack.alert.success" },
             {
                 values: { b: (chunks: React.ReactNode) => <b>{chunks}</b> },
             },
         );
+        closeAlertDialog();
     }, [addSuccess, closeAlertDialog]);
+
+    const { run: createWidgetAlert, status: creatingStatus } = useDashboardCommandProcessing({
+        commandCreator: createAlert,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.ALERT.CREATED",
+        onSuccess: onCreated,
+    });
+
+    const { run: updateWidgetAlert, status: updatingStatus } = useDashboardCommandProcessing({
+        commandCreator: updateAlert,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.ALERT.UPDATED",
+        onSuccess: onCreated, // intentionally the same as for creating a new alert
+    });
+
+    const { run: deleteWidgetAlerts, status: _deletingStatus } = useDashboardCommandProcessing({
+        commandCreator: removeAlerts,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.ALERTS.REMOVED",
+        onSuccess: closeAlertDialog,
+    });
 
     const existingAlert = useDashboardSelector(selectAlertByWidgetRef(props.insightRef));
 
@@ -93,13 +119,7 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
         "dash-item-action-alert",
         "s-dash-item-action-alert",
         "gd-icon-bell",
-        // {
-        //     "alert-set": this.state.isKpiAlertAfterSaving,
-        //     "alert-deleted": this.state.isKpiAlertAfterDeleting,
-        // },
     );
-
-    const kpiAlertOperations = useKpiAlertOperations(onSaveFinish);
 
     const onIconButtonClick = useCallback(() => {
         isAlertDialogOpen ? closeAlertDialog() : openAlertDialog();
@@ -127,21 +147,22 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
         [],
     );
 
-    const isSaving =
-        kpiAlertOperations.creatingStatus === "inProgress" ||
-        kpiAlertOperations.updatingStatus === "inProgress";
-    const isSubmitEnabled = !!threshold && !isSaving;
+    const isSaving = creatingStatus === "running" || updatingStatus === "running";
+
+    const thresholdDiffers = !existingAlert || existingAlert.threshold !== threshold;
+    const whenTriggeredDiffers = !existingAlert || existingAlert.whenTriggered !== whenTriggered;
+    const isSubmitEnabled = !isNil(threshold) && !isSaving && (thresholdDiffers || whenTriggeredDiffers);
 
     const onSave = useCallback(() => {
         if (existingAlert) {
-            kpiAlertOperations.onUpdateAlert({
+            updateWidgetAlert({
                 ...existingAlert,
                 whenTriggered,
                 threshold: threshold ?? 0,
                 actionName,
             });
         } else {
-            kpiAlertOperations.onCreateAlert({
+            createWidgetAlert({
                 widget: props.insightRef,
                 title: "Alert",
                 actionName,
@@ -155,18 +176,19 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
         }
     }, [
         actionName,
+        createWidgetAlert,
         currentFilterContext,
         dashboardRef,
         existingAlert,
-        kpiAlertOperations,
         props.insightRef,
         threshold,
+        updateWidgetAlert,
         whenTriggered,
     ]);
 
     const onDeleteClick = useCallback(async () => {
-        kpiAlertOperations.onRemoveAlert(existingAlert!);
-    }, [existingAlert, kpiAlertOperations]);
+        deleteWidgetAlerts([existingAlert!.ref]);
+    }, [deleteWidgetAlerts, existingAlert]);
 
     const savingButtonTitle = useMemo(() => {
         if (isSaving) {
