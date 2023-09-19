@@ -13,7 +13,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { DataValue } from "@gooddata/sdk-model";
 
-import { CalculateAs, ComparisonPositionValues, IComparison } from "../../../../interfaces/index.js";
+import {
+    CalculateAs,
+    CalculationType,
+    ComparisonPositionValues,
+    IComparison,
+    ILabelConfig,
+} from "../../../../interfaces/index.js";
 import {
     EvaluationType,
     IBaseHeadlineData,
@@ -22,11 +28,7 @@ import {
     IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
 import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
-import {
-    getCalculationValuesDefault,
-    getComparisonFormat,
-    getComparisonTitle,
-} from "../../headlineHelper.js";
+import { getCalculationValuesDefault, getComparisonFormat, IDefaultLabelKeys } from "../../headlineHelper.js";
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
 import ComparisonDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
 import ComparisonDataWithSubItem from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
@@ -107,24 +109,31 @@ function createComparisonItem(
     intl: IntlShape,
 ): IBaseHeadlineItem<IComparisonDataItem | IComparisonDataWithSubItem> {
     const [, , , quaternaryItem] = executionData;
-
+    const evaluationType = getComparisonEvaluationType(executionData);
     if (quaternaryItem) {
         return {
-            data: createComparisonDataWithSubItem(executionData, inheritFormat, comparison, intl),
+            data: createComparisonDataWithSubItem(
+                executionData,
+                evaluationType,
+                inheritFormat,
+                comparison,
+                intl,
+            ),
             baseHeadlineDataItemComponent: ComparisonDataWithSubItem,
-            evaluationType: getComparisonEvaluationType(executionData),
+            evaluationType: evaluationType,
         };
     } else {
         return {
             data: createComparisonDataItem(
                 executionData,
                 isSecondaryDerivedMeasure,
+                evaluationType,
                 inheritFormat,
                 comparison,
                 intl,
             ),
             baseHeadlineDataItemComponent: ComparisonDataItem,
-            evaluationType: getComparisonEvaluationType(executionData),
+            evaluationType: evaluationType,
         };
     }
 }
@@ -156,6 +165,7 @@ function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): E
 function createComparisonDataItem(
     executionData: IHeadlineExecutionData[],
     isSecondaryDerivedMeasure: boolean,
+    evaluationType: EvaluationType,
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
@@ -163,12 +173,18 @@ function createComparisonDataItem(
     const { calculationType, format, labelConfig } = comparison;
 
     const defaultCalculationType = isSecondaryDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
-    const { defaultFormat, defaultLabelKey } = getCalculationValuesDefault(
+    const { defaultFormat, defaultLabelKeys } = getCalculationValuesDefault(
         calculationType ?? defaultCalculationType,
     );
 
     return {
-        title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
+        title: getComparisonTitle(
+            labelConfig,
+            defaultLabelKeys,
+            evaluationType,
+            calculationType ?? defaultCalculationType,
+            intl,
+        ),
         value: getComparisonValue(executionData),
         format: getComparisonFormat(format, defaultFormat) || inheritFormat,
     };
@@ -176,15 +192,17 @@ function createComparisonDataItem(
 
 function createComparisonDataWithSubItem(
     executionData: IHeadlineExecutionData[],
+    evaluationType: EvaluationType,
     inheritFormat: string,
     comparison: IComparison,
     intl: IntlShape,
 ): IComparisonDataWithSubItem {
     const { calculationType, format, subFormat, labelConfig } = comparison;
-    const { defaultFormat, defaultSubFormat, defaultLabelKey } = getCalculationValuesDefault(calculationType);
+    const { defaultFormat, defaultSubFormat, defaultLabelKeys } =
+        getCalculationValuesDefault(calculationType);
 
     return {
-        title: getComparisonTitle(labelConfig, intl.formatMessage({ id: defaultLabelKey })),
+        title: getComparisonTitle(labelConfig, defaultLabelKeys, evaluationType, calculationType, intl),
         item: {
             value: getComparisonValue(executionData),
             format: getComparisonFormat(format, defaultFormat) || inheritFormat,
@@ -208,4 +226,24 @@ function getComparisonValue(executionData: IHeadlineExecutionData[], isSubValue?
 
 function isNumeric(value: DataValue): boolean {
     return (isNumber(value) || (isString(value) && value.trim())) && !isNaN(value as number);
+}
+
+function getComparisonTitle(
+    labelConfig: ILabelConfig,
+    defaultLabelKeys: IDefaultLabelKeys,
+    evaluationType: EvaluationType,
+    calculationType: CalculationType,
+    intl: IntlShape,
+): string {
+    if (labelConfig?.isConditional && calculationType !== CalculateAs.RATIO) {
+        switch (evaluationType) {
+            case EvaluationType.POSITIVE_VALUE:
+                return labelConfig?.positive || intl.formatMessage({ id: defaultLabelKeys.positiveKey });
+            case EvaluationType.NEGATIVE_VALUE:
+                return labelConfig?.negative || intl.formatMessage({ id: defaultLabelKeys.negativeKey });
+            default:
+                return labelConfig?.equals || intl.formatMessage({ id: defaultLabelKeys.equalsKey });
+        }
+    }
+    return labelConfig?.unconditionalValue || intl.formatMessage({ id: defaultLabelKeys.nonConditionalKey });
 }

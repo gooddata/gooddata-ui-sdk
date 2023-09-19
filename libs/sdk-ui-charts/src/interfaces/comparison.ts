@@ -109,6 +109,14 @@ export interface IColorConfig {
  */
 export interface ILabelConfig {
     /**
+     * This property specifies whether to use the unconditional value for all conditions
+     * or separate values for each condition.
+     *
+     * @defaultValue false
+     */
+    isConditional?: boolean;
+
+    /**
      * Specifies the label to be used for the comparison value.
      *
      * @remarks
@@ -122,6 +130,52 @@ export interface ILabelConfig {
      * </table>
      */
     unconditionalValue?: string;
+
+    /**
+     * This property specify the label of the positive comparison value
+     * <br/>
+     * Primary is larger than Secondary
+     *
+     * @defaultValue based on the calculation type
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>Increase</td></tr>
+     *     <tr><td>difference</td><td>Increase</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    positive?: string;
+
+    /**
+     * This property specify the label of the negative comparison
+     * <br/>
+     * Primary is less than Secondary
+     *
+     * @defaultValue based on the calculation type
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>Decrease</td></tr>
+     *     <tr><td>difference</td><td>Decrease</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    negative?: string;
+
+    /**
+     * This property specify the label of the equals comparison value
+     * <br/>
+     * Primary is equals Secondary
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>No change</td></tr>
+     *     <tr><td>difference</td><td>No difference</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    equals?: string;
 }
 
 /**

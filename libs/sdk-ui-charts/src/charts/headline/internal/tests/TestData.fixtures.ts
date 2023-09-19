@@ -338,6 +338,34 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
         }),
     ],
     [
+        "comparison with default config and conditional labels",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnRight,
+        createComparison({
+            labelConfig: {
+                isConditional: true,
+            },
+        }),
+    ],
+    [
+        "comparison with change calculation and conditional labels ",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnRight,
+        createComparison({
+            calculationType: CalculateAs.CHANGE,
+            labelConfig: {
+                isConditional: true,
+            },
+        }),
+    ],
+    [
+        "comparison with secondary measure is PoP and conditional labels",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP,
+        createComparison({
+            labelConfig: {
+                isConditional: true,
+            },
+        }),
+    ],
+    [
         "comparison with drilling on 2 measures",
         ReferenceRecordings.Scenarios.Headline.ComparisonWithDefaultConfig,
         TEST_DEFAULT_COMPARISON,

@@ -182,6 +182,21 @@
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the change between two values.",
         "limit": 0
     },
+    "visualizations.headline.comparison.title.change.positive": {
+        "value": "Increase",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is greater then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.change.negative": {
+        "value": "Decrease",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is less then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.change.equals": {
+        "value": "No change",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is equals secondary value.",
+        "limit": 0
+    },
     "visualizations.headline.comparison.title.ratio": {
         "value": "of",
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the the ratio between two values.",
@@ -190,6 +205,21 @@
     "visualizations.headline.comparison.title.difference": {
         "value": "Difference",
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.positive": {
+        "value": "Increase",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is greater then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.negative": {
+        "value": "Decrease",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is less then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.equals": {
+        "value": "No difference",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is equals secondary value.",
         "limit": 0
     },
     "visualization.numericValues.k": {

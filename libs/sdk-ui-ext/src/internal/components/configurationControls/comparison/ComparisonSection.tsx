@@ -2,7 +2,7 @@
 import React from "react";
 
 import { PushDataCallback, ISeparators } from "@gooddata/sdk-ui";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
 import { IColorPalette } from "@gooddata/sdk-model";
 
 import { comparisonMessages } from "../../../../locales.js";
@@ -12,7 +12,6 @@ import { IComparisonControlProperties } from "../../../interfaces/ControlPropert
 import ConfigSection from "../ConfigSection.js";
 import CalculationControl from "./calculation/CalculationControl.js";
 import ValueSubSection from "./values/ValueSubSection.js";
-import { getComparisonDefaultValues } from "../../../utils/comparisonHelper.js";
 import IndicatorSubSection from "./indicators/IndicatorSubSection.js";
 import LabelSubSection from "./label/LabelSubSection.js";
 
@@ -42,8 +41,8 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     const comparisonDisabled = controlDisabled || disabledByVisualization;
     const sectionDisabled = comparisonDisabled || !toggledOn;
     const showDisabledMessage = !controlDisabled && disabledByVisualization;
-
-    const { defaultFormat, defaultLabelKey } = getComparisonDefaultValues(defaultCalculationType, properties);
+    const calculationType = properties?.controls?.comparison?.calculationType || defaultCalculationType;
+    const { defaultFormat, defaultLabelKeys } = getCalculationValuesDefault(calculationType);
 
     return (
         <ConfigSection
@@ -83,7 +82,8 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             <LabelSubSection
                 sectionDisabled={sectionDisabled}
                 showDisabledMessage={showDisabledMessage}
-                defaultLabelKey={defaultLabelKey}
+                defaultLabelKeys={defaultLabelKeys}
+                calculationType={calculationType}
                 properties={properties}
                 pushData={pushData}
             />
