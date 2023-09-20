@@ -684,6 +684,9 @@ export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
 export const HEADER_ITEM_ID_DATA = "gs.header.data";
 
 // @internal (undocumented)
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
+
+// @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
 
 // @internal (undocumented)
