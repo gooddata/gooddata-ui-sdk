@@ -22,6 +22,9 @@ export const HeadlineWithThreeMeasures = {
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withDefaultBackendSettings({
+        enableNewHeadline: false,
+    })
     .addScenario("single measure", {
         primaryMeasure: ReferenceMd.Won,
     })
