@@ -56,7 +56,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IUser, IMeasure } from "@gooddata/sdk-model";
-import { convertMeasure } from '../convertors/toBackend/afm/MeasureConverter.js';
+import { convertMeasure } from "../convertors/toBackend/afm/MeasureConverter.js";
 
 /**
  * @internal
@@ -466,8 +466,8 @@ export type TigerSpecificFunctions = {
         objectId: string,
         isDelete: boolean,
     ) => Promise<void>;
-    findRecommendations?: (workspaceId: string) => Promise<Recommendation[]>;
-    findRecentAnalytics?: (workspaceId: string) => Promise<RecentAnalyticalObject[]>;
+    findRecommendations?: (workspaceId: string, limit?: number) => Promise<Recommendation[]>;
+    findRecentAnalytics?: (workspaceId: string, limit?: number) => Promise<RecentAnalyticalObject[]>;
     subscribeToTag?: (workspaceId: string, tag: string) => Promise<void>;
     unsubscribeFromTag?: (workspaceId: string, tag: string) => Promise<void>;
     listSubscriptions?: (workspaceId: string) => Promise<EntityIdentifier[]>;
@@ -553,29 +553,60 @@ export type TigerSpecificFunctions = {
         entities: Array<HierarchyObjectIdentification>,
     ) => Promise<Array<IdentifierDuplications>>;
 
-    computeKeyDrivers?: (workspaceId: string, metric: IMeasure, sortDirection: "ASC" | "DESC") => Promise<IKeyDriverAnalysis>;
+    computeKeyDrivers?: (
+        workspaceId: string,
+        metric: IMeasure,
+        sortDirection: "ASC" | "DESC",
+    ) => Promise<IKeyDriverAnalysis>;
 
-    processForecastResult?: (workspaceId: string, executionResultId: string, forecastPeriod: number) => Promise<IForecastCacheResult>;
+    processForecastResult?: (
+        workspaceId: string,
+        executionResultId: string,
+        forecastPeriod: number,
+    ) => Promise<IForecastCacheResult>;
 
-    processClusterResult?: (workspaceId: string, executionResultId: string, numberOfClusters: number) => Promise<IClusteringCacheResult>;
+    processClusterResult?: (
+        workspaceId: string,
+        executionResultId: string,
+        numberOfClusters: number,
+    ) => Promise<IClusteringCacheResult>;
 
-    processAnomalyDetection?: (workspaceId: string, executionResultId: string, sensitivity: number) => Promise<IAnomalyDetectionCacheResult>;
+    processAnomalyDetection?: (
+        workspaceId: string,
+        executionResultId: string,
+        sensitivity: number,
+    ) => Promise<IAnomalyDetectionCacheResult>;
 
     getForecastResult?: (workspaceId: string, resultId: string) => Promise<IForecastCacheResult>;
 
-    setForecastResult?: (workspaceId: string, resultId: string, forecastResult: IForecastCacheResult) => Promise<void>;
+    setForecastResult?: (
+        workspaceId: string,
+        resultId: string,
+        forecastResult: IForecastCacheResult,
+    ) => Promise<void>;
 
     deleteForecastResult?: (workspaceId: string, resultId: string) => Promise<void>;
 
     getClusterResult?: (workspaceId: string, resultId: string) => Promise<IClusteringCacheResult>;
 
-    setClusterResult?: (workspaceId: string, resultId: string, clusteringResult: IClusteringCacheResult) => Promise<void>;
+    setClusterResult?: (
+        workspaceId: string,
+        resultId: string,
+        clusteringResult: IClusteringCacheResult,
+    ) => Promise<void>;
 
     deleteClusterResult?: (workspaceId: string, resultId: string) => Promise<void>;
 
-    getAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<IAnomalyDetectionCacheResult>;
+    getAnomalyDetectionResult?: (
+        workspaceId: string,
+        resultId: string,
+    ) => Promise<IAnomalyDetectionCacheResult>;
 
-    setAnomalyDetectionResult?: (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult) => Promise<void>;
+    setAnomalyDetectionResult?: (
+        workspaceId: string,
+        resultId: string,
+        anomalyDetectionResult: IAnomalyDetectionCacheResult,
+    ) => Promise<void>;
 
     deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
 };
@@ -652,7 +683,7 @@ const customAppSettingResponseAsICustomApplicationSetting = (
 };
 
 const sleep = async (timeoutInMs: number) => {
-    return new Promise(resolve => setTimeout(resolve, timeoutInMs));
+    return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
 const pollResult = async <T>(polledApiCall: Promise<AxiosResponse<T>>): Promise<T> => {
@@ -673,7 +704,11 @@ const pollResult = async <T>(polledApiCall: Promise<AxiosResponse<T>>): Promise<
     throw new Error("Polling of prediction result timeout.");
 };
 
-const findDimensionality = (dims: IKeyDriverAnalysisDimensionality[], attributeId: string): IKeyDriverAnalysisDimensionality | undefined => dims.find((dimensionality) => dimensionality.attribute.id === attributeId);
+const findDimensionality = (
+    dims: IKeyDriverAnalysisDimensionality[],
+    attributeId: string,
+): IKeyDriverAnalysisDimensionality | undefined =>
+    dims.find((dimensionality) => dimensionality.attribute.id === attributeId);
 
 export const buildTigerSpecificFunctions = (
     backend: IAnalyticalBackend,
@@ -1211,12 +1246,12 @@ export const buildTigerSpecificFunctions = (
             return await authApiCall(async (sdk) => {
                 const promise = id
                     ? sdk.scanModel.testDataSource({
-                        dataSourceId: id,
-                        testRequest: connectionData,
-                    })
+                          dataSourceId: id,
+                          testRequest: connectionData,
+                      })
                     : sdk.scanModel.testDataSourceDefinition({
-                        testDefinitionRequest: connectionData,
-                    });
+                          testDefinitionRequest: connectionData,
+                      });
                 return await promise.then((axiosResponse) => axiosResponse.data);
             });
         } catch (error: any) {
@@ -1685,12 +1720,12 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    findRecommendations: async (workspaceId) => {
+    findRecommendations: async (workspaceId, limit = 5) => {
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.actions
                     .findRecommendations(
-                        { workspaceId },
+                        { workspaceId, limit },
                         {
                             // this somehow makes sure that no request body is sent to avoid
                             // including required props we do not have at the moment
@@ -1704,10 +1739,12 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    findRecentAnalytics: async (workspaceId) => {
+    findRecentAnalytics: async (workspaceId, limit = 5) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.actions.findRecentAnalytics({ workspaceId }).then((response) => response.data);
+                return sdk.actions
+                    .findRecentAnalytics({ workspaceId, limit })
+                    .then((response) => response.data);
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1755,15 +1792,17 @@ export const buildTigerSpecificFunctions = (
                 keyDriversRequest: {
                     metric: convertMeasure(metric),
                     sortDirection,
-                }
+                },
             });
 
             const responseData = response.data as IKeyDriverAnalysisResponse;
             const executionResult = responseData.links.executionResult;
-            const result = await pollResult(sdk.keyDrivers.getResult({
-                workspaceId,
-                resultId: executionResult,
-            })) as IKeyDriverAnalysisResult;
+            const result = (await pollResult(
+                sdk.keyDrivers.getResult({
+                    workspaceId,
+                    resultId: executionResult,
+                }),
+            )) as IKeyDriverAnalysisResult;
 
             const { effect, label, labelElement } = result.data;
             const labels = label.map((attributeId, index) => {
@@ -1779,67 +1818,91 @@ export const buildTigerSpecificFunctions = (
         });
     },
 
-    processForecastResult: async (workspaceId: string, executionResultId: string, forecastPeriod: number): Promise<IForecastCacheResult> => {
+    processForecastResult: async (
+        workspaceId: string,
+        executionResultId: string,
+        forecastPeriod: number,
+    ): Promise<IForecastCacheResult> => {
         return await authApiCall(async (sdk) => {
             const response = await sdk.predictionCache.processForecastRequest({
                 workspaceId,
                 resultId: executionResultId,
                 forecastRequest: {
                     forecastPeriod,
-                }
+                },
             });
             const executionResult = response.data.links.executionResult;
-            return pollResult(sdk.predictionCache.getForecastResult({
-                workspaceId,
-                resultId: executionResult,
-            }));
+            return pollResult(
+                sdk.predictionCache.getForecastResult({
+                    workspaceId,
+                    resultId: executionResult,
+                }),
+            );
         });
     },
 
-    processClusterResult: async (workspaceId: string, executionResultId: string, numberOfClusters: number): Promise<IClusteringCacheResult> => {
+    processClusterResult: async (
+        workspaceId: string,
+        executionResultId: string,
+        numberOfClusters: number,
+    ): Promise<IClusteringCacheResult> => {
         return await authApiCall(async (sdk) => {
             const response = await sdk.predictionCache.processClusteringRequest({
                 workspaceId,
                 resultId: executionResultId,
                 clusteringRequest: {
                     numberOfClusters,
-                }
+                },
             });
             const executionResult = response.data.links.executionResult;
-            return pollResult(sdk.predictionCache.getClusteringResult({
-                workspaceId,
-                resultId: executionResult,
-            }));
+            return pollResult(
+                sdk.predictionCache.getClusteringResult({
+                    workspaceId,
+                    resultId: executionResult,
+                }),
+            );
         });
     },
 
-    processAnomalyDetection: async (workspaceId: string, executionResultId: string, sensitivity: number): Promise<IAnomalyDetectionCacheResult> => {
+    processAnomalyDetection: async (
+        workspaceId: string,
+        executionResultId: string,
+        sensitivity: number,
+    ): Promise<IAnomalyDetectionCacheResult> => {
         return await authApiCall(async (sdk) => {
             const response = await sdk.predictionCache.processAnomalyDetection({
                 workspaceId,
                 resultId: executionResultId,
                 anomalyDetectionRequest: {
                     sensitivity,
-                }
+                },
             });
             const executionResult = response.data.links.executionResult;
-            return pollResult(sdk.predictionCache.getAnomalyDetectionResult({
-                workspaceId,
-                resultId: executionResult,
-            }));
+            return pollResult(
+                sdk.predictionCache.getAnomalyDetectionResult({
+                    workspaceId,
+                    resultId: executionResult,
+                }),
+            );
         });
     },
 
     getForecastResult: async (workspaceId: string, resultId: string): Promise<IForecastCacheResult> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.fetchForecastResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data as IForecastCacheResult);
+            return sdk.predictionCache
+                .fetchForecastResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data as IForecastCacheResult);
         });
     },
 
-    setForecastResult: async (workspaceId: string, resultId: string, forecastResult: IForecastCacheResult): Promise<void> => {
+    setForecastResult: async (
+        workspaceId: string,
+        resultId: string,
+        forecastResult: IForecastCacheResult,
+    ): Promise<void> => {
         return await authApiCall(async (sdk) => {
             sdk.predictionCache.cacheForecastResult({
                 workspaceId,
@@ -1851,23 +1914,31 @@ export const buildTigerSpecificFunctions = (
 
     deleteForecastResult: async (workspaceId: string, resultId: string): Promise<void> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.deleteForecastResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data);
+            return sdk.predictionCache
+                .deleteForecastResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data);
         });
     },
 
     getClusterResult: async (workspaceId: string, resultId: string): Promise<IClusteringCacheResult> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.fetchClusteringResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data as IClusteringCacheResult);
+            return sdk.predictionCache
+                .fetchClusteringResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data as IClusteringCacheResult);
         });
     },
 
-    setClusterResult: async (workspaceId: string, resultId: string, clusteringResult: IClusteringCacheResult): Promise<void> => {
+    setClusterResult: async (
+        workspaceId: string,
+        resultId: string,
+        clusteringResult: IClusteringCacheResult,
+    ): Promise<void> => {
         return await authApiCall(async (sdk) => {
             sdk.predictionCache.cacheClusteringResult({
                 workspaceId,
@@ -1879,23 +1950,34 @@ export const buildTigerSpecificFunctions = (
 
     deleteClusterResult: async (workspaceId: string, resultId: string): Promise<void> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.deleteClusteringResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data);
+            return sdk.predictionCache
+                .deleteClusteringResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data);
         });
     },
 
-    getAnomalyDetectionResult: async (workspaceId: string, resultId: string): Promise<IAnomalyDetectionCacheResult> => {
+    getAnomalyDetectionResult: async (
+        workspaceId: string,
+        resultId: string,
+    ): Promise<IAnomalyDetectionCacheResult> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.fetchAnomalyDetectionResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data as IAnomalyDetectionCacheResult);
+            return sdk.predictionCache
+                .fetchAnomalyDetectionResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data as IAnomalyDetectionCacheResult);
         });
     },
 
-    setAnomalyDetectionResult: async (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult): Promise<void> => {
+    setAnomalyDetectionResult: async (
+        workspaceId: string,
+        resultId: string,
+        anomalyDetectionResult: IAnomalyDetectionCacheResult,
+    ): Promise<void> => {
         return await authApiCall(async (sdk) => {
             sdk.predictionCache.cacheAnomalyDetectionResult({
                 workspaceId,
@@ -1907,10 +1989,12 @@ export const buildTigerSpecificFunctions = (
 
     deleteAnomalyDetectionResult: async (workspaceId: string, resultId: string): Promise<void> => {
         return await authApiCall(async (sdk) => {
-            return sdk.predictionCache.deleteAnomalyDetectionResult({
-                workspaceId,
-                resultId,
-            }).then((response) => response.data);
+            return sdk.predictionCache
+                .deleteAnomalyDetectionResult({
+                    workspaceId,
+                    resultId,
+                })
+                .then((response) => response.data);
         });
     },
 });
