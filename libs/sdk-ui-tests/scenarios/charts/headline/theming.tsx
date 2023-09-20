@@ -8,6 +8,9 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
+    .withDefaultBackendSettings({
+        enableNewHeadline: false,
+    })
     .addScenario("themed", {
         primaryMeasure: ReferenceMd.Won,
         secondaryMeasure: ReferenceMd.Amount,
