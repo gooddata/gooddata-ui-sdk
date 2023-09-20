@@ -1,21 +1,6 @@
 {
     "data": [
         {
-            "id": "negative_metric",
-            "type": "metric",
-            "attributes": {
-                "title": "Negative Metric",
-                "description": "",
-                "areRelationsValid": true,
-                "createdAt": "2023-08-31 10:37",
-                "content": { "format": "#,##0.00", "maql": "SELECT SUM({metric/amount_bop} * -1 )" }
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/negative_metric"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
             "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
             "type": "metric",
             "attributes": {
@@ -265,6 +250,24 @@
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
         {
+            "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "type": "metric",
+            "attributes": {
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                "description": "Metric with long name",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
             "id": "metric_has_null_value",
             "type": "metric",
             "attributes": {
@@ -279,6 +282,21 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/metric_has_null_value"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "negative_metric",
+            "type": "metric",
+            "attributes": {
+                "title": "Negative Metric",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2023-08-31 10:37",
+                "content": { "format": "#,##0.00", "maql": "SELECT SUM({metric/amount_bop} * -1 )" }
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/negative_metric"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -384,24 +402,6 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/timeline_bop"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
-            "type": "metric",
-            "attributes": {
-                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
-                "description": "Metric with long name",
-                "areRelationsValid": true,
-                "createdAt": "2023-08-31 10:37",
-                "content": {
-                    "format": "$#,##0.00",
-                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
-                }
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/metrics/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         }

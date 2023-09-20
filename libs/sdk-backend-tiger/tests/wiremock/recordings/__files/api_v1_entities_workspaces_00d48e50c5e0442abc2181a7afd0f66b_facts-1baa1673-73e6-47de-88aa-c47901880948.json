@@ -7,38 +7,11 @@
                 "title": "Activity (Date)",
                 "description": "Activity (Date)",
                 "tags": ["Activity"],
-                "sourceColumn": "f__dt_activity"
+                "sourceColumn": "f__dt_activity",
+                "sourceColumnDataType": "INT"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_activity.activitydate"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "f_density",
-            "type": "fact",
-            "attributes": {
-                "title": "Density",
-                "description": "F density",
-                "tags": ["City"],
-                "sourceColumn": "f_density"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_density"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "f_population",
-            "type": "fact",
-            "attributes": {
-                "title": "Population",
-                "description": "F population",
-                "tags": ["City"],
-                "sourceColumn": "f_population"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_population"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -49,52 +22,11 @@
                 "title": "Opp. Created (Date)",
                 "description": "Opp. Created (Date)",
                 "tags": ["Opportunity"],
-                "sourceColumn": "f__dt_oppcreated"
+                "sourceColumn": "f__dt_oppcreated",
+                "sourceColumnDataType": "INT"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_opportunity.oppcreateddate"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "f_opportunitysnapshot.f_amount",
-            "type": "fact",
-            "attributes": {
-                "title": "Amount",
-                "description": "Amount",
-                "tags": ["OpportunitySnapshot"],
-                "sourceColumn": "f_amount"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_amount"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "f_opportunitysnapshot.f_daystoclose",
-            "type": "fact",
-            "attributes": {
-                "title": "Days to Close",
-                "description": "Days to Close",
-                "tags": ["OpportunitySnapshot"],
-                "sourceColumn": "f_daystoclose"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_daystoclose"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "f_opportunitysnapshot.f_probability",
-            "type": "fact",
-            "attributes": {
-                "title": "Probability",
-                "description": "Probability",
-                "tags": ["OpportunitySnapshot"],
-                "sourceColumn": "f_probability"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_probability"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -105,7 +37,8 @@
                 "title": "Opp. Close (Date)",
                 "description": "Opp. Close (Date)",
                 "tags": ["OpportunitySnapshot"],
-                "sourceColumn": "f__dt_closedate"
+                "sourceColumn": "f__dt_closedate",
+                "sourceColumnDataType": "INT"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_opportunitysnapshot.oppclosedate"
@@ -119,10 +52,101 @@
                 "title": "Opp. Snapshot (Date)",
                 "description": "Opp. Snapshot (Date)",
                 "tags": ["OpportunitySnapshot"],
-                "sourceColumn": "f__dt_snapshotdate"
+                "sourceColumn": "f__dt_snapshotdate",
+                "sourceColumnDataType": "INT"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "fact.f_timeline.timelinedate",
+            "type": "fact",
+            "attributes": {
+                "title": "Timeline (Date)",
+                "description": "Timeline (Date)",
+                "tags": ["Timeline"],
+                "sourceColumn": "f__dt_timeline",
+                "sourceColumnDataType": "INT"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_timeline.timelinedate"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "f_density",
+            "type": "fact",
+            "attributes": {
+                "title": "Density",
+                "description": "F density",
+                "tags": ["City"],
+                "sourceColumn": "f_density",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_density"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_amount",
+            "type": "fact",
+            "attributes": {
+                "title": "Amount",
+                "description": "Amount",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_amount",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_daystoclose",
+            "type": "fact",
+            "attributes": {
+                "title": "Days to Close",
+                "description": "Days to Close",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_daystoclose",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_daystoclose"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "f_opportunitysnapshot.f_probability",
+            "type": "fact",
+            "attributes": {
+                "title": "Probability",
+                "description": "Probability",
+                "tags": ["OpportunitySnapshot"],
+                "sourceColumn": "f_probability",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_opportunitysnapshot.f_probability"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "f_population",
+            "type": "fact",
+            "attributes": {
+                "title": "Population",
+                "description": "F population",
+                "tags": ["City"],
+                "sourceColumn": "f_population",
+                "sourceColumnDataType": "NUMERIC"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_population"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -133,7 +157,8 @@
                 "title": "Duration",
                 "description": "Duration",
                 "tags": ["stagehistory"],
-                "sourceColumn": "f_duration"
+                "sourceColumn": "f_duration",
+                "sourceColumnDataType": "NUMERIC"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_stagehistory.f_duration"
@@ -147,24 +172,11 @@
                 "title": "Velocity",
                 "description": "Velocity",
                 "tags": ["stagehistory"],
-                "sourceColumn": "f_velocity"
+                "sourceColumn": "f_velocity",
+                "sourceColumnDataType": "NUMERIC"
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/f_stagehistory.f_velocity"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "fact.f_timeline.timelinedate",
-            "type": "fact",
-            "attributes": {
-                "title": "Timeline (Date)",
-                "description": "Timeline (Date)",
-                "tags": ["Timeline"],
-                "sourceColumn": "f__dt_timeline"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/facts/fact.f_timeline.timelinedate"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         }
