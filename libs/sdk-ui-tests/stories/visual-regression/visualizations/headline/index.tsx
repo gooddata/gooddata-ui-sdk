@@ -26,7 +26,16 @@ import {
 
 const backend = StorybookBackend();
 
-const enabledNewHeadlineBackend = withCustomWorkspaceSettings(backend, {
+const legacyHeadlineBackend = withCustomWorkspaceSettings(backend, {
+    commonSettingsWrapper: (settings: ISettings) => {
+        return {
+            ...settings,
+            enableNewHeadline: false,
+        };
+    },
+});
+
+const newHeadlineBackend = withCustomWorkspaceSettings(backend, {
     commonSettingsWrapper: (settings: ISettings) => {
         return {
             ...settings,
@@ -50,7 +59,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
                 <div style={{ width: 250, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -58,7 +67,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -74,7 +83,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
                 <div style={{ width: 250, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -83,7 +92,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -100,7 +109,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
                 <div style={{ width: 250, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                         secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
@@ -108,7 +117,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                         secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
@@ -125,7 +134,7 @@ storiesOf(`${CustomStories}/Headline`)
                 <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
                     <div className="dashboard-like-6">
                         <Headline
-                            backend={backend}
+                            backend={legacyHeadlineBackend}
                             workspace={ReferenceWorkspaceId}
                             primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                             secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -142,7 +151,7 @@ storiesOf(`${CustomStories}/Headline`)
                 <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
                     <div className="dashboard-like-6">
                         <Headline
-                            backend={enabledNewHeadlineBackend}
+                            backend={newHeadlineBackend}
                             workspace={ReferenceWorkspaceId}
                             primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                             secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -160,7 +169,7 @@ storiesOf(`${CustomStories}/Headline`)
                 <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
                     <div className="dashboard-like-6">
                         <Headline
-                            backend={enabledNewHeadlineBackend}
+                            backend={newHeadlineBackend}
                             workspace={ReferenceWorkspaceId}
                             primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                             secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
@@ -177,7 +186,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(7)}>
                 <div style={{ width: 550, height: 34, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         config={config}
@@ -185,7 +194,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 550, height: 44, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         config={config}
@@ -193,7 +202,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 550, height: 64, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         config={config}
@@ -202,7 +211,7 @@ storiesOf(`${CustomStories}/Headline`)
 
                 <div style={{ width: 550, height: 100, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         config={config}
@@ -210,7 +219,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, height: 120, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -219,7 +228,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 180, height: 160, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -228,7 +237,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, height: 260, border: "1px solid black" }}>
                     <Headline
-                        backend={backend}
+                        backend={legacyHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
@@ -245,7 +254,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(3)}>
                 <div style={{ width: 150, height: 120, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -254,7 +263,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 180, height: 160, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -263,7 +272,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, height: 260, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlinePositiveComparisonMeasures.primaryMeasure}
                         secondaryMeasures={HeadlinePositiveComparisonMeasures.secondaryMeasures}
@@ -280,7 +289,7 @@ storiesOf(`${CustomStories}/Headline`)
             <ScreenshotReadyWrapper resolver={createElementCountResolver(3)}>
                 <div style={{ width: 150, height: 120, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                         secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
@@ -289,7 +298,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 180, height: 160, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                         secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}
@@ -298,7 +307,7 @@ storiesOf(`${CustomStories}/Headline`)
                 </div>
                 <div style={{ width: 150, height: 260, border: "1px solid black" }}>
                     <Headline
-                        backend={enabledNewHeadlineBackend}
+                        backend={newHeadlineBackend}
                         workspace={ReferenceWorkspaceId}
                         primaryMeasure={HeadlineWithThreeMeasures.primaryMeasure}
                         secondaryMeasures={HeadlineWithThreeMeasures.secondaryMeasures}

@@ -13,6 +13,9 @@ import { comparisonDisabled, comparisonEnabled, HeadlinePositiveComparisonMeasur
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultBackendSettings({
+        enableNewHeadline: false,
+    })
     .addScenario("drilling on single measure", {
         primaryMeasure: ReferenceMd.Won,
         drillableItems: [WonMeasurePredicate],
