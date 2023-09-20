@@ -32,7 +32,7 @@ replace_workspace_dependencies() {
   echo "👷🏻 Replacing 'workspace:*' dependencies in $package_json..."
 
   while IFS= read -r line; do
-    if [[ $line =~ ^[[:space:]]*\"(@gooddata/(.+))\":[[:space:]]*\"workspace:(.+)\"[[:space:]]*,?$ ]]; then
+    if [[ $line =~ ^[[:space:]]*\"(@gooddata/(.+))\":[[:space:]]*\"workspace:\*\",.*$ ]]; then
       dependency="${BASH_REMATCH[1]}"
       lib="${BASH_REMATCH[2]}"
       url_pattern=$(map_lib_directory $lib)
@@ -64,7 +64,7 @@ for d in libs/*
 for d in tools/*    
     do    
         package=$(basename $d)
-        [[ $package =~ ^(app-toolkit|applink|dashboard-plugin-template|dashboard-plugin-tests|experimental-workspace|live-examples-workspace|mock-handling|plugin-toolkit|react-app-template|reference-workspace-mgmt)$ ]] && continue
+        [[ $package =~ ^(app-toolkit|applink|dashboard-plugin-template|dashboard-plugin-tests|experimental-workspace|live-examples-workspace|mock-handling|react-app-template|reference-workspace-mgmt)$ ]] && continue
         echo "💪 Bundling $package"
         cd tools/$package
         replace_workspace_dependencies "package.json" $package
