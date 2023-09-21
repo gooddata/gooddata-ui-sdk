@@ -47,6 +47,7 @@ import {
     AnomalyDetectionResult,
     ForecastResult,
     ClusteringResult,
+    WidgetAlertUserNotification,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -609,6 +610,12 @@ export type TigerSpecificFunctions = {
     ) => Promise<void>;
 
     deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
+
+    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<WidgetAlertUserNotification[]>;
+
+    markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
+
+    markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1995,6 +2002,35 @@ export const buildTigerSpecificFunctions = (
                     resultId,
                 })
                 .then((response) => response.data);
+        });
+    },
+
+    getNotificationsForCurrentUser: async (workspaceId: string): Promise<WidgetAlertUserNotification[]> => {
+        return await authApiCall(async (sdk) => {
+            return sdk.actions
+                .getNotificationsForCurrentUser({
+                    workspaceId,
+                })
+                .then((response) => response.data);
+        });
+    },
+
+    markNotificationAsRead: async (workspaceId: string, notificationId: number): Promise<void> => {
+        return await authApiCall(async (sdk) => {
+            await sdk.actions.markNotificationAsRead({
+                workspaceId,
+                markNotificationAsReadRequest: {
+                    notificationId,
+                },
+            });
+        });
+    },
+
+    markAllNotificationsAsRead: async (workspaceId: string): Promise<void> => {
+        return await authApiCall(async (sdk) => {
+            await sdk.actions.markAllNotificationsAsRead({
+                workspaceId,
+            });
         });
     },
 });

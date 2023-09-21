@@ -49,5 +49,5 @@ export interface IObjectInteractions {
         favorite?: number;
         subscribe?: number;
     };
-    byUser?: ("like" | "dislike" | "favorite" | "subscribe")[];
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe" | "view")[];
 }
