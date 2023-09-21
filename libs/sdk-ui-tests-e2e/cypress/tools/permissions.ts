@@ -41,6 +41,20 @@ export class DashboardAccess {
 
         Api.request("POST", url, body, { useVendorContentType: false });
     }
+
+    static assignRulePermissionToDashboard(workspaceId: string, dashboardId: string, permission?: string) {
+        const url = `/api/v1/actions/workspaces/${workspaceId}/analyticalDashboards/${dashboardId}/managePermissions`;
+        const body = [
+            {
+                assigneeRule: {
+                    type: "allWorkspaceUsers",
+                },
+                permissions: permission ? [permission] : [],
+            },
+        ];
+
+        Api.request("POST", url, body, { useVendorContentType: false });
+    }
 }
 
 export class WorkspaceAccess {
