@@ -213,10 +213,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
             .circle-separator {
                 // stylelint-disable-next-line max-nesting-depth
                 &::after {
-                    content: "\2807";
+                    content: "\22EE";
                     display: inline-block;
                     vertical-align: middle;
-                    margin-left: 13px;
+                    margin-left: 11px;
                     color: kit-variables.$gd-color-link;
                 }
             }
