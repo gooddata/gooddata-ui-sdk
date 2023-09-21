@@ -1822,7 +1822,7 @@ export type INullableFilter = IFilter | undefined | null;
 // @public (undocumented)
 export interface IObjectInteractions {
     // (undocumented)
-    byUser?: ("like" | "dislike" | "favorite" | "subscribe")[];
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe" | "view")[];
     // (undocumented)
     statistics?: {
         like?: number;

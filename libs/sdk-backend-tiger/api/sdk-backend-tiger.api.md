@@ -49,6 +49,7 @@ import { RecentAnalyticalObject } from '@gooddata/api-client-tiger';
 import { Recommendation } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
+import { WidgetAlertUserNotification } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
 
@@ -487,6 +488,9 @@ export type TigerSpecificFunctions = {
     getAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<IAnomalyDetectionCacheResult>;
     setAnomalyDetectionResult?: (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult) => Promise<void>;
     deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<WidgetAlertUserNotification[]>;
+    markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
+    markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
 };
 
 // @public
