@@ -4,32 +4,30 @@ linkTitle: "Home"
 weight: 10
 sectionIndex: false
 cascade:
-- type: "docs"
-  toc_root: true
-  _target:
-    path: "/*/**"
+    - type: "docs"
+      toc_root: true
+      _target:
+          path: "/*/**"
 ---
+
 ---
+
 Start your GoodData.UI journey with hands-on experience:
 
-
 {{< blocks/cards-container maxRow="2" aligned="true" >}}
-  {{< blocks/card sectionLink="/learn/integrate_and_authenticate" description="Integrate GoodData into your application!" >}}
-  {{< /blocks/card >}}
+{{< blocks/card sectionLink="/learn/integrate_and_authenticate" description="Integrate GoodData into your application!" >}}
+{{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/visualize_data" description="Visualize your data ">}}
-  {{< /blocks/card >}}
+{{< blocks/card sectionLink="/learn/visualize_data" description="Visualize your data ">}}
+{{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and insights in minutes!">}}
-  {{< /blocks/card >}}
+{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and insights in minutes!">}}
+{{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/apply_theming" description="Personalize your experience with theming!">}}
-  {{< /blocks/card >}}
+{{< blocks/card sectionLink="/learn/apply_theming" description="Personalize your experience with theming!">}}
+{{< /blocks/card >}}
 
 {{< /blocks/cards-container >}}
-
-
-
 
 ## Supported Frameworks and APIs
 
@@ -51,28 +49,27 @@ Load raw analytical data into your browser or NodeJS application using Custom Ex
 
 {{< /blocks/cards-container >}}
 
-
 ## Join & Learn
 
 Meet other GoodData developers, talk with us and learn:
 
 {{< blocks/cards-container aligned="true">}}
-  {{< blocks/card title="Slack Channel" icon="icon-slack.svg" iconPosition="top" >}}
-  Meet other GoodData developers. Search our knowledge base.
+{{< blocks/card title="Slack Channel" icon="icon-slack.svg" iconPosition="top" >}}
+Meet other GoodData developers. Search our knowledge base.
 
-  [Join us on Slack](https://join.slack.com/t/gooddataconnect/shared_invite/zt-mkqhg6bm-omgjndejTlTyB3wgaVkkGQ)
-  {{< /blocks/card >}}
+[Join us on Slack](https://join.slack.com/t/gooddataconnect/shared_invite/zt-mkqhg6bm-omgjndejTlTyB3wgaVkkGQ)
+{{< /blocks/card >}}
 
-  {{< blocks/card title="Community" icon="icon-community.svg" iconPosition="top" >}}
-  Find answers, share ideas, be inspired and inspire others!
+{{< blocks/card title="Community" icon="icon-community.svg" iconPosition="top" >}}
+Find answers, share ideas, be inspired and inspire others!
 
-  [Check community](https://community.gooddata.com/)
-  {{< /blocks/card >}}
+[Check community](https://community.gooddata.com/)
+{{< /blocks/card >}}
 
-  {{< blocks/card title="University" icon="icon-university.svg" iconPosition="top" >}}
-  Learn how to use GoodData with our hands-on tutorials.
+{{< blocks/card title="University" icon="icon-university.svg" iconPosition="top" >}}
+Learn how to use GoodData with our hands-on tutorials.
 
-  [Do our courses](https://university.gooddata.com/page/gooddatacn/)
-  {{< /blocks/card >}}
+[Do our courses](https://university.gooddata.com/)
+{{< /blocks/card >}}
 
 {{< /blocks/cards-container >}}
