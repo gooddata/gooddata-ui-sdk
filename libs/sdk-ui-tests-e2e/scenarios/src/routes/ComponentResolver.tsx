@@ -69,6 +69,7 @@ import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dash
 import { DashboardForDateFilterScenario } from "../components/Scenarios/Dashboard/DashboardForDateFilterScenario";
 import { DashboardDateFilteringOnInsightScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringOnInsightScenario";
 import { DashboardTableDrillDown } from "../components/Scenarios/Dashboard/DashboardTableDrillDownScenario";
+import { ImplictDrill } from "../components/Scenarios/Dashboard/ImplicitDrillScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -143,6 +144,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_SHORTEN_METRIC_NAME: "dashboard/shorten-metric-name",
     DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO: "dashboard/dashboard-date-filtering-on-insight-scenario",
     DASHBOARD_TABLE_DRILL_DOWN: "dashboard/dashboard-table-drill-down",
+    IMPLICIT_DRILL: "dashboard/implicit-drill",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -225,6 +227,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_SHORTEN_METRIC_NAME, DashboardShortenMetricNameScenario],
     [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO, DashboardDateFilteringOnInsightScenario],
     [SCENARIO_KEYS.DASHBOARD_TABLE_DRILL_DOWN, DashboardTableDrillDown],
+    [SCENARIO_KEYS.IMPLICIT_DRILL, ImplictDrill],
 ]);
 
 const ComponentResolver: React.FC = () => {

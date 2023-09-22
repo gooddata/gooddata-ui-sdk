@@ -3706,6 +3706,65 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "d7e6e85d7f1f4f62bc817549b4194c17",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "a644476fdfcf45629e1f9e46666ee5da"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "7e87cad035ae446eaa9e0d9196bba7ef"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aad4CkIv6mxL",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has only measure and columns"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_has_only_measure_and_columns_aad4CkIv6mxL"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -11553,6 +11612,27 @@
         },
         {
             "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_has_only_measure_and_columns_aad4CkIv6mxL}}}"
+                    },
+                    "meta": {
+                        "identifier": "aab4D6SCCTed",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has only measure and columns"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed"
+        },
+        {
+            "content": {
                 "analyticalDashboard": {
                     "content": {
                         "filterContext": "{{{filterContext_filterContext_aan9jkdFGZF7}}}",
@@ -11624,6 +11704,21 @@
                                                         "width": 6
                                                     }
                                                 }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -11634,7 +11729,8 @@
                             "{{{visualizationWidget_table_has_row_column_measure_aac9lAvgCnao}}}",
                             "{{{visualizationWidget_table_only_row_and_column_aag9jjB6CmLp}}}",
                             "{{{visualizationWidget_table_only_rows_and_measures_aag9jjB2CmHD}}}",
-                            "{{{visualizationWidget_table_only_rows_aao84gSWC7Yg}}}"
+                            "{{{visualizationWidget_table_only_rows_aao84gSWC7Yg}}}",
+                            "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}"
                         ]
                     },
                     "meta": {

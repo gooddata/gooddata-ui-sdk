@@ -76,4 +76,8 @@ export class DrillToModal {
             .click();
         return this;
     }
+
+    hasTitleHeader(title: string) {
+        this.getTitleElement().should("have.text", title);
+    }
 }
