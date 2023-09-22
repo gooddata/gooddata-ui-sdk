@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { SettingItem } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, SettingItem } from "@gooddata/sdk-ui-kit";
 
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
@@ -36,6 +36,25 @@ const SettingItemTest = () => {
                     actionType={"Switcher"}
                     actionValue={true}
                     onAction={() => {}}
+                />
+
+                <SettingItem
+                    title="With subtitle"
+                    titleTooltipText={"Title Tooltip Text"}
+                    value="Current Value"
+                    actionType={"Switcher"}
+                    actionValue={true}
+                    onAction={() => {}}
+                    renderSubtitle={() => (
+                        <BubbleHoverTrigger>
+                            <span className="gd-setting-widget-status-pill" style={{ marginLeft: "10px" }}>
+                                Restricted
+                            </span>
+                            <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }]}>
+                                Subheader tooltip!
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    )}
                 />
             </div>
         </div>

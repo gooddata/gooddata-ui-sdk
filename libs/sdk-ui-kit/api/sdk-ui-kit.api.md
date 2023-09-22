@@ -3519,6 +3519,8 @@ export interface ISettingItem {
     // (undocumented)
     onAction?: () => void;
     // (undocumented)
+    renderSubtitle?: () => React.ReactNode;
+    // (undocumented)
     title: string;
     // (undocumented)
     titleTooltipText?: string;

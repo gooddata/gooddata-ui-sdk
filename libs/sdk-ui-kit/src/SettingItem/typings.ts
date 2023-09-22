@@ -24,4 +24,5 @@ export interface ISettingItem {
     isDisableAction?: boolean;
     hasDivider?: boolean;
     onAction?: () => void;
+    renderSubtitle?: () => React.ReactNode;
 }
