@@ -70,6 +70,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
     actionTooltipText,
     alignPointActionTooltip,
     onAction,
+    renderSubtitle,
 }) => {
     return (
         <div className={cx(className, "gd-setting-item-container", { divider: hasDivider })}>
@@ -86,6 +87,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
                         </Bubble>
                     </BubbleHoverTrigger>
                 ) : null}
+                {renderSubtitle?.()}
             </div>
             <div className="gd-setting-item-state">
                 {isLoading ? <span className={cx("gd-spinner middle")} /> : null}
