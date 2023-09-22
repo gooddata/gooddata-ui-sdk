@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-08-03T14:46:57.551Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-21T07:44:52.906Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -214,6 +214,12 @@ export const ButtonPercentOfGoalButton: IMeasure<IMeasureDefinition> = newMeasur
  * Metric Type: MAQL Metric
  */
 export const Amount: IMeasure<IMeasureDefinition> = newMeasure(idRef("aangOxLSeztu", "measure"));
+/**
+ * Metric Title: Filtered Out Metric
+ * Metric ID: aah8ztyDUink
+ * Metric Type: MAQL Metric
+ */
+export const FilteredOutMetric: IMeasure<IMeasureDefinition> = newMeasure(idRef("aah8ztyDUink", "measure"));
 /**
  * Metric Title: Metric format bars
  * Metric ID: aaFBmFlmWC5C
@@ -2315,6 +2321,22 @@ export const Insights = {
      * Insight Title: Table with one measure two attributes with headers on left and metrics in rows
      * Insight ID: aahgvak6wCmW
      */ TableWithOneMeasureTwoAttributesWithHeadersOnLeftAndMetricsInRows: "aahgvak6wCmW",
+    /**
+     * Insight Title: table only rows
+     * Insight ID: aan84gSWC7Yg
+     */ TableOnlyRows: "aan84gSWC7Yg",
+    /**
+     * Insight Title: table only rows and measures
+     * Insight ID: aad9jj3DGZAs
+     */ TableOnlyRowsAndMeasures: "aad9jj3DGZAs",
+    /**
+     * Insight Title: table only row and column
+     * Insight ID: aad9lblWGZ2y
+     */ TableOnlyRowAndColumn: "aad9lblWGZ2y",
+    /**
+     * Insight Title: table has row column measure
+     * Insight ID: aab9lHNMCnfe
+     */ TableHasRowColumnMeasure: "aab9lHNMCnfe",
 };
 export const Dashboards = {
     /**
@@ -2510,4 +2532,12 @@ export const Dashboards = {
      * Dashboard Title: Metrics in rows
      * Dashboard ID: aabCVFBeuwcH
      */ MetricsInRows: "aabCVFBeuwcH",
+    /**
+     * Dashboard Title: KPI for date filter
+     * Dashboard ID: aab8BY5ksnoC
+     */ KPIForDateFilter: "aab8BY5ksnoC",
+    /**
+     * Dashboard Title: Dashboard table drill down
+     * Dashboard ID: aab9lVBAGZ64
+     */ DashboardTableDrillDown: "aab9lVBAGZ64",
 };
