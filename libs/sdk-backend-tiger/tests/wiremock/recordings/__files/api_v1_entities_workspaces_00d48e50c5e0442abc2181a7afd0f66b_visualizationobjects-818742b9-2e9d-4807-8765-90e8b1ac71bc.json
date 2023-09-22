@@ -1,6 +1,51 @@
 {
     "data": [
         {
+            "id": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Table using long name metric",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "bf992ef0637142dba774330a0851098c",
+                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
             "id": "343b329b-e2b0-43b2-9724-de8cd664ebac",
             "type": "visualizationObject",
             "attributes": {
@@ -227,6 +272,156 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "merge cells insight",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        },
+                                        "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "label.f_stage.stagename.order", "type": "label" }
+                                },
+                                "notIn": { "values": ["101", "102", "103"] }
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                                "direction": "desc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "big insight",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
+                                        "title": "_Timeline [EOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_activity.subject",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -619,355 +814,6 @@
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
         {
-            "id": "ba13041b-87bc-458c-a514-fcc0074c9973",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "Combine with all filter types",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
-                                                        "type": "metric"
-                                                    }
-                                                },
-                                                "filters": [
-                                                    {
-                                                        "positiveAttributeFilter": {
-                                                            "displayForm": {
-                                                                "identifier": {
-                                                                    "id": "f_owner.department_id",
-                                                                    "type": "label"
-                                                                }
-                                                            },
-                                                            "in": { "values": ["Direct Sales"] }
-                                                        }
-                                                    }
-                                                ],
-                                                "computeRatio": false
-                                            }
-                                        },
-                                        "title": "Amount (Department: Direct Sales)"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        },
-                        {
-                            "items": [
-                                {
-                                    "attribute": {
-                                        "localIdentifier": "d100a73db7ec4d418429935e53239a90",
-                                        "displayForm": {
-                                            "identifier": {
-                                                "id": "label.f_account.account.name",
-                                                "type": "label"
-                                            }
-                                        }
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "view"
-                        }
-                    ],
-                    "filters": [
-                        {
-                            "positiveAttributeFilter": {
-                                "displayForm": {
-                                    "identifier": { "id": "label.f_account.account.name", "type": "label" }
-                                },
-                                "in": {
-                                    "values": [
-                                        "(add)ventures",
-                                        ".decimal",
-                                        "1 Source Consulting",
-                                        "1-800 Postcards",
-                                        "1-800 We Answer",
-                                        "1000Bulbs.com",
-                                        "1-888-OhioComp",
-                                        "101 Financial",
-                                        "123 Exteriors",
-                                        "14 West",
-                                        "1Source International",
-                                        "1st Choice Staffing & Consulting",
-                                        "2 Wheel Bikes",
-                                        "2HB Software Designs",
-                                        "352 Media Group",
-                                        "1st in Video - Music World",
-                                        "3Degrees",
-                                        "3E",
-                                        "3balls.com",
-                                        "3dCart Shopping Cart Software",
-                                        "49er Communications",
-                                        "4Wall Entertainment",
-                                        "(mt) Media Temple",
-                                        "4th Source",
-                                        "5LINX Enterprises",
-                                        "614 Media Group",
-                                        "6K Systems",
-                                        "7 Medical Systems",
-                                        "7 Simple Machines",
-                                        "7-Eleven",
-                                        "720 Strategies",
-                                        "90octane",
-                                        "919 Marketing",
-                                        "@properties",
-                                        "A Main Hobbies",
-                                        "A Place for Mom"
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            "measureValueFilter": {
-                                "condition": {
-                                    "comparison": {
-                                        "operator": "GREATER_THAN",
-                                        "treatNullValuesAs": 0,
-                                        "value": 0
-                                    }
-                                },
-                                "measure": { "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777" }
-                            }
-                        },
-                        {
-                            "absoluteDateFilter": {
-                                "dataSet": {
-                                    "identifier": { "id": "dt_oppcreated_timestamp", "type": "dataset" }
-                                },
-                                "from": "2008-01-01 00:00",
-                                "to": "2009-01-01 23:59"
-                            }
-                        },
-                        {
-                            "positiveAttributeFilter": {
-                                "displayForm": {
-                                    "identifier": {
-                                        "id": "dt_oppcreated_timestamp.quarterOfYear",
-                                        "type": "label"
-                                    }
-                                },
-                                "in": { "values": ["01", "02", "03"] }
-                            }
-                        }
-                    ],
-                    "sorts": [],
-                    "properties": {},
-                    "visualizationUrl": "local:pyramid",
-                    "version": "2"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "Negative Insight",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "negative_metric",
-                                                        "type": "metric"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
-                                        "title": "Negative Metric"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        }
-                    ],
-                    "filters": [],
-                    "properties": {},
-                    "sorts": [],
-                    "version": "2",
-                    "visualizationUrl": "local:pyramid"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "merge cells insight",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
-                                                        "type": "metric"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
-                                        "title": "Amount"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        },
-                        {
-                            "items": [
-                                {
-                                    "attribute": {
-                                        "displayForm": {
-                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
-                                        },
-                                        "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f"
-                                    }
-                                },
-                                {
-                                    "attribute": {
-                                        "displayForm": {
-                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
-                                        },
-                                        "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "attribute"
-                        }
-                    ],
-                    "filters": [
-                        {
-                            "negativeAttributeFilter": {
-                                "displayForm": {
-                                    "identifier": { "id": "label.f_stage.stagename.order", "type": "label" }
-                                },
-                                "notIn": { "values": ["101", "102", "103"] }
-                            }
-                        }
-                    ],
-                    "properties": {},
-                    "sorts": [
-                        {
-                            "attributeSortItem": {
-                                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
-                                "direction": "desc"
-                            }
-                        }
-                    ],
-                    "version": "2",
-                    "visualizationUrl": "local:table"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "big insight",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
-                                                        "type": "metric"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
-                                        "title": "_Timeline [EOP]"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        },
-                        {
-                            "items": [
-                                {
-                                    "attribute": {
-                                        "displayForm": {
-                                            "identifier": {
-                                                "id": "label.f_activity.subject",
-                                                "type": "label"
-                                            }
-                                        },
-                                        "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "attribute"
-                        }
-                    ],
-                    "filters": [],
-                    "properties": {},
-                    "sorts": [
-                        {
-                            "attributeSortItem": {
-                                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
-                                "direction": "asc"
-                            }
-                        }
-                    ],
-                    "version": "2",
-                    "visualizationUrl": "local:table"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
             "id": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
             "type": "visualizationObject",
             "attributes": {
@@ -1041,6 +887,84 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "843701ee-8f24-4942-8522-872a96575f8e",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Insight using long name metric",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
+                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": { "id": "avg._amount", "type": "metric" }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
+                                        "title": "Avg. Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        },
+                                        "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "measureValueFilter": {
+                                "measure": { "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9" }
+                            }
+                        }
+                    ],
+                    "properties": { "controls": { "legend": { "position": "right" } } },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:column"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -1256,6 +1180,205 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "ba13041b-87bc-458c-a514-fcc0074c9973",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Combine with all filter types",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": [
+                                                    {
+                                                        "positiveAttributeFilter": {
+                                                            "displayForm": {
+                                                                "identifier": {
+                                                                    "id": "f_owner.department_id",
+                                                                    "type": "label"
+                                                                }
+                                                            },
+                                                            "in": { "values": ["Direct Sales"] }
+                                                        }
+                                                    }
+                                                ],
+                                                "computeRatio": false
+                                            }
+                                        },
+                                        "title": "Amount (Department: Direct Sales)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "d100a73db7ec4d418429935e53239a90",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_account.account.name",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": { "id": "label.f_account.account.name", "type": "label" }
+                                },
+                                "in": {
+                                    "values": [
+                                        "(add)ventures",
+                                        ".decimal",
+                                        "1 Source Consulting",
+                                        "1-800 Postcards",
+                                        "1-800 We Answer",
+                                        "1000Bulbs.com",
+                                        "1-888-OhioComp",
+                                        "101 Financial",
+                                        "123 Exteriors",
+                                        "14 West",
+                                        "1Source International",
+                                        "1st Choice Staffing & Consulting",
+                                        "2 Wheel Bikes",
+                                        "2HB Software Designs",
+                                        "352 Media Group",
+                                        "1st in Video - Music World",
+                                        "3Degrees",
+                                        "3E",
+                                        "3balls.com",
+                                        "3dCart Shopping Cart Software",
+                                        "49er Communications",
+                                        "4Wall Entertainment",
+                                        "(mt) Media Temple",
+                                        "4th Source",
+                                        "5LINX Enterprises",
+                                        "614 Media Group",
+                                        "6K Systems",
+                                        "7 Medical Systems",
+                                        "7 Simple Machines",
+                                        "7-Eleven",
+                                        "720 Strategies",
+                                        "90octane",
+                                        "919 Marketing",
+                                        "@properties",
+                                        "A Main Hobbies",
+                                        "A Place for Mom"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "measureValueFilter": {
+                                "condition": {
+                                    "comparison": {
+                                        "operator": "GREATER_THAN",
+                                        "treatNullValuesAs": 0,
+                                        "value": 0
+                                    }
+                                },
+                                "measure": { "localIdentifier": "a27d351c047b4c7bb6f60977dc99d777" }
+                            }
+                        },
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": { "id": "dt_oppcreated_timestamp", "type": "dataset" }
+                                },
+                                "from": "2008-01-01 00:00",
+                                "to": "2009-01-01 23:59"
+                            }
+                        },
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "dt_oppcreated_timestamp.quarterOfYear",
+                                        "type": "label"
+                                    }
+                                },
+                                "in": { "values": ["01", "02", "03"] }
+                            }
+                        }
+                    ],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:pyramid",
+                    "version": "2"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+        },
+        {
+            "id": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Negative Insight",
+                "description": "",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "negative_metric",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "4ad1cb04125348e3b106411c09054fb7",
+                                        "title": "Negative Metric"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:pyramid"
+                },
+                "createdAt": "2023-08-31 10:37"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         },
@@ -1487,129 +1610,6 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "1e17f8cf-aa34-4474-8dd5-c1249c688225",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "Table using long name metric",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
-                                                        "type": "metric"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "bf992ef0637142dba774330a0851098c",
-                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        }
-                    ],
-                    "filters": [],
-                    "properties": {},
-                    "sorts": [],
-                    "version": "2",
-                    "visualizationUrl": "local:table"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
-            },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
-        },
-        {
-            "id": "843701ee-8f24-4942-8522-872a96575f8e",
-            "type": "visualizationObject",
-            "attributes": {
-                "title": "Insight using long name metric",
-                "description": "",
-                "areRelationsValid": true,
-                "content": {
-                    "buckets": [
-                        {
-                            "items": [
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": {
-                                                        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
-                                                        "type": "metric"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9",
-                                        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
-                                    }
-                                },
-                                {
-                                    "measure": {
-                                        "definition": {
-                                            "measureDefinition": {
-                                                "filters": [],
-                                                "item": {
-                                                    "identifier": { "id": "avg._amount", "type": "metric" }
-                                                }
-                                            }
-                                        },
-                                        "localIdentifier": "ab408bcdfd76443984d7db17c3d5f62a",
-                                        "title": "Avg. Amount"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "measures"
-                        },
-                        {
-                            "items": [
-                                {
-                                    "attribute": {
-                                        "displayForm": {
-                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
-                                        },
-                                        "localIdentifier": "5daa8ff598014da2b89f626ef3c2de67"
-                                    }
-                                }
-                            ],
-                            "localIdentifier": "view"
-                        }
-                    ],
-                    "filters": [
-                        {
-                            "measureValueFilter": {
-                                "measure": { "localIdentifier": "d09dd3ea948e4a098fe741e03e4b90e9" }
-                            }
-                        }
-                    ],
-                    "properties": { "controls": { "legend": { "position": "right" } } },
-                    "sorts": [],
-                    "version": "2",
-                    "visualizationUrl": "local:column"
-                },
-                "createdAt": "2023-08-31 10:37"
-            },
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
             },
             "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
         }

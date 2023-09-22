@@ -1,29 +1,18 @@
 {
-    "id": "6e76c2cd-db45-4e00-a846-896af1b0cef1",
-    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "id": "51fc8c9f-58c9-49d0-9816-f631efd7c135",
+    "name": "api_v1_actions_resolveentitlements",
     "request": {
-        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=5000&limit=100",
-        "method": "POST",
+        "url": "/api/v1/actions/resolveEntitlements",
+        "method": "GET",
         "headers": {
             "Accept": {
                 "equalTo": "application/json, text/plain, */*"
-            },
-            "Content-Type": {
-                "equalTo": "application/json",
-                "caseInsensitive": true
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":5000,\"next\":null}}",
+        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -37,7 +26,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "6e76c2cd-db45-4e00-a846-896af1b0cef1",
+    "uuid": "51fc8c9f-58c9-49d0-9816-f631efd7c135",
     "persistent": true,
-    "insertionIndex": 12
+    "insertionIndex": 3
 }
