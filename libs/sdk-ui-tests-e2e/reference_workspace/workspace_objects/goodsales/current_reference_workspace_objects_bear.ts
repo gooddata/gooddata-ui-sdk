@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-21T07:44:52.906Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-24T02:22:35.163Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2337,6 +2337,10 @@ export const Insights = {
      * Insight Title: table has row column measure
      * Insight ID: aab9lHNMCnfe
      */ TableHasRowColumnMeasure: "aab9lHNMCnfe",
+    /**
+     * Insight Title: table has only measure and columns
+     * Insight ID: aad4CkIv6mxL
+     */ TableHasOnlyMeasureAndColumns: "aad4CkIv6mxL",
 };
 export const Dashboards = {
     /**
