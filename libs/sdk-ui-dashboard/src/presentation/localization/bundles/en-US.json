@@ -308,6 +308,11 @@
         "comment": "",
         "limit": 0
     },
+    "filters.second.previousPeriod": {
+        "value": "prev. second",
+        "comment": "",
+        "limit": 0
+    },
     "filters.minute.previousPeriod": {
         "value": "prev. minute",
         "comment": "",

@@ -53,7 +53,7 @@ export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNIN
 export type DataValue = null | string | number;
 
 // @public (undocumented)
-export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.second" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @public (undocumented)
 export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;

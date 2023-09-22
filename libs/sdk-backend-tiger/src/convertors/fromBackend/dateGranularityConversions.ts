@@ -41,6 +41,7 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     [JsonApiAttributeOutAttributesGranularityEnum.DAY]: "GDC.time.date",
     [JsonApiAttributeOutAttributesGranularityEnum.HOUR]: "GDC.time.hour",
     [JsonApiAttributeOutAttributesGranularityEnum.MINUTE]: "GDC.time.minute",
+    [JsonApiAttributeOutAttributesGranularityEnum.SECOND]: "GDC.time.second",
 
     [JsonApiAttributeOutAttributesGranularityEnum.QUARTER_OF_YEAR]: "GDC.time.quarter_in_year",
     [JsonApiAttributeOutAttributesGranularityEnum.MONTH_OF_YEAR]: "GDC.time.month_in_year",
@@ -72,6 +73,7 @@ const SdkToTigerGranularityMap: SdkToTiger = {
     "GDC.time.date": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY,
     "GDC.time.hour": RelativeDateFilterRelativeDateFilterGranularityEnum.HOUR,
     "GDC.time.minute": RelativeDateFilterRelativeDateFilterGranularityEnum.MINUTE,
+    "GDC.time.second": RelativeDateFilterRelativeDateFilterGranularityEnum.SECOND,
 
     "GDC.time.quarter_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.QUARTER_OF_YEAR,
     "GDC.time.month_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.MONTH_OF_YEAR,

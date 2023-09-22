@@ -16,6 +16,7 @@ const granularityOrders: { [G in DateFilterGranularity]: number } = {
     "GDC.time.date": 4,
     "GDC.time.hour": 5,
     "GDC.time.minute": 6,
+    "GDC.time.second": 7,
 };
 
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>

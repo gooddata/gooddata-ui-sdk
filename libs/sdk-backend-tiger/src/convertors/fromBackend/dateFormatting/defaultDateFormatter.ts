@@ -28,6 +28,7 @@ const defaultLocaleCode = "en-US";
 const defaultGranularityFormatPatterns: {
     [granularity in DateAttributeGranularity]?: string;
 } = {
+    "GDC.time.second": "M/d/y, h:mm:ss a", // 01/31/2020 14:01:01 PM
     "GDC.time.minute": "M/d/y, h:mm a", // 01/31/2020 14:01 PM
     "GDC.time.minute_in_hour": "m", // 1-59
     "GDC.time.hour": "M/d/y, h a", // 01/31/2020 14 PM

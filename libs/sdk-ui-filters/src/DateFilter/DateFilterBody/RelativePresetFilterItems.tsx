@@ -18,6 +18,7 @@ const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.date",
     "GDC.time.hour",
     "GDC.time.minute",
+    "GDC.time.second",
 ];
 
 /**

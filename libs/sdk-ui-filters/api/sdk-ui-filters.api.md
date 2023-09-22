@@ -222,6 +222,7 @@ export const DateFilterHelpers: {
         "GDC.time.date": GranularityIntlKey_2;
         "GDC.time.hour": GranularityIntlKey_2;
         "GDC.time.minute": GranularityIntlKey_2;
+        "GDC.time.second": GranularityIntlKey_2;
     };
     applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2, excludeCurrentPeriod: boolean) => DateFilterOption_2;
     defaultDateFilterOptions: IDateFilterOptionsByType_2;
@@ -253,7 +254,7 @@ export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOpt
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
 // @beta (undocumented)
-export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+export type GranularityIntlKey = "day" | "second" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
 
 // @internal (undocumented)
 export interface IAttributeDatasetInfoProps {

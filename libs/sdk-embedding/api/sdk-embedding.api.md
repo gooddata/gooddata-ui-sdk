@@ -224,7 +224,7 @@ export type CommandFailedData<Product> = IGdcMessageEnvelope<Product, GdcEventTy
 export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
 
 // @public (undocumented)
-export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterGranularity = "GDC.time.second" | "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @public (undocumented)
 export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;

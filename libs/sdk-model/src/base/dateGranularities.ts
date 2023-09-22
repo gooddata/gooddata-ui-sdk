@@ -32,6 +32,7 @@ export type DateAttributeGranularity =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
+    | "GDC.time.second"
     | "GDC.time.minute_in_hour";
 
 /**
