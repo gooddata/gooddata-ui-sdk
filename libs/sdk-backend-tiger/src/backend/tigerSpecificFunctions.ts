@@ -61,6 +61,7 @@ import {
     TestDefinitionRequestTypeEnum,
     VisualizationObjectModelV1,
     WidgetAlertUserNotification,
+    KeyDriversDimension,
     JsonApiWorkspaceDataFilterInDocument,
     JsonApiWorkspaceDataFilterOutDocument,
     JsonApiWorkspaceDataFilterSettingOutDocument,
