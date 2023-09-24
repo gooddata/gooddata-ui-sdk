@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IHeaderMenuItem, TUTMContent } from "./typings.js";
 
 /**
@@ -18,7 +18,7 @@ export function generateHeaderStaticHelpMenuItems(
     universityUrl?: string,
     slackUrl?: string,
 ): IHeaderMenuItem[] {
-    const universityLink = universityUrl || "https://university.gooddata.com/page/gooddatacn";
+    const universityLink = universityUrl || "https://university.gooddata.com";
     const communityLink = communityUrl || "https://community.gooddata.com";
     const slackLink = slackUrl || "https://www.gooddata.com/slack/";
     const documentationLink =
