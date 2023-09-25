@@ -519,6 +519,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "babel-jest",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "babel-loader",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
