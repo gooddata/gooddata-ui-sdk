@@ -14,6 +14,9 @@
   <div class="gd-docs-header-nav__left">
     {{ partial "navbar-breadcrumb.html" . }}
   </div>
+  <div class="gd-docs-header-nav__center">
+    <div id="adds-container" class="gd-docs-header-nav__search"></div>
+  </div>
   <div class="gd-docs-header-nav__right">
     {{ if  .Site.Params.versions }}
       {{ partial "navbar-version-selector.html" . }}
