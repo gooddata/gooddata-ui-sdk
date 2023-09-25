@@ -11,4 +11,10 @@ module.exports = {
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testTimeout: 20000, // This timeout was added because we have flaky tests that ended up with timeouts. more info: https://github.com/facebook/jest/issues/11607
+    transform: {
+        "\\.js$": "babel-jest",
+    },
+    transformIgnorePatterns: [
+        "/node_modules/(?!@gooddata|default-import|node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill|uuid).+\\.js$",
+    ],
 };

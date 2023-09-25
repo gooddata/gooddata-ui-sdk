@@ -783,6 +783,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "jest-environment-jsdom",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "jest-environment-jsdom-fourteen",
       "allowedCategories": [ "production" ]
     },
