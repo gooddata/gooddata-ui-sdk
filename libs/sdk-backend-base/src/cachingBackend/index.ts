@@ -24,11 +24,11 @@ import {
 import {
     AttributesDecoratorFactory,
     CatalogDecoratorFactory,
-    decoratedBackend,
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
-} from "../decoratedBackend/index.js";
+} from "../decoratedBackend/types.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
 import { LRUCache } from "lru-cache";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
