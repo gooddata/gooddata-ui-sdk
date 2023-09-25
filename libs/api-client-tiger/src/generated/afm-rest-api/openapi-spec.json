@@ -1854,6 +1854,7 @@
                                 "description": "Date granularity specifying particular date attribute in given dimension.",
                                 "example": "DAY",
                                 "enum": [
+                                    "SECOND",
                                     "MINUTE",
                                     "HOUR",
                                     "DAY",
@@ -1970,6 +1971,7 @@
                     "granularity": {
                         "type": "string",
                         "enum": [
+                            "SECOND",
                             "MINUTE",
                             "HOUR",
                             "DAY",
@@ -2061,6 +2063,7 @@
                         "type": "string",
                         "description": "Granularity of requested label in case of date attribute",
                         "enum": [
+                            "SECOND",
                             "MINUTE",
                             "HOUR",
                             "DAY",
@@ -2710,6 +2713,7 @@
                             "granularity": {
                                 "type": "string",
                                 "enum": [
+                                    "SECOND",
                                     "MINUTE",
                                     "HOUR",
                                     "DAY",

@@ -25,6 +25,7 @@ const DefaultDateFilterConfig: IDateFilterConfig = {
         availableGranularities: [
             "GDC.time.month",
             "GDC.time.minute",
+            "GDC.time.second",
             "GDC.time.hour",
             "GDC.time.date",
             "GDC.time.week_us",

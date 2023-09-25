@@ -48,6 +48,7 @@ import {
     ForecastResult,
     ClusteringResult,
     WidgetAlertUserNotification,
+    KeyDriversDimension,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -319,31 +320,6 @@ export type ScanSqlResult = ScanSqlResponse;
  * @internal
  */
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
-
-interface IKeyDriverAnalysisDimensionality {
-    label: {
-        id: string;
-        type: string;
-    };
-    labelName: "string";
-    attribute: {
-        id: string;
-        type: string;
-    };
-    attributeName: "string";
-    granularity: "MINUTE";
-    format: {
-        locale: "string";
-        pattern: "string";
-    };
-}
-
-interface IKeyDriverAnalysisResponse {
-    dimensionality: IKeyDriverAnalysisDimensionality[];
-    links: {
-        executionResult: string;
-    };
-}
 
 interface IKeyDriverAnalysisResult {
     data: {
@@ -712,9 +688,9 @@ const pollResult = async <T>(polledApiCall: Promise<AxiosResponse<T>>): Promise<
 };
 
 const findDimensionality = (
-    dims: IKeyDriverAnalysisDimensionality[],
+    dims: KeyDriversDimension[],
     attributeId: string,
-): IKeyDriverAnalysisDimensionality | undefined =>
+): KeyDriversDimension | undefined =>
     dims.find((dimensionality) => dimensionality.attribute.id === attributeId);
 
 export const buildTigerSpecificFunctions = (
@@ -1802,7 +1778,7 @@ export const buildTigerSpecificFunctions = (
                 },
             });
 
-            const responseData = response.data as IKeyDriverAnalysisResponse;
+            const responseData = response.data;
             const executionResult = responseData.links.executionResult;
             const result = (await pollResult(
                 sdk.keyDrivers.getResult({

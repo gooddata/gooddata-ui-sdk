@@ -673,6 +673,7 @@ export interface AttributeHeaderOutAttributeHeader {
 }
 
 export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
+    SECOND: "SECOND",
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -1052,6 +1053,7 @@ export interface ElementsResponse {
 }
 
 export const ElementsResponseGranularityEnum = {
+    SECOND: "SECOND",
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -1430,6 +1432,7 @@ export interface KeyDriversDimension {
 }
 
 export const KeyDriversDimensionGranularityEnum = {
+    SECOND: "SECOND",
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -2015,6 +2018,7 @@ export interface RelativeDateFilterRelativeDateFilter {
 }
 
 export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
+    SECOND: "SECOND",
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",

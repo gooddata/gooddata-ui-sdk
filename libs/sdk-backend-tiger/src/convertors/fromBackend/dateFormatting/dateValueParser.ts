@@ -23,6 +23,7 @@ const granularityParseValueTransformations: {
  * See https://date-fns.org/docs/parse and https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
  */
 const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: string } = {
+    "GDC.time.second": "yyyy-MM-dd HH:mm:ss", // 2020-01-31 14:01:01
     "GDC.time.minute": "yyyy-MM-dd HH:mm", // 2020-01-31 14:01
     "GDC.time.minute_in_hour": "mm", // 00-59
     "GDC.time.hour": "yyyy-MM-dd HH", // 2020-01-31 14
