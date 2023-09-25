@@ -67,7 +67,7 @@
         "@typescript-eslint/parser": "^5.45.0",
         "commander": "^8.1.0",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^12.12.2",
         "dotenv": "^10.0.0",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
