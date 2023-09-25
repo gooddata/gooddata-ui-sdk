@@ -7,9 +7,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "primaryValue",
   },
@@ -18,9 +18,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "secondaryValue",
   },
@@ -29,7 +29,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "[color=d2ccde]#,##0.0",
       "title": "Change",
-      "value": "-78314703.09",
+      "value": "78314703.09",
     },
     "evaluationType": "positive",
   },
@@ -43,9 +43,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "primaryValue",
   },
@@ -54,9 +54,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "secondaryValue",
   },
@@ -65,7 +65,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "#,##0%",
       "title": "Change",
-      "value": "-78314703.09",
+      "value": "78314703.09",
     },
     "evaluationType": "positive",
   },
@@ -79,9 +79,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "primaryValue",
   },
@@ -90,9 +90,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "secondaryValue",
   },
@@ -101,7 +101,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "title": "Difference",
-      "value": "-78314703.09",
+      "value": "78314703.09",
     },
     "evaluationType": "positive",
   },
@@ -136,82 +136,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "#,##0%",
-      "title": "Increase",
+      "title": "Decrease",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
-  },
-}
-`;
-
-exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with conditional labels and change calculation' correctly 1`] = `
-{
-  "primaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "$#,##0.00",
-      "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
-    },
-    "elementType": "primaryValue",
-  },
-  "secondaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "$#,##0.00",
-      "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
-    },
-    "elementType": "secondaryValue",
-  },
-  "tertiaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "#,##0%",
-      "title": "Increase",
-      "value": "0.328493920509201",
-    },
-    "evaluationType": "positive",
-  },
-}
-`;
-
-exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with conditional labels' correctly 1`] = `
-{
-  "primaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "$#,##0.00",
-      "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
-    },
-    "elementType": "primaryValue",
-  },
-  "secondaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "$#,##0.00",
-      "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
-    },
-    "elementType": "secondaryValue",
-  },
-  "tertiaryItem": {
-    "baseHeadlineDataItemComponent": [Function],
-    "data": {
-      "format": "#,##0%",
-      "title": "of",
-      "value": "0.328493920509201",
-    },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -247,7 +175,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -283,7 +211,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "Custom label",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -319,7 +247,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -355,7 +283,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -427,7 +355,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -463,7 +391,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -547,9 +475,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "primaryValue",
   },
@@ -558,9 +486,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "secondaryValue",
   },
@@ -569,7 +497,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
       "title": "of",
-      "value": "3.04419636883962",
+      "value": "0.328493920509201",
     },
     "evaluationType": "negative",
   },
@@ -583,9 +511,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "primaryValue",
   },
@@ -594,9 +522,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "secondaryValue",
   },
@@ -605,7 +533,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
       "title": "of",
-      "value": "3.04419636883962",
+      "value": "0.328493920509201",
     },
     "evaluationType": "negative",
   },
@@ -632,7 +560,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
   "tertiaryItem": {
     "baseHeadlineDataItemComponent": [Function],
@@ -657,7 +585,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
   "secondaryItem": {
     "baseHeadlineDataItemComponent": [Function],
@@ -715,7 +643,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -751,7 +679,7 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
