@@ -59,13 +59,13 @@ const comparisonColorConfig: IColorConfig = {
 };
 
 export const HeadlinePositiveComparisonMeasures = {
-    primaryMeasure: ReferenceMd.Won,
-    secondaryMeasures: [ReferenceMd.Amount],
+    primaryMeasure: ReferenceMd.Amount,
+    secondaryMeasures: [ReferenceMd.Won],
 };
 
 export const HeadlineNegativeComparisonMeasures = {
-    primaryMeasure: ReferenceMd.Amount,
-    secondaryMeasures: [ReferenceMd.Won],
+    primaryMeasure: ReferenceMd.Won,
+    secondaryMeasures: [ReferenceMd.Amount],
 };
 
 export const HeadlineEqualsComparisonMeasures = {
