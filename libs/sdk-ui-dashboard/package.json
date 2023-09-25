@@ -128,7 +128,7 @@
         "@typescript-eslint/parser": "^5.45.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^13.0.3",
         "enzyme": "^3.10.0",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",

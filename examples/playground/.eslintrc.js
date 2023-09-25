@@ -6,7 +6,6 @@ module.exports = {
     extends: [
         "@gooddata",
         "plugin:react/recommended",
-        "plugin:import/errors",
         "plugin:import/typescript",
         "plugin:sonarjs/recommended",
         "plugin:regexp/recommended",
