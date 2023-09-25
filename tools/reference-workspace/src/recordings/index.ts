@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-13T09:41:38.938Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-25T06:38:56.246Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1236,6 +1236,18 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_7ffcf6fae60e6b740dbc4ab0e4bc3da9 = {
+    definition: require("./uiTestScenarios/executions/7ffcf6fae60e6b740dbc4ab0e4bc3da9/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/7ffcf6fae60e6b740dbc4ab0e4bc3da9/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/7ffcf6fae60e6b740dbc4ab0e4bc3da9/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/7ffcf6fae60e6b740dbc4ab0e4bc3da9/scenarios.json"),
+};
+const fp_9fa2b1557bd95a9977d34d1f236aebd7 = {
+    definition: require("./uiTestScenarios/executions/9fa2b1557bd95a9977d34d1f236aebd7/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/9fa2b1557bd95a9977d34d1f236aebd7/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/9fa2b1557bd95a9977d34d1f236aebd7/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/9fa2b1557bd95a9977d34d1f236aebd7/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1689,18 +1701,10 @@ export const Scenarios = {
             scenarioIndex: 1,
             execution: fp_1ec3535d6eab3c62aa82f27dbef73510,
         },
-        ComparisonWithNegativeArrow: { scenarioIndex: 0, execution: fp_2af3393621d9a3afbb8ce824b303d336 },
+        ComparisonWithNegativeArrow: { scenarioIndex: 9, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
         ComparisonWithNegativeArrowAndColor: {
-            scenarioIndex: 1,
-            execution: fp_2af3393621d9a3afbb8ce824b303d336,
-        },
-        ComparisonWithCalculateAsDifferentAndDefaultFormat: {
-            scenarioIndex: 0,
-            execution: fp_2edfa8e7be769ac15c21c26994c78df4,
-        },
-        ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP: {
-            scenarioIndex: 0,
-            execution: fp_35cf5874d968f94378c0b536e76ba1c0,
+            scenarioIndex: 10,
+            execution: fp_378299a09b5ba131d1d5fbc3ac8ea194,
         },
         TwoMeasuresWithComparison: { scenarioIndex: 0, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
         ComparisonWithDefaultConfig: { scenarioIndex: 1, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
@@ -1714,6 +1718,14 @@ export const Scenarios = {
         ComparisonWithCustomLabel: { scenarioIndex: 6, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
         ComparisonWithPositionOnTop: { scenarioIndex: 7, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
         ComparisonWithPositionOnRight: { scenarioIndex: 8, execution: fp_378299a09b5ba131d1d5fbc3ac8ea194 },
+        ComparisonWithCalculateAsDifferentAndDefaultFormat: {
+            scenarioIndex: 0,
+            execution: fp_9fa2b1557bd95a9977d34d1f236aebd7,
+        },
+        ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP: {
+            scenarioIndex: 0,
+            execution: fp_35cf5874d968f94378c0b536e76ba1c0,
+        },
         SingleMeasure: { scenarioIndex: 0, execution: fp_61ebe709fdca90022779fb43924ab885 },
         MultiMeasuresWithOnlyPrimaryMeasure: {
             scenarioIndex: 1,
@@ -1722,11 +1734,11 @@ export const Scenarios = {
         MultiMeasuresWithThreeMeasures: { scenarioIndex: 0, execution: fp_6e24a1e1f8176f68f0e147ba8885dc10 },
         ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat: {
             scenarioIndex: 0,
-            execution: fp_b7327eab043dd232105be348b888a992,
+            execution: fp_7ffcf6fae60e6b740dbc4ab0e4bc3da9,
         },
         ComparisonWithCalculateAsChangeDifferenceAndCustomFormat: {
             scenarioIndex: 1,
-            execution: fp_b7327eab043dd232105be348b888a992,
+            execution: fp_7ffcf6fae60e6b740dbc4ab0e4bc3da9,
         },
         TwoMeasuresOnePoP: { scenarioIndex: 0, execution: fp_e5db8d539a65100391a752d418a1836d },
         MultiMeasuresWithTwoMeasuresOnePoP: {
@@ -6886,6 +6898,8 @@ export const Recordings = {
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_feb54597636051ea61a1ad9aa1a5138a,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_7ffcf6fae60e6b740dbc4ab0e4bc3da9,
+        fp_9fa2b1557bd95a9977d34d1f236aebd7,
     },
     metadata: {
         catalog,

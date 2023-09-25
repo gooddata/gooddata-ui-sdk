@@ -148,8 +148,8 @@ function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): E
         return null;
     }
 
-    const primaryItemValue = primaryItem.value ?? 0;
-    const secondaryItemValue = secondaryItem.value ?? 0;
+    const primaryItemValue = Number(primaryItem.value ?? 0);
+    const secondaryItemValue = Number(secondaryItem.value ?? 0);
 
     if (primaryItemValue > secondaryItemValue) {
         return EvaluationType.POSITIVE_VALUE;

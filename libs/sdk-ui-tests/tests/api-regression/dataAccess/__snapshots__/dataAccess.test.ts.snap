@@ -3056,6 +3056,28 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and custom format 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and default sub format 1`] = `
 {
   "seriesDigest": {
@@ -3067,6 +3089,28 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
       " > Amount",
       " > m_916f5387caf8737c37c4a2206c3471d2",
       " > m_916f5387caf8737c37c4a2206c3471d2_1",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and default sub format 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933_1",
     ],
   },
   "slicesDigest": {
@@ -3099,7 +3143,49 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as different and default format 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom format 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom format 2`] = `
 {
   "seriesDigest": {
     "allSeries": 3,
@@ -3127,6 +3213,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom label 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > m_916f5387caf8737c37c4a2206c3471d2",
@@ -3148,6 +3255,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with decimal-1 format 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > m_916f5387caf8737c37c4a2206c3471d2",
@@ -3163,6 +3291,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 `;
 
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with default config 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with default config 2`] = `
 {
   "seriesDigest": {
     "allSeries": 3,
@@ -3267,6 +3416,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow and color 1`] = `
 {
   "seriesDigest": {
@@ -3288,7 +3458,49 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow and color 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+      " > m_916f5387caf8737c37c4a2206c3471d2",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on right 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on right 2`] = `
 {
   "seriesDigest": {
     "allSeries": 3,
@@ -3316,6 +3528,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on top 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > m_916f5387caf8737c37c4a2206c3471d2",
@@ -3337,6 +3570,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow 2`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > m_916f5387caf8737c37c4a2206c3471d2",
@@ -3352,6 +3606,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 `;
 
 exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow and color 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow and color 2`] = `
 {
   "seriesDigest": {
     "allSeries": 3,
@@ -3572,6 +3847,27 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 `;
 
 exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with comparison 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with comparison 2`] = `
 {
   "seriesDigest": {
     "allSeries": 3,
