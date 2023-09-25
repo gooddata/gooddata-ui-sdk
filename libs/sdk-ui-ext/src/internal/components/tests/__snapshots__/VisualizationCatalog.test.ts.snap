@@ -31170,8 +31170,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31192,8 +31192,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31214,8 +31214,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31236,8 +31236,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31258,8 +31258,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31280,8 +31280,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31302,8 +31302,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31390,8 +31390,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31412,8 +31412,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31434,8 +31434,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31456,8 +31456,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31478,8 +31478,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31500,8 +31500,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - co
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
@@ -31738,8 +31738,8 @@ exports[`getEmbeddingCode functionality > should generate code for Headline - tw
 import { idRef, IMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Headline } from \\"@gooddata/sdk-ui-charts\\";
 
-const primaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
-const secondaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const primaryMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const secondaryMeasure: IMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const style = {height: 400};
 
 export function MyComponent() {
