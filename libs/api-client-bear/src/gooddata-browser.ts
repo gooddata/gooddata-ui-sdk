@@ -1,6 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import { factory, SDK } from "./gooddata.js";
+export { CachingConfiguration, withCaching } from "./caching/cachingClient.js";
 
 const getFactoryBrowser = (config?: any) => factory(fetch.bind(window))(config);
 

@@ -388,6 +388,7 @@ importers:
       js-object-pretty-print: ^0.2.0
       jsdom: ^22.1.0
       lodash: ^4.17.19
+      lru-cache: ^10.0.1
       node-fetch: ^3.3.1
       prettier: ~2.5.0
       qs: ^6.8.0
@@ -401,6 +402,7 @@ importers:
       fetch-cookie: 2.1.0
       isomorphic-fetch: 3.0.0
       lodash: 4.17.21
+      lru-cache: 10.0.1
       node-fetch: 3.3.1
       qs: 6.11.1
       spark-md5: 3.0.2
@@ -6899,7 +6901,7 @@ packages:
       natural-orderby: 2.0.3
       object-treeify: 1.1.33
       password-prompt: 1.1.2
-      semver: 7.5.1
+      semver: 7.5.4
       string-width: 4.2.3
       strip-ansi: 6.0.1
       supports-color: 8.1.1
@@ -12087,7 +12089,7 @@ packages:
       postcss-modules-values: 4.0.0_postcss@8.4.24
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.2
-      semver: 7.5.1
+      semver: 7.5.4
       webpack: 5.79.0
     dev: false
 
