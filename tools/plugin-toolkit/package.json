@@ -82,7 +82,7 @@
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^13.0.3",
+        "dependency-cruiser": "^12.12.2",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
