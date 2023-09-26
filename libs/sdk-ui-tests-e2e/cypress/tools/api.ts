@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { getHost, getProjectId, getBackend } from "../support/constants";
+import { getHost, getProjectId, getBackend, getUserName } from "../support/constants";
 
 export const getTigerAuthToken = (): string => Cypress.env("TIGER_API_TOKEN");
 
@@ -54,6 +54,14 @@ export class Api {
         });
     }
 
+    establishSession = () => {
+        const userName = getUserName();
+
+        if (userName) {
+            cy.session(getUserName(), cy.login);
+        }
+    };
+
     postDrillDownAttribute = (drillFromAttribute: string, payload: string) => {
         cy.request({
             method: "POST",
@@ -71,7 +79,18 @@ export class Api {
         if (getBackend() !== "BEAR") {
             return;
         }
-
+        // Cypress.session.clearAllSavedSessions()
+        // cy.clearAllCookies();
+        // cy.wait(5000)
+        // cy.clearAllCookies()
+        // cy.clearAllLocalStorage();
+        // cy.clearAllSessionStorage();
+        cy.login();
+        this.establishSession();
+        // cy.retry()
+        // cy.wait(5000)
+        // cy.visit(`http://localhost:9500/`)
+        // cy.wait(50000)
         cy.request({
             method: "GET",
             url: `${getHost()}/gdc/md/${getProjectId()}/obj/${drillFromAttribute}`,

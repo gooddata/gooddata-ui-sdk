@@ -40,12 +40,12 @@ const dashboardTable = [
  */
 
 describe("Drilling", () => {
-    beforeEach(() => {
+    before(() => {
         // Sets drilling on Department attribute into Product attribute
         api.setUpDrillDownAttribute(DEPARTMENT_ID, PRODUCT_ID);
     });
 
-    afterEach(() => {
+    after(() => {
         // Removes drilling from Department attribute
         api.setUpDrillDownAttribute(DEPARTMENT_ID);
     });
