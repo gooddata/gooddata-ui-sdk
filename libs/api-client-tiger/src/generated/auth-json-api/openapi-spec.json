@@ -329,6 +329,7 @@
                     "links",
                     "organizationId",
                     "organizationName",
+                    "permissions",
                     "telemetryConfig",
                     "userId"
                 ],
@@ -345,6 +346,13 @@
                     },
                     "userId": {
                         "type": "string"
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": ["MANAGE", "SELF_CREATE_TOKEN"]
+                        }
                     },
                     "telemetry": {
                         "$ref": "#/components/schemas/Telemetry"
