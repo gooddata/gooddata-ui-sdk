@@ -602,7 +602,8 @@
                     "label": {
                         "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
-                        "description": "Requested label."
+                        "description": "Requested label.",
+                        "example": "label_id"
                     },
                     "excludePrimaryLabel": {
                         "type": "boolean",
@@ -631,7 +632,7 @@
                         "description": "Return only items, whose ```label``` title exactly matches one of ```filter```.",
                         "items": {
                             "type": "string",
-                            "description": "Return only items, whose ```label``` title exactly matches one of ```filter```."
+                            "nullable": true
                         }
                     },
                     "dataSamplingPercentage": {
