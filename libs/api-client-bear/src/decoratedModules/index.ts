@@ -56,7 +56,11 @@ class SDKWithDecoratedModules implements ISDK {
         this.md = sdk.md;
         this.mdExt = sdk.mdExt;
         this.execution = sdk.execution;
-        this.project = sdk.project;
+        if (decorators.project) {
+            this.project = decorators.project(sdk.project);
+        } else {
+            this.project = sdk.project;
+        }
         this.report = sdk.report;
         this.dashboard = sdk.dashboard;
         this.catalogue = sdk.catalogue;

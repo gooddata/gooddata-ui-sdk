@@ -6,9 +6,10 @@ import { invariant } from "ts-invariant";
 import { IAccountSetting } from "@gooddata/api-model-bear";
 import { SDK } from "../gooddata.js";
 
-import { IProjectConfigSettingItem } from "../decoratedModules/project.js";
+import { IProjectConfigSettingItem } from "../project.js";
 import { decoratedSdk } from "../decoratedModules/index.js";
 import { cachedUser } from "./user.js";
+import { cachedProject } from "./project.js";
 
 /**
  * Cache control can be used to interact with the caching layer - at the moment to reset the contents of the
@@ -92,7 +93,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxProjectConfig: 1,
 };
 
-type ProjectConfigCacheEntry = {
+export type ProjectConfigCacheEntry = {
     projectConfig: LRUCache<string, Promise<IProjectConfigSettingItem[]>>;
 };
 
@@ -150,7 +151,7 @@ export function withCaching(sdk: SDK, config: CachingConfiguration): SDK {
         config,
     };
 
-    // const project = projectConfigCaching ? cachedProject(ctx) : identity;
+    const project = projectConfigCaching ? cachedProject(ctx) : identity;
     const user = currentProfileCaching ? cachedUser(ctx) : identity;
 
     if (config.onCacheReady) {
@@ -158,7 +159,7 @@ export function withCaching(sdk: SDK, config: CachingConfiguration): SDK {
     }
 
     return decoratedSdk(sdk, {
-        // project,
+        project,
         user,
     });
 }
