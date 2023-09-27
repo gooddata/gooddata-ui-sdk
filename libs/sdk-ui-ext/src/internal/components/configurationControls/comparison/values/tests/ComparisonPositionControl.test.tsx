@@ -13,7 +13,7 @@ import { IVisualizationProperties } from "../../../../../interfaces/Visualizatio
 
 const TITLE_TEXT_QUERY = "Position";
 const DROPDOWN_BUTTON_SELECTOR = "button";
-const TOP_ITEM_TEXT_QUERY = "Top";
+const TOP_ITEM_TEXT_QUERY = "top";
 
 describe("ComparisonPositionControl", () => {
     const mockPushData = vi.fn();
