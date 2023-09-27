@@ -15,6 +15,6 @@ module.exports = {
         "\\.js$": "babel-jest",
     },
     transformIgnorePatterns: [
-        "/node_modules/(?!@gooddata|default-import|node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill|uuid).+\\.js$",
+        "node_modules/.+/node_modules/(?!@gooddata|default-import|node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill|uuid).+\\.js$",
     ],
 };
