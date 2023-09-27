@@ -231,7 +231,7 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": ["USE"],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
