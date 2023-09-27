@@ -108,6 +108,7 @@ export {
     IForecastCacheResult,
     IClusteringCacheResult,
     IAnomalyDetectionCacheResult,
+    IUserNotification,
 } from "./backend/tigerSpecificFunctions.js";
 
 export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
