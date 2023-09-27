@@ -177,7 +177,7 @@ module.exports = async (env, argv) => {
                     use: {
                         loader: "babel-loader",
                         options: {
-                            configFile: path.resolve(__dirname, ".babelrc"),
+                            configFile: path.resolve(__dirname, "babel.config.cjs"),
                         },
                     },
                 },

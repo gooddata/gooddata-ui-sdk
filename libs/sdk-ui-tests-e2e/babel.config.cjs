@@ -1,19 +1,20 @@
-{
-    "presets": [
+// (C) 2023 GoodData Corporation
+module.exports = {
+    presets: [
         [
             "@babel/preset-env",
             {
-                "modules": false
-            }
+                modules: false,
+            },
         ],
         "@babel/react",
-        "@babel/preset-typescript"
+        "@babel/preset-typescript",
     ],
-    "plugins": [
+    plugins: [
         "styled-jsx/babel",
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-proposal-class-properties",
         "@babel/plugin-transform-async-to-generator",
-        "lodash"
-    ]
-}
+        "lodash",
+    ],
+};
