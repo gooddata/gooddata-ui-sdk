@@ -143,7 +143,7 @@ function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): E
     if (
         !isNumeric(primaryItem.value) ||
         !isNumeric(secondaryItem.value) ||
-        (!isNumeric(tertiaryItem.value) && !isNumeric(quaternaryItem.value))
+        (!isNumeric(tertiaryItem.value) && !isNumeric(quaternaryItem?.value))
     ) {
         return null;
     }
