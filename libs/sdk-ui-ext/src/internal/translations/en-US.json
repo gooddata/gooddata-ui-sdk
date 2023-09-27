@@ -1699,17 +1699,17 @@
         "limit": 0
     },
     "properties.comparison.position.top": {
-        "value": "Top",
+        "value": "top",
         "comment": "The title of dropdown option that specifies the position of comparison to be on top.",
         "limit": 0
     },
     "properties.comparison.position.right": {
-        "value": "Right",
+        "value": "right",
         "comment": "The title of dropdown option that specifies the position of comparison to be on right.",
         "limit": 0
     },
     "properties.comparison.position.left": {
-        "value": "Left",
+        "value": "left",
         "comment": "The title of dropdown option that specifies the position of comparison to be on left.",
         "limit": 0
     }
