@@ -160,7 +160,19 @@ export const calculationDropdownItems: IDropdownItem[] = [
 export const comparisonPositionDropdownItems: IDropdownItem[] = [
     { title: messages.autoDefault.id, value: ComparisonPositionValues.AUTO },
     { type: "separator" },
-    { title: comparisonMessages.positionTop.id, value: ComparisonPositionValues.TOP },
-    { title: comparisonMessages.positionRight.id, value: ComparisonPositionValues.RIGHT },
-    { title: comparisonMessages.positionLeft.id, value: ComparisonPositionValues.LEFT },
+    {
+        title: comparisonMessages.positionLeft.id,
+        value: ComparisonPositionValues.LEFT,
+        icon: "gd-dropdown-icon-comparison-position-left",
+    },
+    {
+        title: comparisonMessages.positionRight.id,
+        value: ComparisonPositionValues.RIGHT,
+        icon: "gd-dropdown-icon-comparison-position-right",
+    },
+    {
+        title: comparisonMessages.positionTop.id,
+        value: ComparisonPositionValues.TOP,
+        icon: "gd-dropdown-icon-comparison-position-top",
+    },
 ];
