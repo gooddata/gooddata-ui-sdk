@@ -207,6 +207,12 @@ export interface Profile {
     userId: string;
     /**
      *
+     * @type {Array<string>}
+     * @memberof Profile
+     */
+    permissions: Array<ProfilePermissionsEnum>;
+    /**
+     *
      * @type {Telemetry}
      * @memberof Profile
      * @deprecated
@@ -231,6 +237,14 @@ export interface Profile {
      */
     features: LiveFeatures | StaticFeatures;
 }
+
+export const ProfilePermissionsEnum = {
+    MANAGE: "MANAGE",
+    SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN",
+} as const;
+
+export type ProfilePermissionsEnum = typeof ProfilePermissionsEnum[keyof typeof ProfilePermissionsEnum];
+
 /**
  *
  * @export
