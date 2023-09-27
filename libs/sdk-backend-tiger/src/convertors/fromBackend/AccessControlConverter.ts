@@ -26,8 +26,8 @@ const getPermissionLevels = (permissions: GrantedPermission[] = [], source: "dir
 
 export const convertRulesPermission = (rule: RulePermission): IGranularRulesAccess => ({
     type: "allWorkspaceUsers",
-    permissions: (rule.permissions ?? []) as AccessGranularPermission[],
-    inheritedPermissions: [],
+    permissions: getPermissionLevels(rule.permissions, "direct"),
+    inheritedPermissions: getPermissionLevels(rule.permissions, "indirect"),
 });
 
 export const convertUserPermission = (user: UserPermission): IGranularUserAccess => ({
