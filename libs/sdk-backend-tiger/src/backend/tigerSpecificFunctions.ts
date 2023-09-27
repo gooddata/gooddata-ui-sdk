@@ -48,7 +48,7 @@ import {
     ForecastResult,
     ClusteringResult,
     WidgetAlertUserNotification,
-    KeyDriversDimension,
+    KeyDriversDimension, AnomalyUserNotification,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -353,6 +353,11 @@ export type IForecastCacheResult = ForecastResult;
 export type IClusteringCacheResult = ClusteringResult;
 
 /**
+ * @internal
+ */
+export type IUserNotification = WidgetAlertUserNotification | AnomalyUserNotification
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -587,7 +592,7 @@ export type TigerSpecificFunctions = {
 
     deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
 
-    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<WidgetAlertUserNotification[]>;
+    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<IUserNotification[]>;
 
     markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
 
@@ -1981,7 +1986,7 @@ export const buildTigerSpecificFunctions = (
         });
     },
 
-    getNotificationsForCurrentUser: async (workspaceId: string): Promise<WidgetAlertUserNotification[]> => {
+    getNotificationsForCurrentUser: async (workspaceId: string): Promise<IUserNotification[]> => {
         return await authApiCall(async (sdk) => {
             return sdk.actions
                 .getNotificationsForCurrentUser({

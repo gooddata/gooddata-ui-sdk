@@ -6,6 +6,7 @@
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AnomalyDetectionResult } from '@gooddata/api-client-tiger';
+import { AnomalyUserNotification } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
@@ -291,6 +292,9 @@ export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 // @alpha (undocumented)
 export const isTigerType: (obj: unknown) => obj is TigerObjectType;
 
+// @internal (undocumented)
+export type IUserNotification = WidgetAlertUserNotification | AnomalyUserNotification;
+
 // @alpha
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
@@ -488,7 +492,7 @@ export type TigerSpecificFunctions = {
     getAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<IAnomalyDetectionCacheResult>;
     setAnomalyDetectionResult?: (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult) => Promise<void>;
     deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
-    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<WidgetAlertUserNotification[]>;
+    getNotificationsForCurrentUser?: (workspaceId: string) => Promise<IUserNotification[]>;
     markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
     markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
 };
