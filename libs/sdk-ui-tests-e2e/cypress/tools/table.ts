@@ -215,4 +215,31 @@ export class Table {
             .trigger("mouseover")
             .should(isUnderlined ? "have.css" : "not.have.css", "text-decoration", "underline");
     }
+
+    hasMetricHeaderInRow(rowIndex: number, columnIndex: number, metricName: string) {
+        this.getElement()
+            .find(`.s-cell-${rowIndex}-${columnIndex} .s-header-cell-label`)
+            .should("have.text", metricName);
+        return this;
+    }
+
+    hasColumnHeaderOnTop(columnHeaders: string) {
+        this.getElement().find(".s-table-column-group-header-descriptor").should("have.text", columnHeaders);
+        return this;
+    }
+
+    hasHeader(columnHeaders: string) {
+        this.getElement()
+            .find(".gd-column-group-header--first .gd-pivot-table-header-label--clickable")
+            .should("have.text", columnHeaders);
+        return this;
+    }
+
+    hasMeasureHeader(index: number, content: string, exist = false) {
+        this.getElement()
+            .find(`.s-table-measure-column-header-index-${index}`)
+            .should(exist ? "exist" : "not.exist")
+            .contains(content);
+        return this;
+    }
 }
