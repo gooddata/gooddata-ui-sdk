@@ -7,11 +7,16 @@ import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterValue } from "../../tools/enum/DateFilterValue";
 import { Api } from "../../tools/api";
 
-const DEPARTMENT_ID = "1090";
-const PRODUCT_ID = "1057";
 const drillModal = new DrillToModal();
 const api = new Api();
 const firstWidget = new Widget(0);
+const DIRECT_SALES = "Direct Sales";
+const INSIDE_SALES = "Inside Sales";
+const YEAR_2010 = "2010";
+const DEPARTMENT_ID = "1090";
+const PRODUCT_ID = "1057";
+const YEAR_CLOSE = "521";
+const DISPLAYFORM_PRODUCT = "1056";
 
 const dashboardTable = [
     {
@@ -31,6 +36,8 @@ const dashboardTable = [
         values: ["CompuSci"],
     },
 ];
+
+const PRODUCT_NAMES = ["CompuSci", "Educationly", "Explorer", "Grammar Plus", "PhoenixSoft", "WonderKid"];
 
 /**
  *
@@ -55,7 +62,7 @@ describe("Drilling", () => {
             Navigation.visit("dashboard/dashboard-table-drill-down");
             dashboardTable.forEach((insight, index) => {
                 new Widget(index).waitTableLoaded().getTable().click(0, 0);
-                drillModal.getTitleElement().should("have.text", insight.title + " › Direct Sales");
+                drillModal.hasTitleHeader(insight.title + " › " + DIRECT_SALES);
                 insight.values.forEach((assertValue, index) => {
                     drillModal.getTable().hasCellValue(0, index, assertValue);
                 });
@@ -79,14 +86,12 @@ describe("Drilling", () => {
 
             Navigation.visit("dashboard/drill-to-insight");
             firstWidget.scrollIntoView().waitChartLoaded().getChart().clickSeriesPoint(0);
-            drillModal
-                .selectDropdownAttribute("2008")
-                .getTitleElement()
-                .should("have.text", "Combo chart › 2008");
+
+            drillModal.selectDropdownAttribute("2008").hasTitleHeader("Combo chart › 2008");
             drillModal.getChart().hasDataLabelValues(firstDrillValue).clickSeriesPoint(0);
-            drillModal.getTitleElement().should("have.text", "Combo chart › 2008 › Q1/2008");
+            drillModal.hasTitleHeader("Combo chart › 2008 › Q1/2008");
             drillModal.getChart().hasDataLabelValues(secondDrillValue).clickSeriesPoint(0);
-            drillModal.getTitleElement().should("have.text", "Combo chart › 2008 › Q1/2008 › Feb 2008");
+            drillModal.hasTitleHeader("Combo chart › 2008 › Q1/2008 › Feb 2008");
             drillModal.getChart().hasDataLabelValues(thirdDrillValue);
             drillModal.close();
         });
@@ -109,24 +114,101 @@ describe("Drilling", () => {
                 .should("deep.equal", ["Year (Closed)", "Department", "Won"]);
             firstWidget.getChart().clickSeriesPoint(1, 0);
             drillModal
-                .selectDropdownAttribute("Inside Sales")
-                .getTitleElement()
-                .should("have.text", "Column chart with years › Inside Sales");
+                .selectDropdownAttribute(INSIDE_SALES)
+                .hasTitleHeader("Column chart with years › " + INSIDE_SALES);
             drillModal.getChart().clickSeriesPoint(0);
-            drillModal.getTitleElement().should("have.text", "Column chart with years › Inside Sales › 2010");
+            drillModal.hasTitleHeader("Column chart with years › " + INSIDE_SALES + " › " + YEAR_2010);
             drillModal.close();
 
             firstWidget.waitChartLoaded().getChart().clickSeriesPoint(1, 0);
             drillModal
-                .selectDropdownAttribute("2010")
-                .getTitleElement()
-                .should("have.text", "Column chart with years › 2010");
+                .selectDropdownAttribute(YEAR_2010)
+                .hasTitleHeader("Column chart with years › " + YEAR_2010);
             drillModal.getChart().clickSeriesPoint(0);
             drillModal
-                .selectDropdownAttribute("Q2/2010")
-                .getTitleElement()
-                .should("have.text", "Column chart with years › 2010 › Q2/2010");
+                .selectDropdownAttribute("Q2/" + YEAR_2010)
+                .hasTitleHeader("Column chart with years › " + YEAR_2010 + " › Q2/" + YEAR_2010);
             drillModal.getChart().hasDataLabelValues(valueAttribute);
+        });
+
+        it("Drilling down continue on a table ", () => {
+            const YEAR_LIST = ["2010", "2011", "2012", "2013"];
+            const YEAR_LIST_CLOSE = ["2010", "2011", "2012", "2013", "2014"];
+
+            Navigation.visit("dashboard/dashboard-table-drill-down");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            [DIRECT_SALES, INSIDE_SALES].forEach((value, index) => {
+                firstWidget.waitTableLoaded().getTable().hasCellValue(index, 0, value);
+            });
+
+            firstWidget.waitTableLoaded().getTable().click(0, 0);
+            drillModal.hasTitleHeader("table has row column measure › " + DIRECT_SALES);
+            PRODUCT_NAMES.forEach((value, index) => {
+                drillModal.getTable().hasCellValue(index, 0, value);
+            });
+            drillModal.getTable().waitLoaded().click(0, 0);
+            drillModal.hasTitleHeader("table has row column measure › " + DIRECT_SALES + " › CompuSci");
+            YEAR_LIST.forEach((value, index) => {
+                drillModal.getTable().hasCellValue(index, 0, value);
+            });
+            drillModal.back();
+            drillModal.hasTitleHeader("table has row column measure › " + DIRECT_SALES);
+            PRODUCT_NAMES.forEach((value, index) => {
+                drillModal.getTable().hasCellValue(index, 0, value);
+            });
+            drillModal.getTable().waitLoaded().click(1, 0);
+            drillModal.hasTitleHeader("table has row column measure › " + DIRECT_SALES + " › Educationly");
+            YEAR_LIST_CLOSE.forEach((value, index) => {
+                drillModal.getTable().hasCellValue(index, 0, value);
+            });
+            drillModal.close();
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+        });
+
+        it("Drilling down on a table that has two drillable attributes separate", () => {
+            Navigation.visit("dashboard/implicit-drill");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            const TABLE_WITH_YEAR = [
+                "$6,583,208.52",
+                "$2,876,022.26",
+                "$14,004,144.97",
+                "$6,524,077.69",
+                "$5,917,506.59",
+                "$2,405,793.42",
+            ];
+            TABLE_WITH_YEAR.forEach((value, index) => {
+                firstWidget.waitTableLoaded().getTable().hasCellValue(index, 2, value);
+            });
+            firstWidget.getTable().click(0, 0);
+            drillModal.hasTitleHeader("Table with years › " + YEAR_2010);
+            drillModal.getTable().hasCellValue(0, 0, "Q2/" + YEAR_2010);
+            drillModal.getTable().waitLoaded().click(0, 0);
+            drillModal.hasTitleHeader("Table with years › " + YEAR_2010 + " › " + "Q2/" + YEAR_2010);
+            drillModal.getTable().hasCellValue(0, 0, "Jun 2010");
+            drillModal.close();
+
+            TABLE_WITH_YEAR.forEach((value, index) => {
+                firstWidget.waitTableLoaded().getTable().hasCellValue(index, 2, value);
+            });
+            firstWidget.waitTableLoaded().getTable().click(0, 1);
+            drillModal.hasTitleHeader("Table with years › " + DIRECT_SALES);
+            PRODUCT_NAMES.forEach((value, index) => {
+                drillModal.getTable().hasCellValue(index, 0, value);
+            });
+            drillModal.getTable().waitLoaded().click(0, 0);
+            drillModal.hasTitleHeader("Table with years › " + DIRECT_SALES + " › CompuSci");
+            drillModal.back();
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+        });
+
+        it("Can not drill down with table that only has measures and columns", () => {
+            Navigation.visit("dashboard/dashboard-table-drill-down");
+            new Widget(4)
+                .scrollIntoView()
+                .waitTableLoaded()
+                .getTable()
+                .hasCellValue(0, 0, "$12,076,034.56")
+                .isCellUnderlined(DIRECT_SALES, false);
         });
     });
 

@@ -208,4 +208,11 @@ export class Table {
         cy.get(".s-header-cell-label span").invoke("width").should("equal", width);
         return this;
     }
+
+    isCellUnderlined(cellName: string, isUnderlined = true) {
+        cy.get(`.s-header-cell-label.gd-pivot-table-header-label`)
+            .contains(cellName)
+            .trigger("mouseover")
+            .should(isUnderlined ? "have.css" : "not.have.css", "text-decoration", "underline");
+    }
 }
