@@ -6,10 +6,11 @@ import { invariant } from "ts-invariant";
 import { IAccountSetting } from "@gooddata/api-model-bear";
 import { SDK } from "../gooddata.js";
 
-import { IProjectConfigSettingItem } from "../project.js";
 import { decoratedSdk } from "../decoratedModules/index.js";
 import { cachedUser } from "./user.js";
 import { cachedProject } from "./project.js";
+import { IFeatureFlags } from "../interfaces.js";
+import { cachingEnabled } from "./utils.js";
 
 /**
  * Cache control can be used to interact with the caching layer - at the moment to reset the contents of the
@@ -23,9 +24,9 @@ export type CacheControl = {
      */
     resetCurrentProfile: () => void;
     /**
-     * Resets all project config caches.
+     * Resets all project feature flags caches.
      */
-    resetProjectConfig: () => void;
+    resetProjectFeatureFlags: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -60,17 +61,17 @@ export type CachingSettings = {
     enableCurrentProfileCaching?: boolean;
 
     /**
-     * Maximum number of project settings to cache per project/workspace.
+     * Maximum number of feature flags to cache per project/workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
      *
      * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
-     * workspace settings cache is dangerous in applications that change query the settings of many different
+     * feature flags cache is dangerous in applications that change query the settings of many different
      * workspaces - this will cache quite large objects for each workspace and can make the memory usage go up.
      *
      * When non-positive number is specified, then no caching of result windows will be done.
      */
-    maxProjectConfig?: number;
+    maxProjectFeatureFlags?: number;
 };
 
 /**
@@ -90,17 +91,17 @@ export type CachingConfiguration = CachingCallbacks & CachingSettings;
  */
 export const RecommendedCachingConfiguration: CachingConfiguration = {
     enableCurrentProfileCaching: true,
-    maxProjectConfig: 1,
+    maxProjectFeatureFlags: 1,
 };
 
-export type ProjectConfigCacheEntry = {
-    projectConfig: LRUCache<string, Promise<IProjectConfigSettingItem[]>>;
+export type ProjectFeatureFlagsCacheEntry = {
+    projectFeatureFlags: LRUCache<string, Promise<IFeatureFlags>>;
 };
 
 export type CachingContext = {
     caches: {
         currentProfile?: Promise<IAccountSetting> | null;
-        projectConfigs?: LRUCache<string, ProjectConfigCacheEntry>;
+        projectFeatureFlags?: LRUCache<string, ProjectFeatureFlagsCacheEntry>;
     };
     config: CachingConfiguration;
 };
@@ -112,9 +113,7 @@ function assertPositiveOrUndefined(value: number | undefined, valueName: string)
     );
 }
 
-function cachingEnabled(settingValue: boolean | number | undefined): boolean {
-    return settingValue !== undefined && !!settingValue;
-}
+
 
 function cacheControl(ctx: CachingContext): CacheControl {
     const control: CacheControl = {
@@ -122,13 +121,13 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.currentProfile = undefined;
         },
 
-        resetProjectConfig: () => {
-            ctx.caches.projectConfigs?.clear();
+        resetProjectFeatureFlags: () => {
+            ctx.caches.projectFeatureFlags?.clear();
         },
 
         resetAll: () => {
             control.resetCurrentProfile();
-            control.resetProjectConfig();
+            control.resetProjectFeatureFlags();
         },
     };
 
@@ -136,22 +135,22 @@ function cacheControl(ctx: CachingContext): CacheControl {
 }
 
 export function withCaching(sdk: SDK, config: CachingConfiguration): SDK {
-    assertPositiveOrUndefined(config.maxProjectConfig, "maxProjectConfig");
+    assertPositiveOrUndefined(config.maxProjectFeatureFlags, "maxProjectFeatureFlags");
 
-    const projectConfigCaching = cachingEnabled(config.maxProjectConfig);
+    const projectFeatureFlags = cachingEnabled(config.maxProjectFeatureFlags);
     const currentProfileCaching = cachingEnabled(config.enableCurrentProfileCaching);
 
     const ctx: CachingContext = {
         caches: {
-            projectConfigs: projectConfigCaching
-                ? new LRUCache({ max: config.maxProjectConfig! })
+            projectFeatureFlags: projectFeatureFlags
+                ? new LRUCache({ max: config.maxProjectFeatureFlags! })
                 : undefined,
             currentProfile: undefined,
         },
         config,
     };
 
-    const project = projectConfigCaching ? cachedProject(ctx) : identity;
+    const project = projectFeatureFlags ? cachedProject(ctx) : identity;
     const user = currentProfileCaching ? cachedUser(ctx) : identity;
 
     if (config.onCacheReady) {
