@@ -525,7 +525,7 @@ function newSdkInstance(
     if (config.enableClientCaching) {
         return withCaching(sdk, {
             enableCurrentProfileCaching: implConfig.enableCurrentProfileCaching,
-            maxProjectConfig: implConfig.maxProjectConfig,
+            maxProjectFeatureFlags: implConfig.maxProjectFeatureFlags,
         });
     }
 

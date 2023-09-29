@@ -2,17 +2,18 @@
 import { IAssociatedProjectPermissions, IFeatureFlags } from "@gooddata/api-model-bear";
 import { LRUCache } from "lru-cache";
 
-import { CachingContext, ProjectConfigCacheEntry } from "./cachingClient.js";
+import {
+    CachingContext,
+    ProjectFeatureFlagsCacheEntry,
+    ProjectPermissionsCacheEntry,
+} from "./cachingClient.js";
 import { IProjectConfigSettingItem, ProjectModule } from "../project.js";
 import { ProjectModuleDecorator } from "../decoratedModules/project.js";
+import { cachingEnabled } from "./utils.js";
 
 export class ProjectModuleWithCaching extends ProjectModuleDecorator {
-    private originalGetConfig: (projectId: string) => Promise<IProjectConfigSettingItem[]>;
     constructor(decorated: ProjectModule, private readonly ctx: CachingContext) {
         super(decorated);
-        // rebind cached implementation to the original sdk to use it also in other methods
-        this.originalGetConfig = decorated.getConfig.bind(decorated);
-        decorated.getConfig = (projectId: string) => this.getConfig(projectId);
     }
 
     public getCurrentProjectId(): Promise<string> {
@@ -20,16 +21,7 @@ export class ProjectModuleWithCaching extends ProjectModuleDecorator {
     }
 
     public getConfig(projectId: string): Promise<IProjectConfigSettingItem[]> {
-        const cache = this.getOrCreateConfigEntry(projectId).projectConfig;
-        let config = cache.get(projectId);
-
-        if (!config) {
-            config = this.originalGetConfig(projectId);
-
-            cache.set(projectId, config);
-        }
-
-        return config;
+        return super.getConfig(projectId);
     }
 
     public getConfigItem(projectId: string, key: string): Promise<IProjectConfigSettingItem | undefined> {
@@ -37,24 +29,42 @@ export class ProjectModuleWithCaching extends ProjectModuleDecorator {
     }
 
     public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
-        return super.getProjectFeatureFlags(projectId, source);
+        let featureFlags;
+        if (cachingEnabled(this.ctx.config.maxProjectFeatureFlags)) {
+            const cache = this.getOrCreateFeatureFlagsEntry(projectId, source).projectFeatureFlags;
+            featureFlags = cache.get(projectId);
+
+            if (!featureFlags) {
+                featureFlags = super.getProjectFeatureFlags(projectId, source);
+
+                cache.set(projectId, featureFlags);
+            }
+        } else {
+            featureFlags = super.getProjectFeatureFlags(projectId, source);
+        }
+
+        return featureFlags;
     }
 
     public getPermissions(workspaceId: string, userId: string): Promise<IAssociatedProjectPermissions> {
         return super.getPermissions(workspaceId, userId);
     }
 
-    private getOrCreateConfigEntry = (projectId: string): ProjectConfigCacheEntry => {
-        const cache = this.ctx.caches.projectConfigs!;
-        let cacheEntry = cache.get(projectId);
+    private getOrCreateFeatureFlagsEntry = (
+        projectId: string,
+        source?: string,
+    ): ProjectFeatureFlagsCacheEntry => {
+        const cache = this.ctx.caches.projectFeatureFlags!;
+        const key = `${projectId}_${source}`;
+        let cacheEntry = cache.get(key);
 
         if (!cacheEntry) {
             cacheEntry = {
-                projectConfig: new LRUCache<string, Promise<IProjectConfigSettingItem[]>>({
-                    max: this.ctx.config.maxProjectConfig!,
+                projectFeatureFlags: new LRUCache<string, Promise<IFeatureFlags>>({
+                    max: this.ctx.config.maxProjectFeatureFlags!,
                 }),
             };
-            cache.set(projectId, cacheEntry);
+            cache.set(key, cacheEntry);
         }
 
         return cacheEntry;

@@ -214,6 +214,7 @@ export interface IProjectModule {
 
     /**
      * Gets project config including project specific feature flags
+     * @deprecated Use getProjectFeatureFlags instead
      *
      * @param projectId - A project identifier
      * @returns An array of project config setting items
@@ -603,6 +604,7 @@ export class ProjectModule implements IProjectModule {
 
     /**
      * Gets project config including project specific feature flags
+     * @deprecated Use getProjectFeatureFlags instead
      *
      * @param projectId - A project identifier
      * @returns An array of project config setting items
@@ -651,9 +653,20 @@ export class ProjectModule implements IProjectModule {
      * @returns Hash table of feature flags and theirs values where feature flag is as key
      */
     public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
-        return this.getConfig(projectId).then((settingItems: IProjectConfigSettingItem[]) => {
-            return this.parseProjectFeatureFlags(settingItems, source);
-        });
+        return this.xhr
+            .get(`/gdc/app/projects/${projectId}/config`)
+            .then((apiResponse: ApiResponse) => {
+                return apiResponse.getData();
+            })
+            .then((result: IProjectConfigResponse) => {
+                if (result?.settings?.items) {
+                    return result.settings.items;
+                }
+                return [];
+            })
+            .then((settingItems: IProjectConfigSettingItem[]) => {
+                return this.parseProjectFeatureFlags(settingItems, source);
+            });
     }
 
     protected parseProjectFeatureFlags(
