@@ -125,6 +125,7 @@ export class TableFacadeInitializer {
                             tableMethods.onLoadingChanged({ isLoading: false });
                         }
 
+                        tableMethods.onLoadingChanged({ isLoading: false });
                         tableMethods.onError(convertError(error), this.execution);
                     });
             })
@@ -133,6 +134,7 @@ export class TableFacadeInitializer {
                     return undefined;
                 }
 
+                tableMethods.onLoadingChanged({ isLoading: false });
                 tableMethods.onError(convertError(error), this.execution);
             });
     };
