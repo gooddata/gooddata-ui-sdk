@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, createRef } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -9,11 +9,14 @@ import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate.js
 import { Button } from "../Button/index.js";
 import { ShortenedText } from "../ShortenedText/index.js";
 import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
 
 const visualizationIconWidthAndPadding = 42;
+
+const LOCK_TOOLTIP_ALIGN_POINTS = [{ align: "tc bl" }];
 
 const tooltipAlignPoints = [
     {
@@ -53,6 +56,7 @@ export interface IInsightListItemProps {
 
     showDescriptionPanel?: boolean;
     metadataTimeZone?: string;
+    supportsWorkspaceHierarchy?: boolean;
 }
 
 /**
@@ -72,6 +76,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             onClick,
             onDescriptionPanelOpen,
             showDescriptionPanel = false,
+            isLocked,
         } = this.props;
 
         const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
@@ -93,6 +98,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                         <DescriptionPanel
                             onBubbleOpen={onDescriptionPanelOpen}
                             title={title}
+                            titleIcon={isLocked ? this.renderLock() : undefined}
                             description={description}
                             arrowOffsets={this.shouldRenderActions() ? modifiedArrowOffsets : undefined}
                         />
@@ -105,6 +111,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                             ref={this.shortenedTextRef}
                             tooltipAlignPoints={tooltipAlignPoints}
                             displayTooltip={!showDescriptionPanel}
+                            className="gd-visualizations-list-item-name"
                         >
                             {isLoading
                                 ? this.props.intl.formatMessage({ id: "gs.visualizationsList.loading" })
@@ -137,8 +144,23 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
     };
 
     private renderLock = () => {
-        if (this.props.isLocked) {
-            return <i className="gd-icon-lock" />;
+        const { isLocked, supportsWorkspaceHierarchy } = this.props;
+        if (isLocked) {
+            return (
+                <BubbleHoverTrigger>
+                    <i className="gd-icon-lock" />
+                    <Bubble alignPoints={LOCK_TOOLTIP_ALIGN_POINTS} alignTo=".gd-icon-lock">
+                        <FormattedMessage
+                            id={
+                                supportsWorkspaceHierarchy
+                                    ? "workspaceHierarchy.inheritedInsight"
+                                    : "workspaceHierarchy.lockedInsight"
+                            }
+                            values={{ br: <br /> }}
+                        />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
         }
 
         return false;

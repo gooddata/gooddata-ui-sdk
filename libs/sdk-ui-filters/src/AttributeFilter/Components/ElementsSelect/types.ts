@@ -168,7 +168,7 @@ export interface IAttributeFilterElementsSelectItemProps {
 
     /**
      * Override how to render "Only" in the element item.
-     * 
+     *
      * @internal
      */
     renderSelectOnly?: JSX.Element;

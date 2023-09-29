@@ -159,7 +159,6 @@ class DenormalizingExecutionResult implements IExecutionResult {
         return this._fingerprint;
     };
 
-
     public getResultId(): string {
         return this.normalizedResult.getResultId();
     }

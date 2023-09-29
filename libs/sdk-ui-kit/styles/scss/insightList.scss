@@ -92,7 +92,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
             color: variables.$gd-color-text;
             font-size: 12px;
 
-            span {
+            .gd-visualizations-list-item-name {
                 display: inline-block;
                 width: 100%;
             }
@@ -162,5 +162,12 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
     .gd-visualizations-list-item:hover & {
         opacity: 1;
+    }
+}
+
+.gd-description-panel-title {
+    .gd-icon-lock {
+        color: variables.$gd-color-state-blank;
+        margin-right: 4px;
     }
 }

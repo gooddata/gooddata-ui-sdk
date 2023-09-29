@@ -931,6 +931,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     showDescriptionPanel?: boolean;
     onDescriptionPanelOpen?: () => void;
     metadataTimeZone?: string;
+    supportsWorkspaceHierarchy?: boolean;
 };
 
 // @alpha (undocumented)

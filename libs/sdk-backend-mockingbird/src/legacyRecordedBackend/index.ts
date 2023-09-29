@@ -343,7 +343,7 @@ function recordedExecutionResult(
         },
         getResultId(): string {
             throw Error("Not supported by this implementation");
-        }
+        },
     };
 
     return result;

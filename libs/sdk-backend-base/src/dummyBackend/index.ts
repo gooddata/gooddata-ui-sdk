@@ -371,7 +371,7 @@ function dummyExecutionResult(
         },
         getResultId(): string {
             throw new NotSupported("...");
-        }
+        },
     };
 
     return result;

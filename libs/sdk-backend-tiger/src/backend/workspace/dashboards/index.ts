@@ -68,24 +68,17 @@ import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js"
 import { resolveWidgetFilters } from "./widgetFilters.js";
 import includes from "lodash/includes.js";
 import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions.js";
-import {
-    convertExportMetadata as convertToBackendExportMetadata,
-} from "../../../convertors/toBackend/ExportMetadataConverter.js";
-import {
-    convertExportMetadata as convertFromBackendExportMetadata,
-} from "../../../convertors/fromBackend/ExportMetadataConverter.js";
+import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
+import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { convertWidgetAlert } from "../../../convertors/fromBackend/analyticalDashboards/WidgetAlertConverter.js";
-import {
-    convertWidgetAlert as convertWidgetAlertToBackend,
-} from "../../../convertors/toBackend/WidgetAlertConverter.js";
+import { convertWidgetAlert as convertWidgetAlertToBackend } from "../../../convertors/toBackend/WidgetAlertConverter.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {
-    }
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
     public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {
@@ -440,17 +433,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getAllWidgetAlertsForCurrentUser = async (): Promise<IWidgetAlert[]> => {
         const alerts = await this.authCall(async (client, context) => {
-                const author = await context.getPrincipal();
-                return client.entities.getAllEntitiesWidgetAlerts(
-                    {
-                        workspaceId: this.workspace,
-                        include: ["analyticalDashboard", "filterContext", "visualizationObject"],
-                        filter: `createdBy.id==${author.userId}`,
-                    },
-                    { headers: jsonApiHeaders },
-                );
-            },
-        );
+            const author = await context.getPrincipal();
+            return client.entities.getAllEntitiesWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
+                    filter: `createdBy.id==${author.userId}`,
+                },
+                { headers: jsonApiHeaders },
+            );
+        });
 
         return alerts.data.data.map((a) =>
             convertWidgetAlert(
@@ -466,17 +458,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         const alerts = await this.authCall(async (client, context) => {
-                const author = await context.getPrincipal();
-                return client.entities.getAllEntitiesWidgetAlerts(
-                    {
-                        workspaceId: this.workspace,
-                        include: ["analyticalDashboard", "filterContext", "visualizationObject"],
-                        filter: `analyticalDashboard.id==${id};createdBy.id==${author.userId}`,
-                    },
-                    { headers: jsonApiHeaders },
-                );
-            },
-        );
+            const author = await context.getPrincipal();
+            return client.entities.getAllEntitiesWidgetAlerts(
+                {
+                    workspaceId: this.workspace,
+                    include: ["analyticalDashboard", "filterContext", "visualizationObject"],
+                    filter: `analyticalDashboard.id==${id};createdBy.id==${author.userId}`,
+                },
+                { headers: jsonApiHeaders },
+            );
+        });
 
         return alerts.data.data.map((a) =>
             convertWidgetAlert(
@@ -564,7 +555,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return isFilterContext(filterContext)
             ? this.updateFilterContext(filterContext)
             : // Create a new filter context, or create implicit filter context, when not provided
-            this.createFilterContext(filterContext || emptyFilterContextDefinition);
+              this.createFilterContext(filterContext || emptyFilterContextDefinition);
     };
 
     public deleteWidgetAlert = async (ref: ObjRef): Promise<void> => {

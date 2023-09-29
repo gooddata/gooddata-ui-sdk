@@ -1251,6 +1251,8 @@ export interface IDescriptionPanelProps {
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    titleIcon?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -2075,6 +2077,8 @@ export interface IInsightListItemProps {
     onDescriptionPanelOpen?: () => void;
     // (undocumented)
     showDescriptionPanel?: boolean;
+    // (undocumented)
+    supportsWorkspaceHierarchy?: boolean;
     // (undocumented)
     title?: string;
     // (undocumented)
