@@ -62,6 +62,8 @@ import {
     VisualizationObjectModelV1,
     WidgetAlertUserNotification,
     KeyDriversDimension,
+    AnomalyUserNotification,
+    KeyDriversDimension,
     JsonApiWorkspaceDataFilterInDocument,
     JsonApiWorkspaceDataFilterOutDocument,
     JsonApiWorkspaceDataFilterSettingOutDocument,

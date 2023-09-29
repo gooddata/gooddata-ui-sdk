@@ -2141,6 +2141,28 @@
         "comment": "The button title which will display less description text.",
         "limit": 0
     },
+    "workspaceHierarchy.lockedInsight|insight": {
+        "value": "Only Admins can save changes to this insight.",
+        "comment": "Shown when hovering over lock indicator.",
+        "limit": 0
+    },
+    "workspaceHierarchy.lockedInsight|report": {
+        "value": "Only Admins can save changes to this report.",
+        "comment": "Shown when hovering over lock indicator.",
+        "translate": false,
+        "limit": 0
+    },
+    "workspaceHierarchy.inheritedInsight|insight": {
+        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "limit": 0
+    },
+    "workspaceHierarchy.inheritedInsight|report": {
+        "value": "You cannot edit or delete this report.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "translate": false,
+        "limit": 0
+    },
     "configurationPanel.drillConfig.learn.more.link": {
         "value": "Learn more",
         "comment": "Link with additional info",
