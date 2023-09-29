@@ -67,7 +67,7 @@ if [[ "$IS_AIO" == true ]]; then
   trap shutdownAIO EXIT
   docker network create $NETWORK_ID
 
-  docker run --name $CONTAINER_ID -e APP_LOGLEVEL=INFO -e LICENSE_AND_PRIVACY_POLICY_ACCEPTED=YES \
+  docker run --name $CONTAINER_ID -e APP_LOGLEVEL=INFO -e GDCN_LICENSE_KEY \
       -e BUNDLE_TYPE=gdc -e GDCN_PUBLIC_URL=$TEST_HOST -p $PORT_NUMBER:3000 --net=$NETWORK_ID -d $AIO_IMAGE
 
   if ! health_check; then
