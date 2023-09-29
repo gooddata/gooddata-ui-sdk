@@ -166,6 +166,8 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 }
 
 .gd-description-panel-title {
+    display: flex;
+
     .gd-icon-lock {
         color: variables.$gd-color-state-blank;
         margin-right: 4px;
