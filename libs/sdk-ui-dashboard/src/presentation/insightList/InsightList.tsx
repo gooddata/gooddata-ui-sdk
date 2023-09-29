@@ -29,6 +29,7 @@ import {
     useDashboardSelector,
     selectCurrentUser,
     selectSupportsObjectUris,
+    selectSupportsAccessControlCapability,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -86,6 +87,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
+    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
 
     const params = pagesToLoad.map((pageNumber) => ({
         limit: ITEMS_PER_PAGE,
@@ -226,6 +228,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
+                            supportsWorkspaceHierarchy={supportsWorkspaceHierarchy}
                         />
                     );
                 })

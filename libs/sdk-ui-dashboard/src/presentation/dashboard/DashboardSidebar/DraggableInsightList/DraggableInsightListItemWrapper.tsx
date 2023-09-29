@@ -36,6 +36,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
         insight,
         onDescriptionPanelOpen,
         metadataTimeZone,
+        supportsWorkspaceHierarchy,
     } = props;
     return (
         <DraggableInsightListItem
@@ -51,6 +52,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
                 showDescriptionPanel,
                 onDescriptionPanelOpen,
                 metadataTimeZone,
+                supportsWorkspaceHierarchy,
             }}
             insight={insight}
         />

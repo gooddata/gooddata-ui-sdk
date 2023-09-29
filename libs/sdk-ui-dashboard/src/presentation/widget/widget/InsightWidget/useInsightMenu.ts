@@ -7,7 +7,7 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     selectExecutionResultByRef,
     useDashboardSelector,
-    selectPredictionResult
+    selectPredictionResult,
 } from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";

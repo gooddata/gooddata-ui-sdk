@@ -15,7 +15,7 @@ import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
-import { stringUtils } from '@gooddata/util';
+import { stringUtils } from "@gooddata/util";
 
 /**
  * @internal

@@ -1091,6 +1091,11 @@
         "comment": "Shown when hovering over lock indicator. Dont translate html tags <b>, </b>",
         "limit": 0
     },
+    "header.inheritedInsight.tooltip": {
+        "value": "You cannot edit or delete this dashboard.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "limit": 0
+    },
     "header.shareStatus.private.text": {
         "value": "Private",
         "comment": "Share indicator text when dashboard is private",

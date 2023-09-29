@@ -48,7 +48,8 @@ import {
     ForecastResult,
     ClusteringResult,
     WidgetAlertUserNotification,
-    KeyDriversDimension, AnomalyUserNotification,
+    KeyDriversDimension,
+    AnomalyUserNotification,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -355,7 +356,7 @@ export type IClusteringCacheResult = ClusteringResult;
 /**
  * @internal
  */
-export type IUserNotification = WidgetAlertUserNotification | AnomalyUserNotification
+export type IUserNotification = WidgetAlertUserNotification | AnomalyUserNotification;
 
 /**
  * TigerBackend-specific functions.
