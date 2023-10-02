@@ -161,7 +161,6 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         );
 
         if (visualizationClassChanged) {
-            this.visElementId = uuidv4();
             this.setupVisualization(nextProps);
         }
 
