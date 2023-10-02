@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "8.12.3-beta.0",
+    "version": "8.12.3-beta.1",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -62,12 +62,12 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.12.3-beta.0",
-        "@gooddata/sdk-model": "^8.12.3-beta.0",
-        "@gooddata/sdk-ui": "^8.12.3-beta.0",
-        "@gooddata/sdk-ui-kit": "^8.12.3-beta.0",
-        "@gooddata/sdk-ui-theme-provider": "^8.12.3-beta.0",
-        "@gooddata/sdk-ui-vis-commons": "^8.12.3-beta.0",
+        "@gooddata/sdk-backend-spi": "^8.12.3-beta.1",
+        "@gooddata/sdk-model": "^8.12.3-beta.1",
+        "@gooddata/sdk-ui": "^8.12.3-beta.1",
+        "@gooddata/sdk-ui-kit": "^8.12.3-beta.1",
+        "@gooddata/sdk-ui-theme-provider": "^8.12.3-beta.1",
+        "@gooddata/sdk-ui-vis-commons": "^8.12.3-beta.1",
         "@gooddata/number-formatter": "1.0.0",
         "classnames": "^2.3.1",
         "custom-event": "^1.0.1",
@@ -85,8 +85,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/live-examples-workspace": "^8.12.3-beta.0",
-        "@gooddata/sdk-backend-mockingbird": "^8.12.3-beta.0",
+        "@gooddata/live-examples-workspace": "^8.12.3-beta.1",
+        "@gooddata/sdk-backend-mockingbird": "^8.12.3-beta.1",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
