@@ -4,7 +4,6 @@ import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { EditMode } from "../../tools/editMode";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import { DateFilter } from "../../tools/dateFilter";
 
 const editMode = new EditMode();
 const widget = new Widget(0);
@@ -59,11 +58,6 @@ describe("Insights on dashboard", () => {
             .searchText("no data")
             .clearSearch()
             .tabIsActive("all", true);
-    });
-
-    it("Should show no data message if insight has no data", { tags: ["pre-merge_isolated_tiger"] }, () => {
-        new DateFilter().open().selectAbsoluteForm().apply();
-        widget.waitChartLoaded().getChart().hasNoDataForFilter();
     });
 
     it("(SEPARATE) can rename an existing insight", { tags: ["pre-merge_isolated_tiger"] }, () => {

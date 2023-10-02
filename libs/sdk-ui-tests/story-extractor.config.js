@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
+    ...base,
     preset: "ts-jest/presets/js-with-babel",
     testRegex: "/backstop/story-extractor.js$",
     setupFiles: ["<rootDir>/backstop/register-context.js"],

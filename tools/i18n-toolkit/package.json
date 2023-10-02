@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "8.12.2",
+    "version": "8.12.3-beta.0",
     "author": "GoodData",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "repository": {
@@ -60,7 +60,7 @@
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^12.12.2",
         "dotenv": "^10.0.0",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",

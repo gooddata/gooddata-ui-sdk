@@ -1,9 +1,9 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isFinite from "lodash/isFinite";
 import escape from "lodash/escape";
 import mapboxgl from "mapbox-gl";
-import { ISeparators } from "@gooddata/numberjs";
+import { ISeparators } from "@gooddata/sdk-model";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart";
 import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart";

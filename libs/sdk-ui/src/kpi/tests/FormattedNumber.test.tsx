@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { FormattedNumber } from "../FormattedNumber";
@@ -22,7 +22,6 @@ describe("FormattedNumber", () => {
 
     it("should be colored when formatting contains colors", () => {
         render(<FormattedNumber value="10" format="[color=99AE00]" />);
-        // 99AE00 is rgb(153, 174, 0)
-        expect(screen.getByText("10")).toHaveStyle({ color: "rgb(153, 174, 0)" });
+        expect(screen.getByText("10")).toHaveStyle({ color: "#99ae00" });
     });
 });

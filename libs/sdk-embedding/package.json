@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-embedding",
-    "version": "8.12.2",
+    "version": "8.12.3-beta.0",
     "author": "GoodData",
     "description": "GoodData Embedding APIs",
     "repository": {
@@ -51,8 +51,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.12.2",
-        "@gooddata/sdk-model": "^8.12.2",
+        "@gooddata/api-model-bear": "^8.12.3-beta.0",
+        "@gooddata/sdk-model": "^8.12.3-beta.0",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0",
         "ts-invariant": "^0.7.3"
@@ -66,7 +66,7 @@
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^12.12.2",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",

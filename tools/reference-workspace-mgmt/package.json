@@ -37,8 +37,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/catalog-export": "^8.12.2",
-        "@gooddata/mock-handling": "^8.12.2",
+        "@gooddata/catalog-export": "^8.12.3-beta.0",
+        "@gooddata/mock-handling": "^8.12.3-beta.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -48,7 +48,7 @@
         "@types/node": "^16.11.11",
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^12.12.2",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",

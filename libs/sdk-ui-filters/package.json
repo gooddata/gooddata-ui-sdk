@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "8.12.2",
+    "version": "8.12.3-beta.0",
     "description": "GoodData.UI SDK - Filter Components",
     "repository": {
         "type": "git",
@@ -61,12 +61,11 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.3",
-        "@gooddata/sdk-backend-spi": "^8.12.2",
-        "@gooddata/sdk-model": "^8.12.2",
-        "@gooddata/sdk-ui": "^8.12.2",
-        "@gooddata/sdk-ui-kit": "^8.12.2",
-        "@gooddata/util": "^8.12.2",
+        "@gooddata/sdk-backend-spi": "^8.12.3-beta.0",
+        "@gooddata/sdk-model": "^8.12.3-beta.0",
+        "@gooddata/sdk-ui": "^8.12.3-beta.0",
+        "@gooddata/sdk-ui-kit": "^8.12.3-beta.0",
+        "@gooddata/util": "^8.12.3-beta.0",
         "@reduxjs/toolkit": ">=1.5.1 <1.8.0",
         "abortcontroller-polyfill": "^1.7.5",
         "classnames": "^2.3.1",
@@ -91,8 +90,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/reference-workspace": "^8.12.2",
-        "@gooddata/sdk-backend-mockingbird": "^8.12.2",
+        "@gooddata/reference-workspace": "^8.12.3-beta.0",
+        "@gooddata/sdk-backend-mockingbird": "^8.12.3-beta.0",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
@@ -110,7 +109,7 @@
         "@typescript-eslint/parser": "^5.45.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
         "concurrently": "^6.0.2",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^12.12.2",
         "enzyme": "^3.10.0",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
