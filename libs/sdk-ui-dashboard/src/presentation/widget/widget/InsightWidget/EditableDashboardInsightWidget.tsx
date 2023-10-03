@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
-import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
+import { IdentifierRef, IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
@@ -12,7 +12,8 @@ import {
 import { DashboardInsight } from "../../insight/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import {
-    selectIsDashboardSaving,
+    changeInsightWidgetDescription,
+    selectIsDashboardSaving, useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../../model/index.js";
@@ -51,6 +52,28 @@ const EditableDashboardInsightWidgetCore: React.FC<
 
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+
+    const dashboardDispatch = useDashboardDispatch();
+    const applyWidgetDescription = useCallback((e: {detail: {insightId: string; description: string}}) => {
+        const {insightId, description} = e.detail;
+        // Ensure given widget is the one we want
+        if ((widget.insight as IdentifierRef).identifier === insightId) {
+            dashboardDispatch(
+                changeInsightWidgetDescription(widgetRef(widget), {description}),
+            );
+            document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
+            document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
+        }
+    }, []);
+    useEffect(() => {
+        // @ts-ignore
+        document.addEventListener("gdc-llm-chat-apply-insight-description", applyWidgetDescription);
+
+        return () => {
+            // @ts-ignore
+            document.removeEventListener("gdc-llm-chat-apply-insight-description", applyWidgetDescription);
+        };
+    }, []);
 
     return (
         <DashboardItem

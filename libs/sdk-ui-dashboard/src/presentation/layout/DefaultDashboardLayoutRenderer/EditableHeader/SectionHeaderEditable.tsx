@@ -12,17 +12,20 @@ import {
     DESCRIPTION_LENGTH_WARNING_LIMIT,
 } from "./sectionHeaderHelper.js";
 import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model/index.js";
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 export interface ISectionHeaderEditableProps {
     title: string;
     description: string;
     index: number;
+    dashboardId: string;
 }
 
 export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
+    const [editing, setEditing] = React.useState(false);
     const description = getDescription(props.description);
     const title = getTitle(props.title);
-    const { index } = props;
+    const { index, dashboardId } = props;
     const intl = useIntl();
 
     const dispatch = useDashboardDispatch();
@@ -37,10 +40,12 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
 
     const onEditingStart = useCallback(() => {
         dispatch(uiActions.setActiveSectionIndex(index));
+        setEditing(true);
     }, [dispatch, index]);
 
     const onEditingEnd = useCallback(() => {
         dispatch(uiActions.clearActiveSectionIndex());
+        setEditing(false);
     }, [dispatch]);
 
     const onTitleSubmit = useCallback(
@@ -58,6 +63,37 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
         },
         [changeDescription, onEditingEnd],
     );
+
+    const applySectionDescription = useCallback((e: {detail: {dashboardId: string, sectionIndex: number, description: string}}) => {
+        const {dashboardId: dId, sectionIndex, description} = e.detail;
+
+        if (dashboardId === dId && sectionIndex === index) {
+            onDescriptionSubmit(description);
+            document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
+            document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
+        }
+    }, [dashboardId, index, onDescriptionSubmit]);
+
+    React.useEffect(() => {
+        // Listen to events from chat and apply changes to dashboard
+        // @ts-ignore
+        document.addEventListener("gdc-llm-chat-apply-dashboard-section-description", applySectionDescription);
+
+        return () => {
+            // @ts-ignore
+            document.removeEventListener("gdc-llm-chat-apply-dashboard-section-description", applySectionDescription);
+        };
+    }, []);
+
+    const onAutoGenerate = useCallback(() => {
+        document.dispatchEvent(new CustomEvent("gdc-llm-chat-open"));
+        document.dispatchEvent(new CustomEvent("gdc-llm-chat-generate-dashboard-section-description", {
+            detail: {
+                dashboardId,
+                sectionIndex: index,
+            },
+        }));
+    }, [dashboardId, index]);
 
     return (
         <div className="gd-row-header-edit">
@@ -91,6 +127,9 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                     onCancel={onEditingEnd}
                 />
             </div>
+            {editing ? <div className="gd-icon-section-suggest" onMouseDown={onAutoGenerate}>
+                <Icon.Magic color="rgb(20,178,226)" />
+            </div> : null}
         </div>
     );
 }
