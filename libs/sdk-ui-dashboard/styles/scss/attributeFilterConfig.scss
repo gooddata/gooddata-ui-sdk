@@ -165,6 +165,18 @@
     }
 }
 
+.dropdown-body {
+    .gd-list-footer {
+        .unrelated-date-button {
+            font-size: 12px;
+            line-height: 16px;
+            padding-left: 2px;
+            padding-right: 0;
+            margin-top: -3px;
+        }
+    }
+}
+
 .gd-attribute-filter-dropdown-bubble {
     max-width: 200px;
 }

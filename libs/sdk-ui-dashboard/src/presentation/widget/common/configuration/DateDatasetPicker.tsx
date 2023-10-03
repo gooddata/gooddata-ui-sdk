@@ -24,6 +24,8 @@ export interface IDateDatasetPickerProps {
     onDateDatasetChange: (id: string) => void;
     className?: string;
     isLoading?: boolean;
+    enableUnrelatedItemsVisibility?: boolean;
+    unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
 export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
@@ -35,6 +37,8 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
         dateFromVisualization,
         autoOpen,
         isLoading,
+        enableUnrelatedItemsVisibility,
+        unrelatedDateDatasets,
 
         onDateDatasetChange,
     } = props;
@@ -56,6 +60,8 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
                 onDateDatasetChange={onDateDatasetChange}
                 isLoading={isLoading}
                 width={width}
+                enableUnrelatedItemsVisibility={enableUnrelatedItemsVisibility}
+                unrelatedDateDatasets={unrelatedDateDatasets}
             />
         </div>
     );
