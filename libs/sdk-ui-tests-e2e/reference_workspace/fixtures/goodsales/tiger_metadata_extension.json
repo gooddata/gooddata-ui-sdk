@@ -4186,6 +4186,62 @@
                             "items": [
                                 {
                                     "measure": {
+                                        "localIdentifier": "656c15e862a249e890baeb4ea9930c77",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "aeaea589c912406ab08e67d1a4246103",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {
+                        "controls": {
+                            "measureGroupDimension": "columns"
+                        }
+                    },
+                    "visualizationUrl": "local:table",
+                    "version": "2"
+                },
+                "description": "",
+                "id": "8f88b387-351b-479f-a7fb-e2b072c810f3",
+                "title": "Table Transpose"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
                                         "definition": {
                                             "measureDefinition": {
                                                 "filters": [],
