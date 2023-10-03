@@ -1,2 +1,2 @@
 # (C) 2019-2023 GoodData Corporation
-//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+//registry.npmjs.org/:_authToken=${NPM_PUBLISH_TOKEN}
