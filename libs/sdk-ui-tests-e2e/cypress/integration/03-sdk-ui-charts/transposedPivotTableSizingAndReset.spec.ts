@@ -9,6 +9,7 @@ const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
 const CHANGE_WIDTH_BUTTON_SLICE_MEASURE_STR = ".s-change-width-button-slice-measure";
 const CHANGE_WIDTH_BUTTON_MIXED_VALUE_STR = ".s-change-width-button-mixed-values-measure";
 const TURN_ON_AUTO_SIZE_COMPLEX = ".s-pivot-table-sizing-complex-autoresize-checkbox";
+const TURN_ON_GROW_TO_FIT_COMPLEX = ".s-pivot-table-sizing-complex-grow-to-fit-checkbox";
 
 const SECOND_CELL_AUTORESIZE_WIDTH = 110;
 const SECOND_CELL_MANUAL_WIDTH = 60;
@@ -18,6 +19,7 @@ const FIRST_CELL_MANUAL_WIDTH = 400;
 const FIRST_SLICE_MEASURE_CELL_AUTORESIZE_WIDTH = 80;
 const FIRST_MIXED_VALUES_CELL_AUTORESIZE_WIDTH = 110;
 const AUTO_SIZE_TOLERANCE = 10;
+const TOTAL_SIZE = 1000;
 
 const MEASURE_LOCATOR_ITEM = measureLocalId(Md.Amount);
 
@@ -257,3 +259,102 @@ describe(
         });
     },
 );
+
+describe("Transposed Pivot Table resizing", { tags: ["checklist_integrated_bear"] }, () => {
+    const SIZE_AFTER_GROW_FIT = TOTAL_SIZE / 3;
+    const SIZE_AFTER_CHANGE_1_COL = (TOTAL_SIZE - SECOND_CELL_MANUAL_WIDTH) / 2;
+    const SIZE_AFTER_CHANGE_2_COL = TOTAL_SIZE - SECOND_CELL_MANUAL_WIDTH - FIRST_CELL_MANUAL_WIDTH;
+
+    const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
+
+    beforeEach(() => {
+        Navigation.visit("visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset");
+        table.waitLoaded();
+    });
+
+    it("with autoSizing and growToFit are both off", () => {
+        clickItem(CHANGE_WIDTH_BUTTON_SLICE_MEASURE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, CELL_DEFAULT_WIDTH, false)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, CELL_DEFAULT_WIDTH, false);
+
+        clickItem(CHANGE_WIDTH_BUTTON_MIXED_VALUE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, CELL_DEFAULT_WIDTH, false)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, FIRST_CELL_MANUAL_WIDTH, false);
+    });
+
+    it("with autoSizing is off and growToFit is on", () => {
+        clickItem(TURN_ON_GROW_TO_FIT_COMPLEX);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, SIZE_AFTER_GROW_FIT, true)
+            .hasCellWidth(0, 1, SIZE_AFTER_GROW_FIT, true)
+            .hasCellWidth(0, 2, SIZE_AFTER_GROW_FIT, true);
+
+        clickItem(CHANGE_WIDTH_BUTTON_SLICE_MEASURE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, SIZE_AFTER_CHANGE_1_COL, false)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, SIZE_AFTER_CHANGE_1_COL, false);
+
+        clickItem(CHANGE_WIDTH_BUTTON_MIXED_VALUE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, SIZE_AFTER_CHANGE_2_COL, false)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, FIRST_CELL_MANUAL_WIDTH, false);
+    });
+
+    it("with autoSizing is on and growToFit is off", () => {
+        clickItem(TURN_ON_AUTO_SIZE_COMPLEX);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, 100, true)
+            .hasCellWidth(0, 1, 68, true)
+            .hasCellWidth(0, 2, 110, true);
+
+        clickItem(CHANGE_WIDTH_BUTTON_SLICE_MEASURE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, 100, true)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, 110, true);
+
+        clickItem(CHANGE_WIDTH_BUTTON_MIXED_VALUE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, 100, true)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, FIRST_CELL_MANUAL_WIDTH, false);
+    });
+
+    it("with autoSizing and growToFit are both on", () => {
+        clickItem(TURN_ON_AUTO_SIZE_COMPLEX);
+        clickItem(TURN_ON_GROW_TO_FIT_COMPLEX);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, 363, true)
+            .hasCellWidth(0, 1, 245, true)
+            .hasCellWidth(0, 2, 392, true);
+
+        clickItem(CHANGE_WIDTH_BUTTON_SLICE_MEASURE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, 452, true)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, 488, true);
+
+        clickItem(CHANGE_WIDTH_BUTTON_MIXED_VALUE_STR);
+        table
+            .waitLoaded()
+            .hasCellWidth(0, 0, SIZE_AFTER_CHANGE_2_COL, false)
+            .hasCellWidth(0, 1, SECOND_CELL_MANUAL_WIDTH, false)
+            .hasCellWidth(0, 2, FIRST_CELL_MANUAL_WIDTH, false);
+    });
+});
