@@ -62,7 +62,7 @@ fi
 echo "Publishing to NPM"
 
 # forcing restricted access level; switch this to public
-${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all --tag "${TAG_NPM}" --set-access-level public
+${_RUSH} publish -p --include-all --tag "${TAG_NPM}" --set-access-level public
 publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
