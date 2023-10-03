@@ -106,7 +106,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePdmRemovalDeprecationPhase: false,
     enablePivotTableTransposition: true,
     enableColumnHeadersPosition: true,
-    enableNewHeadline: true,
+    enableNewHeadline: false,
     enableAttributeHierarchies: false,
     enableUnavailableItemsVisible: false,
 };
