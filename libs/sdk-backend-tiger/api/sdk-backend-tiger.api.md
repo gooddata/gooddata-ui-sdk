@@ -31,9 +31,11 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
@@ -495,6 +497,10 @@ export type TigerSpecificFunctions = {
     getNotificationsForCurrentUser?: (workspaceId: string) => Promise<IUserNotification[]>;
     markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
     markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
+    getAllEntitiesWidgetAlerts?: (workspaceId: string) => Promise<{
+        alert: IWidgetAlert;
+        insight: IInsight;
+    }[]>;
 };
 
 // @public

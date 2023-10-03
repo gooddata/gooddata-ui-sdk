@@ -50,6 +50,9 @@ import {
     WidgetAlertUserNotification,
     KeyDriversDimension,
     AnomalyUserNotification,
+    JsonApiFilterContextOutWithLinks,
+    JsonApiVisualizationObjectOutWithLinks,
+    VisualizationObjectModelV1,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -58,8 +61,12 @@ import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/s
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { IUser, IMeasure } from "@gooddata/sdk-model";
+import { IUser, IMeasure, IWidgetAlert, IInsight } from "@gooddata/sdk-model";
 import { convertMeasure } from "../convertors/toBackend/afm/MeasureConverter.js";
+import { convertWidgetAlert } from "../convertors/fromBackend/analyticalDashboards/WidgetAlertConverter.js";
+import { convertVisualizationObject } from "../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+import { insightFromInsightDefinition } from "../convertors/fromBackend/InsightConverter.js";
+import { isInheritedObject } from "../convertors/fromBackend/ObjectInheritance.js";
 
 /**
  * @internal
@@ -598,6 +605,10 @@ export type TigerSpecificFunctions = {
     markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
 
     markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
+
+    getAllEntitiesWidgetAlerts?: (
+        workspaceId: string,
+    ) => Promise<{ alert: IWidgetAlert; insight: IInsight }[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -2013,6 +2024,55 @@ export const buildTigerSpecificFunctions = (
             await sdk.actions.markAllNotificationsAsRead({
                 workspaceId,
             });
+        });
+    },
+
+    getAllEntitiesWidgetAlerts: async (workspaceId: string) => {
+        const alertsData = await authApiCall(async (client, context) => {
+            const author = await context.getPrincipal();
+
+            return client.entities.getAllEntitiesWidgetAlerts({
+                workspaceId,
+                include: ["visualizationObject", "filterContext", "analyticalDashboard"],
+                filter: `createdBy.id==${author.userId}`,
+            });
+        });
+
+        return alertsData.data.data.map((alertToConvert) => {
+            const insightId = alertToConvert.relationships!.visualizationObject!.data!.id;
+            const insightToConvert = alertsData.data!.included!.find(
+                (i) => i.id === insightId,
+            )! as JsonApiVisualizationObjectOutWithLinks;
+
+            return {
+                alert: convertWidgetAlert(
+                    alertToConvert,
+                    alertsData.data.included?.find(
+                        (i) =>
+                            i.type === "filterContext" &&
+                            i.id === alertToConvert.relationships!.filterContext?.data?.id,
+                    ) as JsonApiFilterContextOutWithLinks,
+                ),
+                insight: insightFromInsightDefinition(
+                    convertVisualizationObject(
+                        insightToConvert.attributes!.content! as
+                            | VisualizationObjectModelV1.IVisualizationObject
+                            | VisualizationObjectModelV1.IVisualizationObject,
+                        insightToConvert.attributes!.title!,
+                        insightToConvert.attributes!.description!,
+                        insightToConvert.attributes!.tags,
+                    ),
+                    insightToConvert.id,
+                    insightToConvert.links!.self,
+                    insightToConvert.attributes!.tags,
+                    isInheritedObject(insightToConvert),
+                    insightToConvert.attributes?.createdAt,
+                    insightToConvert.attributes?.modifiedAt,
+                    undefined,
+                    undefined,
+                    undefined,
+                ),
+            };
         });
     },
 });
