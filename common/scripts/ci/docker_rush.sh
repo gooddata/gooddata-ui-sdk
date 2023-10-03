@@ -32,6 +32,7 @@ docker run \
   --env WIREMOCK_NET \
   --env HOME="/workspace" \
   --env EXAMPLES_BUILD_TYPE \
+  --env NPM_PUBLISH_TOKEN \
   --env EXAMPLE_MAPBOX_ACCESS_TOKEN \
   --env BROWSERSLIST_IGNORE_OLD_DATA=true \
   --rm \
