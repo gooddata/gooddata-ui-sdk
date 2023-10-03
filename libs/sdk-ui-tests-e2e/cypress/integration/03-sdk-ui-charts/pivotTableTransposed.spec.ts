@@ -29,9 +29,7 @@ describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
         table.waitLoaded().hasHeader("Product");
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("should display Metric in row", () => {
-        // skip test because ticket https://gooddata.atlassian.net/browse/TNT-1757
+    it("should display Metric in row", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-m-row-left");
         table.waitLoaded().hasMetricHeaderInRow(0, 0, "Amount").hasCellValue(0, 1, "$116,625,456.54");
     });
