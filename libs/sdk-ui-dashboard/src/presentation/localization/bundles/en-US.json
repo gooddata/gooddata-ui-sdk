@@ -2058,6 +2058,21 @@
         "comment": "",
         "limit": 0
     },
+    "gs.date.date-dataset.unrelated_hidden": {
+        "value": "{count} unrelated {count, plural, one {date} other {dates}} {isShow, select, true {visible} other {hidden}}.",
+        "comment": "Don't translate placeholder '{count}'. In '{count, plural, one {DATE} other {DATES}} and {isShow, select, true {VISIBLE} other {HIDDEN}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "gs.date.date-dataset.unrelated.show": {
+        "value": "Show",
+        "comment": "The unrelated items button",
+        "limit": 0
+    },
+    "gs.date.date-dataset.unrelated.hide": {
+        "value": "Hide",
+        "comment": "The unrelated items button",
+        "limit": 0
+    },
     "layout.widget.width.min": {
         "value": "Widget is at the minimal width",
         "comment": "Shown as red text inside of widget if resized under min limit.",

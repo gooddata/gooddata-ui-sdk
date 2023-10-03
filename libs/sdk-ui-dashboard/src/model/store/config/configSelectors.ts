@@ -563,3 +563,15 @@ export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelect
         return isKPIDashboardImplicitDrillDownEnabled || isAttribueHierarchiesEnabled;
     },
 );
+
+/**
+ * Returns whether the unrelated data datasets are shown.
+ *
+ * @internal
+ */
+export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableUnavailableItemsVisible ?? false;
+    },
+);

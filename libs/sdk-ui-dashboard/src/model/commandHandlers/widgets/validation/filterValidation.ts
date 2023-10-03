@@ -26,6 +26,8 @@ import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.j
 import isEmpty from "lodash/isEmpty.js";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
 import { IDashboardCommand } from "../../../commands/index.js";
+import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
+import { selectCatalogDateDatasets } from "../../../store/catalog/catalogSelectors.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
@@ -60,9 +62,11 @@ export function* validateDatasetForInsightWidgetDateFilter(
         query,
         queryDateDatasetsForInsight(resolvedInsight ? resolvedInsight : widget.insight),
     );
-    const catalogDataSet = newCatalogDateDatasetMap(insightDateDatasets.allAvailableDateDatasets).get(
-        dateDataSet,
-    );
+    const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
+    const dateDataSetsToValidate = enableUnavailableItemsVisible
+        ? yield select(selectCatalogDateDatasets)
+        : insightDateDatasets.allAvailableDateDatasets;
+    const catalogDataSet = newCatalogDateDatasetMap(dateDataSetsToValidate).get(dateDataSet);
 
     if (!catalogDataSet) {
         throw invalidArgumentsProvided(

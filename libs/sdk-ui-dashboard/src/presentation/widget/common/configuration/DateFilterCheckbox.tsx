@@ -15,6 +15,7 @@ interface IDateFilterCheckboxProps {
     selectedDateDatasetHidden?: boolean;
     dateFilterCheckboxDisabled?: boolean;
     onDateDatasetFilterEnabled: (enabled: boolean, dateDatasetRef: ObjRef | undefined) => void;
+    enableUnrelatedItemsVisibility?: boolean;
 }
 
 export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) => {
@@ -28,6 +29,7 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
         relatedDateDatasets,
         widget,
         onDateDatasetFilterEnabled,
+        enableUnrelatedItemsVisibility,
     } = props;
 
     const unrelatedDateDataset =
@@ -41,7 +43,8 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
         !selectedDateDatasetHidden &&
         dateFilterEnabled &&
         !isDropdownLoading &&
-        !dateFilterCheckboxDisabled;
+        !dateFilterCheckboxDisabled &&
+        !enableUnrelatedItemsVisibility;
 
     const showError =
         (!!unrelatedDateDataset || showNoRelatedDate) &&
