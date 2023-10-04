@@ -64,35 +64,44 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
         [changeDescription, onEditingEnd],
     );
 
-    const applySectionDescription = useCallback((e: {detail: {dashboardId: string, sectionIndex: number, description: string}}) => {
-        const {dashboardId: dId, sectionIndex, description} = e.detail;
+    const applySectionDescription = useCallback(
+        (e: { detail: { dashboardId: string; sectionIndex: number; description: string } }) => {
+            const { dashboardId: dId, sectionIndex, description } = e.detail;
 
-        if (dashboardId === dId && sectionIndex === index) {
-            onDescriptionSubmit(description);
-            document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
-            document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
-        }
-    }, [dashboardId, index, onDescriptionSubmit]);
+            if (dashboardId === dId && sectionIndex === index) {
+                onDescriptionSubmit(description);
+                document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
+                document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
+            }
+        },
+        [dashboardId, index, onDescriptionSubmit],
+    );
 
     React.useEffect(() => {
         // Listen to events from chat and apply changes to dashboard
-        // @ts-ignore
-        document.addEventListener("gdc-llm-chat-apply-dashboard-section-description", applySectionDescription);
+        document.addEventListener(
+            "gdc-llm-chat-apply-dashboard-section-description",
+            applySectionDescription,
+        );
 
         return () => {
-            // @ts-ignore
-            document.removeEventListener("gdc-llm-chat-apply-dashboard-section-description", applySectionDescription);
+            document.removeEventListener(
+                "gdc-llm-chat-apply-dashboard-section-description",
+                applySectionDescription,
+            );
         };
     }, []);
 
     const onAutoGenerate = useCallback(() => {
         document.dispatchEvent(new CustomEvent("gdc-llm-chat-open"));
-        document.dispatchEvent(new CustomEvent("gdc-llm-chat-generate-dashboard-section-description", {
-            detail: {
-                dashboardId,
-                sectionIndex: index,
-            },
-        }));
+        document.dispatchEvent(
+            new CustomEvent("gdc-llm-chat-generate-dashboard-section-description", {
+                detail: {
+                    dashboardId,
+                    sectionIndex: index,
+                },
+            }),
+        );
     }, [dashboardId, index]);
 
     return (
@@ -127,9 +136,11 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                     onCancel={onEditingEnd}
                 />
             </div>
-            {editing ? <div className="gd-icon-section-suggest" onMouseDown={onAutoGenerate}>
-                <Icon.Magic color="rgb(20,178,226)" />
-            </div> : null}
+            {editing ? (
+                <div className="gd-icon-section-suggest" onMouseDown={onAutoGenerate}>
+                    <Icon.Magic color="rgb(20,178,226)" />
+                </div>
+            ) : null}
         </div>
     );
 }

@@ -13,7 +13,8 @@ import { DashboardInsight } from "../../insight/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import {
     changeInsightWidgetDescription,
-    selectIsDashboardSaving, useDashboardDispatch,
+    selectIsDashboardSaving,
+    useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../../model/index.js";
@@ -54,23 +55,22 @@ const EditableDashboardInsightWidgetCore: React.FC<
     const isEditable = !isSaving;
 
     const dashboardDispatch = useDashboardDispatch();
-    const applyWidgetDescription = useCallback((e: {detail: {insightId: string; description: string}}) => {
-        const {insightId, description} = e.detail;
-        // Ensure given widget is the one we want
-        if ((widget.insight as IdentifierRef).identifier === insightId) {
-            dashboardDispatch(
-                changeInsightWidgetDescription(widgetRef(widget), {description}),
-            );
-            document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
-            document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
-        }
-    }, []);
+    const applyWidgetDescription = useCallback(
+        (e: { detail: { insightId: string; description: string } }) => {
+            const { insightId, description } = e.detail;
+            // Ensure given widget is the one we want
+            if ((widget.insight as IdentifierRef).identifier === insightId) {
+                dashboardDispatch(changeInsightWidgetDescription(widgetRef(widget), { description }));
+                document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
+                document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
+            }
+        },
+        [],
+    );
     useEffect(() => {
-        // @ts-ignore
         document.addEventListener("gdc-llm-chat-apply-insight-description", applyWidgetDescription);
 
         return () => {
-            // @ts-ignore
             document.removeEventListener("gdc-llm-chat-apply-insight-description", applyWidgetDescription);
         };
     }, []);

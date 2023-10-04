@@ -8,7 +8,11 @@ import { SectionHotspot } from "../../dragAndDrop/index.js";
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { getRefsForSection } from "../refs.js";
-import { selectDashboardId, selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectDashboardId,
+    selectIsSectionInsertedByPlugin,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,

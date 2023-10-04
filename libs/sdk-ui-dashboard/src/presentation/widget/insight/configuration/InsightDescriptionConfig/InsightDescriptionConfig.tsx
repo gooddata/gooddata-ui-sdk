@@ -165,15 +165,17 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
         [descriptionConfig, setDescriptionConfiguration, widget, widgetDescriptionState],
     );
 
-    const openAiDescriptionChangeCallback = React.useCallback((e: CustomEvent<{description: string}>) => {
-        handleDescriptionChange(e.detail.description);
-    }, [handleDescriptionChange])
+    const openAiDescriptionChangeCallback = React.useCallback(
+        (e: CustomEvent<{ description: string }>) => {
+            handleDescriptionChange(e.detail.description);
+        },
+        [handleDescriptionChange],
+    );
 
     React.useEffect(() => {
         return () => {
-            // @ts-ignore
             document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
-            document.dispatchEvent(new CustomEvent("gdc-llm-chat-set-value", {detail: ""}));
+            document.dispatchEvent(new CustomEvent("gdc-llm-chat-set-value", { detail: "" }));
         };
     }, [openAiDescriptionChangeCallback]);
 
@@ -218,25 +220,29 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
                     />
                     {widgetDescriptionState.config === "widget" ||
                     widgetDescriptionState.config === "insight" ? (
-                        <div style={{position:"relative"}}>
+                        <div style={{ position: "relative" }}>
                             <InsightDescription
                                 description={widgetDescriptionState.description ?? ""}
                                 setDescription={handleDescriptionChange}
                                 readOnly={widgetDescriptionState.config === "insight"}
                             />
-                            {widgetDescriptionState.config === "widget"
-                                ? <div
+                            {widgetDescriptionState.config === "widget" ? (
+                                <div
                                     style={iconButton}
                                     onClick={() => {
-                                        // @ts-ignore
                                         document.dispatchEvent(new CustomEvent("gdc-llm-chat-open"));
-                                        document.dispatchEvent(new CustomEvent("gdc-llm-chat-generate-insight-description", {detail: {insightId: (widget.insight as IdentifierRef).identifier}}));
+                                        document.dispatchEvent(
+                                            new CustomEvent("gdc-llm-chat-generate-insight-description", {
+                                                detail: {
+                                                    insightId: (widget.insight as IdentifierRef).identifier,
+                                                },
+                                            }),
+                                        );
                                     }}
                                 >
                                     <Icon.Magic color="rgb(20,178,226)" />
                                 </div>
-                                : null
-                            }
+                            ) : null}
                         </div>
                     ) : null}
                     {
