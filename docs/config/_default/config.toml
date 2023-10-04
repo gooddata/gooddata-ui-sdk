@@ -177,3 +177,6 @@ mediatype = "text/netlify"
 baseName = "_redirects"
 isPlainText = true
 notAlternative = true
+
+[security.funcs]
+getenv = ['^HUGO_', '^CI$', '^hugo_env$']
