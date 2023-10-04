@@ -8,7 +8,11 @@ import { SectionHotspot } from "../../dragAndDrop/index.js";
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { getRefsForSection } from "../refs.js";
-import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectDashboardId,
+    selectIsSectionInsertedByPlugin,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -21,6 +25,7 @@ export function DashboardLayoutEditSectionHeaderRenderer(
 
     const refs = getRefsForSection(section);
     const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
+    const dashboardId = useDashboardSelector(selectDashboardId)!;
 
     return (
         <DashboardLayoutItemViewRenderer
@@ -40,6 +45,7 @@ export function DashboardLayoutEditSectionHeaderRenderer(
                             title={sectionHeader?.title || ""}
                             description={sectionHeader?.description || ""}
                             index={section.index()}
+                            dashboardId={dashboardId}
                         />
                     ) : undefined
                 }

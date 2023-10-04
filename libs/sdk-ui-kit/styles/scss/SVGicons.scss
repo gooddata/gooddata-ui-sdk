@@ -274,3 +274,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         @include gd-svg-icon("hyperlink-warning");
     }
 }
+
+.gd-icon-magic {
+    @include gd-svg-icon("magic");
+}
