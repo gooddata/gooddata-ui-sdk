@@ -6159,6 +6159,9 @@ export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
 export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
