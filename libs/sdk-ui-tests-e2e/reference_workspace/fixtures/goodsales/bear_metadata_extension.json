@@ -11328,6 +11328,19 @@
                                         "uri": "{{{visualizationObject_With_own_description_aa84cd0bv9i0}}}"
                                     }
                                 }
+                            },
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "5ec3da5465e640d49b59bdb97f44a2f5"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Sales_Rep_chart_aaifwhL4qpvy}}}"
+                                    }
+                                }
                             }
                         ],
                         "ignoreDashboardFilters": [],

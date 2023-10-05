@@ -105,5 +105,10 @@ describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrat
         new Widget(2).scrollIntoView().getTable().click(0, 3, false);
 
         drillModal.getTitleElement().should("have.text", "With own description");
+        drillModal.close();
+
+        new Widget(2).scrollIntoView().getTable().click(1, 3, false);
+
+        drillModal.getTitleElement().should("have.text", "Sales Rep chart");
     });
 });
