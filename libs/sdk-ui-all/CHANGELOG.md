@@ -41,6 +41,13 @@ Thu, 27 Jul 2023 12:35:32 GMT
 - Make it possible to hide/show on demand the web components tab on embedding dialogs
 - Add the continuous line configuration for the Line, Area and Combo charts
 
+## 8.12.3
+Thu, 05 Oct 2023 07:58:45 GMT
+
+### Updates
+
+- Use @gooddata/number-formatter instead of @gooddata/numberjs library
+
 ## 8.12.2
 Wed, 19 Jul 2023 14:12:54 GMT
 
