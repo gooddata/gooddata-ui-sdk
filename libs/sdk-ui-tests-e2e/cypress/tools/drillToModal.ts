@@ -79,5 +79,6 @@ export class DrillToModal {
 
     hasTitleHeader(title: string) {
         this.getTitleElement().should("have.text", title);
+        return this;
     }
 }

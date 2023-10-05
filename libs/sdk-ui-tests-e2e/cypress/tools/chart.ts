@@ -140,8 +140,10 @@ export class Chart {
         return this;
     }
 
-    getTooltipContents(index: number) {
-        cy.get(`.highcharts-series-${index}.highcharts-tracker rect`)
+    private getTooltipContents(index: number) {
+        cy.get(
+            `.highcharts-series-${index}.highcharts-tracker rect, .highcharts-series-${index}.highcharts-tracker path `,
+        )
             .first()
             .trigger("mouseover", { force: true });
 
@@ -153,5 +155,23 @@ export class Chart {
                 return result.push($li.text());
             });
         return cy.wrap(result);
+    }
+
+    hasTooltipContents(index: number, tooltip: string[]) {
+        this.getTooltipContents(index).should("deep.equal", tooltip);
+        return this;
+    }
+
+    clickCellHeatMap(index: number) {
+        this.getElement().find(".highcharts-data-label text").eq(index).click({ force: true });
+        return this;
+    }
+
+    isColumnHighlighted(value: string, isStroked = true) {
+        cy.get(`.highcharts-data-label text`)
+            .contains(value)
+            .trigger("mouseover")
+            .should(isStroked ? "have.attr" : "not.have.attr", "stroke");
+        return this;
     }
 }
