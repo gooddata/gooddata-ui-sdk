@@ -3,7 +3,7 @@ import { LRUCache } from "lru-cache";
 import identity from "lodash/identity.js";
 import { invariant } from "ts-invariant";
 
-import { IAccountSetting } from "@gooddata/api-model-bear";
+import { IAccountSetting, IAssociatedProjectPermissions } from "@gooddata/api-model-bear";
 import { SDK } from "../gooddata.js";
 
 import { decoratedSdk } from "../decoratedModules/index.js";
@@ -72,6 +72,19 @@ export type CachingSettings = {
      * When non-positive number is specified, then no caching of result windows will be done.
      */
     maxProjectFeatureFlags?: number;
+
+    /**
+     * Maximum number of permissions to cache per project/workspace + user combinations.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * permissions cache is dangerous in applications that query the permissions of many different
+     * workspaces or users - this will cache quite large objects for each workspace/user and can make the memory usage go up.
+     *
+     * When non-positive number is specified, then no caching of result windows will be done.
+     */
+    maxProjectPermissions?: number;
 };
 
 /**
@@ -92,16 +105,21 @@ export type CachingConfiguration = CachingCallbacks & CachingSettings;
 export const RecommendedCachingConfiguration: CachingConfiguration = {
     enableCurrentProfileCaching: true,
     maxProjectFeatureFlags: 1,
+    maxProjectPermissions: 1,
 };
 
 export type ProjectFeatureFlagsCacheEntry = {
     projectFeatureFlags: LRUCache<string, Promise<IFeatureFlags>>;
+};
+export type ProjectPermissionsCacheEntry = {
+    projectPermissions: LRUCache<string, Promise<IAssociatedProjectPermissions>>;
 };
 
 export type CachingContext = {
     caches: {
         currentProfile?: Promise<IAccountSetting> | null;
         projectFeatureFlags?: LRUCache<string, ProjectFeatureFlagsCacheEntry>;
+        projectPermissions?: LRUCache<string, ProjectPermissionsCacheEntry>;
     };
     config: CachingConfiguration;
 };
@@ -136,21 +154,26 @@ function cacheControl(ctx: CachingContext): CacheControl {
 
 export function withCaching(sdk: SDK, config: CachingConfiguration): SDK {
     assertPositiveOrUndefined(config.maxProjectFeatureFlags, "maxProjectFeatureFlags");
+    assertPositiveOrUndefined(config.maxProjectPermissions, "maxProjectPermissions");
 
-    const projectFeatureFlags = cachingEnabled(config.maxProjectFeatureFlags);
     const currentProfileCaching = cachingEnabled(config.enableCurrentProfileCaching);
+    const projectFeatureFlags = cachingEnabled(config.maxProjectFeatureFlags);
+    const projectPermissions = cachingEnabled(config.maxProjectPermissions);
 
     const ctx: CachingContext = {
         caches: {
             projectFeatureFlags: projectFeatureFlags
                 ? new LRUCache({ max: config.maxProjectFeatureFlags! })
                 : undefined,
+            projectPermissions: projectPermissions
+                ? new LRUCache({ max: config.maxProjectPermissions! })
+                : undefined,
             currentProfile: undefined,
         },
         config,
     };
 
-    const project = projectFeatureFlags ? cachedProject(ctx) : identity;
+    const project = projectFeatureFlags || projectPermissions ? cachedProject(ctx) : identity;
     const user = currentProfileCaching ? cachedUser(ctx) : identity;
 
     if (config.onCacheReady) {

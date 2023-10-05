@@ -166,11 +166,15 @@ type FactoryFunction = {
     factory?: (config?: any) => SDK;
 };
 
+type ClientCachingConfiguration = {
+    cachingConfiguration?: CachingConfiguration;
+}
+
 type BearImplConfig = BearBackendConfig &
     LegacyFunctionsSubscription &
     FactoryFunction &
     LegacySetup &
-    CachingConfiguration;
+    ClientCachingConfiguration;
 
 /**
  * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
@@ -522,10 +526,9 @@ function newSdkInstance(
         }
     }
 
-    if (config.enableClientCaching) {
+    if (implConfig.cachingConfiguration) {
         return withCaching(sdk, {
-            enableCurrentProfileCaching: implConfig.enableCurrentProfileCaching,
-            maxProjectFeatureFlags: implConfig.maxProjectFeatureFlags,
+            ...implConfig.cachingConfiguration
         });
     }
 
