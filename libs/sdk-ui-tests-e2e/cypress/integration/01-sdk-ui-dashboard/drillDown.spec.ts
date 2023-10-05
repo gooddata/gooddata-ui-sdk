@@ -38,6 +38,38 @@ const dashboardTable = [
 ];
 
 const PRODUCT_NAMES = ["CompuSci", "Educationly", "Explorer", "Grammar Plus", "PhoenixSoft", "WonderKid"];
+const PRODUCT_VALUE = [
+    "$3,312,958.33",
+    "$3,762,615.61",
+    "$2,178,059.74",
+    "$8,566,536.72",
+    "$6,758,757.23",
+    "$11,640,203.95",
+];
+const heatmapInsights = [
+    {
+        title: "heat map only row measure",
+        value: PRODUCT_VALUE,
+        firstCallValue: INSIDE_SALES,
+    },
+    {
+        title: "heat map only column measure",
+        value: [
+            "$15,582,695.69",
+            "$16,188,138.24",
+            "$30,029,658.14",
+            "$5,863,972.18",
+            "$5,763,242.30",
+            "$6,978,618.41",
+        ],
+        firstCallValue: DIRECT_SALES,
+    },
+    {
+        title: "heat map has measure column row",
+        value: PRODUCT_VALUE,
+        firstCallValue: INSIDE_SALES,
+    },
+];
 
 /**
  *
@@ -110,8 +142,7 @@ describe("Drilling", () => {
             firstWidget
                 .waitChartLoaded()
                 .getChart()
-                .getTooltipContents(0)
-                .should("deep.equal", ["Year (Closed)", "Department", "Won"]);
+                .hasTooltipContents(0, ["Year (Closed)", "Department", "Won"]);
             firstWidget.getChart().clickSeriesPoint(1, 0);
             drillModal
                 .selectDropdownAttribute(INSIDE_SALES)
@@ -209,6 +240,102 @@ describe("Drilling", () => {
                 .getTable()
                 .hasCellValue(0, 0, "$12,076,034.56")
                 .isCellUnderlined(DIRECT_SALES, false);
+        });
+
+        it("Should drill down on heat map chart", () => {
+            Navigation.visit("dashboard/heatmap-drill-down");
+            heatmapInsights.forEach((insight, index) => {
+                new Widget(index)
+                    .scrollIntoView()
+                    .waitChartLoaded()
+                    .getChart()
+                    .waitLoaded()
+                    .hasTooltipContents(0, ["Department", "Amount"])
+                    .clickCellHeatMap(0);
+                drillModal
+                    .hasTitleHeader(insight.title + " › " + insight.firstCallValue)
+                    .getChart()
+                    .hasDataLabelValues(insight.value);
+                drillModal.close();
+            });
+        });
+
+        it("Can not drill down on heat map chart has only measure", () => {
+            Navigation.visit("dashboard/heatmap-drill-down");
+            const thirdWidget = new Widget(3);
+            thirdWidget
+                .scrollIntoView()
+                .waitChartLoaded()
+                .getChart()
+                .hasDataLabelValues(["$116,625,456.54"])
+                .isColumnHighlighted("$116,625,456.54", false);
+        });
+
+        it("Drilling down on heat map chart with two drillable attributes", () => {
+            Navigation.visit("dashboard/heatmap-drill-down");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            firstWidget.waitChartLoaded().getChart().clickCellHeatMap(0);
+            drillModal
+                .hasTitleHeader("heat map only row measure › " + INSIDE_SALES)
+                .getChart()
+                .hasDataLabelValues(PRODUCT_VALUE)
+                .clickCellHeatMap(0);
+            drillModal
+                .hasTitleHeader("heat map only row measure › " + INSIDE_SALES + " › WonderKid")
+                .getChart()
+                .hasDataLabelValues([
+                    "$8,560.00",
+                    "$4,274.40",
+                    "$1,001,723.68",
+                    "$915,932.67",
+                    "$1,382,467.58",
+                ]);
+            drillModal.back().getChart().hasDataLabelValues(PRODUCT_VALUE);
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+        });
+
+        it("drilling down on heat map that have two drillable attributes on the difference bucket", () => {
+            const secondWidget = new Widget(2);
+            Navigation.visit("dashboard/heatmap-drill-down");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            secondWidget.scrollIntoView().waitChartLoaded().getChart().clickCellHeatMap(0);
+            drillModal
+                .selectDropdownAttribute(INSIDE_SALES)
+                .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES)
+                .getChart()
+                .clickCellHeatMap(0);
+            drillModal
+                .selectDropdownAttribute("WonderKid")
+                .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES + " › WonderKid")
+                .getChart()
+                .hasDataLabelValues([
+                    "$8,560.00",
+                    "$4,274.40",
+                    "$1,001,723.68",
+                    "$915,932.67",
+                    "$1,382,467.58",
+                ]);
+            drillModal
+                .back()
+                .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES)
+                .close();
+            secondWidget.scrollIntoView().waitChartLoaded().getChart().clickCellHeatMap(0);
+            drillModal
+                .selectDropdownAttribute("CompuSci")
+                .hasTitleHeader("heat map has measure column row › CompuSci")
+                .getChart()
+                .hasDataLabelValues([
+                    "$1,761,522.97",
+                    "$2,757,078.40",
+                    "$6,955,359.58",
+                    "$162,599.00",
+                    "$3,644.00",
+                    "$3,476,276.54",
+                    "$5,690,108.03",
+                    "$5,639,031.41",
+                    "$777,279.71",
+                ]);
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
     });
 

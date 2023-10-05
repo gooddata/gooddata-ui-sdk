@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-24T02:22:35.163Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-08T06:26:40.625Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2341,6 +2341,22 @@ export const Insights = {
      * Insight Title: table has only measure and columns
      * Insight ID: aad4CkIv6mxL
      */ TableHasOnlyMeasureAndColumns: "aad4CkIv6mxL",
+    /**
+     * Insight Title: heat map only row measure
+     * Insight ID: aabVP3wpB5r2
+     */ HeatMapOnlyRowMeasure: "aabVP3wpB5r2",
+    /**
+     * Insight Title: heat map only column measure
+     * Insight ID: aakVNxRuB2o9
+     */ HeatMapOnlyColumnMeasure: "aakVNxRuB2o9",
+    /**
+     * Insight Title: heat map has measure column row
+     * Insight ID: aadVO9GtCbI9
+     */ HeatMapHasMeasureColumnRow: "aadVO9GtCbI9",
+    /**
+     * Insight Title: heat map only measures
+     * Insight ID: aacVQjGsHKYh
+     */ HeatMapOnlyMeasures: "aacVQjGsHKYh",
 };
 export const Dashboards = {
     /**
@@ -2544,4 +2560,8 @@ export const Dashboards = {
      * Dashboard Title: Dashboard table drill down
      * Dashboard ID: aab9lVBAGZ64
      */ DashboardTableDrillDown: "aab9lVBAGZ64",
+    /**
+     * Dashboard Title: Heat map chart with stack data
+     * Dashboard ID: aacVR9reHK0x
+     */ HeatMapChartWithStackData: "aacVR9reHK0x",
 };
