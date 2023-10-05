@@ -195,3 +195,5 @@ export {
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
 } from "./AttributeFilter/index.js";
+
+export { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";

@@ -3,12 +3,7 @@ import React from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import noop from "lodash/noop.js";
-import {
-    DateFilterGranularity,
-    isAbsoluteDateFilterForm,
-    DashboardDateFilterConfigMode,
-    WeekStart,
-} from "@gooddata/sdk-model";
+import { DateFilterGranularity, isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 
 import { DateFilterCore } from "./DateFilterCore.js";
@@ -20,6 +15,7 @@ import {
 } from "./interfaces/index.js";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
+import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -33,7 +29,6 @@ export interface IDateFilterStatePropsIntersection {
 
 /**
  * Props of the {@link DateFilter} component.
- *
  * @public
  */
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
@@ -41,11 +36,17 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     availableGranularities: DateFilterGranularity[];
     isEditMode?: boolean;
     customFilterName?: string;
-    dateFilterMode: DashboardDateFilterConfigMode;
+    dateFilterMode: VisibilityMode;
     dateFormat?: string;
     locale?: string;
     isTimeForAbsoluteRangeEnabled?: boolean;
     weekStart?: WeekStart;
+    /**
+     * Represents a custom icon with associated tooltip information.
+     *
+     * @alpha
+     */
+    customIcon?: IFilterButtonCustomIcon;
 }
 
 /**
@@ -172,6 +173,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             locale,
             isTimeForAbsoluteRangeEnabled,
             weekStart,
+            customIcon,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -196,6 +198,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 onSelectedFilterOptionChange={this.handleSelectedFilterOptionChange}
                 errors={validateFilterOption(selectedFilterOption)}
                 weekStart={weekStart}
+                customIcon={customIcon}
             />
         );
     }
