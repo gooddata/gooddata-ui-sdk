@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 19 Jul 2023 14:12:54 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Oct 2023 07:58:45 GMT and should not be manually modified.
+
+## 8.12.3
+Thu, 05 Oct 2023 07:58:45 GMT
+
+### Updates
+
+- Use @gooddata/number-formatter instead of @gooddata/numberjs library
 
 ## 8.12.2
 Wed, 19 Jul 2023 14:12:54 GMT
