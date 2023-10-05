@@ -52,7 +52,15 @@ export function createDrillIntersection(
         } else if (isMixedValuesCol(col)) {
             mappingHeaders.push(...createMixedValuesColHeaders(col, row));
 
-            rowNodes.forEach((rowNode) => mappingHeaders.push(...createMixedValuesColHeaders(col, rowNode)));
+            if (row.measureDescriptor) {
+                rowNodes.forEach((rowNode) =>
+                    mappingHeaders.push(...createMixedValuesColHeaders(col, rowNode)),
+                );
+            } else {
+                rowNodes.forEach((rowNode) =>
+                    mappingHeaders.unshift(...createMixedValuesColHeaders(col, rowNode)),
+                );
+            }
         }
     }
 
