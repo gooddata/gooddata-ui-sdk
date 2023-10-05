@@ -8,7 +8,6 @@
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
-import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterOption as DateFilterOption_2 } from './interfaces/index.js';
 import { DateString } from '@gooddata/sdk-model';
@@ -649,8 +648,10 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     availableGranularities: DateFilterGranularity[];
     // (undocumented)
     customFilterName?: string;
+    // @alpha
+    customIcon?: IFilterButtonCustomIcon;
     // (undocumented)
-    dateFilterMode: DashboardDateFilterConfigMode;
+    dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
     // (undocumented)
@@ -705,6 +706,14 @@ export interface IDateTranslator {
 export interface IExtendedDateFilterErrors {
     absoluteForm?: IDateFilterAbsoluteFormErrors;
     relativeForm?: IDateFilterRelativeFormErrors;
+}
+
+// @alpha
+export interface IFilterButtonCustomIcon {
+    bubbleAlignPoints?: IAlignPoint[];
+    bubbleClassNames?: string;
+    icon: string;
+    tooltip: string;
 }
 
 // @public
@@ -1149,6 +1158,9 @@ export const useAutoOpenAttributeFilterDropdownButton: (props: IAttributeFilterD
 
 // @internal
 export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, onClose: () => void) => void;
+
+// @public
+export type VisibilityMode = "readonly" | "hidden" | "active";
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;

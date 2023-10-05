@@ -4,6 +4,7 @@ import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import DefaultMediaQuery from "react-responsive";
 import { defaultImport } from "default-import";
+import format from "date-fns/format/index.js";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
@@ -14,7 +15,7 @@ import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
-import format from "date-fns/format/index.js";
+import { IFilterButtonCustomIcon } from "../shared/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -55,6 +56,7 @@ export interface IDateFilterCoreProps {
     errors?: IExtendedDateFilterErrors;
 
     weekStart?: WeekStart;
+    customIcon?: IFilterButtonCustomIcon;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -85,6 +87,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     filterOptions,
     isTimeForAbsoluteRangeEnabled,
     weekStart,
+    customIcon,
     ...dropdownBodyProps
 }) => {
     const verifiedDateFormat = verifyDateFormat(dateFormat);
@@ -109,6 +112,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 isTimeForAbsoluteRangeEnabled,
                             )}
                             customFilterName={customFilterName}
+                            customIcon={customIcon}
                         />
                     );
                     return (

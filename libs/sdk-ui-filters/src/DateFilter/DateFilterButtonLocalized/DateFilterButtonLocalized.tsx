@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { DateFilterButton } from "../DateFilterButton/DateFilterButton.js";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
 import { DateFilterOption } from "../interfaces/index.js";
+import { IFilterButtonCustomIcon } from "../../shared/index.js";
 
 export interface IDateFilterButtonLocalizedProps {
     dateFilterOption: DateFilterOption;
@@ -12,6 +13,7 @@ export interface IDateFilterButtonLocalizedProps {
     isMobile: boolean;
     customFilterName?: string;
     disabled?: boolean;
+    customIcon?: IFilterButtonCustomIcon;
 }
 
 export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
@@ -21,6 +23,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     isMobile = true,
     customFilterName,
     disabled,
+    customIcon,
 }) => {
     return (
         <DateFilterButton
@@ -28,6 +31,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             isOpen={isOpen}
             isMobile={isMobile}
             disabled={disabled}
+            customIcon={customIcon}
         >
             <span className="s-button-text">
                 <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />
