@@ -2,11 +2,7 @@
 import { IAssociatedProjectPermissions, IFeatureFlags } from "@gooddata/api-model-bear";
 import { LRUCache } from "lru-cache";
 
-import {
-    CachingContext,
-    ProjectFeatureFlagsCacheEntry,
-    ProjectPermissionsCacheEntry,
-} from "./cachingClient.js";
+import { CachingContext, ProjectFeatureFlagsCacheEntry, ProjectPermissionsCacheEntry } from "./types.js";
 import { IProjectConfigSettingItem, ProjectModule } from "../project.js";
 import { ProjectModuleDecorator } from "../decoratedModules/project.js";
 import { cachingEnabled } from "./utils.js";

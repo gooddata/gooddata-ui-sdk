@@ -168,7 +168,7 @@ type FactoryFunction = {
 
 type ClientCachingConfiguration = {
     cachingConfiguration?: CachingConfiguration;
-}
+};
 
 type BearImplConfig = BearBackendConfig &
     LegacyFunctionsSubscription &
@@ -528,7 +528,7 @@ function newSdkInstance(
 
     if (implConfig.cachingConfiguration) {
         return withCaching(sdk, {
-            ...implConfig.cachingConfiguration
+            ...implConfig.cachingConfiguration,
         });
     }
 

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { UserModule } from "../user.js";
 import { IAccountSetting } from "@gooddata/api-model-bear";
-import { CachingContext } from "./cachingClient.js";
+import { CachingContext } from "./types.js";
 import { ApiResponse } from "../xhr.js";
 import { UserModuleDecorator } from "../decoratedModules/user.js";
 
