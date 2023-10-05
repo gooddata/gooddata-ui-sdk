@@ -92,6 +92,18 @@
       }
     },
     {
+      "version": "8.12.3",
+      "tag": "@gooddata/sdk-ui-all_v8.12.3",
+      "date": "Thu, 05 Oct 2023 07:58:45 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Use @gooddata/number-formatter instead of @gooddata/numberjs library"
+          }
+        ]
+      }
+    },
+    {
       "version": "8.12.2",
       "tag": "@gooddata/sdk-ui-all_v8.12.2",
       "date": "Wed, 19 Jul 2023 14:12:54 GMT",
