@@ -4,6 +4,7 @@ import fetchCookie from "fetch-cookie";
 import nodeFetch from "node-fetch";
 
 import { factory, SDK } from "./gooddata.js";
+export * from "./caching/index.js";
 
 // Calling getFactoryNode always reinitializes fetch-cookie. This way, when factory
 // initialization happens between requests, new instance of fetch-cookie and uderlying
