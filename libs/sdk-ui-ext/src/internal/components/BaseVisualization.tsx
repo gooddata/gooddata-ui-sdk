@@ -69,6 +69,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     configPanelClassName?: string;
     theme?: ITheme;
     lastSavedVisClassUrl?: string;
+    sourceInsightId?: string;
     onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint, sortConfig?: ISortConfig): void;
     onSortingChanged?(sortConfig: ISortConfig): void;
 
@@ -392,6 +393,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 drillableItems: this.props.drillableItems,
                 totalsEditAllowed: this.props.totalsEditAllowed,
                 lastSavedVisClassUrl: this.props.lastSavedVisClassUrl,
+                sourceInsightId: this.props.sourceInsightId,
             },
             config: this.props.config,
             theme: this.props.theme,
