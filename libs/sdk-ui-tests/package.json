@@ -8,7 +8,7 @@
         "directory": "libs/sdk-ui-tests"
     },
     "author": "GoodData Corporation",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "type": "module",
     "browser": "./esm/index.js",
     "exports": "./esm/index.js",
