@@ -9,7 +9,7 @@
     },
     "author": "GoodData Corporation",
     "private": true,
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "type": "module",
     "exports": "./esm/index.js",
     "types": "esm/index.d.ts",
