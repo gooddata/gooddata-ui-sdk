@@ -223,6 +223,14 @@ export interface IBackendCapabilities {
     supportsEnumeratingDatetimeAttributes?: boolean;
 
     /**
+     * Indicates whether the UI supports hidden and locked filters.
+     *
+     * If set to true, the user interface (UI) provides functionality for managing hidden
+     * and locked filters. If set to false or undefined, the UI does not support these features.
+     */
+    supportsHiddenAndLockedFiltersOnUI?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

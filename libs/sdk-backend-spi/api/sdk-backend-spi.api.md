@@ -247,6 +247,7 @@ export interface IBackendCapabilities {
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
     supportsGranularAccessControl?: boolean;
+    supportsHiddenAndLockedFiltersOnUI?: boolean;
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsInlineMeasures?: boolean;
