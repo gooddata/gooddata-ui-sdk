@@ -232,6 +232,65 @@ describe("PluggableHeadline2", () => {
             });
         });
 
+        it("should correctly set default comparison configuration for new insight", () => {
+            const headline = createComponent({
+                featureFlags: {
+                    enableNewHeadline: true,
+                },
+            });
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+            });
+        });
+
+        it("should correctly set default comparison configuration for migration in InsightOverlay", () => {
+            const headline = createComponent({
+                featureFlags: {
+                    enableNewHeadline: true,
+                },
+            });
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+                sourceInsightId: "dummy_insight",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                format: "#,##0%",
+                colorConfig: {
+                    disabled: true,
+                },
+                labelConfig: {
+                    unconditionalValue: "Versus",
+                },
+            });
+        });
+
         it("should correctly set default comparison configuration for migration", () => {
             const headline = createComponent({
                 featureFlags: {
