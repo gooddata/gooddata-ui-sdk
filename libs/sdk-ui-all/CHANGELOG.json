@@ -2,6 +2,21 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.2.0",
+      "tag": "@gooddata/sdk-ui-all_v9.2.0",
+      "date": "Fri, 06 Oct 2023 13:12:04 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Supporting to share the dashboard with all workspace users."
+          },
+          {
+            "comment": "Introduce new attribute hierarchy catalog entity which is used for implicit drill-down in dashboards."
+          }
+        ]
+      }
+    },
+    {
       "version": "9.1.0",
       "tag": "@gooddata/sdk-ui-all_v9.1.0",
       "date": "Fri, 08 Sep 2023 07:19:23 GMT",

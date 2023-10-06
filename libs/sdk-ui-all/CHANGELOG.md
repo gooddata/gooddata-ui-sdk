@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 08 Sep 2023 07:19:23 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Oct 2023 13:12:04 GMT and should not be manually modified.
+
+## 9.2.0
+Fri, 06 Oct 2023 13:12:04 GMT
+
+### Updates
+
+- Supporting to share the dashboard with all workspace users.
+- Introduce new attribute hierarchy catalog entity which is used for implicit drill-down in dashboards.
 
 ## 9.1.0
 Fri, 08 Sep 2023 07:19:23 GMT
