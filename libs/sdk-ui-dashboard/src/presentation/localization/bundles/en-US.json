@@ -2169,5 +2169,20 @@
         "value": "with data of",
         "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
         "limit": 0
+    },
+    "filter.visibilityMode.tooltip.hidden": {
+        "value": "This filter is hidden outside of edit mode, but its selection is still applied.",
+        "comment": "The tooltip serves as a warning to the user that the filter will be hidden in view mode.",
+        "limit": 0
+    },
+    "filter.visibilityMode.tooltip.readonly.editMode": {
+        "value": "This filter is locked, its value cannot be changed outside of edit mode.",
+        "comment": "The tooltip serves as a warning to the user that the filter will be locked, and the user cannot change its value in view mode.",
+        "limit": 0
+    },
+    "filter.visibilityMode.tooltip.readonly.viewMode": {
+        "value": "This filter is locked. You cannot change its value.",
+        "comment": "The tooltip helps users understand why they cannot change its value.",
+        "limit": 0
     }
 }
