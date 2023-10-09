@@ -334,8 +334,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
     ): HeadlineControlProperties {
         const isInsightOpened = isInsight(insight) && insightId(insight);
+        const hasSourceInsightId = !!options.custom?.sourceInsightId;
         const hasVisClassChanged = options.custom?.lastSavedVisClassUrl !== "local:headline";
-        const useDefaultMigrationProperties = isInsightOpened && !hasVisClassChanged;
+        const useDefaultMigrationProperties = (isInsightOpened && !hasVisClassChanged) || hasSourceInsightId;
         return useDefaultMigrationProperties
             ? this.buildDefaultMigrationProperties()
             : HEADLINE_DEFAULT_CONTROL_PROPERTIES;
