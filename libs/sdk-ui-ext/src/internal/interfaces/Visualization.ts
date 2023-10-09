@@ -59,6 +59,7 @@ export interface ICustomProps {
     drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
     lastSavedVisClassUrl?: string;
+    sourceInsightId?: string;
 }
 
 export interface IDimensions {

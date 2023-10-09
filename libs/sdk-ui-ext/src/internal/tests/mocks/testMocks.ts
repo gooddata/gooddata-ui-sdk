@@ -35,6 +35,57 @@ export const dummyInsight: IInsightDefinition = {
     },
 };
 
+export const insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier: IInsight = {
+    insight: {
+        visualizationUrl: "local:headline",
+        buckets: [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1269",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.SECONDARY_MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        identifier: undefined,
+        uri: "/gdc/md/project/obj/1234",
+        ref: {
+            identifier: undefined,
+        },
+        title: "Dummy insight with single primary and secondary measure",
+    },
+};
+
 export const insightWithSinglePrimaryAndSecondaryMeasure: IInsight = {
     insight: {
         visualizationUrl: "local:headline",
