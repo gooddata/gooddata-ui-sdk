@@ -57,7 +57,9 @@ export function isHslColorBlackOrWhite(hslColor: ColorFormats.HSL): boolean {
 }
 
 function getX(e: TouchEvent | MouseEvent) {
-    return e instanceof TouchEvent ? e.touches[0].pageX : e.pageX;
+    return (e as TouchEvent)?.touches?.[0]?.pageX
+        ? (e as TouchEvent).touches[0].pageX
+        : (e as MouseEvent).pageX;
 }
 
 export function calculateHueChange(
