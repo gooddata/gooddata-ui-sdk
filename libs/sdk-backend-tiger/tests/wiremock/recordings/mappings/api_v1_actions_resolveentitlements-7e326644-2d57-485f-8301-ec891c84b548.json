@@ -1,29 +1,18 @@
 {
-    "id": "ff7216a3-5ff9-43fd-851e-156771146717",
-    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "id": "7e326644-2d57-485f-8301-ec891c84b548",
+    "name": "api_v1_actions_resolveentitlements",
     "request": {
-        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=0&limit=100",
-        "method": "POST",
+        "url": "/api/v1/actions/resolveEntitlements",
+        "method": "GET",
         "headers": {
             "Accept": {
                 "equalTo": "application/json, text/plain, */*"
-            },
-            "Content-Type": {
-                "equalTo": "application/json",
-                "caseInsensitive": true
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements-ff7216a3-5ff9-43fd-851e-156771146717.json",
+        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -37,7 +26,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "ff7216a3-5ff9-43fd-851e-156771146717",
+    "uuid": "7e326644-2d57-485f-8301-ec891c84b548",
     "persistent": true,
-    "insertionIndex": 13
+    "insertionIndex": 4
 }

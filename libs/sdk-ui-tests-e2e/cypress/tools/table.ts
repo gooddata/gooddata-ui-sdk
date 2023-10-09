@@ -169,6 +169,17 @@ export class Table {
         return cy.wrap(result);
     }
 
+    getRowValues(rowIndex: number) {
+        this.waitLoaded();
+        const result = [] as string[];
+        this.getElement()
+            .find(`[row-index="${rowIndex}"] .s-value`)
+            .each(($li) => {
+                return result.push($li.text());
+            });
+        return cy.wrap(result);
+    }
+
     getCellValue(row: number, column: number) {
         return this.getElement().find(`.s-cell-${row}-${column} .s-value`);
     }

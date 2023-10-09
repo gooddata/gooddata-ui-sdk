@@ -219,6 +219,292 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "measure",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_and_datetime_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_and_datetime_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales rep and datetime condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE {label/dt_closedate_timestamp.week} >= DATETIME_ADD(MAX({label/dt_oppcreated_timestamp.week}, {dataset/f_opportunitysnapshot}), -1)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_add_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_add_and_max",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime add and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE {label/dt_closedate_timestamp.week} <= DATETIME_ADD(PREVIOUS(YEAR, 2), WEEK, -551)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_and_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_and_previous",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime and previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, {label/dt_closedate_timestamp.hour}, MINUTE) < 50000",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_3_difference_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_3_difference_params",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and 3 difference params",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.month}, DATETIME_ADD((
+        SELECT MAX({label/dt_closedate_timestamp.day}, {dataset/f_opportunitysnapshot})
+          BY {dataset/f_opportunitysnapshot}), -1), HOUR) < 600",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_add",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and add",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_DIFF({label/dt_closedate_timestamp.month},
+    SELECT MAX({label/dt_oppcreated_timestamp.week})
+      BY ALL OTHER
+      USING {dataset/f_opportunitysnapshot}, DAY) > 670",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_max_by_all_other",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_max_by_all_other",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and max by all other",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, 
+    SELECT MAX({label/dt_closedate_timestamp.month}) 
+      USING {dataset/f_opportunitysnapshot}, MONTH) > 8",
+        "format": "#,##0.00",
+        "id": "count_sales_reps_with_diff_and_max_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_sales_reps_with_diff_and_max_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales reps with diff and max condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.day} = DATETIME_ADD({label/dt_closedate_timestamp.year}, DAY, -150)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_day",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_day",
+          "type": "measure",
+        },
+        "title": "Datetime add of day",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.hour} >= DATETIME_ADD({label/dt_closedate_timestamp.year}, HOUR, 1000)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_hour",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_hour",
+          "type": "measure",
+        },
+        "title": "Datetime add of hour",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.minute} <= DATETIME_ADD({label/dt_closedate_timestamp.year}, MINUTE, -10)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_minute",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_minute",
+          "type": "measure",
+        },
+        "title": "Datetime add of minute",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = DATETIME_ADD({label/dt_closedate_timestamp.year}, MONTH, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_month",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_month",
+          "type": "measure",
+        },
+        "title": "Datetime add of month",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(THIS(YEAR), YEAR, -13)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_this_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.week} < DATETIME_ADD({label/dt_closedate_timestamp.year}, WEEK, 1)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_week",
+          "type": "measure",
+        },
+        "title": "Datetime add of week",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = DATETIME_ADD({label/dt_closedate_timestamp.year}, YEAR, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "fact": {
         "description": "Days to Close",
         "id": "f_opportunitysnapshot.f_daystoclose",
@@ -259,6 +545,362 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "fact",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_diffrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_diffrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_diffenrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_diffenrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of week (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
+  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of week (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_month_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_month_week",
+          "type": "measure",
+        },
+        "title": "Diff of week (month week)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "diff_of_week_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "diff_of_week_string",
+          "type": "measure",
+        },
+        "title": "Diff of week (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_week_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_week_year",
+          "type": "measure",
+        },
+        "title": "Diff of week (week year)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_2_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_2_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (2 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(PREVIOUS(YEAR), NEXT(YEAR)))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous and next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string_and_this",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string_and_this",
+          "type": "measure",
+        },
+        "title": "Diff of year (string and this)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string",
+          "type": "measure",
+        },
+        "title": "Diff of year (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "fact": {
         "description": "Duration",
         "id": "f_stagehistory.f_duration",
@@ -277,6 +919,410 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "filter_time_transformation_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "filter_time_transformation_datetime_add",
+          "type": "measure",
+        },
+        "title": "Filter time transformation (datetime add)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "First value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ first_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "First value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "First value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "First value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "First value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "first_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "First value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount_2",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount_2",
+          "type": "measure",
+        },
+        "title": "First value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "Last value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ last_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "Last value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "Last value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "last_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "Last value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount",
+          "type": "measure",
+        },
+        "title": "Last value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "groups": [],
@@ -330,6 +1376,26 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "Negative Metric",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "no_time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "no_time_transformation",
+          "type": "measure",
+        },
+        "title": "No Time transformation",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -472,6 +1538,230 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(FIRST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "runsum_first_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_first_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum first value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(LAST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})
+",
+        "format": "#,##0.00",
+        "id": "runsum_last_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_last_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum last value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND NEXT(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  NOT BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_not_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_not_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and not between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} BETWEEN (
+  SELECT MAX({label/dt_oppcreated_timestamp.year})
+    USING {label/f_opportunity.id}) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_between_max_created_year_and_previous_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_between_max_created_year_and_previous_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount between max created year and previous year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT sum({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} NOT BETWEEN (
+  SELECT MAX(SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})) AND THIS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_not_between_max_created_year_and_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_not_between_max_created_year_and_this_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount not between max created year and this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} = CASE
+    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+      SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})
+    ELSE \\"2010\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_case_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_case_and_max",
+          "type": "measure",
+        },
+        "title": "Sum of amount with case and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+    SELECT MIN(
+        {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
+    ELSE \\"2009\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_if_having_and_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_if_having_and_min",
+          "type": "measure",
+        },
+        "title": "Sum of amount with if, having and min",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation",
+          "type": "measure",
+        },
+        "title": "Time transformation",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation_combined",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation_combined",
+          "type": "measure",
+        },
+        "title": "Time transformation (combined)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "fact": {
@@ -854,6 +2144,26 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "# of Won Opps.",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE
+ DATETIME_DIFF(\\"2018\\",\\"2020\\", YEAR)> 2",
+        "format": "#,##0.00",
+        "id": "2_literals_in_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "2_literals_in_datetime_diff",
+          "type": "measure",
+        },
+        "title": "2 literals in datetime_diff",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -1352,6 +2662,25 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.day},{label/dt_oppcreated_timestamp.hour}, DAY)",
+        "format": "#,##0.00",
+        "id": "argument_bigger_granularity",
+        "isLocked": false,
+        "ref": {
+          "identifier": "argument_bigger_granularity",
+          "type": "measure",
+        },
+        "title": "Argument bigger granularity",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -1676,6 +3005,152 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_and_datetime_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_and_datetime_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales rep and datetime condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE {label/dt_closedate_timestamp.week} >= DATETIME_ADD(MAX({label/dt_oppcreated_timestamp.week}, {dataset/f_opportunitysnapshot}), -1)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_add_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_add_and_max",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime add and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE {label/dt_closedate_timestamp.week} <= DATETIME_ADD(PREVIOUS(YEAR, 2), WEEK, -551)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_and_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_and_previous",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime and previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, {label/dt_closedate_timestamp.hour}, MINUTE) < 50000",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_3_difference_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_3_difference_params",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and 3 difference params",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.month}, DATETIME_ADD((
+        SELECT MAX({label/dt_closedate_timestamp.day}, {dataset/f_opportunitysnapshot})
+          BY {dataset/f_opportunitysnapshot}), -1), HOUR) < 600",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_add",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and add",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_DIFF({label/dt_closedate_timestamp.month},
+    SELECT MAX({label/dt_oppcreated_timestamp.week})
+      BY ALL OTHER
+      USING {dataset/f_opportunitysnapshot}, DAY) > 670",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_max_by_all_other",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_max_by_all_other",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and max by all other",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, 
+    SELECT MAX({label/dt_closedate_timestamp.month}) 
+      USING {dataset/f_opportunitysnapshot}, MONTH) > 8",
+        "format": "#,##0.00",
+        "id": "count_sales_reps_with_diff_and_max_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_sales_reps_with_diff_and_max_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales reps with diff and max condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "attribute": {
         "description": "County name",
         "displayForms": [
@@ -1746,6 +3221,207 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.day} = DATETIME_ADD({label/dt_closedate_timestamp.year}, DAY, -150)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_day",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_day",
+          "type": "measure",
+        },
+        "title": "Datetime add of day",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.hour} >= DATETIME_ADD({label/dt_closedate_timestamp.year}, HOUR, 1000)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_hour",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_hour",
+          "type": "measure",
+        },
+        "title": "Datetime add of hour",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.minute} <= DATETIME_ADD({label/dt_closedate_timestamp.year}, MINUTE, -10)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_minute",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_minute",
+          "type": "measure",
+        },
+        "title": "Datetime add of minute",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = DATETIME_ADD({label/dt_closedate_timestamp.year}, MONTH, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_month",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_month",
+          "type": "measure",
+        },
+        "title": "Datetime add of month",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(THIS(YEAR), YEAR, -13)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_this_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.week} < DATETIME_ADD({label/dt_closedate_timestamp.year}, WEEK, 1)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_week",
+          "type": "measure",
+        },
+        "title": "Datetime add of week",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = DATETIME_ADD({label/dt_closedate_timestamp.year}, YEAR, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT IF DATETIME_ADD(MAX({label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}), YEAR, 1) = {label/dt_snapshotdate_timestamp.year} THEN 1
+    ELSE -1
+  END
+  BY {dataset/f_opportunitysnapshot}",
+        "format": "#,##0.00",
+        "id": "datetime_add_with_if_else",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_with_if_else",
+          "type": "measure",
+        },
+        "title": "Datetime add with if else",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_ADD({label/dt_closedate_timestamp.quarter}, 2) <= PREVIOUS(QUARTER)",
+        "format": "#,##0.00",
+        "id": "datetime_add_with_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_with_quarter",
+          "type": "measure",
+        },
+        "title": "Datetime_add with quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.quarter},{label/dt_closedate_timestamp.quarter})",
+        "format": "#,##0.00",
+        "id": "datetime_diff_with_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_with_quarter",
+          "type": "measure",
+        },
+        "title": "Datetime_diff with quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "fact": {
         "description": "Days to Close",
         "id": "f_opportunitysnapshot.f_daystoclose",
@@ -1804,6 +3480,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "type": "displayForm",
             "uri": "sanitize_uri",
           },
+          {
+            "attribute": {
+              "identifier": "f_owner.department_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "f_owner.department_id.departmenthyperlink",
+            "ref": {
+              "identifier": "f_owner.department_id.departmenthyperlink",
+              "type": "displayForm",
+            },
+            "title": "Department hyperlink",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
         ],
         "id": "f_owner.department_id",
         "ref": {
@@ -1845,6 +3537,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
+        {
+          "attribute": {
+            "identifier": "f_owner.department_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.department_id.departmenthyperlink",
+          "ref": {
+            "identifier": "f_owner.department_id.departmenthyperlink",
+            "type": "displayForm",
+          },
+          "title": "Department hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
       ],
       "geoPinDisplayForms": [],
       "groups": [
@@ -1854,6 +3562,362 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_diffrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_diffrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_diffenrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_diffenrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of week (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
+  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of week (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_month_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_month_week",
+          "type": "measure",
+        },
+        "title": "Diff of week (month week)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "diff_of_week_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "diff_of_week_string",
+          "type": "measure",
+        },
+        "title": "Diff of week (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_week_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_week_year",
+          "type": "measure",
+        },
+        "title": "Diff of week (week year)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_2_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_2_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (2 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(PREVIOUS(YEAR), NEXT(YEAR)))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous and next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string_and_this",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string_and_this",
+          "type": "measure",
+        },
+        "title": "Diff of year (string and this)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string",
+          "type": "measure",
+        },
+        "title": "Diff of year (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "fact": {
@@ -1874,6 +3938,260 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "filter_time_transformation_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "filter_time_transformation_datetime_add",
+          "type": "measure",
+        },
+        "title": "Filter time transformation (datetime add)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "First value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ first_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "First value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "First value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "First value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "First value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "first_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "First value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount_2",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount_2",
+          "type": "measure",
+        },
+        "title": "First value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -1944,6 +4262,65 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\\"2022\\", DAY, 1)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_add_with_day",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_add_with_day",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_add with day",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\\"2022-09-30\\", MONTH, -1)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_add_with_month",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_add_with_month",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_add with month",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF(\\"2020\\", NEXT(MONTH), MONTH)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_diff",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_diff",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -2299,6 +4676,156 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "groups": [],
       "measure": {
         "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "Last value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ last_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "Last value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "Last value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "last_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "Last value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount",
+          "type": "measure",
+        },
+        "title": "Last value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
         "description": "Metric with long name",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -2309,6 +4836,45 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MAX({label/dt_closedate_timestamp.week}, {dataset/f_opportunitysnapshot})",
+        "format": "#,##0.00",
+        "id": "max_of_top_level",
+        "isLocked": false,
+        "ref": {
+          "identifier": "max_of_top_level",
+          "type": "measure",
+        },
+        "title": "Max of top level",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.day} < DATETIME_ADD({label/dt_closedate_timestamp.minute}, MONTH, 9999999999999999999999999999999)",
+        "format": "#,##0.00",
+        "id": "maximum_literal_of_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "maximum_literal_of_datetime_add",
+          "type": "measure",
+        },
+        "title": "Maximum literal of datetime_add",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -2338,6 +4904,26 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\\"2010-07\\", 1)",
+        "format": "#,##0.00",
+        "id": "missing_required_datetime_add_granularity",
+        "isLocked": false,
+        "ref": {
+          "identifier": "missing_required_datetime_add_granularity",
+          "type": "measure",
+        },
+        "title": "Missing required datetime_add granularity",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
         "expression": "SELECT SUM({metric/amount_bop} * -1 )",
         "format": "#,##0.00",
         "id": "negative_metric",
@@ -2347,6 +4933,91 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "Negative Metric",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "no_time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "no_time_transformation",
+          "type": "measure",
+        },
+        "title": "No Time transformation",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.dayOfWeek},{label/dt_oppcreated_timestamp.weekOfYear})",
+        "format": "#,##0.00",
+        "id": "not_allow_datetime_types_for_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_allow_datetime_types_for_datetime_diff",
+          "type": "measure",
+        },
+        "title": "Not allow datetime types for datetime_diff",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} = (
+  SELECT MAX(
+      SELECT {label/dt_oppcreated_timestamp.year})
+    BY ALL OTHER)",
+        "format": "#,##0.00",
+        "id": "not_enough_context_for_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_enough_context_for_max",
+          "type": "measure",
+        },
+        "title": "Not enough context for MAX",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN(
+      SELECT {label/dt_closedate_timestamp.year})
+    BY ALL OTHER)",
+        "format": "#,##0.00",
+        "id": "not_enough_context_for_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_enough_context_for_min",
+          "type": "measure",
+        },
+        "title": "Not enough context for MIN",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -3144,6 +5815,108 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     },
     {
       "attribute": {
+        "description": "",
+        "displayForms": [
+          {
+            "attribute": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "productthatisrenamedtotestthelongattributename",
+            "ref": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "displayForm",
+            },
+            "title": "Product that is renamed to test the long attribute name",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+            "ref": {
+              "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+              "type": "displayForm",
+            },
+            "title": "Product that is renamed to test the long attribute name hyperlink",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+        ],
+        "id": "productthatisrenamedtotestthelongattributename",
+        "ref": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "attribute",
+        },
+        "title": "Product that is renamed to test the long attribute name",
+        "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "defaultDisplayForm": {
+        "attribute": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "attribute",
+        },
+        "description": "",
+        "id": "productthatisrenamedtotestthelongattributename",
+        "ref": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "displayForm",
+        },
+        "title": "Product that is renamed to test the long attribute name",
+        "type": "displayForm",
+        "uri": "sanitize_uri",
+      },
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "productthatisrenamedtotestthelongattributename",
+          "ref": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "displayForm",
+          },
+          "title": "Product that is renamed to test the long attribute name",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+          "ref": {
+            "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+            "type": "displayForm",
+          },
+          "title": "Product that is renamed to test the long attribute name hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+      ],
+      "geoPinDisplayForms": [],
+      "groups": [
+        {
+          "identifier": "product",
+          "type": "tag",
+        },
+      ],
+      "type": "attribute",
+    },
+    {
+      "attribute": {
         "description": "Region",
         "displayForms": [
           {
@@ -3158,6 +5931,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
               "type": "displayForm",
             },
             "title": "Region",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "f_owner.region_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "f_owner.region_id.regionhyperlink",
+            "ref": {
+              "identifier": "f_owner.region_id.regionhyperlink",
+              "type": "displayForm",
+            },
+            "title": "Region hyperlink",
             "type": "displayForm",
             "uri": "sanitize_uri",
           },
@@ -3202,6 +5991,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
+        {
+          "attribute": {
+            "identifier": "f_owner.region_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.region_id.regionhyperlink",
+          "ref": {
+            "identifier": "f_owner.region_id.regionhyperlink",
+            "type": "displayForm",
+          },
+          "title": "Region hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
       ],
       "geoPinDisplayForms": [],
       "groups": [
@@ -3211,6 +6016,53 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(FIRST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "runsum_first_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_first_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum first value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(LAST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})
+",
+        "format": "#,##0.00",
+        "id": "runsum_last_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_last_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum last value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -3893,6 +6745,229 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND NEXT(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  NOT BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_not_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_not_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and not between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} BETWEEN (
+  SELECT MAX({label/dt_oppcreated_timestamp.year})
+    USING {label/f_opportunity.id}) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_between_max_created_year_and_previous_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_between_max_created_year_and_previous_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount between max created year and previous year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT sum({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} NOT BETWEEN (
+  SELECT MAX(SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})) AND THIS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_not_between_max_created_year_and_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_not_between_max_created_year_and_this_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount not between max created year and this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} = CASE
+    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+      SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})
+    ELSE \\"2010\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_case_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_case_and_max",
+          "type": "measure",
+        },
+        "title": "Sum of amount with case and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+    SELECT MIN(
+        {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
+    ELSE \\"2009\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_if_having_and_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_if_having_and_min",
+          "type": "measure",
+        },
+        "title": "Sum of amount with if, having and min",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN((
+      SELECT {label/dt_closedate_timestamp.year}
+    BY ALL OTHER)))",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_min_and_by_all_other",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_min_and_by_all_other",
+          "type": "measure",
+        },
+        "title": "Sum of amount with min and by all other",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN((
+      SELECT {label/dt_closedate_timestamp.year}
+    BY ALL IN ALL OTHER DIMENSIONS EXCEPT {label/county_name})))",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_min_and_by_all_other_except",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_min_and_by_all_other_except",
+          "type": "measure",
+        },
+        "title": "Sum of amount with min and by all other except",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation",
+          "type": "measure",
+        },
+        "title": "Time transformation",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation_combined",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation_combined",
+          "type": "measure",
+        },
+        "title": "Time transformation (combined)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "attribute": {
         "description": "Timeline",
         "displayForms": [
@@ -3981,6 +7056,63 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MAX(SELECT {label/dt_closedate_timestamp.year} BY {dataset/f_opportunitysnapshot})   ",
+        "format": "#,##0.00",
+        "id": "top_level_metric_for_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_metric_for_max",
+          "type": "measure",
+        },
+        "title": "Top level metric for MAX",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MIN({label/dt_closedate_timestamp.year}) USING {dataset/f_opportunitysnapshot}",
+        "format": "#,##0.00",
+        "id": "top_level_metric_for_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_metric_for_min",
+          "type": "measure",
+        },
+        "title": "Top level metric for MIN",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_ADD(THIS(MONTH), MONTH, -1)",
+        "format": "#,##0.00",
+        "id": "top_level_of_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_of_datetime_add",
+          "type": "measure",
+        },
+        "title": "Top level of datetime_add",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "fact": {
@@ -7970,6 +11102,26 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "type": "measure",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE
+ DATETIME_DIFF(\\"2018\\",\\"2020\\", YEAR)> 2",
+        "format": "#,##0.00",
+        "id": "2_literals_in_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "2_literals_in_datetime_diff",
+          "type": "measure",
+        },
+        "title": "2 literals in datetime_diff",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "attribute": {
         "description": "Account",
         "displayForms": [
@@ -8462,6 +11614,25 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.day},{label/dt_oppcreated_timestamp.hour}, DAY)",
+        "format": "#,##0.00",
+        "id": "argument_bigger_granularity",
+        "isLocked": false,
+        "ref": {
+          "identifier": "argument_bigger_granularity",
+          "type": "measure",
+        },
+        "title": "Argument bigger granularity",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
         "expression": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})
   WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -8786,6 +11957,152 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_and_datetime_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_and_datetime_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales rep and datetime condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE {label/dt_closedate_timestamp.week} >= DATETIME_ADD(MAX({label/dt_oppcreated_timestamp.week}, {dataset/f_opportunitysnapshot}), -1)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_add_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_add_and_max",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime add and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE {label/dt_closedate_timestamp.week} <= DATETIME_ADD(PREVIOUS(YEAR, 2), WEEK, -551)",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_datetime_and_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_datetime_and_previous",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with datetime and previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, {label/dt_closedate_timestamp.hour}, MINUTE) < 50000",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_3_difference_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_3_difference_params",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and 3 difference params",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.month}, DATETIME_ADD((
+        SELECT MAX({label/dt_closedate_timestamp.day}, {dataset/f_opportunitysnapshot})
+          BY {dataset/f_opportunitysnapshot}), -1), HOUR) < 600",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_add",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and add",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_DIFF({label/dt_closedate_timestamp.month},
+    SELECT MAX({label/dt_oppcreated_timestamp.week})
+      BY ALL OTHER
+      USING {dataset/f_opportunitysnapshot}, DAY) > 670",
+        "format": "#,##0.00",
+        "id": "count_of_sales_rep_with_diff_and_max_by_all_other",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_of_sales_rep_with_diff_and_max_by_all_other",
+          "type": "measure",
+        },
+        "title": "Count of sales rep with diff and max by all other",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})
+  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, 
+    SELECT MAX({label/dt_closedate_timestamp.month}) 
+      USING {dataset/f_opportunitysnapshot}, MONTH) > 8",
+        "format": "#,##0.00",
+        "id": "count_sales_reps_with_diff_and_max_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "count_sales_reps_with_diff_and_max_condition",
+          "type": "measure",
+        },
+        "title": "Count of sales reps with diff and max condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "attribute": {
         "description": "County name",
         "displayForms": [
@@ -8856,6 +12173,207 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.day} = DATETIME_ADD({label/dt_closedate_timestamp.year}, DAY, -150)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_day",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_day",
+          "type": "measure",
+        },
+        "title": "Datetime add of day",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.hour} >= DATETIME_ADD({label/dt_closedate_timestamp.year}, HOUR, 1000)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_hour",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_hour",
+          "type": "measure",
+        },
+        "title": "Datetime add of hour",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.minute} <= DATETIME_ADD({label/dt_closedate_timestamp.year}, MINUTE, -10)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_minute",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_minute",
+          "type": "measure",
+        },
+        "title": "Datetime add of minute",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = DATETIME_ADD({label/dt_closedate_timestamp.year}, MONTH, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_month",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_month",
+          "type": "measure",
+        },
+        "title": "Datetime add of month",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(THIS(YEAR), YEAR, -13)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_this_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.week} < DATETIME_ADD({label/dt_closedate_timestamp.year}, WEEK, 1)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_week",
+          "type": "measure",
+        },
+        "title": "Datetime add of week",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = DATETIME_ADD({label/dt_closedate_timestamp.year}, YEAR, -2)",
+        "format": "#,##0.00",
+        "id": "datetime_add_of_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_of_year",
+          "type": "measure",
+        },
+        "title": "Datetime add of year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT IF DATETIME_ADD(MAX({label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}), YEAR, 1) = {label/dt_snapshotdate_timestamp.year} THEN 1
+    ELSE -1
+  END
+  BY {dataset/f_opportunitysnapshot}",
+        "format": "#,##0.00",
+        "id": "datetime_add_with_if_else",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_with_if_else",
+          "type": "measure",
+        },
+        "title": "Datetime add with if else",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
+  WHERE DATETIME_ADD({label/dt_closedate_timestamp.quarter}, 2) <= PREVIOUS(QUARTER)",
+        "format": "#,##0.00",
+        "id": "datetime_add_with_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_add_with_quarter",
+          "type": "measure",
+        },
+        "title": "Datetime_add with quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.quarter},{label/dt_closedate_timestamp.quarter})",
+        "format": "#,##0.00",
+        "id": "datetime_diff_with_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_with_quarter",
+          "type": "measure",
+        },
+        "title": "Datetime_diff with quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "fact": {
         "description": "Days to Close",
         "id": "f_opportunitysnapshot.f_daystoclose",
@@ -8914,6 +12432,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "type": "displayForm",
             "uri": "sanitize_uri",
           },
+          {
+            "attribute": {
+              "identifier": "f_owner.department_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "f_owner.department_id.departmenthyperlink",
+            "ref": {
+              "identifier": "f_owner.department_id.departmenthyperlink",
+              "type": "displayForm",
+            },
+            "title": "Department hyperlink",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
         ],
         "id": "f_owner.department_id",
         "ref": {
@@ -8955,6 +12489,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
+        {
+          "attribute": {
+            "identifier": "f_owner.department_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.department_id.departmenthyperlink",
+          "ref": {
+            "identifier": "f_owner.department_id.departmenthyperlink",
+            "type": "displayForm",
+          },
+          "title": "Department hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
       ],
       "geoPinDisplayForms": [],
       "groups": [
@@ -8964,6 +12514,362 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_diffrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_diffrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_diffenrence_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_diffenrence_params",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 difference params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_month_3_params_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_month_3_params_string",
+          "type": "measure",
+        },
+        "title": "Diff of month (3 params and string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_2_same_params",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_2_same_params",
+          "type": "measure",
+        },
+        "title": "Diff of week (2 same params)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
+  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of week (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_month_week",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_month_week",
+          "type": "measure",
+        },
+        "title": "Diff of week (month week)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "diff_of_week_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "diff_of_week_string",
+          "type": "measure",
+        },
+        "title": "Diff of week (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.week}))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_week_week_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_week_week_year",
+          "type": "measure",
+        },
+        "title": "Diff of week (week year)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_2_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_2_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (2 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_3_parameters",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_3_parameters",
+          "type": "measure",
+        },
+        "title": "Diff of year (3 parameters)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(PREVIOUS(YEAR), NEXT(YEAR)))",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous_next",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous_next",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous and next)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_previous",
+          "type": "measure",
+        },
+        "title": "Diff of year (previous)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string_and_this",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string_and_this",
+          "type": "measure",
+        },
+        "title": "Diff of year (string and this)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "format": "#,##0.00",
+        "id": "datetime_diff_of_year_string",
+        "isLocked": false,
+        "ref": {
+          "identifier": "datetime_diff_of_year_string",
+          "type": "measure",
+        },
+        "title": "Diff of year (string)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "fact": {
@@ -8984,6 +12890,260 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "filter_time_transformation_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "filter_time_transformation_datetime_add",
+          "type": "measure",
+        },
+        "title": "Filter time transformation (datetime add)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "First value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ first_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "First value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "First value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "First value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "first_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "First value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "first_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "First value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount_2",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount_2",
+          "type": "measure",
+        },
+        "title": "First value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR NEXT({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_next_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_next_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Next last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_first_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_first_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous first value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})
+  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+  FOR Previous({label/dt_closedate_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "for_previous_last_value_of_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "for_previous_last_value_of_amount",
+          "type": "measure",
+        },
+        "title": "For Previous last value of amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -9054,6 +13214,65 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\\"2022\\", DAY, 1)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_add_with_day",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_add_with_day",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_add with day",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\\"2022-09-30\\", MONTH, -1)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_add_with_month",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_add_with_month",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_add with month",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF(\\"2020\\", NEXT(MONTH), MONTH)",
+        "format": "#,##0.00",
+        "id": "incorrect_literal_string_with_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "incorrect_literal_string_with_datetime_diff",
+          "type": "measure",
+        },
+        "title": "Incorrect literal string with datetime_diff",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -9409,6 +13628,156 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "groups": [],
       "measure": {
         "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_closedate_timestamp.quarter}
+  BY {label/dt_closedate_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_quarter",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_quarter",
+          "type": "measure",
+        },
+        "title": "Last value of amount by quarter",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "select
+ last_value(
+   select sum({fact/f_opportunitysnapshot.f_amount})
+   by {label/attr.f_owner.salesrep}
+   )
+ order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}
+ within ({label/f_owner.department_id})",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_by_sales_rep",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_by_sales_rep",
+          "type": "measure",
+        },
+        "title": "Last value of amount by sales rep",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_asc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_asc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order asc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC ",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_order_desc",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_order_desc",
+          "type": "measure",
+        },
+        "title": "Last value of amount order desc",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  by {label/attr.f_owner.salesrep}
+  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)",
+        "format": "#,##0.00",
+        "id": "last_value_of_amount_with_previous",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_amount_with_previous",
+          "type": "measure",
+        },
+        "title": "Last value of amount with previous",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(
+    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.year}
+  BY ALL {label/f_owner.department_id}",
+        "format": "#,##0.00",
+        "id": "last_value_of_rank_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "last_value_of_rank_amount",
+          "type": "measure",
+        },
+        "title": "Last value of rank amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT LAST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))
+  ORDER BY {label/dt_oppcreated_timestamp.month}
+  BY {label/dt_oppcreated_timestamp.year}",
+        "format": "#,##0.00",
+        "id": "first_value_of_runvar_amount",
+        "isLocked": false,
+        "ref": {
+          "identifier": "first_value_of_runvar_amount",
+          "type": "measure",
+        },
+        "title": "Last value of runvar amount",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
         "description": "Metric with long name",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
         "format": "$#,##0.00",
@@ -9419,6 +13788,45 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "type": "measure",
         },
         "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MAX({label/dt_closedate_timestamp.week}, {dataset/f_opportunitysnapshot})",
+        "format": "#,##0.00",
+        "id": "max_of_top_level",
+        "isLocked": false,
+        "ref": {
+          "identifier": "max_of_top_level",
+          "type": "measure",
+        },
+        "title": "Max of top level",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.day} < DATETIME_ADD({label/dt_closedate_timestamp.minute}, MONTH, 9999999999999999999999999999999)",
+        "format": "#,##0.00",
+        "id": "maximum_literal_of_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "maximum_literal_of_datetime_add",
+          "type": "measure",
+        },
+        "title": "Maximum literal of datetime_add",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -9448,6 +13856,26 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\\"2010-07\\", 1)",
+        "format": "#,##0.00",
+        "id": "missing_required_datetime_add_granularity",
+        "isLocked": false,
+        "ref": {
+          "identifier": "missing_required_datetime_add_granularity",
+          "type": "measure",
+        },
+        "title": "Missing required datetime_add granularity",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
         "expression": "SELECT SUM({metric/amount_bop} * -1 )",
         "format": "#,##0.00",
         "id": "negative_metric",
@@ -9457,6 +13885,91 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "type": "measure",
         },
         "title": "Negative Metric",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "no_time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "no_time_transformation",
+          "type": "measure",
+        },
+        "title": "No Time transformation",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.dayOfWeek},{label/dt_oppcreated_timestamp.weekOfYear})",
+        "format": "#,##0.00",
+        "id": "not_allow_datetime_types_for_datetime_diff",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_allow_datetime_types_for_datetime_diff",
+          "type": "measure",
+        },
+        "title": "Not allow datetime types for datetime_diff",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} = (
+  SELECT MAX(
+      SELECT {label/dt_oppcreated_timestamp.year})
+    BY ALL OTHER)",
+        "format": "#,##0.00",
+        "id": "not_enough_context_for_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_enough_context_for_max",
+          "type": "measure",
+        },
+        "title": "Not enough context for MAX",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN(
+      SELECT {label/dt_closedate_timestamp.year})
+    BY ALL OTHER)",
+        "format": "#,##0.00",
+        "id": "not_enough_context_for_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "not_enough_context_for_min",
+          "type": "measure",
+        },
+        "title": "Not enough context for MIN",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -10254,6 +14767,108 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     },
     {
       "attribute": {
+        "description": "",
+        "displayForms": [
+          {
+            "attribute": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "productthatisrenamedtotestthelongattributename",
+            "ref": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "displayForm",
+            },
+            "title": "Product that is renamed to test the long attribute name",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "productthatisrenamedtotestthelongattributename",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+            "ref": {
+              "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+              "type": "displayForm",
+            },
+            "title": "Product that is renamed to test the long attribute name hyperlink",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+        ],
+        "id": "productthatisrenamedtotestthelongattributename",
+        "ref": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "attribute",
+        },
+        "title": "Product that is renamed to test the long attribute name",
+        "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "defaultDisplayForm": {
+        "attribute": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "attribute",
+        },
+        "description": "",
+        "id": "productthatisrenamedtotestthelongattributename",
+        "ref": {
+          "identifier": "productthatisrenamedtotestthelongattributename",
+          "type": "displayForm",
+        },
+        "title": "Product that is renamed to test the long attribute name",
+        "type": "displayForm",
+        "uri": "sanitize_uri",
+      },
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "productthatisrenamedtotestthelongattributename",
+          "ref": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "displayForm",
+          },
+          "title": "Product that is renamed to test the long attribute name",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "productthatisrenamedtotestthelongattributename",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+          "ref": {
+            "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+            "type": "displayForm",
+          },
+          "title": "Product that is renamed to test the long attribute name hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+      ],
+      "geoPinDisplayForms": [],
+      "groups": [
+        {
+          "identifier": "product",
+          "type": "tag",
+        },
+      ],
+      "type": "attribute",
+    },
+    {
+      "attribute": {
         "description": "Region",
         "displayForms": [
           {
@@ -10268,6 +14883,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
               "type": "displayForm",
             },
             "title": "Region",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "f_owner.region_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "f_owner.region_id.regionhyperlink",
+            "ref": {
+              "identifier": "f_owner.region_id.regionhyperlink",
+              "type": "displayForm",
+            },
+            "title": "Region hyperlink",
             "type": "displayForm",
             "uri": "sanitize_uri",
           },
@@ -10312,6 +14943,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
+        {
+          "attribute": {
+            "identifier": "f_owner.region_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "f_owner.region_id.regionhyperlink",
+          "ref": {
+            "identifier": "f_owner.region_id.regionhyperlink",
+            "type": "displayForm",
+          },
+          "title": "Region hyperlink",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
       ],
       "geoPinDisplayForms": [],
       "groups": [
@@ -10321,6 +14968,53 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
       ],
       "type": "attribute",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(FIRST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})",
+        "format": "#,##0.00",
+        "id": "runsum_first_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_first_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum first value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT RUNSUM(LAST_VALUE(
+      SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+        BY {label/attr.f_owner.salesrep}
+        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+    ORDER BY {label/dt_oppcreated_timestamp.year})
+",
+        "format": "#,##0.00",
+        "id": "runsum_last_value_of_amount_with_condition",
+        "isLocked": false,
+        "ref": {
+          "identifier": "runsum_last_value_of_amount_with_condition",
+          "type": "measure",
+        },
+        "title": "Runsum last value of amount with condition",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "attribute": {
@@ -11003,6 +15697,229 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "type": "attribute",
     },
     {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND NEXT(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year}
+  NOT BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_amount_with_datetime_add_and_not_between",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_amount_with_datetime_add_and_not_between",
+          "type": "measure",
+        },
+        "title": "Sum amount with datetime_add and not between",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} BETWEEN (
+  SELECT MAX({label/dt_oppcreated_timestamp.year})
+    USING {label/f_opportunity.id}) AND PREVIOUS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_between_max_created_year_and_previous_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_between_max_created_year_and_previous_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount between max created year and previous year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT sum({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} NOT BETWEEN (
+  SELECT MAX(SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})) AND THIS(YEAR)",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_not_between_max_created_year_and_this_year",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_not_between_max_created_year_and_this_year",
+          "type": "measure",
+        },
+        "title": "Sum of amount not between max created year and this year",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_closedate_timestamp.year} = CASE
+    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+      SELECT {label/dt_oppcreated_timestamp.year}
+        BY {dataset/f_opportunitysnapshot})
+    ELSE \\"2010\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_case_and_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_case_and_max",
+          "type": "measure",
+        },
+        "title": "Sum of amount with case and max",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+    SELECT MIN(
+        {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
+    ELSE \\"2009\\"
+  END",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_if_having_and_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_if_having_and_min",
+          "type": "measure",
+        },
+        "title": "Sum of amount with if, having and min",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN((
+      SELECT {label/dt_closedate_timestamp.year}
+    BY ALL OTHER)))",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_min_and_by_all_other",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_min_and_by_all_other",
+          "type": "measure",
+        },
+        "title": "Sum of amount with min and by all other",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  WHERE {label/dt_oppcreated_timestamp.year} = (
+  SELECT MIN((
+      SELECT {label/dt_closedate_timestamp.year}
+    BY ALL IN ALL OTHER DIMENSIONS EXCEPT {label/county_name})))",
+        "format": "#,##0.00",
+        "id": "sum_of_amount_with_min_and_by_all_other_except",
+        "isLocked": false,
+        "ref": {
+          "identifier": "sum_of_amount_with_min_and_by_all_other_except",
+          "type": "measure",
+        },
+        "title": "Sum of amount with min and by all other except",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation",
+          "type": "measure",
+        },
+        "title": "Time transformation",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
+  FOR Next({label/dt_oppcreated_timestamp.month})
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+        "format": "#,##0.00",
+        "id": "time_transformation_combined",
+        "isLocked": false,
+        "ref": {
+          "identifier": "time_transformation_combined",
+          "type": "measure",
+        },
+        "title": "Time transformation (combined)",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
       "attribute": {
         "description": "Timeline",
         "displayForms": [
@@ -11091,6 +16008,63 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
       ],
       "type": "fact",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MAX(SELECT {label/dt_closedate_timestamp.year} BY {dataset/f_opportunitysnapshot})   ",
+        "format": "#,##0.00",
+        "id": "top_level_metric_for_max",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_metric_for_max",
+          "type": "measure",
+        },
+        "title": "Top level metric for MAX",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT MIN({label/dt_closedate_timestamp.year}) USING {dataset/f_opportunitysnapshot}",
+        "format": "#,##0.00",
+        "id": "top_level_metric_for_min",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_metric_for_min",
+          "type": "measure",
+        },
+        "title": "Top level metric for MIN",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "created": "sanitize_created",
+        "description": "",
+        "expression": "SELECT DATETIME_ADD(THIS(MONTH), MONTH, -1)",
+        "format": "#,##0.00",
+        "id": "top_level_of_datetime_add",
+        "isLocked": false,
+        "ref": {
+          "identifier": "top_level_of_datetime_add",
+          "type": "measure",
+        },
+        "title": "Top level of datetime_add",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
     },
     {
       "fact": {
@@ -14846,7 +19820,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "attributeHierarchy",
     ],
   },
-  "workspace": "00d48e50c5e0442abc2181a7afd0f66b",
+  "workspace": "9a2b7310f4a84f76980ce6d3d255a57a",
 }
 `;
 
@@ -18420,6 +23394,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "00d48e50c5e0442abc2181a7afd0f66b",
+  "workspace": "9a2b7310f4a84f76980ce6d3d255a57a",
 }
 `;

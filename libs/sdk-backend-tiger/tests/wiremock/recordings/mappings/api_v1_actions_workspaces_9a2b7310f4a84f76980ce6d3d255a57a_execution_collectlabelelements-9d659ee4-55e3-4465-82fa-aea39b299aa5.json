@@ -1,18 +1,29 @@
 {
-    "id": "51fc8c9f-58c9-49d0-9816-f631efd7c135",
-    "name": "api_v1_actions_resolveentitlements",
+    "id": "9d659ee4-55e3-4465-82fa-aea39b299aa5",
+    "name": "api_v1_actions_workspaces_9a2b7310f4a84f76980ce6d3d255a57a_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/resolveEntitlements",
-        "method": "GET",
+        "url": "/api/v1/actions/workspaces/9a2b7310f4a84f76980ce6d3d255a57a/execution/collectLabelElements?offset=10000&limit=100",
+        "method": "POST",
         "headers": {
             "Accept": {
                 "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
             }
-        }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
     },
     "response": {
         "status": 200,
-        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":10000,\"next\":null}}",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -26,7 +37,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "51fc8c9f-58c9-49d0-9816-f631efd7c135",
+    "uuid": "9d659ee4-55e3-4465-82fa-aea39b299aa5",
     "persistent": true,
-    "insertionIndex": 3
+    "insertionIndex": 14
 }

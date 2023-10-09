@@ -1,8 +1,8 @@
 {
-    "id": "d35f34a9-9c77-43b1-9500-2345b9d365d3",
-    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "id": "b4d57773-22fa-4702-950e-548f1c2603d5",
+    "name": "api_v1_actions_workspaces_9a2b7310f4a84f76980ce6d3d255a57a_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=10000&limit=100",
+        "url": "/api/v1/actions/workspaces/9a2b7310f4a84f76980ce6d3d255a57a/execution/collectLabelElements?offset=0&limit=2",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -23,7 +23,7 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":10000,\"next\":null}}",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"(add)ventures\",\"primaryTitle\":\"(add)ventures\"},{\"title\":\"(blank)\",\"primaryTitle\":\"(blank)\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/9a2b7310f4a84f76980ce6d3d255a57a/execution/collectLabelElements?limit=2&offset=2\"}}",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -37,7 +37,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "d35f34a9-9c77-43b1-9500-2345b9d365d3",
+    "uuid": "b4d57773-22fa-4702-950e-548f1c2603d5",
     "persistent": true,
-    "insertionIndex": 15
+    "insertionIndex": 8
 }

@@ -853,7 +853,7 @@ importers:
       '@gooddata/api-client-tiger': workspace:*
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.27.0
+      '@gooddata/fixtures': 1.28.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -903,7 +903,7 @@ importers:
     devDependencies:
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.27.0
+      '@gooddata/fixtures': 1.28.5
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@microsoft/api-documenter': 7.21.7
       '@microsoft/api-extractor': 7.36.0
@@ -2550,7 +2550,7 @@ importers:
       '@cypress/grep': ^3.1.5
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.27.0
+      '@gooddata/fixtures': 1.28.5
       '@gooddata/sdk-backend-bear': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-backend-tiger': workspace:*
@@ -2628,7 +2628,7 @@ importers:
       '@babel/polyfill': 7.12.1
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.27.0
+      '@gooddata/fixtures': 1.28.5
       '@gooddata/sdk-backend-bear': link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-backend-tiger': link:../sdk-backend-tiger
@@ -6087,8 +6087,8 @@ packages:
       - supports-color
       - typescript
 
-  /@gooddata/fixtures/1.27.0:
-    resolution: {integrity: sha512-3szu4Yx3IKUIPAwqv4emo+5mN/sXq5aGbF5/CBmh11FDya+J5qN5XY+63cgJoSOsHmZYbDgkDB0QupAmu/Cgeg==}
+  /@gooddata/fixtures/1.28.5:
+    resolution: {integrity: sha512-HFlekXYO+J3jkzzN0Fw07Y19YDQO70yzFwbs6BzMzfmpv1CyDm9kLdkEmX6AzNaSZzVXkltMzCqSsUWZG3aJFA==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.1
       '@gooddata/api-client-tiger': 8.12.1
@@ -19705,7 +19705,7 @@ packages:
       safe-buffer: 5.2.1
       tough-cookie: 2.5.0
       tunnel-agent: 0.6.0
-      uuid: 3.3.2
+      uuid: 3.4.0
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -22149,12 +22149,12 @@ packages:
     resolution: {integrity: sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
+    dev: true
 
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
-    dev: true
 
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
