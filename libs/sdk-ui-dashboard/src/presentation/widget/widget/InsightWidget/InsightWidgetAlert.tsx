@@ -9,7 +9,6 @@ import {
     DropdownButton,
     IAlignPoint,
     Input,
-    Message,
     Overlay,
     Typography,
     useToastMessage,
@@ -269,12 +268,13 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
                                         value={threshold}
                                     />
                                 </div>
-                                {!existingAlert ? (
-                                    <Message type="progress">
-                                        Dashboard contains filter changes that will be saved in the alert.{" "}
-                                        <a href="#">Learn more</a>
-                                    </Message>
-                                ) : null}
+                                {/*TODO hidden for now for demo, will be enabled when productized later*/}
+                                {/*{!existingAlert ? (*/}
+                                {/*    <Message type="progress">*/}
+                                {/*        Dashboard contains filter changes that will be saved in the alert.{" "}*/}
+                                {/*        <a href="#">Learn more</a>*/}
+                                {/*    </Message>*/}
+                                {/*) : null}*/}
                             </div>
                             <div className="gd-fast-track-buttons">
                                 <div className="left-buttons">
@@ -291,15 +291,15 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
                                 </div>
                                 <div className="right-buttons">
                                     <Button
+                                        className="gd-button-secondary gd-button-small cancel-button s-cancel_button"
+                                        value={intl.formatMessage({ id: "cancel" })}
+                                        onClick={onCancelClick}
+                                    />
+                                    <Button
                                         className="gd-button-action gd-button-small save-button s-save_button"
                                         value={savingButtonTitle}
                                         onClick={onSave}
                                         disabled={!isSubmitEnabled}
-                                    />
-                                    <Button
-                                        className="gd-button-secondary gd-button-small cancel-button s-cancel_button"
-                                        value={intl.formatMessage({ id: "cancel" })}
-                                        onClick={onCancelClick}
                                     />
                                 </div>
                             </div>
