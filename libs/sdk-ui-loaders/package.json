@@ -22,7 +22,8 @@
         "esm/**/*.json",
         "esm/**/*.d.ts",
         "esm/**/*.map",
-        "esm/**/*.svg"
+        "esm/**/*.svg",
+        "NOTICE"
     ],
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css",
