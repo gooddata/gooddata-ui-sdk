@@ -85,6 +85,7 @@ import {
     InsightTranspose_MetricRow,
     InsightTranspose_ColHeaderLeft,
 } from "../components/Scenarios/Insight/InsightTransposeScenario";
+import { HeatMapChartDrillDownWithStackData } from "../components/Scenarios/Dashboard/HeatmapChartScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -176,6 +177,7 @@ export const SCENARIO_KEYS = {
     INSIGHT_TRANSPOSE_HAS_MC_COLUMN_TOP: "insight/insight-transpose-has-mc-column-top",
     INSIGHT_TRANSPOSE_HAS_MC_ROW: "insight/insight-transpose-has-mc-row",
     INSIGHT_TRANSPOSE_HAS_MC_LEFT: "insight/insight-transpose-has-mc-left",
+    HEATMAP_DRILLDOWN_DASHBOARD: "dashboard/heatmap-drill-down",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -270,6 +272,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_COLUMN_TOP, InsightTranspose_MetricColumn_ColHeaderTop],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW, InsightTranspose_MetricRow],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_LEFT, InsightTranspose_ColHeaderLeft],
+    [SCENARIO_KEYS.HEATMAP_DRILLDOWN_DASHBOARD, HeatMapChartDrillDownWithStackData],
 ]);
 
 const ComponentResolver: React.FC = () => {

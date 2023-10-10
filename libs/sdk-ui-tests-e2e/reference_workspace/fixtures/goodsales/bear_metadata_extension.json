@@ -3765,6 +3765,210 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "f66632ceaea44f5187047c770e1d62a0",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "b2432f7a2c3c4a739b2f78fd21d10b2e"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aabVP3wpB5r2",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only row measure"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_row_measure_aabVP3wpB5r2"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "5d1c76a80a614a79a2beca6eab36c0e1",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "cfe5ffb8a76e4573a6a96636839153a3"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aakVNxRuB2o9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only column measure"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_column_measure_aakVNxRuB2o9"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "ddd52783b308403691a6fe548898c8ef",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "64357859038f4152afcd38f63055e8a0"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_product_id_name}}}"
+                                            },
+                                            "localIdentifier": "0cc8288dee874d2191083e1c73a2b499"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aadVO9GtCbI9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map has measure column row"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_has_measure_column_row_aadVO9GtCbI9"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "809d46fcc0b3463196965e1b810944f4",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacVQjGsHKYh",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only measures"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_measures_aacVQjGsHKYh"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -11755,6 +11959,198 @@
                 }
             },
             "name": "analyticalDashboard_Dashboard_table_drill_down_aab9lVBAGZ64"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_row_measure_aabVP3wpB5r2}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacVP4T3HKXs",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only row measure"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_has_measure_column_row_aadVO9GtCbI9}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabVR9reHK0x",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map has measure column row"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_measures_aacVQjGsHKYh}}}"
+                    },
+                    "meta": {
+                        "identifier": "aalVNxRuB2o9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only measures"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_measures_aalVNxRuB2o9"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_column_measure_aakVNxRuB2o9}}}"
+                    },
+                    "meta": {
+                        "identifier": "aafVO9GtCbI9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only column measure"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aadVP3wpB5r2",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aadVP3wpB5r2"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aadVP3wpB5r2}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_measures_aalVNxRuB2o9}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs}}}",
+                            "{{{visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9}}}",
+                            "{{{visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x}}}",
+                            "{{{visualizationWidget_heat_map_only_measures_aalVNxRuB2o9}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacVR9reHK0x",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Heat map chart with stack data"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Heat_map_chart_with_stack_data_aacVR9reHK0x"
         },
         {
             "content": {
