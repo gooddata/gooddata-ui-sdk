@@ -61,6 +61,7 @@ export class Table {
         } else {
             columnWidth().should("equal", expectedWidth);
         }
+        return this;
     }
 
     scrollTo(position: Cypress.PositionType) {
