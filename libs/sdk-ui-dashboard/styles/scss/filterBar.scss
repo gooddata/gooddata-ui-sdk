@@ -432,3 +432,9 @@ $attribute-filter-drag-handle-left: 10px;
         }
     }
 }
+
+.gd-bubble {
+    &.gd-filter-button-custom-icon-bubble {
+        max-width: 209px;
+    }
+}
