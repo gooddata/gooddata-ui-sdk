@@ -123,6 +123,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                                 screen={screen}
                             />
                         ) : null}
+                        {visType === "headline" && isViewMode ? (
+                            <InsightWidgetAlert insightRef={insightRef(insight)} />
+                        ) : undefined}
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={widget}
@@ -130,9 +133,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             onClick={openMenu}
                             items={menuItems}
                         />
-                        {visType === "headline" && isViewMode ? (
-                            <InsightWidgetAlert insightRef={insightRef(insight)} />
-                        ) : undefined}
                     </div>
                 )}
                 renderAfterContent={() => {
