@@ -1,8 +1,17 @@
 // (C) 2019-2022 GoodData Corporation
 import globalAxios, { AxiosInstance, CreateAxiosDefaults } from "axios";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import merge from "lodash/merge.js";
 import { LIB_VERSION, LIB_NAME } from "./__version.js";
+
+const RETRIES_TIMOUT = 1000;
+
+// Extend Axios Config with retry mechanism.
+interface AxiosDefaultsWithRetryConfig extends CreateAxiosDefaults {
+    retry: number;
+    retryDelay?: number;
+}
 
 /**
  * Default config from axios sets request headers:
@@ -16,9 +25,12 @@ import { LIB_VERSION, LIB_NAME } from "./__version.js";
  * Setting default Content-Type to application/json;charset=utf - will be sent regardless of data as the
  * backend can only accept JSON anyway.
  */
-const _CONFIG: CreateAxiosDefaults = {
+const _CONFIG: AxiosDefaultsWithRetryConfig = {
     maxContentLength: -1,
     withCredentials: true,
+    retry: 0,
+    // TODO - is needed? There's backoff_algorithm for it | might come as header from BE - `Retry-after: X ms`;
+    retryDelay: RETRIES_TIMOUT,
     headers: {
         common: {
             "X-Requested-With": "XMLHttpRequest",
@@ -88,7 +100,7 @@ export function newAxiosRequestConfig(
     baseUrl?: string,
     headers?: { [name: string]: string },
 ): CreateAxiosDefaults {
-    const config: CreateAxiosDefaults = cloneDeep(_CONFIG);
+    const config: AxiosDefaultsWithRetryConfig = cloneDeep(_CONFIG);
 
     if (baseUrl) {
         config.baseURL = baseUrl;

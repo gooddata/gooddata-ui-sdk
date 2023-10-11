@@ -454,6 +454,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       axios: ^1.4.0
+      axios-retry: ^3.8.0
       commander: ^8.1.0
       concurrently: ^6.0.2
       dependency-cruiser: ^13.0.3
@@ -478,6 +479,7 @@ importers:
     dependencies:
       '@gooddata/sdk-model': link:../sdk-model
       axios: 1.4.0
+      axios-retry: 3.8.0
       lodash: 4.17.21
       tslib: 2.5.0
     devDependencies:
@@ -866,6 +868,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
       axios: ^1.4.0
+      axios-retry: ^3.8.0
       concurrently: ^6.0.2
       date-fns: ^2.22.1
       dependency-cruiser: ^13.0.3
@@ -894,6 +897,7 @@ importers:
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       axios: 1.4.0
+      axios-retry: 3.8.0
       date-fns: 2.29.3
       lodash: 4.17.21
       spark-md5: 3.0.2
@@ -10568,6 +10572,13 @@ packages:
   /aws4/1.12.0:
     resolution: {integrity: sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==}
 
+  /axios-retry/3.8.0:
+    resolution: {integrity: sha512-CfIsQyWNc5/AE7x/UEReRUadiBmQeoBpSEC+4QyGLJMswTsP1tz0GW2YYPnE7w9+ESMef5zOgLDFpHynNyEZ1w==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+      is-retry-allowed: 2.2.0
+    dev: false
+
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
@@ -15999,6 +16010,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /is-retry-allowed/2.2.0:
+    resolution: {integrity: sha512-XVm7LOeLpTW4jV19QSH38vkswxoLud8sQ57YwJVTPWdiaI9I8keEhGFpBlslyVsgdQy4Opg8QOLb8YRgsyZiQg==}
+    engines: {node: '>=10'}
+    dev: false
+
   /is-set/2.0.2:
     resolution: {integrity: sha512-+2cnTEZeY5z/iXGbLhPrOAaK/Mau5k5eXq9j14CpRTftq0pAJu2MwVRSZhyZWBzx3o6X795Lz6Bpb6R0GKf37g==}
 
@@ -17534,7 +17550,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.12.0
-      semver: 7.5.1
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -19915,7 +19931,7 @@ packages:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
     engines: {npm: '>=2.0.0'}
     dependencies:
-      tslib: 1.9.3
+      tslib: 1.14.1
     dev: true
 
   /rxjs/7.8.0:
