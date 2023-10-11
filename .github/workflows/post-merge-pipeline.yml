@@ -1,0 +1,156 @@
+# (C) 2023 GoodData Corporation
+
+name: Build web component's container image
+
+on:
+  push:
+    branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
+
+env:
+  WEB_COMPONENTS_DIR: libs/sdk-ui-web-components
+
+jobs:
+  get-ecr-credentials:
+    # run this job only when the commit message starts with 'Release '
+    # all the following jobs will be skipped if this job is skipped
+    if: ${{ startsWith(github.event.head_commit.message, 'Release ') }}
+    permissions:
+      id-token: write
+    uses: ./.github/workflows/get-ecr-credentials.yml
+  build-web-components:
+    runs-on: [infra1-medium] # need the bigger runner than small because Web component build consume more resource
+    needs: get-ecr-credentials
+    permissions:
+      contents: read
+      id-token: write
+    container:
+      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18
+      credentials:
+        username: ${{ needs.get-ecr-credentials.outputs.ecr-docker-username }}
+        password: ${{ needs.get-ecr-credentials.outputs.ecr-docker-password }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Add repository to git safe directories to avoid dubious ownership issue
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Cache pnpm dependencies
+        id: cache-pnpm
+        uses: actions/cache@v3
+        with:
+          key: web-components-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          path: |
+            common/temp/node_modules
+            common/temp/pnpm-store
+      - name: Run build web components app
+        run: |
+          npm i -g @microsoft/rush
+          rush install
+          rush build --to @gooddata/sdk-ui-web-components
+          tar czvf ./libs/sdk-ui-web-components/web-components.tar.gz -C ./$WEB_COMPONENTS_DIR/esm .
+      - name: Archive the build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-components-artifact
+          path: ./${{ env.WEB_COMPONENTS_DIR }}/web-components.tar.gz
+  docker-build-web-components:
+    runs-on: [infra1-small]
+    needs: [build-web-components]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set SHORT SHA and BRANCH ESCAPE REF NAME to ENV Variable to use for image tag later
+        run: |
+          echo "GITHUB_SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
+          echo "GITHUB_ESCAPE_REF_NAME=${GITHUB_REF_NAME/\//-}" >> $GITHUB_ENV
+      - name: Set up QEMU to add multiplatform support
+        uses: docker/setup-qemu-action@v2
+      - name: Create docker context
+        run: |
+          docker context create builder
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          endpoint: builder
+      - name: Get Vault secrets for ECR
+        uses: hashicorp/vault-action@v2
+        with:
+          url: "https://vault.ord1.infra.intgdc.com"
+          method: jwt
+          path: jwt/github
+          role: ecr-push
+          secrets: |
+            secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_access_key | AWS_ACCESS_KEY ;
+            secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_secret_key | AWS_SECRET_KEY ;
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - uses: actions/download-artifact@v3
+        with:
+          name: web-components-artifact
+          path: ./${{ env.WEB_COMPONENTS_DIR }}
+      - name: Docker build and push image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ env.WEB_COMPONENTS_DIR }}
+          file: ./${{ env.WEB_COMPONENTS_DIR }}/Dockerfile
+          platforms: |
+            linux/amd64
+            linux/arm64
+          push: true
+          tags: |
+            020413372491.dkr.ecr.us-east-1.amazonaws.com/nas-testing/${{ github.event.repository.name }}:${{ env.GITHUB_ESCAPE_REF_NAME }}
+            020413372491.dkr.ecr.us-east-1.amazonaws.com/nas-testing/${{ github.event.repository.name }}:${{ env.GITHUB_SHORT_SHA }}
+    outputs:
+      github_short_sha: ${{ env.GITHUB_SHORT_SHA }}
+      docker_username: ${{ steps.login-ecr.outputs.docker_username_020413372491_dkr_ecr_us_east_1_amazonaws_com }}
+      docker_password: ${{ steps.login-ecr.outputs.docker_password_020413372491_dkr_ecr_us_east_1_amazonaws_com }}
+#  generate-update:
+#    runs-on: [infra1-small]
+#    permissions:
+#      contents: read
+#      id-token: write
+#    needs: [docker-build-web-components]
+#    container:
+#      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/infra/tools:3.5.0
+#      credentials:
+#        username: ${{ needs.docker-build-web-components.outputs.docker_username }}
+#        password: ${{ needs.docker-build-web-components.outputs.docker_password }}
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#      - name: Add repository to git safe directories to void dubious ownership issue
+#        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+#      - name: Get the commit before SHA
+#        run: echo "GITHUB_COMMIT_BEFORE_SHA=$(git rev-parse HEAD^)" >> $GITHUB_ENV
+#      - name: Get Vault secrets for creating MR to gdc-nas gitlab project
+#        uses: hashicorp/vault-action@v2
+#        with:
+#          url: "https://vault.ord1.infra.intgdc.com"
+#          method: jwt
+#          path: jwt/github
+#          role: front-end
+#          secrets: |
+#            secret/data/v3/int/github/github-runner-gitlab-token gitlab_approver_token | GITLAB_APPROVER_TOKEN ;
+#            secret/data/v3/int/github/github-runner-gitlab-token gitlab_merger_token | GITLAB_MERGER_TOKEN ;
+#      - name: Generate MR with a new version of web-components image to gdc-nas
+#        run: /scripts/update_ext_image_version.py web-components
+#        env:
+#          CI_API_V4_URL: https://gitlab.com/api/v4
+#          CI_PROJECT_NAME: ${{ github.event.repository.name }}
+#          CI_COMMIT_SHORT_SHA: ${{ needs.docker-build-web-components.outputs.github_short_sha }}
+#          CI_COMMIT_BEFORE_SHA: ${{ env.GITHUB_COMMIT_BEFORE_SHA }}
+#          CI_COMMIT_BRANCH: ${{ github.ref_name }}
+#          GITLAB_APPROVER_TOKEN: ${{ env.GITLAB_APPROVER_TOKEN }}
+#          GITLAB_MERGER_TOKEN: ${{ env.GITLAB_MERGER_TOKEN }}
