@@ -7,4 +7,5 @@ import { ISettings } from "@gooddata/sdk-model";
  */
 export const DefaultUiSettings: ISettings = {
     metadataTimeZone: "Europe/Prague", // Bear metadata are always stored in Prague time zone
+    enableNewHeadline: true,
 };
