@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import globalAxios, { AxiosInstance, CreateAxiosDefaults } from "axios";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import merge from "lodash/merge.js";
 import { LIB_VERSION, LIB_NAME } from "./__version.js";

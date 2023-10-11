@@ -487,6 +487,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "axios-retry",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "babel-loader",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

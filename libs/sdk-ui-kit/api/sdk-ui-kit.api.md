@@ -1596,6 +1596,8 @@ export interface IErrorOverlayProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    containerClassName?: string;
+    // (undocumented)
     icon?: ReactNode;
     // (undocumented)
     locale?: string;

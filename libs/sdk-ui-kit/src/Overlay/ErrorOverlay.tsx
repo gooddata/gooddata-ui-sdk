@@ -22,6 +22,7 @@ export interface IErrorOverlayProps {
     onButtonClick?: () => void;
     className?: string;
     locale?: string;
+    containerClassName?: string;
 }
 
 const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = (props) => {
@@ -35,6 +36,7 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
         onButtonClick,
         className,
         intl,
+        containerClassName,
     } = props;
 
     const theme = useTheme();
@@ -56,7 +58,7 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
             closeOnOutsideClick={false}
             closeOnMouseDrag={false}
             zIndex={10001}
-            containerClassName="gd-error-overlay-content"
+            containerClassName={`gd-error-overlay-content ${containerClassName}`}
             className={className}
         >
             <div className="gd-error-overlay s-error-overlay">

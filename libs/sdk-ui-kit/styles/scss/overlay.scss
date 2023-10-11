@@ -37,6 +37,10 @@
         z-index: 10001;
         opacity: 0.95;
     }
+
+    &.gd-api-timeout {
+        opacity: 0;
+    }
 }
 
 .gd-error-overlay {

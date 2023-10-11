@@ -47,6 +47,11 @@ import { LIB_VERSION, LIB_NAME } from "../__version.js";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
 import { TigerEntitlements } from "./entitlements/index.js";
 
+// TODO: GDP-2651 - This is here hardoced for now to have working PoC, will most likely be replaced by BE headers once ready.
+const BACKOFF_FACTOR = 2;
+const RETRY_TIMEOUT_MS = 1000;
+const TOTAL_NUMBER_OF_RETRIES = 5;
+
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
     canCalculateGrandTotals: true,
@@ -87,6 +92,8 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsShowAllAttributeValues: true,
     supportsSeparateLatitudeLongitudeLabels: true,
     supportsEnumeratingDatetimeAttributes: false,
+    // TODO - GDP-2651 - For development purposes and to not reach production. Can be enabled for testing once BE is ready.
+    supportsApiGateway: false,
 };
 
 /**
@@ -118,6 +125,7 @@ export type TigerBackendConfig = {
 type TigerSpecificFunctionsSubscription = {
     onTigerSpecificFunctionsReady?: (functions: TigerSpecificFunctions) => void;
     onContractExpired?: (tier: string) => void;
+    onApiTimeout?: (isOpen: boolean, currentDelayInMs?: number) => void;
 };
 
 /**
@@ -147,6 +155,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
+
+        if (this.capabilities.supportsApiGateway) {
+            retryMechanism(axios, implConfig);
+        }
 
         this.client = tigerClientFactory(axios);
 
@@ -357,6 +369,7 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
             const details = omit(response.data, ["title"]);
             console.error("Tiger backend threw an error:", details);
         }
+        // }
 
         return Promise.reject(error);
     });
@@ -388,4 +401,44 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
 
 function isNotAuthenticatedResponse(err: any): boolean {
     return err?.response?.status === 401;
+}
+
+function retryMechanism(
+    client: AxiosInstance,
+    implConfig: TigerBackendConfig & TigerSpecificFunctionsSubscription = {},
+) {
+    let counter = 0;
+
+    // interceptors
+    client.interceptors.response.use(identity, (error) => {
+        const response: AxiosResponse = error.response;
+        const config = error.config;
+
+        console.log("==================");
+        console.log(`Counter: ${counter}`);
+        console.log("Error: ", error.response.statusText);
+        console.log("==================");
+
+        if (response.status === 400 && counter < TOTAL_NUMBER_OF_RETRIES) {
+            counter = counter + 1;
+
+            implConfig.onApiTimeout?.(true);
+            // 1, 2, 4, 8, 16, 32, 64, 128
+            const backoff_algorithm = BACKOFF_FACTOR ** (counter - 1) * RETRY_TIMEOUT_MS;
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(client(config));
+                }, backoff_algorithm);
+            });
+        }
+
+        counter = 0;
+
+        implConfig.onApiTimeout?.(false);
+
+        return Promise.reject(error);
+    });
+
+    return client;
 }
