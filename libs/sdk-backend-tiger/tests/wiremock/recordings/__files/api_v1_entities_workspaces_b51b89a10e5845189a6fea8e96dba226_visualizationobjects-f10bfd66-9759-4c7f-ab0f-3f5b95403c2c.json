@@ -38,12 +38,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "343b329b-e2b0-43b2-9724-de8cd664ebac",
@@ -268,12 +268,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
@@ -350,12 +350,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
@@ -418,12 +418,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
@@ -806,12 +806,68 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/6d236ec6-5cf7-493e-8285-6613fde4ce18"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/6d236ec6-5cf7-493e-8285-6613fde4ce18"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart only measures",
+                "description": "Column chart only measures",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "ded20bdcb90145b68711ae0c1901968d",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "localIdentifier": "953ecfafba014941ab12ec89f84d1d85",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/6ecba0d9-8fff-4c78-8adf-7f33cc1956c8"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
@@ -883,12 +939,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "843701ee-8f24-4942-8522-872a96575f8e",
@@ -961,12 +1017,296 @@
                     "version": "2",
                     "visualizationUrl": "local:column"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has not hyperlink",
+                "description": "Column chart has not hyperlink",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "92cee6a571f64e09abe8c43055fe5dea",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "localIdentifier": "ddec7417e27f4921bc001317cea32e44",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "85b09ca610064d5cbb7f966efe91e09b",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_owner.salesrep.ownername",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "908a5fcd650941f885ed768c243f4d0d",
+                                        "displayForm": {
+                                            "identifier": { "id": "attr.f_stage.stagename", "type": "label" }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/84d13bd9-f976-4e03-8b00-fec9497d580b"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart long attribute has hyperlink",
+                "description": "Column chart long attribute has hyperlink",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "7504986dd4854e848a7e9411789bb97c",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "productthatisrenamedtotestthelongattributename",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/87c466b7-e3e0-4a1a-a45a-4ae333bce863"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "9a2ab62b-587a-4b16-9682-1b7962340354",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has many hyperlinks",
+                "description": "Column chart has many hyperlinks",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "best_case", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "5e61d047dac64eaebcbfd102176cbdc1",
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        }
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "fbd134a022954e5c94d15939c96d061e",
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.region_id", "type": "label" }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/9a2ab62b-587a-4b16-9682-1b7962340354"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "b1614db1-3058-4071-a2fe-64a017d318c5",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart with Department attribute",
+                "description": "Column chart with Department attribute",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "be65b4c9d5cd4272a552409f70e4698a",
+                                        "displayForm": {
+                                            "identifier": { "id": "f_owner.department_id", "type": "label" }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b1614db1-3058-4071-a2fe-64a017d318c5"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
@@ -1111,12 +1451,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/b3b665b7-bca2-0322-82f1-b86ky73k90f8afe"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b3b665b7-bca2-0322-82f1-b86ky73k90f8afe"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
@@ -1176,12 +1516,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "ba13041b-87bc-458c-a514-fcc0074c9973",
@@ -1330,12 +1670,12 @@
                     "visualizationUrl": "local:pyramid",
                     "version": "2"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
@@ -1375,12 +1715,12 @@
                     "version": "2",
                     "visualizationUrl": "local:pyramid"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "dcce2234-9097-47e7-a165-36cdbaa2e134",
@@ -1446,12 +1786,12 @@
                     "version": "2",
                     "visualizationUrl": "local:column"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
@@ -1524,12 +1864,70 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/f00bd5d5-91da-4139-9e7e-5498d9fe49b5"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/f00bd5d5-91da-4139-9e7e-5498d9fe49b5"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+        },
+        {
+            "id": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+            "type": "visualizationObject",
+            "attributes": {
+                "title": "Column chart has hyperlink",
+                "description": "Column chart has hyperlink",
+                "areRelationsValid": true,
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": { "id": "amount_bop", "type": "metric" }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "4281a0b55f65458f98f5e11b20c6faaf",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_opportunity.opportunity.name",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "createdAt": "2023-10-12 08:48"
+            },
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/f7a50db1-5d2d-4b1a-82e6-e1648836985c"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         },
         {
             "id": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
@@ -1606,16 +2004,16 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-08-31 10:37"
+                "createdAt": "2023-10-12 08:48"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "00d48e50c5e0442abc2181a7afd0f66b" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
         }
     ],
     "links": {
-        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects?page=0&size=250",
-        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/00d48e50c5e0442abc2181a7afd0f66b/visualizationObjects?page=1&size=250"
+        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects?page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects?page=1&size=250"
     }
 }
