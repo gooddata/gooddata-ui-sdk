@@ -86,6 +86,23 @@ import {
     InsightTranspose_ColHeaderLeft,
 } from "../components/Scenarios/Insight/InsightTransposeScenario";
 import { HeatMapChartDrillDownWithStackData } from "../components/Scenarios/Dashboard/HeatmapChartScenario";
+import {
+    PivotTableOfMaxWithCaseWhen,
+    PivotTableOfMaxWithMacroYear,
+    PivotTableOfMinWithByAllOther,
+    PivotTableOfMinWithIfThen,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithMaxMinScenario";
+import {
+    PivotTableOfDatetimeAddWithBetween,
+    PivotTableOfDatetimeAddWithAllGranularities,
+    PivotTableOfDatetimeAddWithPop,
+    PivotTableOfDatetimeAddWithCount,
+    PivotTableOfDatetimeDiffWithYear,
+    PivotTableOfDatetimeDiffWithMonth,
+    PivotTableOfDatetimeDiffWithWeekCheckParams,
+    PivotTableOfDatetimeDiffWithWeekCheckOthers,
+    PivotTableOfDatetimeDiffWithCompare,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithDateArithmeticsScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -178,6 +195,31 @@ export const SCENARIO_KEYS = {
     INSIGHT_TRANSPOSE_HAS_MC_ROW: "insight/insight-transpose-has-mc-row",
     INSIGHT_TRANSPOSE_HAS_MC_LEFT: "insight/insight-transpose-has-mc-left",
     HEATMAP_DRILLDOWN_DASHBOARD: "dashboard/heatmap-drill-down",
+    VIS_PIVOT_TABLE_OF_MAX_WITH_MACRO_YEAR:
+        "visualizations/pivot-table/maxmin/pivot-table-of-max-with-macro-year",
+    VIS_PIVOT_TABLE_OF_MAX_WITH_CASE_WHEN:
+        "visualizations/pivot-table/maxmin/pivot-table-of-max-with-case-when",
+    VIS_PIVOT_TABLE_OF_MIN_WITH_IF_THEN: "visualizations/pivot-table/maxmin/pivot-table-of-min-with-if-then",
+    VIS_PIVOT_TABLE_OF_MIN_WITH_BY_ALL_OTHER:
+        "visualizations/pivot-table/maxmin/pivot-table-of-min-with-by-all-other",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_BETWEEN:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-between",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_ALL_GRANULARITIES:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-all-granularities",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_POP:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-pop",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_COUNT:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-count",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_YEAR:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-year",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_MONTH:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-month",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_PARAMS:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-week-check-params",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_OTHERS:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-week-check-others",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-compare",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -273,6 +315,28 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW, InsightTranspose_MetricRow],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_LEFT, InsightTranspose_ColHeaderLeft],
     [SCENARIO_KEYS.HEATMAP_DRILLDOWN_DASHBOARD, HeatMapChartDrillDownWithStackData],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MAX_WITH_MACRO_YEAR, PivotTableOfMaxWithMacroYear],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MAX_WITH_CASE_WHEN, PivotTableOfMaxWithCaseWhen],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MIN_WITH_IF_THEN, PivotTableOfMinWithIfThen],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MIN_WITH_BY_ALL_OTHER, PivotTableOfMinWithByAllOther],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_BETWEEN, PivotTableOfDatetimeAddWithBetween],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_ALL_GRANULARITIES,
+        PivotTableOfDatetimeAddWithAllGranularities,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_POP, PivotTableOfDatetimeAddWithPop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_COUNT, PivotTableOfDatetimeAddWithCount],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_YEAR, PivotTableOfDatetimeDiffWithYear],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_MONTH, PivotTableOfDatetimeDiffWithMonth],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_PARAMS,
+        PivotTableOfDatetimeDiffWithWeekCheckParams,
+    ],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_OTHERS,
+        PivotTableOfDatetimeDiffWithWeekCheckOthers,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE, PivotTableOfDatetimeDiffWithCompare],
 ]);
 
 const ComponentResolver: React.FC = () => {
