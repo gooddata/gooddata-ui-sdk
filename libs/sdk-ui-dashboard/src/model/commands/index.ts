@@ -9,6 +9,7 @@ import {
     ExportDashboardToPdf,
     DeleteDashboard,
     ChangeSharing,
+    SetDashboardDateFilterConfigMode,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -104,6 +105,9 @@ export {
     ChangeSharing,
     ChangeSharingPayload,
     changeSharing,
+    SetDashboardDateFilterConfigMode,
+    SetDashboardDateFilterConfigModePayload,
+    setDashboardDateFilterConfigMode,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -432,5 +436,6 @@ export type DashboardCommands =
     | DrillToLegacyDashboard
     | ChangeDrillableItems
     | AddDrillTargets
+    | SetDashboardDateFilterConfigMode
     // fast track
     | PredictionResult;

@@ -688,6 +688,7 @@ export {
     IDashboardBase,
     IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,
+    DashboardDateFilterConfigModeValues,
     IDashboardDateFilterAddedPresets,
     IDashboardPluginBase,
     IDashboardPlugin,

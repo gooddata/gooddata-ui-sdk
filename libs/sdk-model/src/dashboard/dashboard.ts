@@ -18,6 +18,20 @@ import { IDashboardWidget, IDashboardLayout } from "./layout.js";
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 /**
+ * Represent the values of DashboardDateFilterConfigMode
+ *
+ * @internal
+ */
+export const DashboardDateFilterConfigModeValues: Record<
+    Uppercase<DashboardDateFilterConfigMode>,
+    DashboardDateFilterConfigMode
+> = {
+    READONLY: "readonly" as const,
+    HIDDEN: "hidden" as const,
+    ACTIVE: "active" as const,
+};
+
+/**
  * Date filter presets to add to the date filter for the current dashboard
  * @alpha
  */

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { IBaseExportConfig } from '@gooddata/api-model-bear';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILocalIdentifierQualifier as ILocalIdentifierQualifier_2 } from '@gooddata/api-model-bear';
@@ -360,6 +361,8 @@ export interface IAbsoluteDateFilter {
         from: string;
         to: string;
     };
+    // @alpha
+    mode?: DashboardDateFilterConfigMode;
 }
 
 // @public
@@ -728,6 +731,8 @@ export interface IRankingFilter {
 
 // @public (undocumented)
 export interface IRelativeDateFilter {
+    // @alpha
+    mode?: DashboardDateFilterConfigMode;
     // (undocumented)
     relativeDateFilter: {
         dataSet?: ObjQualifier;

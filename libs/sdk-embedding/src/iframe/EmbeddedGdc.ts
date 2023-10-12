@@ -5,6 +5,7 @@ import {
     isObjIdentifierQualifier as isBearObjIdentifierQualifier,
     isObjectUriQualifier as isBearObjectUriQualifier,
 } from "@gooddata/api-model-bear";
+import { DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -43,6 +44,12 @@ export interface IAbsoluteDateFilter {
         from: string;
         to: string;
     };
+    /**
+     * Configures the visibility mode of the date filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardDateFilterConfigMode;
 }
 
 /**
@@ -56,6 +63,12 @@ export interface IRelativeDateFilter {
         from: number;
         to: number;
     };
+    /**
+     * Configures the visibility mode of the date filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardDateFilterConfigMode;
 }
 
 /**
