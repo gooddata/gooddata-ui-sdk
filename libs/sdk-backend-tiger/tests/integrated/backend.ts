@@ -77,7 +77,7 @@ export function testWorkspace(): string {
 }
 
 function getRecordingsWorkspaceId() {
-    return "00d48e50c5e0442abc2181a7afd0f66b";
+    return "b51b89a10e5845189a6fea8e96dba226";
 }
 
 export function sanitizeKeyWithNewValue(result: object, key: string, newValue: string) {

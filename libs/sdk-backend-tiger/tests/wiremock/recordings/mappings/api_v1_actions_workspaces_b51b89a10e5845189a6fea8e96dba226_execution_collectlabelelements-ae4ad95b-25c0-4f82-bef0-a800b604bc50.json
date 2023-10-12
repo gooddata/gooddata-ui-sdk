@@ -1,8 +1,8 @@
 {
-    "id": "982a18fc-f7f2-40dd-a9c5-dd0b1255a401",
-    "name": "api_v1_actions_workspaces_00d48e50c5e0442abc2181a7afd0f66b_execution_collectlabelelements",
+    "id": "ae4ad95b-25c0-4f82-bef0-a800b604bc50",
+    "name": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?offset=0&limit=2",
+        "url": "/api/v1/actions/workspaces/b51b89a10e5845189a6fea8e96dba226/execution/collectLabelElements?offset=10000&limit=100",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -23,7 +23,7 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"(add)ventures\",\"primaryTitle\":\"(add)ventures\"},{\"title\":\"(blank)\",\"primaryTitle\":\"(blank)\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/00d48e50c5e0442abc2181a7afd0f66b/execution/collectLabelElements?limit=2&offset=2\"}}",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":10000,\"next\":null}}",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -37,7 +37,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "982a18fc-f7f2-40dd-a9c5-dd0b1255a401",
+    "uuid": "ae4ad95b-25c0-4f82-bef0-a800b604bc50",
     "persistent": true,
-    "insertionIndex": 9
+    "insertionIndex": 14
 }
