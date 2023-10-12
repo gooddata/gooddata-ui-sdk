@@ -276,6 +276,9 @@ export type DashboardAttributeFilterSelectionMode = "single" | "multi";
 // @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
+// @internal
+export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDateFilterConfigMode>, DashboardDateFilterConfigMode>;
+
 // @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
