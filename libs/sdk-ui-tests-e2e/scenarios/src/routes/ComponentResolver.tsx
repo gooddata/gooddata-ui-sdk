@@ -86,6 +86,33 @@ import {
     InsightTranspose_ColHeaderLeft,
 } from "../components/Scenarios/Insight/InsightTransposeScenario";
 import { HeatMapChartDrillDownWithStackData } from "../components/Scenarios/Dashboard/HeatmapChartScenario";
+import {
+    PivotTableOfMaxWithCaseWhen,
+    PivotTableOfMaxWithMacroYear,
+    PivotTableOfMinWithByAllOther,
+    PivotTableOfMinWithIfThen,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithMaxMinScenario";
+import {
+    PivotTableOfDatetimeAddWithBetween,
+    PivotTableOfDatetimeAddWithAllGranularities,
+    PivotTableOfDatetimeAddWithPop,
+    PivotTableOfDatetimeAddWithCount,
+    PivotTableOfDatetimeDiffWithYear,
+    PivotTableOfDatetimeDiffWithMonth,
+    PivotTableOfDatetimeDiffWithWeekCheckParams,
+    PivotTableOfDatetimeDiffWithWeekCheckOthers,
+    PivotTableOfDatetimeDiffWithCompare,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithDateArithmeticsScenario";
+import {
+    PivotTableOfFirstLastValueWithinAttribute,
+    PivotTableOfFirstLastValueWithOrder,
+    PivotTableOfFirstLastValueWithPop,
+    PivotTableOfFirstLastValueWithPrevious,
+    PivotTableOfFirstLastValueWithQuarter,
+    PivotTableOfFirstLastValueWithRank,
+    PivotTableOfFirstLastValueWithRunSum,
+    PivotTableOfFirstLastValueWithRunVar,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithFisrtValueLastValueScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -178,6 +205,47 @@ export const SCENARIO_KEYS = {
     INSIGHT_TRANSPOSE_HAS_MC_ROW: "insight/insight-transpose-has-mc-row",
     INSIGHT_TRANSPOSE_HAS_MC_LEFT: "insight/insight-transpose-has-mc-left",
     HEATMAP_DRILLDOWN_DASHBOARD: "dashboard/heatmap-drill-down",
+    VIS_PIVOT_TABLE_OF_MAX_WITH_MACRO_YEAR:
+        "visualizations/pivot-table/maxmin/pivot-table-of-max-with-macro-year",
+    VIS_PIVOT_TABLE_OF_MAX_WITH_CASE_WHEN:
+        "visualizations/pivot-table/maxmin/pivot-table-of-max-with-case-when",
+    VIS_PIVOT_TABLE_OF_MIN_WITH_IF_THEN: "visualizations/pivot-table/maxmin/pivot-table-of-min-with-if-then",
+    VIS_PIVOT_TABLE_OF_MIN_WITH_BY_ALL_OTHER:
+        "visualizations/pivot-table/maxmin/pivot-table-of-min-with-by-all-other",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_BETWEEN:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-between",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_ALL_GRANULARITIES:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-all-granularities",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_POP:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-pop",
+    VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_COUNT:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-count",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_YEAR:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-year",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_MONTH:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-month",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_PARAMS:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-week-check-params",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_OTHERS:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-week-check-others",
+    VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE:
+        "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-compare",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_ORDER:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-order",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_QUARTER:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-quarter",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITHIN_ATTRIBUTE:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-within-attribute",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUN_SUM:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-run-sum",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_PREVIOUS:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-previous",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_POP:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-pop",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RANK:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-rank",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-runvar",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -273,6 +341,39 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW, InsightTranspose_MetricRow],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_LEFT, InsightTranspose_ColHeaderLeft],
     [SCENARIO_KEYS.HEATMAP_DRILLDOWN_DASHBOARD, HeatMapChartDrillDownWithStackData],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MAX_WITH_MACRO_YEAR, PivotTableOfMaxWithMacroYear],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MAX_WITH_CASE_WHEN, PivotTableOfMaxWithCaseWhen],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MIN_WITH_IF_THEN, PivotTableOfMinWithIfThen],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_MIN_WITH_BY_ALL_OTHER, PivotTableOfMinWithByAllOther],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_BETWEEN, PivotTableOfDatetimeAddWithBetween],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_ALL_GRANULARITIES,
+        PivotTableOfDatetimeAddWithAllGranularities,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_POP, PivotTableOfDatetimeAddWithPop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_ADD_WITH_COUNT, PivotTableOfDatetimeAddWithCount],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_YEAR, PivotTableOfDatetimeDiffWithYear],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_MONTH, PivotTableOfDatetimeDiffWithMonth],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_PARAMS,
+        PivotTableOfDatetimeDiffWithWeekCheckParams,
+    ],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_WEEK_CHECK_OTHERS,
+        PivotTableOfDatetimeDiffWithWeekCheckOthers,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE, PivotTableOfDatetimeDiffWithCompare],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_ORDER, PivotTableOfFirstLastValueWithOrder],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_QUARTER, PivotTableOfFirstLastValueWithQuarter],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITHIN_ATTRIBUTE,
+        PivotTableOfFirstLastValueWithinAttribute,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUN_SUM, PivotTableOfFirstLastValueWithRunSum],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_PREVIOUS, PivotTableOfFirstLastValueWithPrevious],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_POP, PivotTableOfFirstLastValueWithPop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RANK, PivotTableOfFirstLastValueWithRank],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR, PivotTableOfFirstLastValueWithRunVar],
 ]);
 
 const ComponentResolver: React.FC = () => {

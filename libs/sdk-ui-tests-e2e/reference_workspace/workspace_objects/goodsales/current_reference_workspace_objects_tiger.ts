@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-12T07:16:01.650Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-13T07:10:45.122Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -16,14 +16,14 @@ import {
  */
 export const Account = {
     /**
-     * Display Form Title: Name
-     * Display Form ID: label.f_account.account.name
-     */
-    Name: newAttribute("label.f_account.account.name"),
-    /**
      * Display Form Title: Account
      * Display Form ID: attr.f_account.account
-     */ Default: newAttribute("attr.f_account.account"),
+     */
+    Default: newAttribute("attr.f_account.account"),
+    /**
+     * Display Form Title: Name
+     * Display Form ID: label.f_account.account.name
+     */ Name: newAttribute("label.f_account.account.name"),
 };
 /**
  * Attribute Title: Activity
@@ -51,13 +51,13 @@ export const Opportunity = {
      */
     SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
-     * Display Form Title: Opportunity
-     * Display Form ID: attr.f_opportunity.opportunity
-     */ Default: newAttribute("attr.f_opportunity.opportunity"),
-    /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
      */ Name: newAttribute("label.f_opportunity.opportunity.name"),
+    /**
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
+     */ Default: newAttribute("attr.f_opportunity.opportunity"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -70,14 +70,14 @@ export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Sales Rep
-     * Display Form ID: attr.f_owner.salesrep
-     */
-    Default: newAttribute("attr.f_owner.salesrep"),
-    /**
      * Display Form Title: Owner Name
      * Display Form ID: label.f_owner.salesrep.ownername
-     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
+     */
+    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
+    /**
+     * Display Form Title: Sales Rep
+     * Display Form ID: attr.f_owner.salesrep
+     */ Default: newAttribute("attr.f_owner.salesrep"),
 };
 /**
  * Attribute Title: Product
@@ -164,10 +164,22 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
      */
-    Default: newAttribute("f_city.id"),
+    Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
     /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
@@ -177,21 +189,9 @@ export const City = {
      * Display Form ID: f_city.id.location
      */ Location: newAttribute("f_city.id.location"),
     /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -254,38 +254,6 @@ export const ProductId: IAttribute = newAttribute("f_product.id");
  */
 export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
 /**
- * Attribute Title: State
- * Attribute ID: state_id
- */
-export const State = {
-    /**
-     * Display Form Title: State name
-     * Display Form ID: state_id.statename
-     */
-    Name: newAttribute("state_id.statename"),
-    /**
-     * Display Form Title: State
-     * Display Form ID: state_id
-     */ Default: newAttribute("state_id"),
-};
-/**
- * Attribute Title: Product that is renamed to test the long attribute name
- * Attribute ID: productthatisrenamedtotestthelongattributename
- */
-export const ProductThatIsRenamedToTestTheLongAttributeName = {
-    /**
-     * Display Form Title: Product that is renamed to test the long attribute name
-     * Display Form ID: productthatisrenamedtotestthelongattributename
-     */
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
-    /**
-     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
-     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */ Hyperlink: newAttribute(
-        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
-    ),
-};
-/**
  * Attribute Title: Stage Id
  * Attribute ID: f_stage.id
  */
@@ -315,6 +283,38 @@ export const Status_1: IAttribute = newAttribute("f_stage.status_id");
  * Attribute ID: f_timeline.id
  */
 export const Timeline: IAttribute = newAttribute("f_timeline.id");
+/**
+ * Attribute Title: Product that is renamed to test the long attribute name
+ * Attribute ID: productthatisrenamedtotestthelongattributename
+ */
+export const ProductThatIsRenamedToTestTheLongAttributeName = {
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */
+    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
+     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
+     */ Hyperlink: newAttribute(
+        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+    ),
+};
+/**
+ * Attribute Title: State
+ * Attribute ID: state_id
+ */
+export const State = {
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */
+    Default: newAttribute("state_id"),
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */ Name: newAttribute("state_id.statename"),
+};
 /**
  * Metric Title: 2 literals in datetime_diff
  * Metric ID: 2_literals_in_datetime_diff
@@ -1096,12 +1096,12 @@ export const TimeTransformation: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("time_transformation", "measure"),
 );
 /**
- * Metric Title: Top level of datetime_add
- * Metric ID: top_level_of_datetime_add
+ * Metric Title: Time transformation (combined)
+ * Metric ID: time_transformation_combined
  * Metric Type: MAQL Metric
  */
-export const TopLevelOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("top_level_of_datetime_add", "measure"),
+export const TimeTransformationCombined: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("time_transformation_combined", "measure"),
 );
 /**
  * Metric Title: Top level metric for MAX
@@ -1120,12 +1120,12 @@ export const TopLevelMetricForMIN: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("top_level_metric_for_min", "measure"),
 );
 /**
- * Metric Title: Time transformation (combined)
- * Metric ID: time_transformation_combined
+ * Metric Title: Top level of datetime_add
+ * Metric ID: top_level_of_datetime_add
  * Metric Type: MAQL Metric
  */
-export const TimeTransformationCombined: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("time_transformation_combined", "measure"),
+export const TopLevelOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("top_level_of_datetime_add", "measure"),
 );
 /**
  * Fact Title: Activity (Date)
