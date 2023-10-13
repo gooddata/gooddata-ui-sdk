@@ -1,5 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
+import axiosRetry from "axios-retry";
 import { invariant } from "ts-invariant";
 import {
     IAnalyticalBackendConfig,
@@ -46,6 +47,10 @@ import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
 import { LIB_VERSION, LIB_NAME } from "../__version.js";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
 import { TigerEntitlements } from "./entitlements/index.js";
+
+const BACKOFF_FACTOR = 2;
+const RETRY_TIMEOUT_MS = 1000;
+const TOTAL_NUMBER_OF_RETRIES = 6;
 
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
@@ -148,6 +153,9 @@ export class TigerBackend implements IAnalyticalBackend {
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
+
+        // TODO - would this cover all endpoints (AD/KD/LDM/Home)?
+        retryMechanism(axios);
 
         this.client = tigerClientFactory(axios);
 
@@ -358,6 +366,7 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
             const details = omit(response.data, ["title"]);
             console.error("Tiger backend threw an error:", details);
         }
+        // }
 
         return Promise.reject(error);
     });
@@ -389,4 +398,42 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
 
 function isNotAuthenticatedResponse(err: any): boolean {
     return err?.response?.status === 401;
+}
+
+function retryMechanism(client: AxiosInstance): AxiosInstance {
+    // could use axios-retry https://www.npmjs.com/package/axios-retry
+    axiosRetry(client, {
+        retries: 3,
+        retryDelay: (retryCount) => retryCount * 1000,
+        retryCondition: (error) => {
+            return error?.response?.status === 400;
+        },
+    });
+
+    // interceptors
+    client.interceptors.response.use(identity, (error) => {
+        const response: AxiosResponse = error.response;
+        const config = error.config;
+
+        if (response.status === 429 && config.retry < TOTAL_NUMBER_OF_RETRIES) {
+            config.retry = config.retry + 1;
+
+            // 1, 2, 4, 8, 16, 32, 64, 128
+            const backoff_algorithm = BACKOFF_FACTOR ** (config.retry - 1) * RETRY_TIMEOUT_MS;
+
+            const delayedRequest = new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    console.log("Retrying request: ", config.url);
+                    console.log(`Retrying after: ${backoff_algorithm} ms`);
+                    resolve();
+                }, backoff_algorithm);
+            });
+
+            return delayedRequest.then(() => client(config));
+        }
+
+        return Promise.reject(error);
+    });
+
+    return client;
 }
