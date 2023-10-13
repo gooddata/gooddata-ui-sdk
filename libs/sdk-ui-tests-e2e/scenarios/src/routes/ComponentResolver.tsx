@@ -116,6 +116,7 @@ import {
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithFisrtValueLastValueScenario";
 import { DashboardTigerHideFilters } from "../components/Scenarios/Dashboard/DashboardTigerHideFilters";
 import { DashboardTigerReadonlyDateFilter } from "../components/Scenarios/Dashboard/DashboardTigerReadonlyDateFilter";
+import { DashboardDrilldownOnChart } from "../components/Scenarios/Dashboard/DashboardDrilldownonChartScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -252,6 +253,7 @@ export const SCENARIO_KEYS = {
         "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-rank",
     VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR:
         "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-runvar",
+    DRILLDOWN_ON_CHART: "dashboard/drilldown-on-chart",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -383,6 +385,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_POP, PivotTableOfFirstLastValueWithPop],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RANK, PivotTableOfFirstLastValueWithRank],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR, PivotTableOfFirstLastValueWithRunVar],
+    [SCENARIO_KEYS.DRILLDOWN_ON_CHART, DashboardDrilldownOnChart],
 ]);
 
 const ComponentResolver: React.FC = () => {

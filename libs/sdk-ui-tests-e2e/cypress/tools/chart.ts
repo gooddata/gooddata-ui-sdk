@@ -140,25 +140,42 @@ export class Chart {
         return this;
     }
 
-    private getTooltipContents(index: number) {
-        cy.get(
-            `.highcharts-series-${index}.highcharts-tracker rect, .highcharts-series-${index}.highcharts-tracker path `,
-        )
-            .first()
-            .trigger("mouseover", { force: true });
+    hoverOnHighChartSeries(index: number, pointIndex = 0) {
+        this.getElement()
+            .find(
+                `.highcharts-series-${index}.highcharts-tracker rect,
+             .highcharts-series-${index}.highcharts-tracker path, 
+             .highcharts-data-label text,
+             .highcharts-series rect
+             `,
+            )
+            .eq(pointIndex)
+            .realHover();
+        cy.wait(1000); //wait until the tooltip visible
+    }
 
-        cy.wait(500);
+    getTooltipContents(index: number, pointIndex = 0) {
+        this.hoverOnHighChartSeries(index, pointIndex);
         const result: string[] = [];
-        cy.get(".gd-viz-tooltip-content")
-            .find(".gd-viz-tooltip-title")
-            .each(($li) => {
-                return result.push($li.text());
-            });
+        const titles = ".gd-viz-tooltip-title:visible";
+        const values = ".gd-viz-tooltip-value:visible";
+        cy.get(".gd-viz-tooltip-item:visible").each(($li) => {
+            const titleText = $li.find(titles).text().trim();
+            const valueText = $li.find(values).text().trim();
+            result.push(titleText, valueText);
+        });
+
         return cy.wrap(result);
     }
 
-    hasTooltipContents(index: number, tooltip: string[]) {
+    hasTooltipInteraction(index: number, pointIndex = 0) {
+        this.hoverOnHighChartSeries(index, pointIndex);
+        cy.get(".gd-viz-tooltip-interaction:visible").should("have.text", "Click chart to drill");
+    }
+
+    hasTooltipContents(index: number, pointIndex = 0, tooltip: string[]) {
         this.getTooltipContents(index).should("deep.equal", tooltip);
+        this.hasTooltipInteraction(index, pointIndex);
         return this;
     }
 

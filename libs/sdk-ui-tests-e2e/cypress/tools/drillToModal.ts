@@ -73,7 +73,7 @@ export class DrillToModal {
             .find(".s-drill-down")
             .should("be.visible")
             .contains(`${attr}`)
-            .click();
+            .click({ force: true });
         return this;
     }
 
