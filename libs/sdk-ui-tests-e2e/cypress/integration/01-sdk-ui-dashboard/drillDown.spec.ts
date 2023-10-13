@@ -6,6 +6,7 @@ import { DrillToModal } from "../../tools/drillToModal";
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterValue } from "../../tools/enum/DateFilterValue";
 import { Api } from "../../tools/api";
+import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 
 const drillModal = new DrillToModal();
 const api = new Api();
@@ -50,7 +51,8 @@ const heatmapInsights = [
     {
         title: "heat map only row measure",
         value: PRODUCT_VALUE,
-        firstCallValue: INSIDE_SALES,
+        firstCellValue: INSIDE_SALES,
+        tooltip: ["Department", "Inside Sales", "Amount", "$36,219,131.58"],
     },
     {
         title: "heat map only column measure",
@@ -62,12 +64,14 @@ const heatmapInsights = [
             "$5,763,242.30",
             "$6,978,618.41",
         ],
-        firstCallValue: DIRECT_SALES,
+        firstCellValue: DIRECT_SALES,
+        tooltip: ["Department", "Direct Sales", "Amount", "$80,406,324.96"],
     },
     {
         title: "heat map has measure column row",
         value: PRODUCT_VALUE,
-        firstCallValue: INSIDE_SALES,
+        firstCellValue: INSIDE_SALES,
+        tooltip: ["Department", "Inside Sales", "Product", "CompuSci", "Amount", "$11,640,203.95"],
     },
 ];
 
@@ -94,7 +98,7 @@ describe("Drilling", () => {
             Navigation.visit("dashboard/dashboard-table-drill-down");
             dashboardTable.forEach((insight, index) => {
                 new Widget(index).waitTableLoaded().getTable().click(0, 0);
-                drillModal.hasTitleHeader(insight.title + " › " + DIRECT_SALES);
+                drillModal.waitForDrillModalViz().hasTitleHeader(insight.title + " › " + DIRECT_SALES);
                 insight.values.forEach((assertValue, index) => {
                     drillModal.getTable().hasCellValue(0, index, assertValue);
                 });
@@ -118,7 +122,6 @@ describe("Drilling", () => {
 
             Navigation.visit("dashboard/drill-to-insight");
             firstWidget.scrollIntoView().waitChartLoaded().getChart().clickSeriesPoint(0);
-
             drillModal.selectDropdownAttribute("2008").hasTitleHeader("Combo chart › 2008");
             drillModal.getChart().hasDataLabelValues(firstDrillValue).clickSeriesPoint(0);
             drillModal.hasTitleHeader("Combo chart › 2008 › Q1/2008");
@@ -133,33 +136,51 @@ describe("Drilling", () => {
             const assertInsightValues = ["69.6%", "68.22%", "71.1%", "30.4%", "31.78%", "28.9%"];
 
             Navigation.visit("dashboard/insight");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             firstWidget.scrollIntoView().waitChartLoaded().getChart().waitLoaded();
             new DateFilter()
                 .openAndSelectDateFilterByName(DateFilterValue.ALL_TIME)
                 .apply()
                 .subtitleHasValue(DateFilterValue.ALL_TIME);
-            firstWidget.getChart().hasDataLabelValues(assertInsightValues);
+
             firstWidget
+                .scrollIntoView()
                 .waitChartLoaded()
                 .getChart()
-                .hasTooltipContents(0, ["Year (Closed)", "Department", "Won"]);
-            firstWidget.getChart().clickSeriesPoint(1, 0);
+                .hasDataLabelValues(assertInsightValues)
+                .hasTooltipContents(0, 0, [
+                    "Year (Closed)",
+                    "2010",
+                    "Department",
+                    "Direct Sales",
+                    "Won",
+                    "69.6%",
+                ])
+                .clickSeriesPoint(1);
             drillModal
                 .selectDropdownAttribute(INSIDE_SALES)
-                .hasTitleHeader("Column chart with years › " + INSIDE_SALES);
-            drillModal.getChart().clickSeriesPoint(0);
-            drillModal.hasTitleHeader("Column chart with years › " + INSIDE_SALES + " › " + YEAR_2010);
-            drillModal.close();
+                .hasTitleHeader("Column chart with years › " + INSIDE_SALES)
+                .getChart()
+                .clickSeriesPoint(0);
+
+            drillModal
+                .selectDropdownAttribute(YEAR_2010)
+                .waitForDrillModalViz()
+                .hasTitleHeader("Column chart with years › " + INSIDE_SALES + " › " + YEAR_2010)
+                .close();
 
             firstWidget.waitChartLoaded().getChart().clickSeriesPoint(1, 0);
             drillModal
                 .selectDropdownAttribute(YEAR_2010)
-                .hasTitleHeader("Column chart with years › " + YEAR_2010);
-            drillModal.getChart().clickSeriesPoint(0);
+                .waitForDrillModalViz()
+                .hasTitleHeader("Column chart with years › " + YEAR_2010)
+                .getChart()
+                .clickSeriesPoint(0);
             drillModal
                 .selectDropdownAttribute("Q2/" + YEAR_2010)
                 .hasTitleHeader("Column chart with years › " + YEAR_2010 + " › Q2/" + YEAR_2010);
             drillModal.getChart().hasDataLabelValues(valueAttribute);
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Drilling down continue on a table ", () => {
@@ -211,8 +232,10 @@ describe("Drilling", () => {
                 firstWidget.waitTableLoaded().getTable().hasCellValue(index, 2, value);
             });
             firstWidget.getTable().click(0, 0);
-            drillModal.hasTitleHeader("Table with years › " + YEAR_2010);
-            drillModal.getTable().hasCellValue(0, 0, "Q2/" + YEAR_2010);
+            drillModal
+                .hasTitleHeader("Table with years › " + YEAR_2010)
+                .getTable()
+                .hasCellValue(0, 0, "Q2/" + YEAR_2010);
             drillModal.getTable().waitLoaded().click(0, 0);
             drillModal.hasTitleHeader("Table with years › " + YEAR_2010 + " › " + "Q2/" + YEAR_2010);
             drillModal.getTable().hasCellValue(0, 0, "Jun 2010");
@@ -244,16 +267,17 @@ describe("Drilling", () => {
 
         it("Should drill down on heat map chart", () => {
             Navigation.visit("dashboard/heatmap-drill-down");
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
             heatmapInsights.forEach((insight, index) => {
                 new Widget(index)
                     .scrollIntoView()
                     .waitChartLoaded()
                     .getChart()
-                    .waitLoaded()
-                    .hasTooltipContents(0, ["Department", "Amount"])
+                    .hasTooltipContents(0, 0, insight.tooltip)
                     .clickCellHeatMap(0);
                 drillModal
-                    .hasTitleHeader(insight.title + " › " + insight.firstCallValue)
+                    .waitForDrillModalViz()
+                    .hasTitleHeader(insight.title + " › " + insight.firstCellValue)
                     .getChart()
                     .hasDataLabelValues(insight.value);
                 drillModal.close();
@@ -280,6 +304,7 @@ describe("Drilling", () => {
                 .getChart()
                 .hasDataLabelValues(PRODUCT_VALUE)
                 .clickCellHeatMap(0);
+
             drillModal
                 .hasTitleHeader("heat map only row measure › " + INSIDE_SALES + " › WonderKid")
                 .getChart()
@@ -299,11 +324,13 @@ describe("Drilling", () => {
             Navigation.visit("dashboard/heatmap-drill-down");
             api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             secondWidget.scrollIntoView().waitChartLoaded().getChart().clickCellHeatMap(0);
+
             drillModal
                 .selectDropdownAttribute(INSIDE_SALES)
                 .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES)
                 .getChart()
                 .clickCellHeatMap(0);
+
             drillModal
                 .selectDropdownAttribute("WonderKid")
                 .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES + " › WonderKid")
@@ -315,11 +342,14 @@ describe("Drilling", () => {
                     "$915,932.67",
                     "$1,382,467.58",
                 ]);
+
             drillModal
                 .back()
                 .hasTitleHeader("heat map has measure column row › " + INSIDE_SALES)
                 .close();
+
             secondWidget.scrollIntoView().waitChartLoaded().getChart().clickCellHeatMap(0);
+
             drillModal
                 .selectDropdownAttribute("CompuSci")
                 .hasTitleHeader("heat map has measure column row › CompuSci")
@@ -336,6 +366,113 @@ describe("Drilling", () => {
                     "$777,279.71",
                 ]);
             api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+        });
+
+        it("Drilling down on chart that have two attribute same bucket with two drillable attributes", () => {
+            Navigation.visit("dashboard/drilldown-on-chart");
+            const bulletWidget = new Widget(1);
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            bulletWidget
+                .scrollIntoView()
+                .waitChartLoaded()
+                .getChart()
+                .hasTooltipContents(0, 0, [
+                    "Department",
+                    "Direct Sales",
+                    "Product",
+                    "CompuSci",
+                    "Amount",
+                    "$15,582,695.69",
+                ])
+                .clickSeriesPoint(0);
+
+            drillModal
+                .selectDropdownAttribute(DIRECT_SALES)
+                .hasTitleHeader("bullet with two attributes same bucket › " + DIRECT_SALES)
+                .waitForDrillModalViz()
+                .getChart()
+                .hasTooltipContents(0, 0, ["Product", "CompuSci", "Amount", "$15,582,695.69"])
+                .clickSeriesPoint(0);
+
+            drillModal
+                .hasTitleHeader("bullet with two attributes same bucket › " + DIRECT_SALES + " › CompuSci")
+                .getChart()
+                .hasTooltipContents(0, 0, ["Year (Closed)", "2010", "Amount", "$3,476,276.54"]);
+            drillModal.back();
+
+            drillModal
+                .hasTitleHeader("bullet with two attributes same bucket › " + DIRECT_SALES)
+                .waitForDrillModalViz()
+                .getChart()
+                .hasTooltipContents(0, 0, ["Product", "CompuSci", "Amount", "$15,582,695.69"])
+                .clickSeriesPoint(0);
+            drillModal.close();
+
+            bulletWidget.scrollIntoView().waitChartLoaded().getChart().clickSeriesPoint(0, 0);
+            drillModal
+                .selectDropdownAttribute("CompuSci")
+                .hasTitleHeader("bullet with two attributes same bucket › CompuSci")
+                .waitForDrillModalViz()
+                .getChart()
+                .hasTooltipContents(0, 0, ["Year (Closed)", "2010", "Amount", "$3,476,276.54"]);
+
+            drillModal.close();
+            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+        });
+
+        it("Drilling down on charts that have two drillable attributes separates with date filter", () => {
+            Navigation.visit("dashboard/drilldown-on-chart");
+            const dateFilter = new DateFilter().open().selectAbsoluteForm();
+            new DateFilterAbsoluteForm()
+                .openFromRangePicker()
+                .typeIntoFromRangePickerInput("01/01/2011")
+                .openToRangePicker()
+                .typeIntoToRangePickerInput("12/31/2012");
+            dateFilter.apply().subtitleHasValue("01/01/2011 – 12/31/2012");
+
+            firstWidget
+                .scrollIntoView()
+                .waitChartLoaded()
+                .getChart()
+                .hasTooltipContents(0, 0, [
+                    "Department",
+                    "Direct Sales",
+                    "Year (Closed)",
+                    "2011",
+                    "Amount",
+                    "$40,105,983.96",
+                ])
+                .clickSeriesPoint(0, 0);
+
+            drillModal
+                .selectDropdownAttribute(DIRECT_SALES)
+                .hasTitleHeader("Column with two drillable attributes › " + DIRECT_SALES)
+                .waitForDrillModalViz()
+                .getChart()
+                .hasTooltipContents(0, 0, [
+                    "Product",
+                    "CompuSci",
+                    "Year (Closed)",
+                    "2011",
+                    "Amount",
+                    "$5,690,108.03",
+                ]);
+            drillModal.close();
+
+            firstWidget.getChart().clickSeriesPoint(1, 0);
+            drillModal
+                .selectDropdownAttribute("2012")
+                .hasTitleHeader("Column with two drillable attributes › 2012")
+                .waitForDrillModalViz()
+                .getChart()
+                .hasTooltipContents(0, 0, [
+                    "Department",
+                    "Direct Sales",
+                    "Quarter/Year (Closed)",
+                    "Q1/2012",
+                    "Amount",
+                    "$8,217,514.98",
+                ]);
         });
     });
 
