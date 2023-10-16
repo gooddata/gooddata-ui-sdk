@@ -103,6 +103,16 @@ import {
     PivotTableOfDatetimeDiffWithWeekCheckOthers,
     PivotTableOfDatetimeDiffWithCompare,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithDateArithmeticsScenario";
+import {
+    PivotTableOfFirstLastValueWithinAttribute,
+    PivotTableOfFirstLastValueWithOrder,
+    PivotTableOfFirstLastValueWithPop,
+    PivotTableOfFirstLastValueWithPrevious,
+    PivotTableOfFirstLastValueWithQuarter,
+    PivotTableOfFirstLastValueWithRank,
+    PivotTableOfFirstLastValueWithRunSum,
+    PivotTableOfFirstLastValueWithRunVar,
+} from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithFisrtValueLastValueScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -220,6 +230,22 @@ export const SCENARIO_KEYS = {
         "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-week-check-others",
     VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE:
         "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-diff-with-compare",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_ORDER:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-order",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_QUARTER:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-quarter",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITHIN_ATTRIBUTE:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-within-attribute",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUN_SUM:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-run-sum",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_PREVIOUS:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-previous",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_POP:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-pop",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RANK:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-rank",
+    VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR:
+        "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-runvar",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -337,6 +363,17 @@ const scenarios = new Map<string, React.ComponentType>([
         PivotTableOfDatetimeDiffWithWeekCheckOthers,
     ],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_DATETIME_DIFF_WITH_COMPARE, PivotTableOfDatetimeDiffWithCompare],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_ORDER, PivotTableOfFirstLastValueWithOrder],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_QUARTER, PivotTableOfFirstLastValueWithQuarter],
+    [
+        SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITHIN_ATTRIBUTE,
+        PivotTableOfFirstLastValueWithinAttribute,
+    ],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUN_SUM, PivotTableOfFirstLastValueWithRunSum],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_PREVIOUS, PivotTableOfFirstLastValueWithPrevious],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_POP, PivotTableOfFirstLastValueWithPop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RANK, PivotTableOfFirstLastValueWithRank],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR, PivotTableOfFirstLastValueWithRunVar],
 ]);
 
 const ComponentResolver: React.FC = () => {

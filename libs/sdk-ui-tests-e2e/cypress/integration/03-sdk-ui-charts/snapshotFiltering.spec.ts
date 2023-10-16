@@ -227,3 +227,160 @@ describe("Insight with Date arithmetics functions", { tags: "checklist_integrate
         table.getRowValues(7).should("deep.equal", ["2011", "2011", "20.00", "–", "20.00", "20.00"]);
     });
 });
+
+describe("Insight with FIRST_VALUE/LAST_VALUE functions", { tags: "checklist_integrated_tiger" }, () => {
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of order`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-order",
+        );
+        table.waitLoaded();
+        table.getColumnValues(0).should("deep.equal", ["205,434,904.22"]);
+        table.getColumnValues(1).should("deep.equal", ["166,985,877.61"]);
+        table.getColumnValues(2).should("deep.equal", ["166,985,877.61"]);
+        table.getColumnValues(3).should("deep.equal", ["205,434,904.22"]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of quarter`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-quarter",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(2)
+            .should("deep.equal", [
+                "3,782,819.08",
+                "3,782,819.08",
+                "3,782,819.08",
+                "45,451,566.19",
+                "45,451,566.19",
+                "45,451,566.19",
+                "45,451,566.19",
+            ]);
+        table
+            .getColumnValues(3)
+            .should("deep.equal", [
+                "47,410,840.57",
+                "47,410,840.57",
+                "47,410,840.57",
+                "16,739,606.15",
+                "16,739,606.15",
+                "16,739,606.15",
+                "16,739,606.15",
+            ]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of within attribute`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-within-attribute",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(1)
+            .should("deep.equal", [
+                "11,707,748.68",
+                "17,922,937.68",
+                "72,322,103.05",
+                "75,374,703.58",
+                "8,182,197.40",
+            ]);
+        table
+            .getColumnValues(2)
+            .should("deep.equal", [
+                "8,811,958.20",
+                "46,812,340.80",
+                "111,033,603.96",
+                "180,091,143.53",
+                "9,425,523.72",
+            ]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of run sum`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-run-sum",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(3)
+            .should("deep.equal", ["72,322,103.05", "147,696,806.63", "–", "–", "–", "–"]);
+        table
+            .getColumnValues(4)
+            .should("deep.equal", ["72,322,103.05", "147,696,806.63", "–", "–", "–", "–"]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of previous`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-previous",
+        );
+        table.waitLoaded();
+        table.getColumnValues(1).should("deep.equal", ["404,437.78", "–", "1,044,000.00"]);
+        table.getColumnValues(2).should("deep.equal", ["51,702,180.70", "37,373,398.72", "19,700,474.52"]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of POP`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-pop",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(2)
+            .should("deep.equal", ["4,994,872.73", "404,437.78", "6,308,438.17", "161,942.48", "–", "–"]);
+        table
+            .getColumnValues(3)
+            .should("deep.equal", ["258,770.40", "51,702,180.70", "3,969,181.80", "4,213,015.60", "–", "–"]);
+        table
+            .getColumnValues(4)
+            .should("deep.equal", ["–", "–", "4,994,872.73", "404,437.78", "6,308,438.17", "161,942.48"]);
+        table
+            .getColumnValues(5)
+            .should("deep.equal", ["–", "–", "258,770.40", "51,702,180.70", "3,969,181.80", "4,213,015.60"]);
+    });
+
+    // Will enable this test when CAL-1100 is solved
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip(`check insight with FIRST_VALUE, LAST_VALUE function of rank`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-rank",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(3)
+            .should("deep.equal", ["1.00", "1.00", "249,442.00", "249,442.00", "269,790.00", "269,790.00"]);
+        table
+            .getColumnValues(4)
+            .should("deep.equal", [
+                "141,161.00",
+                "141,161.00",
+                "162,051.00",
+                "162,051.00",
+                "37,020.00",
+                "37,020.00",
+            ]);
+    });
+
+    it(`check insight with FIRST_VALUE, LAST_VALUE function of run var`, () => {
+        Navigation.visit(
+            "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-runvar",
+        );
+        table.waitLoaded();
+        table
+            .getColumnValues(3)
+            .should("deep.equal", [
+                "0.00",
+                "6,644,109,505.12",
+                "2,234,457,654.05",
+                "0.00",
+                "37,503,132.32",
+                "176,421,008.08",
+            ]);
+        table
+            .getColumnValues(4)
+            .should("deep.equal", [
+                "7,943,735,733.70",
+                "2,900,380,588.62",
+                "1,534,245,999.06",
+                "37,503,132.32",
+                "174,008,711.54",
+                "76,370,757.75",
+            ]);
+    });
+});
