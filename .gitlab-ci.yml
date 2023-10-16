@@ -26,6 +26,7 @@ stages:
   # every single merge commit to master - that would be a waste.
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(master|release|hotfix\/(tiger|panther)|fast_track)$/ && $CI_COMMIT_MESSAGE =~ /^Release /'
+      when: manual
 
 .with-buildx:
   before_script:
