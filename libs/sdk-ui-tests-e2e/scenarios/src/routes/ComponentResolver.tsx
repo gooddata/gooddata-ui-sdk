@@ -77,6 +77,7 @@ import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dash
 import { DashboardForDateFilterScenario } from "../components/Scenarios/Dashboard/DashboardForDateFilterScenario";
 import { DashboardDateFilteringOnInsightScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringOnInsightScenario";
 import { DashboardTableDrillDown } from "../components/Scenarios/Dashboard/DashboardTableDrillDownScenario";
+import { DashboardTableTranspose } from "../components/Scenarios/Dashboard/DashboardTableTransposeScenario";
 import { ImplictDrill } from "../components/Scenarios/Dashboard/ImplicitDrillScenario";
 import {
     InsightTranspose_MetricRow_ColHeaderLeft,
@@ -188,6 +189,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_SHORTEN_METRIC_NAME: "dashboard/shorten-metric-name",
     DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO: "dashboard/dashboard-date-filtering-on-insight-scenario",
     DASHBOARD_TABLE_DRILL_DOWN: "dashboard/dashboard-table-drill-down",
+    DASHBOARD_TABLE_TRANSPOSE: "dashboard/dashboard-table-transpose",
     IMPLICIT_DRILL: "dashboard/implicit-drill",
     INSIGHT_TRANSPOSE_HAS_MC_ROW_LEFT: "insight/insight-transpose-has-mc-row-left",
     INSIGHT_TRANSPOSE_HAS_MC_COLUMN_LEFT: "insight/insight-transpose-has-mc-column-left",
@@ -308,6 +310,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_SHORTEN_METRIC_NAME, DashboardShortenMetricNameScenario],
     [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO, DashboardDateFilteringOnInsightScenario],
     [SCENARIO_KEYS.DASHBOARD_TABLE_DRILL_DOWN, DashboardTableDrillDown],
+    [SCENARIO_KEYS.DASHBOARD_TABLE_TRANSPOSE, DashboardTableTranspose],
     [SCENARIO_KEYS.IMPLICIT_DRILL, ImplictDrill],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW_LEFT, InsightTranspose_MetricRow_ColHeaderLeft],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_COLUMN_LEFT, InsightTranspose_MetricColumn_ColHeaderLeft],
