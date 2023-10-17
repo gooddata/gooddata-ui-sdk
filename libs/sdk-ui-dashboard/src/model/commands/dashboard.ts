@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
-import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
+import { DashboardDateFilterConfigMode, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
@@ -418,5 +418,44 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF",
         correlationId,
+    };
+}
+
+/**
+ * Payload of the {@link SetDashboardDateFilterConfigMode} command.
+ * @alpha
+ */
+export interface SetDashboardDateFilterConfigModePayload {
+    mode: DashboardDateFilterConfigMode;
+}
+
+/**
+ * A command that set the mode of a date filter configuration in a dashboard.
+ *
+ * @alpha
+ */
+export interface SetDashboardDateFilterConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE";
+    readonly payload: SetDashboardDateFilterConfigModePayload;
+}
+
+/**
+ * Creates the {@link SetDashboardDateFilterConfigMode} command.
+ *
+ * @remarks
+ * Dispatching this command will set the visibility mode of the dashboard date filter to the provided value.
+ *
+ * @alpha
+ * @param mode - The visibility mode to set.
+ * @returns set dashboard date filter config mode command
+ */
+export function setDashboardDateFilterConfigMode(
+    mode: DashboardDateFilterConfigMode,
+): SetDashboardDateFilterConfigMode {
+    return {
+        type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE",
+        payload: {
+            mode,
+        },
     };
 }

@@ -2,6 +2,7 @@
 import { IntlShape } from "react-intl";
 import { messages } from "../../locales.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "@gooddata/sdk-ui-filters";
+import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
     bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",
@@ -17,7 +18,7 @@ export const getVisibilityIcon = (
         return undefined;
     }
 
-    if (mode === "hidden") {
+    if (mode === DashboardDateFilterConfigModeValues.HIDDEN) {
         return {
             ...VISIBILITY_BUBBLE_SETTINGS,
             icon: "gd-icon-invisible",
@@ -25,7 +26,7 @@ export const getVisibilityIcon = (
         };
     }
 
-    if (mode === "readonly") {
+    if (mode === DashboardDateFilterConfigModeValues.READONLY) {
         return {
             ...VISIBILITY_BUBBLE_SETTINGS,
             icon: "gd-icon-lock",

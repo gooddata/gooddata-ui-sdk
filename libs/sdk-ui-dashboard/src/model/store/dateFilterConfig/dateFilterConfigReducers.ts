@@ -1,9 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
 
+import isEmpty from "lodash/isEmpty.js";
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { DateFilterConfigState } from "./dateFilterConfigState.js";
-import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
+import {
+    IDateFilterConfig,
+    IDashboardDateFilterConfig,
+    DashboardDateFilterConfigMode,
+} from "@gooddata/sdk-model";
 import { DateFilterValidationResult } from "../../../types.js";
+
+const DEFAULT_DASHBOARD_DATE_FILTER_NAME = "Date range";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigState, A>;
 
@@ -38,6 +45,24 @@ const setDateFilterConfig: DateFilterConfigReducer<PayloadAction<SetDateFilterCo
     state.isUsingDashboardOverrides = isUsingDashboardOverrides;
 };
 
+const setDateFilterConfigMode: DateFilterConfigReducer<PayloadAction<DashboardDateFilterConfigMode>> = (
+    state,
+    action,
+) => {
+    const mode = action.payload;
+    const newDateFilterConfig = isEmpty(state.dateFilterConfig)
+        ? {
+              mode,
+              filterName: DEFAULT_DASHBOARD_DATE_FILTER_NAME,
+          }
+        : {
+              ...state.dateFilterConfig,
+              mode,
+          };
+
+    state.dateFilterConfig = newDateFilterConfig;
+};
+
 const addDateFilterConfigValidationWarning: DateFilterConfigReducer<
     PayloadAction<DateFilterValidationResult>
 > = (state, action) => {
@@ -53,6 +78,7 @@ const clearDateFilterConfigValidationWarning: DateFilterConfigReducer<PayloadAct
 
 export const dateFilterConfigReducers = {
     setDateFilterConfig,
+    setDateFilterConfigMode,
     addDateFilterConfigValidationWarning,
     clearDateFilterConfigValidationWarning,
 };

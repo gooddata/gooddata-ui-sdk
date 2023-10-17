@@ -626,6 +626,7 @@ export interface ChangeFilterContextSelectionPayload {
      * Filters to apply to the current dashboard filter context.
      */
     filters: (IDashboardFilter | FilterContextItem)[];
+
     /**
      * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
