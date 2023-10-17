@@ -32,6 +32,26 @@ export const DashboardDateFilterConfigModeValues: Record<
 };
 
 /**
+ * Attribute filter configuration mode
+ * @alpha
+ */
+export type DashboardAttributeFilterConfigMode = "readonly" | "hidden" | "active";
+
+/**
+ * Represent the values of DashboardAttributeFilterConfigMode
+ *
+ * @internal
+ */
+export const DashboardAttributeFilterConfigModeValues: Record<
+    Uppercase<DashboardAttributeFilterConfigMode>,
+    DashboardAttributeFilterConfigMode
+> = {
+    READONLY: "readonly" as const,
+    HIDDEN: "hidden" as const,
+    ACTIVE: "active" as const,
+};
+
+/**
  * Date filter presets to add to the date filter for the current dashboard
  * @alpha
  */
@@ -75,6 +95,22 @@ export interface IDashboardDateFilterConfig {
      * Date filter presets to add to the date filter dropdown specific for the current dashboard
      */
     addPresets?: IDashboardDateFilterAddedPresets;
+}
+
+/**
+ * Extended attribute filter config
+ * @alpha
+ */
+export interface IDashboardAttributeFilterConfig {
+    /**
+     * Local identifier of the attribute filter to configure
+     */
+    localIdentifier: string;
+
+    /**
+     * Control visibility mode of the attribute filter
+     */
+    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**
@@ -231,6 +267,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Dashboard extended date filter config
      */
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Dashboard extended attribute filter configs
+     */
+    readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 
     /**
      * Plugins used on this dashboard.

@@ -169,6 +169,8 @@ export {
     selectEffectiveDateFilterAvailableGranularities,
     selectDateFilterConfigValidationWarnings,
 } from "./dateFilterConfig/dateFilterConfigSelectors.js";
+export { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
+export { selectAttributeFilterConfigsOverrides } from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export {
     selectInsights,
     selectInsightRefs,

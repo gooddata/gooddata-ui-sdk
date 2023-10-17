@@ -141,6 +141,7 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
@@ -388,6 +389,11 @@ export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilte
 
 // @internal
 export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps, Parameters<AttributeFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
+
+// @alpha (undocumented)
+export interface AttributeFilterConfigsState {
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+}
 
 // @internal (undocumented)
 export type AttributeFilterDraggableComponent = {
@@ -2308,6 +2314,8 @@ export interface DashboardState {
     accessibleDashboards: EntityState<IListedDashboard>;
     // @beta (undocumented)
     alerts: EntityState<IWidgetAlert>;
+    // @alpha (undocumented)
+    attributeFilterConfigs: AttributeFilterConfigsState;
     // (undocumented)
     backendCapabilities: BackendCapabilitiesState;
     // (undocumented)
@@ -5909,6 +5917,9 @@ export const selectAllowUnfinishedFeatures: DashboardSelector<boolean>;
 
 // @alpha
 export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | undefined>;
+
+// @alpha
+export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]>;
 
 // @public
 export const selectAttributeFilterDescendants: (localId: string) => DashboardSelector<string[]>;
