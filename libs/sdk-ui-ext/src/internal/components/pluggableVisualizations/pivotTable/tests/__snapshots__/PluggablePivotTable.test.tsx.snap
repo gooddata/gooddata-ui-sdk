@@ -252,6 +252,1098 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
 }
 `;
 
+exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedReferencePoint > should return reference point with new bucket max size 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 50,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+      },
+      "columns": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Columns",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 100,
+        "title": "Measures",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedReferencePoint > should return reference point with new bucket max size, when measures/attributes limit is reached with columns 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-1",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-2",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-3",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-4",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-5",
+          "localIdentifier": "m5",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-6",
+          "localIdentifier": "m6",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-7",
+          "localIdentifier": "m7",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-8",
+          "localIdentifier": "m8",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-9",
+          "localIdentifier": "m9",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-10",
+          "localIdentifier": "m10",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-11",
+          "localIdentifier": "m11",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-12",
+          "localIdentifier": "m12",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-13",
+          "localIdentifier": "m13",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-14",
+          "localIdentifier": "m14",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-15",
+          "localIdentifier": "m15",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-16",
+          "localIdentifier": "m16",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-17",
+          "localIdentifier": "m17",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-18",
+          "localIdentifier": "m18",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-19",
+          "localIdentifier": "m19",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-20",
+          "localIdentifier": "m20",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-1",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-2",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-3",
+          "dfRef": {
+            "uri": "a3/df",
+          },
+          "localIdentifier": "a3",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-4",
+          "dfRef": {
+            "uri": "a4/df",
+          },
+          "localIdentifier": "a4",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-5",
+          "dfRef": {
+            "uri": "a5/df",
+          },
+          "localIdentifier": "a5",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-6",
+          "dfRef": {
+            "uri": "a6/df",
+          },
+          "localIdentifier": "a6",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-7",
+          "dfRef": {
+            "uri": "a7/df",
+          },
+          "localIdentifier": "a7",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-8",
+          "dfRef": {
+            "uri": "a8/df",
+          },
+          "localIdentifier": "a8",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-9",
+          "dfRef": {
+            "uri": "a9/df",
+          },
+          "localIdentifier": "a9",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-10",
+          "dfRef": {
+            "uri": "a10/df",
+          },
+          "localIdentifier": "a10",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-11",
+          "dfRef": {
+            "uri": "a11/df",
+          },
+          "localIdentifier": "a11",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-12",
+          "dfRef": {
+            "uri": "a12/df",
+          },
+          "localIdentifier": "a12",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-13",
+          "dfRef": {
+            "uri": "a13/df",
+          },
+          "localIdentifier": "a13",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-14",
+          "dfRef": {
+            "uri": "a14/df",
+          },
+          "localIdentifier": "a14",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-15",
+          "dfRef": {
+            "uri": "a15/df",
+          },
+          "localIdentifier": "a15",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-16",
+          "dfRef": {
+            "uri": "a16/df",
+          },
+          "localIdentifier": "a16",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-17",
+          "dfRef": {
+            "uri": "a17/df",
+          },
+          "localIdentifier": "a17",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-18",
+          "dfRef": {
+            "uri": "a18/df",
+          },
+          "localIdentifier": "a18",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-19",
+          "dfRef": {
+            "uri": "a19/df",
+          },
+          "localIdentifier": "a19",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-20",
+          "dfRef": {
+            "uri": "a20/df",
+          },
+          "localIdentifier": "a20",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "column.attribute",
+          "dfRef": {
+            "uri": "c1/df",
+          },
+          "localIdentifier": "c1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:table/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+        "warningMessage": "To add up to 30 more, remove all items from columns section",
+      },
+      "columns": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Columns",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:table/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+        "warningMessage": "To add up to 80 more, remove all items from columns section",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedReferencePoint > should return reference point with new bucket max size, when measures/attributes limit is reached with no columns 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-1",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-2",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-3",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-4",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-5",
+          "localIdentifier": "m5",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-6",
+          "localIdentifier": "m6",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-7",
+          "localIdentifier": "m7",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-8",
+          "localIdentifier": "m8",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-9",
+          "localIdentifier": "m9",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-10",
+          "localIdentifier": "m10",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-11",
+          "localIdentifier": "m11",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-12",
+          "localIdentifier": "m12",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-13",
+          "localIdentifier": "m13",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-14",
+          "localIdentifier": "m14",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-15",
+          "localIdentifier": "m15",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-16",
+          "localIdentifier": "m16",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-17",
+          "localIdentifier": "m17",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-18",
+          "localIdentifier": "m18",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-19",
+          "localIdentifier": "m19",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-20",
+          "localIdentifier": "m20",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-21",
+          "localIdentifier": "m21",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-1",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-2",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-3",
+          "dfRef": {
+            "uri": "a3/df",
+          },
+          "localIdentifier": "a3",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-4",
+          "dfRef": {
+            "uri": "a4/df",
+          },
+          "localIdentifier": "a4",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-5",
+          "dfRef": {
+            "uri": "a5/df",
+          },
+          "localIdentifier": "a5",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-6",
+          "dfRef": {
+            "uri": "a6/df",
+          },
+          "localIdentifier": "a6",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-7",
+          "dfRef": {
+            "uri": "a7/df",
+          },
+          "localIdentifier": "a7",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-8",
+          "dfRef": {
+            "uri": "a8/df",
+          },
+          "localIdentifier": "a8",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-9",
+          "dfRef": {
+            "uri": "a9/df",
+          },
+          "localIdentifier": "a9",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-10",
+          "dfRef": {
+            "uri": "a10/df",
+          },
+          "localIdentifier": "a10",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-11",
+          "dfRef": {
+            "uri": "a11/df",
+          },
+          "localIdentifier": "a11",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-12",
+          "dfRef": {
+            "uri": "a12/df",
+          },
+          "localIdentifier": "a12",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-13",
+          "dfRef": {
+            "uri": "a13/df",
+          },
+          "localIdentifier": "a13",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-14",
+          "dfRef": {
+            "uri": "a14/df",
+          },
+          "localIdentifier": "a14",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-15",
+          "dfRef": {
+            "uri": "a15/df",
+          },
+          "localIdentifier": "a15",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-16",
+          "dfRef": {
+            "uri": "a16/df",
+          },
+          "localIdentifier": "a16",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-17",
+          "dfRef": {
+            "uri": "a17/df",
+          },
+          "localIdentifier": "a17",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-18",
+          "dfRef": {
+            "uri": "a18/df",
+          },
+          "localIdentifier": "a18",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-19",
+          "dfRef": {
+            "uri": "a19/df",
+          },
+          "localIdentifier": "a19",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-20",
+          "dfRef": {
+            "uri": "a20/df",
+          },
+          "localIdentifier": "a20",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attributeIdentifer-21",
+          "dfRef": {
+            "uri": "a21/df",
+          },
+          "localIdentifier": "a21",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 50,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+      },
+      "columns": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsDuplicateDates": false,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:table/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Columns",
+        "warningMessage": "To add columns, total count of items from measures or rows should not be higher than 20",
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+      "measures": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:table/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 100,
+        "title": "Measures",
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
 exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new reference point with ui config supporting mulple date dimensions when turned on 1`] = `
 {
   "buckets": {

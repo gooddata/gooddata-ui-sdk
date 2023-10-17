@@ -576,6 +576,21 @@
         "limit": 0,
         "translate": false
     },
+    "dashboard.bucket.category_columns_warning._measure": {
+        "value": "To add columns, total count of items from measures or rows should not be higher than {oldLimit}",
+        "comment": "Do not translate {oldLimit}.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_columns_warning._metric": {
+        "value": "To add columns, total count of items from metrics or rows should not be higher than {oldLimit}",
+        "comment": "Do not translate {oldLimit}.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_measures_rows_warning": {
+        "value": "To add up to {limit} more, remove all items from columns section",
+        "comment": "Do not translate {limit}.",
+        "limit": 0
+    },
     "dashboard.bucket.category_category_by_warning._measure|insight": {
         "value": "To view by, an insight can have only one measure",
         "comment": "",

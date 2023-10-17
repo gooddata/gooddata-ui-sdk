@@ -3929,3 +3929,114 @@ export const metricAndAttributeFromAndTo: IReferencePoint = {
         sortItems: [],
     },
 };
+
+export const tableWithMultipleMeasuresRowsAndColumns: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "attribute",
+            items: attributeItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "attribute",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [],
+    },
+};
+
+const generateMeasuresItems = (count: number): IBucketItem[] => {
+    const result: IBucketItem[] = [];
+    for (let i = 1; i <= count; i++) {
+        const item: IBucketItem = {
+            ...masterMeasureItems[0],
+            localIdentifier: `m${i}`,
+            attribute: `attributeIdentifer-${i}`,
+        };
+
+        result.push(item);
+    }
+
+    return result;
+};
+
+const generateAttributeItems = (count: number): IBucketItem[] => {
+    const result: IBucketItem[] = [];
+    for (let i = 1; i <= count; i++) {
+        const item: IBucketItem = {
+            ...attributeItems[0],
+            localIdentifier: `a${i}`,
+            attribute: `attributeIdentifer-${i}`,
+            dfRef: uriRef(`a${i}/df`),
+        };
+
+        result.push(item);
+    }
+
+    return result;
+};
+
+export const tableWith20MeasuresAndAttributesAndNoColumn: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: generateMeasuresItems(21),
+        },
+        {
+            localIdentifier: "attribute",
+            items: generateAttributeItems(21),
+        },
+        {
+            localIdentifier: "columns",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [],
+    },
+};
+
+export const tableWith20MeasuresAndAttributesAnd1Column: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: generateMeasuresItems(20),
+        },
+        {
+            localIdentifier: "attribute",
+            items: generateAttributeItems(20),
+        },
+        {
+            localIdentifier: "columns",
+            items: [
+                {
+                    localIdentifier: "c1",
+                    type: "attribute",
+                    aggregation: null,
+                    attribute: "column.attribute",
+                    dfRef: uriRef("c1/df"),
+                },
+            ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [],
+    },
+};

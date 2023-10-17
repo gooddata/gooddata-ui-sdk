@@ -106,6 +106,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     metricSegment: { id: "dashboard.bucket.metric_segment_by_warning" },
     categorySegment: { id: "dashboard.bucket.category_segment_by_warning" },
     category: { id: "dashboard.bucket.category_category_by_warning" },
+    columns: { id: "dashboard.bucket.category_columns_warning" },
+    measuresAttributes: { id: "dashboard.bucket.category_measures_rows_warning" },
     autoDefault: { id: "properties.auto_default" },
     extraSmall: { id: "properties.points.size.extra_small" },
     small: { id: "properties.points.size.small" },
