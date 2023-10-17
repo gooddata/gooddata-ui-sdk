@@ -15,7 +15,7 @@ const style = { height: 300 };
 
 const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props) => {
     const { config } = props;
-    const insight = idRef(Insights.TableTranspose);
+    const insight = idRef(Insights.TableWithMC);
 
     return (
         <div style={style} className="s-insight-view-transpose">
