@@ -46,9 +46,12 @@ export default defineConfig({
             openMode: 0,
         },
         trashAssetsBeforeRuns: false,
-        reporter: "junit",
+        reporter: "cypress-multi-reporters",
         reporterOptions: {
-            mochaFile: "./cypress/results/result.[hash].xml",
+            reporterEnabled: "mocha-junit-reporter",
+            mochaJunitReporterReporterOptions: {
+                mochaFile: "cypress/results/[suiteFilename].xml",
+            },
         },
         specPattern: "./cypress/integration/**/*.spec.ts",
         videoUploadOnPasses: false,
