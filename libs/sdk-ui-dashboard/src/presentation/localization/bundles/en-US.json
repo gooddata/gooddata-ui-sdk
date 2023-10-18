@@ -2171,18 +2171,64 @@
         "limit": 0
     },
     "filter.visibilityMode.tooltip.hidden": {
-        "value": "This filter is hidden outside of edit mode, but its selection is still applied.",
+        "value": "This filter is hidden. It can be accessed only via the Edit mode.",
         "comment": "The tooltip serves as a warning to the user that the filter will be hidden in view mode.",
         "limit": 0
     },
     "filter.visibilityMode.tooltip.readonly.editMode": {
-        "value": "This filter is locked, its value cannot be changed outside of edit mode.",
+        "value": "This filter is locked. It can be changed only via the Edit mode.",
         "comment": "The tooltip serves as a warning to the user that the filter will be locked, and the user cannot change its value in view mode.",
         "limit": 0
     },
     "filter.visibilityMode.tooltip.readonly.viewMode": {
-        "value": "This filter is locked. You cannot change its value.",
+        "value": "This filter is locked.",
         "comment": "The tooltip helps users understand why they cannot change its value.",
+        "limit": 0
+    },
+    "dateFilterDropdown.save": {
+        "value": "Save",
+        "comment": "Save button label in date filter dropdown configuration",
+        "limit": 0
+    },
+    "dateFilterDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in date filter dropdown",
+        "limit": 0
+    },
+
+    "filter.configuration.mode.title": {
+        "value": "Mode",
+        "comment": "The title of the state section in date filter dropdown configuration",
+        "limit": 0
+    },
+    "filter.configuration.mode.interactive.title": {
+        "value": "Interactive",
+        "comment": "The title of the interactive mode",
+        "limit": 0
+    },
+    "filter.configuration.mode.interactive.tooltip": {
+        "value": "Dashboard users can see and change the filter.",
+        "comment": "The tooltip of the interactive mode",
+        "limit": 0
+    },
+    "filter.configuration.mode.locked.title": {
+        "value": "Locked",
+        "comment": "The title of the locked mode",
+        "limit": 0
+    },
+    "filter.configuration.mode.locked.tooltip": {
+        "value": "Dashboard users can see the filter but cannot change it.",
+        "comment": "The tooltip of the locked mode",
+        "limit": 0
+    },
+    "filter.configuration.mode.hidden.title": {
+        "value": "Hidden",
+        "comment": "The title of the hidden mode",
+        "limit": 0
+    },
+    "filter.configuration.mode.hidden.tooltip": {
+        "value": "Dashboard users cannot see the filter but it is applied.",
+        "comment": "The tooltip of the hidden mode",
         "limit": 0
     }
 }
