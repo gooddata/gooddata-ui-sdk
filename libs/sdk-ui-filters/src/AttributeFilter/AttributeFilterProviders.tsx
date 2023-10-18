@@ -28,6 +28,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         fullscreenOnMobile = false,
         selectionMode = "multi",
         selectFirst = false,
+        disabled,
+        customIcon,
         attribute,
         onApply,
         onError,
@@ -94,6 +96,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     fullscreenOnMobile={fullscreenOnMobile}
                     selectionMode={selectionMode}
                     selectFirst={selectFirst}
+                    disabled={disabled}
+                    customIcon={customIcon}
                 >
                     {children}
                 </AttributeFilterContextProvider>
