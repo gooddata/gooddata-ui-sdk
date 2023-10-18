@@ -17,6 +17,7 @@ type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;
     filterIndex: number;
     autoOpen: boolean;
+    readonly: boolean;
     FilterComponent: CustomDashboardAttributeFilterComponent;
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onAttributeFilterAdded: (index: number) => void;
@@ -28,6 +29,7 @@ export function DraggableAttributeFilter({
     filter,
     filterIndex,
     autoOpen,
+    readonly,
     onAttributeFilterChanged,
     onAttributeFilterAdded,
     onAttributeFilterClose,
@@ -82,6 +84,7 @@ export function DraggableAttributeFilter({
                     filter={filterToUse}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
+                    readonly={readonly}
                     autoOpen={autoOpen}
                     onClose={onClose}
                 />

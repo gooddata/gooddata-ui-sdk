@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
+import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
@@ -67,7 +68,11 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
-            dateFilterMode={readonly ? "readonly" : "active"}
+            dateFilterMode={
+                readonly
+                    ? DashboardDateFilterConfigModeValues.READONLY
+                    : DashboardDateFilterConfigModeValues.ACTIVE
+            }
             filterOptions={config.dateFilterOptions}
             availableGranularities={config.availableGranularities}
             customFilterName={config.customFilterName}

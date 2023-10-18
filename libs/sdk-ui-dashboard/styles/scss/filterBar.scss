@@ -303,6 +303,16 @@ $attribute-filter-drag-handle-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .gd-filter-button-custom-icon-wrapper {
+        display: flex;
+        align-items: center;
+
+        .gd-icon-invisible {
+            display: flex;
+            padding-top: 2px;
+        }
+    }
 }
 
 .add-attribute-filter-dropdown {

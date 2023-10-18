@@ -24,6 +24,7 @@ import { DashboardAlertUpdated as DashboardAlertUpdated_2 } from '../events/aler
 import { DashboardAsyncRenderRequested as DashboardAsyncRenderRequested_2 } from '../events/render.js';
 import { DashboardAsyncRenderResolved as DashboardAsyncRenderResolved_2 } from '../events/render.js';
 import { DashboardAttributeFilterAdded as DashboardAttributeFilterAdded_2 } from '../events/filters.js';
+import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterMoved as DashboardAttributeFilterMoved_2 } from '../events/filters.js';
 import { DashboardAttributeFilterParentChanged as DashboardAttributeFilterParentChanged_2 } from '../events/filters.js';
 import { DashboardAttributeFilterRemoved as DashboardAttributeFilterRemoved_2 } from '../events/filters.js';
@@ -3305,6 +3306,8 @@ export interface IDashboardAttributeFilterProps {
     isDraggable?: boolean;
     onClose?: () => void;
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    // @alpha
+    readonly?: boolean;
 }
 
 // @public (undocumented)
@@ -5885,6 +5888,9 @@ export const selectAllowUnfinishedFeatures: DashboardSelector<boolean>;
 export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | undefined>;
 
 // @alpha
+export const selectAttributeFilterConfigsModeMap: DashboardSelector<Map<string, DashboardAttributeFilterConfigMode>>;
+
+// @alpha
 export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]>;
 
 // @public
@@ -6102,6 +6108,9 @@ export const selectDrillTargets: DashboardSelector<ObjRefMap<IDrillTargets>>;
 
 // @alpha
 export const selectDrillTargetsByWidgetRef: (ref: ObjRef) => DashboardSelector<IDrillTargets | undefined>;
+
+// @alpha
+export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<Map<string, DashboardAttributeFilterConfigMode>>;
 
 // @alpha
 export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<DateFilterGranularity[]>;
