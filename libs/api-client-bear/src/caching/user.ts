@@ -42,7 +42,7 @@ export class UserModuleWithCaching extends UserModuleDecorator {
      */
     public async logout(): Promise<ApiResponse | void> {
         this.ctx.caches.currentProfile = null;
-        super.logout();
+        return super.logout();
     }
 
     /**
