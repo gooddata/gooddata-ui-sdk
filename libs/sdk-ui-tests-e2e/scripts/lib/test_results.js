@@ -14,8 +14,8 @@ function handleError(e) {
 }
 
 export async function getTestResults() {
-    const fileNames = await util.promisify(fs.readdir)(RESULTS_DIR).catch(handleError);
-    const resultFileNames = fileNames.filter((name) => name.match(/result\..+\.xml/g));
+    const fileNames = await util.promisify(fs.readdir)(RESULTS_DIR, { recursive: true }).catch(handleError);
+    const resultFileNames = fileNames.filter((name) => name.match(/.+\.xml/g));
     const result = [];
     for (const fileName of resultFileNames) {
         const resultPath = path.resolve(RESULTS_DIR, fileName);
