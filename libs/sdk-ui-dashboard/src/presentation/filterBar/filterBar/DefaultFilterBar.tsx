@@ -4,6 +4,8 @@ import classNames from "classnames";
 import { invariant } from "ts-invariant";
 import {
     areObjRefsEqual,
+    DashboardAttributeFilterConfigModeValues,
+    DashboardDateFilterConfigModeValues,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     objRefToString,
@@ -24,6 +26,7 @@ import {
     selectIsInEditMode,
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreAttributeFilters,
+    selectEffectiveAttributeFiltersModeMap,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -107,6 +110,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
+    const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
     const isExport = useDashboardSelector(selectIsExport);
     const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
         useDashboardComponentsContext();
@@ -133,7 +137,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     "dash-filter-is-edit-mode": isInEditMode,
                 })}
             >
-                {dateFilterMode === "hidden" ? (
+                {dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN ? (
                     <HiddenDashboardDateFilter />
                 ) : (
                     <>
@@ -141,7 +145,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             filter={dateFilter}
                             onFilterChanged={onDateFilterChanged}
                             config={dateFilterComponentConfig}
-                            readonly={dateFilterMode === "readonly"}
+                            readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                         />
                         <AttributeFilterDropZoneHint
                             placement="outside"
@@ -171,6 +175,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         : convertDashboardAttributeFilterElementsUrisToValues(filter);
                     const CustomAttributeFilterComponent =
                         AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
+                    const attributeFilterMode = attributeFiltersModeMap.get(
+                        filter.attributeFilter.localIdentifier!,
+                    );
 
                     /**
                      * Use the attribute as key, not the display form.
@@ -183,12 +190,19 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     const displayForm = displayFormsMap.get(convertedFilter.attributeFilter.displayForm);
                     invariant(displayForm, "inconsistent state, display form for a filter was not found");
 
+                    if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
+                        return null;
+                    }
+
                     return (
                         <DraggableAttributeFilter
                             key={objRefToString(displayForm.attribute)}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
                             filterIndex={filterIndex}
+                            readonly={
+                                attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
+                            }
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
                             onAttributeFilterAdded={addAttributeFilterPlaceholder}

@@ -20,7 +20,7 @@ import {
 
 import { IDashboardAttributeFilterProps } from "./types.js";
 import { useParentFilters } from "./useParentFilters.js";
-import { filterObjRef } from "@gooddata/sdk-model";
+import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import {
     CustomAttributeFilterDropdownActions,
@@ -32,6 +32,8 @@ import {
     selectLocale,
     useDashboardSelector,
     selectIsInEditMode,
+    selectBackendCapabilities,
+    selectAttributeFilterConfigsModeMap,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -40,6 +42,7 @@ import {
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { getVisibilityIcon } from "../utils.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -51,10 +54,12 @@ import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks
 export const DefaultDashboardAttributeFilter = (
     props: IDashboardAttributeFilterProps,
 ): JSX.Element | null => {
-    const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
+    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -63,6 +68,7 @@ export const DefaultDashboardAttributeFilter = (
     }, [attributeFilter]);
 
     const dispatch = useDashboardDispatch();
+
     const handleRemoveAttributeFilter = useCallback(
         () => dispatch(removeAttributeFilter(filter.attributeFilter.localIdentifier!)),
         [filter, dispatch],
@@ -99,6 +105,17 @@ export const DefaultDashboardAttributeFilter = (
 
     const { attributes } = useAttributes(attributeFilterRef);
 
+    const visibilityIcon = useMemo(
+        () =>
+            getVisibilityIcon(
+                attributeFilterConfigsModeMap.get(filter.attributeFilter.localIdentifier!),
+                isEditMode,
+                !!capabilities.supportsHiddenAndLockedFiltersOnUI,
+                intl,
+            ),
+        [attributeFilterConfigsModeMap, isEditMode, capabilities, intl],
+    );
+
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             useAutoOpenAttributeFilterDropdownButton(props, Boolean(autoOpen));
@@ -134,7 +151,7 @@ export const DefaultDashboardAttributeFilter = (
                 />
             );
         };
-    }, [isDraggable, autoOpen, isEditMode, onCloseFilter]);
+    }, [isDraggable, autoOpen, isEditMode, visibilityIcon, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
@@ -271,6 +288,12 @@ export const DefaultDashboardAttributeFilter = (
                 fullscreenOnMobile
                 selectionMode={filter.attributeFilter.selectionMode}
                 selectFirst={true}
+                attributeFilterMode={
+                    readonly
+                        ? DashboardAttributeFilterConfigModeValues.READONLY
+                        : DashboardAttributeFilterConfigModeValues.ACTIVE
+                }
+                customIcon={visibilityIcon}
             />
         </AttributeFilterParentFilteringProvider>
     );
