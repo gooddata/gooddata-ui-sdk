@@ -29,6 +29,7 @@ import {
 } from "./bucketHelper.js";
 
 import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
+import { MAX_TABLE_CATEGORIES_COUNT } from "../constants/uiConfig.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
@@ -74,6 +75,17 @@ export function hasNoSecondaryMeasures(buckets: IBucketOfFun[]): boolean {
 
 export function hasNoAttribute(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.ATTRIBUTE) === 0;
+}
+
+export function hasNoMoreThan20ItemsOnMeasuresOrRows(buckets: IBucketOfFun[]): boolean {
+    return (
+        getItemsCount(buckets, BucketNames.ATTRIBUTE) <= MAX_TABLE_CATEGORIES_COUNT &&
+        getItemsCount(buckets, BucketNames.MEASURES) <= MAX_TABLE_CATEGORIES_COUNT
+    );
+}
+
+export function hasNoColumns(buckets: IBucketOfFun[]): boolean {
+    return getItemsCount(buckets, BucketNames.COLUMNS) === 0;
 }
 
 export function hasSomeSegmentByItems(buckets: IBucketOfFun[]): boolean {
@@ -270,4 +282,10 @@ export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): bo
     ];
 
     return allRulesMet(rules, buckets);
+}
+
+export function canTableMeasuresOrAttributesAddMoreItems(buckets: IBucketOfFun[], localIdentifier: string) {
+    const itemsCount = getItemsCount(buckets, localIdentifier);
+
+    return hasNoColumns(buckets) ? true : itemsCount < MAX_TABLE_CATEGORIES_COUNT;
 }

@@ -304,6 +304,11 @@ export interface ISettings {
      */
     enableAttributeHierarchies?: boolean;
 
+    /**
+     * Enable new max bucket size items limit for Pivot Table
+     */
+    enablePivotTableIncreaseBucketSize?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
