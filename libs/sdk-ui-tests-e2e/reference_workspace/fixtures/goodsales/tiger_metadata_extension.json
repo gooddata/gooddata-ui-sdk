@@ -930,6 +930,59 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "234e9a15-4e45-4e85-9606-0726226b1914",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "type": "IDashboardLayout",
+                        "sections": [
+                            {
+                                "type": "IDashboardLayoutSection",
+                                "header": {},
+                                "items": [
+                                    {
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "type": "insight",
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "b69512f0-6285-4d4d-b31c-47b7b081276c",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "ignoreDashboardFilters": [],
+                                            "drills": [],
+                                            "title": "Table Transpose",
+                                            "description": "",
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            }
+                                        },
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "a402fcdc-fa1c-49ca-be7f-dade9e75d33e",
+                "title": "KD with Table Transpose"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "4241e9a6-4dd0-4f61-9b4b-3d7d6ca4e165",
                             "type": "filterContext"
                         }
@@ -2040,6 +2093,15 @@
                 },
                 "description": "",
                 "id": "215f465d-3e3e-4940-922b-326bdb75b82b",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "234e9a15-4e45-4e85-9606-0726226b1914",
                 "title": "filterContext"
             },
             {
@@ -4233,6 +4295,63 @@
                 },
                 "description": "",
                 "id": "8f88b387-351b-479f-a7fb-e2b072c810f3",
+                "title": "Table With MC"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "e96c2c0d49ac4b9286079f1e1169ccd6",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "d0793f9cdd934ce290e697327f2f35fc",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {
+                        "controls": {
+                            "columnHeadersPosition": "left",
+                            "measureGroupDimension": "rows"
+                        }
+                    },
+                    "visualizationUrl": "local:table",
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b69512f0-6285-4d4d-b31c-47b7b081276c",
                 "title": "Table Transpose"
             },
             {
