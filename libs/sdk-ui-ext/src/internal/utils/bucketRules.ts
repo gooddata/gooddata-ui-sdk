@@ -26,6 +26,7 @@ import {
     isDateBucketItem,
     isMeasureValueFilter,
     isRankingFilter,
+    filterOutDerivedMeasures,
 } from "./bucketHelper.js";
 
 import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
@@ -78,9 +79,11 @@ export function hasNoAttribute(buckets: IBucketOfFun[]): boolean {
 }
 
 export function hasNoMoreThan20ItemsOnMeasuresOrRows(buckets: IBucketOfFun[]): boolean {
+    const measures = filterOutDerivedMeasures(getBucketItems(buckets, BucketNames.MEASURES));
+
     return (
         getItemsCount(buckets, BucketNames.ATTRIBUTE) <= MAX_TABLE_CATEGORIES_COUNT &&
-        getItemsCount(buckets, BucketNames.MEASURES) <= MAX_TABLE_CATEGORIES_COUNT
+        measures.length <= MAX_TABLE_CATEGORIES_COUNT
     );
 }
 

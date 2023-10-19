@@ -3969,6 +3969,22 @@ const generateMeasuresItems = (count: number): IBucketItem[] => {
     return result;
 };
 
+const generateDerivedMeasuresItems = (count: number): IBucketItem[] => {
+    const result: IBucketItem[] = [];
+    for (let i = 1; i <= count; i++) {
+        const item: IBucketItem = {
+            ...derivedMeasureItems[0],
+            masterLocalIdentifier: `m${i}`,
+            localIdentifier: `m${i}_pop`,
+            attribute: `attributeIdentifier-${i}`,
+        };
+
+        result.push(item);
+    }
+
+    return result;
+};
+
 const generateAttributeItems = (count: number): IBucketItem[] => {
     const result: IBucketItem[] = [];
     for (let i = 1; i <= count; i++) {
@@ -4018,6 +4034,38 @@ export const tableWith20MeasuresAndAttributesAnd1Column: IReferencePoint = {
         {
             localIdentifier: "attribute",
             items: generateAttributeItems(20),
+        },
+        {
+            localIdentifier: "columns",
+            items: [
+                {
+                    localIdentifier: "c1",
+                    type: "attribute",
+                    aggregation: null,
+                    attribute: "column.attribute",
+                    dfRef: uriRef("c1/df"),
+                },
+            ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [],
+    },
+};
+
+export const tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [...generateMeasuresItems(20), ...generateDerivedMeasuresItems(20)],
+        },
+        {
+            localIdentifier: "attribute",
+            items: [],
         },
         {
             localIdentifier: "columns",
