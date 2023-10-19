@@ -36,6 +36,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
@@ -57,6 +58,7 @@ import { Recommendation } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { WidgetAlertUserNotification } from '@gooddata/api-client-tiger';
+import { WorkspacePermissionAssignment } from '@gooddata/sdk-backend-spi';
 
 export { AnonymousAuthProvider }
 
@@ -511,6 +513,13 @@ export type TigerSpecificFunctions = {
         alert: IWidgetAlert;
         insight: IInsight;
     }[]>;
+    getUserById?: (userId: string) => Promise<IWorkspaceUser>;
+    getUsers?: () => Promise<ManageUsers>;
+    getUserGroups?: () => Promise<ManageUserGroups>;
+    getWorkspacePermissionsForUser?: (userId: string) => Promise<WorkspacePermissionAssignment[]>;
+    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
+    manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+    manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
 };
 
 // @public

@@ -2163,6 +2163,186 @@
         "translate": false,
         "limit": 0
     },
+    "userGroupDialog.workspace.noMatchingItems": {
+        "value": "No matching workspaces.",
+        "comment": "Information shown to the user when query in search input does no match any workspace.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchPlaceholder": {
+        "value": "Search workspaces",
+        "comment": "Placeholder of empty workspace dialog search input.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchError": {
+        "value": "Failed to load workspaces. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.view": {
+        "value": "This user does not have any members.{br}Add one now.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.edit": {
+        "value": "No workspace selected.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.title": {
+        "value": "Add workspace permission",
+        "comment": "Title of dialog used for granting workspace permission to users or user groups.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addButton": {
+        "value": "Add",
+        "comment": "Title of confirm button of grant workspace permission dialog",
+        "limit": 0
+    },
+    "userGroupDialog.tab.workspaces": {
+        "value": "Permission to workspaces",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.groups": {
+        "value": "Groups",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.details": {
+        "value": "Details",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addWorkspace": {
+        "value": "Add permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addToGroup": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.deleteUser": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeSuccess": {
+        "value": "Great! We deleted the permission!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeError": {
+        "value": "Deletion of the permission failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addSuccess": {
+        "value": "Great! We added the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addError": {
+        "value": "Added of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeSuccess": {
+        "value": "Great! We changed the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeError": {
+        "value": "Change of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes": {
+        "value": "Hierarchy bellow",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes.tooltip": {
+        "value": "Apply permission also to all child workspaces of this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no": {
+        "value": "This workspace",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no.tooltip": {
+        "value": "Apply permission only on this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view": {
+        "value": "View",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view.tooltip": {
+        "value": "Allow to view the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport": {
+        "value": "View & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport.tooltip": {
+        "value": "Allow to view and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze": {
+        "value": "Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze.tooltip": {
+        "value": "Allow to analyze the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport": {
+        "value": "Analyze & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport.tooltip": {
+        "value": "Allow to analyze and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage": {
+        "value": "Manage",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage.tooltip": {
+        "value": "Allow to manage the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.learn.more.link": {
         "value": "Learn more",
         "comment": "Link with additional info",
