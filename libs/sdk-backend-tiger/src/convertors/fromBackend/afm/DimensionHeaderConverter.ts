@@ -138,7 +138,7 @@ function getTransformedBaseHeader(
     baseHeadersTotalsMap: { [key: number]: TotalExecutionResultHeader },
 ) {
     if (isResultAttributeHeader(header)) {
-        return attributeMeasureItem(header, dateFormatProps, dateValueFormatter);
+        return attributeHeaderItem(header, dateFormatProps, dateValueFormatter);
     }
 
     if (isResultMeasureHeader(header)) {
@@ -205,7 +205,7 @@ export function getTransformDimensionHeaders(
         });
 }
 
-function attributeMeasureItem(
+function attributeHeaderItem(
     header: AttributeExecutionResultHeader,
     dateFormatProps: DateAttributeFormatProps | undefined,
     dateValueFormatter: DateParseFormatter,
