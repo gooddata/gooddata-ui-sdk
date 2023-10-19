@@ -50,6 +50,7 @@ import uniqBy from "lodash/uniqBy.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -216,6 +217,9 @@ function* loadExistingDashboard(
                 dateFilterConfig: dashboard.dateFilterConfig,
                 effectiveDateFilterConfig: effectiveDateFilterConfig.config,
                 isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
+            }),
+            attributeFilterConfigsActions.setAttributeFilterConfigs({
+                attributeFilterConfigs: dashboard.attributeFilterConfigs,
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),

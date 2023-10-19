@@ -92,6 +92,7 @@ export const DefaultDashboardAttributeFilter = (
     const parentFiltersDisabledTooltip = intl.formatMessage({
         id: "attributesDropdown.parentFilter.disabled.tooltip",
     });
+    const modeCategoryTitleText = intl.formatMessage({ id: "filter.configuration.mode.title" });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -163,11 +164,18 @@ export const DefaultDashboardAttributeFilter = (
                 onConfigurationSave,
                 onConfigurationClose,
                 selectionModeChanged,
+                modeChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.length > 0;
             const isSaveDisabled = isTitleDefined
-                ? !(configurationChanged || displayFormChanged || titleChanged || selectionModeChanged)
+                ? !(
+                      configurationChanged ||
+                      displayFormChanged ||
+                      titleChanged ||
+                      selectionModeChanged ||
+                      modeChanged
+                  )
                 : true;
 
             return (
@@ -232,6 +240,7 @@ export const DefaultDashboardAttributeFilter = (
                 <>
                     {isConfigurationOpen ? (
                         <AttributeFilterConfiguration
+                            intl={intl}
                             closeHandler={closeHandler}
                             filterRef={filterRef}
                             filterByText={filterByText}
@@ -241,8 +250,10 @@ export const DefaultDashboardAttributeFilter = (
                             selectionTitleText={selectionTitleText}
                             multiSelectionOptionText={multiSelectionOptionText}
                             singleSelectionOptionText={singleSelectionOptionText}
+                            modeCategoryTitleText={modeCategoryTitleText}
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
+                            showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -262,6 +273,9 @@ export const DefaultDashboardAttributeFilter = (
         singleSelectionOptionText,
         singleSelectionDisabledTooltip,
         parentFiltersDisabledTooltip,
+        modeCategoryTitleText,
+        intl,
+        capabilities,
     ]);
 
     return (

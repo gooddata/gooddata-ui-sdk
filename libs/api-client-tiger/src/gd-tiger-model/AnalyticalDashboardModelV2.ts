@@ -5,6 +5,7 @@ import {
     IFilterContext as IFilterContextModel,
     IDashboardLayout,
     IDashboardDateFilterConfig,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 
 /**
@@ -15,6 +16,7 @@ export interface IAnalyticalDashboard {
     layout?: IDashboardLayout;
     filterContextRef?: ObjRef;
     dateFilterConfig?: IDashboardDateFilterConfig;
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     plugins?: IDashboardPluginLink[];
 }
 

@@ -49,6 +49,7 @@ export function convertAnalyticalDashboard(
 
     return {
         dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
+        attributeFilterConfigs: cloneWithSanitizedIds(dashboard.attributeFilterConfigs),
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
         layout: cloneWithSanitizedIds(layout),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),

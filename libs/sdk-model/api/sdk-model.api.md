@@ -943,6 +943,7 @@ export interface IDashboardDateFilterReference {
 
 // @alpha
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
+    readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;

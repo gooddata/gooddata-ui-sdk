@@ -9,6 +9,7 @@ import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { AxiosResponse } from 'axios';
 import { IBucket } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -6704,6 +6705,8 @@ interface IAnalyticalDashboard {
 
 // @public (undocumented)
 interface IAnalyticalDashboard_2 {
+    // (undocumented)
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     // (undocumented)
     dateFilterConfig?: IDashboardDateFilterConfig;
     // (undocumented)

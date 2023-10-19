@@ -306,6 +306,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
 
     /**
+     * Dashboard extended attribute filter configs
+     */
+    readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
      * Plugins to use on this dashboard.
      */
     readonly plugins?: IDashboardPluginLink[];
