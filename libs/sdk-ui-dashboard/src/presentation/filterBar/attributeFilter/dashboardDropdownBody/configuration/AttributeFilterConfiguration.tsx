@@ -1,26 +1,32 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
+import { IntlShape } from "react-intl";
+import {
+    DashboardAttributeFilterConfigMode,
+    DashboardAttributeFilterConfigModeValues,
+    IDashboardAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { invariant } from "ts-invariant";
+
 import { ConfigurationCategory } from "./ConfigurationCategory.js";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader.js";
-
 import {
     useDashboardSelector,
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
     selectSupportsElementsQueryParentFiltering,
 } from "../../../../../model/index.js";
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
-
-import { invariant } from "ts-invariant";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
-import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
 import { AttributeTitleRenaming } from "./title/AttributeTitleRenaming.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
+import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -34,6 +40,9 @@ interface IAttributeFilterConfigurationProps {
     singleSelectionOptionText: string;
     singleSelectionDisabledTooltip: string;
     parentFiltersDisabledTooltip: string;
+    intl: IntlShape;
+    modeCategoryTitleText: string;
+    showConfigModeSection: boolean;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
@@ -49,6 +58,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         singleSelectionDisabledTooltip,
         parentFiltersDisabledTooltip,
         closeHandler,
+        intl,
+        modeCategoryTitleText,
+        showConfigModeSection,
     } = props;
     const theme = useTheme();
 
@@ -90,6 +102,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onTitleReset,
         selectionMode,
         onSelectionModeUpdate,
+        mode,
+        onModeUpdate,
     } = useAttributeFilterParentFiltering();
 
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
@@ -117,6 +131,10 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     if (!filterRef || !connectingAttributes || !attributes) {
         return null;
     }
+
+    const handleModeChanged = (value: string) => {
+        onModeUpdate(value as DashboardAttributeFilterConfigMode);
+    };
 
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration sdk-edit-mode-on">
@@ -162,6 +180,16 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                         />
                     </div>
                 </div>
+            ) : null}
+            {showConfigModeSection ? (
+                <>
+                    <ConfigurationCategory categoryTitle={modeCategoryTitleText} />
+                    <ConfigModeSelect
+                        intl={intl}
+                        selectedMode={mode ?? DashboardAttributeFilterConfigModeValues.ACTIVE}
+                        onChanged={handleModeChanged}
+                    />
+                </>
             ) : null}
         </div>
     );

@@ -22,6 +22,7 @@ import {
     IDashboardDateFilterConfig,
     IDashboardPlugin,
     IDashboardPluginLink,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -62,6 +63,7 @@ interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
     plugins?: IDashboardPluginLink[];
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
 function convertDashboardPluginLink(
@@ -79,6 +81,7 @@ function getConvertedAnalyticalDashboardContent(
 ): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
+        attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
         layout: convertDrillToCustomUrlInLayoutFromBackend(
             setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
         ),
@@ -96,9 +99,8 @@ export function convertDashboard(
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
-    const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
-        content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
-    );
+    const { dateFilterConfig, layout, plugins, attributeFilterConfigs } =
+        getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
         type: "IDashboard",
@@ -118,6 +120,7 @@ export function convertDashboard(
         tags: attributes.tags ?? [],
         filterContext,
         dateFilterConfig,
+        attributeFilterConfigs,
         layout,
         plugins,
     };
