@@ -575,6 +575,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "cypress-multi-reporters",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "cypress-real-events",
       "allowedCategories": [ "production" ]
     },
@@ -797,6 +801,14 @@
     {
       "name": "mkdirp",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "mocha",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mocha-junit-reporter",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "moment",
