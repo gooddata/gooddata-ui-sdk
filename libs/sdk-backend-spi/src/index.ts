@@ -188,3 +188,93 @@ export {
 } from "./workspace/userGroups/index.js";
 
 export { IWorkspaceAccessControlService } from "./workspace/accessControl/index.js";
+
+/**
+ * @internal
+ */
+export interface ManageUsersItem {
+    userId: string;
+    name?: string;
+    email?: string;
+    organizationAdmin: boolean;
+    groups: Array<string>;
+    workspaces: Array<string>;
+}
+
+/**
+ * @internal
+ */
+export interface ManageUsers {
+    users: Array<ManageUsersItem>;
+}
+
+/**
+ * @internal
+ */
+export interface ManageUserGroups {
+    userGroups: Array<ManageUserGroupsItem>;
+}
+
+/**
+ * @internal
+ */
+export interface ManageUserGroupsItem {
+    groupId: string;
+    name?: string;
+    organizationAdmin: boolean;
+    userCount: number;
+    workspaces: Array<string>;
+}
+
+/**
+ * @internal
+ */
+export interface WorkspaceInfo {
+    id: string;
+    name?: string;
+}
+
+/**
+ * @internal
+ */
+export const WorkspacePermissionAssignmentPermissionsEnum = {
+    MANAGE: "MANAGE",
+    ANALYZE: "ANALYZE",
+    EXPORT: "EXPORT",
+    EXPORT_TABULAR: "EXPORT_TABULAR",
+    EXPORT_PDF: "EXPORT_PDF",
+    VIEW: "VIEW",
+} as const;
+
+/**
+ * @internal
+ */
+export type WorkspacePermissionAssignmentPermissionsEnum =
+    typeof WorkspacePermissionAssignmentPermissionsEnum[keyof typeof WorkspacePermissionAssignmentPermissionsEnum];
+
+/**
+ * @internal
+ */
+export const WorkspacePermissionAssignmentHierarchyPermissionsEnum = {
+    MANAGE: "MANAGE",
+    ANALYZE: "ANALYZE",
+    EXPORT: "EXPORT",
+    EXPORT_TABULAR: "EXPORT_TABULAR",
+    EXPORT_PDF: "EXPORT_PDF",
+    VIEW: "VIEW",
+} as const;
+
+/**
+ * @internal
+ */
+export type WorkspacePermissionAssignmentHierarchyPermissionsEnum =
+    typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum[keyof typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum];
+
+/**
+ * @internal
+ */
+export interface WorkspacePermissionAssignment {
+    workspace: WorkspaceInfo;
+    permissions: Array<WorkspacePermissionAssignmentPermissionsEnum>;
+    hierarchyPermissions: Array<WorkspacePermissionAssignmentHierarchyPermissionsEnum>;
+}

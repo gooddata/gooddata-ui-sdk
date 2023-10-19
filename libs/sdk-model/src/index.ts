@@ -798,6 +798,12 @@ export {
     isGranularUserGroupAccessGrantee,
     isGranularUserAccess,
     isGranularUserGroupAccess,
+    WorkspaceAccessPermission,
+    IWorkspaceAccess,
+    IUserWorkspaceAccessGrantee,
+    IUserGroupWorkspaceAccessGrantee,
+    isUserWorkspaceAccessGrantee,
+    isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
 
 export { IOrganizationDescriptor } from "./organization/index.js";

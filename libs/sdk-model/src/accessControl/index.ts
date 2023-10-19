@@ -354,3 +354,60 @@ export const isAvailableUserGroupAccessGrantee = (obj: unknown): obj is IAvailab
  * @alpha
  */
 export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUserGroupAccessGrantee;
+
+/**
+ * Type of granted workspace granular access.
+ *
+ * @public
+ */
+export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
+
+/**
+ * Workspace access specification with granular permissions.
+ *
+ * @alpha
+ */
+export interface IWorkspaceAccess {
+    /**
+     * Access user
+     */
+    workspace: string;
+    /**
+     * Permissions granted directly
+     */
+    permissions: WorkspaceAccessPermission;
+}
+
+/**
+ * Workspace access for user with granular permissions.
+ *
+ * @alpha
+ */
+export type IUserWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserAccessGrantee;
+
+/**
+ * Workspace access for group with granular permissions.
+ *
+ * @alpha
+ */
+export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
+
+/**
+ * Tests whether the provided object is an instance of {@link IUserWorkspaceAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isUserWorkspaceAccessGrantee = (obj: unknown): obj is IUserWorkspaceAccessGrantee => {
+    return !isEmpty(obj) && (obj as IUserWorkspaceAccessGrantee).workspace !== undefined && isGranularUserAccessGrantee(obj);
+};
+
+/**
+ * Tests whether the provided object is an instance of {@link IUserWorkspaceAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isUserGroupWorkspaceAccessGrantee = (obj: unknown): obj is IUserGroupWorkspaceAccessGrantee => {
+    return !isEmpty(obj) && (obj as IUserGroupWorkspaceAccessGrantee).workspace !== undefined && isGranularUserGroupAccessGrantee(obj);
+};

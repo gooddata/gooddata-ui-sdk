@@ -360,3 +360,46 @@
 .gd-granular-permissions-remove {
     border-top: 1px solid variables.$gd-border-color;
 }
+
+.gd-workspace-permission-empty {
+    text-align: center;
+    padding: 40px 0 40px;
+    height: auto;
+}
+
+.gd-user-group-dialog-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gd-user-group-dialog-buttons-right {
+    display: flex;
+    gap: 5px
+}
+
+.blue-icon {
+    color: variables.$gd-palette-primary-base
+}
+
+.gd-user-group-dialog {
+    .gd-dialog-footer {
+        padding: 20px 0 0;
+        border-top: 1px solid variables.$gd-border-color;
+    }
+
+    .gd-share-dialog-grantee-list {
+        margin-right: 0;
+        padding-right: 0;
+    }
+}
+
+.gd-user-group-dialog-tabs {
+    margin-bottom: 20px;
+}
+
+.gd-user-group-dialog-loading {
+    position: absolute;
+    z-index: 10000;
+    width: 100%;
+    background: #fff;
+}

@@ -4,8 +4,8 @@ import { useIntl } from "react-intl";
 import compact from "lodash/compact.js";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { ContentDivider } from "../../ContentDivider.js";
 
-import { ContentDivider } from "./ContentDivider.js";
 import { ShareGranteeContent } from "./ShareGranteeContent.js";
 import { IShareGranteeBaseProps } from "./types.js";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";
