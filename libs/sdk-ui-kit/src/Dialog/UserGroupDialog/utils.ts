@@ -7,7 +7,7 @@ import {
     WorkspacePermissionAssignmentPermissionsEnum
 } from "@gooddata/sdk-backend-spi";
 
-import { IGrantedWorkspace, WorkspacePermission } from "./types.js";
+import { IGrantedWorkspace, WorkspacePermission, IGrantedGroup } from "./types.js";
 
 /**
  * @internal
@@ -17,12 +17,22 @@ export const sortWorkspacesByName = (workspaceA: IWorkspaceDescriptor, workspace
     const textB = workspaceB.title.toUpperCase();
     return textA.localeCompare(textB);
 };
+
 /**
  * @internal
  */
 export const sortGrantedWorkspacesByName = (workspaceA: IGrantedWorkspace, workspaceB: IGrantedWorkspace): number => {
     const textA = workspaceA.title.toUpperCase();
     const textB = workspaceB.title.toUpperCase();
+    return textA.localeCompare(textB);
+};
+
+/**
+ * @internal
+ */
+export const sortGrantedGroupsByName = (groupA: IGrantedGroup, groupB: IGrantedGroup): number => {
+    const textA = groupA.title.toUpperCase();
+    const textB = groupB.title.toUpperCase();
     return textA.localeCompare(textB);
 };
 

@@ -2277,5 +2277,60 @@
         "value": "Remove",
         "comment": "",
         "limit": 0
+    },
+    "userGroupDialog.detail.firstName.label": {
+        "value": "First name",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.lastName.label": {
+        "value": "Last name",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.email.label": {
+        "value": "E-mail",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.orgPermission.label": {
+        "value": "Org. permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.orgPermission.admin": {
+        "value": "Admin",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.orgPermission.member": {
+        "value": "Member",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.id.label": {
+        "value": "ID",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.status.label": {
+        "value": "Status",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.detail.emptyValue": {
+        "value": "not set",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.groups.emptySelection.view": {
+        "value": "This user does not belong to any group.{br}Add him to a group now.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.groups.emptySelection.edit": {
+        "value": "No groups selected.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
     }
 }

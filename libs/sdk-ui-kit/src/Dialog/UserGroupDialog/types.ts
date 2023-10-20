@@ -59,6 +59,11 @@ export type WorkspaceListMode = "VIEW" | "EDIT";
 /**
  * @internal
  */
+export type GroupsListMode = "VIEW" | "EDIT";
+
+/**
+ * @internal
+ */
 export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 /**
@@ -75,4 +80,13 @@ export interface IPermissionsItem {
     id: WorkspacePermission;
     enabled: boolean;
     tooltip?: string;
+}
+
+
+/**
+ * @internal
+ */
+export interface IGrantedGroup {
+    id: string;
+    title: string;
 }
