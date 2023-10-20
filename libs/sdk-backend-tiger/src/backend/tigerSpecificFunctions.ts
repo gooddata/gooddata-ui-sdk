@@ -68,7 +68,16 @@ import {
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { IUser, IMeasure, IWidgetAlert, IInsight, uriRef, IWorkspaceUser } from "@gooddata/sdk-model";
+import {
+    IUser,
+    IMeasure,
+    IWidgetAlert,
+    IInsight,
+    uriRef,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    idRef
+} from "@gooddata/sdk-model";
 import { convertMeasure } from "../convertors/toBackend/afm/MeasureConverter.js";
 import { convertWidgetAlert } from "../convertors/fromBackend/analyticalDashboards/WidgetAlertConverter.js";
 import {
@@ -636,6 +645,12 @@ export type TigerSpecificFunctions = {
     updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
 
     changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
+
+    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
+
+    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
+
+    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -2196,7 +2211,49 @@ export const buildTigerSpecificFunctions = (
 
     changeUserOrgAdminStatus: async (_userId: string, _isOrgAdmin: boolean) => {
         return await authApiCall(async (_client) => {
-              // await client.entities.patchEntityOrganizations()
+            // await client.entities.patchEntityOrganizations()
+        });
+    },
+
+    getGroupsForUser: async (userId: string) => {
+        return await authApiCall(async (client) => {
+            return client.entities
+                .getEntityUsers({
+                    id: userId,
+                    include: ["userGroups"]
+                })
+                .then((response) => response.data)
+                .then((groups) => {
+                    return groups.included?.map((group) => ({
+                        ref: group.links?.self ? uriRef(group.links?.self) : idRef(group.id),
+                        id: group.id,
+                        name: group.attributes?.name,
+                    })) || [];
+                });
+        });
+    },
+
+    addGroupsToUser: async (userId: string, userGroupIds: string[]) => {
+        return await authApiCall(async (client) => {
+            await Promise.all(userGroupIds.map((userGroupId) => {
+                return client.actions.addGroupMembers({
+                    userGroupId,
+                    userGroupMembers: {
+                        members: [{ id: userId }],
+                    }
+                });
+            }));
+        });
+    },
+
+    removeGroupFromUser: async (userId: string, userGroupId: string) => {
+        return await authApiCall(async (client) => {
+            await client.actions.removeGroupMembers({
+                userGroupId: userGroupId,
+                userGroupMembers: {
+                    members: [{ id: userId }]
+                }
+            });
         });
     }
 });

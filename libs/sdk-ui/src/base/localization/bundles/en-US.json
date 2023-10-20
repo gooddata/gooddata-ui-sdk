@@ -2114,7 +2114,7 @@
         "limit": 0
     },
     "userGroupDialog.workspace.emptySelection.view": {
-        "value": "This user does not have any members.{br}Add one now.",
+        "value": "This user does not have any workspaces.{br}Add one now.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
     },
@@ -2189,7 +2189,7 @@
         "limit": 0
     },
     "userGroupDialog.workspace.addError": {
-        "value": "Added of the permission(s) failed!",
+        "value": "Addition of the permission(s) failed!",
         "comment": "",
         "limit": 0
     },
@@ -2345,6 +2345,51 @@
     },
     "userGroupDialog.workspace.detailsUpdatedError": {
         "value": "Change of the user details failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.addSuccess": {
+        "value": "Great! We added the group(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.addError": {
+        "value": "Addition of the group(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.title": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.noMatchingItems": {
+        "value": "No matching group.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.searchPlaceholder": {
+        "value": "Search groups",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.searchError": {
+        "value": "Failed to load groups. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.removeSuccess": {
+        "value": "Great! We deleted the group!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.removeError": {
+        "value": "Deletion of the group failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.group.remove": {
+        "value": "Remove user from the group.",
         "comment": "",
         "limit": 0
     }

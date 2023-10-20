@@ -36,6 +36,7 @@ export const GroupsList: React.FC<IWorkspaceListProps> = ({ groups, mode, onDele
                         key={group.id}
                         group={group}
                         onDelete={onDelete}
+                        mode={mode}
                     />
                 );
             })}

@@ -32,6 +32,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ManageUserGroups } from '@gooddata/sdk-backend-spi';
 import { ManageUsers } from '@gooddata/sdk-backend-spi';
@@ -3960,7 +3961,11 @@ export interface IUserDialogBaseProps {
 // @internal (undocumented)
 export interface IUserEditDialogApi {
     // (undocumented)
+    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
+    // (undocumented)
     changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
+    // (undocumented)
+    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
     // (undocumented)
     getUserById?: (userId: string) => Promise<IWorkspaceUser>;
     // (undocumented)
@@ -3975,6 +3980,8 @@ export interface IUserEditDialogApi {
     manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
     // (undocumented)
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+    // (undocumented)
+    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
     // (undocumented)
     updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
 }

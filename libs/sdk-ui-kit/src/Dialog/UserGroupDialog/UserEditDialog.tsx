@@ -20,12 +20,14 @@ import {
     sortGrantedWorkspacesByName,
     asEmptyPermissionAssignment,
     asPermissionAssignment,
-    asPermission
+    asPermission,
+    sortGrantedGroupsByName,
 } from "./utils.js";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { DetailsView } from "./Details/DetailsView.js";
 import { GroupsList } from "./Groups/GroupsList.js";
 import { EditDetails } from "./Details/EditDetails.js";
+import { AddGroup } from "./Groups/AddGroup.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -75,7 +77,19 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
             });
     }, [api, userId]);
 
+    useEffect(() => {
+        api
+            ?.getGroupsForUser(userId)
+            .then((groups) => {
+                setGrantedGroups(groups.map((group) => ({
+                    id: group.id,
+                    title: group.name ?? group.id,
+                })));
+            });
+    }, [api, userId]);
+
     const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[]>([]);
+    const [grantedGroups, setGrantedGroups] = useState<IGrantedGroup[]>([]);
 
     // TODO show confirm dialog, call backend API from there
     const deleteUser = () => alert("Call API to delete user (possibly confirm the action first)");
@@ -92,9 +106,23 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
             });
     };
 
-    const removeGrantedGroup = (_grantedGroup: IGrantedGroup) => {
-        // TODO call API
-        // TODO update inner state
+    const removeGrantedGroup = (grantedGroup: IGrantedGroup) => {
+        api.removeGroupFromUser(userId, grantedGroup.id)
+            .then(() => {
+                addSuccess(userDialogMessageLabels.grantedGroupRemovedSuccess);
+                setGrantedGroups(grantedGroups.filter((item) => item.id !== grantedGroup.id));
+            })
+            .catch((error) => {
+                console.error("Removal of group failed", error);
+                addError(userDialogMessageLabels.grantedGroupRemovedError);
+            });
+    };
+
+    // update internal array with groups after applied changed in groups edit mode
+    const onGroupsChanged = (groups: IGrantedGroup[]) => {
+        const unchangedGroups = grantedGroups
+            .filter((item) => !groups.some((g) => g.id === item.id));
+        setGrantedGroups([...unchangedGroups, ...groups].sort(sortGrantedGroupsByName));
     };
 
     const changeGrantedWorkspace = (workspace: IGrantedWorkspace) => {
@@ -161,7 +189,7 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
                             )}
                             {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
                                 <GroupsList
-                                    groups={[]}
+                                    groups={grantedGroups}
                                     mode="VIEW"
                                     onDelete={removeGrantedGroup}
                                 />
@@ -225,6 +253,16 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
                         grantedWorkspaces={grantedWorkspaces}
                         onBackClick={() => setDialogMode("VIEW")}
                         onSubmit={onWorkspaceChanged}
+                        onCancel={() => setDialogMode("VIEW")}
+                    />
+                )}
+                {dialogMode === "GROUPS" && (
+                    <AddGroup
+                        api={api}
+                        userId={userId}
+                        grantedGroups={grantedGroups}
+                        onBackClick={() => setDialogMode("VIEW")}
+                        onSubmit={onGroupsChanged}
                         onCancel={() => setDialogMode("VIEW")}
                     />
                 )}
