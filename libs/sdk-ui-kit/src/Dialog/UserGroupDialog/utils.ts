@@ -43,6 +43,13 @@ export const getWorkspaceItemTestId = (workspace: IWorkspaceDescriptor): string 
     return `s-gd-workspace-item-id-${workspace.id}`;
 };
 
+/**
+ * @internal
+ */
+export const getGroupItemTestId = (group: IGrantedGroup): string => {
+    return `s-gd-group-item-id-${group.id}`;
+};
+
 const asPermissions = (permission: WorkspacePermission): WorkspacePermissionAssignmentPermissionsEnum[] => {
     switch (permission) {
         case "VIEW":
@@ -61,9 +68,6 @@ const asPermissions = (permission: WorkspacePermission): WorkspacePermissionAssi
 };
 
 export const asPermission = (permissions: WorkspacePermissionAssignmentHierarchyPermissionsEnum[]): WorkspacePermission => {
-    // eslint-disable-next-line no-console
-    console.log("Parse permissions:", permissions);
-
     if (permissions.includes("MANAGE")) {
         return "MANAGE";
     }

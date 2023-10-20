@@ -7,7 +7,7 @@ import {
     ManageUserGroups,
     WorkspacePermissionAssignment,
 } from "@gooddata/sdk-backend-spi";
-import { IWorkspaceUser } from "@gooddata/sdk-model";
+import { IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -22,6 +22,9 @@ export interface IUserEditDialogApi {
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
     updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
     changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
+    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
+    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
+    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
 }
 
 /**
@@ -91,4 +94,20 @@ export interface IPermissionsItem {
 export interface IGrantedGroup {
     id: string;
     title: string;
+}
+
+
+/**
+ * @internal
+ */
+export const isGroupItem = (obj: unknown): obj is IGrantedGroup => {
+    return (!isEmpty(obj) && (obj as IGrantedGroup).id !== undefined);
+};
+
+/**
+ * @internal
+ */
+export interface IGroupSelectOption {
+    label: string;
+    value: IGrantedGroup;
 }

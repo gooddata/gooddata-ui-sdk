@@ -37,6 +37,7 @@ import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
@@ -514,6 +515,9 @@ export type TigerSpecificFunctions = {
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
     updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
     changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
+    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
+    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
+    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
 };
 
 // @public
