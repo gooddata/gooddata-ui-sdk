@@ -14,7 +14,7 @@ import { DialogBase } from "../DialogBase.js";
 import { Typography } from "../../Typography/index.js";
 
 import { WorkspaceList } from "./Workspace/WorkspaceList.js";
-import { DialogMode, IGrantedWorkspace, IUserEditDialogApi } from "./types.js";
+import { DialogMode, IGrantedWorkspace, IUserEditDialogApi, IGrantedGroup } from "./types.js";
 import { AddWorkspaceBase } from "./Workspace/AddWorkspaceBase.js";
 import {
     sortGrantedWorkspacesByName,
@@ -23,6 +23,8 @@ import {
     asPermission
 } from "./utils.js";
 import { LoadingComponent } from "@gooddata/sdk-ui";
+import { DetailsView } from "./Details/DetailsView.js";
+import { GroupsList } from "./Groups/GroupsList.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -87,6 +89,11 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
             });
     };
 
+    const removeGrantedGroup = (_grantedGroup: IGrantedGroup) => {
+        // TODO call API
+        // TODO update inner state
+    };
+
     const changeGrantedWorkspace = (workspace: IGrantedWorkspace) => {
         api.manageWorkspacePermissionsForUser(userId, [asPermissionAssignment(workspace)])
             .then(() => {
@@ -145,10 +152,17 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
                                 />
                             )}
                             {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
-                                <div>TODO groups list</div>
+                                <GroupsList
+                                    groups={[]}
+                                    mode="VIEW"
+                                    onDelete={removeGrantedGroup}
+                                />
                             )}
                             {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
-                                <div>TODO detail</div>
+                                <DetailsView
+                                    user={user}
+                                    isAdmin={true}
+                                />
                             )}
                         </div>
                         <div className="gd-dialog-footer">
