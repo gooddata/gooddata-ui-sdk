@@ -24,7 +24,6 @@ const AppWithBackend: React.FC = () => {
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={WORKSPACE}>
                 <IntlWrapper locale="en-US">
-                    {/*<AddWorkspaceSelect appliedWorkspaces={[]} onSelectWorkspace={(workspace) => console.log(workspace)} />*/}
                     {isOpen && (
                         <UserEditDialog
                             userId="mort"
