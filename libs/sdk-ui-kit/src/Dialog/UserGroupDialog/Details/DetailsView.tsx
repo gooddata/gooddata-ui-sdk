@@ -4,27 +4,43 @@ import React from "react";
 import { IWorkspaceUser } from "@gooddata/sdk-model";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
+import noop from "lodash/noop.js";
 
-export interface IDetailsViewProps {
-    isAdmin: boolean;
-    user: IWorkspaceUser;
+import { GroupsListMode } from "../types.js";
+import { Input } from "../../../Form/index.js";
+
+import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
+
+interface IValueCellProps {
+    value?: string;
+    mode: GroupsListMode;
+    disabled?: boolean;
+    onChange: (value: string) => void;
 }
 
-const ValueCell: React.FC<{ value?: string }> = ({ value }) => {
+const ValueCell: React.FC<IValueCellProps> = ({ value, mode, disabled, onChange }) => {
     const intl = useIntl();
     return (
         <div
             className={cx(
                 "gd-user-group-dialog-detail-value",
-                { "gd-user-group-dialog-detail-value-empty": !value }
+                { "gd-user-group-dialog-detail-value-empty": !value && mode === "VIEW" }
             )}
         >
-            {value ? value : intl.formatMessage({ id: "userGroupDialog.detail.emptyValue" })}
+            {mode === "EDIT" && <Input value={value} disabled={disabled} onChange={onChange} className="gd-user-group-dialog-detail-input" />}
+            {mode === "VIEW" && (value ? value : intl.formatMessage({ id: "userGroupDialog.detail.emptyValue" }))}
         </div>
     );
 };
 
-export const DetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin }) => {
+export interface IDetailsViewProps {
+    isAdmin: boolean;
+    user: IWorkspaceUser;
+    mode: GroupsListMode;
+    onChange?: (user: IWorkspaceUser, isAdmin: boolean) => void;
+}
+
+export const DetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin, mode, onChange }) => {
     const intl = useIntl();
 
     if (!user) {
@@ -37,19 +53,37 @@ export const DetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin }) => {
                 <div className="gd-user-group-dialog-detail-label">
                     <FormattedMessage id="userGroupDialog.detail.firstName.label" />
                 </div>
-                <ValueCell value={user.firstName} />
+                <ValueCell
+                    value={user.firstName}
+                    mode={mode}
+                    onChange={(firstName) => {
+                        onChange({ ...user, firstName }, isAdmin);
+                    }}
+                />
             </div>
             <div className="gd-user-group-dialog-detail-row">
                 <div className="gd-user-group-dialog-detail-label">
                     <FormattedMessage id="userGroupDialog.detail.lastName.label" />
                 </div>
-                <ValueCell value={user.lastName} />
+                <ValueCell
+                    value={user.lastName}
+                    mode={mode}
+                    onChange={(lastName) => {
+                        onChange({ ...user, lastName }, isAdmin);
+                    }}
+                />
             </div>
             <div className="gd-user-group-dialog-detail-row">
                 <div className="gd-user-group-dialog-detail-label">
                     <FormattedMessage id="userGroupDialog.detail.email.label" />
                 </div>
-                <ValueCell value={user.email} />
+                <ValueCell
+                    value={user.email}
+                    mode={mode}
+                    onChange={(email) => {
+                        onChange({ ...user, email }, isAdmin);
+                    }}
+                />
             </div>
             <div className="gd-user-group-dialog-detail-row">
                 <div className="gd-user-group-dialog-detail-label">
@@ -57,17 +91,27 @@ export const DetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin }) => {
                 </div>
                 <div className="gd-user-group-dialog-detail-value">
                     {
-                        isAdmin
-                            ? intl.formatMessage({ id: "userGroupDialog.detail.orgPermission.admin" }) :
-                            intl.formatMessage({ id: "userGroupDialog.detail.orgPermission.member" })
+                        mode === "VIEW" && (
+                            isAdmin
+                                ? intl.formatMessage({ id: "userGroupDialog.detail.orgPermission.admin" })
+                                : intl.formatMessage({ id: "userGroupDialog.detail.orgPermission.member" })
+                        )
                     }
+                    {mode === "EDIT" && (
+                        <OrganizationMemberDropdown
+                            isAdmin={isAdmin}
+                            onChange={(isAdmin) => {
+                                onChange(user, isAdmin);
+                            }}
+                        />
+                    )}
                 </div>
             </div>
             <div className="gd-user-group-dialog-detail-row">
                 <div className="gd-user-group-dialog-detail-label">
                     <FormattedMessage id="userGroupDialog.detail.id.label" />
                 </div>
-                <div className="gd-user-group-dialog-detail-value">{user.login}</div>
+                <ValueCell value={user.login} mode={mode} disabled={true} onChange={noop} />
             </div>
             <div className="gd-user-group-dialog-detail-row">
                 <div className="gd-user-group-dialog-detail-label">

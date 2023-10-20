@@ -20,6 +20,8 @@ export interface IUserEditDialogApi {
     getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
     manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
+    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
 }
 
 /**

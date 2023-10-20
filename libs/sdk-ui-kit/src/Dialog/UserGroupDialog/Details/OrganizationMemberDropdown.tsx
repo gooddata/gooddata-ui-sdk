@@ -1,14 +1,14 @@
 // (C) 2023 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { DropdownButton, Dropdown, Overlay, ItemsWrapper, IAlignPoint } from "sdk-ui-kit/src/index.js";
+import { DropdownButton, Dropdown, Overlay, ItemsWrapper, IAlignPoint } from "../../../index.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 export interface IOrganizationMemberDropdownProps {
-    isAdmin: false;
+    isAdmin: boolean;
     onChange: (isAdmin: boolean) => void;
 }
 
@@ -36,6 +36,7 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
                         className={cx(
                             "gd-list-item",
                             "gd-menu-item",
+                            "gd-user-group-dialog-detail-input",
                             {
                                 "is-selected": isAdmin,
                             }
@@ -51,6 +52,7 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
                         className={cx(
                             "gd-list-item",
                             "gd-menu-item",
+                            "gd-user-group-dialog-detail-input",
                             {
                                 "is-selected": !isAdmin,
                             }
@@ -79,7 +81,7 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
                 isOpen={isOpen}
                 onClick={openDropdown}
                 isSmall={false}
-                className="gd-user-group-dialog-detail-organization-membership"
+                className="gd-user-group-dialog-detail-organization-membership gd-user-group-dialog-detail-input"
             />
         ),
         [selectedValue],

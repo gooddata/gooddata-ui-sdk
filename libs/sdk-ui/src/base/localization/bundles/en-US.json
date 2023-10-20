@@ -3209,5 +3209,20 @@
         "value": "Name",
         "comment": "Placeholder shown in input box where user types name of a new user group.",
         "limit": 0
+    },
+    "userGroupDialog.detail.saveButton": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedSuccess": {
+        "value": "Great! We changed the user details!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedError": {
+        "value": "Change of the user details failed!",
+        "comment": "",
+        "limit": 0
     }
 }
