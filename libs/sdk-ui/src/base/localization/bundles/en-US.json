@@ -2332,5 +2332,20 @@
         "value": "No groups selected.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
+    },
+    "userGroupDialog.detail.saveButton": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedSuccess": {
+        "value": "Great! We changed the user details!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedError": {
+        "value": "Change of the user details failed!",
+        "comment": "",
+        "limit": 0
     }
 }

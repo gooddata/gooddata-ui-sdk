@@ -3950,6 +3950,8 @@ export interface IUserDialogBaseProps {
     // (undocumented)
     api: IUserEditDialogApi;
     // (undocumented)
+    isAdmin: boolean;
+    // (undocumented)
     onClose: () => void;
     // (undocumented)
     userId: string;
@@ -3957,6 +3959,8 @@ export interface IUserDialogBaseProps {
 
 // @internal (undocumented)
 export interface IUserEditDialogApi {
+    // (undocumented)
+    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
     // (undocumented)
     getUserById?: (userId: string) => Promise<IWorkspaceUser>;
     // (undocumented)
@@ -3971,6 +3975,8 @@ export interface IUserEditDialogApi {
     manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
     // (undocumented)
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+    // (undocumented)
+    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
 }
 
 // @internal (undocumented)

@@ -25,6 +25,7 @@ import {
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { DetailsView } from "./Details/DetailsView.js";
 import { GroupsList } from "./Groups/GroupsList.js";
+import { EditDetails } from "./Details/EditDetails.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -33,6 +34,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  */
 export interface IUserDialogBaseProps {
     userId: string;
+    isAdmin: boolean;
     onClose: () => void;
     api: IUserEditDialogApi;
 }
@@ -42,12 +44,13 @@ const tabs = [userDialogTabsMessageLabels.workspaces, userDialogTabsMessageLabel
 /**
  * @internal
  */
-export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, onClose }) => {
+export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin, api, onClose }) => {
     const [dialogMode, setDialogMode] = useState<DialogMode>("VIEW");
     const { addSuccess, addError } = useToastMessage();
     const intl = useIntl();
     const [selectedTabId, setSelectedTabId] = useState(userDialogTabsMessageLabels.workspaces);
     const [user, setUser] = useState<IWorkspaceUser>();
+    const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
 
     useEffect(() => {
         api?.getUserById(userId)
@@ -101,7 +104,7 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
                 setGrantedWorkspaces([...grantedWorkspaces.filter((item) => item.id !== workspace.id), workspace].sort(sortGrantedWorkspacesByName));
             })
             .catch((error) => {
-                console.error("Addition of workspace permission failed", error);
+                console.error("Change of workspace permission failed", error);
                 addError(userDialogMessageLabels.grantedWorkspaceChangeError);
             });
     };
@@ -111,6 +114,11 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
         const unchangedWorkspaces = grantedWorkspaces
             .filter((item) => !workspaces.some((w) => w.id === item.id));
         setGrantedWorkspaces([...unchangedWorkspaces, ...workspaces].sort(sortGrantedWorkspacesByName));
+    };
+
+    const onUserChanged = (user: IWorkspaceUser, isAdmin: boolean) => {
+        setUser(user);
+        setIsAdmin(isAdmin);
     };
 
     return (
@@ -161,7 +169,8 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
                             {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
                                 <DetailsView
                                     user={user}
-                                    isAdmin={true}
+                                    isAdmin={isCurrentlyAdmin}
+                                    mode="VIEW"
                                 />
                             )}
                         </div>
@@ -216,6 +225,16 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, api, on
                         grantedWorkspaces={grantedWorkspaces}
                         onBackClick={() => setDialogMode("VIEW")}
                         onSubmit={onWorkspaceChanged}
+                        onCancel={() => setDialogMode("VIEW")}
+                    />
+                )}
+                {dialogMode === "DETAIL" && (
+                    <EditDetails
+                        api={api}
+                        user={user}
+                        isAdmin={isCurrentlyAdmin}
+                        onBackClick={() => setDialogMode("VIEW")}
+                        onSubmit={onUserChanged}
                         onCancel={() => setDialogMode("VIEW")}
                     />
                 )}

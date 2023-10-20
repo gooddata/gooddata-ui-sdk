@@ -632,6 +632,10 @@ export type TigerSpecificFunctions = {
     manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
 
     manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+
+    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
+
+    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -2169,4 +2173,30 @@ export const buildTigerSpecificFunctions = (
             });
         });
     },
+
+    updateUserDetails: async (user: IWorkspaceUser) => {
+        return await authApiCall(async (client) => {
+            const { login, firstName, lastName, email } = user;
+            await client.entities.updateEntityUsers({
+                id: login,
+                jsonApiUserInDocument: {
+                    data: {
+                        type: "user",
+                        id: login,
+                        attributes: {
+                            firstname: firstName,
+                            lastname: lastName,
+                            email: email,
+                        }
+                    }
+                }
+            });
+        });
+    },
+
+    changeUserOrgAdminStatus: async (_userId: string, _isOrgAdmin: boolean) => {
+        return await authApiCall(async (_client) => {
+              // await client.entities.patchEntityOrganizations()
+        });
+    }
 });
