@@ -1,6 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
-import React, { useMemo } from "react";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import React, { useMemo, useState } from "react";
+import { BackendProvider, WorkspaceProvider, IntlWrapper } from "@gooddata/sdk-ui";
+import { UserEditDialog } from "@gooddata/sdk-ui-kit";
+
 import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {
@@ -12,14 +14,25 @@ function hasCredentialsSetup(): boolean {
 
 const AppWithBackend: React.FC = () => {
     // only create the backend instance once
-    const backend = useMemo(() => {
+    const { backend, tigerSpecificFunctions } = useMemo(() => {
         return createBackend();
     }, []);
+
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={WORKSPACE}>
-                {/* Build your playground components under the playground directory.*/}
+                <IntlWrapper locale="en-US">
+                    {/*<AddWorkspaceSelect appliedWorkspaces={[]} onSelectWorkspace={(workspace) => console.log(workspace)} />*/}
+                    {isOpen && (
+                        <UserEditDialog
+                            userId="mort"
+                            onClose={() => setIsOpen(false)}
+                            api={tigerSpecificFunctions!}
+                        />
+                    )}
+                </IntlWrapper>
             </WorkspaceProvider>
         </BackendProvider>
     );

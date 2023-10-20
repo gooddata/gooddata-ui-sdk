@@ -20,3 +20,5 @@ export * from "./EmbedInsightDialog/index.js";
 export * from "./DialogList/index.js";
 
 export * from "./StylingEditorDialog/index.js";
+
+export * from "./UserGroupDialog/index.js";

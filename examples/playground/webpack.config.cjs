@@ -20,6 +20,7 @@ const playgroundDefinitions = {
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],
     "tiger-stg": ["https://staging.anywhere.gooddata.com", "4dc4e033e611421791adea58d34d958c", "tiger"],
+    "fast-track": ["https://gartner.fast-track.stg11.panther.intgdc.com/", "gartner", "tiger"],
 };
 
 module.exports = async (env, argv) => {

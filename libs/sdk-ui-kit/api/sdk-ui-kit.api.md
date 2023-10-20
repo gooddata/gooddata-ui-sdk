@@ -29,8 +29,12 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
+import { ManageUserGroups } from '@gooddata/sdk-backend-spi';
+import { ManageUsers } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
@@ -41,6 +45,7 @@ import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
+import { WorkspacePermissionAssignment } from '@gooddata/sdk-backend-spi';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -54,6 +59,9 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
+
+// @internal (undocumented)
+export const AddWorkspaceSelect: React_2.FC<IAddWorkspaceSelectProps>;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -755,6 +763,16 @@ export interface IAddGranteeBaseProps {
     onSubmit: () => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
+}
+
+// @internal (undocumented)
+export interface IAddWorkspaceSelectProps {
+    // (undocumented)
+    addedWorkspaces: IGrantedWorkspace[];
+    // (undocumented)
+    grantedWorkspaces: IGrantedWorkspace[];
+    // (undocumented)
+    onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
 }
 
 // @internal (undocumented)
@@ -1730,6 +1748,18 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
+}
+
+// @internal (undocumented)
+export interface IGrantedWorkspace {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isHierarchical: boolean;
+    // (undocumented)
+    permission: WorkspacePermission;
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
@@ -3916,6 +3946,34 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
+export interface IUserDialogBaseProps {
+    // (undocumented)
+    api: IUserEditDialogApi;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    userId: string;
+}
+
+// @internal (undocumented)
+export interface IUserEditDialogApi {
+    // (undocumented)
+    getUserById?: (userId: string) => Promise<IWorkspaceUser>;
+    // (undocumented)
+    getUserGroups?: () => Promise<ManageUserGroups>;
+    // (undocumented)
+    getUsers?: () => Promise<ManageUsers>;
+    // (undocumented)
+    getWorkspacePermissionsForUser?: (userId: string) => Promise<WorkspacePermissionAssignment[]>;
+    // (undocumented)
+    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
+    // (undocumented)
+    manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+    // (undocumented)
+    manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
+}
+
+// @internal (undocumented)
 export interface IWebComponentsOptions {
     // (undocumented)
     allowLocale: boolean;
@@ -4539,6 +4597,9 @@ export const useOverlayController: () => OverlayController;
 // @internal
 export const useOverlayZIndex: (uuid: string) => number;
 
+// @internal (undocumented)
+export const UserEditDialog: React_2.FC<IUserDialogBaseProps>;
+
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
 
@@ -4568,6 +4629,9 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
+
+// @internal (undocumented)
+export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;

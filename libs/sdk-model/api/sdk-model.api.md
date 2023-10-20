@@ -2530,6 +2530,12 @@ export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 // @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
 
+// @alpha
+export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGroupWorkspaceAccessGrantee;
+
+// @alpha
+export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspaceAccessGrantee;
+
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
@@ -2902,6 +2908,12 @@ export interface IUserGroupAccessGrantee {
     type: "group";
 }
 
+// @alpha
+export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
+
+// @alpha
+export type IUserWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserAccessGrantee;
+
 // @public
 export interface IVariableMetadataObject extends IMetadataObject {
     // (undocumented)
@@ -2982,6 +2994,12 @@ export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 export interface IWidgetDescription {
     readonly description: string;
     readonly title: string;
+}
+
+// @alpha
+export interface IWorkspaceAccess {
+    permissions: WorkspaceAccessPermission;
+    workspace: string;
 }
 
 // @public
@@ -3459,6 +3477,9 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;
+
+// @public
+export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 // @public
 export type WorkspacePermission =
