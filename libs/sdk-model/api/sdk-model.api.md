@@ -270,6 +270,12 @@ export enum ComputeRatioRule {
     SINGLE_MEASURE_ONLY = 1
 }
 
+// @alpha
+export type DashboardAttributeFilterConfigMode = "readonly" | "hidden" | "active";
+
+// @internal
+export const DashboardAttributeFilterConfigModeValues: Record<Uppercase<DashboardAttributeFilterConfigMode>, DashboardAttributeFilterConfigMode>;
+
 // @beta
 export type DashboardAttributeFilterSelectionMode = "single" | "multi";
 
@@ -823,6 +829,7 @@ export interface IComparisonConditionBody {
 
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+    readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -850,6 +857,12 @@ export interface IDashboardAttributeFilter {
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
+}
+
+// @alpha
+export interface IDashboardAttributeFilterConfig {
+    localIdentifier: string;
+    mode?: DashboardAttributeFilterConfigMode;
 }
 
 // @beta
