@@ -27,6 +27,7 @@ const AppWithBackend: React.FC = () => {
                     {isOpen && (
                         <UserEditDialog
                             userId="mort"
+                            isAdmin={true}
                             onClose={() => setIsOpen(false)}
                             api={tigerSpecificFunctions!}
                         />
