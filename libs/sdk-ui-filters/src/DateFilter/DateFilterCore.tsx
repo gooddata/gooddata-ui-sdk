@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import DefaultMediaQuery from "react-responsive";
@@ -16,6 +16,7 @@ import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { IFilterButtonCustomIcon } from "../shared/index.js";
+import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -57,6 +58,7 @@ export interface IDateFilterCoreProps {
 
     weekStart?: WeekStart;
     customIcon?: IFilterButtonCustomIcon;
+    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -88,12 +90,26 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     isTimeForAbsoluteRangeEnabled,
     weekStart,
     customIcon,
+    FilterConfigurationComponent,
+    onApplyClick,
+    onCancelClick,
     ...dropdownBodyProps
 }) => {
+    const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const verifiedDateFormat = verifyDateFormat(dateFormat);
     const filteredFilterOptions = useMemo(() => {
         return flow(filterVisibleDateFilterOptions, sanitizePresetIntervals)(filterOptions);
     }, [filterOptions]);
+    const closeConfiguration = () => {
+        setIsConfigurationOpen(false);
+    };
+    const openConfiguration = () => {
+        setIsConfigurationOpen(true);
+    };
+    const cancelConfiguration = () => {
+        closeConfiguration();
+        onCancelClick();
+    };
     return (
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
@@ -138,20 +154,31 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 ".s-do-not-close-dropdown-on-click",
                                 ".rdp-day", // absolute range picker calendar items
                             ]}
-                            renderBody={({ closeDropdown }) => (
-                                // Dropdown component uses React.Children.map and adds special props to this component
-                                // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
-                                <DateFilterBody
-                                    {...dropdownBodyProps}
-                                    filterOptions={filteredFilterOptions}
-                                    isMobile={isMobile}
-                                    closeDropdown={closeDropdown}
-                                    dateFilterButton={dateFilterButton()}
-                                    dateFormat={verifiedDateFormat}
-                                    isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
-                                    weekStart={weekStart}
-                                />
-                            )}
+                            renderBody={({ closeDropdown }) => {
+                                return isConfigurationOpen ? (
+                                    <FilterConfigurationComponent
+                                        onSaveButtonClick={closeConfiguration}
+                                        onCancelButtonClick={cancelConfiguration}
+                                    />
+                                ) : (
+                                    // Dropdown component uses React.Children.map and adds special props to this component
+                                    // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
+                                    <DateFilterBody
+                                        {...dropdownBodyProps}
+                                        onApplyClick={onApplyClick}
+                                        onCancelClick={onCancelClick}
+                                        filterOptions={filteredFilterOptions}
+                                        isMobile={isMobile}
+                                        closeDropdown={closeDropdown}
+                                        dateFilterButton={dateFilterButton()}
+                                        dateFormat={verifiedDateFormat}
+                                        isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                                        weekStart={weekStart}
+                                        isConfigurationEnabled={FilterConfigurationComponent !== undefined}
+                                        onConfigurationClick={openConfiguration}
+                                    />
+                                );
+                            }}
                         />
                     );
                 }}

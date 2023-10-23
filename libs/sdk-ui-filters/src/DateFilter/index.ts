@@ -72,6 +72,7 @@ export {
     isUiRelativeDateFilterForm,
 } from "./interfaces/index.js";
 
+export { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 export { defaultDateFilterOptions } from "./constants/config.js";
 export { GranularityIntlKey } from "./constants/i18n.js";
 export { getLocalizedIcuDateFormatPattern } from "./utils/FormattingUtils.js";

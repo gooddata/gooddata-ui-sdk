@@ -34,6 +34,8 @@ import {
     openAbsoluteFormFilter,
     createDateFilterWithState,
     clickAbsoluteFormFilter,
+    isConfigurationButtonVisible,
+    clickConfigurationButton,
 } from "./extendedDateFilters_helpers.js";
 import { AbsoluteForm } from "./AbsoluteForm.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
@@ -55,11 +57,33 @@ describe("DateFilter", () => {
         createDateFilter({ dateFilterMode: "readonly" });
         clickDateFilterButton();
         expect(isDateFilterBodyVisible()).toBe(false);
+        expect(isConfigurationButtonVisible()).toBe(false);
     });
 
     it("should render hidden", () => {
         createDateFilter({ dateFilterMode: "hidden" });
         expect(isDateFilterVisible()).toBe(false);
+    });
+
+    describe("configuration", () => {
+        it("should render configuration button", () => {
+            const MockConfigComponent = vi.fn();
+            createDateFilter({
+                FilterConfigurationComponent: MockConfigComponent,
+            });
+            clickDateFilterButton();
+            expect(isConfigurationButtonVisible()).toBe(true);
+            clickConfigurationButton();
+            expect(MockConfigComponent).toHaveBeenCalled();
+        });
+
+        it("should not render configuration button", () => {
+            createDateFilter({
+                FilterConfigurationComponent: undefined,
+            });
+            clickDateFilterButton();
+            expect(isConfigurationButtonVisible()).toBe(false);
+        });
     });
 
     describe("cancel button", () => {
