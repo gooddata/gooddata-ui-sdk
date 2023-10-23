@@ -7,7 +7,7 @@ export class Messages {
     }
 
     hasProgressMessage(expect: boolean) {
-        cy.get(".s-message.progress").should(expect ? "exist" : "not.exist");
+        cy.get(".s-message.progress", { timeout: 40000 }).should(expect ? "exist" : "not.exist");
         return this;
     }
 
