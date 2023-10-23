@@ -22,6 +22,8 @@ import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { messages } from "../../../../locales.js";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">
@@ -55,6 +57,7 @@ const EditableDashboardInsightWidgetCore: React.FC<
     const isEditable = !isSaving;
 
     const dashboardDispatch = useDashboardDispatch();
+    const { addSuccess } = useToastMessage();
     const applyWidgetDescription = useCallback(
         (e: { detail: { insightId: string; description: string } }) => {
             const { insightId, description } = e.detail;
@@ -63,9 +66,10 @@ const EditableDashboardInsightWidgetCore: React.FC<
                 dashboardDispatch(changeInsightWidgetDescription(widgetRef(widget), { description }));
                 document.dispatchEvent(new CustomEvent("gdc-llm-chat-clear"));
                 document.dispatchEvent(new CustomEvent("gdc-llm-chat-close"));
+                addSuccess(messages.widgetDescriptionApplied);
             }
         },
-        [],
+        [addSuccess],
     );
     useEffect(() => {
         document.addEventListener("gdc-llm-chat-apply-insight-description", applyWidgetDescription);

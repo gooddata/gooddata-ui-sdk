@@ -2169,5 +2169,11 @@
         "value": "<b>Success.</b> You have set the alert.",
         "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
         "limit": 0
+    },
+    "dialogs.flexai.widgetDescriptionApplied": {
+        "value": "Widget description has been updated.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
     }
 }
