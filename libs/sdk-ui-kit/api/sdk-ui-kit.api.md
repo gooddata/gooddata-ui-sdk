@@ -3965,6 +3965,8 @@ export interface IUserEditDialogApi {
     // (undocumented)
     changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
     // (undocumented)
+    deleteUser?: (userId: string) => Promise<void>;
+    // (undocumented)
     getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
     // (undocumented)
     getUserById?: (userId: string) => Promise<IWorkspaceUser>;

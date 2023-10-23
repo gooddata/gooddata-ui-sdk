@@ -27,7 +27,7 @@ export const loadGroupOptionsPromise = (api: IUserEditDialogApi, intl: IntlShape
                 .then((response) => response.userGroups)
                 .then((groups) => groups.filter((group) => {
                     const name = group.name ?? group.groupId;
-                    return inputValue === "" || name.includes(inputValue);
+                    return inputValue === "" || name.toLowerCase().includes(inputValue.toLowerCase());
                 }))
                 .then((groups) => groups
                     .map((group) => ({

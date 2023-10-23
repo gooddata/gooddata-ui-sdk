@@ -2392,5 +2392,35 @@
         "value": "Remove user from the group.",
         "comment": "",
         "limit": 0
+    },
+    "userGroupDialog.deleteUser.title": {
+        "value": "Delete user?",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.deleteUser.message": {
+        "value": "User will be permanently and irreversibly deleted.{br}Their insights and dashboards will not be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.deleteUser.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.deleteUser.confirmButton": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.deleteUser.success": {
+        "value": "Great! We deleted the user!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.deleteUser.failure": {
+        "value": "Deletion of the user failed!",
+        "comment": "",
+        "limit": 0
     }
 }

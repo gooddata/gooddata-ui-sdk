@@ -86,6 +86,8 @@ export const userDialogMessageLabels = defineMessages({
     grantedGroupAddedError: { id: "userGroupDialog.group.addError" },
     grantedGroupRemovedSuccess: { id: "userGroupDialog.group.removeSuccess" },
     grantedGroupRemovedError: { id: "userGroupDialog.group.removeError" },
+    userRemovedSuccess: { id: "userGroupDialog.deleteUser.success" },
+    userRemovedError: { id: "userGroupDialog.deleteUser.failure" },
 });
 
 export const hierarchicalPermissionMessageLabels = defineMessages({

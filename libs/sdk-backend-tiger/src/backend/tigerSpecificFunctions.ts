@@ -651,6 +651,8 @@ export type TigerSpecificFunctions = {
     addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
 
     removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
+
+    deleteUser?: (userId: string) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -2192,9 +2194,9 @@ export const buildTigerSpecificFunctions = (
     updateUserDetails: async (user: IWorkspaceUser) => {
         return await authApiCall(async (client) => {
             const { login, firstName, lastName, email } = user;
-            await client.entities.updateEntityUsers({
+            await client.entities.patchEntityUsers({
                 id: login,
-                jsonApiUserInDocument: {
+                jsonApiUserPatchDocument: {
                     data: {
                         type: "user",
                         id: login,
@@ -2211,7 +2213,7 @@ export const buildTigerSpecificFunctions = (
 
     changeUserOrgAdminStatus: async (_userId: string, _isOrgAdmin: boolean) => {
         return await authApiCall(async (_client) => {
-            // await client.entities.patchEntityOrganizations()
+            // TODO when gartner env will get rebased onto develop and missing API will be available
         });
     },
 
@@ -2253,6 +2255,14 @@ export const buildTigerSpecificFunctions = (
                 userGroupMembers: {
                     members: [{ id: userId }]
                 }
+            });
+        });
+    },
+
+    deleteUser: async (id: string) => {
+        return await authApiCall(async (client) => {
+            await client.entities.deleteEntityUsers({
+                id,
             });
         });
     }
