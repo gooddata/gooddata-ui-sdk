@@ -25,6 +25,7 @@ export interface IUserEditDialogApi {
     getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
     addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
     removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
+    deleteUser?: (userId: string) => Promise<void>;
 }
 
 /**

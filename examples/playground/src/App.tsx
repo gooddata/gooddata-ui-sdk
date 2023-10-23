@@ -26,7 +26,7 @@ const AppWithBackend: React.FC = () => {
                 <IntlWrapper locale="en-US">
                     {isOpen && (
                         <UserEditDialog
-                            userId="boba.fett"
+                            userId="han.solo"
                             isAdmin={true}
                             onClose={() => setIsOpen(false)}
                             api={tigerSpecificFunctions!}

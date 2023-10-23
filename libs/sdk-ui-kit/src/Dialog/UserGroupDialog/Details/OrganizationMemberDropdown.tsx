@@ -1,9 +1,13 @@
 // (C) 2023 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { DropdownButton, Dropdown, Overlay, ItemsWrapper, IAlignPoint } from "../../../index.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
+
+import { Overlay } from "../../../Overlay/index.js";
+import { DropdownButton, Dropdown } from "../../../Dropdown/index.js";
+import { IAlignPoint } from "../../../typings/positioning.js";
+import { ItemsWrapper } from "../../../List/index.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { IWorkspaceUser } from "@gooddata/sdk-model";
+import cx from "classnames";
 
 import { Overlay } from "../../Overlay/index.js";
 import { IAlignPoint } from "../../typings/positioning.js";
@@ -15,7 +16,7 @@ import { Typography } from "../../Typography/index.js";
 
 import { WorkspaceList } from "./Workspace/WorkspaceList.js";
 import { DialogMode, IGrantedWorkspace, IUserEditDialogApi, IGrantedGroup } from "./types.js";
-import { AddWorkspaceBase } from "./Workspace/AddWorkspaceBase.js";
+import { AddWorkspace } from "./Workspace/AddWorkspace.js";
 import {
     sortGrantedWorkspacesByName,
     asEmptyPermissionAssignment,
@@ -28,6 +29,7 @@ import { DetailsView } from "./Details/DetailsView.js";
 import { GroupsList } from "./Groups/GroupsList.js";
 import { EditDetails } from "./Details/EditDetails.js";
 import { AddGroup } from "./Groups/AddGroup.js";
+import { DeleteUserConfirmDialog } from "./ConfirmDialogs/DeleteUserConfirmDialog.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -53,6 +55,7 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
     const [selectedTabId, setSelectedTabId] = useState(userDialogTabsMessageLabels.workspaces);
     const [user, setUser] = useState<IWorkspaceUser>();
     const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
+    const [isConfirmDeleteOpened, setConfirmDeleteOpened] = useState(false);
 
     useEffect(() => {
         api?.getUserById(userId)
@@ -90,9 +93,6 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
 
     const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[]>([]);
     const [grantedGroups, setGrantedGroups] = useState<IGrantedGroup[]>([]);
-
-    // TODO show confirm dialog, call backend API from there
-    const deleteUser = () => alert("Call API to delete user (possibly confirm the action first)");
 
     const removeGrantedWorkspace = (workspace: IGrantedWorkspace) => {
         api.manageWorkspacePermissionsForUser(userId, [asEmptyPermissionAssignment(workspace)])
@@ -149,135 +149,165 @@ export const UserEditDialog: React.FC<IUserDialogBaseProps> = ({ userId, isAdmin
         setIsAdmin(isAdmin);
     };
 
+    const onDeleteUser = () => setConfirmDeleteOpened(true);
+
+    const onUserDeleteCancel = () => setConfirmDeleteOpened(false);
+
+    const onUserDelete = () => api
+        ?.deleteUser(userId)
+        .then(() => {
+            addSuccess(userDialogMessageLabels.userRemovedSuccess);
+            onClose();
+        })
+        .catch((error) => {
+            console.error("Delete of user failed", error);
+            addError(userDialogMessageLabels.userRemovedError);
+        });
+
+    const dialogOverlayStyles = cx("gd-share-dialog-overlay", {
+        "gd-user-group-dialog-hidden": isConfirmDeleteOpened,
+    });
+    const dialogStyles = cx("gd-user-group-dialog", {
+        "gd-user-group-dialog-hidden": isConfirmDeleteOpened,
+    })
+
     return (
-        <Overlay
-            alignPoints={alignPoints}
-            isModal={true}
-            positionType="fixed"
-            className="gd-share-dialog-overlay"
-        >
-            {!user && <LoadingComponent className="gd-user-group-dialog-loading" />}
-            <div className="gd-user-group-dialog">
-                {dialogMode === "VIEW" && (
-                    <DialogBase
-                        className="gd-share-dialog gd-share-dialog-add-users s-gd-share-add-grantees"
-                        displayCloseButton={true}
-                        isPositive={true}
-                        onClose={onClose}
-                    >
-                        <div className="gd-dialog-header-wrapper">
-                            <div className="gd-dialog-header">
-                                <Typography tagName="h3" className="gd-dialog-header-title">
-                                    {user?.fullName ?? user?.login}
-                                </Typography>
-                            </div>
-                        </div>
-                        <div className="gd-dialog-content">
-                            <Tabs
-                                selectedTabId={selectedTabId.id}
-                                onTabSelect={setSelectedTabId}
-                                tabs={tabs}
-                                className="gd-user-group-dialog-tabs"
-                            />
-                            {selectedTabId.id === userDialogTabsMessageLabels.workspaces.id && (
-                                <WorkspaceList
-                                    workspaces={grantedWorkspaces}
-                                    mode="VIEW"
-                                    onDelete={removeGrantedWorkspace}
-                                    onChange={changeGrantedWorkspace}
-                                />
-                            )}
-                            {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
-                                <GroupsList
-                                    groups={grantedGroups}
-                                    mode="VIEW"
-                                    onDelete={removeGrantedGroup}
-                                />
-                            )}
-                            {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
-                                <DetailsView
-                                    user={user}
-                                    isAdmin={isCurrentlyAdmin}
-                                    mode="VIEW"
-                                />
-                            )}
-                        </div>
-                        <div className="gd-dialog-footer">
-                            <div className="gd-user-group-dialog-buttons">
-                                <div className="gd-user-group-dialog-buttons-left">
-                                    {selectedTabId.id === userDialogTabsMessageLabels.workspaces.id && (
-                                        <Button
-                                            className="gd-button gd-button-secondary"
-                                            iconLeft="gd-icon-add blue-icon"
-                                            value={intl.formatMessage({ id: "userGroupDialog.buttons.addWorkspace" })}
-                                            onClick={() => setDialogMode("WORKSPACE")}
-                                        />
-                                    )}
-                                    {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
-                                        <Button
-                                            className="gd-button gd-button-secondary"
-                                            iconLeft="gd-icon-add blue-icon"
-                                            value={intl.formatMessage({ id: "userGroupDialog.buttons.addToGroup" })}
-                                            onClick={() => setDialogMode("GROUPS")}
-                                        />
-                                    )}
-                                    {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
-                                        <Button
-                                            className="gd-button gd-button-secondary"
-                                            iconLeft="gd-icon-pencil blue-icon"
-                                            value={intl.formatMessage({ id: "userGroupDialog.buttons.edit" })}
-                                            onClick={() => setDialogMode("DETAIL")}
-                                        />
-                                    )}
-                                </div>
-                                <div className="gd-user-group-dialog-buttons-right">
-                                    <Button
-                                        className="gd-button gd-button-link-dimmed gd-user-group-dialog-button-underlined"
-                                        value={intl.formatMessage({ id: "userGroupDialog.buttons.deleteUser" })}
-                                        onClick={deleteUser}
-                                    />
-                                    <Button
-                                        className="gd-button gd-button-secondary"
-                                        value={intl.formatMessage({ id: "userGroupDialog.buttons.close" })}
-                                        onClick={onClose}
-                                    />
+        <>
+            {isConfirmDeleteOpened ? (
+                <DeleteUserConfirmDialog
+                    onConfirm={onUserDelete}
+                    onCancel={onUserDeleteCancel}
+                />
+            ) : null}
+            <Overlay
+                alignPoints={alignPoints}
+                isModal={true}
+                positionType="fixed"
+                className={dialogOverlayStyles}
+            >
+                {!user && <LoadingComponent className="gd-user-group-dialog-loading" />}
+                <div className={dialogStyles}>
+                    {dialogMode === "VIEW" && (
+                        <DialogBase
+                            className="gd-share-dialog gd-share-dialog-add-users s-gd-share-add-grantees"
+                            displayCloseButton={true}
+                            isPositive={true}
+                            onClose={onClose}
+                        >
+                            <div className="gd-dialog-header-wrapper">
+                                <div className="gd-dialog-header">
+                                    <Typography tagName="h3" className="gd-dialog-header-title">
+                                        {user?.fullName ?? user?.login}
+                                    </Typography>
                                 </div>
                             </div>
-                        </div>
-                    </DialogBase>
-                )}
-                {dialogMode === "WORKSPACE" && (
-                    <AddWorkspaceBase
-                        api={api}
-                        userId={userId}
-                        grantedWorkspaces={grantedWorkspaces}
-                        onBackClick={() => setDialogMode("VIEW")}
-                        onSubmit={onWorkspaceChanged}
-                        onCancel={() => setDialogMode("VIEW")}
-                    />
-                )}
-                {dialogMode === "GROUPS" && (
-                    <AddGroup
-                        api={api}
-                        userId={userId}
-                        grantedGroups={grantedGroups}
-                        onBackClick={() => setDialogMode("VIEW")}
-                        onSubmit={onGroupsChanged}
-                        onCancel={() => setDialogMode("VIEW")}
-                    />
-                )}
-                {dialogMode === "DETAIL" && (
-                    <EditDetails
-                        api={api}
-                        user={user}
-                        isAdmin={isCurrentlyAdmin}
-                        onBackClick={() => setDialogMode("VIEW")}
-                        onSubmit={onUserChanged}
-                        onCancel={() => setDialogMode("VIEW")}
-                    />
-                )}
-            </div>
-        </Overlay>
+                            <div className="gd-dialog-content">
+                                <Tabs
+                                    selectedTabId={selectedTabId.id}
+                                    onTabSelect={setSelectedTabId}
+                                    tabs={tabs}
+                                    className="gd-user-group-dialog-tabs"
+                                />
+                                {selectedTabId.id === userDialogTabsMessageLabels.workspaces.id && (
+                                    <WorkspaceList
+                                        workspaces={grantedWorkspaces}
+                                        mode="VIEW"
+                                        onDelete={removeGrantedWorkspace}
+                                        onChange={changeGrantedWorkspace}
+                                    />
+                                )}
+                                {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
+                                    <GroupsList
+                                        groups={grantedGroups}
+                                        mode="VIEW"
+                                        onDelete={removeGrantedGroup}
+                                    />
+                                )}
+                                {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
+                                    <DetailsView
+                                        user={user}
+                                        isAdmin={isCurrentlyAdmin}
+                                        mode="VIEW"
+                                    />
+                                )}
+                            </div>
+                            <div className="gd-dialog-footer">
+                                <div className="gd-user-group-dialog-buttons">
+                                    <div className="gd-user-group-dialog-buttons-left">
+                                        {selectedTabId.id === userDialogTabsMessageLabels.workspaces.id && (
+                                            <Button
+                                                className="gd-button gd-button-secondary"
+                                                iconLeft="gd-icon-add blue-icon"
+                                                value={intl.formatMessage({ id: "userGroupDialog.buttons.addWorkspace" })}
+                                                onClick={() => setDialogMode("WORKSPACE")}
+                                            />
+                                        )}
+                                        {selectedTabId.id === userDialogTabsMessageLabels.groups.id && (
+                                            <Button
+                                                className="gd-button gd-button-secondary"
+                                                iconLeft="gd-icon-add blue-icon"
+                                                value={intl.formatMessage({ id: "userGroupDialog.buttons.addToGroup" })}
+                                                onClick={() => setDialogMode("GROUPS")}
+                                            />
+                                        )}
+                                        {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
+                                            <Button
+                                                className="gd-button gd-button-secondary"
+                                                iconLeft="gd-icon-pencil blue-icon"
+                                                value={intl.formatMessage({ id: "userGroupDialog.buttons.edit" })}
+                                                onClick={() => setDialogMode("DETAIL")}
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="gd-user-group-dialog-buttons-right">
+                                        <Button
+                                            className="gd-button gd-button-link-dimmed gd-user-group-dialog-button-underlined"
+                                            value={intl.formatMessage({ id: "userGroupDialog.buttons.deleteUser" })}
+                                            onClick={onDeleteUser}
+                                        />
+                                        <Button
+                                            className="gd-button gd-button-secondary"
+                                            value={intl.formatMessage({ id: "userGroupDialog.buttons.close" })}
+                                            onClick={onClose}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </DialogBase>
+                    )}
+                    {dialogMode === "WORKSPACE" && (
+                        <AddWorkspace
+                            api={api}
+                            userId={userId}
+                            grantedWorkspaces={grantedWorkspaces}
+                            onBackClick={() => setDialogMode("VIEW")}
+                            onSubmit={onWorkspaceChanged}
+                            onCancel={() => setDialogMode("VIEW")}
+                        />
+                    )}
+                    {dialogMode === "GROUPS" && (
+                        <AddGroup
+                            api={api}
+                            userId={userId}
+                            grantedGroups={grantedGroups}
+                            onBackClick={() => setDialogMode("VIEW")}
+                            onSubmit={onGroupsChanged}
+                            onCancel={() => setDialogMode("VIEW")}
+                        />
+                    )}
+                    {dialogMode === "DETAIL" && (
+                        <EditDetails
+                            api={api}
+                            user={user}
+                            isAdmin={isCurrentlyAdmin}
+                            onBackClick={() => setDialogMode("VIEW")}
+                            onSubmit={onUserChanged}
+                            onCancel={() => setDialogMode("VIEW")}
+                        />
+                    )}
+                </div>
+            </Overlay>
+        </>
     );
 };
 
