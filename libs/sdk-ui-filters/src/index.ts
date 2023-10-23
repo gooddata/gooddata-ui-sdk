@@ -37,6 +37,7 @@ export {
     IDateTranslator,
     IMessageTranslator,
     getLocalizedIcuDateFormatPattern,
+    IFilterConfigurationProps,
 } from "./DateFilter/index.js";
 export {
     MeasureValueFilter,

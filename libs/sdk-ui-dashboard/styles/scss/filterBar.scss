@@ -444,7 +444,8 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .gd-bubble {
-    &.gd-filter-button-custom-icon-bubble {
+    &.gd-filter-button-custom-icon-bubble,
+    &.gd-filter-configuration-mode-item-bubble {
         max-width: 209px;
     }
 }

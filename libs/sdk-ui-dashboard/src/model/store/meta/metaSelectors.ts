@@ -18,6 +18,7 @@ import {
     IdentifierRef,
     ShareStatus,
     IDashboardWidget,
+    IDashboardDateFilterConfig,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -81,6 +82,12 @@ export const selectPersistedDashboardFilterContext: DashboardSelector<
     IFilterContext | ITempFilterContext | undefined
 > = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.filterContext ?? undefined;
+});
+
+export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<
+    IDashboardDateFilterConfig | undefined
+> = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.dateFilterConfig ?? undefined;
 });
 
 /**
@@ -375,6 +382,14 @@ export const selectIsDateFilterChanged: DashboardSelector<boolean> = createSelec
     },
 );
 
+export const selectIsDateFilterConfigChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardFilterContextDateFilterConfig,
+    selectDateFilterConfigOverrides,
+    (persistedDateFilterConfig, currentDateFilterConfig) => {
+        return !isEqual(persistedDateFilterConfig, currentDateFilterConfig);
+    },
+);
+
 /**
  * Selects a boolean indication if he dashboard has any changes to the attribute filters compared to the persisted version (if any)
  *
@@ -438,12 +453,13 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsFiltersChanged,
     selectIsTitleChanged,
     selectIsLayoutChanged,
-    (isNew, layout, isFiltersChanged, isTitleChanged, isLayoutChanged) => {
+    selectIsDateFilterConfigChanged,
+    (isNew, layout, isFiltersChanged, isTitleChanged, isLayoutChanged, isDateFilterConfigChanged) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
         }
 
-        return [isFiltersChanged, isTitleChanged, isLayoutChanged].some(Boolean);
+        return [isFiltersChanged, isTitleChanged, isLayoutChanged, isDateFilterConfigChanged].some(Boolean);
     },
 );
 

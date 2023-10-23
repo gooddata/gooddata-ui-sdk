@@ -658,6 +658,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    // @alpha
+    FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
     // (undocumented)
@@ -718,6 +720,12 @@ export interface IFilterButtonCustomIcon {
     bubbleClassNames?: string;
     icon: string;
     tooltip: string;
+}
+
+// @alpha
+export interface IFilterConfigurationProps {
+    onCancelButtonClick: () => void;
+    onSaveButtonClick: () => void;
 }
 
 // @public
