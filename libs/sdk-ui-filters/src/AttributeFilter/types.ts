@@ -24,6 +24,7 @@ import { IAttributeFilterElementsSelectLoadingProps } from "./Components/Element
 import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
 import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
 import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
+import { IFilterButtonCustomIcon } from "../shared/index.js";
 
 /**
  * @public
@@ -183,6 +184,20 @@ export interface IAttributeFilterCoreProps {
      * By default, the value is "false". Works only for `selectionMode` "single" and if current selection is empty.
      */
     selectFirst?: boolean;
+
+    /**
+     * Specifies the visibility mode of the filter.
+     *
+     * @alpha
+     */
+    disabled?: boolean;
+
+    /**
+     * Represents a custom icon along with a tooltip.
+     *
+     * @alpha
+     */
+    customIcon?: IFilterButtonCustomIcon;
 
     /**
      * Specify function which will be called when user clicks 'Apply' button.

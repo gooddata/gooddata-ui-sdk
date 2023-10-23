@@ -2,15 +2,18 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 import {
     AttributeFilterDropdownButton,
     IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
+import * as shared from "../../../../shared/index.js";
+
+const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";
 
 describe("Test AttributeFilterDropdownButton", () => {
-    function renderComponent(props = {}) {
+    const renderComponent = (props = {}) => {
         const defaultProps: IAttributeFilterDropdownButtonProps = {
             title: "Product name",
             subtitle: "GoodData",
@@ -21,7 +24,11 @@ describe("Test AttributeFilterDropdownButton", () => {
         };
         const Wrapped = withIntl(AttributeFilterDropdownButton);
         return render(<Wrapped {...defaultProps} {...props} />);
-    }
+    };
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
 
     it("should render the filter dropdown button at normal state", () => {
         renderComponent();
@@ -34,5 +41,21 @@ describe("Test AttributeFilterDropdownButton", () => {
 
         expect(document.querySelector(".gd-message")).toBeInTheDocument();
         expect(document.querySelector(".gd-icon-circle-cross")).toBeInTheDocument();
+    });
+
+    it("should render custom icon", () => {
+        const MockCustomIconComponent = vi.spyOn(shared, "FilterButtonCustomIcon");
+        const customIcon = {
+            icon: "icon",
+            tooltip: "tooltip",
+        };
+
+        renderComponent({ customIcon });
+        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, {});
+    });
+
+    it("should render the button as disabled", () => {
+        const { container } = renderComponent({ disabled: true });
+        expect(container.querySelector(ATTRIBUTE_FILTER_BUTTON_SELECTOR)).toHaveClass("disabled");
     });
 });

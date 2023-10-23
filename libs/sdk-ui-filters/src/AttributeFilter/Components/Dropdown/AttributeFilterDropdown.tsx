@@ -7,6 +7,7 @@ import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilt
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
+import noop from "lodash/noop.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -40,6 +41,8 @@ export const AttributeFilterDropdown: React.VFC = () => {
         fullscreenOnMobile,
         isCommittedSelectionInverted,
         selectionMode,
+        disabled,
+        customIcon,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -61,30 +64,35 @@ export const AttributeFilterDropdown: React.VFC = () => {
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
-            renderButton={({ toggleDropdown, isOpen }) => (
-                <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
-                    {!!isInitializing && <LoadingComponent onClick={toggleDropdown} isOpen={isOpen} />}
-                    {!isInitializing && !!initError && !title && (
-                        <ErrorComponent message={initError.message} error={initError} />
-                    )}
-                    {!isInitializing && !!title && (
-                        <AttributeFilterButtonErrorTooltip errorMessage={initError?.message}>
-                            <DropdownButtonComponent
-                                title={title}
-                                subtitle={subtitle}
-                                isFiltering={isFiltering}
-                                isLoaded={!isInitializing}
-                                isLoading={isInitializing}
-                                isOpen={isOpen}
-                                selectedItemsCount={committedSelectionElements.length}
-                                showSelectionCount={showSelectionCount}
-                                onClick={toggleDropdown}
-                                isError={!!initError}
-                            />
-                        </AttributeFilterButtonErrorTooltip>
-                    )}
-                </div>
-            )}
+            renderButton={({ toggleDropdown, isOpen }) => {
+                const handleClickAction = disabled ? noop : toggleDropdown;
+                return (
+                    <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
+                        {!!isInitializing && <LoadingComponent onClick={handleClickAction} isOpen={isOpen} />}
+                        {!isInitializing && !!initError && !title && (
+                            <ErrorComponent message={initError.message} error={initError} />
+                        )}
+                        {!isInitializing && !!title && (
+                            <AttributeFilterButtonErrorTooltip errorMessage={initError?.message}>
+                                <DropdownButtonComponent
+                                    title={title}
+                                    subtitle={subtitle}
+                                    isFiltering={isFiltering}
+                                    isLoaded={!isInitializing}
+                                    isLoading={isInitializing}
+                                    isOpen={isOpen}
+                                    selectedItemsCount={committedSelectionElements.length}
+                                    showSelectionCount={showSelectionCount}
+                                    disabled={disabled}
+                                    customIcon={customIcon}
+                                    onClick={handleClickAction}
+                                    isError={!!initError}
+                                />
+                            </AttributeFilterButtonErrorTooltip>
+                        )}
+                    </div>
+                );
+            }}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
                     onReset();

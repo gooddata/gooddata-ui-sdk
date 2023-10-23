@@ -344,7 +344,9 @@ export interface IAttributeFilterBaseProps extends IAttributeFilterCoreProps, IA
 }
 
 // @public (undocumented)
-export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
+export type IAttributeFilterButtonProps = Omit<IAttributeFilterBaseProps, "disabled"> & {
+    attributeFilterMode?: VisibilityMode;
+};
 
 // @internal (undocumented)
 export interface IAttributeFilterConfigurationButtonProps {
@@ -353,12 +355,16 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
+    // @alpha
+    customIcon?: IFilterButtonCustomIcon;
+    // @alpha
+    disabled?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
@@ -428,6 +434,10 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    // @alpha
+    customIcon?: IFilterButtonCustomIcon;
+    // @alpha
+    disabled?: boolean;
     icon?: ReactNode;
     isDraggable?: boolean;
     // (undocumented)
