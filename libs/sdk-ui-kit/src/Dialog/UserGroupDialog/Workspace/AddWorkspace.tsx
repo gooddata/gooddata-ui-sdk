@@ -9,14 +9,15 @@ import { BackButton } from "../../BackButton.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { sortGrantedWorkspacesByName, asPermissionAssignment } from "../utils.js";
 
-import { AddWorkspaceContent } from "./AddWorkspaceContent.js";
 import { userDialogMessageLabels } from "../../../locales.js";
 import { useToastMessage } from "../../../Messages/index.js";
+import { AddWorkspaceSelect } from "./AddWorkspaceSelect.js";
+import { WorkspaceList } from "./WorkspaceList.js";
 
 /**
  * @internal
  */
-export interface IAddWorkspaceBaseProps {
+export interface IAddWorkspaceProps {
     api: IUserEditDialogApi;
     userId: string;
     grantedWorkspaces: IGrantedWorkspace[];
@@ -28,7 +29,7 @@ export interface IAddWorkspaceBaseProps {
 /**
  * @internal
  */
-export const AddWorkspaceBase: React.FC<IAddWorkspaceBaseProps> = ({
+export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     api,
     userId,
     grantedWorkspaces,
@@ -91,12 +92,16 @@ export const AddWorkspaceBase: React.FC<IAddWorkspaceBaseProps> = ({
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
         >
-            <AddWorkspaceContent
-                grantedWorkspaces={grantedWorkspaces}
+            <AddWorkspaceSelect
                 addedWorkspaces={addedWorkspaces}
+                grantedWorkspaces={grantedWorkspaces}
+                onSelectWorkspace={onSelectWorkspace}
+            />
+            <WorkspaceList
+                mode="EDIT"
+                workspaces={addedWorkspaces}
                 onDelete={onDelete}
                 onChange={onChange}
-                onSelectWorkspace={onSelectWorkspace}
             />
         </ConfirmDialogBase>
     );
