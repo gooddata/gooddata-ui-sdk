@@ -8,11 +8,10 @@
 # Delivery is managed by the CI / CD pipeline in gooddata/gdc-nas repository.
 ---
 default:
-  image: $AWS_ECR_URL/infra/tools:$BUILD_IMAGE_VERSION
+  image: $PANTHER_REPO_URL/infra/tools:$BUILD_IMAGE_VERSION
 
 variables:
-  AWS_ECR_URL: '441851189095.dkr.ecr.eu-central-1.amazonaws.com'
-  BUILD_IMAGE_VERSION: "3.1.0"
+  BUILD_IMAGE_VERSION: "4.0.0"
 
 stages:
   - build
