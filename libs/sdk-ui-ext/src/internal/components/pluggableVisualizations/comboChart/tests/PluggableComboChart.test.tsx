@@ -36,6 +36,7 @@ describe("PluggableComboChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
     };
     const primaryMeasureBucketProps: IBucketOfFun = {
         localIdentifier: "measures",

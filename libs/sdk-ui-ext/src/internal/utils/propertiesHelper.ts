@@ -13,8 +13,9 @@ import {
     IVisualizationProperties,
     IBucketItem,
     IVisProps,
+    IBucketOfFun,
 } from "../interfaces/Visualization.js";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { AXIS } from "../constants/axis.js";
 import {
     getItemsCount,
@@ -389,5 +390,38 @@ export function getPivotTableProperties(settings: ISettings, properties: IVisual
                   columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
               }
             : {}),
+    };
+}
+
+export function setComboChartDefaultStackMeasuresValue(
+    buckets: IBucketOfFun[],
+    primaryChartType: string,
+    stackMeasures?: boolean,
+) {
+    const measuresCount = getItemsCount(buckets, BucketNames.MEASURES);
+
+    return {
+        ...(measuresCount > 1 && primaryChartType === VisualizationTypes.AREA && stackMeasures === undefined
+            ? {
+                  stackMeasures: true,
+              }
+            : {}),
+    };
+}
+
+export function setAreaChartDefaultStackMeasuresValue(referencePoint: IExtendedReferencePoint) {
+    const measuresCount = getItemsCount(referencePoint.buckets, BucketNames.MEASURES);
+    const propertiesControlStackMeasures = referencePoint.properties?.controls?.stackMeasures;
+
+    return {
+        ...(measuresCount > 1 && propertiesControlStackMeasures === undefined
+            ? {
+                  ...referencePoint.properties,
+                  controls: {
+                      ...referencePoint.properties?.controls,
+                      stackMeasures: true,
+                  },
+              }
+            : referencePoint.properties),
     };
 }

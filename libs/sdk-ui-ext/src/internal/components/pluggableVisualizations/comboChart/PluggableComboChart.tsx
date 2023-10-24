@@ -53,6 +53,7 @@ import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
 import {
     getReferencePointWithSupportedProperties,
     isDualAxisOrSomeSecondaryAxisMeasure,
+    setComboChartDefaultStackMeasuresValue,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper.js";
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper.js";
@@ -265,6 +266,11 @@ export class PluggableComboChart extends PluggableBaseChart {
                 ...referencePoint.properties,
                 controls: {
                     ...controls,
+                    ...setComboChartDefaultStackMeasuresValue(
+                        buckets,
+                        primaryChartType,
+                        controls.stackMeasures,
+                    ),
                     primaryChartType,
                     secondaryChartType,
                 },

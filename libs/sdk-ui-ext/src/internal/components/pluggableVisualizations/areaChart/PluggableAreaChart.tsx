@@ -55,6 +55,7 @@ import {
 import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
+    setAreaChartDefaultStackMeasuresValue,
 } from "../../../utils/propertiesHelper.js";
 import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper.js";
@@ -149,6 +150,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
         if (!this.featureFlags.enableChartsSorting) {
             newReferencePoint = removeSort(newReferencePoint);
         }
+
+        newReferencePoint.properties = setAreaChartDefaultStackMeasuresValue(newReferencePoint);
+
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 

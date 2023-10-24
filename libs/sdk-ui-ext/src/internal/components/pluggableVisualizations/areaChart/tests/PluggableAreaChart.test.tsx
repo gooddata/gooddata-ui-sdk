@@ -58,6 +58,7 @@ describe("PluggableAreaChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
     };
 
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();

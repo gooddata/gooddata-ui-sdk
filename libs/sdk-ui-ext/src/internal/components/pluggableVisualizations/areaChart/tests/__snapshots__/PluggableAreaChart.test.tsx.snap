@@ -487,7 +487,11 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "stackMeasures": true,
+    },
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
