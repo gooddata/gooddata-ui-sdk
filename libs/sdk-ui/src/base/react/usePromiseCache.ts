@@ -87,8 +87,10 @@ export function usePromiseCache<TParams, TResult, TError>(
             });
 
         return () => {
-            preventResetPromisesRef.current = !!preventResetPromises;
-            usedPromiseCache.cancel(newParams[0]);
+            if (preventResetPromises) {
+                preventResetPromisesRef.current = preventResetPromises;
+                usedPromiseCache.cancel(newParams[0]);
+            }
         };
     }, fetchDeps);
 

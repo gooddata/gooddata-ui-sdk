@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
     insightTitle,
@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce.js";
 import range from "lodash/range.js";
+import isEqual from "lodash/isEqual.js";
 import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
 import { InsightListItem, DropdownList, ITab } from "@gooddata/sdk-ui-kit";
@@ -87,6 +88,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
+    const previousSearch = useRef("");
     const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
 
     const params = pagesToLoad.map((pageNumber) => ({
@@ -119,7 +121,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                 title,
                 orderBy: "updated",
             };
-
+            previousSearch.current = title ?? "";
             return backend.workspace(workspaceId).insights().getInsights(options);
         },
         params,
@@ -127,7 +129,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
         [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
         undefined,
         undefined,
-        true,
+        previousSearch.current !== search && isEqual(pagesToLoad, [0]),
     );
 
     useEffect(() => {
