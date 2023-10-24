@@ -67,6 +67,10 @@
         margin: 0 10px;
         padding: 10px 0;
         border-top: 1px solid variables.$gd-border-color;
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        align-items: center;
 
         &-buttons {
             display: flex;

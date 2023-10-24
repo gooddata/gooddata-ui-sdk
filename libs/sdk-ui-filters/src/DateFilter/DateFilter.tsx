@@ -16,6 +16,7 @@ import {
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
+import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -47,6 +48,13 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     customIcon?: IFilterButtonCustomIcon;
+
+    /**
+     * Represents a custom component for configuration.
+     *
+     * @alpha
+     */
+    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
 }
 
 /**
@@ -174,6 +182,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             isTimeForAbsoluteRangeEnabled,
             weekStart,
             customIcon,
+            FilterConfigurationComponent,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -199,6 +208,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 errors={validateFilterOption(selectedFilterOption)}
                 weekStart={weekStart}
                 customIcon={customIcon}
+                FilterConfigurationComponent={FilterConfigurationComponent}
             />
         );
     }

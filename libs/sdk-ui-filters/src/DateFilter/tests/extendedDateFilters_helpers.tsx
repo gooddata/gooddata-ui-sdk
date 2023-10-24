@@ -186,6 +186,7 @@ const defaultProps: IDateFilterProps = {
     onClose: noop,
 };
 
+const configurationButton = ".s-configuration-button";
 const dateFilterButton = ".s-date-filter-button";
 const dateButtonFilterTitle = ".s-date-filter-title";
 const dateFilterButtonText = ".s-button-text";
@@ -261,6 +262,8 @@ export const clickCancelButton = () => fireEvent.click(screen.getByText("Cancel"
 
 export const getDateFilterButtonText = () => document.querySelector(dateFilterButtonText).textContent;
 
+export const clickConfigurationButton = () => fireEvent.click(document.querySelector(configurationButton));
+
 // config
 
 export const getFilterTitle = () => document.querySelector(dateButtonFilterTitle).textContent;
@@ -270,6 +273,8 @@ export const isDateFilterBodyVisible = () => !!document.querySelector(dateFilter
 export const isDateFilterVisible = () => !!document.querySelector(dateFilterButton);
 
 export const getSelectedItemText = () => document.querySelector(dateFilterSelectedItem).textContent;
+
+export const isConfigurationButtonVisible = () => !!document.querySelector(configurationButton);
 
 // relative presets
 

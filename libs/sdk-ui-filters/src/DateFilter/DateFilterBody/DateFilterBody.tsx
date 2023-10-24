@@ -24,6 +24,7 @@ import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { EditModeMessage } from "./EditModeMessage.js";
 import { DateFilterHeader } from "./DateFilterHeader.js";
 import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
+import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { DateFilterRoute } from "./types.js";
 import {
@@ -62,6 +63,8 @@ export interface IDateFilterBodyProps {
     dateFilterButton: JSX.Element;
 
     weekStart?: WeekStart;
+    isConfigurationEnabled?: boolean;
+    onConfigurationClick: () => void;
 }
 
 interface IDateFilterBodyState {
@@ -95,25 +98,17 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         const {
             isExcludeCurrentPeriodEnabled,
             isMobile,
-            isEditMode,
             onApplyClick,
             onCancelClick,
             closeDropdown,
-            selectedFilterOption,
+            onConfigurationClick,
             dateFilterButton,
             errors,
+            isConfigurationEnabled,
         } = this.props;
         const { route } = this.state;
 
         const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
-        const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
-        let wrapperStyle: React.CSSProperties = {};
-        let scrollerStyle: React.CSSProperties = {};
-        if (bodyHeight) {
-            // display: flex causes the scroller is cut off when scrolling
-            wrapperStyle = { display: "block", height: `${bodyHeight}px` };
-            scrollerStyle = { minHeight: `${bodyHeight}px` };
-        }
 
         return (
             <div className="gd-extended-date-filter-container">
@@ -134,27 +129,15 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             {dateFilterButton}
                         </div>
                     ) : null}
-                    <div
-                        className={cx("gd-extended-date-filter-body-wrapper", {
-                            "gd-extended-date-filter-body-wrapper-wide":
-                                isRelativeDateFilterForm(selectedFilterOption),
-                        })}
-                        style={wrapperStyle}
-                    >
-                        {isEditMode && !isMobile ? <EditModeMessage /> : null}
-                        {isMobile ? (
-                            this.renderMobileContent()
-                        ) : (
-                            <VisibleScrollbar
-                                className="gd-extended-date-filter-body-scrollable"
-                                style={scrollerStyle}
-                            >
-                                {this.renderDefaultContent()}
-                            </VisibleScrollbar>
-                        )}
-                    </div>
+                    {this.renderDateFilterBody()}
                     {showExcludeCurrent ? this.renderExcludeCurrent() : null}
+
                     <div className={cx("gd-extended-date-filter-actions")}>
+                        <div className="gd-extended-date-filter-actions-left-content">
+                            {isConfigurationEnabled ? (
+                                <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />
+                            ) : null}
+                        </div>
                         <div className="gd-extended-date-filter-actions-buttons">
                             <DateFilterBodyButton
                                 messageId="cancel"
@@ -179,6 +162,43 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             </div>
         );
     }
+
+    private renderDateFilterBody = () => {
+        const { isExcludeCurrentPeriodEnabled, isMobile, isEditMode, selectedFilterOption } = this.props;
+
+        const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
+        const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
+        let wrapperStyle: React.CSSProperties = {};
+        let scrollerStyle: React.CSSProperties = {};
+        if (bodyHeight) {
+            // display: flex causes the scroller is cut off when scrolling
+            wrapperStyle = { display: "block", height: `${bodyHeight}px` };
+            scrollerStyle = { minHeight: `${bodyHeight}px` };
+        }
+        return (
+            <>
+                <div
+                    className={cx("gd-extended-date-filter-body-wrapper", {
+                        "gd-extended-date-filter-body-wrapper-wide":
+                            isRelativeDateFilterForm(selectedFilterOption),
+                    })}
+                    style={wrapperStyle}
+                >
+                    {isEditMode && !isMobile ? <EditModeMessage /> : null}
+                    {isMobile ? (
+                        this.renderMobileContent()
+                    ) : (
+                        <VisibleScrollbar
+                            className="gd-extended-date-filter-body-scrollable"
+                            style={scrollerStyle}
+                        >
+                            {this.renderDefaultContent()}
+                        </VisibleScrollbar>
+                    )}
+                </div>
+            </>
+        );
+    };
 
     private renderAllTime = () => {
         const { filterOptions, isMobile, selectedFilterOption, onSelectedFilterOptionChange } = this.props;

@@ -2,7 +2,12 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
+import {
+    DateFilter,
+    getLocalizedIcuDateFormatPattern,
+    IDateFilterProps,
+    IFilterConfigurationProps,
+} from "@gooddata/sdk-ui-filters";
 import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
@@ -19,6 +24,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { getVisibilityIcon } from "../utils.js";
+import { DateFilterConfigurationBody } from "./DateFilterConfigurationBody.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -64,6 +70,14 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         intl,
     );
 
+    const isConfigurationEnabled = isInEditMode && !!capabilities.supportsHiddenAndLockedFiltersOnUI;
+
+    const FilterConfigurationComponent = useMemo(() => {
+        return function ElementsSelect(props: IFilterConfigurationProps) {
+            return <DateFilterConfigurationBody {...props} intl={intl} />;
+        };
+    }, []);
+
     return (
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
@@ -83,6 +97,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             isEditMode={isInEditMode}
             weekStart={weekStart}
             customIcon={visibilityIcon}
+            FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
         />
     );
 };
