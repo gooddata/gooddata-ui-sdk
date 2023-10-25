@@ -10,6 +10,7 @@ import {
     DeleteDashboard,
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
+    SetDashboardAttributeFilterConfigMode,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -107,6 +108,9 @@ export {
     SetDashboardDateFilterConfigMode,
     SetDashboardDateFilterConfigModePayload,
     setDashboardDateFilterConfigMode,
+    SetDashboardAttributeFilterConfigMode,
+    setDashboardAttributeFilterConfigMode,
+    SetDashboardAttributeFilterConfigModePayload,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -433,4 +437,5 @@ export type DashboardCommands =
     | DrillToLegacyDashboard
     | ChangeDrillableItems
     | AddDrillTargets
-    | SetDashboardDateFilterConfigMode;
+    | SetDashboardDateFilterConfigMode
+    | SetDashboardAttributeFilterConfigMode;

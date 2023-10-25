@@ -143,6 +143,14 @@
             width: 100%;
         }
     }
+
+    .configuration-item-mode {
+        margin: 0 10px 10px;
+
+        .input-radio-label {
+            font-size: 12px;
+        }
+    }
 }
 
 .connecting-attributes-dropdown-body {

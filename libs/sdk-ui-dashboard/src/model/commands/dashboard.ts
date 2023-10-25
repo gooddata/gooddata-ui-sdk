@@ -1,7 +1,12 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
-import { DashboardDateFilterConfigMode, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
+import {
+    DashboardAttributeFilterConfigMode,
+    DashboardDateFilterConfigMode,
+    IDashboard,
+    IWorkspacePermissions,
+} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
@@ -455,6 +460,55 @@ export function setDashboardDateFilterConfigMode(
     return {
         type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE",
         payload: {
+            mode,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link SetDashboardAttributeFilterConfigMode} command.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigModePayload {
+    /**
+     * Local identifier of the filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Mode of the attribute filter.
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
+ * Command for changing attribute filter mode.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE";
+    readonly payload: SetDashboardAttributeFilterConfigModePayload;
+}
+
+/**
+ * Creates the {@link SetDashboardAttributeFilterConfigMode} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided the mode as a mode for the attribute filter.
+ *
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter the display form is changed for
+ * @param mode - newly added mode
+ * @returns change filter mode command
+ */
+export function setDashboardAttributeFilterConfigMode(
+    localIdentifier: string,
+    mode?: DashboardAttributeFilterConfigMode,
+): SetDashboardAttributeFilterConfigMode {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE",
+        payload: {
+            localIdentifier,
             mode,
         },
     };

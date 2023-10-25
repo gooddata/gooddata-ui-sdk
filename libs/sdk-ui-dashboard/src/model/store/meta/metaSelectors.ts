@@ -34,6 +34,7 @@ import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual.js";
 import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
 import { DashboardDescriptor } from "./metaState.js";
+import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -370,6 +371,29 @@ const selectPersistedDashboardLayout = createSelector(selectSelf, (state) => {
 });
 
 /**
+ * Selects persisted attribute filter configs - that is the attribute filter configs array object that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardAttributeFilterConfigs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.attributeFilterConfigs || [];
+});
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
+ *
+ */
+export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardAttributeFilterConfigs,
+    selectAttributeFilterConfigsOverrides,
+    (persistedAttributeFilterConfigs, currentAttributeFilterConfigs) => {
+        return !isEqual(persistedAttributeFilterConfigs, currentAttributeFilterConfigs);
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  * @internal
@@ -411,8 +435,9 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
 export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectIsDateFilterChanged,
     selectIsAttributeFiltersChanged,
-    (isDateFilterChanged, isAttributeFiltersChanged) => {
-        return isDateFilterChanged || isAttributeFiltersChanged;
+    selectIsAttributeFilterConfigsChanged,
+    (isDateFilterChanged, isAttributeFiltersChanged, isAttributeFilterConfigsChanged) => {
+        return isDateFilterChanged || isAttributeFiltersChanged || isAttributeFilterConfigsChanged;
     },
 );
 

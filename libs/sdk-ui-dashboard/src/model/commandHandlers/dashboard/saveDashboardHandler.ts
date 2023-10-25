@@ -38,6 +38,7 @@ import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.j
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -135,6 +136,9 @@ function* createDashboardSaveContext(
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,
     );
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
         selectBackendCapabilities,
@@ -165,6 +169,7 @@ function* createDashboardSaveContext(
         },
         layout,
         dateFilterConfig,
+        ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...pluginsProp,
     };
 
