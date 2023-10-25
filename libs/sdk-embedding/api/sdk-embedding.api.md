@@ -4,6 +4,7 @@
 
 ```ts
 
+import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { IBaseExportConfig } from '@gooddata/api-model-bear';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -683,6 +684,8 @@ export type ILocalIdentifierQualifier = ILocalIdentifierQualifier_2;
 
 // @public (undocumented)
 export interface INegativeAttributeFilter {
+    // @alpha
+    mode?: DashboardAttributeFilterConfigMode;
     // (undocumented)
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
@@ -701,6 +704,8 @@ export interface IObjectMeta {
 
 // @public
 export interface IPositiveAttributeFilter {
+    // @alpha
+    mode?: DashboardAttributeFilterConfigMode;
     // (undocumented)
     positiveAttributeFilter: {
         displayForm: ObjQualifier;

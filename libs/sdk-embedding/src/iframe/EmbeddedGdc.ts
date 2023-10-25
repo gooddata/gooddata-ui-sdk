@@ -5,7 +5,7 @@ import {
     isObjIdentifierQualifier as isBearObjIdentifierQualifier,
     isObjectUriQualifier as isBearObjectUriQualifier,
 } from "@gooddata/api-model-bear";
-import { DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import { DashboardDateFilterConfigMode, DashboardAttributeFilterConfigMode } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -20,6 +20,12 @@ export interface IPositiveAttributeFilter {
         textFilter?: boolean;
         selectionMode?: AttributeFilterItemSelectionMode;
     };
+    /**
+     * Configures the visibility mode of the attribute filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**
@@ -32,6 +38,12 @@ export interface INegativeAttributeFilter {
         textFilter?: boolean;
         selectionMode?: "multi";
     };
+    /**
+     * Configures the visibility mode of the attribute filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**

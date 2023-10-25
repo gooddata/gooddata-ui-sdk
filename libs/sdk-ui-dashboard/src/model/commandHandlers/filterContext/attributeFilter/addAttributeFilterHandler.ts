@@ -14,12 +14,14 @@ import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
 } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import isEmpty from "lodash/isEmpty.js";
 import { batchActions } from "redux-batched-actions";
@@ -29,8 +31,15 @@ export function* addAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: AddAttributeFilter,
 ): SagaIterator<void> {
-    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters, selectionMode } =
-        cmd.payload;
+    const {
+        displayForm,
+        index,
+        initialIsNegativeSelection,
+        initialSelection,
+        parentFilters,
+        selectionMode,
+        mode,
+    } = cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreAttributeFilters> = yield select(
         selectCanAddMoreAttributeFilters,
@@ -105,6 +114,20 @@ export function* addAttributeFilterHandler(
         yield select(selectFilterContextAttributeFilterByDisplayForm(displayFormMetadata.ref));
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
+
+    const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
+        selectBackendCapabilities,
+    );
+    if (capabilities.supportsHiddenAndLockedFiltersOnUI && mode) {
+        yield put(
+            batchActions([
+                attributeFilterConfigsActions.changeMode({
+                    localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+                    mode,
+                }),
+            ]),
+        );
+    }
 
     yield dispatchDashboardEvent(
         attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId),
