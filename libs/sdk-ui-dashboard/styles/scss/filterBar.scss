@@ -20,6 +20,15 @@ $attribute-filter-drag-handle-left: 10px;
         display: block;
         transform: translateX(-50%);
     }
+
+    .gd-filter-button-custom-icon-wrapper {
+        display: flex;
+
+        .gd-icon-invisible {
+            display: flex;
+            padding-top: 2px;
+        }
+    }
 }
 
 .gd-dash-header-wrapper {
@@ -305,13 +314,7 @@ $attribute-filter-drag-handle-left: 10px;
     align-items: center;
 
     .gd-filter-button-custom-icon-wrapper {
-        display: flex;
         align-items: center;
-
-        .gd-icon-invisible {
-            display: flex;
-            padding-top: 2px;
-        }
     }
 }
 

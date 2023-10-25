@@ -16,6 +16,7 @@ import {
     FilterContextItem,
     IDashboardAttributeFilterParent,
     DashboardAttributeFilterSelectionMode,
+    DashboardAttributeFilterConfigMode,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { IDashboardFilter } from "../../types.js";
@@ -239,6 +240,11 @@ export interface AddAttributeFilterPayload {
      * Default value is 'multi' if property is missing.
      */
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+
+    /**
+     * Specify the visibility mode of attribute filter
+     */
+    readonly mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**
@@ -263,6 +269,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing.
  * @param selectionMode - single or multi value selection mode of the filter.
+ * @param mode - specify the visibility mode of attribute filter
  * @beta
  */
 export function addAttributeFilter(
@@ -270,6 +277,7 @@ export function addAttributeFilter(
     index: number,
     correlationId?: string,
     selectionMode?: DashboardAttributeFilterSelectionMode,
+    mode?: DashboardAttributeFilterConfigMode,
 ): AddAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
@@ -278,6 +286,7 @@ export function addAttributeFilter(
             displayForm,
             index,
             selectionMode,
+            mode,
         },
     };
 }
