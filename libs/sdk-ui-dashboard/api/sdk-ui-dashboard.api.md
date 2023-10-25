@@ -280,7 +280,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 }
 
 // @beta
-export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode): AddAttributeFilter;
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode): AddAttributeFilter;
 
 // @internal (undocumented)
 export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): JSX.Element;
@@ -293,6 +293,7 @@ export interface AddAttributeFilterPayload {
     readonly index: number;
     readonly initialIsNegativeSelection?: boolean;
     readonly initialSelection?: IAttributeElements;
+    readonly mode?: DashboardAttributeFilterConfigMode;
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
 }
