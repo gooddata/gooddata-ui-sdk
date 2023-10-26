@@ -57,7 +57,7 @@ https.request = function cookieRewritingRequestFactory(req) {
     const requestCookies = req.headers["cookie"];
 
     if (requestCookies) {
-        req.headers["cookie"] = addDomain(requestCookies, "staging.anywhere.gooddata.com");
+        req.headers["cookie"] = addDomain(requestCookies, "staging.dev-latest.stg11.panther.intgdc.com");
     }
 
     const newRequest = originalRequest.apply(this, arguments);
@@ -66,7 +66,7 @@ https.request = function cookieRewritingRequestFactory(req) {
         const responseCookies = res.headers["set-cookie"];
 
         if (responseCookies) {
-            res.headers["set-cookie"] = stripDomain(responseCookies, "staging.anywhere.gooddata.com");
+            res.headers["set-cookie"] = stripDomain(responseCookies, "staging.dev-latest.stg11.panther.intgdc.com");
         }
     });
 
