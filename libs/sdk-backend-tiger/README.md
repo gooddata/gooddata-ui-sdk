@@ -13,6 +13,10 @@ You can use this package to communicate with GoodData Cloud and GoodData.CN in a
 
 For the similar package for the GoodData platform, see [`@gooddata/sdk-backend-bear`](https://www.npmjs.com/package/@gooddata/sdk-backend-bear).
 
+## Documentation how to play with sdk-backend-tiger and run compatibility matrix test
+
+https://gooddata.atlassian.net/wiki/spaces/Quality/pages/1454276716/Play+with+sdk-backend-tiger+on+UI-SDK
+
 ## License
 
 (C) 2017-2022 GoodData Corporation
