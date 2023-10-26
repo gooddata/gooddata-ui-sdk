@@ -397,5 +397,9 @@
             border-color: transparent;
             text-decoration: none;
         }
+
+        .gd-attribute-filter-dropdown-button-subtitle__next::after {
+            content: none;
+        }
     }
 }
