@@ -112,7 +112,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewHeadline: true,
     enableAttributeHierarchies: false,
     enableUnavailableItemsVisible: false,
-    enablePivotTableIncreaseBucketSize: false,
+    enablePivotTableIncreaseBucketSize: true,
 };
 
 export const FeatureFlagsValues = {
