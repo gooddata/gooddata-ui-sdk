@@ -122,7 +122,7 @@ export const getGranteePossibilities = (
     }
 
     // cannot remove permission that is defined on the object in parent workspace
-    if (grantee.permissions.length === 0 && grantee.inheritedPermissions.length !== 0) {
+    if (remove.enabled && grantee.inheritedPermissions.length !== 0) {
         disableWithTooltip(
             remove,
             isGranularGranteeUser(grantee)
