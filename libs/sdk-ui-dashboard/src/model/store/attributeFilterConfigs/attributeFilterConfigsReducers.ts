@@ -35,7 +35,14 @@ const setAttributeFilterConfigs: AttributeFilterConfigReducer<PayloadAction<Attr
     state.attributeFilterConfigs = attributeFilterConfigs;
 };
 
+const removeAttributeFilterConfig: AttributeFilterConfigReducer<PayloadAction<string>> = (state, action) => {
+    state.attributeFilterConfigs = state.attributeFilterConfigs?.filter(
+        (attributeFilterConfig) => attributeFilterConfig.localIdentifier !== action.payload,
+    );
+};
+
 export const attributeFilterConfigsReducers = {
     changeMode,
     setAttributeFilterConfigs,
+    removeAttributeFilterConfig,
 };
