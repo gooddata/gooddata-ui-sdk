@@ -19,7 +19,7 @@ const playgroundDefinitions = {
     developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],
-    "tiger-stg": ["https://staging.anywhere.gooddata.com", "4dc4e033e611421791adea58d34d958c", "tiger"],
+    "tiger-stg": ["https://staging.dev-latest.stg11.panther.intgdc.com", "4dc4e033e611421791adea58d34d958c", "tiger"],
 };
 
 module.exports = async (env, argv) => {

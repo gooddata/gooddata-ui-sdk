@@ -1,8 +1,8 @@
 {
-    "id": "7c5b8b9d-9b2f-49cb-8244-b1407f5a0b0a",
-    "name": "api_v1_entities_workspaces_b51b89a10e5845189a6fea8e96dba226_metrics",
+    "id": "3387778b-59f8-4bec-b800-ffced18f7f1d",
+    "name": "api_v1_entities_workspaces_a9699e80b0ae484da980bde0b75499e3_metrics",
     "request": {
-        "url": "/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/metrics?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,21 +16,25 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_b51b89a10e5845189a6fea8e96dba226_metrics-7c5b8b9d-9b2f-49cb-8244-b1407f5a0b0a.json",
+        "bodyFileName": "api_v1_entities_workspaces_a9699e80b0ae484da980bde0b75499e3_metrics-3387778b-59f8-4bec-b800-ffced18f7f1d.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "7c5b8b9d-9b2f-49cb-8244-b1407f5a0b0a",
+    "uuid": "3387778b-59f8-4bec-b800-ffced18f7f1d",
     "persistent": true,
     "insertionIndex": 9
 }
