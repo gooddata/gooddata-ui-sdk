@@ -5,6 +5,7 @@ import { IUser, ShareStatus } from "@gooddata/sdk-model";
 import {
     availableUserAccessGrantee,
     granularUserAccess,
+    granularUserAccessNoInheritPermission,
     userAccessGrantee,
     workspaceUser,
 } from "../ShareDialogBase/test/GranteeMock.js";
@@ -418,9 +419,9 @@ describe("ShareDialog", () => {
             );
         });
 
-        it("should call interaction with SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED type", async () => {
+        it("should call interaction with SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED type when the user has no inherit permission", async () => {
             const onInteraction = vi.fn();
-            await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+            await createComponent({ onInteraction }, [], [], [granularUserAccessNoInheritPermission], [], {
                 supportsGranularAccessControl: true,
             });
 
@@ -437,9 +438,20 @@ describe("ShareDialog", () => {
                     granteeType: "user",
                     isExistingGrantee: true,
                     isCurrentUserSelfUpdating: false,
-                    granteeEffectivePermission: "SHARE",
+                    granteeEffectivePermission: "VIEW",
                 }),
             );
+        });
+
+        it("should call interaction with SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED type", async () => {
+            const onInteraction = vi.fn();
+            await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+                supportsGranularAccessControl: true,
+            });
+
+            const dropdownButton = document.querySelector(".s-granular-permission-button.disabled");
+
+            expect(dropdownButton).toBeDefined();
         });
 
         it("should call interaction with SHARE_DIALOG_PERMISSIONS_CHANGED type", async () => {
@@ -484,9 +496,9 @@ describe("ShareDialog", () => {
             );
         });
 
-        it("should call interaction with SHARE_DIALOG_GRANTEE_REMOVED type and user grantee", async () => {
+        it("should call interaction with SHARE_DIALOG_GRANTEE_REMOVED type and user grantee has no inherit permission", async () => {
             const onInteraction = vi.fn();
-            await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+            await createComponent({ onInteraction }, [], [], [granularUserAccessNoInheritPermission], [], {
                 supportsGranularAccessControl: true,
             });
 
@@ -504,9 +516,20 @@ describe("ShareDialog", () => {
                     granteeType: "user",
                     isExistingGrantee: true,
                     isCurrentUserSelfUpdating: false,
-                    granteeEffectivePermission: "SHARE",
+                    granteeEffectivePermission: "VIEW",
                 }),
             );
+        });
+
+        it("should call interaction with SHARE_DIALOG_GRANTEE_REMOVED type and user grantee", async () => {
+            const onInteraction = vi.fn();
+            await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+                supportsGranularAccessControl: true,
+            });
+
+            const dropdownButton = document.querySelector(".s-granular-permission-button.disabled");
+
+            expect(dropdownButton).toBeDefined();
         });
     });
 });

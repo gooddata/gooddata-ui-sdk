@@ -46,6 +46,13 @@ export class ShareDialog {
         return this;
     }
 
+    isGranularPermissionButtonEnabled(userOrGroup: string, isEnable = true) {
+        this.getItemForGivenUserOrGroup(userOrGroup)
+            .find(".s-granular-permission-button")
+            .should(isEnable ? "not.have.class" : "have.class", "disabled");
+        return this;
+    }
+
     setPermission(user: string, permission: string) {
         this.openDropdownForUserOrGroup(user);
         this.getPermissionsDropdownElement()
