@@ -102,3 +102,33 @@ export const selectSupportsObjectUris: DashboardSelector<boolean> = createSelect
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsObjectUris ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsSettingConnectingAttributes}
+ *
+ * @internal
+ */
+export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsSettingConnectingAttributes ?? false,
+);
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsKeepingDependentFiltersSelection}
+ *
+ * @internal
+ */
+export const selectSupportsKeepingDependentFiltersSelection: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsKeepingDependentFiltersSelection ?? false,
+);
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsCircularDependencyInFilters}
+ *
+ * @internal
+ */
+export const selectSupportsCircularDependencyInFilters: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsCircularDependencyInFilters ?? false,
+);

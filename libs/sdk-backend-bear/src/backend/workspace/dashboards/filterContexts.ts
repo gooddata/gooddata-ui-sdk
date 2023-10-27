@@ -35,7 +35,7 @@ export async function sanitizeFilterContext<T extends IFilterContextDefinition>(
             const ref = getDashboardFilterRef(filter);
 
             const overRefs = isDashboardAttributeFilter(filter)
-                ? flatMap(filter.attributeFilter.filterElementsBy ?? [], (item) => item.over.attributes)
+                ? flatMap(filter.attributeFilter.filterElementsBy ?? [], (item) => item.over!.attributes)
                 : [];
 
             return [ref, ...overRefs];
@@ -66,7 +66,7 @@ export async function sanitizeFilterContext<T extends IFilterContextDefinition>(
                     ...item,
                     over: {
                         ...item.over,
-                        attributes: item.over.attributes.map((attrRef) => {
+                        attributes: item.over!.attributes.map((attrRef) => {
                             // we can use referential comparison here, the objects are the same
                             const attrMatch = refUriPairs.find(([ref]) => ref === attrRef);
 

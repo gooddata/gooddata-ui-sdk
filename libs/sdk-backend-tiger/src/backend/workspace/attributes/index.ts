@@ -14,6 +14,7 @@ import {
     IAttributeMetadataObject,
     IDataSetMetadataObject,
     IdentifierRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
@@ -24,6 +25,8 @@ import {
     JsonApiDatasetOutWithLinks,
     JsonApiDatasetOutWithLinksTypeEnum,
     EntitiesApiGetAllEntitiesAttributesRequest,
+    AfmValidObjectsQuery,
+    AttributeItem,
 } from "@gooddata/api-client-tiger";
 import flatMap from "lodash/flatMap.js";
 import { invariant } from "ts-invariant";
@@ -35,6 +38,8 @@ import {
 } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
+import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
+import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(
@@ -89,6 +94,33 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         return this.authCall((client) => {
             return loadAttributeDataset(client, this.workspace, ref);
         });
+    }
+
+    public async getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
+        const attributeItem: AttributeItem = {
+            localIdentifier: objRefToString(ref),
+            label: toLabelQualifier(ref),
+        };
+
+        const afmValidObjectsQuery: AfmValidObjectsQuery = {
+            types: ["attributes"],
+            afm: {
+                attributes: [attributeItem],
+                measures: [],
+                filters: [],
+            },
+        };
+
+        const connectedItemsResponse = await this.authCall((client) =>
+            client.validObjects.computeValidObjects({
+                workspaceId: this.workspace,
+                afmValidObjectsQuery,
+            }),
+        );
+
+        return connectedItemsResponse.data.items
+            .filter((item) => item.type === "attribute")
+            .map(jsonApiIdToObjRef);
     }
 }
 

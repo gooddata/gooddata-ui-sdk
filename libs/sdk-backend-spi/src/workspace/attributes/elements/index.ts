@@ -157,7 +157,11 @@ export interface IElementsQueryOptions {
  * and the filter attribute must be connected in the data model. The property `overAttribute` identifies
  * the connecting table in the logical data model.
  *
+ * Not all backends support overAttribute prop.
+ *
  * For method providing all possible connecting attributes see {@link IWorkspaceAttributesService.getCommonAttributes}.
+ * For method providing whether attributes have some connection in model
+ * see {@link IWorkspaceAttributesService.getConnectedAttributesByDisplayForm}.
  *
  * @public
  */

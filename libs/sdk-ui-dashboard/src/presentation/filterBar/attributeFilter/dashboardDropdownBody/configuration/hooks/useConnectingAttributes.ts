@@ -8,6 +8,7 @@ import {
     useDashboardQueryProcessing,
     selectSupportsElementsQueryParentFiltering,
     useDashboardSelector,
+    selectSupportsSettingConnectingAttributes,
 } from "../../../../../../model/index.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -24,7 +25,11 @@ export function useConnectingAttributes(
     currentFilterDisplayForm: ObjRef,
     neighborFiltersDisplayForms: ObjRef[],
 ): IUseConnectingAttributesResult {
-    const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
+    const supportsDependentFilters = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
+    const supportsSettingConnectingAttributes = useDashboardSelector(
+        selectSupportsSettingConnectingAttributes,
+    );
+    const shouldLoadConnectingAttributes = supportsDependentFilters && supportsSettingConnectingAttributes;
 
     const pairs = useMemo<[ObjRef, ObjRef][]>(
         () =>
@@ -50,16 +55,16 @@ export function useConnectingAttributes(
 
     useEffect(() => {
         // if the backend does not support the parent attributes, we must not run the query, it will end in an error
-        if (isDependentFiltersEnabled) {
+        if (shouldLoadConnectingAttributes) {
             getConnectingAttributes(pairs);
         }
-    }, [pairs, getConnectingAttributes, isDependentFiltersEnabled]);
+    }, [pairs, getConnectingAttributes, shouldLoadConnectingAttributes]);
 
     const connectingAttributesLoading = useMemo(() => {
         return connectingAttributesStatus === "pending" || connectingAttributesStatus === "running";
     }, [connectingAttributesStatus]);
 
-    if (!isDependentFiltersEnabled) {
+    if (!shouldLoadConnectingAttributes) {
         // if the backend does not support the parent attributes, return en empty response
         return {
             connectingAttributes: [],

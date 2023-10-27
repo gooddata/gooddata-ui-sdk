@@ -142,4 +142,8 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
 
         return obj.id === ref.identifier;
     }
+
+    public getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
+        throw new NotSupported("Not supported");
+    }
 }
