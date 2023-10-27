@@ -1024,48 +1024,6 @@ export class LimitReached extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @internal (undocumented)
-export interface ManageUserGroups {
-    // (undocumented)
-    userGroups: Array<ManageUserGroupsItem>;
-}
-
-// @internal (undocumented)
-export interface ManageUserGroupsItem {
-    // (undocumented)
-    groupId: string;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    organizationAdmin: boolean;
-    // (undocumented)
-    userCount: number;
-    // (undocumented)
-    workspaces: Array<string>;
-}
-
-// @internal (undocumented)
-export interface ManageUsers {
-    // (undocumented)
-    users: Array<ManageUsersItem>;
-}
-
-// @internal (undocumented)
-export interface ManageUsersItem {
-    // (undocumented)
-    email?: string;
-    // (undocumented)
-    groups: Array<string>;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    organizationAdmin: boolean;
-    // (undocumented)
-    userId: string;
-    // (undocumented)
-    workspaces: Array<string>;
-}
-
 // @public
 export class NoDataError extends AnalyticalBackendError {
     constructor(message: string, dataView?: IDataView, cause?: Error);
@@ -1143,49 +1101,5 @@ export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardL
     itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
-
-// @internal (undocumented)
-export interface WorkspaceInfo {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    name?: string;
-}
-
-// @internal (undocumented)
-export interface WorkspacePermissionAssignment {
-    // (undocumented)
-    hierarchyPermissions: Array<WorkspacePermissionAssignmentHierarchyPermissionsEnum>;
-    // (undocumented)
-    permissions: Array<WorkspacePermissionAssignmentPermissionsEnum>;
-    // (undocumented)
-    workspace: WorkspaceInfo;
-}
-
-// @internal (undocumented)
-export const WorkspacePermissionAssignmentHierarchyPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly ANALYZE: "ANALYZE";
-    readonly EXPORT: "EXPORT";
-    readonly EXPORT_TABULAR: "EXPORT_TABULAR";
-    readonly EXPORT_PDF: "EXPORT_PDF";
-    readonly VIEW: "VIEW";
-};
-
-// @internal (undocumented)
-export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum[keyof typeof WorkspacePermissionAssignmentHierarchyPermissionsEnum];
-
-// @internal (undocumented)
-export const WorkspacePermissionAssignmentPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly ANALYZE: "ANALYZE";
-    readonly EXPORT: "EXPORT";
-    readonly EXPORT_TABULAR: "EXPORT_TABULAR";
-    readonly EXPORT_PDF: "EXPORT_PDF";
-    readonly VIEW: "VIEW";
-};
-
-// @internal (undocumented)
-export type WorkspacePermissionAssignmentPermissionsEnum = typeof WorkspacePermissionAssignmentPermissionsEnum[keyof typeof WorkspacePermissionAssignmentPermissionsEnum];
 
 ```
