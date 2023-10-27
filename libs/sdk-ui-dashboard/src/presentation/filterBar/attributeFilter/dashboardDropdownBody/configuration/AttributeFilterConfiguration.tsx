@@ -18,6 +18,7 @@ import {
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
     selectSupportsElementsQueryParentFiltering,
+    selectIsKDDependentFiltersEnabled,
 } from "../../../../../model/index.js";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
@@ -27,6 +28,7 @@ import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes
 import { AttributeTitleRenaming } from "./title/AttributeTitleRenaming.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
+import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes.js";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -73,7 +75,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
     );
-    const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
+    const supportsParentFiltering = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
+    const isDependentFiltersEnabled = useDashboardSelector(selectIsKDDependentFiltersEnabled);
+    const showDependentFiltersConfiguration = supportsParentFiltering && isDependentFiltersEnabled;
 
     const neighborFilterDisplayForms = useMemo(() => {
         return neighborFilters.map((filter) => filter.attributeFilter.displayForm);
@@ -111,13 +115,18 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         neighborFilterDisplayForms,
     );
 
+    const { validNeighbourAttributesLoading, validNeighbourAttributes } = useValidNeighbourAttributes(
+        filterDisplayForms.selectedDisplayForm,
+        neighborFilterDisplayForms,
+    );
+
     const { attributes, attributesLoading } = useAttributes(neighborFilterDisplayForms);
 
     const parentsSelected = useCallback(() => {
         return parents.filter((parent) => parent.isSelected).length > 0;
     }, [parents]);
 
-    if (connectingAttributesLoading || attributesLoading) {
+    if (connectingAttributesLoading || attributesLoading || validNeighbourAttributesLoading) {
         return (
             <div className="gd-loading-equalizer-attribute-filter-config-wrap">
                 <LoadingSpinner
@@ -128,7 +137,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         );
     }
 
-    if (!filterRef || !connectingAttributes || !attributes) {
+    if (!filterRef || !connectingAttributes || !validNeighbourAttributes || !attributes) {
         return null;
     }
 
@@ -156,7 +165,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 onSelectionModeChange={onSelectionModeUpdate}
                 disabled={parentsSelected()}
             />
-            {isDependentFiltersEnabled && parents.length > 0 ? (
+            {showDependentFiltersConfiguration && parents.length > 0 ? (
                 <ConfigurationCategory categoryTitle={filterByText} />
             ) : null}
             <ParentFiltersList
@@ -168,6 +177,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 attributes={attributes}
                 disabled={selectionMode === "single"}
                 disabledTooltip={parentFiltersDisabledTooltip}
+                validParents={validNeighbourAttributes}
             />
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">

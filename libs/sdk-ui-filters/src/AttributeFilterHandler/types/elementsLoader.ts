@@ -453,6 +453,17 @@ export interface IAttributeElementLoader {
      * @param callback - callback to run
      */
     onLoadCustomElementsCancel: CallbackRegistration<OnLoadCustomElementsCancelCallbackPayload>;
+
+    /**
+     * Sets information whether elements should be reinitialized for example
+     * in case when limiting attributes changed.
+     */
+    setShouldReloadElements(shouldReloadElements: boolean): void;
+
+    /**
+     * Returns the information whether elements should reload whenever possible.
+     */
+    getShouldReloadElements(): boolean;
 }
 
 /**

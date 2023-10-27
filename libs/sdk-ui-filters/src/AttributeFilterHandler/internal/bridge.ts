@@ -81,6 +81,7 @@ import {
     selectLimitingAttributeFiltersAttributes,
     selectInitTotalCountStatus,
     selectInitTotalCountError,
+    selectShouldReloadElements,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -415,6 +416,14 @@ export class AttributeFilterReduxBridge {
 
     getLimitingAttributeFiltersAttributes = (): IAttributeMetadataObject[] => {
         return this.redux.select(selectLimitingAttributeFiltersAttributes);
+    };
+
+    getShouldReloadElements = (): boolean => {
+        return this.redux.select(selectShouldReloadElements);
+    };
+
+    setShouldReloadElements = (shouldReloadElements: boolean): void => {
+        this.redux.dispatch(actions.setShouldReloadElements({ shouldReloadElements }));
     };
 
     //

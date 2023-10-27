@@ -105,7 +105,9 @@ export class LimitingAfmFactory {
 
         const attributeRefUri = getDisplayFormAttributeUri(this.displayFormRef);
 
-        const groupsByOverAttribute = groupBy(filters, (filter) => getUriForIdentifier(filter.overAttribute));
+        const groupsByOverAttribute = groupBy(filters, (filter) =>
+            getUriForIdentifier(filter.overAttribute!),
+        );
 
         const expressionsByOverAttribute = Object.keys(groupsByOverAttribute).map((overAttribute) => {
             const filterGroupExpression = groupsByOverAttribute[overAttribute]

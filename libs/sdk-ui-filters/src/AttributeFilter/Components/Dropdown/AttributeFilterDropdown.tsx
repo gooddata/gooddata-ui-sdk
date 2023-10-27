@@ -38,6 +38,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
         committedSelectionElements,
         onReset,
         onApply,
+        onOpen,
         fullscreenOnMobile,
         isCommittedSelectionInverted,
         selectionMode,
@@ -96,6 +97,8 @@ export const AttributeFilterDropdown: React.VFC = () => {
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
                     onReset();
+                } else {
+                    onOpen();
                 }
             }}
             renderBody={({ closeDropdown }) => (

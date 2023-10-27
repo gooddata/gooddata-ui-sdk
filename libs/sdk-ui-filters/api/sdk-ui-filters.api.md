@@ -90,6 +90,7 @@ export type AttributeFilterControllerCallbacks = {
     onSearch: (search: string) => void;
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onReset: () => void;
+    onOpen: () => void;
 };
 
 // @public
@@ -303,6 +304,7 @@ export interface IAttributeElementLoader {
     getOffset(): number;
     getOrder(): SortDirection;
     getSearch(): string;
+    getShouldReloadElements(): boolean;
     getTotalElementsCount(): number;
     getTotalElementsCountWithCurrentSettings(): number;
     initTotalCount(correlation?: Correlation): void;
@@ -331,6 +333,7 @@ export interface IAttributeElementLoader {
     setLimitingMeasures(measures: IMeasure[]): void;
     setOrder(order: SortDirection): void;
     setSearch(search: string): void;
+    setShouldReloadElements(shouldReloadElements: boolean): void;
 }
 
 // @beta

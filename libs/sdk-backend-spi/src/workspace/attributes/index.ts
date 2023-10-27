@@ -96,4 +96,12 @@ export interface IWorkspaceAttributesService {
      * @returns promise of metadata object
      */
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+
+    /**
+     * Request list of attributes that have a connection with specified display form in the data model.
+     *
+     * @param ref - attribute display form reference whose connections we need to find
+     * @returns promise of array of connected attribute references
+     */
+    getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
 }

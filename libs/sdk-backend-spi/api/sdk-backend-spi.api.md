@@ -251,6 +251,7 @@ export interface IBackendCapabilities {
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsInlineMeasures?: boolean;
+    supportsKeepingDependentFiltersSelection?: boolean;
     supportsKpiWidget?: boolean;
     supportsMetadataObjectLocking?: boolean;
     supportsNonProductionDatasets?: boolean;
@@ -260,6 +261,7 @@ export interface IBackendCapabilities {
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
     supportsSeparateLatitudeLongitudeLabels?: boolean;
+    supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;
     supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
@@ -340,7 +342,7 @@ export interface IElementsQueryAttributeFilter {
     // (undocumented)
     attributeFilter: IAttributeFilter;
     // (undocumented)
-    overAttribute: ObjRef;
+    overAttribute?: ObjRef;
 }
 
 // @public
@@ -723,6 +725,7 @@ export interface IWorkspaceAttributesService {
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
+    getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
 }
 
 // @public

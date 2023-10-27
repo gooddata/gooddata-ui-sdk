@@ -267,6 +267,8 @@ export const selectFilterContextAttributeFilterIndexByLocalId: (
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
+ * This selector should only be used when circular filter dependencies are not allowed,
+ * otherwise loops may occur.
  *
  * @public
  */

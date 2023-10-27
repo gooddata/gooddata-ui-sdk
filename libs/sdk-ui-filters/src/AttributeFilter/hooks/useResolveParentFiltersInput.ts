@@ -12,12 +12,25 @@ import { ParentFilterOverAttributeType } from "../types.js";
 export const useResolveParentFiltersInput = (
     parentFilters?: AttributeFiltersOrPlaceholders,
     overAttribute?: ParentFilterOverAttributeType,
-) => {
+    supportsSettingConnectingAttributes?: boolean,
+): IElementsQueryAttributeFilter[] => {
     const resolvedParentFilters = useResolveValueWithPlaceholders(parentFilters);
 
     return useMemo(() => {
+        if (!supportsSettingConnectingAttributes) {
+            return getParentFilters(resolvedParentFilters);
+        }
+
         return getParentFiltersWithOverAttribute(resolvedParentFilters, overAttribute);
-    }, [resolvedParentFilters, overAttribute]);
+    }, [supportsSettingConnectingAttributes, resolvedParentFilters, overAttribute]);
+};
+
+const getParentFilters = (parentFilters: IAttributeFilter[]) => {
+    if (!parentFilters) {
+        return [];
+    }
+
+    return parentFilters.map((attributeFilter) => ({ attributeFilter }));
 };
 
 const getParentFiltersWithOverAttribute = (

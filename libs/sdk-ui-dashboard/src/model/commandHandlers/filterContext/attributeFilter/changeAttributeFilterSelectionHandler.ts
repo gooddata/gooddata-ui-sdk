@@ -42,23 +42,25 @@ export function* changeAttributeFilterSelectionHandler(
 
     invariant(changedFilter, "Inconsistent state in attributeFilterChangeSelectionCommandHandler");
 
-    const childFiltersIds: ReturnType<ReturnType<typeof selectAttributeFilterDescendants>> = yield select(
-        selectAttributeFilterDescendants(changedFilter.attributeFilter.localIdentifier!),
-    );
+    if (!ctx.backend.capabilities.supportsKeepingDependentFiltersSelection) {
+        const childFiltersIds: ReturnType<ReturnType<typeof selectAttributeFilterDescendants>> = yield select(
+            selectAttributeFilterDescendants(changedFilter.attributeFilter.localIdentifier!),
+        );
 
-    yield all(
-        childFiltersIds.map((childFilterId) =>
-            put(
-                filterContextActions.updateAttributeFilterSelection({
-                    filterLocalId: childFilterId,
-                    elements: {
-                        uris: [],
-                    },
-                    negativeSelection: true,
-                }),
+        yield all(
+            childFiltersIds.map((childFilterId) =>
+                put(
+                    filterContextActions.updateAttributeFilterSelection({
+                        filterLocalId: childFilterId,
+                        elements: {
+                            uris: [],
+                        },
+                        negativeSelection: true,
+                    }),
+                ),
             ),
-        ),
-    );
+        );
+    }
 
     yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);

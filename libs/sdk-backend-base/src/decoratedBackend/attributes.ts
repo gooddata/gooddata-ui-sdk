@@ -49,4 +49,8 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
     public getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.decorated.getAttributeDatasetMeta(ref);
     }
+
+    public getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
+        return this.decorated.getConnectedAttributesByDisplayForm(ref);
+    }
 }

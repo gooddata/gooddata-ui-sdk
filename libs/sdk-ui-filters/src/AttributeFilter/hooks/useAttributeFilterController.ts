@@ -75,10 +75,17 @@ export const useAttributeFilterController = (
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
+    const supportsSettingConnectingAttributes = backend.capabilities.supportsSettingConnectingAttributes;
+    const supportsKeepingDependentFiltersSelection =
+        backend.capabilities.supportsKeepingDependentFiltersSelection;
 
     const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(filterInput, connectToPlaceholder);
 
-    const limitingAttributeFilters = useResolveParentFiltersInput(parentFilters, parentFilterOverAttribute);
+    const limitingAttributeFilters = useResolveParentFiltersInput(
+        parentFilters,
+        parentFilterOverAttribute,
+        supportsSettingConnectingAttributes,
+    );
 
     const handler = useAttributeFilterHandler({
         backend,
@@ -94,16 +101,24 @@ export const useAttributeFilterController = (
         : { initError: new UnexpectedSdkError() };
 
     useOnError(handler, { onError });
-    useInitOrReload(handler, {
-        filter,
-        limitingAttributeFilters,
-        limit: elementsOptions?.limit,
-        onApply,
-        setConnectedPlaceholderValue,
-        resetOnParentFilterChange,
-        selectionMode,
-    });
-    const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue, selectionMode });
+    useInitOrReload(
+        handler,
+        {
+            filter,
+            limitingAttributeFilters,
+            limit: elementsOptions?.limit,
+            onApply,
+            setConnectedPlaceholderValue,
+            resetOnParentFilterChange,
+            selectionMode,
+        },
+        supportsKeepingDependentFiltersSelection,
+    );
+    const callbacks = useCallbacks(
+        handler,
+        { onApply, setConnectedPlaceholderValue, selectionMode },
+        supportsKeepingDependentFiltersSelection,
+    );
 
     useSingleSelectModeHandler(handler, {
         selectFirst,
@@ -160,6 +175,7 @@ function useInitOrReload(
         resetOnParentFilterChange: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
     },
+    supportsKeepingDependentFiltersSelection: boolean,
 ) {
     const {
         filter,
@@ -204,8 +220,8 @@ function useInitOrReload(
 
         const change = resetOnParentFilterChange
             ? updateAutomaticResettingFilter(handler, props)
-            : updateNonResettingFilter(handler, props);
-        refreshByType(handler, change);
+            : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
+        refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
     }, [
         filter,
         limitingAttributeFilters,
@@ -214,6 +230,7 @@ function useInitOrReload(
         onApply,
         setConnectedPlaceholderValue,
         selectionMode,
+        supportsKeepingDependentFiltersSelection,
     ]);
 }
 
@@ -238,11 +255,15 @@ function updateNonResettingFilter(
         filterChanged,
         setConnectedPlaceholderValue,
     }: UpdateFilterProps,
+    supportsKeepingDependentFiltersSelection: boolean,
 ): UpdateFilterType {
     if (limitingAttributesChanged || filterChanged) {
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
+
+        const hasNumberOfLimitingAttributesChanged =
+            handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
 
         handler.changeSelection({ keys, isInverted });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -251,7 +272,12 @@ function updateNonResettingFilter(
         const nextFilter = handler.getFilter();
         setConnectedPlaceholderValue(nextFilter);
 
+        if (supportsKeepingDependentFiltersSelection && hasNumberOfLimitingAttributesChanged) {
+            return "init-self";
+        }
+
         if (limitingAttributesChanged) {
+            handler.setShouldReloadElements(true);
             return "init-parent";
         }
         return "init-self";
@@ -303,8 +329,16 @@ function updateAutomaticResettingFilter(
     return undefined;
 }
 
-function refreshByType(handler: IMultiSelectAttributeFilterHandler, change: UpdateFilterType) {
+function refreshByType(
+    handler: IMultiSelectAttributeFilterHandler,
+    change: UpdateFilterType,
+    supportsKeepingDependentFiltersSelection: boolean,
+) {
     if (change === "init-parent") {
+        if (supportsKeepingDependentFiltersSelection) {
+            return;
+        }
+
         if (handler.getInitStatus() !== "success") {
             handler.init(PARENT_FILTERS_CORRELATION);
         } else {
@@ -326,6 +360,7 @@ function useCallbacks(
         onApply: OnApplyCallbackType;
         selectionMode: DashboardAttributeFilterSelectionMode;
     },
+    supportsKeepingDependentFiltersSelection: boolean,
 ) {
     const { onApply: onApplyInput, setConnectedPlaceholderValue, selectionMode } = props;
     const onSelect = useCallback(
@@ -373,12 +408,29 @@ function useCallbacks(
         onApplyInput?.(nextFilter, isInverted, selectionMode);
     }, [onApplyInput, setConnectedPlaceholderValue, handler, selectionMode]);
 
+    const onOpen = useCallback(() => {
+        /**
+         * This callback handles elements reload when shouldElementsReload flag is true.
+         * In case the backend does not support keeping dependent filter selection,
+         * we do not care about this as elements are reloaded on every limiting filter change.
+         */
+        if (!supportsKeepingDependentFiltersSelection) {
+            return;
+        }
+
+        if (handler.getShouldReloadElements()) {
+            handler.loadInitialElementsPage(RESET_CORRELATION);
+            handler.setShouldReloadElements(false);
+        }
+    }, [handler, supportsKeepingDependentFiltersSelection]);
+
     return {
         onApply,
         onLoadNextElementsPage,
         onSearch,
         onSelect,
         onReset,
+        onOpen,
     };
 }
 

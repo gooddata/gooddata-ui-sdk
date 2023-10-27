@@ -385,4 +385,12 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     onUpdate: CallbackRegistration<void> = (cb) => {
         return this.bridge.onUpdate(cb);
     };
+
+    getShouldReloadElements(): boolean {
+        return this.bridge.getShouldReloadElements();
+    }
+
+    setShouldReloadElements(shouldReloadElements: boolean): void {
+        this.bridge.setShouldReloadElements(shouldReloadElements);
+    }
 }

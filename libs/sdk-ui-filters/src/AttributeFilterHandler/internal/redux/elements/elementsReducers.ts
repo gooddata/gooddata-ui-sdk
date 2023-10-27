@@ -89,6 +89,13 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };
 
+const setShouldReloadElements: AttributeFilterReducer<PayloadAction<{ shouldReloadElements: boolean }>> = (
+    state,
+    action,
+) => {
+    state.elements.shouldReloadElements = action.payload.shouldReloadElements;
+};
+
 /**
  * @internal
  */
@@ -108,4 +115,5 @@ export const elementsReducers = {
     setLimitingMeasures,
     setLimitingDateFilters,
     setLimitingAttributeFiltersAttributes,
+    setShouldReloadElements,
 };

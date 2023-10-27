@@ -868,7 +868,7 @@ export interface IDashboardAttributeFilterConfig {
 // @beta
 export interface IDashboardAttributeFilterParent {
     filterLocalIdentifier: string;
-    over: {
+    over?: {
         attributes: ObjRef[];
     };
 }

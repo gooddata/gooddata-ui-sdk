@@ -55,7 +55,7 @@ export async function validateAttributeFilterParents(
         }
 
         return {
-            parentOverAttributes: parent.over.attributes,
+            parentOverAttributes: parent.over?.attributes,
             displayFormsToGetAncestorsFor: [dashboardFilterAttribute, parentAttribute],
         };
     });
@@ -64,22 +64,32 @@ export async function validateAttributeFilterParents(
         return "INVALID_METADATA";
     }
 
-    const commonAttributeResults = await ctx.backend
-        .workspace(ctx.workspace)
-        .attributes()
-        // the ! is fine here, we validated parentValidationData for empty items above
-        .getCommonAttributesBatch(parentValidationData.map((item) => item!.displayFormsToGetAncestorsFor));
+    const supportsSettingConnectingAttributes =
+        !!ctx.backend.capabilities.supportsSettingConnectingAttributes;
 
-    const validationPairs = zip(
-        parentValidationData.map((item) => item!.parentOverAttributes),
-        commonAttributeResults,
-    ) as [ObjRef[], ObjRef[]][]; // we know the lengths match so we cast to get rid on the undefined in teh default typing
+    if (supportsSettingConnectingAttributes) {
+        const commonAttributeResults = await ctx.backend
+            .workspace(ctx.workspace)
+            .attributes()
+            // the ! is fine here, we validated parentValidationData for empty items above
+            .getCommonAttributesBatch(
+                parentValidationData.map((item) => item!.displayFormsToGetAncestorsFor),
+            );
 
-    // connection is valid if all the over attributes are part of the connecting attributes set
-    const areAllConnectionsValid = validationPairs.every(
-        ([parentOverAttributes, connectingAttrs]) =>
-            differenceBy(parentOverAttributes, connectingAttrs, objRefToString).length === 0,
-    );
+        const validationPairs = zip(
+            parentValidationData.map((item) => item!.parentOverAttributes),
+            commonAttributeResults,
+        ) as [ObjRef[], ObjRef[]][]; // we know the lengths match so we cast to get rid on the undefined in teh default typing
 
-    return areAllConnectionsValid ? "VALID" : "INVALID_CONNECTION";
+        // connection is valid if all the over attributes are part of the connecting attributes set
+        const areAllConnectionsValid = validationPairs.every(
+            ([parentOverAttributes, connectingAttrs]) =>
+                differenceBy(parentOverAttributes, connectingAttrs, objRefToString).length === 0,
+        );
+
+        return areAllConnectionsValid ? "VALID" : "INVALID_CONNECTION";
+    } else {
+        // if the backend does not support setting connecting attributes, there is no need to validate the connections
+        return "VALID";
+    }
 }

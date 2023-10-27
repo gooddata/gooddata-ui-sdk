@@ -22,7 +22,7 @@ export function useOriginalConfigurationState(
 
             const overAttributes = filterElementsBy?.find(
                 (by) => by.filterLocalIdentifier === neighborFilterLocalId,
-            )?.over.attributes;
+            )?.over?.attributes;
 
             invariant(
                 neighborFilterLocalId,

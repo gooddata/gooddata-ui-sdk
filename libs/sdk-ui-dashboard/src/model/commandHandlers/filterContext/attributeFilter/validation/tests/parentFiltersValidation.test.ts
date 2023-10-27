@@ -95,11 +95,15 @@ describe("validateAttributeFilterParents", () => {
 
     it("should reject when there are parents that are NOT valid as ancestors", async () => {
         const ctx: DashboardContext = {
-            backend: recordedBackend(ReferenceRecordings.Recordings, {
-                getCommonAttributesResponses: {
-                    [objRefsToStringKey([idRef("df1"), idRef("df2")])]: [idRef("parent")],
+            backend: recordedBackend(
+                ReferenceRecordings.Recordings,
+                {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([idRef("df1"), idRef("df2")])]: [idRef("parent")],
+                    },
                 },
-            }),
+                { supportsSettingConnectingAttributes: true },
+            ),
             dashboardRef: idRef(SimpleDashboardIdentifier),
             workspace: "referenceworkspace",
         };
@@ -117,6 +121,37 @@ describe("validateAttributeFilterParents", () => {
         const allFilters = [getAttributeFilter("df1"), getAttributeFilter("df2")];
 
         const expected: AttributeFilterParentsValidationResult = "INVALID_CONNECTION";
+        const actual = await validateAttributeFilterParents(
+            ctx,
+            changingFilter,
+            parents,
+            allFilters,
+            getDisplayFormsMap(),
+        );
+        expect(actual).toBe(expected);
+    });
+
+    it("should allow when backend does not support setting connecting attributes", async () => {
+        const ctx: DashboardContext = {
+            backend: recordedBackend(
+                ReferenceRecordings.Recordings,
+                {},
+                { supportsSettingConnectingAttributes: false },
+            ),
+            dashboardRef: idRef(SimpleDashboardIdentifier),
+            workspace: "referenceworkspace",
+        };
+
+        const changingFilter = getAttributeFilter("df1");
+        const parents: IDashboardAttributeFilterParent[] = [
+            {
+                filterLocalIdentifier: "df2",
+            },
+        ];
+
+        const allFilters = [getAttributeFilter("df1"), getAttributeFilter("df2")];
+
+        const expected: AttributeFilterParentsValidationResult = "VALID";
         const actual = await validateAttributeFilterParents(
             ctx,
             changingFilter,

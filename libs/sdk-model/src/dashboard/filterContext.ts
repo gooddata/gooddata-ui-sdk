@@ -36,7 +36,7 @@ export interface IDashboardAttributeFilterParent {
     /**
      * Specification of the connection point(s) between the parent and child filter in the data model
      */
-    over: {
+    over?: {
         attributes: ObjRef[];
     };
 }

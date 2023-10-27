@@ -15,6 +15,8 @@ import {
     IDashboardLayout,
     IDashboard,
     ISettings,
+    IFilterContext,
+    ITempFilterContext,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -68,17 +70,47 @@ export function actionsToInitializeNewDashboard(
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
+    settings: ISettings,
 ): SagaIterator<IDashboard["filterContext"]> {
-    // we don't need sanitize filter references, if backend guarantees consistent references
-    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
-        return filterContext;
-    }
-
     if (!filterContext || isEmpty(filterContext.filters)) {
         return filterContext;
     }
 
-    const usedFilterDisplayForms = filterContext.filters
+    const isDependentFiltersEnabled = !!(
+        settings?.enableKDDependentFilters || settings?.enableKPIDashboardDependentFilters
+    );
+
+    /**
+     * When dependent filters are not enabled, we need to sanitize the filter context
+     * so that it does not contain any filterElementsBy stored on backend.
+     *
+     * Remove this when dependent filters on Tiger are fully turned off.
+     */
+    const filterContextWithSanitizedFilterElementsBy: IFilterContext | ITempFilterContext =
+        isDependentFiltersEnabled
+            ? filterContext
+            : update(
+                  "filters",
+                  (filters: FilterContextItem[]) =>
+                      filters.map((filter) => {
+                          if (!isDashboardAttributeFilter(filter)) {
+                              return filter;
+                          }
+
+                          return {
+                              ...filter,
+                              attributeFilter: { ...filter.attributeFilter, filterElementsBy: [] },
+                          };
+                      }),
+                  filterContext,
+              );
+
+    // we don't need sanitize filter references, if backend guarantees consistent references
+    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
+        return filterContextWithSanitizedFilterElementsBy;
+    }
+
+    const usedFilterDisplayForms = filterContextWithSanitizedFilterElementsBy.filters
         .filter(isDashboardAttributeFilter)
         .map((f) => f.attributeFilter.displayForm);
 
@@ -98,7 +130,7 @@ function* sanitizeFilterContext(
 
                 return availableRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
             }),
-        filterContext,
+        filterContextWithSanitizedFilterElementsBy,
     );
 }
 
@@ -134,7 +166,7 @@ export function* actionsToInitializeExistingDashboard(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
-    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext);
+    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext, settings);
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
         ...dashboard,

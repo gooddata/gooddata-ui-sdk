@@ -231,6 +231,16 @@ export interface IBackendCapabilities {
     supportsHiddenAndLockedFiltersOnUI?: boolean;
 
     /**
+     * Indicates whether backend supports setting connecting attribute in dependent filters.
+     */
+    supportsSettingConnectingAttributes?: boolean;
+
+    /**
+     * Indicates whether backend supports to keep selection of dependent filters.
+     */
+    supportsKeepingDependentFiltersSelection?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
