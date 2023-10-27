@@ -314,6 +314,11 @@ export interface ISettings {
      */
     enableUserManagement?: boolean;
 
+    /**
+     * Enable new dependent filters in KD
+     */
+    enableKDDependentFilters?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
