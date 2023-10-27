@@ -385,5 +385,17 @@
     "newDashboard.title": "Arraste o insight para cá",
     "newDashboard.dropInsight": "Soltar insight",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já foi filtrado por <strong>{childTitle}</strong> diretamente ou por meio de outros filtros.",
-    "attributesDropdown.attributeNameWithData": "com dados de"
+    "attributesDropdown.attributeNameWithData": "com dados de",
+    "filter.visibilityMode.tooltip.hidden": "O filtro está oculto e pode ser acessado apenas através do modo Editar.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "O filtro está bloqueado e pode ser alterado apenas através do modo Editar.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "O filtro está bloqueado.",
+    "dateFilterDropdown.save": "Salvar",
+    "dateFilterDropdown.configuration": "Configuração",
+    "filter.configuration.mode.title": "Modo",
+    "filter.configuration.mode.interactive.title": "Interativo",
+    "filter.configuration.mode.interactive.tooltip": "Usuários do painel podem visualizar e alterar o filtro.",
+    "filter.configuration.mode.locked.title": "Bloqueado",
+    "filter.configuration.mode.locked.tooltip": "Usuários do painel pode visualizar o filtro, mas não podem alterá-lo.",
+    "filter.configuration.mode.hidden.title": "Oculto",
+    "filter.configuration.mode.hidden.tooltip": "Usuários do painel não podem visualizar o filtro, mas ele está aplicado."
 }
