@@ -46,6 +46,7 @@ import {
     convertDashboardAttributeFilterElementsUrisToValues,
     convertDashboardAttributeFilterElementsValuesToUris,
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
+import { areAllFiltersHidden } from "../utils.js";
 
 /**
  * @alpha
@@ -117,8 +118,13 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
+    const haveAllFiltersHidden = areAllFiltersHidden(
+        attributeFiltersWithPlaceholder,
+        dateFilterMode,
+        attributeFiltersModeMap,
+    );
 
-    if (isExport) {
+    if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
     }
 

@@ -1,7 +1,13 @@
 // (C) 2023 GoodData Corporation
 import { describe, it, expect, vi } from "vitest";
-import { getVisibilityIcon } from "../utils.js";
-import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
+import cloneDeep from "lodash/cloneDeep.js";
+import {
+    DashboardAttributeFilterConfigModeValues,
+    DashboardDateFilterConfigModeValues,
+} from "@gooddata/sdk-model";
+
+import { areAllFiltersHidden, getVisibilityIcon } from "../utils.js";
+import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
 
 describe("utils", () => {
     describe("getVisibilityIcon", () => {
@@ -60,6 +66,68 @@ describe("utils", () => {
                 mockIntl,
             );
             expect(result).toMatchSnapshot();
+        });
+    });
+
+    describe("areAllFiltersHidden", () => {
+        const effectedAttributeFiltersModeMap = filterBarAttributeFilterIndexes.reduce((map, filter) => {
+            map.set(
+                filter.filter.attributeFilter.localIdentifier,
+                DashboardAttributeFilterConfigModeValues.HIDDEN,
+            );
+            return map;
+        }, new Map());
+
+        it("should return true when all filters are hidden", () => {
+            expect(
+                areAllFiltersHidden(
+                    filterBarAttributeFilterIndexes,
+                    DashboardDateFilterConfigModeValues.HIDDEN,
+                    effectedAttributeFiltersModeMap,
+                ),
+            ).toBe(true);
+        });
+
+        it("should return false when existing attribute filter placeholder", () => {
+            expect(
+                areAllFiltersHidden(
+                    [
+                        ...filterBarAttributeFilterIndexes,
+                        {
+                            type: "attributeFilterPlaceholder",
+                            filterIndex: 2,
+                        },
+                    ],
+                    DashboardDateFilterConfigModeValues.HIDDEN,
+                    effectedAttributeFiltersModeMap,
+                ),
+            ).toBe(false);
+        });
+
+        it("should return false when date filter visible", () => {
+            expect(
+                areAllFiltersHidden(
+                    filterBarAttributeFilterIndexes,
+                    DashboardDateFilterConfigModeValues.READONLY,
+                    effectedAttributeFiltersModeMap,
+                ),
+            ).toBe(false);
+        });
+
+        it("should return false when at least one attribute filter visible", () => {
+            const attributeFiltersModeMap = cloneDeep(effectedAttributeFiltersModeMap);
+            attributeFiltersModeMap.set(
+                filterBarAttributeFilterIndexes[0].filter.attributeFilter.localIdentifier,
+                DashboardAttributeFilterConfigModeValues.ACTIVE,
+            );
+
+            expect(
+                areAllFiltersHidden(
+                    filterBarAttributeFilterIndexes,
+                    DashboardDateFilterConfigModeValues.HIDDEN,
+                    attributeFiltersModeMap,
+                ),
+            ).toBe(false);
         });
     });
 });

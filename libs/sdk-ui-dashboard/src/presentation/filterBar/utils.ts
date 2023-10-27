@@ -1,8 +1,19 @@
 // (C) 2023 GoodData Corporation
 import { IntlShape } from "react-intl";
-import { messages } from "../../locales.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "@gooddata/sdk-ui-filters";
-import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
+import {
+    DashboardAttributeFilterConfigMode,
+    DashboardAttributeFilterConfigModeValues,
+    DashboardDateFilterConfigMode,
+    DashboardDateFilterConfigModeValues,
+} from "@gooddata/sdk-model";
+
+import { messages } from "../../locales.js";
+import {
+    FilterBarAttributeItem,
+    FilterBarAttributeItems,
+    isFilterBarAttributeFilterPlaceholder,
+} from "./filterBar/useFiltersWithAddedPlaceholder.js";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
     bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",
@@ -37,4 +48,31 @@ export const getVisibilityIcon = (
             ),
         };
     }
+};
+
+export const areAllFiltersHidden = (
+    attributeFilters: FilterBarAttributeItems,
+    effectedDateFilterMode: DashboardDateFilterConfigMode,
+    effectedAttributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
+) => {
+    const isDateFilterHidden = effectedDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
+    const areAllAttributeFiltersHidden = attributeFilters.every((it) =>
+        isAttributeFilterHidden(it, effectedAttributeFiltersModeMap),
+    );
+
+    return isDateFilterHidden && areAllAttributeFiltersHidden;
+};
+
+const isAttributeFilterHidden = (
+    attributeFilter: FilterBarAttributeItem,
+    effectedAttributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
+) => {
+    if (isFilterBarAttributeFilterPlaceholder(attributeFilter)) {
+        return false;
+    }
+
+    const attributeFilterMode = effectedAttributeFiltersModeMap.get(
+        attributeFilter.filter.attributeFilter.localIdentifier!,
+    );
+    return attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
 };
