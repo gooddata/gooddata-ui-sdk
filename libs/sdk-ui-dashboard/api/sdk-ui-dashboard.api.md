@@ -6162,6 +6162,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 // @public
 export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boolean>;
 
@@ -6356,6 +6359,9 @@ export const selectIsInEditMode: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
