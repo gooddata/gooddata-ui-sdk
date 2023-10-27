@@ -35,7 +35,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
                 <div className="s-date-filter-title button-title">{title}</div>
                 <div className="button-subtitle">{children}</div>
             </div>
-            <FilterButtonCustomIcon customIcon={customIcon} />
+            <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
         </div>
     );
 };
