@@ -22,8 +22,6 @@ $attribute-filter-drag-handle-left: 10px;
     }
 
     .gd-filter-button-custom-icon-wrapper {
-        display: flex;
-
         .gd-icon-invisible {
             display: flex;
             padding-top: 2px;
@@ -312,10 +310,6 @@ $attribute-filter-drag-handle-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .gd-filter-button-custom-icon-wrapper {
-        align-items: center;
-    }
 }
 
 .add-attribute-filter-dropdown {

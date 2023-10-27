@@ -214,7 +214,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                             {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                         </ShortenedText>
                     </div>
-                    <FilterButtonCustomIcon customIcon={customIcon} />
+                    <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
                     {TooltipContentComponent && isLoaded ? (
                         <AttributeFilterButtonToolip>
                             <TooltipContentComponent />
