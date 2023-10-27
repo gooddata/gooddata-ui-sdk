@@ -390,7 +390,7 @@
         &:hover::after,
         &:focus::after,
         &:active::after {
-            cursor: pointer;
+            cursor: default;
             user-select: auto;
             box-shadow: none;
             background: transparent;

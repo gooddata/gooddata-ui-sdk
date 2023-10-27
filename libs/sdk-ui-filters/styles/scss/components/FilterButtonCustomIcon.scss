@@ -12,4 +12,10 @@
     i {
         cursor: pointer;
     }
+
+    &.disabled {
+        i {
+            cursor: default;
+        }
+    }
 }
