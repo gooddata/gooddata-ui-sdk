@@ -239,6 +239,21 @@ export interface IBackendCapabilities {
     supportsAttributeHierarchies?: boolean;
 
     /**
+     * Indicates whether backend supports setting connecting attribute in dependent filters.
+     */
+    supportsSettingConnectingAttributes?: boolean;
+
+    /**
+     * Indicates whether backend supports to keep selection of dependent filters.
+     */
+    supportsKeepingDependentFiltersSelection?: boolean;
+
+    /**
+     * Indicates whether backend supports to circular dependencies in dependent filters.
+     */
+    supportsCircularDependencyInFilters?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

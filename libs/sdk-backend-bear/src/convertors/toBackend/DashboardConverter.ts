@@ -251,7 +251,7 @@ export const convertFilterContextItem = (
         return {
             filterLocalIdentifier: filterElementsByItem.filterLocalIdentifier,
             over: {
-                attributes: filterElementsByItem.over.attributes.map(refToUri),
+                attributes: filterElementsByItem.over!.attributes.map(refToUri),
             },
         };
     });

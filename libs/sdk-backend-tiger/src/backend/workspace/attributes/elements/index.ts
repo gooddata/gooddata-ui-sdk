@@ -4,11 +4,13 @@ import {
     FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
     ElementsResponseGranularityEnum,
+    DependsOn,
 } from "@gooddata/api-client-tiger";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     FilterWithResolvableElements,
     IElementsQuery,
+    IElementsQueryAttributeFilter,
     IElementsQueryFactory,
     IElementsQueryOptions,
     IElementsQueryResult,
@@ -27,6 +29,9 @@ import {
     isIdentifierRef,
     ObjRef,
     IAttributeElement,
+    isNegativeAttributeFilter,
+    filterObjRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
@@ -36,6 +41,7 @@ import { createDateValueFormatter } from "../../../../convertors/fromBackend/dat
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
+import compact from "lodash/compact.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -58,6 +64,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private offset: number = 0;
     private signal: AbortSignal | null = null;
     private options: IElementsQueryOptions | undefined;
+    private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -84,8 +91,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return this;
     }
 
-    public withAttributeFilters(): IElementsQuery {
-        throw new NotSupported("withAttributeFilters is not supported in sdk-backend-tiger yet");
+    public withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery {
+        this.attributeFilters = filters;
+        return this;
     }
 
     public withDateFilters(): IElementsQuery {
@@ -131,6 +139,29 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return {};
     }
 
+    private getDependsOnSpec(): Partial<ElementsRequest> {
+        const { attributeFilters } = this;
+        if (attributeFilters) {
+            const dependsOn: DependsOn[] = attributeFilters.map((filter) => {
+                const { attributeFilter } = filter;
+                const complementFilter = isNegativeAttributeFilter(attributeFilter);
+                const label = objRefToString(filterObjRef(attributeFilter));
+                const elements = filterAttributeElements(attributeFilter);
+                const values = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
+
+                return {
+                    label,
+                    values: compact(values),
+                    complementFilter,
+                };
+            });
+
+            return { dependsOn };
+        }
+
+        return {};
+    }
+
     private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
         const { ref } = this;
         if (!isIdentifierRef(ref)) {
@@ -145,6 +176,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         ...(options?.complement && { complementFilter: options.complement }),
                         ...(options?.filter && { patternFilter: options.filter }),
                         ...this.getExactFilterSpec(options ?? {}),
+                        ...this.getDependsOnSpec(),
                         ...(options?.excludePrimaryLabel && {
                             excludePrimaryLabel: options.excludePrimaryLabel,
                         }),

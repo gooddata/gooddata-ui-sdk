@@ -14,6 +14,8 @@ export {
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
     selectSupportsObjectUris,
+    selectSupportsSettingConnectingAttributes,
+    selectSupportsKeepingDependentFiltersSelection,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {

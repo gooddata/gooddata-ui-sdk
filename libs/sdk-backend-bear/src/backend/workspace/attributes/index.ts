@@ -21,6 +21,7 @@ import { BearWorkspaceElements } from "./elements/index.js";
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,
+    NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -185,5 +186,9 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
 
             return convertMetadataObjectXrefEntry("dataSet", usedBy.entries[0]);
         });
+    }
+
+    public async getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
+        throw new NotSupported("Not supported");
     }
 }
