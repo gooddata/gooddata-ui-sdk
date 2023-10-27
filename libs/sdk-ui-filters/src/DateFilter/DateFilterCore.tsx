@@ -97,19 +97,32 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
 }) => {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const verifiedDateFormat = verifyDateFormat(dateFormat);
+
     const filteredFilterOptions = useMemo(() => {
         return flow(filterVisibleDateFilterOptions, sanitizePresetIntervals)(filterOptions);
     }, [filterOptions]);
+
     const closeConfiguration = () => {
         setIsConfigurationOpen(false);
     };
+
     const openConfiguration = () => {
         setIsConfigurationOpen(true);
     };
+
     const cancelConfiguration = () => {
         closeConfiguration();
         onCancelClick();
     };
+
+    const handleOpenStateChanged = (isOpen: boolean) => {
+        onDropdownOpenChanged(isOpen);
+
+        if (!isOpen) {
+            closeConfiguration();
+        }
+    };
+
     return (
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
@@ -144,7 +157,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 { align: "tr tl", offset: { x: 0, y: -100 } },
                                 { align: "tr tl", offset: { x: 0, y: -50 } },
                             ]}
-                            onOpenStateChanged={onDropdownOpenChanged}
+                            onOpenStateChanged={handleOpenStateChanged}
                             renderButton={({ isOpen, toggleDropdown }) => (
                                 <span onClick={disabled ? noop : toggleDropdown}>
                                     {dateFilterButton(isOpen)}
