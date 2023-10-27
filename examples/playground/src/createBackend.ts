@@ -4,7 +4,10 @@ import { TigerSpecificFunctions } from "@gooddata/sdk-backend-tiger";
 
 let tigerSpecificFunctions: TigerSpecificFunctions | undefined = undefined;
 
-export function createBackend(): { backend: IAnalyticalBackend; tigerSpecificFunctions: TigerSpecificFunctions | undefined } {
+export function createBackend(): {
+    backend: IAnalyticalBackend;
+    tigerSpecificFunctions: TigerSpecificFunctions | undefined;
+} {
     // do not replace ifs with a switch
     // do not use isTigerBackend instead of BACKEND_TYPE === "tiger", etc.
     // do not extract the bodies to functions

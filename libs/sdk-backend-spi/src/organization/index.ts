@@ -3,6 +3,8 @@ import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import { IOrganizationSettingsService } from "./settings/index.js";
 import { ISecuritySettingsService } from "./securitySettings/index.js";
 import { IOrganizationStylingService } from "./styling/index.js";
+import { IOrganizationUserService } from "./users/index.js";
+import { IOrganizationPermissionService } from "./permissions/index.js";
 
 /**
  * Represents an organization that services analytical workspaces.
@@ -34,6 +36,16 @@ export interface IOrganization {
      * Returns current organization settings.
      */
     settings(): IOrganizationSettingsService;
+
+    /**
+     * Returns service that can be used to query and update organization users and user groups.
+     */
+    users(): IOrganizationUserService;
+
+    /**
+     * Returns service that can be used to query and manage permissions to organization.
+     */
+    permissions(): IOrganizationPermissionService;
 }
 
 /**

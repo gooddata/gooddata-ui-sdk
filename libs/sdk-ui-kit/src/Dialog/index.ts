@@ -21,4 +21,4 @@ export * from "./DialogList/index.js";
 
 export * from "./StylingEditorDialog/index.js";
 
-export * from "./UserGroupDialog/index.js";
+export * from "./UserManagementDialogs/index.js";

@@ -56,6 +56,8 @@ import {
     IElementsQueryResult,
     IPagedResource,
     IEntitlements,
+    IOrganizationPermissionService,
+    IOrganizationUserService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -726,6 +728,35 @@ class DummyOrganization implements IOrganization {
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
+        };
+    }
+
+    permissions(): IOrganizationPermissionService {
+        return {
+            getWorkspacePermissionsForUser: () => Promise.resolve([]),
+            getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
+            updateUserOrganizationAdminStatus: () => Promise.resolve(),
+            updateWorkspacePermissionsForUser: () => Promise.resolve(),
+            updateWorkspacePermissionsForUserGroup: () => Promise.resolve(),
+        };
+    }
+
+    users(): IOrganizationUserService {
+        return {
+            addUserGroupToUsers: () => Promise.resolve(),
+            addUserToUserGroups: () => Promise.resolve(),
+            createUserGroup: () => Promise.resolve(),
+            deleteUser: () => Promise.resolve(),
+            deleteUserGroup: () => Promise.resolve(),
+            getUser: () => Promise.resolve(undefined),
+            getUserGroup: () => Promise.resolve(undefined),
+            getUserGroups: () => Promise.resolve([]),
+            getUserGroupsOfUser: () => Promise.resolve([]),
+            getUsersOfUserGroup: () => Promise.resolve([]),
+            getUsers: () => Promise.resolve([]),
+            removeUserFromUserGroup: () => Promise.resolve(),
+            updateUser: () => Promise.resolve(),
+            updateUserGroup: () => Promise.resolve(),
         };
     }
 }

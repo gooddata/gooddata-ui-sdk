@@ -57,32 +57,14 @@ import {
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
 import toLower from "lodash/toLower.js";
-import {
-    UnexpectedError,
-    ErrorConverter,
-    IAnalyticalBackend,
-    ManageUserGroups,
-    ManageUsers,
-    WorkspacePermissionAssignment
-} from "@gooddata/sdk-backend-spi";
+import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import {
-    IUser,
-    IMeasure,
-    IWidgetAlert,
-    IInsight,
-    uriRef,
-    IWorkspaceUser,
-    IWorkspaceUserGroup,
-    idRef
-} from "@gooddata/sdk-model";
+import { IUser, IMeasure, IWidgetAlert, IInsight } from "@gooddata/sdk-model";
 import { convertMeasure } from "../convertors/toBackend/afm/MeasureConverter.js";
 import { convertWidgetAlert } from "../convertors/fromBackend/analyticalDashboards/WidgetAlertConverter.js";
-import {
-    convertVisualizationObject
-} from "../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+import { convertVisualizationObject } from "../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
 import { insightFromInsightDefinition } from "../convertors/fromBackend/InsightConverter.js";
 import { isInheritedObject } from "../convertors/fromBackend/ObjectInheritance.js";
 
@@ -627,32 +609,6 @@ export type TigerSpecificFunctions = {
     getAllEntitiesWidgetAlerts?: (
         workspaceId: string,
     ) => Promise<{ alert: IWidgetAlert; insight: IInsight }[]>;
-
-    getUserById?: (userId: string) => Promise<IWorkspaceUser>;
-
-    getUsers?: () => Promise<ManageUsers>;
-
-    getUserGroups?: () => Promise<ManageUserGroups>;
-
-    getWorkspacePermissionsForUser?: (userId: string) => Promise<WorkspacePermissionAssignment[]>;
-
-    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
-
-    manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-
-    manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-
-    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
-
-    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
-
-    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
-
-    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
-
-    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
-
-    deleteUser?: (userId: string) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1290,12 +1246,12 @@ export const buildTigerSpecificFunctions = (
             return await authApiCall(async (sdk) => {
                 const promise = id
                     ? sdk.scanModel.testDataSource({
-                        dataSourceId: id,
-                        testRequest: connectionData,
-                    })
+                          dataSourceId: id,
+                          testRequest: connectionData,
+                      })
                     : sdk.scanModel.testDataSourceDefinition({
-                        testDefinitionRequest: connectionData,
-                    });
+                          testDefinitionRequest: connectionData,
+                      });
                 return await promise.then((axiosResponse) => axiosResponse.data);
             });
         } catch (error: any) {
@@ -1640,33 +1596,33 @@ export const buildTigerSpecificFunctions = (
                 if (objectType === "Dashboard") {
                     isDelete
                         ? await sdk.actions.unfavoriteAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.favoriteAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Insight") {
                     isDelete
                         ? await sdk.actions.unfavoriteVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.favoriteVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Metric") {
                     isDelete
                         ? await sdk.actions.unfavoriteMetric({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.favoriteMetric({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 }
             });
         } catch (error: any) {
@@ -1685,33 +1641,33 @@ export const buildTigerSpecificFunctions = (
                 if (objectType === "Dashboard") {
                     isDelete
                         ? await sdk.actions.unlikeAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.likeAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Insight") {
                     isDelete
                         ? await sdk.actions.unlikeVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.likeVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Metric") {
                     isDelete
                         ? await sdk.actions.unlikeMetric({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.likeMetric({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 }
             });
         } catch (error: any) {
@@ -1730,33 +1686,33 @@ export const buildTigerSpecificFunctions = (
                 if (objectType === "Dashboard") {
                     isDelete
                         ? await sdk.actions.undislikeAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.dislikeAnalyticalDashboard({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Insight") {
                     isDelete
                         ? await sdk.actions.undislikeVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.dislikeVisualizationObject({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 } else if (objectType === "Metric") {
                     isDelete
                         ? await sdk.actions.undislikeMetric({
-                            workspaceId,
-                            objectId,
-                        })
+                              workspaceId,
+                              objectId,
+                          })
                         : await sdk.actions.dislikeMetric({
-                            workspaceId,
-                            objectId,
-                        });
+                              workspaceId,
+                              objectId,
+                          });
                 }
             });
         } catch (error: any) {
@@ -1773,8 +1729,7 @@ export const buildTigerSpecificFunctions = (
                         {
                             // this somehow makes sure that no request body is sent to avoid
                             // including required props we do not have at the moment
-                            transformRequest: () => {
-                            },
+                            transformRequest: () => {},
                         },
                     )
                     .then((response) => response.data);
@@ -2120,150 +2075,4 @@ export const buildTigerSpecificFunctions = (
             };
         });
     },
-
-    getUserById: async (id: string) => {
-        return await authApiCall(async (client) => {
-            return client.entities.getEntityUsers({ id })
-                .then((response) => response.data)
-                .then((user) => {
-                    const firstName = user.data.attributes?.firstname;
-                    const lastName = user.data.attributes?.lastname;
-                    const email = user.data.attributes?.email ?? "";
-                    const fullName = firstName && lastName ? `${firstName} ${lastName}` : undefined;
-                    return {
-                        ref: uriRef(user!.links!.self),
-                        uri: user!.links!.self,
-                        login: user.data.id,
-                        email,
-                        fullName,
-                        firstName,
-                        lastName,
-                    };
-                });
-        });
-    },
-
-    getUsers: async () => {
-        return await authApiCall(async (client) => {
-            return client.actions.getUsers()
-                .then((response) => response.data);
-        });
-    },
-
-    getUserGroups: async () => {
-        return await authApiCall(async (client) => {
-            return client.actions.getUserGroups()
-                .then((response) => response.data);
-        });
-    },
-
-    getWorkspacePermissionsForUser: async (userId: string) => {
-        return await authApiCall(async (client) => {
-            return client.actions.getWorkspacePermissionsForUser({ userId })
-                .then((response) => response.data)
-                .then((response) => response.assignments);
-        });
-    },
-
-    getWorkspacePermissionsForUserGroup: async (userGroupId: string) => {
-        return await authApiCall(async (client) => {
-            return client.actions.getWorkspacePermissionsForUserGroup({ userGroupId })
-                .then((response) => response.data)
-                .then((response) => response.assignments);
-        });
-    },
-
-    manageWorkspacePermissionsForUser: async (userId: string, assignments: WorkspacePermissionAssignment[]) => {
-        return await authApiCall(async (client) => {
-            await client.actions.manageWorkspacePermissionsForUser({
-                userId,
-                workspacePermissionAssignments: { assignments },
-            });
-        });
-    },
-
-    manageWorkspacePermissionsForUserGroup: async (userGroupId: string, assignments: WorkspacePermissionAssignment[]) => {
-        return await authApiCall(async (client) => {
-            await client.actions.manageWorkspacePermissionsForUserGroup({
-                userGroupId,
-                workspacePermissionAssignments: { assignments },
-            });
-        });
-    },
-
-    updateUserDetails: async (user: IWorkspaceUser) => {
-        return await authApiCall(async (client) => {
-            const { login, firstName, lastName, email } = user;
-            await client.entities.patchEntityUsers({
-                id: login,
-                jsonApiUserPatchDocument: {
-                    data: {
-                        type: "user",
-                        id: login,
-                        attributes: {
-                            firstname: firstName,
-                            lastname: lastName,
-                            email: email,
-                        }
-                    }
-                }
-            });
-        });
-    },
-
-    changeUserOrgAdminStatus: async (_userId: string, _isOrgAdmin: boolean) => {
-        return await authApiCall(async (_client) => {
-            // TODO when gartner env will get rebased onto develop and missing API will be available
-        });
-    },
-
-    getGroupsForUser: async (userId: string) => {
-        return await authApiCall(async (client) => {
-            return client.entities
-                .getEntityUsers({
-                    id: userId,
-                    include: ["userGroups"]
-                })
-                .then((response) => response.data)
-                .then((groups) => {
-                    return groups.included?.map((group) => ({
-                        ref: group.links?.self ? uriRef(group.links?.self) : idRef(group.id),
-                        id: group.id,
-                        name: group.attributes?.name,
-                    })) || [];
-                });
-        });
-    },
-
-    addGroupsToUser: async (userId: string, userGroupIds: string[]) => {
-        return await authApiCall(async (client) => {
-            await Promise.all(userGroupIds.map((userGroupId) => {
-                return client.actions.addGroupMembers({
-                    userGroupId,
-                    userGroupMembers: {
-                        members: [{ id: userId }],
-                    }
-                });
-            }));
-        });
-    },
-
-    removeGroupFromUser: async (userId: string, userGroupId: string) => {
-        return await authApiCall(async (client) => {
-            await client.actions.removeGroupMembers({
-                userGroupId: userGroupId,
-                userGroupMembers: {
-                    members: [{ id: userId }]
-                }
-            });
-        });
-    },
-
-    deleteUser: async (id: string) => {
-        return await authApiCall(async (client) => {
-            await client.entities.deleteEntityUsers({
-                id,
-            });
-        });
-    }
 });

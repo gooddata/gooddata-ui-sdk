@@ -3,8 +3,8 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
-import { BackButton } from '../../BackButton.js';
-import { ContentDivider } from '../../ContentDivider.js';
+import { BackButton } from "../../BackButton.js";
+import { ContentDivider } from "../../ContentDivider.js";
 
 import { AddGranteeContent } from "./AddGranteeContent.js";
 import { IAddGranteeBaseProps } from "./types.js";

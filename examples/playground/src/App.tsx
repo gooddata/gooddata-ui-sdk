@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { BackendProvider, WorkspaceProvider, IntlWrapper } from "@gooddata/sdk-ui";
-import { UserEditDialog } from "@gooddata/sdk-ui-kit";
+import { UserEditDialog, UserGroupEditDialog, CreateUserGroupDialog } from "@gooddata/sdk-ui-kit";
 
 import { createBackend } from "./createBackend.js";
 
@@ -14,24 +14,40 @@ function hasCredentialsSetup(): boolean {
 
 const AppWithBackend: React.FC = () => {
     // only create the backend instance once
-    const { backend, tigerSpecificFunctions } = useMemo(() => {
+    const { backend } = useMemo(() => {
         return createBackend();
     }, []);
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isUserOpen, setIsUserOpen] = useState(false);
+    const [isUserGroupOpen, setIsUserGroupOpen] = useState(false);
+    const [isCreateUserGroupOpen, setIsCreateUserGroupOpen] = useState(true);
 
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={WORKSPACE}>
                 <IntlWrapper locale="en-US">
-                    {isOpen && (
+                    {isUserOpen ? (
                         <UserEditDialog
-                            userId="han.solo"
-                            isAdmin={true}
-                            onClose={() => setIsOpen(false)}
-                            api={tigerSpecificFunctions!}
+                            userId="ahsoka.tano"
+                            organizationId="mlkse3rji6"
+                            isAdmin={false}
+                            onClose={() => setIsUserOpen(false)}
                         />
-                    )}
+                    ) : undefined}
+                    {isUserGroupOpen ? (
+                        <UserGroupEditDialog
+                            userGroupId="viewerGroup"
+                            organizationId="mlkse3rji6"
+                            isAdmin={false}
+                            onClose={() => setIsUserGroupOpen(false)}
+                        />
+                    ) : undefined}
+                    {isCreateUserGroupOpen ? (
+                        <CreateUserGroupDialog
+                            organizationId="mlkse3rji6"
+                            onCancel={() => setIsCreateUserGroupOpen(false)}
+                        />
+                    ) : undefined}
                 </IntlWrapper>
             </WorkspaceProvider>
         </BackendProvider>

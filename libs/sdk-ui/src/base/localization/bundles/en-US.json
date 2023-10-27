@@ -2098,328 +2098,528 @@
         "translate": false,
         "limit": 0
     },
-    "userGroupDialog.workspace.noMatchingItems": {
+    "userManagement.workspace.noMatchingItems": {
         "value": "No matching workspaces.",
         "comment": "Information shown to the user when query in search input does no match any workspace.",
         "limit": 0
     },
-    "userGroupDialog.workspace.searchPlaceholder": {
+    "userManagement.workspace.searchPlaceholder": {
         "value": "Search workspaces",
         "comment": "Placeholder of empty workspace dialog search input.",
         "limit": 0
     },
-    "userGroupDialog.workspace.searchError": {
+    "userManagement.workspace.searchError": {
         "value": "Failed to load workspaces. Try again later.",
         "comment": "Error message shown to the user when query in search input failed",
         "limit": 0
     },
-    "userGroupDialog.workspace.emptySelection.view": {
+    "userManagement.workspace.emptySelection.view": {
         "value": "This user does not have any workspaces.{br}Add one now.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
     },
-    "userGroupDialog.workspace.emptySelection.edit": {
+    "userManagement.workspace.emptySelection.edit": {
         "value": "No workspace selected.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
     },
-    "userGroupDialog.workspace.title": {
+    "userManagement.workspace.title": {
         "value": "Add workspace permission",
         "comment": "Title of dialog used for granting workspace permission to users or user groups.",
         "limit": 0
     },
-    "userGroupDialog.workspace.addButton": {
+    "userManagement.workspace.addButton": {
         "value": "Add",
         "comment": "Title of confirm button of grant workspace permission dialog",
         "limit": 0
     },
-    "userGroupDialog.tab.workspaces": {
-        "value": "Permission to workspaces",
+    "userManagement.userGroups.addButton": {
+        "value": "Add",
         "comment": "",
         "limit": 0
     },
-    "userGroupDialog.tab.groups": {
-        "value": "Groups",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.tab.details": {
-        "value": "Details",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.addWorkspace": {
-        "value": "Add permission",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.addToGroup": {
-        "value": "Add to group",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.edit": {
-        "value": "Edit",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.deleteUser": {
-        "value": "Delete",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.close": {
-        "value": "Close",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.removeSuccess": {
-        "value": "Great! We deleted the permission!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.removeError": {
-        "value": "Deletion of the permission failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.addSuccess": {
-        "value": "Great! We added the permission(s)!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.addError": {
-        "value": "Addition of the permission(s) failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.changeSuccess": {
-        "value": "Great! We changed the permission(s)!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.changeError": {
-        "value": "Change of the permission(s) failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.yes": {
-        "value": "Hierarchy bellow",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.yes.tooltip": {
-        "value": "Apply permission also to all child workspaces of this workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.no": {
-        "value": "This workspace",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.no.tooltip": {
-        "value": "Apply permission only on this workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.view": {
-        "value": "View",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.view.tooltip": {
-        "value": "Allow to view the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.viewExport": {
-        "value": "View & Export",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.viewExport.tooltip": {
-        "value": "Allow to view and export the objects from the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyze": {
-        "value": "Analyze",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyze.tooltip": {
-        "value": "Allow to analyze the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyzeExport": {
-        "value": "Analyze & Export",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyzeExport.tooltip": {
-        "value": "Allow to analyze and export the objects from the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.manage": {
-        "value": "Manage",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.manage.tooltip": {
-        "value": "Allow to manage the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.remove": {
-        "value": "Remove",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.firstName.label": {
-        "value": "First name",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.lastName.label": {
-        "value": "Last name",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.email.label": {
-        "value": "E-mail",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.orgPermission.label": {
-        "value": "Org. permission",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.orgPermission.admin": {
-        "value": "Admin",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.orgPermission.member": {
-        "value": "Member",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.id.label": {
-        "value": "ID",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.status.label": {
-        "value": "Status",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.detail.emptyValue": {
-        "value": "not set",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.groups.emptySelection.view": {
-        "value": "This user does not belong to any group.{br}Add him to a group now.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
-        "limit": 0
-    },
-    "userGroupDialog.groups.emptySelection.edit": {
-        "value": "No groups selected.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
-        "limit": 0
-    },
-    "userGroupDialog.detail.saveButton": {
-        "value": "Save",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.detailsUpdatedSuccess": {
-        "value": "Great! We changed the user details!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.detailsUpdatedError": {
-        "value": "Change of the user details failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.addSuccess": {
-        "value": "Great! We added the group(s)!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.addError": {
-        "value": "Addition of the group(s) failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.title": {
-        "value": "Add to group",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.noMatchingItems": {
-        "value": "No matching group.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.searchPlaceholder": {
-        "value": "Search groups",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.searchError": {
-        "value": "Failed to load groups. Try again later.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.removeSuccess": {
-        "value": "Great! We deleted the group!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.removeError": {
-        "value": "Deletion of the group failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.group.remove": {
-        "value": "Remove user from the group.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.deleteUser.title": {
-        "value": "Delete user?",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.deleteUser.message": {
-        "value": "User will be permanently and irreversibly deleted.{br}Their insights and dashboards will not be deleted.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.deleteUser.cancelButton": {
+    "userManagement.userGroups.cancelButton": {
         "value": "Cancel",
         "comment": "",
         "limit": 0
     },
-    "userGroupDialog.deleteUser.confirmButton": {
+    "userManagement.tab.workspaces": {
+        "value": "Permission ({count})",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.tab.groups": {
+        "value": "Groups ({count})",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.tab.users": {
+        "value": "Members ({count})",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.tab.details": {
+        "value": "Details",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.buttons.addWorkspace": {
+        "value": "Add permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.buttons.addToGroup": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.buttons.addUser": {
+        "value": "Add user",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.buttons.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.deleteLink": {
+        "value": "Delete user",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.deleteLink": {
+        "value": "Delete user group",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.closeButton": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.removeSuccess": {
+        "value": "Great! We deleted the permission!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.removeError": {
+        "value": "Deletion of the permission failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.addSuccess": {
+        "value": "Great! We added the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.addError": {
+        "value": "Addition of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.changeSuccess": {
+        "value": "Great! We changed the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.changeError": {
+        "value": "Change of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.hierarchicalPermission.yes": {
+        "value": "Hierarchy bellow",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.hierarchicalPermission.yes.tooltip": {
+        "value": "Apply permission also to all child workspaces of this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.hierarchicalPermission.no": {
+        "value": "This workspace",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.hierarchicalPermission.no.tooltip": {
+        "value": "Apply permission only on this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.view": {
+        "value": "View",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.view.tooltip": {
+        "value": "Allow to view the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.viewExport": {
+        "value": "View & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.viewExport.tooltip": {
+        "value": "Allow to view and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.analyze": {
+        "value": "Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.analyze.tooltip": {
+        "value": "Allow to analyze the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.analyzeExport": {
+        "value": "Analyze & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.analyzeExport.tooltip": {
+        "value": "Allow to analyze and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.manage": {
+        "value": "Manage",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.manage.tooltip": {
+        "value": "Allow to manage the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetail.id.label": {
+        "value": "ID",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetail.name.label": {
+        "value": "Name",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.firstName.label": {
+        "value": "First name",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.lastName.label": {
+        "value": "Last name",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.email.label": {
+        "value": "E-mail",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.orgPermission.label": {
+        "value": "Org. permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.detail.orgPermission.admin": {
+        "value": "Admin",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.detail.orgPermission.admin.tooltip": {
+        "value": "Organization administrator. This user has access to any protected action or resource.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.detail.orgPermission.member": {
+        "value": "Member",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.detail.orgPermission.member.tooltip": {
+        "value": "Organization member. This user has access to action or resource to which he has permission to.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.id.label": {
+        "value": "ID",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.emptyValue": {
+        "value": "not set",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.emptySelection.view": {
+        "value": "This user does not belong to any group.{br}Add him to a group now.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userManagement.userGroups.emptySelection.edit": {
+        "value": "No groups selected.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userManagement.userDetail.saveButton": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetail.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetail.saveButton": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetail.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetails.updatedSuccess": {
+        "value": "Great! We changed the user details!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userDetails.updatedFailure": {
+        "value": "Change of the user details failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetails.updatedSuccess": {
+        "value": "Great! We changed the user group details!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.groupDetails.updatedFailure": {
+        "value": "Change of the user details group failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroup.addSuccess": {
+        "value": "Great! We added the group(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroup.addError": {
+        "value": "Addition of the group(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.title": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.noMatchingItems": {
+        "value": "No matching group.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.searchPlaceholder": {
+        "value": "Search groups",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.searchError": {
+        "value": "Failed to load groups. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.removeSuccess": {
+        "value": "Great! We deleted the group!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.removeFailure": {
+        "value": "Deletion of the group failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.removeTooltip": {
+        "value": "Remove group from the user.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.user.title": {
+        "value": "Delete user?",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.user.body": {
+        "value": "User will be permanently and irreversibly deleted.{br}Their insights and dashboards will not be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.group.body": {
+        "value": "User group will be permanently and irreversibly deleted.{br}Their users will not be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.confirmButton": {
         "value": "Delete",
         "comment": "",
         "limit": 0
     },
-    "userGroupDialog.deleteUser.success": {
+    "userManagement.userGroups.deleteSuccess": {
         "value": "Great! We deleted the user!",
         "comment": "",
         "limit": 0
     },
-    "userGroupDialog.deleteUser.failure": {
+    "userManagement.userGroups.deleteFailure": {
         "value": "Deletion of the user failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.createSuccess": {
+        "value": "Great! We created the user group!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.createFailure": {
+        "value": "Creation of the user group failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.deleteSuccess": {
+        "value": "Great! We deleted the user group!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.deleteFailure": {
+        "value": "Deletion of the user group failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.searchError": {
+        "value": "Failed to load users. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.emptySelection.view": {
+        "value": "This group does not have any member.{br}Add one now.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.emptySelection.edit": {
+        "value": "No users selected.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.removeUserFromGroup": {
+        "value": "Remove user from the group.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.removeUserFromSelection": {
+        "value": "Remove from selection.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.removeUserGroupFromSelection": {
+        "value": "Remove from selection.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.noMatchingItems": {
+        "value": "No matching user.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.searchPlaceholder": {
+        "value": "Search users",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.title": {
+        "value": "Add group members",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.addButton": {
+        "value": "Add",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.addSuccess": {
+        "value": "Great! We added the user(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.addFailure": {
+        "value": "Addition of the user(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.removeSuccess": {
+        "value": "Great! We removed the user(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.removeFailure": {
+        "value": "Removal of the user(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.buttons.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.admin.alert": {
+        "value": "Administrators have full access to any workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.admin.pill": {
+        "value": "Admin",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.createButton": {
+        "value": "Create",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.dialogTitle": {
+        "value": "Create user group",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.createUserGroup.inputPlaceholder": {
+        "value": "Name",
         "comment": "",
         "limit": 0
     }

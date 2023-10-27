@@ -31,6 +31,8 @@ import {
     IOrganizationStylingService,
     IOrganizationSettingsService,
     IEntitlements,
+    IOrganizationUserService,
+    IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
@@ -241,6 +243,14 @@ class OrganizationDecorator implements IOrganization {
 
     public settings(): IOrganizationSettingsService {
         return this.decorated.settings();
+    }
+
+    public users(): IOrganizationUserService {
+        return this.decorated.users();
+    }
+
+    public permissions(): IOrganizationPermissionService {
+        return this.decorated.permissions();
     }
 }
 

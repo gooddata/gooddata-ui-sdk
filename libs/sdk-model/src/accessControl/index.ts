@@ -360,7 +360,12 @@ export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUs
  *
  * @public
  */
-export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
+export type WorkspaceAccessPermission =
+    | "VIEW"
+    | "VIEW_AND_EXPORT"
+    | "ANALYZE"
+    | "ANALYZE_AND_EXPORT"
+    | "MANAGE";
 
 /**
  * Workspace access specification with granular permissions.
@@ -399,7 +404,11 @@ export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserG
  * @alpha
  */
 export const isUserWorkspaceAccessGrantee = (obj: unknown): obj is IUserWorkspaceAccessGrantee => {
-    return !isEmpty(obj) && (obj as IUserWorkspaceAccessGrantee).workspace !== undefined && isGranularUserAccessGrantee(obj);
+    return (
+        !isEmpty(obj) &&
+        (obj as IUserWorkspaceAccessGrantee).workspace !== undefined &&
+        isGranularUserAccessGrantee(obj)
+    );
 };
 
 /**
@@ -409,5 +418,9 @@ export const isUserWorkspaceAccessGrantee = (obj: unknown): obj is IUserWorkspac
  * @alpha
  */
 export const isUserGroupWorkspaceAccessGrantee = (obj: unknown): obj is IUserGroupWorkspaceAccessGrantee => {
-    return !isEmpty(obj) && (obj as IUserGroupWorkspaceAccessGrantee).workspace !== undefined && isGranularUserGroupAccessGrantee(obj);
+    return (
+        !isEmpty(obj) &&
+        (obj as IUserGroupWorkspaceAccessGrantee).workspace !== undefined &&
+        isGranularUserGroupAccessGrantee(obj)
+    );
 };
