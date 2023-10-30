@@ -38,12 +38,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/1e17f8cf-aa34-4474-8dd5-c1249c688225"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "343b329b-e2b0-43b2-9724-de8cd664ebac",
@@ -268,12 +268,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/343b329b-e2b0-43b2-9724-de8cd664ebac"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
@@ -350,12 +350,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/3ef94acb-1e15-49ef-88d5-e9e2931be959"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
@@ -418,12 +418,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/5517045e-661f-4d6b-b0b0-98030ab9f68c"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
@@ -806,12 +806,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/6d236ec6-5cf7-493e-8285-6613fde4ce18"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/6d236ec6-5cf7-493e-8285-6613fde4ce18"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
@@ -862,12 +862,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/6ecba0d9-8fff-4c78-8adf-7f33cc1956c8"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/6ecba0d9-8fff-4c78-8adf-7f33cc1956c8"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
@@ -939,12 +939,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/81452cc9-558b-4b4e-a70b-0a80f3bd2924"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "843701ee-8f24-4942-8522-872a96575f8e",
@@ -1017,12 +1017,12 @@
                     "version": "2",
                     "visualizationUrl": "local:column"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/843701ee-8f24-4942-8522-872a96575f8e"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "84d13bd9-f976-4e03-8b00-fec9497d580b",
@@ -1097,12 +1097,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/84d13bd9-f976-4e03-8b00-fec9497d580b"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/84d13bd9-f976-4e03-8b00-fec9497d580b"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
@@ -1169,12 +1169,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/87c466b7-e3e0-4a1a-a45a-4ae333bce863"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/87c466b7-e3e0-4a1a-a45a-4ae333bce863"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "9a2ab62b-587a-4b16-9682-1b7962340354",
@@ -1246,12 +1246,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/9a2ab62b-587a-4b16-9682-1b7962340354"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/9a2ab62b-587a-4b16-9682-1b7962340354"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "b1614db1-3058-4071-a2fe-64a017d318c5",
@@ -1301,12 +1301,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b1614db1-3058-4071-a2fe-64a017d318c5"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/b1614db1-3058-4071-a2fe-64a017d318c5"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
@@ -1451,12 +1451,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b3b665b7-bca2-0322-82f1-b86ky73k90f8afe"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/b3b665b7-bca2-0322-82f1-b86ky73k90f8afe"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
@@ -1516,12 +1516,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/b3b665b7-bca2-4462-82f1-b0e01dff8afe"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "ba13041b-87bc-458c-a514-fcc0074c9973",
@@ -1670,12 +1670,12 @@
                     "visualizationUrl": "local:pyramid",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/ba13041b-87bc-458c-a514-fcc0074c9973"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
@@ -1715,12 +1715,12 @@
                     "version": "2",
                     "visualizationUrl": "local:pyramid"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "dcce2234-9097-47e7-a165-36cdbaa2e134",
@@ -1786,12 +1786,12 @@
                     "version": "2",
                     "visualizationUrl": "local:column"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
@@ -1864,12 +1864,12 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/f00bd5d5-91da-4139-9e7e-5498d9fe49b5"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/f00bd5d5-91da-4139-9e7e-5498d9fe49b5"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
@@ -1922,12 +1922,12 @@
                     "visualizationUrl": "local:column",
                     "version": "2"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/f7a50db1-5d2d-4b1a-82e6-e1648836985c"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/f7a50db1-5d2d-4b1a-82e6-e1648836985c"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         },
         {
             "id": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
@@ -2004,16 +2004,16 @@
                     "version": "2",
                     "visualizationUrl": "local:table"
                 },
-                "createdAt": "2023-10-12 08:48"
+                "createdAt": "2023-10-26 10:03"
             },
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects/fb53ecfb-3874-4bee-8612-afecd3fa3e04"
             },
-            "meta": { "origin": { "originType": "NATIVE", "originId": "b51b89a10e5845189a6fea8e96dba226" } }
+            "meta": { "origin": { "originType": "NATIVE", "originId": "a9699e80b0ae484da980bde0b75499e3" } }
         }
     ],
     "links": {
-        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects?page=0&size=250",
-        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/b51b89a10e5845189a6fea8e96dba226/visualizationObjects?page=1&size=250"
+        "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects?page=0&size=250",
+        "next": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/visualizationObjects?page=1&size=250"
     }
 }

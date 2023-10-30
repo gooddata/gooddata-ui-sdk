@@ -1,0 +1,47 @@
+{
+    "id": "1ff124b4-f7a2-4783-b5ab-237802c46064",
+    "name": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/collectLabelElements?offset=0&limit=100",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_collectlabelelements-1ff124b4-f7a2-4783-b5ab-237802c46064.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "1ff124b4-f7a2-4783-b5ab-237802c46064",
+    "persistent": true,
+    "insertionIndex": 13
+}

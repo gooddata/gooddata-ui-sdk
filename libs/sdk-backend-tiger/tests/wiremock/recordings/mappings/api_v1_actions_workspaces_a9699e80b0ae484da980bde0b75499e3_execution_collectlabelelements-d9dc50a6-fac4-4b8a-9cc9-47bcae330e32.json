@@ -1,8 +1,8 @@
 {
-    "id": "b15289ae-8e7d-442c-a960-6eb8052c07e8",
-    "name": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_collectlabelelements",
+    "id": "d9dc50a6-fac4-4b8a-9cc9-47bcae330e32",
+    "name": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/b51b89a10e5845189a6fea8e96dba226/execution/collectLabelElements?offset=0&limit=100",
+        "url": "/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/collectLabelElements?offset=0&limit=2",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -23,21 +23,20 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_collectlabelelements-b15289ae-8e7d-442c-a960-6eb8052c07e8.json",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"(add)ventures\",\"primaryTitle\":\"(add)ventures\"},{\"title\":\"(blank)\",\"primaryTitle\":\"(blank)\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/collectLabelElements?limit=2&offset=2\"}}",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "b15289ae-8e7d-442c-a960-6eb8052c07e8",
+    "uuid": "d9dc50a6-fac4-4b8a-9cc9-47bcae330e32",
     "persistent": true,
-    "insertionIndex": 13
+    "insertionIndex": 7
 }
