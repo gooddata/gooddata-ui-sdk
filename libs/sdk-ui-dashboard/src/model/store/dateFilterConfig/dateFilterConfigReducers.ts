@@ -76,9 +76,17 @@ const clearDateFilterConfigValidationWarning: DateFilterConfigReducer<PayloadAct
     state.dateFilterConfigValidationWarnings = [];
 };
 
+const updateDateFilterConfig: DateFilterConfigReducer<PayloadAction<IDashboardDateFilterConfig>> = (
+    state,
+    action,
+) => {
+    state.dateFilterConfig = action.payload;
+};
+
 export const dateFilterConfigReducers = {
     setDateFilterConfig,
     setDateFilterConfigMode,
+    updateDateFilterConfig,
     addDateFilterConfigValidationWarning,
     clearDateFilterConfigValidationWarning,
 };
