@@ -1,13 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { SagaIterator } from "redux-saga";
+import { call } from "redux-saga/effects";
+import update from "lodash/fp/update.js";
+import isEmpty from "lodash/isEmpty.js";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { alertsActions } from "../../../store/alerts/index.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
-import { layoutActions } from "../../../store/layout/index.js";
-import { insightsActions } from "../../../store/insights/index.js";
-import { metaActions } from "../../../store/meta/index.js";
-import { uiActions } from "../../../store/ui/index.js";
 import {
     areObjRefsEqual,
     IInsight,
@@ -20,22 +16,28 @@ import {
     IDashboard,
     ISettings,
 } from "@gooddata/sdk-model";
+
+import { alertsActions } from "../../../store/alerts/index.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { layoutActions } from "../../../store/layout/index.js";
+import { insightsActions } from "../../../store/insights/index.js";
+import { metaActions } from "../../../store/meta/index.js";
+import { uiActions } from "../../../store/ui/index.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
-import { SagaIterator } from "redux-saga";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
-import { call } from "redux-saga/effects";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
-import update from "lodash/fp/update.js";
-import isEmpty from "lodash/isEmpty.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -178,6 +180,10 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,
         }),
+        attributeFilterConfigsActions.setAttributeFilterConfigs({
+            attributeFilterConfigs: dashboard.attributeFilterConfigs,
+        }),
+        dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
         insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),
