@@ -34,48 +34,48 @@ const identifierParametersMessages = defineMessages({
 const identifierParametersSection: IIdentifierParameter[] = [
     {
         titleIntlKey: identifierParametersMessages.insightIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.INSIGHT_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.widgetIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.WIDGET_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.dashboardIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.projectIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.PROJECT_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.workspaceIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.clientIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.CLIENT_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID,
     },
     {
         titleIntlKey: identifierParametersMessages.dataProductIdParameterLabel.id,
-        placeholder: DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID,
+        placeholder: DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID,
     },
 ];
 
 const getDetailContent = (type: string, title: string): JSX.Element => {
     switch (type) {
-        case DRILL_TO_URL_PLACEHOLDER.PROJECT_ID:
-        case DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID:
             return <ProjectIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID:
             return <DashboardIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.WIDGET_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID:
             return <WidgetIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.INSIGHT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID:
             return <InsightIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.CLIENT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID:
             return <ClientIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID:
             return <DataProductIdParameterDetail title={title} />;
         default:
             return <></>;
@@ -99,23 +99,25 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
             {identifierParametersSection
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.CLIENT_ID || enableClientIdParameter,
+                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID ||
+                        enableClientIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.WIDGET_ID || enableWidgetIdParameter,
+                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID ||
+                        enableWidgetIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID ||
+                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID ||
                         enableDataProductIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
                         placeholder !==
                         (enableRenamingProjectToWorkspace
-                            ? DRILL_TO_URL_PLACEHOLDER.PROJECT_ID
-                            : DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID),
+                            ? DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID
+                            : DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID),
                 )
                 .map(({ placeholder, titleIntlKey }) => {
                     const title = intl.formatMessage({ id: titleIntlKey });

@@ -2725,19 +2725,19 @@ export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardD
 // @internal (undocumented)
 export enum DRILL_TO_URL_PLACEHOLDER {
     // (undocumented)
-    CLIENT_ID = "{client_id}",
+    DRILL_TO_URL_PLACEHOLDER_CLIENT_ID = "{client_id}",
     // (undocumented)
-    DASHBOARD_ID = "{dashboard_id}",
+    DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID = "{dashboard_id}",
     // (undocumented)
-    DATA_PRODUCT_ID = "{data_product_id}",
+    DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
     // (undocumented)
-    INSIGHT_ID = "{insight_id}",
+    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{insight_id}",
     // (undocumented)
-    PROJECT_ID = "{project_id}",
+    DRILL_TO_URL_PLACEHOLDER_PROJECT_ID = "{project_id}",
     // (undocumented)
-    WIDGET_ID = "{widget_id}",
+    DRILL_TO_URL_PLACEHOLDER_WIDGET_ID = "{widget_id}",
     // (undocumented)
-    WORKSPACE_ID = "{workspace_id}"
+    DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID = "{workspace_id}"
 }
 
 // @alpha (undocumented)
