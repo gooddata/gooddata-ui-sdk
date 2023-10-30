@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "Ce filtre est verrouillé. Il peut uniquement être modifié en mode Édition.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Ce filtre est verrouillé.",
     "dateFilterDropdown.save": "Enregistrer",
-    "dateFilterDropdown.configuration": "Configuration",
     "filter.configuration.mode.title": "Mode",
     "filter.configuration.mode.interactive.title": "Interactif",
     "filter.configuration.mode.interactive.tooltip": "Les utilisateurs du tableau de bord peuvent voir le filtre et le modifier.",

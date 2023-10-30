@@ -113,6 +113,7 @@
     "filtering": "Wird gefiltert…",
     "dateFilterDropdown.title": "Datumsbereich",
     "dateFilterDropdown.setDefault": "Standarddatumsfilter für{nbsp}Betrachter festlegen:",
+    "dateFilterDropdown.configuration": "Konfiguration",
     "filters.thisMinute.title": "Diese Minute",
     "filters.lastMinute.title": "Letzte Minute",
     "filters.nextMinute.title": "Nächste Minute",

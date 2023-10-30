@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "Dit filter is vergrendeld. U kunt het alleen wijzigen via de bewerkingsmodus.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Dit filter is vergrendeld.",
     "dateFilterDropdown.save": "Opslaan",
-    "dateFilterDropdown.configuration": "Configuratie",
     "filter.configuration.mode.title": "Modus",
     "filter.configuration.mode.interactive.title": "Interactief",
     "filter.configuration.mode.interactive.tooltip": "Dashboard-gebruikers kunnen he filter zien en wijzigen.",

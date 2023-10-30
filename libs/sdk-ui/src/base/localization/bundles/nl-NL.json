@@ -113,6 +113,7 @@
     "filtering": "Filteren…",
     "dateFilterDropdown.title": "Datumbereik",
     "dateFilterDropdown.setDefault": "Standaard datumfilter instellen voor{nbsp}kijkers:",
+    "dateFilterDropdown.configuration": "Configuratie",
     "filters.thisMinute.title": "Deze minuut",
     "filters.lastMinute.title": "Afgelopen minuut",
     "filters.nextMinute.title": "Volgende minuut",

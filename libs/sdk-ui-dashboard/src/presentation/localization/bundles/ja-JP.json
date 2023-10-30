@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "このフィルタはロックされています。編集モードでのみ変更できます。",
     "filter.visibilityMode.tooltip.readonly.viewMode": "このフィルタはロックされています。",
     "dateFilterDropdown.save": "保存",
-    "dateFilterDropdown.configuration": "設定",
     "filter.configuration.mode.title": "モード",
     "filter.configuration.mode.interactive.title": "インタラクティブ",
     "filter.configuration.mode.interactive.tooltip": "ダッシュボードユーザーはフィルタを確認および変更できます。",

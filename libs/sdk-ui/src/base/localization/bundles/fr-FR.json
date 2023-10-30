@@ -113,6 +113,7 @@
     "filtering": "Filtrage…",
     "dateFilterDropdown.title": "Plage de dates",
     "dateFilterDropdown.setDefault": "Définissez le filtre de date par défaut pour les{nbsp}lecteurs :",
+    "dateFilterDropdown.configuration": "Configuration",
     "filters.thisMinute.title": "Cette minute",
     "filters.lastMinute.title": "Dernière minute",
     "filters.nextMinute.title": "Minute suivante",

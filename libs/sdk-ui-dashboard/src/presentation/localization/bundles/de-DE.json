@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "Dieser Filter ist gesperrt. Es kann nur über den Bearbeitungsmodus geändert werden.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Dieser Filter ist gesperrt.",
     "dateFilterDropdown.save": "Speichern",
-    "dateFilterDropdown.configuration": "Konfiguration",
     "filter.configuration.mode.title": "Modus",
     "filter.configuration.mode.interactive.title": "Interaktiv",
     "filter.configuration.mode.interactive.tooltip": "Dashboard-Benutzer können den Filter sehen und ändern.",
