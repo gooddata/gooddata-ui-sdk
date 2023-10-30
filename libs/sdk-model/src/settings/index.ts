@@ -309,6 +309,11 @@ export interface ISettings {
      */
     enablePivotTableIncreaseBucketSize?: boolean;
 
+    /**
+     * Enable user management page in Home UI.
+     */
+    enableUserManagement?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
