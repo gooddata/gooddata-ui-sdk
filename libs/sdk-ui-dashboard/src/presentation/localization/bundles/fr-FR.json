@@ -385,5 +385,17 @@
     "newDashboard.title": "Faire glisser une perception ici",
     "newDashboard.dropInsight": "Déposer une perception",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
-    "attributesDropdown.attributeNameWithData": "avec les données de"
+    "attributesDropdown.attributeNameWithData": "avec les données de",
+    "filter.visibilityMode.tooltip.hidden": "Ce filtre est masqué. Il n'est accessible qu'en mode Édition.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Ce filtre est verrouillé. Il peut uniquement être modifié en mode Édition.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Ce filtre est verrouillé.",
+    "dateFilterDropdown.save": "Enregistrer",
+    "dateFilterDropdown.configuration": "Configuration",
+    "filter.configuration.mode.title": "Mode",
+    "filter.configuration.mode.interactive.title": "Interactif",
+    "filter.configuration.mode.interactive.tooltip": "Les utilisateurs du tableau de bord peuvent voir le filtre et le modifier.",
+    "filter.configuration.mode.locked.title": "Verrouillé",
+    "filter.configuration.mode.locked.tooltip": "Les utilisateurs du tableau de bord peuvent voir le filtre mais ne peuvent pas le modifier.",
+    "filter.configuration.mode.hidden.title": "Masqué",
+    "filter.configuration.mode.hidden.tooltip": "Les utilisateurs du tableau de bord ne peuvent pas voir le filtre, mais il est appliqué."
 }

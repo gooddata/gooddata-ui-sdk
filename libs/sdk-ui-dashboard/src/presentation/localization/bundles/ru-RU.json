@@ -385,5 +385,17 @@
     "newDashboard.title": "Перетащите анализ сюда",
     "newDashboard.dropInsight": "Сбросьте анализ",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
-    "attributesDropdown.attributeNameWithData": "с данными"
+    "attributesDropdown.attributeNameWithData": "с данными",
+    "filter.visibilityMode.tooltip.hidden": "Этот фильтр скрыт. Доступ к нему возможен только через режим редактирования.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Этот фильтр заблокирован. Его можно изменить только в режиме редактирования.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Этот фильтр заблокирован.",
+    "dateFilterDropdown.save": "Сохранять",
+    "dateFilterDropdown.configuration": "Конфигурация",
+    "filter.configuration.mode.title": "Режим",
+    "filter.configuration.mode.interactive.title": "Интерактивный",
+    "filter.configuration.mode.interactive.tooltip": "Пользователи панели могут очень легко настроить фильтр.",
+    "filter.configuration.mode.locked.title": "Заблокировано",
+    "filter.configuration.mode.locked.tooltip": "Пользователи информационной панели могут видеть фильтр, но не могут его изменить.",
+    "filter.configuration.mode.hidden.title": "Скрытый",
+    "filter.configuration.mode.hidden.tooltip": "Пользователи информационной панели не видят фильтр, но он применяется."
 }

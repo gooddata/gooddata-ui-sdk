@@ -385,5 +385,17 @@
     "newDashboard.title": "インサイトをここにドラッグ",
     "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ",
     "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
-    "attributesDropdown.attributeNameWithData": "データの"
+    "attributesDropdown.attributeNameWithData": "データの",
+    "filter.visibilityMode.tooltip.hidden": "このフィルタは非表示です。編集モードでのみアクセスできます。",
+    "filter.visibilityMode.tooltip.readonly.editMode": "このフィルタはロックされています。編集モードでのみ変更できます。",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "このフィルタはロックされています。",
+    "dateFilterDropdown.save": "保存",
+    "dateFilterDropdown.configuration": "設定",
+    "filter.configuration.mode.title": "モード",
+    "filter.configuration.mode.interactive.title": "インタラクティブ",
+    "filter.configuration.mode.interactive.tooltip": "ダッシュボードユーザーはフィルタを確認および変更できます。",
+    "filter.configuration.mode.locked.title": "ロックされています",
+    "filter.configuration.mode.locked.tooltip": "ダッシュボードユーザーはフィルタが表示されますが、変更することはできません。",
+    "filter.configuration.mode.hidden.title": "非表示",
+    "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。"
 }
