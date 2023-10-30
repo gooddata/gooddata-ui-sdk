@@ -1,8 +1,8 @@
 {
-    "id": "acf8b269-a949-44d8-9ac2-678272aa544d",
-    "name": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_afm_computevalidobjects",
+    "id": "430df64e-f4e6-46d7-af5d-46b8637fa65c",
+    "name": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_afm_computevalidobjects",
     "request": {
-        "url": "/api/v1/actions/workspaces/b51b89a10e5845189a6fea8e96dba226/execution/afm/computeValidObjects",
+        "url": "/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/afm/computeValidObjects",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -23,21 +23,25 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_afm_computevalidobjects-acf8b269-a949-44d8-9ac2-678272aa544d.json",
+        "bodyFileName": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_afm_computevalidobjects-430df64e-f4e6-46d7-af5d-46b8637fa65c.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "acf8b269-a949-44d8-9ac2-678272aa544d",
+    "uuid": "430df64e-f4e6-46d7-af5d-46b8637fa65c",
     "persistent": true,
-    "insertionIndex": 15
+    "insertionIndex": 16
 }

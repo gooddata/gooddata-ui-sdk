@@ -19820,7 +19820,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "attributeHierarchy",
     ],
   },
-  "workspace": "b51b89a10e5845189a6fea8e96dba226",
+  "workspace": "a9699e80b0ae484da980bde0b75499e3",
 }
 `;
 
@@ -23394,6 +23394,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "b51b89a10e5845189a6fea8e96dba226",
+  "workspace": "a9699e80b0ae484da980bde0b75499e3",
 }
 `;

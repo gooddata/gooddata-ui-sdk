@@ -1,8 +1,8 @@
 {
-    "id": "e9aee9e4-3378-4e17-914e-262f95827c33",
-    "name": "api_v1_actions_workspaces_b51b89a10e5845189a6fea8e96dba226_execution_collectlabelelements",
+    "id": "8afa6315-c396-424f-ae2f-7d50c169c440",
+    "name": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/b51b89a10e5845189a6fea8e96dba226/execution/collectLabelElements?offset=5000&limit=100",
+        "url": "/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/collectLabelElements?offset=6&limit=2",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -23,21 +23,20 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":5000,\"next\":null}}",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"1-800 We Answer\",\"primaryTitle\":\"1-800 We Answer\"},{\"title\":\"1-888-OhioComp\",\"primaryTitle\":\"1-888-OhioComp\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":6,\"next\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/collectLabelElements?limit=2&offset=8\"}}",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "Expires": "0",
             "X-XSS-Protection": "1 ; mode=block",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "e9aee9e4-3378-4e17-914e-262f95827c33",
+    "uuid": "8afa6315-c396-424f-ae2f-7d50c169c440",
     "persistent": true,
-    "insertionIndex": 12
+    "insertionIndex": 10
 }
