@@ -57,6 +57,8 @@ export enum TigerFeaturesNames {
     EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
     //boolean + possible values: enabled, disabled
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
+    // boolean + possible values: enabled, disabled
+    EnableUserManagement = "enableUserManagement",
 }
 
 export type ITigerFeatureFlags = {
@@ -85,6 +87,7 @@ export type ITigerFeatureFlags = {
     enableAttributeHierarchies: typeof FeatureFlagsValues["enableAttributeHierarchies"][number];
     enableUnavailableItemsVisible: typeof FeatureFlagsValues["enableUnavailableItemsVisible"][number];
     enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
+    enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -113,6 +116,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAttributeHierarchies: false,
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
+    enableUserManagement: false,
 };
 
 export const FeatureFlagsValues = {
@@ -145,4 +149,5 @@ export const FeatureFlagsValues = {
     enableAttributeHierarchies: [true, false] as const,
     enableUnavailableItemsVisible: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
+    enableUserManagement: [true, false] as const,
 };

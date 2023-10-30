@@ -2414,6 +2414,7 @@ export interface ISettings {
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
     enableUnavailableItemsVisible?: boolean;
+    enableUserManagement?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     formatLocale?: string;
