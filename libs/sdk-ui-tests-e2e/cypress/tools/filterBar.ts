@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
 
@@ -285,6 +285,57 @@ export class AttributeFilter {
 
     hasFilterListSize(length: number) {
         this.getDropdownElement().find(".s-list-search-selection-size").should("have.text", `(${length})`);
+        return this;
+    }
+
+    getConfigurationMode(mode: DashboardAttributeFilterConfigMode) {
+        return cy.get(".s-configuration-item-mode").find(`.s-config-state-${mode}`);
+    }
+
+    selectConfigurationMode(mode: DashboardAttributeFilterConfigMode) {
+        this.getConfigurationMode(mode).click();
+        return this;
+    }
+
+    hoverOnConfigurationMode(mode: DashboardDateFilterConfigMode) {
+        this.getConfigurationMode(mode).trigger("mouseover");
+    }
+
+    getHiddenIcon() {
+        return this.getElement().find(".s-gd-icon-invisible");
+    }
+
+    isHiddenIconVisible(expected = true) {
+        this.getHiddenIcon().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hoverOnHiddenIcon() {
+        this.getHiddenIcon().trigger("mouseover", { force: true });
+        return this;
+    }
+
+    getLockedIcon() {
+        return this.getElement().find(".s-gd-icon-lock");
+    }
+
+    isLockedIconVisible(expected = true) {
+        this.getLockedIcon().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hoverOnLockedIcon() {
+        this.getLockedIcon().trigger("mouseover", { force: true });
+        return this;
+    }
+
+    isVisible(expected = true) {
+        this.getElement().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hasDropdownBodyOpen(expected = true) {
+        this.getDropdownElement().should(expected ? "be.visible" : "not.exist");
         return this;
     }
 }

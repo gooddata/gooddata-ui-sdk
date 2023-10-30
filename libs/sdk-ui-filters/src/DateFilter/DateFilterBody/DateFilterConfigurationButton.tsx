@@ -19,7 +19,7 @@ export const DateFilterConfigurationButton: React.FC<IDateFilterConfigurationBut
     const { onConfiguration } = props;
 
     return (
-        <div className="gd-date-filter-configuration-button">
+        <div className="gd-date-filter-configuration-button s-gd-date-filter-configuration-button">
             <BubbleHoverTrigger>
                 <Button
                     className="gd-button-link gd-button-icon-only gd-icon-settings gd-button-small gd-configuration-button s-configuration-button"

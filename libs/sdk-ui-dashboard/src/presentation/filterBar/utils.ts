@@ -32,7 +32,7 @@ export const getVisibilityIcon = (
     if (mode === DashboardDateFilterConfigModeValues.HIDDEN) {
         return {
             ...VISIBILITY_BUBBLE_SETTINGS,
-            icon: "gd-icon-invisible",
+            icon: "gd-icon-invisible s-gd-icon-invisible",
             tooltip: intl.formatMessage(messages.filterHiddenTooltip),
         };
     }
@@ -40,7 +40,7 @@ export const getVisibilityIcon = (
     if (mode === DashboardDateFilterConfigModeValues.READONLY) {
         return {
             ...VISIBILITY_BUBBLE_SETTINGS,
-            icon: "gd-icon-lock",
+            icon: "gd-icon-lock s-gd-icon-lock",
             tooltip: intl.formatMessage(
                 isInEditMode
                     ? messages.filterReadonlyInEditModeTooltip
