@@ -114,6 +114,8 @@ import {
     PivotTableOfFirstLastValueWithRunSum,
     PivotTableOfFirstLastValueWithRunVar,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableWithFisrtValueLastValueScenario";
+import { DashboardTigerHideFilters } from "../components/Scenarios/Dashboard/DashboardTigerHideFilters";
+import { DashboardTigerReadonlyDateFilter } from "../components/Scenarios/Dashboard/DashboardTigerReadonlyDateFilter";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -123,6 +125,8 @@ export const SCENARIO_KEYS = {
     NEW_DASHBOARD: "dashboard/new-dashboard",
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
+    DASHBOARD_TIGER_HIDE_FILTERS: "dashboard/dashboard-tiger-hide-filters",
+    DASHBOARD_TIGER_READONLY_DATE_FILTER: "dashboard/dashboard-tiger-readonly-date-filter",
     DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
     DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS: "dashboard/dashboard-tiger-unknown-visualization",
     DASHBOARD_TIGER_CHARTS: "dashboard/dashboard-tiger-charts",
@@ -254,6 +258,8 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.NEW_DASHBOARD, NewDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_HIDE_FILTERS, DashboardTigerHideFilters],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_READONLY_DATE_FILTER, DashboardTigerReadonlyDateFilter],
     [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],
     [SCENARIO_KEYS.DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS, DashboardScenarioTigerUnknownVisualization],
     [SCENARIO_KEYS.DASHBOARD_TIGER_CHARTS, DashboardScenarioTigerCharts],

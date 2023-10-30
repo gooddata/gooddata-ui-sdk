@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-13T07:10:45.122Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-30T06:12:00.483Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2772,4 +2772,12 @@ export const Dashboards = {
      * Dashboard Title: KD with invalid insight
      * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12
      */ KDWithInvalidInsight: "f50c7076-1d45-4031-a4fd-564459254b12",
+    /**
+     * Dashboard Title: Dashboard Readonly Date Filter
+     * Dashboard ID: 62554df1-31a8-49c7-bfed-524771a83b1a
+     */ DashboardReadonlyDateFilter: "62554df1-31a8-49c7-bfed-524771a83b1a",
+    /**
+     * Dashboard Title: Dashboard Hide Filters
+     * Dashboard ID: c4e4916e-ccc2-46d1-8202-8321249ec2a3
+     */ DashboardHideFilters: "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
 };

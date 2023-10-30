@@ -20,7 +20,7 @@ export const DateFilterConfigurationActions: React.FC<ICustomConfigureDateFilter
     return (
         <div className="gd-extended-date-filter-actions">
             <div className="gd-extended-date-filter-actions-left-content" />
-            <div className="gd-extended-date-filter-actions-right-content">
+            <div className="gd-extended-date-filter-actions-right-content s-gd-extended-date-filter-actions-right-content">
                 <Button
                     className="gd-button-secondary gd-button-small s-date-filter-cancel"
                     onClick={onCancelButtonClick}

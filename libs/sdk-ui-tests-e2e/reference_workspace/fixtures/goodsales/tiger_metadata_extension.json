@@ -4,6 +4,158 @@
         "analyticalDashboards": [
             {
                 "content": {
+                    "dateFilterConfig": {
+                        "filterName": "Date range",
+                        "mode": "readonly"
+                    },
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "84b43119-13a0-468b-a089-6b4680e25b00",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 11,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-10-30 05:37",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "62554df1-31a8-49c7-bfed-524771a83b1a",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard Readonly Date Filter"
+            },
+            {
+                "content": {
+                    "attributeFilterConfigs": [
+                        {
+                            "localIdentifier": "d37c609e20da4de9ad298e53218c2c80",
+                            "mode": "readonly"
+                        },
+                        {
+                            "localIdentifier": "8cbf790c39cb48929b76996eff7532f9",
+                            "mode": "hidden"
+                        }
+                    ],
+                    "dateFilterConfig": {
+                        "filterName": "Date range",
+                        "mode": "hidden"
+                    },
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "35fb83f8-34eb-4b88-abf7-2900420d42af",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 11,
+                                                "gridWidth": 5
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-10-30 05:35",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard Hide Filters"
+            },
+            {
+                "content": {
                     "filterContextRef": {
                         "identifier": {
                             "id": "19551c0c-62a1-40ee-898b-b46b95e59074",
@@ -1920,6 +2072,87 @@
         ],
         "dashboardPlugins": [],
         "filterContexts": [
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "84b43119-13a0-468b-a089-6b4680e25b00",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_account.account.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "d37c609e20da4de9ad298e53218c2c80",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_city.id.cityname",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "8cbf790c39cb48929b76996eff7532f9",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_activity.subject",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "5993a14217d4470c99a761e24fd2d74d",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "35fb83f8-34eb-4b88-abf7-2900420d42af",
+                "title": "filterContext"
+            },
             {
                 "content": {
                     "filters": [
