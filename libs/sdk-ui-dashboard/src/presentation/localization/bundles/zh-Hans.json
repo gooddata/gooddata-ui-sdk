@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "此筛选条件已锁定。只能通过编辑模式进行更改。",
     "filter.visibilityMode.tooltip.readonly.viewMode": "此筛选条件已锁定",
     "dateFilterDropdown.save": "保存",
-    "dateFilterDropdown.configuration": "配置",
     "filter.configuration.mode.title": "模式",
     "filter.configuration.mode.interactive.title": "互动",
     "filter.configuration.mode.interactive.tooltip": "仪表板用户可以查看和更改筛选条件。",

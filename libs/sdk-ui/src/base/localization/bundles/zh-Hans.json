@@ -113,6 +113,7 @@
     "filtering": "正在筛选…",
     "dateFilterDropdown.title": "日期范围",
     "dateFilterDropdown.setDefault": "为 {nbsp} 查看器设置默认日期筛选器：",
+    "dateFilterDropdown.configuration": "配置",
     "filters.thisMinute.title": "这一分钟",
     "filters.lastMinute.title": "上一分钟",
     "filters.nextMinute.title": "下一分钟",

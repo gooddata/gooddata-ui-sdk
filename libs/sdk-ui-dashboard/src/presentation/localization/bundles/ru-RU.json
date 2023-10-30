@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "Этот фильтр заблокирован. Его можно изменить только в режиме редактирования.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Этот фильтр заблокирован.",
     "dateFilterDropdown.save": "Сохранять",
-    "dateFilterDropdown.configuration": "Конфигурация",
     "filter.configuration.mode.title": "Режим",
     "filter.configuration.mode.interactive.title": "Интерактивный",
     "filter.configuration.mode.interactive.tooltip": "Пользователи панели могут очень легко настроить фильтр.",
