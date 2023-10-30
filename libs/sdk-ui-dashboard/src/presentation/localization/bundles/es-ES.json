@@ -390,7 +390,6 @@
     "filter.visibilityMode.tooltip.readonly.editMode": "Este filtro está bloqueado. Solo se puede cambiar en el modo Edición.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Este filtro está bloqueado.",
     "dateFilterDropdown.save": "Guardar",
-    "dateFilterDropdown.configuration": "Configuración",
     "filter.configuration.mode.title": "Modo",
     "filter.configuration.mode.interactive.title": "Interactivo",
     "filter.configuration.mode.interactive.tooltip": "Los usuarios del panel pueden ver y cambiar el filtro.",

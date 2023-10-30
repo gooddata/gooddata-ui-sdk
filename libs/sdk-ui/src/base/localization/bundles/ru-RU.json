@@ -113,6 +113,7 @@
     "filtering": "Фильтрация…",
     "dateFilterDropdown.title": "Диапазон дат",
     "dateFilterDropdown.setDefault": "Установите фильтр даты по умолчанию для{nbsp}зрителей:",
+    "dateFilterDropdown.configuration": "Конфигурация",
     "filters.thisMinute.title": "Эта минута",
     "filters.lastMinute.title": "Последняя минута",
     "filters.nextMinute.title": "Следующая минута",

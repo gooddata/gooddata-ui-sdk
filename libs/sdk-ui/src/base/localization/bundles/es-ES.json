@@ -113,6 +113,7 @@
     "filtering": "Filtrando…",
     "dateFilterDropdown.title": "Rango de fechas",
     "dateFilterDropdown.setDefault": "Establecer filtro de fecha predeterminado para{nbsp}lectores:",
+    "dateFilterDropdown.configuration": "Configuración",
     "filters.thisMinute.title": "Este minuto",
     "filters.lastMinute.title": "Último minuto",
     "filters.nextMinute.title": "Minuto siguiente",

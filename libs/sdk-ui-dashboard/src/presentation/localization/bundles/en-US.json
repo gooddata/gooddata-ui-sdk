@@ -2211,12 +2211,6 @@
         "comment": "Save button label in date filter dropdown configuration",
         "limit": 0
     },
-    "dateFilterDropdown.configuration": {
-        "value": "Configuration",
-        "comment": "Configuration button label in date filter dropdown",
-        "limit": 0
-    },
-
     "filter.configuration.mode.title": {
         "value": "Mode",
         "comment": "The title of the state section in date filter dropdown configuration",

@@ -113,6 +113,7 @@
     "filtering": "フィルタリング中…",
     "dateFilterDropdown.title": "日付範囲",
     "dateFilterDropdown.setDefault": "ビューアーのデフォルトの{nbsp}日付フィルターを設定：",
+    "dateFilterDropdown.configuration": "設定",
     "filters.thisMinute.title": "現時点",
     "filters.lastMinute.title": "一分前",
     "filters.nextMinute.title": "一分後",
