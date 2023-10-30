@@ -385,5 +385,17 @@
     "newDashboard.title": "Arrastre aquí la perspectiva",
     "newDashboard.dropInsight": "Soltar perspectiva",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
-    "attributesDropdown.attributeNameWithData": "con datos de"
+    "attributesDropdown.attributeNameWithData": "con datos de",
+    "filter.visibilityMode.tooltip.hidden": "Este filtro está oculto. Solo se puede acceder a él desde el modo Edición.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Este filtro está bloqueado. Solo se puede cambiar en el modo Edición.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Este filtro está bloqueado.",
+    "dateFilterDropdown.save": "Guardar",
+    "dateFilterDropdown.configuration": "Configuración",
+    "filter.configuration.mode.title": "Modo",
+    "filter.configuration.mode.interactive.title": "Interactivo",
+    "filter.configuration.mode.interactive.tooltip": "Los usuarios del panel pueden ver y cambiar el filtro.",
+    "filter.configuration.mode.locked.title": "Bloqueado",
+    "filter.configuration.mode.locked.tooltip": "Los usuarios del panel pueden ver el filtro, pero no cambiarlo.",
+    "filter.configuration.mode.hidden.title": "Oculto",
+    "filter.configuration.mode.hidden.tooltip": "Los usuarios del panel no pueden ver el filtro, pero se aplica."
 }
