@@ -16,7 +16,7 @@ import {
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { kpiAlertDialogAlignPoints } from "../../kpi/ViewModeDashboardKpi/KpiAlerts/KpiAlertDialog/alignPoints.js";
-import { KpiAlertDialogWhenTriggeredPicker } from "../../kpi/ViewModeDashboardKpi/KpiAlerts/KpiAlertDialog/KpiAlertDialogWhenTriggeredPicker.js";
+import { WidgetAlertDialogWhenTriggeredPicker } from "./WidgetAlertDialogWhenTriggeredPicker.js";
 import { IWidgetAlertDefinition, ObjRef } from "@gooddata/sdk-model";
 import {
     createAlert,
@@ -245,9 +245,9 @@ export const InsightWidgetAlert: React.FC<IInsightWidgetAlertProps> = (props) =>
                                         )}
                                     />
                                 </div>
-                                <Typography tagName="p">When the value is</Typography>
+                                <Typography tagName="p">When the value</Typography>
                                 <div className="fast-track-row">
-                                    <KpiAlertDialogWhenTriggeredPicker
+                                    <WidgetAlertDialogWhenTriggeredPicker
                                         whenTriggered={whenTriggered}
                                         intl={intl}
                                         onWhenTriggeredChange={onAlertTypeChange}
