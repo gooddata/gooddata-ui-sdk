@@ -5,7 +5,7 @@ import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
 // Try editing lines below 👇
-const dashboard = Catalog.Dashboards._1Overview;
+const dashboard = Catalog.Dashboards._2Sales;
 //const dashboard = Catalog.Dashboards._3Customers;
 
 export default () => {

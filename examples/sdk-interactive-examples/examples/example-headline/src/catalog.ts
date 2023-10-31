@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-26T12:08:08.287Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-31T15:38:46.606Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -21,14 +21,14 @@ export const CustomerAge: IAttribute = newAttribute("customer_age");
  */
 export const CustomerCity = {
     /**
-     * Display Form Title: City pushpin latitude
-     * Display Form ID: geo__customer_city__city_pushpin_latitude
-     */
-    CityPushpinLatitude: newAttribute("geo__customer_city__city_pushpin_latitude"),
-    /**
      * Display Form Title: City pushpin longitude
      * Display Form ID: geo__customer_city__city_pushpin_longitude
-     */ CityPushpinLongitude: newAttribute("geo__customer_city__city_pushpin_longitude"),
+     */
+    CityPushpinLongitude: newAttribute("geo__customer_city__city_pushpin_longitude"),
+    /**
+     * Display Form Title: City pushpin latitude
+     * Display Form ID: geo__customer_city__city_pushpin_latitude
+     */ CityPushpinLatitude: newAttribute("geo__customer_city__city_pushpin_latitude"),
     /**
      * Display Form Title: Customer city
      * Display Form ID: customer_city
@@ -50,14 +50,14 @@ export const CustomerEmail: IAttribute = newAttribute("customer_email");
  */
 export const CustomerId = {
     /**
-     * Display Form Title: Customer name
-     * Display Form ID: customer_name
-     */
-    CustomerName: newAttribute("customer_name"),
-    /**
      * Display Form Title: Customer id
      * Display Form ID: customer_id
-     */ Default: newAttribute("customer_id"),
+     */
+    Default: newAttribute("customer_id"),
+    /**
+     * Display Form Title: Customer name
+     * Display Form ID: customer_name
+     */ CustomerName: newAttribute("customer_name"),
 };
 /**
  * Attribute Title: Customer state
@@ -100,14 +100,14 @@ export const ProductCategory: IAttribute = newAttribute("product_category");
  */
 export const ProductId = {
     /**
-     * Display Form Title: Product id image web
-     * Display Form ID: product_id_image_web
-     */
-    ImageWeb: newAttribute("product_id_image_web"),
-    /**
      * Display Form Title: Product id
      * Display Form ID: product_id
-     */ Default: newAttribute("product_id"),
+     */
+    Default: newAttribute("product_id"),
+    /**
+     * Display Form Title: Product id image web
+     * Display Form ID: product_id_image_web
+     */ ImageWeb: newAttribute("product_id_image_web"),
     /**
      * Display Form Title: Product name
      * Display Form ID: product_name
@@ -1823,4 +1823,8 @@ export const Dashboards = {
      * Dashboard Title: 3. Customers
      * Dashboard ID: 370ec88c-2235-4e65-bb7c-5318280069a1
      */ _3Customers: "370ec88c-2235-4e65-bb7c-5318280069a1",
+    /**
+     * Dashboard Title: 2. Sales
+     * Dashboard ID: bf439696-d6c6-4d41-a102-dd98e2f3da35
+     */ _2Sales: "bf439696-d6c6-4d41-a102-dd98e2f3da35",
 };
