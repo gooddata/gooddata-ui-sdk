@@ -50,8 +50,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         interactiveAttributeFilter
             .isVisible(true)
             .open()
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .selectConfigurationMode("hidden")
             .saveConfiguration()
             .isHiddenIconVisible();
@@ -74,8 +73,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         interactiveAttributeFilter
             .isVisible(true)
             .open()
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .hoverOnConfigurationMode("hidden");
         bubbleTooltip.hasTooltip("Dashboard users cannot see the filter but it is applied.");
     });
@@ -105,8 +103,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         interactiveAttributeFilter
             .isVisible(true)
             .open()
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .selectConfigurationMode("hidden")
             .saveConfiguration()
             .hoverOnHiddenIcon();
@@ -141,12 +138,11 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
         insightsCatalog.waitForCatalogLoad();
-        
+
         lockedAttributeFilter
             .open()
             .hasDropdownBodyOpen(true)
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .selectConfigurationMode("hidden")
             .saveConfiguration()
             .isHiddenIconVisible();
@@ -169,8 +165,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         interactiveAttributeFilter
             .isVisible(true)
             .open()
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .hoverOnConfigurationMode("readonly");
         bubbleTooltip.hasTooltip("Dashboard users can see the filter but cannot change it.");
     });
@@ -199,8 +194,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         interactiveAttributeFilter
             .isVisible(true)
             .open()
-            .isLoaded()
-            .selectConfiguration()
+            .selectConfiguration(500)
             .selectConfigurationMode("readonly")
             .saveConfiguration()
             .hoverOnLockedIcon();
@@ -232,5 +226,45 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
 
         filterBar.addAttribute("Account").isLockedIconVisible(false).isHiddenIconVisible(false);
+    });
+
+    it("Should render correct mode in configuration overlay", () => {
+        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        editMode.edit().saveButtonEnabled(false);
+        insightsCatalog.waitForCatalogLoad();
+
+        dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("hidden");
+        interactiveAttributeFilter.open().selectConfiguration(500).hasConfigurationModeCheckedAt("active");
+        hiddenAttributeFilter.open().selectConfiguration(500).hasConfigurationModeCheckedAt("hidden");
+        lockedAttributeFilter.open().selectConfiguration(500).hasConfigurationModeCheckedAt("readonly");
+    });
+
+    it("Should render correct date filter readonly mode in configuration overlay", () => {
+        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
+        editMode.edit().saveButtonEnabled(false);
+        insightsCatalog.waitForCatalogLoad();
+
+        dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("readonly");
+    });
+
+    it("Use interactive mode as default for date filter mode in configuration overlay", () => {
+        Navigation.visit("dashboard/dashboard-tiger");
+        editMode.edit().saveButtonEnabled(false);
+        insightsCatalog.waitForCatalogLoad();
+
+        dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("active");
+    });
+
+    it("Use interactive mode as default for attribute filter mode in configuration overlay", () => {
+        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        editMode.edit().saveButtonEnabled(false);
+        insightsCatalog.waitForCatalogLoad();
+
+        lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
+        filterBar
+            .addAttribute("Account")
+            .isLoaded()
+            .selectConfiguration(500)
+            .hasConfigurationModeCheckedAt("active");
     });
 });
