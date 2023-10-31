@@ -43,7 +43,7 @@ export interface IWidgetAlertBase {
     /**
      * Rule to apply
      */
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly whenTriggered: "underThreshold" | "aboveThreshold" | "outliers";
 
     /**
      * Action to trigger when the alert is triggered.

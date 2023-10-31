@@ -2968,7 +2968,7 @@ export interface IWidgetAlertBase {
     readonly isTriggered: boolean;
     readonly threshold: number;
     readonly title: string;
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly whenTriggered: "underThreshold" | "aboveThreshold" | "outliers";
     readonly widget: ObjRef;
 }
 

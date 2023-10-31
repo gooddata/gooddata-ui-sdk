@@ -611,6 +611,8 @@ export const convertWidgetAlert = (alert: IWidgetAlert | IWidgetAlertDefinition)
 
     const alertUri = ref && refToUri(ref);
 
+    invariant(whenTriggered != "outliers", "The 'outliers' alert type is not supported on Bear.")
+
     return {
         kpiAlert: {
             content: {
