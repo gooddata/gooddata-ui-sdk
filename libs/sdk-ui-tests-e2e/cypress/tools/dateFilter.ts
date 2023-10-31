@@ -213,4 +213,9 @@ export class DateFilter {
         this.getDropdownElement().should(expected ? "be.visible" : "not.exist");
         return this;
     }
+
+    hasConfigurationModeCheckedAt(mode: DashboardDateFilterConfigMode) {
+        this.getConfigurationMode(mode).should("have.attr", "checked");
+        return this;
+    }
 }

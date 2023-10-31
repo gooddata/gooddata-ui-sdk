@@ -198,7 +198,12 @@ export class AttributeFilter {
         return this;
     }
 
-    selectConfiguration() {
+    selectConfiguration(delay?: number) {
+        // delay to make sure the attribute elements are loaded
+        if (delay) {
+            cy.wait(delay);
+        }
+
         this.getDropdownElement().find(".s-configuration-button").click();
         return this;
     }
@@ -336,6 +341,11 @@ export class AttributeFilter {
 
     hasDropdownBodyOpen(expected = true) {
         this.getDropdownElement().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hasConfigurationModeCheckedAt(mode: DashboardAttributeFilterConfigMode) {
+        this.getConfigurationMode(mode).should("have.attr", "checked");
         return this;
     }
 }
