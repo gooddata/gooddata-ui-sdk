@@ -1,0 +1,4 @@
+.env
+esm
+dist
+node_modules
