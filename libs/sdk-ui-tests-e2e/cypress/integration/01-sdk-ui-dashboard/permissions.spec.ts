@@ -9,6 +9,7 @@ import { Users } from "../../tools/users";
 import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { generateUUID } from "../../tools/utils";
+import { Messages } from "../../tools/messages";
 
 describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
     const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
@@ -80,6 +81,8 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
                 .setPermission(username, "Can view & share")
                 .save();
 
+            new Messages().hasSuccessMessage("Sharing updated.");
+
             // check that viewer can share
             Users.switchToUser(username);
             Navigation.visit("dashboard/dashboard-tiger-permissions");
@@ -148,7 +151,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
             new TopBar().enterSharing();
 
             const shareDialog = new ShareDialog();
-            shareDialog.openDropdownForUserOrGroup(username).isPermissionDisabled("Can edit & share");
+            shareDialog.isGranularPermissionButtonEnabled(username, false);
         });
     });
 
@@ -229,17 +232,9 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
             Users.switchToUser(firstUser);
             Navigation.visit("dashboard/dashboard-tiger-permissions");
             new TopBar().enterSharing();
-            new ShareDialog()
-                .dialogExists(true)
-                .hasPermissionSet(firstGroup, "Can view & share")
-                .hasPermissionSet(firstUser, "Can view & share");
+            new ShareDialog().dialogExists(true).hasPermissionSet(firstGroup, "Can view & share");
 
-            // cannot raise permissions but also cannot lower permissions as
-            // share is already implied by group membership
-            new ShareDialog()
-                .openDropdownForUserOrGroup(firstUser)
-                .isPermissionDisabled("Can edit & share")
-                .isPermissionDisabled("Can view");
+            new ShareDialog().isGranularPermissionButtonEnabled(firstUser, false);
         });
     });
 });

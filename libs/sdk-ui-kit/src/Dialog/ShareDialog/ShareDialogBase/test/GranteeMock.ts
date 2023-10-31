@@ -178,6 +178,13 @@ export const granularUserAccess: IGranularUserAccess = {
     inheritedPermissions: ["SHARE"],
 };
 
+export const granularUserAccessNoInheritPermission: IGranularUserAccess = {
+    ...userAccessGrantee,
+    type: "granularUser",
+    permissions: ["VIEW"],
+    inheritedPermissions: [],
+};
+
 export const granularUserGroupAccess: IGranularUserGroupAccess = {
     ...groupAccessGrantee,
     type: "granularGroup",

@@ -221,8 +221,10 @@ describe("permissions logic", () => {
                         ],
                     },
                     remove: {
-                        enabled: true,
-                        tooltip: "",
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.granular${
+                            type === "granularUser" ? "User" : "Group"
+                        }.tooltip.cannotRemoveFromParent`,
                     },
                     change: {
                         enabled: true,
