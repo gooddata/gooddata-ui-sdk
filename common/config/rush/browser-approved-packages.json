@@ -479,6 +479,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "ajv",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "async",
       "allowedCategories": [ "production" ]
     },
@@ -1057,6 +1061,10 @@
     {
       "name": "ts-invariant",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "ts-json-schema-generator",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "ts-loader",
