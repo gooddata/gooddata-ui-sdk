@@ -22,6 +22,14 @@
         color: inherit;
         font: inherit;
     }
+
+    .gd-attribute-filter-dropdown-body__next {
+        // override the fixed width of the attribute filter dropdown body
+        // stylelint-disable-next-line declaration-no-important
+        width: auto !important;
+        min-width: 245px;
+        max-width: 270px;
+    }
 }
 
 .gd-dash-content {
