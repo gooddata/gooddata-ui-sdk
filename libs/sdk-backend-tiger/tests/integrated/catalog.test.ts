@@ -2,6 +2,7 @@
 import { describe, beforeAll, expect, it } from "vitest";
 import { testBackend, testWorkspace, sanitizeWorkspace, sortToOrder } from "./backend.js";
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
+import { validateData } from "./jsonSchema.js";
 
 import * as Md from "../../src/fixtures/full.js";
 
@@ -16,6 +17,7 @@ describe("tiger catalog", () => {
         const result = await backend.workspace(testWorkspace()).catalog().load();
         const sanitizedResult = sanitizeWorkspace(result);
         expect(sortToOrder(sanitizedResult)).toMatchSnapshot();
+        validateData(sanitizedResult, { type: "IWorkspaceCatalog" });
     });
 
     it("should read catalog for reference workspace with additional date attributes", async () => {
