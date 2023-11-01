@@ -139,10 +139,10 @@ export const convertFilterContextItem: (filterContextItem: FilterContextItem) =>
 export const convertFilterReference: (filterReference: IDateFilterReference | IAttributeFilterReference) => IDashboardFilterReference;
 
 // @internal (undocumented)
-export const convertInsight: (insight: IInsight) => IVisualizationObject;
+export const convertInsight: (insight: IInsight, options?: IConvertInsightOptions) => IVisualizationObject;
 
 // @internal (undocumented)
-export const convertInsightDefinition: (insight: IInsightDefinition) => IVisualizationObject;
+export const convertInsightDefinition: (insight: IInsightDefinition, options?: IConvertInsightOptions) => IVisualizationObject;
 
 // @internal (undocumented)
 export const convertKpiDrill: (kpi: IWrappedKPI) => IDrillToLegacyDashboard;
@@ -196,6 +196,11 @@ export interface IConversionData {
     properties: VisualizationProperties;
     // (undocumented)
     references: IReferenceItems;
+}
+
+// @internal (undocumented)
+export interface IConvertInsightOptions {
+    allowNullValuesInAttributeFilters?: boolean;
 }
 
 // @internal (undocumented)

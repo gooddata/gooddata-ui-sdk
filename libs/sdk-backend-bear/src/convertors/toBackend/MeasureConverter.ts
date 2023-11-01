@@ -95,7 +95,7 @@ const convertSimpleMeasureDefinition = (
 
     const aggregation = convertAggregation(measureAggregation(measure));
     const computeRatio = measureDoesComputeRatio(measure);
-    const filters = (measureFilters(measure) || []).map(convertFilter);
+    const filters = (measureFilters(measure) || []).map((filter) => convertFilter(filter));
 
     return {
         measureDefinition: {
