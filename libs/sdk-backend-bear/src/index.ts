@@ -69,6 +69,11 @@ export {
 };
 
 /**
+ * @internal
+ */
+export { IConvertInsightOptions } from "./convertors/toBackend/FilterConverter.js";
+
+/**
  * Some of the convertors from bear types are exported through this so that they can be used by our
  * applications that were using bear-specific types in their state.
  *

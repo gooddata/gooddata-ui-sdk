@@ -33,7 +33,7 @@ import isEmpty from "lodash/isEmpty.js";
 import omitBy from "lodash/omitBy.js";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter.js";
 import { serializeProperties } from "../fromBackend/PropertiesConverter.js";
-import { convertExtendedFilter } from "./FilterConverter.js";
+import { convertExtendedFilter, IConvertInsightOptions } from "./FilterConverter.js";
 import { convertMeasure } from "./MeasureConverter.js";
 
 const convertAttribute = (attribute: IAttribute): IVisualizationObjectAttribute => {
@@ -64,7 +64,10 @@ const convertBucket = (bucket: IBucket): IBearBucket => {
 /**
  * @internal
  */
-export const convertInsightContent = (insight: IInsightDefinition): IVisualizationObjectContent => {
+export const convertInsightContent = (
+    insight: IInsightDefinition,
+    options?: IConvertInsightOptions,
+): IVisualizationObjectContent => {
     const { properties, references } = convertUrisToReferences({
         properties: insightProperties(insight),
         references: {},
@@ -72,7 +75,7 @@ export const convertInsightContent = (insight: IInsightDefinition): IVisualizati
 
     const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
 
-    const filters = insightFilters(insight).map(convertExtendedFilter);
+    const filters = insightFilters(insight).map((filter) => convertExtendedFilter(filter, options));
 
     return {
         buckets: insightBuckets(insight).map(convertBucket),
@@ -88,9 +91,12 @@ export const convertInsightContent = (insight: IInsightDefinition): IVisualizati
 /**
  * @internal
  */
-export const convertInsightDefinition = (insight: IInsightDefinition): IVisualizationObject => {
+export const convertInsightDefinition = (
+    insight: IInsightDefinition,
+    options?: IConvertInsightOptions,
+): IVisualizationObject => {
     return {
-        content: convertInsightContent(insight),
+        content: convertInsightContent(insight, options),
         meta: {
             title: insightTitle(insight),
             category: "visualizationObject",
@@ -102,8 +108,8 @@ export const convertInsightDefinition = (insight: IInsightDefinition): IVisualiz
 /**
  * @internal
  */
-export const convertInsight = (insight: IInsight): IVisualizationObject => {
-    const convertedDefinition = convertInsightDefinition(insight);
+export const convertInsight = (insight: IInsight, options?: IConvertInsightOptions): IVisualizationObject => {
+    const convertedDefinition = convertInsightDefinition(insight, options);
     const locked = insightIsLocked(insight);
 
     return {
