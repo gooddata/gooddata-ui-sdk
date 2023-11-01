@@ -2817,55 +2817,6 @@
                     }
                 }
             },
-            "put": {
-                "tags": ["API tokens", "entities", "user-model-controller"],
-                "summary": "Put new API token for the user",
-                "operationId": "updateEntity@ApiTokens",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "filter=bearerToken==someString"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiApiTokenInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiApiTokenOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "delete": {
                 "tags": ["API tokens", "entities", "user-model-controller"],
                 "summary": "Delete an API Token for a user",
@@ -12514,73 +12465,6 @@
                     }
                 ]
             },
-            "JsonApiApiTokenInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
-                    }
-                }
-            },
-            "JsonApiApiTokenIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": ["apiToken"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
-            "JsonApiApiTokenOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
-            },
-            "JsonApiApiTokenOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": ["apiToken"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "bearerToken": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
             "JsonApiUserSettingInDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -13850,7 +13734,7 @@
                 }
             },
             "JsonApiAnalyticalDashboardPatch": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -13950,7 +13834,7 @@
                 }
             },
             "JsonApiAnalyticalDashboardOut": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -14004,6 +13888,7 @@
                         }
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -14839,7 +14724,7 @@
                 }
             },
             "JsonApiFilterContextPatch": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -14924,7 +14809,7 @@
                 }
             },
             "JsonApiFilterContextOut": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -14960,6 +14845,7 @@
                         }
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -15572,7 +15458,7 @@
                 }
             },
             "JsonApiVisualizationObjectPatch": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -15644,7 +15530,7 @@
                 }
             },
             "JsonApiVisualizationObjectOut": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -15680,6 +15566,7 @@
                         }
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -16248,6 +16135,33 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiApiTokenOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": ["apiToken"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "bearerToken": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
             },
             "JsonApiUserSettingOutWithLinks": {
                 "allOf": [
@@ -17231,6 +17145,18 @@
                     }
                 ]
             },
+            "JsonApiApiTokenOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
             "JsonApiAnalyticalDashboardPostOptionalIdDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -17241,7 +17167,7 @@
                 }
             },
             "JsonApiAnalyticalDashboardPostOptionalId": {
-                "required": ["type"],
+                "required": ["attributes", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -17257,6 +17183,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -17472,7 +17399,7 @@
                 }
             },
             "JsonApiFilterContextPostOptionalId": {
-                "required": ["type"],
+                "required": ["attributes", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -17488,6 +17415,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -17676,7 +17604,7 @@
                 }
             },
             "JsonApiVisualizationObjectPostOptionalId": {
-                "required": ["type"],
+                "required": ["attributes", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -17692,6 +17620,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -17988,6 +17917,34 @@
                     }
                 },
                 "description": "Tables in data source"
+            },
+            "JsonApiApiTokenInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
+                    }
+                }
+            },
+            "JsonApiApiTokenIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": ["apiToken"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
             },
             "JsonApiDataSourceTableOutWithLinks": {
                 "allOf": [
@@ -18535,7 +18492,7 @@
                 }
             },
             "JsonApiAnalyticalDashboardIn": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -18551,6 +18508,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -18696,7 +18654,7 @@
                 }
             },
             "JsonApiFilterContextIn": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -18712,6 +18670,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -18900,7 +18859,7 @@
                 }
             },
             "JsonApiVisualizationObjectIn": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -18916,6 +18875,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -19609,7 +19569,7 @@
                 "description": "A data model structured as a set of its attributes."
             },
             "DeclarativeReference": {
-                "required": ["identifier", "multivalue", "sourceColumns"],
+                "required": ["identifier", "multivalue"],
                 "type": "object",
                 "properties": {
                     "identifier": {
@@ -19622,15 +19582,17 @@
                     },
                     "sourceColumns": {
                         "type": "array",
-                        "description": "An array of source column names for a given reference.",
+                        "description": "An array of source column names for a given reference. Deprecated, use 'sources' instead.",
                         "example": ["customer_id"],
+                        "deprecated": true,
                         "items": {
                             "type": "string"
                         }
                     },
                     "sourceColumnDataTypes": {
                         "type": "array",
-                        "description": "An array of source column data types for a given reference.",
+                        "description": "An array of source column data types for a given reference. Deprecated, use 'sources' instead.",
+                        "deprecated": true,
                         "items": {
                             "type": "string",
                             "enum": [
@@ -19643,9 +19605,39 @@
                                 "BOOLEAN"
                             ]
                         }
+                    },
+                    "sources": {
+                        "type": "array",
+                        "description": "An array of source columns for a given reference.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeReferenceSource"
+                        }
                     }
                 },
                 "description": "A dataset reference."
+            },
+            "DeclarativeReferenceSource": {
+                "required": ["column", "target"],
+                "type": "object",
+                "properties": {
+                    "column": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "A name of the source column in the table.",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "A type of the source column.",
+                        "example": "STRING",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                    },
+                    "target": {
+                        "$ref": "#/components/schemas/GrainIdentifier"
+                    }
+                },
+                "description": "A dataset reference source column description."
             },
             "DeclarativeWorkspaceDataFilterColumn": {
                 "required": ["dataType", "name"],
@@ -19685,6 +19677,7 @@
                 }
             },
             "GrainIdentifier": {
+                "maxLength": 255,
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
@@ -19701,7 +19694,11 @@
                         "enum": ["attribute", "date"]
                     }
                 },
-                "description": "A grain identifier."
+                "description": "A grain identifier.",
+                "example": {
+                    "id": "customer_id",
+                    "type": "attribute"
+                }
             },
             "GranularitiesFormatting": {
                 "required": ["titleBase", "titlePattern"],
@@ -21452,7 +21449,8 @@
                                 "UnlimitedUsers",
                                 "UnlimitedWorkspaces",
                                 "WhiteLabeling",
-                                "WorkspaceCount"
+                                "WorkspaceCount",
+                                "UserTelemetryDisabled"
                             ]
                         }
                     }
@@ -21478,7 +21476,8 @@
                             "UnlimitedUsers",
                             "UnlimitedWorkspaces",
                             "WhiteLabeling",
-                            "WorkspaceCount"
+                            "WorkspaceCount",
+                            "UserTelemetryDisabled"
                         ]
                     },
                     "value": {
