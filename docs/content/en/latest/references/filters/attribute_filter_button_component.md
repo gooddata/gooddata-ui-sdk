@@ -108,7 +108,7 @@ You can define the parent filter as an [AttributeFilter](../attribute_filter/) o
 
 ## Properties
 
-### | Name | Required? | Type | Description |
+| Name | Required? | Type | Description |
 | :--- | :--- | :--- | :--- |
 | onApply | false | OnApplyCallbackType | A callback that contains the updated filter when the selection change is confirmed by a user |
 | onError | false | (error: GoodDataSdkError) => void; | A callback that is triggered when the component runs into an error |
