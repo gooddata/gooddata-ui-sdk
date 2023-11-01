@@ -89,11 +89,27 @@ const convertAbsoluteDateFilter = (filter: IAbsoluteDateFilter): IVisualizationO
     };
 };
 
+/**
+ * @internal
+ */
+export interface IConvertInsightOptions {
+    /**
+     * Disables prohibition of null values in elements of the attribute filter.
+     * In most use-cases, it is false/undefined, such as metadata conversion,
+     * but in some specific instances, where the same conversion is needed
+     * without a strict rule for nulls, it can be disabled.
+     */
+    allowNullValuesInAttributeFilters?: boolean;
+}
+
 const convertNegativeAttributeFilter = (
     filter: INegativeAttributeFilter,
+    options?: IConvertInsightOptions,
 ): IVisualizationObjectNegativeAttributeFilter => {
     const elements = filterAttributeElements(filter);
-    assertNoNulls(elements);
+    if (!options?.allowNullValuesInAttributeFilters) {
+        assertNoNulls(elements);
+    }
     return {
         negativeAttributeFilter: {
             displayForm: toBearRef(filterObjRef(filter)),
@@ -104,9 +120,12 @@ const convertNegativeAttributeFilter = (
 
 const convertPositiveAttributeFilter = (
     filter: IPositiveAttributeFilter,
+    options?: IConvertInsightOptions,
 ): IVisualizationObjectPositiveAttributeFilter => {
     const elements = filterAttributeElements(filter);
-    assertNoNulls(elements);
+    if (!options?.allowNullValuesInAttributeFilters) {
+        assertNoNulls(elements);
+    }
     return {
         positiveAttributeFilter: {
             displayForm: toBearRef(filterObjRef(filter)),
@@ -115,21 +134,27 @@ const convertPositiveAttributeFilter = (
     };
 };
 
-export const convertExtendedFilter = (filter: IFilter): VisualizationObjectExtendedFilter => {
+export const convertExtendedFilter = (
+    filter: IFilter,
+    options?: IConvertInsightOptions,
+): VisualizationObjectExtendedFilter => {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     } else if (isRankingFilter(filter)) {
         return convertRankingFilter(filter);
     } else {
-        return convertFilter(filter);
+        return convertFilter(filter, options);
     }
 };
 
-export const convertFilter = (filter: IMeasureFilter): VisualizationObjectFilter => {
+export const convertFilter = (
+    filter: IMeasureFilter,
+    options?: IConvertInsightOptions,
+): VisualizationObjectFilter => {
     if (isPositiveAttributeFilter(filter)) {
-        return convertPositiveAttributeFilter(filter);
+        return convertPositiveAttributeFilter(filter, options);
     } else if (isNegativeAttributeFilter(filter)) {
-        return convertNegativeAttributeFilter(filter);
+        return convertNegativeAttributeFilter(filter, options);
     } else if (isAbsoluteDateFilter(filter)) {
         return convertAbsoluteDateFilter(filter);
     } else {
