@@ -1,5 +1,7 @@
 styles/css
 # ignore the auxiliary file created during build to extract package version
 src/__version.ts
+# ignore localisations TS files, used to avoid ESM errors on node runtime
+src/presentation/localization/bundles/*.ts
 # ignore the NOTICE that gets copied here on publish, the source of truth is the root of the repo
 NOTICE
