@@ -43,7 +43,7 @@ export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
     included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IListedDashboard => {
-    const { id, links, attributes = {}, meta, relationships = {} } = analyticalDashboard;
+    const { id, links, attributes, meta, relationships = {} } = analyticalDashboard;
     const { createdBy, modifiedBy } = relationships;
     const { createdAt, modifiedAt, interactions } = attributes;
     const isPrivate = meta?.accessInfo?.private ?? false;

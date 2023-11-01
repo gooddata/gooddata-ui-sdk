@@ -200,6 +200,7 @@ export {
     ActionsApiFetchAnomalyDetectionResultRequest,
     ActionsApiFetchClusteringResultRequest,
     ActionsApiFetchForecastResultRequest,
+    DependsOn,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

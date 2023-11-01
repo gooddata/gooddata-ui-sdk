@@ -94,7 +94,7 @@ export function convertDashboard(
     filterContext?: IFilterContext,
 ): IDashboard {
     const { data, links, included } = analyticalDashboard;
-    const { id, attributes = {}, meta = {}, relationships = {} } = data;
+    const { id, attributes, meta = {}, relationships = {} } = data;
     const { createdBy, modifiedBy } = relationships;
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
