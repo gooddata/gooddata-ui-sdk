@@ -107,6 +107,8 @@ export class DateFilterComponentExample extends Component {
 | customFilterName | false | string | A custom filter label |
 | dateFilterMode | true | string | Filter mode; can be `readonly`, `hidden`, or `active` |
 | dateFormat | false | string | Date format. Defaults to `MM/dd/yyyy`. For the supported values, see the `date-fns` library. |
+| customIcon | false | IFilterButtonCustomIcon | A custom icon with associated tooltip information. |
+| FilterConfigurationComponent | false | Component | A component to be rendered when the configuration button is clicked. |
 | backend | false | IAnalyticalBackend | The object with the configuration related to communication with the backend and access to analytical workspaces |
 | workspace | false | string | The workspace ID |
 | isTimeForAbsoluteRangeEnabled | false | boolean | Determine whether the static period form allows the user to set also the time of the date range or only the date. |
