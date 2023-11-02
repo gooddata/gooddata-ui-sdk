@@ -2,6 +2,24 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.3.0",
+      "tag": "@gooddata/sdk-ui-all_v9.3.0",
+      "date": "Thu, 02 Nov 2023 11:25:49 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "The headline allows two secondary measures to be displayed as the headline values."
+          },
+          {
+            "comment": "The headline allows for the customization of comparison values and styles using the comparison config."
+          },
+          {
+            "comment": "Introduce possibility to cache client calls"
+          }
+        ]
+      }
+    },
+    {
       "version": "9.2.0",
       "tag": "@gooddata/sdk-ui-all_v9.2.0",
       "date": "Fri, 06 Oct 2023 13:12:04 GMT",
