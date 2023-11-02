@@ -6,7 +6,9 @@ weight: 28
 no_list: true
 ---
 
-As of now, there is direct support only for [React](../../quick_start/) and [Angular 9+](./angular/). There are no near-future plans to introduce guides for any other platforms or frameworks.
+As of now, there is direct support only for [React](../../quick_start/) and [Angular 9+](./angular/) and indirect for [Next.js](./nextjs/)
+
+There are no near-future plans to introduce guides for any other platforms or frameworks.
 
 GoodData.UI also support [Web Components](../../learn/embed_dashboards/web_components/), as we understand, that sometimes, you don't want to use the React, due to the innert complexity it would bring.
 
