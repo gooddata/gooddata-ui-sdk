@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 06 Oct 2023 13:12:04 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Nov 2023 11:25:49 GMT and should not be manually modified.
+
+## 9.3.0
+Thu, 02 Nov 2023 11:25:49 GMT
+
+### Updates
+
+- The headline allows two secondary measures to be displayed as the headline values.
+- The headline allows for the customization of comparison values and styles using the comparison config.
+- Introduce possibility to cache client calls
 
 ## 9.2.0
 Fri, 06 Oct 2023 13:12:04 GMT
