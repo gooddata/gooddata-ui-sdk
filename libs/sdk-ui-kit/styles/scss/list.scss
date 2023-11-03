@@ -160,6 +160,11 @@ $menu-item-icon-width: 30px;
         }
     }
 
+    &.gd-menu-item-remove:hover {
+        color: variables.$gd-palette-error-base;
+        background: variables.$gd-palette-error-dimmed;
+    }
+
     .gd-mobile-dropdown-content & {
         border-bottom: 1px solid variables.$gd-border-color;
         font-size: 14px;

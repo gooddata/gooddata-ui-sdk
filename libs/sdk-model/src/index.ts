@@ -652,7 +652,16 @@ export {
     IScheduledMailBase,
 } from "./dashboard/scheduledMail.js";
 
-export { IUser, IWorkspaceUser, userFullName } from "./user/index.js";
+export {
+    IUser,
+    IUserGroup,
+    IWorkspaceUser,
+    userFullName,
+    IOrganizationUser,
+    IOrganizationUserGroup,
+    isIOrganizationUser,
+    isIOrganizationUserGroup,
+} from "./user/index.js";
 
 export {
     IDashboardLayout,
@@ -806,5 +815,11 @@ export {
     isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
 
-export { IOrganizationDescriptor } from "./organization/index.js";
+export {
+    IOrganizationDescriptor,
+    IWorkspacePermissionAssignment,
+    IAssignedWorkspace,
+    AssignedWorkspacePermission,
+    AssignedWorkspacePermissionValue,
+} from "./organization/index.js";
 export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";

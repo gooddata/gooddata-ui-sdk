@@ -29,13 +29,8 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
-import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
-import { IWorkspaceUser } from '@gooddata/sdk-model';
-import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { ManageUserGroups } from '@gooddata/sdk-backend-spi';
-import { ManageUsers } from '@gooddata/sdk-backend-spi';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
@@ -46,7 +41,6 @@ import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
-import { WorkspacePermissionAssignment } from '@gooddata/sdk-backend-spi';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -60,9 +54,6 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
-
-// @internal (undocumented)
-export const AddWorkspaceSelect: React_2.FC<IAddWorkspaceSelectProps>;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -325,6 +316,9 @@ export const ContentDivider: React_2.VFC;
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal (undocumented)
+export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
+
+// @internal (undocumented)
 export type CurrentUserPermissions = {
     [permission in "canEditLockedAffectedObject" | "canEditAffectedObject" | "canShareLockedAffectedObject" | "canShareAffectedObject" | "canViewAffectedObject"]: boolean;
 };
@@ -581,6 +575,9 @@ export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
 export function formatTime(h: number, m: number, format?: string): string;
 
 // @internal (undocumented)
+export type FormatXMLElementFn<T, R = string | T | (string | T)[]> = (parts: Array<string | T>) => R;
+
+// @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
     constructor(props: IOverlayProps<any>);
     // (undocumented)
@@ -764,16 +761,6 @@ export interface IAddGranteeBaseProps {
     onSubmit: () => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
-}
-
-// @internal (undocumented)
-export interface IAddWorkspaceSelectProps {
-    // (undocumented)
-    addedWorkspaces: IGrantedWorkspace[];
-    // (undocumented)
-    grantedWorkspaces: IGrantedWorkspace[];
-    // (undocumented)
-    onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
 }
 
 // @internal (undocumented)
@@ -1174,6 +1161,14 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     titleRightIconRenderer?: () => JSX.Element;
     // (undocumented)
     warning?: string | React_2.ReactElement;
+}
+
+// @internal (undocumented)
+export interface ICreateUserGroupDialogProps {
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    organizationId: string;
 }
 
 // @internal (undocumented)
@@ -1749,18 +1744,6 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
-}
-
-// @internal (undocumented)
-export interface IGrantedWorkspace {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    isHierarchical: boolean;
-    // (undocumented)
-    permission: WorkspacePermission;
-    // (undocumented)
-    title: string;
 }
 
 // @internal (undocumented)
@@ -3830,6 +3813,8 @@ export interface ISyntaxHighlightingInputProps {
 export interface ITab {
     // (undocumented)
     id: string;
+    // (undocumented)
+    values?: Record<string, string | number | boolean | null | undefined | Date | FormatXMLElementFn<string, string>>;
 }
 
 // @internal (undocumented)
@@ -3947,45 +3932,27 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
-export interface IUserDialogBaseProps {
-    // (undocumented)
-    api: IUserEditDialogApi;
+export interface IUserEditDialogProps {
     // (undocumented)
     isAdmin: boolean;
     // (undocumented)
     onClose: () => void;
     // (undocumented)
+    organizationId: string;
+    // (undocumented)
     userId: string;
 }
 
 // @internal (undocumented)
-export interface IUserEditDialogApi {
+export interface IUserGroupEditDialogProps {
     // (undocumented)
-    addGroupsToUser?: (userId: string, userGroups: string[]) => Promise<void>;
+    isAdmin: boolean;
     // (undocumented)
-    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
+    onClose: () => void;
     // (undocumented)
-    deleteUser?: (userId: string) => Promise<void>;
+    organizationId: string;
     // (undocumented)
-    getGroupsForUser?: (userId: string) => Promise<IWorkspaceUserGroup[]>;
-    // (undocumented)
-    getUserById?: (userId: string) => Promise<IWorkspaceUser>;
-    // (undocumented)
-    getUserGroups?: () => Promise<ManageUserGroups>;
-    // (undocumented)
-    getUsers?: () => Promise<ManageUsers>;
-    // (undocumented)
-    getWorkspacePermissionsForUser?: (userId: string) => Promise<WorkspacePermissionAssignment[]>;
-    // (undocumented)
-    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
-    // (undocumented)
-    manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-    // (undocumented)
-    manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-    // (undocumented)
-    removeGroupFromUser?: (userId: string, userGroup: string) => Promise<void>;
-    // (undocumented)
-    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
+    userGroupId: string;
 }
 
 // @internal (undocumented)
@@ -4613,10 +4580,13 @@ export const useOverlayController: () => OverlayController;
 export const useOverlayZIndex: (uuid: string) => number;
 
 // @internal (undocumented)
-export const UserEditDialog: React_2.FC<IUserDialogBaseProps>;
+export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
+
+// @internal (undocumented)
+export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 
 // @internal (undocumented)
 export const useScrollContext: () => {
@@ -4644,9 +4614,6 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
-
-// @internal (undocumented)
-export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;

@@ -8,8 +8,17 @@ import noop from "lodash/noop.js";
 /**
  * @internal
  */
+export type FormatXMLElementFn<T, R = string | T | (string | T)[]> = (parts: Array<string | T>) => R;
+
+/**
+ * @internal
+ */
 export interface ITab {
     id: string;
+    values?: Record<
+        string,
+        string | number | boolean | null | undefined | Date | FormatXMLElementFn<string, string>
+    >;
 }
 
 /**
@@ -80,7 +89,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
                 }}
             >
                 <span>
-                    <FormattedMessage id={tab.id} />
+                    <FormattedMessage id={tab.id} values={tab.values ?? {}} />
                 </span>
             </div>
         );

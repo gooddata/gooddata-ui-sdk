@@ -36,6 +36,8 @@ import {
     IOrganizationStylingService,
     IOrganizationSettingsService,
     IEntitlements,
+    IOrganizationPermissionService,
+    IOrganizationUserService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -348,6 +350,33 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+            };
+        },
+        permissions(): IOrganizationPermissionService {
+            return {
+                getWorkspacePermissionsForUser: () => Promise.resolve([]),
+                getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
+                updateUserOrganizationAdminStatus: () => Promise.resolve(),
+                updateWorkspacePermissionsForUser: () => Promise.resolve(),
+                updateWorkspacePermissionsForUserGroup: () => Promise.resolve(),
+            };
+        },
+        users(): IOrganizationUserService {
+            return {
+                addUserGroupToUsers: () => Promise.resolve(),
+                addUserToUserGroups: () => Promise.resolve(),
+                createUserGroup: () => Promise.resolve(),
+                deleteUser: () => Promise.resolve(),
+                deleteUserGroup: () => Promise.resolve(),
+                getUser: () => Promise.resolve(undefined),
+                getUserGroup: () => Promise.resolve(undefined),
+                getUserGroups: () => Promise.resolve([]),
+                getUserGroupsOfUser: () => Promise.resolve([]),
+                getUsersOfUserGroup: () => Promise.resolve([]),
+                getUsers: () => Promise.resolve([]),
+                removeUserFromUserGroup: () => Promise.resolve(),
+                updateUser: () => Promise.resolve(),
+                updateUserGroup: () => Promise.resolve(),
             };
         },
     };

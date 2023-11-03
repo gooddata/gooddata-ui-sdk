@@ -59,6 +59,19 @@ export type ArithmeticMeasureBuilderInput = {
 // @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
+// @alpha
+export type AssignedWorkspacePermission = typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
+
+// @alpha
+export const AssignedWorkspacePermissionValue: {
+    readonly MANAGE: "MANAGE";
+    readonly ANALYZE: "ANALYZE";
+    readonly EXPORT: "EXPORT";
+    readonly EXPORT_TABULAR: "EXPORT_TABULAR";
+    readonly EXPORT_PDF: "EXPORT_PDF";
+    readonly VIEW: "VIEW";
+};
+
 // @public
 export function attributeAlias(attribute: IAttribute): string | undefined;
 
@@ -499,6 +512,14 @@ export interface IArithmeticMeasureDefinition {
         measureIdentifiers: Identifier[];
         operator: ArithmeticMeasureOperator;
     };
+}
+
+// @alpha
+export interface IAssignedWorkspace {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
 }
 
 // @public
@@ -1840,6 +1861,40 @@ export interface IOrganizationDescriptor {
     title: string;
 }
 
+// @alpha
+export interface IOrganizationUser {
+    // (undocumented)
+    assignedUserGroupIds: string[];
+    // (undocumented)
+    assignedWorkspaceIds: string[];
+    // (undocumented)
+    email?: string;
+    // (undocumented)
+    fullName?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isOrganizationAdmin: boolean;
+    // (undocumented)
+    ref: ObjRef;
+}
+
+// @alpha
+export interface IOrganizationUserGroup {
+    // (undocumented)
+    assignedUsersCount: number;
+    // (undocumented)
+    assignedWorkspaceIds: string[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isOrganizationAdmin: boolean;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    ref: ObjRef;
+}
+
 // @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
@@ -2379,6 +2434,12 @@ export function isInsightWidget(obj: unknown): obj is IInsightWidget;
 export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
 
 // @alpha
+export function isIOrganizationUser(obj: unknown): obj is IOrganizationUser;
+
+// @alpha
+export function isIOrganizationUserGroup(obj: unknown): obj is IOrganizationUserGroup;
+
+// @alpha
 export function isKpi(obj: unknown): obj is IKpi;
 
 // @alpha
@@ -2897,6 +2958,13 @@ export interface IUserAccessGrantee {
 }
 
 // @alpha
+export interface IUserGroup {
+    id: string;
+    name?: string;
+    ref: ObjRef;
+}
+
+// @alpha
 export interface IUserGroupAccess {
     type: "group";
     userGroup: IWorkspaceUserGroup;
@@ -3000,6 +3068,16 @@ export interface IWidgetDescription {
 export interface IWorkspaceAccess {
     permissions: WorkspaceAccessPermission;
     workspace: string;
+}
+
+// @alpha
+export interface IWorkspacePermissionAssignment {
+    // (undocumented)
+    hierarchyPermissions: AssignedWorkspacePermission[];
+    // (undocumented)
+    permissions: AssignedWorkspacePermission[];
+    // (undocumented)
+    workspace: IAssignedWorkspace;
 }
 
 // @public
