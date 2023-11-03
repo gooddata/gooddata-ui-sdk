@@ -342,7 +342,7 @@ export interface IElementsQueryAttributeFilter {
     // (undocumented)
     attributeFilter: IAttributeFilter;
     // (undocumented)
-    overAttribute?: ObjRef;
+    overAttribute: ObjRef;
 }
 
 // @public

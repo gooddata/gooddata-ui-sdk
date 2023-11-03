@@ -168,7 +168,7 @@ export interface IElementsQueryOptions {
 
 export interface IElementsQueryAttributeFilter {
     attributeFilter: IAttributeFilter;
-    overAttribute?: ObjRef;
+    overAttribute: ObjRef;
 }
 
 /**

@@ -18,19 +18,21 @@ export const useResolveParentFiltersInput = (
 
     return useMemo(() => {
         if (!supportsSettingConnectingAttributes) {
-            return getParentFilters(resolvedParentFilters);
+            return getParentFiltersWithoutOverAttribute(resolvedParentFilters);
         }
 
         return getParentFiltersWithOverAttribute(resolvedParentFilters, overAttribute);
     }, [supportsSettingConnectingAttributes, resolvedParentFilters, overAttribute]);
 };
 
-const getParentFilters = (parentFilters: IAttributeFilter[]) => {
+const getParentFiltersWithoutOverAttribute = (
+    parentFilters: IAttributeFilter[],
+): IElementsQueryAttributeFilter[] => {
     if (!parentFilters) {
         return [];
     }
 
-    return parentFilters.map((attributeFilter) => ({ attributeFilter }));
+    return parentFilters.map((attributeFilter) => ({ attributeFilter, overAttribute: null }));
 };
 
 const getParentFiltersWithOverAttribute = (
