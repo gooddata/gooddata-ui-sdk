@@ -35,18 +35,18 @@ export const QueryAttributeByDisplayFormService = createCachedQueryService(
 async function loadAttributeByDisplayForm(
     ctx: DashboardContext,
     catalogAttributes: ICatalogAttribute[],
-    displayForm: ObjRef,
+    displayFormRef: ObjRef,
 ): Promise<IAttributeMetadataObject> {
     const { backend, workspace } = ctx;
     const attribute = catalogAttributes.find((catalogAttribute) =>
-        catalogAttribute.displayForms.some((df) => areObjRefsEqual(df, displayForm)),
+        catalogAttribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
     );
 
     if (attribute) {
         return attribute.attribute;
     }
 
-    return backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayForm);
+    return backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayFormRef);
 }
 
 async function loadAttributes(
