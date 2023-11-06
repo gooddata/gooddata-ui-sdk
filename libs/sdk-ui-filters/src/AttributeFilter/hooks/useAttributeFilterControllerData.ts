@@ -15,6 +15,8 @@ import { AttributeFilterControllerData } from "./types.js";
  */
 export function useAttributeFilterControllerData(
     handler: IMultiSelectAttributeFilterHandler,
+    supportsShowingFilteredElements: boolean,
+    shouldIncludeLimitingFilters: boolean,
 ): AttributeFilterControllerData {
     const handlerState = useAttributeFilterHandlerState(handler);
 
@@ -61,7 +63,8 @@ export function useAttributeFilterControllerData(
 
     const isParentFiltersEmpty = isLimitingAttributeFiltersEmpty(limitingAttributeFilters);
 
-    const isFilteredByParentFilters = initialElementsPageStatus === "success" && !isParentFiltersEmpty;
+    const isFilteredByParentFilters =
+        shouldIncludeLimitingFilters && initialElementsPageStatus === "success" && !isParentFiltersEmpty;
 
     const isFiltering = useIsFiltering(handler);
 
@@ -70,6 +73,10 @@ export function useAttributeFilterControllerData(
     const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
 
     const offset = handlerState.elements.options.offset;
+
+    const irrelevantSelection = supportsShowingFilteredElements
+        ? handlerState.selection.working.irrelevantElements
+        : [];
 
     return {
         attribute,
@@ -104,11 +111,14 @@ export function useAttributeFilterControllerData(
         searchString,
 
         isFilteredByParentFilters,
-
         parentFilterAttributes,
 
         displayForms,
         currentDisplayFormRef,
+
+        enableShowingFilteredElements: supportsShowingFilteredElements,
+
+        irrelevantSelection,
     };
 }
 

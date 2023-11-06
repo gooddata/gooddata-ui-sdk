@@ -5,6 +5,13 @@ import { describe, it, expect, vi } from "vitest";
 const changedSelection = {
     isInverted: true,
     keys: ["/selectedElement"],
+    irrelevantKeys: [] as string[],
+};
+
+const changedSelectionWithIrrelevantElements = {
+    isInverted: true,
+    keys: ["/selectedElement", "/irrelevantElement"],
+    irrelevantKeys: ["/irrelevantElement"],
 };
 
 describe("MultiSelectAttributeFilterHandler", () => {
@@ -36,9 +43,9 @@ describe("MultiSelectAttributeFilterHandler", () => {
     it("changeSelection() should change the selection", async () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
-        attributeFilterHandler.changeSelection(changedSelection);
+        attributeFilterHandler.changeSelection(changedSelectionWithIrrelevantElements);
 
-        expect(attributeFilterHandler.getWorkingSelection()).toEqual(changedSelection);
+        expect(attributeFilterHandler.getWorkingSelection()).toEqual(changedSelectionWithIrrelevantElements);
     });
 
     it("revertSelection() should trigger onSelectionChanged() callback", async () => {

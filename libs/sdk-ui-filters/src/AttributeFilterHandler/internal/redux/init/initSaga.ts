@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
+import { SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { actions } from "../store/slice.js";
 import { selectHiddenElements } from "../filter/filterSelectors.js";
@@ -10,6 +10,8 @@ import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
 import { initTotalCountSaga } from "./initTotalCount.js";
 import { selectLimitingAttributeFilters } from "../elements/elementsSelectors.js";
 import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
+import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
 
 /**
  * @internal
@@ -26,10 +28,14 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
     try {
         yield put(actions.initStart({ correlation }));
 
+        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
+            getAttributeFilterContext,
+        );
         const hiddenElements: ReturnType<typeof selectHiddenElements> = yield select(selectHiddenElements);
         const limitingFilters: ReturnType<typeof selectLimitingAttributeFilters> = yield select(
             selectLimitingAttributeFilters,
         );
+        const supportsShowingFilteredElements = context.backend.capabilities.supportsShowingFilteredElements;
 
         const loadTotal = !isLimitingAttributeFiltersEmpty(limitingFilters);
 
@@ -46,6 +52,12 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
             // It is because the fact that when elements fetched filtered by parent selection, the includeTotalCountWithoutFilters: true option does not work, despite its name
             sagas.push(initTotalCountSaga);
         }
+
+        if (loadTotal && supportsShowingFilteredElements) {
+            // In this case we also load the irrelevant selection
+            sagas.push(initIrrelevantSelectionSaga);
+        }
+
         yield all(sagas.map((saga) => call(saga, correlation)));
 
         yield put(actions.initSuccess({ correlation: correlation }));

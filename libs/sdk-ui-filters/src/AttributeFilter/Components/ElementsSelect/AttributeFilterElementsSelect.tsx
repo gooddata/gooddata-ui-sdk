@@ -44,9 +44,15 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         onLoadNextPage,
         error,
 
+        attributeTitle,
         isFilteredByParentFilters,
-
         parentFilterTitles,
+
+        enableShowingFilteredElements,
+        onShowFilteredElements,
+
+        irrelevantSelection,
+        onClearIrrelevantSelection,
     } = props;
 
     const intl = useIntl();
@@ -113,6 +119,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                             searchString={searchString}
                             totalItemsCount={totalItemsCount}
                             parentFilterTitles={parentFilterTitles}
+                            enableShowingFilteredElements={enableShowingFilteredElements}
                         />
                     );
                 }}
@@ -135,6 +142,11 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                             selectedItems={selectedItems}
                             totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
                             selectedItemsLimit={selectedItemsLimit}
+                            attributeTitle={attributeTitle}
+                            enableShowingFilteredElements={enableShowingFilteredElements}
+                            onShowFilteredElements={onShowFilteredElements}
+                            irrelevantSelection={irrelevantSelection}
+                            onClearIrrelevantSelection={onClearIrrelevantSelection}
                         />
                     );
                 }}
