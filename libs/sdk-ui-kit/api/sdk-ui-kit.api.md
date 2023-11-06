@@ -347,6 +347,12 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
 
+// @alpha (undocumented)
+export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
+
+// @alpha (undocumented)
+export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
+
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
     align: string;
@@ -1251,6 +1257,30 @@ export interface IDateTimeConfigOptions {
     dateTimezone?: string;
     // (undocumented)
     now?: Date;
+}
+
+// @alpha (undocumented)
+export interface IDeleteUserDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onDeleteUser: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userId: string;
+}
+
+// @alpha (undocumented)
+export interface IDeleteUserGroupDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onDeleteUserGroup: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupId: string;
 }
 
 // @internal (undocumented)
@@ -3936,6 +3966,8 @@ export interface IUiSettings {
 // @internal (undocumented)
 export interface IUserEditDialogProps {
     // (undocumented)
+    initialView?: UserEditDialogMode;
+    // (undocumented)
     isAdmin: boolean;
     // (undocumented)
     onClose: () => void;
@@ -3949,6 +3981,8 @@ export interface IUserEditDialogProps {
 
 // @internal (undocumented)
 export interface IUserGroupEditDialogProps {
+    // (undocumented)
+    initialView?: UserGroupEditDialogMode;
     // (undocumented)
     isAdmin: boolean;
     // (undocumented)
@@ -4588,11 +4622,17 @@ export const useOverlayZIndex: (uuid: string) => number;
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
 
+// @alpha (undocumented)
+export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
+
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
 
 // @internal (undocumented)
 export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
+
+// @alpha (undocumented)
+export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
 // @internal (undocumented)
 export const useScrollContext: () => {

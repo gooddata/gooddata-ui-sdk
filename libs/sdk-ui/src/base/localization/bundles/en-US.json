@@ -2468,6 +2468,11 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.deleteDialog.group.title": {
+        "value": "Delete group?",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.deleteDialog.group.body": {
         "value": "User group will be permanently and irreversibly deleted.{br}Their users will not be deleted.",
         "comment": "",
@@ -2484,12 +2489,12 @@
         "limit": 0
     },
     "userManagement.userGroups.deleteSuccess": {
-        "value": "Great! We deleted the user!",
+        "value": "Great! We deleted the user group!",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.deleteFailure": {
-        "value": "Deletion of the user failed!",
+        "value": "Deletion of the user group failed!",
         "comment": "",
         "limit": 0
     },
@@ -2504,12 +2509,12 @@
         "limit": 0
     },
     "userManagement.users.deleteSuccess": {
-        "value": "Great! We deleted the user group!",
+        "value": "Great! We deleted the user!",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.deleteFailure": {
-        "value": "Deletion of the user group failed!",
+        "value": "Deletion of the user failed!",
         "comment": "",
         "limit": 0
     },

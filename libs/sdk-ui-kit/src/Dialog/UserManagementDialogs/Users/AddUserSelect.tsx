@@ -79,7 +79,10 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
         }
     }, []);
 
-    const usedUsers = useMemo(() => [...addedUsers, ...grantedUsers], [addedUsers, grantedUsers]);
+    const usedUsers = useMemo(
+        () => (grantedUsers ? [...addedUsers, ...grantedUsers] : []),
+        [addedUsers, grantedUsers],
+    );
 
     const filterOption = (option: any) => {
         const user = option.value;

@@ -1,0 +1,42 @@
+// (C) 2023 GoodData Corporation
+
+import React from "react";
+import { useIntl } from "react-intl";
+
+import { userManagementMessages } from "../../locales.js";
+
+import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
+import { useDeleteUserGroup } from "./dialogHooks.js";
+
+/**
+ * @alpha
+ */
+export interface IDeleteUserGroupDialogProps {
+    userGroupId: string;
+    organizationId: string;
+    onDeleteUserGroup: () => void;
+    onClose: () => void;
+}
+
+/**
+ * @alpha
+ */
+export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
+    userGroupId,
+    organizationId,
+    onDeleteUserGroup,
+    onClose,
+}) => {
+    const intl = useIntl();
+    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onDeleteUserGroup, onClose);
+    return (
+        <DeleteConfirmDialog
+            titleText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmTitle)}
+            bodyText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmBody, {
+                br: <br />,
+            })}
+            onConfirm={deleteUserGroup}
+            onCancel={onClose}
+        />
+    );
+};

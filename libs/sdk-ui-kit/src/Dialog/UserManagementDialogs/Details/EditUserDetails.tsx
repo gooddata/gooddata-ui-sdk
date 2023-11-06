@@ -17,9 +17,16 @@ export interface IEditUserDetailsProps {
     user: IUser;
     onSubmit: (user: IUser, isAdmin: boolean) => void;
     onCancel: () => void;
+    onClose: () => void;
 }
 
-export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({ user, isAdmin, onSubmit, onCancel }) => {
+export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
+    user,
+    isAdmin,
+    onSubmit,
+    onCancel,
+    onClose,
+}) => {
     const intl = useIntl();
     const { updatedUser, isUpdatedAdmin, onSave, onChange, isDirty } = useUserDetails(
         user,
@@ -43,7 +50,7 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({ user, isAdmin
             submitButtonText={intl.formatMessage(userManagementMessages.saveEditedDetails)}
             onCancel={onCancel}
             onSubmit={onSave}
-            onClose={onCancel}
+            onClose={onClose}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <UserDetailsView user={updatedUser} isAdmin={isUpdatedAdmin} mode="EDIT" onChange={onChange} />

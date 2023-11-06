@@ -18,7 +18,15 @@ export const isWorkspaceItem = (obj: unknown): obj is IWorkspaceDescriptor => {
     return !isEmpty(obj) && (obj as IWorkspaceDescriptor).id !== undefined;
 };
 
-export type DialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "USERS" | "DETAIL";
+/**
+ * @alpha
+ */
+export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
+
+/**
+ * @alpha
+ */
+export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
 export type ListMode = "VIEW" | "EDIT";
 

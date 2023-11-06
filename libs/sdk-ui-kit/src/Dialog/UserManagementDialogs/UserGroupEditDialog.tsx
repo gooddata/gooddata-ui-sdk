@@ -13,12 +13,12 @@ import { WorkspaceList } from "./Workspace/WorkspaceList.js";
 import { AddWorkspace } from "./Workspace/AddWorkspace.js";
 import {
     useWorkspaces,
-    useDialogMode,
     useDeleteDialog,
     useUserGroup,
     useUsers,
     useDeleteUserGroup,
     useUserGroupDialogTabs,
+    useUserGroupDialogMode,
 } from "./dialogHooks.js";
 import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
@@ -28,6 +28,7 @@ import { EditUserGroupDetails } from "./Details/EditUserGroupDetails.js";
 import { UserGroupDetailsView } from "./Details/UserGroupDetailsView.js";
 import { UsersList } from "./Users/UsersList.js";
 import { extractUserGroupName } from "./utils.js";
+import { UserGroupEditDialogMode } from "./types.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -38,6 +39,7 @@ export interface IUserGroupEditDialogProps {
     userGroupId: string;
     organizationId: string;
     isAdmin: boolean;
+    initialView?: UserGroupEditDialogMode;
     onUserGroupChanged: () => void;
     onClose: () => void;
 }
@@ -51,13 +53,22 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     isAdmin,
     onUserGroupChanged,
     onClose,
+    initialView = "VIEW",
 }) => {
     const intl = useIntl();
-    const { dialogMode, setDialogMode } = useDialogMode();
-    const { userGroup, onUserGroupDetailsChanged } = useUserGroup(userGroupId, organizationId, onUserGroupChanged);
+    const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
+    const { userGroup, onUserGroupDetailsChanged } = useUserGroup(
+        userGroupId,
+        organizationId,
+        onUserGroupChanged,
+    );
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
         useWorkspaces(userGroupId, "userGroup", organizationId, onUserGroupChanged);
-    const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(userGroupId, organizationId, onUserGroupChanged);
+    const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
+        userGroupId,
+        organizationId,
+        onUserGroupChanged,
+    );
     const { tabs, selectedTabId, setSelectedTabId } = useUserGroupDialogTabs(
         grantedWorkspaces,
         grantedUsers,
@@ -156,6 +167,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             grantedWorkspaces={grantedWorkspaces}
                             onSubmit={onWorkspacesChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                     {dialogMode === "USERS" && (
@@ -164,6 +176,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             grantedUsers={grantedUsers}
                             onSubmit={onUsersChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                     {dialogMode === "DETAIL" && (
@@ -171,6 +184,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             userGroup={userGroup}
                             onSubmit={onUserGroupDetailsChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                 </div>
