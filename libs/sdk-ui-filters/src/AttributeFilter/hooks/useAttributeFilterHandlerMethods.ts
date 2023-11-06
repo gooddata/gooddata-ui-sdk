@@ -45,6 +45,14 @@ export const useAttributeFilterHandlerMethods = (handler: IMultiSelectAttributeF
         onLoadCustomElementsError: handler.onLoadCustomElementsError,
         onLoadCustomElementsCancel: handler.onLoadCustomElementsCancel,
 
+        loadIrrelevantElements: handler.loadIrrelevantElements,
+        cancelIrrelevantElementsLoad: handler.cancelIrrelevantElementsLoad,
+
+        onLoadIrrelevantElementsStart: handler.onLoadIrrelevantElementsStart,
+        onLoadIrrelevantElementsSuccess: handler.onLoadIrrelevantElementsSuccess,
+        onLoadIrrelevantElementsError: handler.onLoadIrrelevantElementsError,
+        onLoadIrrelevantElementsCancel: handler.onLoadIrrelevantElementsCancel,
+
         setOrder: handler.setOrder,
         setSearch: handler.setSearch,
         setLimit: handler.setLimit,

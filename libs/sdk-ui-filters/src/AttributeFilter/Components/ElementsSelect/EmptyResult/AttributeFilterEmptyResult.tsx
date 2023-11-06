@@ -33,6 +33,11 @@ export interface IAttributeFilterEmptyResultProps {
      * List of parent filters items titles that are used as current filtering criteria
      */
     parentFilterTitles?: string[];
+
+    /**
+     * This enables "show filtered elements" option which manages showing filtered elements.
+     */
+    enableShowingFilteredElements?: boolean;
 }
 
 /**
@@ -46,6 +51,7 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
     searchString,
     isFilteredByParentFilters,
     parentFilterTitles = [],
+    enableShowingFilteredElements = false,
 }) => {
     let renderEmptyResult = null;
 
@@ -59,7 +65,11 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
         renderEmptyResult = <AttributeFilterEmptyAttributeResult />;
     } else if (isFilteredByParentFilters) {
         renderEmptyResult = (
-            <AttributeFilterAllValuesFilteredResult parentFilterTitles={parentFilterTitles} />
+            <AttributeFilterAllValuesFilteredResult
+                parentFilterTitles={parentFilterTitles}
+                searchString={searchString}
+                enableShowingFilteredElements={enableShowingFilteredElements}
+            />
         );
     } else if (searchString.length > 0) {
         renderEmptyResult = <AttributeFilterEmptySearchResult />;

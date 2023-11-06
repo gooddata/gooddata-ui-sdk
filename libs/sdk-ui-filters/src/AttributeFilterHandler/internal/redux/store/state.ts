@@ -45,10 +45,12 @@ export interface AttributeFilterState {
         commited: {
             keys?: string[];
             isInverted?: boolean;
+            irrelevantKeys?: string[];
         };
         working: {
             keys?: string[];
             isInverted?: boolean;
+            irrelevantKeys?: string[];
         };
     };
     config: {

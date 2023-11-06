@@ -1619,6 +1619,46 @@
         "comment": "",
         "limit": 0
     },
+    "attributesDropdown.relevantValues": {
+        "value": "Relevant values only.{nbsp}",
+        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "limit": 0
+    },
+    "attributesDropdown.relevantValues.tooltip": {
+        "value": "Available values for <strong>{child}</strong> are filtered by selected <strong>{parents}</strong>.",
+        "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.noRelevantValues": {
+        "value": "No relevant values",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.noRelevantValues.tooltip": {
+        "value": "Your selection in the dependent filter has resulted in no matching values for this filter.{break}Click 'Show all' to see all available options.",
+        "comment": "Do not translate '{break}' variable.",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues": {
+        "value": "Irrelevant value selected.{nbsp}",
+        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues.tooltip": {
+        "value": "Selected value is no longer relevant due to changes in <strong>{parents}</strong>.",
+        "comment": "Do not translate HTML markup enclosed in <> and {parents} placeholder as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues.clear": {
+        "value": "Clear",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.showAll": {
+        "value": "Show all",
+        "comment": "",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",

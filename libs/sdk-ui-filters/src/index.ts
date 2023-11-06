@@ -77,6 +77,7 @@ export {
     IAttributeFilterLoader,
     ILoadElementsResult,
     ILoadElementsOptions,
+    ILoadIrrelevantElementsResult,
     OnInitCancelCallbackPayload,
     OnInitErrorCallbackPayload,
     OnInitStartCallbackPayload,
@@ -103,6 +104,10 @@ export {
     OnInitTotalCountCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
+    OnLoadIrrelevantElementsStartCallbackPayload,
+    OnLoadIrrelevantElementsSuccessCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
     // Options
     IAttributeFilterHandlerOptions,
     IAttributeFilterHandlerOptionsBase,

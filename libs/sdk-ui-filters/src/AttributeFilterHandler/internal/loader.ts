@@ -42,6 +42,10 @@ import {
     OnInitTotalCountErrorCallbackPayload,
     OnInitTotalCountStartCallbackPayload,
     OnInitTotalCountSuccessCallbackPayload,
+    OnLoadIrrelevantElementsStartCallbackPayload,
+    OnLoadIrrelevantElementsSuccessCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
 } from "../types/index.js";
 import { AttributeFilterReduxBridge } from "./bridge.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -302,6 +306,42 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     onLoadCustomElementsCancel: CallbackRegistration<OnLoadCustomElementsCancelCallbackPayload> = (cb) => {
         return this.bridge.onLoadCustomElementsCancel(cb);
+    };
+
+    //
+    // Irrelevant elements
+    //
+
+    loadIrrelevantElements = (correlation?: Correlation): void => {
+        this.bridge.loadIrrelevantElements(correlation);
+    };
+
+    cancelIrrelevantElementsLoad(correlation?: Correlation): void {
+        this.bridge.cancelIrrelevantElementsLoad(correlation);
+    }
+
+    onLoadIrrelevantElementsStart: CallbackRegistration<OnLoadIrrelevantElementsStartCallbackPayload> = (
+        cb,
+    ) => {
+        return this.bridge.onLoadIrrelevantElementsStart(cb);
+    };
+
+    onLoadIrrelevantElementsSuccess: CallbackRegistration<OnLoadIrrelevantElementsSuccessCallbackPayload> = (
+        cb,
+    ) => {
+        return this.bridge.onLoadIrrelevantElementsSuccess(cb);
+    };
+
+    onLoadIrrelevantElementsError: CallbackRegistration<OnLoadIrrelevantElementsErrorCallbackPayload> = (
+        cb,
+    ) => {
+        return this.bridge.onLoadIrrelevantElementsError(cb);
+    };
+
+    onLoadIrrelevantElementsCancel: CallbackRegistration<OnLoadIrrelevantElementsCancelCallbackPayload> = (
+        cb,
+    ) => {
+        return this.bridge.onLoadIrrelevantElementsCancel(cb);
     };
 
     // Elements options
