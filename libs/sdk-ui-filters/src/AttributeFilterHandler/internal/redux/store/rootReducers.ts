@@ -6,6 +6,7 @@ import { loadInitialElementsPageReducers } from "../loadInitialElementsPage/load
 import { loadNextElementsPageReducers } from "../loadNextElementsPage/loadNextElementsPageReducers.js";
 import { selectionReducers } from "../selection/selectionReducers.js";
 import { elementsReducers } from "../elements/elementsReducers.js";
+import { loadIrrelevantElementsReducers } from "../loadIrrelevantElements/loadIrrelevantElementsReducers.js";
 
 /**
  * @internal
@@ -16,6 +17,7 @@ export const rootReducers = {
     ...loadInitialElementsPageReducers,
     ...loadNextElementsPageReducers,
     ...loadCustomElementsReducers,
+    ...loadIrrelevantElementsReducers,
     ...selectionReducers,
     ...elementsReducers,
 };

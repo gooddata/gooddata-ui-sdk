@@ -35,3 +35,47 @@
     flex-wrap: wrap;
     width: 100%;
 }
+
+.gd-attribute-filter-status-show-all {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    min-width: 0;
+    margin: 0 10px;
+    color: variables.$gd-color-state-blank;
+    line-height: 20px;
+    font-size: 12px;
+    padding-top: 5px;
+    border-top: 1px solid variables.$gd-border-color;
+    font-family: variables.$gd-font-primary;
+
+    .gd-relevant-values-text {
+        margin-left: 3px;
+    }
+
+    .gd-action-show-all {
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+            color: variables.$gd-palette-primary-base;
+        }
+    }
+}
+
+.gd-attribute-filter-status-irrelevant-message {
+    width: 100%;
+    margin: 0 10px 10px;
+
+    .gd-message-text {
+        line-height: 20px;
+        font-size: 12px;
+    }
+
+    .gd-action-clear {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

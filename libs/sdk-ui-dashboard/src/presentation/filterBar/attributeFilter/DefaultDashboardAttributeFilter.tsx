@@ -11,6 +11,8 @@ import {
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
     AttributeDatasetInfo,
+    AttributeFilterStatusBar,
+    IAttributeFilterStatusBarProps,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -34,6 +36,7 @@ import {
     selectIsInEditMode,
     selectBackendCapabilities,
     selectAttributeFilterConfigsModeMap,
+    selectEnableKDDependentFilters,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -60,6 +63,7 @@ export const DefaultDashboardAttributeFilter = (
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
+    const enableKDDependentFilters = useDashboardSelector(selectEnableKDDependentFilters);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -278,6 +282,17 @@ export const DefaultDashboardAttributeFilter = (
         capabilities,
     ]);
 
+    const CustomStatusBarComponent = useMemo(() => {
+        return function StatusBar(props: IAttributeFilterStatusBarProps) {
+            return (
+                <AttributeFilterStatusBar
+                    {...props}
+                    enableShowingFilteredElements={enableKDDependentFilters}
+                />
+            );
+        };
+    }, [enableKDDependentFilters]);
+
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
@@ -308,6 +323,7 @@ export const DefaultDashboardAttributeFilter = (
                         : DashboardAttributeFilterConfigModeValues.ACTIVE
                 }
                 customIcon={visibilityIcon}
+                StatusBarComponent={CustomStatusBarComponent}
             />
         </AttributeFilterParentFilteringProvider>
     );

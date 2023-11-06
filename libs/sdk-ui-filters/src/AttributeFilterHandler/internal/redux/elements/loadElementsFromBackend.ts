@@ -162,7 +162,7 @@ export async function loadElementsFromBackend(
         hiddenElementsInfo.attribute,
     );
 
-    if (effectiveLimitingAttributeFilters.length) {
+    if (effectiveLimitingAttributeFilters.length && options.includeLimitingFilters) {
         loader = loader.withAttributeFilters(effectiveLimitingAttributeFilters);
     }
 

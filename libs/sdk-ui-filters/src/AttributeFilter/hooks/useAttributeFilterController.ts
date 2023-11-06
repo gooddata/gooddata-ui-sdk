@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
+import difference from "lodash/difference.js";
 import {
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
@@ -19,7 +20,13 @@ import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
 import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
-import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants.js";
+import {
+    IRRELEVANT_SELECTION,
+    PARENT_FILTERS_CORRELATION,
+    RESET_CORRELATION,
+    SEARCH_CORRELATION,
+    SHOW_FILTERED_ELEMENTS_CORRELATION,
+} from "./constants.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController } from "./types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
@@ -84,6 +91,7 @@ export const useAttributeFilterController = (
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
     );
+    const supportsShowingFilteredElements = backend.capabilities.supportsShowingFilteredElements;
 
     const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(filterInput, connectToPlaceholder);
 
@@ -100,7 +108,10 @@ export const useAttributeFilterController = (
         hiddenElements,
         staticElements,
     });
-    const attributeFilterControllerData = useAttributeFilterControllerData(handler);
+    const attributeFilterControllerData = useAttributeFilterControllerData(
+        handler,
+        supportsShowingFilteredElements,
+    );
 
     const forcedInitErrorProp = isValidSingleSelectionFilter(selectionMode, filter, limitingAttributeFilters)
         ? {}
@@ -121,13 +132,18 @@ export const useAttributeFilterController = (
         },
         supportsKeepingDependentFiltersSelection,
     );
-    const callbacks = useCallbacks(handler, {
-        onApply,
-        setConnectedPlaceholderValue,
-        selectionMode,
-        shouldReloadElements,
-        setShouldReloadElements,
-    });
+    const callbacks = useCallbacks(
+        handler,
+        {
+            onApply,
+            setConnectedPlaceholderValue,
+            selectionMode,
+            shouldReloadElements,
+            setShouldReloadElements,
+        },
+        supportsShowingFilteredElements,
+        supportsKeepingDependentFiltersSelection,
+    );
 
     useSingleSelectModeHandler(handler, {
         selectFirst,
@@ -377,6 +393,8 @@ function useCallbacks(
         shouldReloadElements: boolean;
         setShouldReloadElements: (value: boolean) => void;
     },
+    supportsShowingFilteredElements: boolean,
+    supportsKeepingDependentFiltersSelection: boolean,
 ) {
     const {
         onApply: onApplyInput,
@@ -419,7 +437,15 @@ function useCallbacks(
             handler.setSearch("");
             handler.loadInitialElementsPage(RESET_CORRELATION);
         }
-    }, [handler]);
+
+        /**
+         * Set shouldReloadELements to true when reseting as we want to reload elements in the future.
+         */
+        if (supportsShowingFilteredElements && !handler.getIncludeLimitingFilters()) {
+            handler.setIncludeLimitingFilters(true);
+            setShouldReloadElements(true);
+        }
+    }, [handler, setShouldReloadElements, supportsShowingFilteredElements]);
 
     const onApply = useCallback(() => {
         handler.commitSelection();
@@ -433,9 +459,34 @@ function useCallbacks(
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
             handler.loadInitialElementsPage(RESET_CORRELATION);
+            handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
             setShouldReloadElements(false);
         }
     }, [handler, shouldReloadElements, setShouldReloadElements]);
+
+    const onShowFilteredElements = useCallback(() => {
+        if (supportsShowingFilteredElements) {
+            handler.setIncludeLimitingFilters(false);
+            handler.changeSelection({ ...handler.getWorkingSelection(), irrelevantKeys: [] });
+            handler.loadInitialElementsPage(SHOW_FILTERED_ELEMENTS_CORRELATION);
+        }
+    }, [handler, supportsShowingFilteredElements]);
+
+    const onClearIrrelevantSelection = useCallback(() => {
+        if (supportsKeepingDependentFiltersSelection) {
+            const workingSelection = handler.getWorkingSelection();
+            const sanitizedWorkingSelectionKeys = difference(
+                workingSelection.keys,
+                workingSelection.irrelevantKeys,
+            );
+
+            handler.changeSelection({
+                ...workingSelection,
+                keys: sanitizedWorkingSelectionKeys,
+                irrelevantKeys: [],
+            });
+        }
+    }, [handler, supportsKeepingDependentFiltersSelection]);
 
     return {
         onApply,
@@ -444,6 +495,8 @@ function useCallbacks(
         onSelect,
         onReset,
         onOpen,
+        onShowFilteredElements,
+        onClearIrrelevantSelection,
     };
 }
 

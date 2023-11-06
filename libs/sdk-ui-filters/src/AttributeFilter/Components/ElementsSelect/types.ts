@@ -114,6 +114,45 @@ export interface IAttributeFilterElementsSelectProps {
      * @beta
      */
     error?: GoodDataSdkError;
+
+    /**
+     * This enables "show filtered elements" option which manages showing filtered elements.
+     */
+    enableShowingFilteredElements?: boolean;
+
+    /**
+     * Title of the attribute
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    attributeTitle?: string;
+
+    /**
+     * Render "show filtered elements" option.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    renderShowFilteredElementsOption?: boolean;
+
+    /**
+     * Show filtered elements callback
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    onShowFilteredElements?: () => void;
+
+    /**
+     * Irrelevant/filtered out selection keys which are still effective.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    irrelevantSelection?: string[];
+
+    /**
+     * Clear irrelevant/filtered out selection callback.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    onClearIrrelevantSelection?: () => void;
 }
 
 /**

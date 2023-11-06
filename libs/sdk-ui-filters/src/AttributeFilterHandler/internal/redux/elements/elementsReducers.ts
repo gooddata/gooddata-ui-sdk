@@ -89,6 +89,12 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };
 
+const setIncludeLimitingFilters: AttributeFilterReducer<
+    PayloadAction<{ includeLimitingFilters: boolean }>
+> = (state, action) => {
+    state.elements.currentOptions.includeLimitingFilters = action.payload.includeLimitingFilters;
+};
+
 /**
  * @internal
  */
@@ -108,4 +114,5 @@ export const elementsReducers = {
     setLimitingMeasures,
     setLimitingDateFilters,
     setLimitingAttributeFiltersAttributes,
+    setIncludeLimitingFilters,
 };

@@ -154,6 +154,14 @@ export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = 
 /**
  * @internal
  */
+export const selectIncludeLimitingFilters: FilterSelector<boolean> = createSelector(
+    selectState,
+    (state) => state.elements.currentOptions.includeLimitingFilters,
+);
+
+/**
+ * @internal
+ */
 export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = createSelector(
     selectOffset,
     selectLimit,
@@ -162,6 +170,7 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
     selectLimitingAttributeFilters,
     selectLimitingMeasures,
     selectLimitingDateFilters,
+    selectIncludeLimitingFilters,
     (
         offset,
         limit,
@@ -170,6 +179,7 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
         limitingAttributeFilters,
         limitingMeasures,
         limitingDateFilters,
+        includeLimitingFilters,
     ): ILoadElementsOptions => {
         return {
             limit,
@@ -179,6 +189,7 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
             offset,
             order,
             search,
+            includeLimitingFilters,
         };
     },
 );

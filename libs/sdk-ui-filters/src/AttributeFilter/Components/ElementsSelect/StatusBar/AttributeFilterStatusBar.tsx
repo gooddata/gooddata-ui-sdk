@@ -3,6 +3,9 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import React from "react";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
 import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus.js";
+import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";
+import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
+import noop from "lodash/noop.js";
 
 /**
  * It represents component that display status of current selection.
@@ -52,6 +55,46 @@ export interface IAttributeFilterStatusBarProps {
      * @beta
      */
     selectedItemsLimit: number;
+
+    /**
+     * This enables "show filtered elements" option which manages showing filtered elements.
+     */
+    enableShowingFilteredElements?: boolean;
+
+    /**
+     * Title of the attribute used for dependent filter configuration.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    attributeTitle?: string;
+
+    /**
+     * Render "show filtered elements" option.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    renderShowFilteredElementsOption?: boolean;
+
+    /**
+     * Show filtered elements callback
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    onShowFilteredElements?: () => void;
+
+    /**
+     * Irrelevant/filtered out selection keys which are still effective.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    irrelevantSelection?: string[];
+
+    /**
+     * Clear irrelevant/filtered out selection callback.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    onClearIrrelevantSelection?: () => void;
 }
 
 /**
@@ -61,6 +104,7 @@ export interface IAttributeFilterStatusBarProps {
  */
 export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> = (props) => {
     const {
+        attributeTitle,
         isFilteredByParentFilters,
         parentFilterTitles,
         totalElementsCountWithCurrentSettings,
@@ -68,7 +112,36 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
         isInverted,
         selectedItems,
         selectedItemsLimit,
+        enableShowingFilteredElements = false,
+        renderShowFilteredElementsOption = false,
+        onShowFilteredElements = noop,
+        irrelevantSelection = [],
+        onClearIrrelevantSelection = noop,
     } = props;
+
+    if (enableShowingFilteredElements) {
+        return (
+            <div className="gd-attribute-filter-status-bar__next">
+                <AttributeFilterShowFilteredElements
+                    isHidden={!renderShowFilteredElementsOption}
+                    attributeTitle={attributeTitle}
+                    onClick={onShowFilteredElements}
+                    parentFilterTitles={parentFilterTitles}
+                />
+                <AttributeFilterSelectionStatus
+                    isInverted={isInverted}
+                    getItemTitle={getItemTitle}
+                    selectedItems={selectedItems}
+                    selectedItemsLimit={selectedItemsLimit}
+                />
+                <AttributeFilterIrrelevantSelectionStatus
+                    parentFilterTitles={parentFilterTitles}
+                    irrelevantSelection={irrelevantSelection}
+                    onClear={onClearIrrelevantSelection}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className="gd-attribute-filter-status-bar__next">

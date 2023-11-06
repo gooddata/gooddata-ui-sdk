@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import { action } from "@storybook/addon-actions";
 
 import { FilterStories } from "../../../../_infra/storyGroups.js";
 import { storiesOf } from "../../../../_infra/storyRepository.js";
@@ -81,6 +82,22 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                         selectedItemsLimit={2}
                         parentFilterTitles={["Location", "Department"]}
                         isFilteredByParentFilters={true}
+                    />
+                    <h4>AttributeFilterStatusBar with irrelevant selected elements and show all option</h4>
+                    <AttributeFilterStatusBar
+                        getItemTitle={(element) => element.title!}
+                        selectedItems={elements}
+                        totalElementsCountWithCurrentSettings={100}
+                        isInverted={true}
+                        selectedItemsLimit={500}
+                        parentFilterTitles={["Location", "Department"]}
+                        isFilteredByParentFilters={true}
+                        enableShowingFilteredElements={true}
+                        attributeTitle="Product"
+                        renderShowFilteredElementsOption={true}
+                        onShowFilteredElements={action("showAll")}
+                        irrelevantSelection={[elements[0].title]}
+                        onClearIrrelevantSelection={action("clear")}
                     />
                 </div>
             </IntlWrapper>

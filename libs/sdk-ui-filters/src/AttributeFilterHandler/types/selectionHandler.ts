@@ -86,6 +86,7 @@ export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionH
 export interface InvertableSelection<T> {
     keys: T[];
     isInverted: boolean;
+    irrelevantKeys?: string[];
 }
 
 /**

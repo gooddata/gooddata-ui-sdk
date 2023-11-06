@@ -50,6 +50,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             limitingAttributeFilters?: IElementsQueryAttributeFilter[];
             limitingMeasures?: IMeasure[];
             limitingDateFilters?: IRelativeDateFilter[];
+            includeLimitingFilters?: boolean;
         };
     };
     selection: {
@@ -57,6 +58,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             elements?: IAttributeElement[];
             keys?: string[];
             isInverted?: boolean;
+            irrelevantKeys?: string[];
         };
         working: {
             elements?: IAttributeElement[];
@@ -64,6 +66,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             isInverted?: boolean;
             isChanged?: boolean;
             isEmpty?: boolean;
+            irrelevantKeys?: string[];
         };
     };
     config?: {
@@ -113,6 +116,7 @@ export const useAttributeFilterHandlerState = (
                 limitingDateFilters: handler.getLimitingDateFilters(),
                 limitingMeasures: handler.getLimitingMeasures(),
                 order: handler.getOrder(),
+                includeLimitingFilters: handler.getIncludeLimitingFilters(),
             },
         },
         selection: {
@@ -120,6 +124,7 @@ export const useAttributeFilterHandlerState = (
                 elements: initStatus === "success" ? handler.getElementsByKey(committedSelection.keys) : [],
                 keys: committedSelection.keys,
                 isInverted: committedSelection.isInverted,
+                irrelevantKeys: committedSelection.irrelevantKeys,
             },
             working: {
                 elements: initStatus === "success" ? handler.getElementsByKey(workingSelection.keys) : [],
@@ -127,6 +132,7 @@ export const useAttributeFilterHandlerState = (
                 isInverted: workingSelection.isInverted,
                 isChanged: handler.isWorkingSelectionChanged(),
                 isEmpty: handler.isWorkingSelectionEmpty(),
+                irrelevantKeys: workingSelection.irrelevantKeys,
             },
         },
     };

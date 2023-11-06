@@ -15,6 +15,7 @@ import { AttributeFilterControllerData } from "./types.js";
  */
 export function useAttributeFilterControllerData(
     handler: IMultiSelectAttributeFilterHandler,
+    supportsShowingFilteredElements: boolean,
 ): AttributeFilterControllerData {
     const handlerState = useAttributeFilterHandlerState(handler);
 
@@ -71,6 +72,17 @@ export function useAttributeFilterControllerData(
 
     const offset = handlerState.elements.options.offset;
 
+    const irrelevantSelection = supportsShowingFilteredElements
+        ? handlerState.selection.working.irrelevantKeys
+        : [];
+
+    const renderShowFilteredElementsOption =
+        supportsShowingFilteredElements &&
+        initialElementsPageStatus === "success" &&
+        limitingAttributeFilters.length > 0 &&
+        totalElementsCount > totalElementsCountWithCurrentSettings &&
+        handlerState.elements.options.includeLimitingFilters; // This makes sure to not show the option when all is shown and user is searching
+
     return {
         attribute,
 
@@ -104,11 +116,15 @@ export function useAttributeFilterControllerData(
         searchString,
 
         isFilteredByParentFilters,
-
         parentFilterAttributes,
 
         displayForms,
         currentDisplayFormRef,
+
+        enableShowingFilteredElements: supportsShowingFilteredElements,
+        renderShowFilteredElementsOption,
+
+        irrelevantSelection,
     };
 }
 

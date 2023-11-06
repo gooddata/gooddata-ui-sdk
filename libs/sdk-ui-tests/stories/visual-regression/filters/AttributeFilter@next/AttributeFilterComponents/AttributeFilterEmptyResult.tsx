@@ -39,6 +39,17 @@ const AttributeFilterEmptyResultExamples = (): JSX.Element => {
                         totalItemsCount={100}
                         parentFilterTitles={["Location", "Department"]}
                     />
+                    <h4>
+                        AttributeFilterEmptyResult empty filtered result with support for irrelevant values
+                    </h4>
+                    <AttributeFilterEmptyResult
+                        height={100}
+                        isFilteredByParentFilters={true}
+                        searchString={""}
+                        totalItemsCount={100}
+                        parentFilterTitles={["Location", "Department"]}
+                        enableShowingFilteredElements={true}
+                    />
                 </div>
             </IntlWrapper>
         </div>
