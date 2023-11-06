@@ -23,7 +23,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((response) => response.data)
                 .then((user) => convertUser(user));
         });
-    }
+    };
 
     public getUserGroup = async (id: string): Promise<IUserGroup | undefined> => {
         return this.authCall(async (client) => {
@@ -32,7 +32,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((response) => response.data)
                 .then((userGroup) => convertUserGroup(userGroup));
         });
-    }
+    };
 
     public updateUser = async (user: IUser): Promise<void> => {
         return this.authCall(async (client) => {
@@ -52,7 +52,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 },
             });
         });
-    }
+    };
 
     public createUserGroup = async (group: IUserGroup): Promise<void> => {
         return this.authCall(async (client) => {
@@ -69,7 +69,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 },
             });
         });
-    }
+    };
 
     public updateUserGroup = async (group: IUserGroup): Promise<void> => {
         return this.authCall(async (client) => {
@@ -87,7 +87,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 },
             });
         });
-    }
+    };
 
     public deleteUser = async (id: string): Promise<void> => {
         return this.authCall(async (client) => {
@@ -95,7 +95,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 id,
             });
         });
-    }
+    };
 
     public deleteUserGroup = async (id: string): Promise<void> => {
         return this.authCall(async (client) => {
@@ -103,7 +103,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 id,
             });
         });
-    }
+    };
 
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
@@ -111,7 +111,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .getUsers()
                 .then((response) => response.data.users.map(convertOrganizationUser));
         });
-    }
+    };
 
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
@@ -119,7 +119,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .getUserGroups()
                 .then((response) => response.data.userGroups.map(convertOrganizationUserGroup));
         });
-    }
+    };
 
     public getUserGroupsOfUser = async (userId: string): Promise<IUserGroup[]> => {
         return this.authCall(async (client) => {
@@ -131,7 +131,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((response) => response.data)
                 .then((groups) => groups.included?.map(convertIncludedUserGroup) || []);
         });
-    }
+    };
 
     public getUsersOfUserGroup = async (userGroupId: string): Promise<IUser[]> => {
         return this.authCall(async (client) => {
@@ -143,7 +143,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((response) => response.data)
                 .then((users) => users.data.map(convertIncludedUser) || []);
         });
-    }
+    };
 
     public addUserGroupToUsers = async (userGroupId: string, userIds: string[]): Promise<void> => {
         return this.authCall(async (client) => {
@@ -154,7 +154,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 },
             });
         });
-    }
+    };
 
     public addUserToUserGroups = async (userId: string, userGroupIds: string[]): Promise<void> => {
         return this.authCall(async (client) => {
@@ -171,7 +171,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 }),
             );
         });
-    }
+    };
 
     public removeUserFromUserGroup = async (userId: string, userGroupId: string): Promise<void> => {
         return this.authCall(async (client) => {
@@ -182,5 +182,5 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 },
             });
         });
-    }
+    };
 }

@@ -75,7 +75,7 @@ export const AddWorkspaceSelect: React.FC<IAddWorkspaceSelectProps> = ({
     }, []);
 
     const usedWorkspace = useMemo(
-        () => [...addedWorkspaces, ...grantedWorkspaces],
+        () => (grantedWorkspaces ? [...addedWorkspaces, ...grantedWorkspaces] : []),
         [addedWorkspaces, grantedWorkspaces],
     );
 

@@ -54,7 +54,12 @@ export const InputRendered = (props: InputProps): JSX.Element => {
 };
 
 const OptionContentRenderer = (item: IUserSelectOption): JSX.Element => {
-    return <> {item.label} <span className={"option-email"}>{item.value.email}</span> </>;
+    return (
+        <>
+            {" "}
+            {item.label} <span className={"option-email"}>{item.value.email}</span>{" "}
+        </>
+    );
 };
 
 export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): JSX.Element => {

@@ -18,6 +18,7 @@ export interface IAddWorkspaceProps {
     grantedWorkspaces: IGrantedWorkspace[];
     onSubmit: (workspaces: IGrantedWorkspace[]) => void;
     onCancel: () => void;
+    onClose: () => void;
 }
 
 export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
@@ -26,6 +27,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     grantedWorkspaces,
     onSubmit,
     onCancel,
+    onClose,
 }) => {
     const intl = useIntl();
     const { addedWorkspaces, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
@@ -50,7 +52,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             submitButtonText={intl.formatMessage(userManagementMessages.addWorkspaceDialogSaveButton)}
             onCancel={onCancel}
             onSubmit={onAdd}
-            onClose={onCancel}
+            onClose={onClose}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddWorkspaceSelect

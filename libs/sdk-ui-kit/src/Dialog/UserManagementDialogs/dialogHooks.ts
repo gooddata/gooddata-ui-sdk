@@ -24,12 +24,18 @@ import {
 import {
     IGrantedWorkspace,
     IGrantedUserGroup,
-    DialogMode,
+    UserEditDialogMode,
     IUserMember,
     WorkspacePermissionSubject,
+    UserGroupEditDialogMode,
 } from "./types.js";
 
-export const useUser = (userId: string, organizationId: string, isAdmin: boolean, onUserChanged: () => void) => {
+export const useUser = (
+    userId: string,
+    organizationId: string,
+    isAdmin: boolean,
+    onUserChanged: () => void,
+) => {
     const [user, setUser] = useState<IUser>();
     const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
 
@@ -73,7 +79,7 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onUser
     const onUserGroupDetailsChanged = (userGroup: IUserGroup) => {
         setUserGroup(userGroup);
         onUserChanged();
-    }
+    };
 
     return {
         userGroup,
@@ -81,7 +87,12 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onUser
     };
 };
 
-export const useDeleteUser = (userId: string, organizationId: string, onUserChanged: () => void, onClose: () => void) => {
+export const useDeleteUser = (
+    userId: string,
+    organizationId: string,
+    onUserChanged: () => void,
+    onClose: () => void,
+) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
 
@@ -101,7 +112,12 @@ export const useDeleteUser = (userId: string, organizationId: string, onUserChan
             });
 };
 
-export const useDeleteUserGroup = (userGroupId: string, organizationId: string, onUserGroupChanged: () => void, onClose: () => void) => {
+export const useDeleteUserGroup = (
+    userGroupId: string,
+    organizationId: string,
+    onUserGroupChanged: () => void,
+    onClose: () => void,
+) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
 
@@ -144,7 +160,7 @@ export const useWorkspaces = (
     id: string,
     subjectType: WorkspacePermissionSubject,
     organizationId: string,
-    onUserChanged: () => void
+    onUserChanged: () => void,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -173,7 +189,9 @@ export const useWorkspaces = (
         getWorkspacePermissions(id).then((assignments) => {
             const workspaces = assignments.map((assignment) => {
                 const { workspace, permissions, hierarchyPermissions } = assignment;
-                const permission = asPermission(hierarchyPermissions.length ? hierarchyPermissions : permissions);
+                const permission = asPermission(
+                    hierarchyPermissions.length ? hierarchyPermissions : permissions,
+                );
                 return {
                     id: workspace.id,
                     title: workspace.name,
@@ -373,9 +391,7 @@ export const useUserGroupDialogTabs = (
     grantedUsers: IUserMember[],
     isAdmin: boolean,
 ) => {
-    const [selectedTabId, setSelectedTabId] = useState(
-        userGroupDialogTabsMessageLabels.users,
-    );
+    const [selectedTabId, setSelectedTabId] = useState(userGroupDialogTabsMessageLabels.users);
 
     const tabs = useMemo<ITab[]>(() => {
         return [
@@ -400,8 +416,16 @@ export const useUserGroupDialogTabs = (
     };
 };
 
-export const useDialogMode = () => {
-    const [dialogMode, setDialogMode] = useState<DialogMode>("VIEW");
+export const useUserDialogMode = (initialView: UserEditDialogMode) => {
+    const [dialogMode, setDialogMode] = useState<UserEditDialogMode>(initialView);
+    return {
+        dialogMode,
+        setDialogMode,
+    };
+};
+
+export const useUserGroupDialogMode = (initialView: UserGroupEditDialogMode) => {
+    const [dialogMode, setDialogMode] = useState<UserGroupEditDialogMode>(initialView);
     return {
         dialogMode,
         setDialogMode,

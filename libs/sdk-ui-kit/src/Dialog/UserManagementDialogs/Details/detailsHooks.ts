@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { IUser, IUserGroup } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 
@@ -19,6 +19,11 @@ export const useUserDetails = (
     const [isUpdatedAdmin, setUpdatedAdmin] = useState(isAdmin);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
+
+    // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
+    useEffect(() => {
+        setUpdatedUser(user);
+    }, [user]);
 
     const onChange = (user: IUser, isAdmin: boolean) => {
         setUpdatedUser(user);
@@ -76,6 +81,11 @@ export const useUserGroupDetails = (
     const [updatedUserGroup, setUpdatedUserGroup] = useState(userGroup);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
+
+    // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
+    useEffect(() => {
+        setUpdatedUserGroup(userGroup);
+    }, [userGroup]);
 
     const onSave = () => {
         backend

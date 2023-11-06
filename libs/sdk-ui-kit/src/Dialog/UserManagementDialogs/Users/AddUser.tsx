@@ -16,9 +16,16 @@ export interface IAddUserProps {
     grantedUsers: IUserMember[];
     onSubmit: (users: IUserMember[]) => void;
     onCancel: () => void;
+    onClose: () => void;
 }
 
-export const AddUser: React.FC<IAddUserProps> = ({ userGroupId, grantedUsers, onSubmit, onCancel }) => {
+export const AddUser: React.FC<IAddUserProps> = ({
+    userGroupId,
+    grantedUsers,
+    onSubmit,
+    onCancel,
+    onClose,
+}) => {
     const intl = useIntl();
     const { addedUsers, onSelect, onAdd, onDelete } = useAddUsers(userGroupId, onSubmit, onCancel);
 
@@ -37,7 +44,7 @@ export const AddUser: React.FC<IAddUserProps> = ({ userGroupId, grantedUsers, on
             submitButtonText={intl.formatMessage(userManagementMessages.addUserDialogSaveButton)}
             onCancel={onCancel}
             onSubmit={onAdd}
-            onClose={onCancel}
+            onClose={onClose}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddUserContent

@@ -76,7 +76,9 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
                     >
                         <div>{intl.formatMessage(userManagementMessages.userIsRegularUser)}</div>
                         <div className="gd-user-management-help-icon-wrapper">
-                            <QuestionMarkIcon bubbleTextId={userManagementMessages.userIsRegularUserTooltip.id} />
+                            <QuestionMarkIcon
+                                bubbleTextId={userManagementMessages.userIsRegularUserTooltip.id}
+                            />
                         </div>
                     </div>
                 </ItemsWrapper>

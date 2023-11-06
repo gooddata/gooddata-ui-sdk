@@ -16,6 +16,7 @@ export interface IAddUserGroupProps {
     grantedUserGroups: IGrantedUserGroup[];
     onSubmit: (userGroups: IGrantedUserGroup[]) => void;
     onCancel: () => void;
+    onClose: () => void;
 }
 
 export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
@@ -23,6 +24,7 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
     grantedUserGroups,
     onSubmit,
     onCancel,
+    onClose,
 }) => {
     const intl = useIntl();
     const { addedUserGroups, onAdd, onSelect, onDelete } = useAddUserGroup(userId, onSubmit, onCancel);
@@ -42,7 +44,7 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
             submitButtonText={intl.formatMessage(userManagementMessages.addUserGroupDialogSaveButton)}
             onCancel={onCancel}
             onSubmit={onAdd}
-            onClose={onCancel}
+            onClose={onClose}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddUserGroupContent

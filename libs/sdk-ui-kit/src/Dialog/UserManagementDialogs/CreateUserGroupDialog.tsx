@@ -26,10 +26,14 @@ export interface ICreateUserGroupDialogProps {
 /**
  * @internal
  */
-export const CreateUserGroupDialog:React.FC<ICreateUserGroupDialogProps> = ({organizationId, onGroupCreated, onCancel}) => {
+export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
+    organizationId,
+    onGroupCreated,
+    onCancel,
+}) => {
     const intl = useIntl();
     const backend = useBackendStrict();
-    const { addSuccess, addError} = useToastMessage();
+    const { addSuccess, addError } = useToastMessage();
     const [userGroupName, setUserGroupName] = useState<string>();
 
     const onSubmit = () => {

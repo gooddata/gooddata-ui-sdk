@@ -9,7 +9,7 @@ import { Overlay } from "../../../../Overlay/index.js";
 import { IAlignPoint } from "../../../../typings/positioning.js";
 import {
     userManagementWorkspacePermissionMessages,
-    userManagementWorkspacePermissionTooltipMessages
+    userManagementWorkspacePermissionTooltipMessages,
 } from "../../../../locales.js";
 import { IPermissionsItem, WorkspacePermission } from "../../types.js";
 
@@ -29,9 +29,13 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ disabled, onClick }) => {
     const intl = useIntl();
-    const className = cx("gd-list-item gd-menu-item gd-menu-item-remove", "s-user-management-permission-remove", {
-        "is-disabled": disabled,
-    });
+    const className = cx(
+        "gd-list-item gd-menu-item gd-menu-item-remove",
+        "s-user-management-permission-remove",
+        {
+            "is-disabled": disabled,
+        },
+    );
 
     return (
         <div className={className} onClick={onClick}>
@@ -86,7 +90,9 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
                             selectedPermission={selectedPermission}
                             toggleDropdown={toggleDropdown}
                             onSelect={handleOnSelect}
-                            bubbleTextId={userManagementWorkspacePermissionTooltipMessages[permissionItem.id].id}
+                            bubbleTextId={
+                                userManagementWorkspacePermissionTooltipMessages[permissionItem.id].id
+                            }
                         />
                     );
                 })}

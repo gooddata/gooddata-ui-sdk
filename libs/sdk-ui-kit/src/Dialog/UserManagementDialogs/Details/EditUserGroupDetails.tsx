@@ -16,12 +16,14 @@ export interface IEditUserGroupDetailsProps {
     userGroup: IUserGroup;
     onSubmit: (userGroup: IUserGroup) => void;
     onCancel: () => void;
+    onClose: () => void;
 }
 
 export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
     userGroup,
     onSubmit,
     onCancel,
+    onClose,
 }) => {
     const intl = useIntl();
     const { updatedUserGroup, onChange, isDirty, onSave } = useUserGroupDetails(
@@ -45,7 +47,7 @@ export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
             submitButtonText={intl.formatMessage(userManagementMessages.saveEditedDetails)}
             onCancel={onCancel}
             onSubmit={onSave}
-            onClose={onCancel}
+            onClose={onClose}
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <UserGroupDetailsView userGroup={updatedUserGroup} mode="EDIT" onChange={onChange} />

@@ -20,7 +20,7 @@ import {
     useUserGroups,
     useUser,
     useWorkspaces,
-    useDialogMode,
+    useUserDialogMode,
     useDeleteUser,
     useDeleteDialog,
 } from "./dialogHooks.js";
@@ -28,6 +28,7 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
+import { UserEditDialogMode } from "./types.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -38,6 +39,7 @@ export interface IUserEditDialogProps {
     userId: string;
     organizationId: string;
     isAdmin: boolean;
+    initialView?: UserEditDialogMode;
     onUserChanged: () => void;
     onClose: () => void;
 }
@@ -51,10 +53,16 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
     isAdmin,
     onUserChanged,
     onClose,
+    initialView = "VIEW",
 }) => {
     const intl = useIntl();
-    const { dialogMode, setDialogMode } = useDialogMode();
-    const { user, isCurrentlyAdmin, onUserDetailsChanged } = useUser(userId, organizationId, isAdmin, onUserChanged);
+    const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
+    const { user, isCurrentlyAdmin, onUserDetailsChanged } = useUser(
+        userId,
+        organizationId,
+        isAdmin,
+        onUserChanged,
+    );
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
         useWorkspaces(userId, "user", organizationId, onUserChanged);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup } = useUserGroups(
@@ -104,7 +112,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         <OrganizationIdProvider organizationId={organizationId}>
             {isConfirmDeleteOpened ? (
                 <DeleteConfirmDialog
-                    titleText={extractUserName(user)}
+                    titleText={intl.formatMessage(userManagementMessages.deleteUserConfirmTitle)}
                     bodyText={intl.formatMessage(userManagementMessages.deleteUserConfirmBody, {
                         br: <br />,
                     })}
@@ -171,6 +179,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             grantedWorkspaces={grantedWorkspaces}
                             onSubmit={onWorkspacesChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                     {dialogMode === "USER_GROUPS" && (
@@ -179,6 +188,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             grantedUserGroups={grantedUserGroups}
                             onSubmit={onUserGroupsChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                     {dialogMode === "DETAIL" && (
@@ -187,6 +197,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             isAdmin={isCurrentlyAdmin}
                             onSubmit={onUserDetailsChanged}
                             onCancel={() => setDialogMode("VIEW")}
+                            onClose={onClose}
                         />
                     )}
                 </div>

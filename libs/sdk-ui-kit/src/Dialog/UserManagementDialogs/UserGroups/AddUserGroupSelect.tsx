@@ -84,7 +84,7 @@ export const AddUserGroupSelect: React.FC<IAddUserGroupSelectProps> = ({
     }, []);
 
     const usedUserGroups = useMemo(
-        () => [...addedUserGroups, ...grantedUserGroups],
+        () => (grantedUserGroups ? [...addedUserGroups, ...grantedUserGroups] : []),
         [addedUserGroups, grantedUserGroups],
     );
 
