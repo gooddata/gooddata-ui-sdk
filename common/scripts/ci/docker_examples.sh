@@ -5,7 +5,7 @@ set -o pipefail
 # Absolute root directory - for volumes
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 
-IMAGE="node:18.17.0-bullseye"
+IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18"
 
 echo "Running \"$*\" using ${IMAGE} in root directory ${ROOT_DIR}"
 
