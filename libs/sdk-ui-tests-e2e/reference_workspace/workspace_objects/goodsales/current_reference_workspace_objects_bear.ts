@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-30T07:46:12.317Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-11-06T04:05:54.938Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2365,6 +2365,10 @@ export const Insights = {
      * Insight Title: bullet with two attributes same bucket
      * Insight ID: aagaVhl74Rj5
      */ BulletWithTwoAttributesSameBucket: "aagaVhl74Rj5",
+    /**
+     * Insight Title: table transpose row left
+     * Insight ID: aacXBmMBL1DV
+     */ TableTransposeRowLeft: "aacXBmMBL1DV",
 };
 export const Dashboards = {
     /**

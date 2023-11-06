@@ -4128,6 +4128,60 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "{{{fact_opportunitysnapshot_amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "dc8b59d2e9d942db93f39b555385ab50",
+                                            "title": "Sum of Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "3a1008bc2a43411c923d4db6fc7aa7b5"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"columnHeadersPosition\":\"left\",\"measureGroupDimension\":\"rows\"}}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacXBmMBL1DV",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table transpose row left"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_transpose_row_left_aacXBmMBL1DV"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -12009,6 +12063,27 @@
         },
         {
             "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_transpose_row_left_aacXBmMBL1DV}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacXBsRE2xxO",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table transpose row left"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_transpose_row_left_aacXBsRE2xxO"
+        },
+        {
+            "content": {
                 "analyticalDashboard": {
                     "content": {
                         "filterContext": "{{{filterContext_filterContext_aan9jkdFGZF7}}}",
@@ -12097,6 +12172,25 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_transpose_row_left_aacXBsRE2xxO}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
@@ -12106,7 +12200,8 @@
                             "{{{visualizationWidget_table_only_row_and_column_aag9jjB6CmLp}}}",
                             "{{{visualizationWidget_table_only_rows_and_measures_aag9jjB2CmHD}}}",
                             "{{{visualizationWidget_table_only_rows_aao84gSWC7Yg}}}",
-                            "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}"
+                            "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}",
+                            "{{{visualizationWidget_table_transpose_row_left_aacXBsRE2xxO}}}"
                         ]
                     },
                     "meta": {

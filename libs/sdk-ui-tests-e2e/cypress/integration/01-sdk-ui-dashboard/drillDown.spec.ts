@@ -106,6 +106,16 @@ describe("Drilling", () => {
             });
         });
 
+        it("Should drill down on table transpose", () => {
+            Navigation.visit("dashboard/dashboard-table-drill-down");
+            new Widget(5).scrollIntoView().waitTableLoaded().getTable().click(0, 1);
+            drillModal
+                .waitForDrillModalViz()
+                .hasTitleHeader("table transpose row left" + " › " + DIRECT_SALES);
+            drillModal.getTable().hasCellValue(0, 1, "CompuSci").hasCellValue(1, 1, "763,142,664.03");
+            drillModal.close();
+        });
+
         it("Should drill down on charts that have two drillable attributes", () => {
             const firstDrillValue = [
                 "617.00",
