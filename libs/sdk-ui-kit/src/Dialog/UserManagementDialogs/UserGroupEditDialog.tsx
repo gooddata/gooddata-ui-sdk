@@ -38,6 +38,7 @@ export interface IUserGroupEditDialogProps {
     userGroupId: string;
     organizationId: string;
     isAdmin: boolean;
+    onUserGroupChanged: () => void;
     onClose: () => void;
 }
 
@@ -48,14 +49,15 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     userGroupId,
     organizationId,
     isAdmin,
+    onUserGroupChanged,
     onClose,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useDialogMode();
-    const { userGroup, onUserGroupChanged } = useUserGroup(userGroupId, organizationId);
+    const { userGroup, onUserGroupDetailsChanged } = useUserGroup(userGroupId, organizationId, onUserGroupChanged);
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
-        useWorkspaces(userGroupId, "userGroup", organizationId);
-    const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(userGroupId, organizationId);
+        useWorkspaces(userGroupId, "userGroup", organizationId, onUserGroupChanged);
+    const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(userGroupId, organizationId, onUserGroupChanged);
     const { tabs, selectedTabId, setSelectedTabId } = useUserGroupDialogTabs(
         grantedWorkspaces,
         grantedUsers,
@@ -68,7 +70,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         dialogOverlayClassNames,
         dialogWrapperClassNames,
     } = useDeleteDialog();
-    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onClose);
+    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onUserGroupChanged, onClose);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessageLabels.workspaces.id) {
@@ -167,7 +169,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                     {dialogMode === "DETAIL" && (
                         <EditUserGroupDetails
                             userGroup={userGroup}
-                            onSubmit={onUserGroupChanged}
+                            onSubmit={onUserGroupDetailsChanged}
                             onCancel={() => setDialogMode("VIEW")}
                         />
                     )}

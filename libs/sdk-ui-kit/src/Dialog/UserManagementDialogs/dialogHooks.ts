@@ -29,7 +29,7 @@ import {
     WorkspacePermissionSubject,
 } from "./types.js";
 
-export const useUser = (userId: string, organizationId: string, isAdmin: boolean) => {
+export const useUser = (userId: string, organizationId: string, isAdmin: boolean, onUserChanged: () => void) => {
     const [user, setUser] = useState<IUser>();
     const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
 
@@ -44,19 +44,20 @@ export const useUser = (userId: string, organizationId: string, isAdmin: boolean
             .then((user) => setUser(user));
     }, [backend, userId, organizationId]);
 
-    const onUserChanged = (user: IUser, isAdmin: boolean) => {
+    const onUserDetailsChanged = (user: IUser, isAdmin: boolean) => {
         setUser(user);
         setIsAdmin(isAdmin);
+        onUserChanged();
     };
 
     return {
         user,
-        onUserChanged,
+        onUserDetailsChanged,
         isCurrentlyAdmin,
     };
 };
 
-export const useUserGroup = (userGroupId: string, organizationId: string) => {
+export const useUserGroup = (userGroupId: string, organizationId: string, onUserChanged: () => void) => {
     const [userGroup, setUserGroup] = useState<IUserGroup>();
     const backend = useBackendStrict();
 
@@ -69,13 +70,18 @@ export const useUserGroup = (userGroupId: string, organizationId: string) => {
             .then((userGroup) => setUserGroup(userGroup));
     }, [backend, userGroupId, organizationId]);
 
+    const onUserGroupDetailsChanged = (userGroup: IUserGroup) => {
+        setUserGroup(userGroup);
+        onUserChanged();
+    }
+
     return {
         userGroup,
-        onUserGroupChanged: setUserGroup,
+        onUserGroupDetailsChanged,
     };
 };
 
-export const useDeleteUser = (userId: string, organizationId: string, onClose: () => void) => {
+export const useDeleteUser = (userId: string, organizationId: string, onUserChanged: () => void, onClose: () => void) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
 
@@ -86,6 +92,7 @@ export const useDeleteUser = (userId: string, organizationId: string, onClose: (
             .deleteUser(userId)
             .then(() => {
                 addSuccess(userManagementMessages.userDeleteSuccess);
+                onUserChanged();
                 onClose();
             })
             .catch((error) => {
@@ -94,7 +101,7 @@ export const useDeleteUser = (userId: string, organizationId: string, onClose: (
             });
 };
 
-export const useDeleteUserGroup = (userGroupId: string, organizationId: string, onClose: () => void) => {
+export const useDeleteUserGroup = (userGroupId: string, organizationId: string, onUserGroupChanged: () => void, onClose: () => void) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
 
@@ -105,6 +112,7 @@ export const useDeleteUserGroup = (userGroupId: string, organizationId: string, 
             .deleteUserGroup(userGroupId)
             .then(() => {
                 addSuccess(userManagementMessages.userGroupDeleteSuccess);
+                onUserGroupChanged();
                 onClose();
             })
             .catch((error) => {
@@ -136,6 +144,7 @@ export const useWorkspaces = (
     id: string,
     subjectType: WorkspacePermissionSubject,
     organizationId: string,
+    onUserChanged: () => void
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -181,6 +190,7 @@ export const useWorkspaces = (
             .then(() => {
                 addSuccess(userManagementMessages.workspaceRemovedSuccess);
                 setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== workspace.id));
+                onUserChanged();
             })
             .catch((error) => {
                 console.error("Removal of workspace permission failed", error);
@@ -210,6 +220,7 @@ export const useWorkspaces = (
             (item) => !workspaces.some((w) => w.id === item.id),
         );
         setGrantedWorkspaces([...unchangedWorkspaces, ...workspaces].sort(sortByName));
+        onUserChanged();
     };
 
     return {
@@ -220,7 +231,7 @@ export const useWorkspaces = (
     };
 };
 
-export const useUserGroups = (userId: string, organizationId: string) => {
+export const useUserGroups = (userId: string, organizationId: string, onUserChanged: () => void) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[]>(undefined);
@@ -249,6 +260,7 @@ export const useUserGroups = (userId: string, organizationId: string) => {
             .then(() => {
                 addSuccess(userManagementMessages.userGroupRemovedSuccess);
                 setGrantedUserGroups(grantedUserGroups.filter((item) => item.id !== grantedUserGroup.id));
+                onUserChanged();
             })
             .catch((error) => {
                 console.error("Removal of user group failed", error);
@@ -262,6 +274,7 @@ export const useUserGroups = (userId: string, organizationId: string) => {
             (item) => !userGroups.some((userGroup) => userGroup.id === item.id),
         );
         setGrantedUserGroups([...unchangedUserGroups, ...userGroups].sort(sortByName));
+        onUserChanged();
     };
 
     return {
@@ -271,7 +284,7 @@ export const useUserGroups = (userId: string, organizationId: string) => {
     };
 };
 
-export const useUsers = (userGroupId: string, organizationId: string) => {
+export const useUsers = (userGroupId: string, organizationId: string, onUserChanged: () => void) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUsers, setGrantedUsers] = useState<IUserMember[]>(undefined);
@@ -301,6 +314,7 @@ export const useUsers = (userGroupId: string, organizationId: string) => {
             .then(() => {
                 addSuccess(userManagementMessages.usersRemovedSuccess);
                 setGrantedUsers(grantedUsers.filter((item) => item.id !== grantedUser.id));
+                onUserChanged();
             })
             .catch((error) => {
                 console.error("Removal of user failed", error);
@@ -312,6 +326,7 @@ export const useUsers = (userGroupId: string, organizationId: string) => {
     const onUsersChanged = (users: IUserMember[]) => {
         const unchangedUsers = grantedUsers.filter((item) => !users.some((g) => g.id === item.id));
         setGrantedUsers([...unchangedUsers, ...users].sort(sortByName));
+        onUserChanged();
     };
 
     return {

@@ -1168,6 +1168,8 @@ export interface ICreateUserGroupDialogProps {
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
+    onGroupCreated: () => void;
+    // (undocumented)
     organizationId: string;
 }
 
@@ -3938,6 +3940,8 @@ export interface IUserEditDialogProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
+    onUserChanged: () => void;
+    // (undocumented)
     organizationId: string;
     // (undocumented)
     userId: string;
@@ -3949,6 +3953,8 @@ export interface IUserGroupEditDialogProps {
     isAdmin: boolean;
     // (undocumented)
     onClose: () => void;
+    // (undocumented)
+    onUserGroupChanged: () => void;
     // (undocumented)
     organizationId: string;
     // (undocumented)

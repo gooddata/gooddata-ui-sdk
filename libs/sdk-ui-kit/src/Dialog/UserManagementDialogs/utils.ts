@@ -90,11 +90,11 @@ export const extractUserName = (user?: IOrganizationUser | IUser): string | unde
         return undefined;
     }
     if (isIOrganizationUser(user)) {
-        return user.fullName ?? user.email ?? user.id;
+        return user.fullName || user.email || user.id;
     }
-    return user.fullName ?? user.email ?? user.login;
+    return user.fullName || user.email || user.login; // do not use ?? as for example empty email is set to ""
 };
 
 export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGroup): string | undefined => {
-    return userGroup?.name ?? userGroup?.id;
+    return userGroup?.name || userGroup?.id;
 };
