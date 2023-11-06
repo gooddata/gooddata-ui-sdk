@@ -38,6 +38,7 @@ export interface IUserEditDialogProps {
     userId: string;
     organizationId: string;
     isAdmin: boolean;
+    onUserChanged: () => void;
     onClose: () => void;
 }
 
@@ -48,16 +49,18 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
     userId,
     organizationId,
     isAdmin,
+    onUserChanged,
     onClose,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useDialogMode();
-    const { user, isCurrentlyAdmin, onUserChanged } = useUser(userId, organizationId, isAdmin);
+    const { user, isCurrentlyAdmin, onUserDetailsChanged } = useUser(userId, organizationId, isAdmin, onUserChanged);
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
-        useWorkspaces(userId, "user", organizationId);
+        useWorkspaces(userId, "user", organizationId, onUserChanged);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup } = useUserGroups(
         userId,
         organizationId,
+        onUserChanged,
     );
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
@@ -71,7 +74,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         dialogOverlayClassNames,
         dialogWrapperClassNames,
     } = useDeleteDialog();
-    const deleteUser = useDeleteUser(userId, organizationId, onClose);
+    const deleteUser = useDeleteUser(userId, organizationId, onUserChanged, onClose);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userDialogTabsMessageLabels.workspaces.id) {
@@ -182,7 +185,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <EditUserDetails
                             user={user}
                             isAdmin={isCurrentlyAdmin}
-                            onSubmit={onUserChanged}
+                            onSubmit={onUserDetailsChanged}
                             onCancel={() => setDialogMode("VIEW")}
                         />
                     )}

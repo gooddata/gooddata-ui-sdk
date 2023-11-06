@@ -19,19 +19,20 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  */
 export interface ICreateUserGroupDialogProps {
     organizationId: string;
+    onGroupCreated: () => void;
     onCancel: () => void;
 }
 
 /**
  * @internal
  */
-export const CreateUserGroupDialog:React.FC<ICreateUserGroupDialogProps> = ({organizationId, onCancel}) => {
+export const CreateUserGroupDialog:React.FC<ICreateUserGroupDialogProps> = ({organizationId, onGroupCreated, onCancel}) => {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError} = useToastMessage();
     const [userGroupName, setUserGroupName] = useState<string>();
 
-    const onCreate = () => {
+    const onSubmit = () => {
         backend
             .organization(organizationId)
             .users()
@@ -42,6 +43,7 @@ export const CreateUserGroupDialog:React.FC<ICreateUserGroupDialogProps> = ({org
             })
             .then(() => {
                 addSuccess(userManagementMessages.userGroupCreatedSuccess);
+                onGroupCreated();
                 onCancel();
             })
             .catch(() => {
@@ -59,7 +61,7 @@ export const CreateUserGroupDialog:React.FC<ICreateUserGroupDialogProps> = ({org
             className="gd-user-management-dialog"
         >
             <ConfirmDialogBase
-                onSubmit={onCreate}
+                onSubmit={onSubmit}
                 onCancel={onCancel}
                 isPositive={true}
                 className="s-user-management-delete-confirm-dialog gd-user-management-create-dialog"
