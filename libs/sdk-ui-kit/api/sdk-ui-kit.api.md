@@ -55,6 +55,15 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
 
+// @alpha (undocumented)
+export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
+
+// @alpha (undocumented)
+export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
+
+// @alpha (undocumented)
+export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
+
 // @internal (undocumented)
 export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
 
@@ -364,6 +373,12 @@ export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
 
 // @internal (undocumented)
 export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
+
+// @alpha (undocumented)
+export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
+
+// @alpha (undocumented)
+export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
 export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
@@ -785,6 +800,44 @@ export interface IAddGranteeBaseProps {
     onSubmit: () => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
+}
+
+// @alpha (undocumented)
+export interface IAddUserGroupsToUsersDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userIds: string[];
+}
+
+// @alpha (undocumented)
+export interface IAddUsersToUserGroupsDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupIds: string[];
+}
+
+// @alpha (undocumented)
+export interface IAddWorkspaceToSubjectsProps {
+    // (undocumented)
+    ids: string[];
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    subjectType: WorkspacePermissionSubject;
 }
 
 // @internal (undocumented)
@@ -1345,6 +1398,30 @@ export interface IDeleteUserGroupDialogProps {
     organizationId: string;
     // (undocumented)
     userGroupId: string;
+}
+
+// @alpha (undocumented)
+export interface IDeleteUserGroupsDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupIds: string[];
+}
+
+// @alpha (undocumented)
+export interface IDeleteUsersDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userIds: string[];
 }
 
 // @internal (undocumented)
@@ -4773,6 +4850,9 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
+
+// @alpha (undocumented)
+export type WorkspacePermissionSubject = "user" | "userGroup";
 
 // @internal (undocumented)
 export type WorkspacePermissionSubject = "user" | "userGroup";
