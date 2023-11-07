@@ -231,6 +231,14 @@ export interface IBackendCapabilities {
     supportsHiddenAndLockedFiltersOnUI?: boolean;
 
     /**
+     * Indicates whether the UI supports attribute hierarchies.
+     *
+     * If set to true, the user interface (UI) provides functionality for managing attribute hierarchies
+     * If set to false or undefined, the UI does not support attribute hierarchies features.
+     */
+    supportsAttributeHierarchies?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

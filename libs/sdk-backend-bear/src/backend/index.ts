@@ -91,6 +91,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsSeparateLatitudeLongitudeLabels: false,
     supportsEnumeratingDatetimeAttributes: true,
     supportsHiddenAndLockedFiltersOnUI: false,
+    supportsAttributeHierarchies: false,
 };
 
 /**

@@ -237,6 +237,7 @@ export interface IBackendCapabilities {
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsAccessControl?: boolean;
+    supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
