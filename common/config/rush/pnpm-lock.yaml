@@ -1522,7 +1522,7 @@ importers:
       '@gooddata/api-client-tiger': workspace:*
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': 1.28.7
+      '@gooddata/fixtures': 1.31.0
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -1572,7 +1572,7 @@ importers:
     devDependencies:
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.28.7
+      '@gooddata/fixtures': 1.31.0
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@microsoft/api-documenter': 7.21.7
       '@microsoft/api-extractor': 7.36.0
@@ -3219,7 +3219,7 @@ importers:
       '@cypress/grep': ^3.1.5
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': 1.28.7
+      '@gooddata/fixtures': 1.31.0
       '@gooddata/sdk-backend-bear': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-backend-tiger': workspace:*
@@ -3300,7 +3300,7 @@ importers:
       '@babel/polyfill': 7.12.1
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.28.7
+      '@gooddata/fixtures': 1.31.0
       '@gooddata/sdk-backend-bear': link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-backend-tiger': link:../sdk-backend-tiger
@@ -8199,8 +8199,8 @@ packages:
       - supports-color
       - typescript
 
-  /@gooddata/fixtures/1.28.7:
-    resolution: {integrity: sha512-gDVjblD+3FQmyFURnNYzRAvUOKGfgDtTRpemJqJNkWaql4z6GOWmYF9vuVZ9GalYyxcRRgnVIDMcc4qfHplzTQ==}
+  /@gooddata/fixtures/1.31.0:
+    resolution: {integrity: sha512-kAKWnovryd7dG95Eevcjg80qhQ90/y2l+hLsRDM7iiQGSjqqT//SWx5Gu6UEzi7Y8MkVRnaEPveWcAHV4qvKaQ==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.1
       '@gooddata/api-client-tiger': 8.12.1
