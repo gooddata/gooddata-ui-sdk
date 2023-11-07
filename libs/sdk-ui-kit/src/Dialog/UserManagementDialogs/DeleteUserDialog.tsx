@@ -14,7 +14,7 @@ import { useDeleteUser } from "./dialogHooks.js";
 export interface IDeleteUserDialogProps {
     userId: string;
     organizationId: string;
-    onDeleteUser: () => void;
+    onSuccess: () => void;
     onClose: () => void;
 }
 
@@ -24,11 +24,11 @@ export interface IDeleteUserDialogProps {
 export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
     userId,
     organizationId,
-    onDeleteUser,
+    onSuccess,
     onClose,
 }) => {
     const intl = useIntl();
-    const deleteUser = useDeleteUser(userId, organizationId, onDeleteUser, onClose);
+    const deleteUser = useDeleteUser(userId, organizationId, onSuccess, onClose);
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(userManagementMessages.deleteUserConfirmTitle)}

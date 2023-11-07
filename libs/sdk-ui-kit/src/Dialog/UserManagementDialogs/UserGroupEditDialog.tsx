@@ -40,7 +40,7 @@ export interface IUserGroupEditDialogProps {
     organizationId: string;
     isAdmin: boolean;
     initialView?: UserGroupEditDialogMode;
-    onUserGroupChanged: () => void;
+    onSuccess: () => void;
     onClose: () => void;
 }
 
@@ -51,7 +51,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     userGroupId,
     organizationId,
     isAdmin,
-    onUserGroupChanged,
+    onSuccess,
     onClose,
     initialView = "VIEW",
 }) => {
@@ -60,14 +60,14 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     const { userGroup, onUserGroupDetailsChanged } = useUserGroup(
         userGroupId,
         organizationId,
-        onUserGroupChanged,
+        onSuccess,
     );
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
-        useWorkspaces(userGroupId, "userGroup", organizationId, onUserGroupChanged);
+        useWorkspaces(userGroupId, "userGroup", organizationId, onSuccess);
     const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
         userGroupId,
         organizationId,
-        onUserGroupChanged,
+        onSuccess,
     );
     const { tabs, selectedTabId, setSelectedTabId } = useUserGroupDialogTabs(
         grantedWorkspaces,
@@ -81,7 +81,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         dialogOverlayClassNames,
         dialogWrapperClassNames,
     } = useDeleteDialog();
-    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onUserGroupChanged, onClose);
+    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessageLabels.workspaces.id) {
@@ -162,7 +162,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                     )}
                     {dialogMode === "WORKSPACE" && (
                         <AddWorkspace
-                            id={userGroupId}
+                            ids={[userGroupId]}
                             subjectType="userGroup"
                             grantedWorkspaces={grantedWorkspaces}
                             onSubmit={onWorkspacesChanged}
@@ -172,7 +172,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                     )}
                     {dialogMode === "USERS" && (
                         <AddUser
-                            userGroupId={userGroupId}
+                            userGroupIds={[userGroupId]}
                             grantedUsers={grantedUsers}
                             onSubmit={onUsersChanged}
                             onCancel={() => setDialogMode("VIEW")}

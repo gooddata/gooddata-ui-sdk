@@ -816,16 +816,6 @@
         "comment": "Example: 'From 3 to 5 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
         "limit": 0
     },
-    "filters.interval.seconds.future": {
-        "value": "From {from} to {to} {to, plural, one {second} other {seconds}} ahead",
-        "comment": "Example: 'From 3 to 5 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
-        "limit": 0
-    },
-    "filters.interval.seconds.future": {
-        "value": "From {from} to {to} {to, plural, one {second} other {seconds}} ahead",
-        "comment": "Example: 'From 3 to 5 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
-        "limit": 0
-    },
     "filters.interval.seconds.future.sameValue": {
         "value": "{value} {value, plural, one {second} other {seconds}} ahead",
         "comment": "Example: '5 minutes ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
@@ -2218,6 +2208,26 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.users.multipleWorkspaces.addSuccess": {
+        "value": "Addition of the permission to the users failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.multipleWorkspaces.addError": {
+        "value": "Addition of the permission to the users failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleWorkspaces.addSuccess": {
+        "value": "Addition of the permission to the groups failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleWorkspaces.addError": {
+        "value": "Addition of the permission to the groups failed!",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.workspace.changeSuccess": {
         "value": "Great! We changed the permission(s)!",
         "comment": "",
@@ -2423,6 +2433,16 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.multipleUserGroup.addSuccess": {
+        "value": "Great! We added users to the group!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.multipleUserGroup.addError": {
+        "value": "Addition of the users to groups failed!",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.userGroups.title": {
         "value": "Add to group",
         "comment": "",
@@ -2468,6 +2488,16 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.deleteDialog.multipleUsers.title": {
+        "value": "Delete users?",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.multipleUsers.body": {
+        "value": "<b>{count} users</b> will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.deleteDialog.group.title": {
         "value": "Delete group?",
         "comment": "",
@@ -2475,6 +2505,16 @@
     },
     "userManagement.deleteDialog.group.body": {
         "value": "User group will be permanently and irreversibly deleted.{br}Their users will not be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.multipleGroups.title": {
+        "value": "Delete groups?",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.multipleGroups.body": {
+        "value": "<b>{count} groups</b> will be permanently and irreversibly deleted.{br}All users in groups will loose access define by group permission.",
         "comment": "",
         "limit": 0
     },
@@ -2498,6 +2538,16 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.multipleUserGroups.deleteSuccess": {
+        "value": "Great! We deleted the user groups!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.multipleUserGroups.deleteFailure": {
+        "value": "Deletion of the user groups failed!",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.createUserGroup.createSuccess": {
         "value": "Great! We created the user group!",
         "comment": "",
@@ -2515,6 +2565,16 @@
     },
     "userManagement.users.deleteFailure": {
         "value": "Deletion of the user failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.multipleUsers.deleteSuccess": {
+        "value": "Great! We deleted the users!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.multipleUsers.deleteFailure": {
+        "value": "Deletion of the users failed!",
         "comment": "",
         "limit": 0
     },
@@ -2580,6 +2640,16 @@
     },
     "userManagement.users.addFailure": {
         "value": "Addition of the user(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.addToUserGroupsSuccess": {
+        "value": "Great! We added users to the groups!",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.users.addToUserGroupsFailure": {
+        "value": "Addition of the users to groups failed!",
         "comment": "",
         "limit": 0
     },

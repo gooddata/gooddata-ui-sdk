@@ -9,7 +9,7 @@ import { userManagementMessages } from "../../../locales.js";
 import { sortByName } from "../utils.js";
 
 export const useAddUsers = (
-    userGroupId: string,
+    userGroupIds: string[],
     onSave: (users: IUserMember[]) => void,
     onCancel: () => void,
 ) => {
@@ -23,22 +23,41 @@ export const useAddUsers = (
     };
 
     const onAdd = () => {
-        backend
-            .organization(organizationId)
-            .users()
-            .addUserGroupToUsers(
-                userGroupId,
-                addedUsers.map((user) => user.id),
-            )
-            .then(() => {
-                addSuccess(userManagementMessages.usersAddedSuccess);
-                onSave(addedUsers);
-                onCancel();
-            })
-            .catch((error) => {
-                console.error("Addition of user group members failed", error);
-                addError(userManagementMessages.usersAddedFailure);
-            });
+        if (userGroupIds.length === 1) {
+            backend
+                .organization(organizationId)
+                .users()
+                .addUserGroupToUsers(
+                    userGroupIds[0],
+                    addedUsers.map((user) => user.id),
+                )
+                .then(() => {
+                    addSuccess(userManagementMessages.usersAddedSuccess);
+                    onSave(addedUsers);
+                    onCancel();
+                })
+                .catch((error) => {
+                    console.error("Addition of user group members failed", error);
+                    addError(userManagementMessages.usersAddedFailure);
+                });
+        } else {
+            backend
+                .organization(organizationId)
+                .users()
+                .addUserGroupsToUsers(
+                    userGroupIds,
+                    addedUsers.map((user) => user.id),
+                )
+                .then(() => {
+                    addSuccess(userManagementMessages.usersAddedToUserGroupsSuccess);
+                    onSave(addedUsers);
+                    onCancel();
+                })
+                .catch((error) => {
+                    console.error("Addition of user groups members failed", error);
+                    addError(userManagementMessages.usersAddedToUserGroupsFailure);
+                });
+        }
     };
 
     const onSelect = (user: IUserMember) => {

@@ -12,22 +12,24 @@ import { useAddUserGroup } from "./userGroupHooks.js";
 import { userManagementMessages } from "../../../locales.js";
 
 export interface IAddUserGroupProps {
-    userId: string;
+    userIds: string[];
     grantedUserGroups: IGrantedUserGroup[];
+    enableBackButton?: boolean;
     onSubmit: (userGroups: IGrantedUserGroup[]) => void;
     onCancel: () => void;
     onClose: () => void;
 }
 
 export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
-    userId,
+    userIds,
     grantedUserGroups,
+    enableBackButton = true,
     onSubmit,
     onCancel,
     onClose,
 }) => {
     const intl = useIntl();
-    const { addedUserGroups, onAdd, onSelect, onDelete } = useAddUserGroup(userId, onSubmit, onCancel);
+    const { addedUserGroups, onAdd, onSelect, onDelete } = useAddUserGroup(userIds, onSubmit, onCancel);
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onCancel} className="s-user-group-dialog-navigate-back" />;
@@ -45,7 +47,7 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
             onCancel={onCancel}
             onSubmit={onAdd}
             onClose={onClose}
-            headerLeftButtonRenderer={backButtonRenderer}
+            headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
             <AddUserGroupContent
                 grantedUserGroups={grantedUserGroups}

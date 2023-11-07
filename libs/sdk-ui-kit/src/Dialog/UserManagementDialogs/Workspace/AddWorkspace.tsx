@@ -13,25 +13,27 @@ import { useAddWorkspace } from "./workspaceHooks.js";
 import { userManagementMessages } from "../../../locales.js";
 
 export interface IAddWorkspaceProps {
-    id: string;
+    ids: string[];
     subjectType: WorkspacePermissionSubject;
     grantedWorkspaces: IGrantedWorkspace[];
+    enableBackButton?: boolean;
     onSubmit: (workspaces: IGrantedWorkspace[]) => void;
     onCancel: () => void;
     onClose: () => void;
 }
 
 export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
-    id,
+    ids,
     subjectType,
     grantedWorkspaces,
+    enableBackButton,
     onSubmit,
     onCancel,
     onClose,
 }) => {
     const intl = useIntl();
     const { addedWorkspaces, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
-        id,
+        ids,
         subjectType,
         onSubmit,
         onCancel,
@@ -53,7 +55,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             onCancel={onCancel}
             onSubmit={onAdd}
             onClose={onClose}
-            headerLeftButtonRenderer={backButtonRenderer}
+            headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
             <AddWorkspaceSelect
                 addedWorkspaces={addedWorkspaces}
