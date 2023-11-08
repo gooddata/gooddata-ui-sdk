@@ -7,6 +7,7 @@ import { QueryConnectingAttributes } from "./connectingAttributes.js";
 import { QueryAttributeByDisplayForm } from "./attributes.js";
 import { QueryAttributeDataSet } from "./attributeDataSet.js";
 import { QueryAttributeElements } from "./attributeElements.js";
+import { QueryConnectedAttributes } from "./connectedAttributes.js";
 
 export { IDashboardQuery, DashboardQueryType } from "./base.js";
 export {
@@ -28,6 +29,7 @@ export {
     queryWidgetAlertCount,
 } from "./widgets.js";
 export { QueryConnectingAttributes, queryConnectingAttributes } from "./connectingAttributes.js";
+export { QueryConnectedAttributes, queryConnectedAttributes } from "./connectedAttributes.js";
 export { QueryAttributeByDisplayForm, queryAttributeByDisplayForm } from "./attributes.js";
 export { QueryAttributeDataSet, queryAttributeDataSet } from "./attributeDataSet.js";
 export { QueryAttributeElements, queryAttributeElements } from "./attributeElements.js";
@@ -45,4 +47,5 @@ export type DashboardQueries =
     | QueryConnectingAttributes
     | QueryAttributeByDisplayForm
     | QueryAttributeDataSet
-    | QueryAttributeElements;
+    | QueryAttributeElements
+    | QueryConnectedAttributes;

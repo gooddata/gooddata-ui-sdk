@@ -425,7 +425,6 @@ export const AfmValidObjectsQueryTypesEnum = {
     FACTS: "facts",
     ATTRIBUTES: "attributes",
     MEASURES: "measures",
-    UNRECOGNIZED: "UNRECOGNIZED",
 } as const;
 
 export type AfmValidObjectsQueryTypesEnum =
@@ -771,6 +770,31 @@ export interface DataColumnLocators {
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
 /**
+ *
+ * @export
+ * @interface DependsOn
+ */
+export interface DependsOn {
+    /**
+     * Specifies on which label the filter depends on.
+     * @type {string}
+     * @memberof DependsOn
+     */
+    label: string;
+    /**
+     * Specifies values of the label for element filtering.
+     * @type {Array<string>}
+     * @memberof DependsOn
+     */
+    values: Array<string>;
+    /**
+     * Inverse filtering mode.
+     * @type {boolean}
+     * @memberof DependsOn
+     */
+    complementFilter?: boolean;
+}
+/**
  * Single dimension description.
  * @export
  * @interface Dimension
@@ -875,6 +899,12 @@ export interface ElementsRequest {
      * @memberof ElementsRequest
      */
     exactFilter?: Array<string>;
+    /**
+     * Return only items, whose are not filtered out by the parent filters.
+     * @type {Array<DependsOn>}
+     * @memberof ElementsRequest
+     */
+    dependsOn?: Array<DependsOn>;
     /**
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @type {number}

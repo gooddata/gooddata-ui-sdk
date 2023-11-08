@@ -9,6 +9,7 @@ import { QueryConnectingAttributesService } from "./queryConnectingAttributes.js
 import { QueryAttributeByDisplayFormService } from "./queryAttributeByDisplayForm.js";
 import { QueryAttributeDataSetService } from "./queryAttributeDataset.js";
 import { QueryAttributeElementsService } from "./queryAttributeElements.js";
+import { QueryConnectedAttributesService } from "./queryConnectedAttributes.js";
 
 export const AllQueryServices = [
     QueryDateDatasetsForInsightService,
@@ -21,4 +22,5 @@ export const AllQueryServices = [
     QueryAttributeByDisplayFormService,
     QueryAttributeDataSetService,
     QueryAttributeElementsService,
+    QueryConnectedAttributesService,
 ];

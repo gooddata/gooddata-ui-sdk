@@ -918,6 +918,9 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
     }
+    getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
+        throw new NotSupported("Not supported");
+    }
 }
 
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {

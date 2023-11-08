@@ -15,6 +15,8 @@ import {
     IDashboardLayout,
     IDashboard,
     ISettings,
+    IFilterContext,
+    ITempFilterContext,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -65,20 +67,61 @@ export function actionsToInitializeNewDashboard(
     ];
 }
 
+/**
+ * When dependent filters are not enabled, we need to sanitize the filter context
+ * so that it does not contain any filterElementsBy stored on backend.
+ *
+ * Remove this completely when dependent filters on Tiger are fully turned on.
+ */
+function removeFilterElementsByFromFilterContext(
+    filterContext: IFilterContext | ITempFilterContext,
+    settings: ISettings,
+) {
+    const isDependentFiltersEnabled = !!(
+        settings?.enableKDDependentFilters || settings?.enableKPIDashboardDependentFilters
+    );
+
+    const sanitizedFilterContext: IFilterContext | ITempFilterContext = isDependentFiltersEnabled
+        ? filterContext
+        : update(
+              "filters",
+              (filters: FilterContextItem[]) =>
+                  filters.map((filter) => {
+                      if (!isDashboardAttributeFilter(filter)) {
+                          return filter;
+                      }
+
+                      return {
+                          ...filter,
+                          attributeFilter: { ...filter.attributeFilter, filterElementsBy: [] },
+                      };
+                  }),
+              filterContext,
+          );
+
+    return sanitizedFilterContext;
+}
+
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
+    settings: ISettings,
 ): SagaIterator<IDashboard["filterContext"]> {
-    // we don't need sanitize filter references, if backend guarantees consistent references
-    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
-        return filterContext;
-    }
-
     if (!filterContext || isEmpty(filterContext.filters)) {
         return filterContext;
     }
 
-    const usedFilterDisplayForms = filterContext.filters
+    const filterContextWithSanitizedFilterElementsBy = removeFilterElementsByFromFilterContext(
+        filterContext,
+        settings,
+    );
+
+    // we don't need sanitize filter references, if backend guarantees consistent references
+    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
+        return filterContextWithSanitizedFilterElementsBy;
+    }
+
+    const usedFilterDisplayForms = filterContextWithSanitizedFilterElementsBy.filters
         .filter(isDashboardAttributeFilter)
         .map((f) => f.attributeFilter.displayForm);
 
@@ -98,8 +141,25 @@ function* sanitizeFilterContext(
 
                 return availableRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
             }),
-        filterContext,
+        filterContextWithSanitizedFilterElementsBy,
     );
+}
+
+function sanitizePersistedDashboard(
+    persistedDashboard: IDashboard | undefined,
+    dashboard: IDashboard,
+    settings: ISettings,
+) {
+    const effectiveDashboard = persistedDashboard ?? dashboard;
+
+    if (!effectiveDashboard.filterContext) {
+        return effectiveDashboard;
+    }
+
+    return {
+        ...effectiveDashboard,
+        filterContext: removeFilterElementsByFromFilterContext(effectiveDashboard.filterContext, settings),
+    };
 }
 
 /**
@@ -134,7 +194,8 @@ export function* actionsToInitializeExistingDashboard(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
-    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext);
+    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext, settings);
+    const sanitizedPersistedDashboard = sanitizePersistedDashboard(persistedDashboard, dashboard, settings);
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
         ...dashboard,
@@ -178,7 +239,7 @@ export function* actionsToInitializeExistingDashboard(
         }),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({
-            dashboard: persistedDashboard ?? dashboard,
+            dashboard: sanitizedPersistedDashboard,
         }),
         attributeFilterConfigsActions.setAttributeFilterConfigs({
             attributeFilterConfigs: dashboard.attributeFilterConfigs,

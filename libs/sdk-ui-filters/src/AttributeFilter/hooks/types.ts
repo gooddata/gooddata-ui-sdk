@@ -165,6 +165,11 @@ export type AttributeFilterControllerCallbacks = {
      * Reset working selection.
      */
     onReset: () => void;
+
+    /**
+     * Filter open callback.
+     */
+    onOpen: () => void;
 };
 
 /**

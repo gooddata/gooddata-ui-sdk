@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IDashboardAttributeFilter, IDashboardAttributeFilterParent, ObjRef } from "@gooddata/sdk-model";
+import { useBackend } from "@gooddata/sdk-ui";
 import { useState, useMemo, useCallback } from "react";
 import { invariant } from "ts-invariant";
 import isEqual from "lodash/isEqual.js";
@@ -22,12 +23,18 @@ export function useParentsConfiguration(
     );
 
     const saveParentFilterCommand = useDispatchDashboardCommand(setAttributeFilterParents);
+    const backend = useBackend();
+    const supportsSettingConnectingAttributes = !!backend?.capabilities.supportsSettingConnectingAttributes;
 
     const originalState = useOriginalConfigurationState(neighborFilters, filterElementsBy);
 
     const [parents, setParents] = useState<IDashboardAttributeFilterParentItem[]>(originalState);
 
-    function onParentSelect(localIdentifier: string, isSelected: boolean, overAttributes: ObjRef[]) {
+    function onParentSelect(
+        localIdentifier: string,
+        isSelected: boolean,
+        overAttributes: ObjRef[] | undefined,
+    ) {
         const changedParentIndex = parents.findIndex((parent) => parent.localIdentifier === localIdentifier);
         const changedItem = { ...parents[changedParentIndex] };
 
@@ -35,7 +42,7 @@ export function useParentsConfiguration(
         changedItem.overAttributes = overAttributes;
 
         if (isSelected) {
-            changedItem.selectedConnectingAttribute = overAttributes[0];
+            changedItem.selectedConnectingAttribute = overAttributes?.[0];
         } else {
             // set connecting attributes to undefined to properly check for
             // state updates
@@ -70,7 +77,19 @@ export function useParentsConfiguration(
         if (configurationChanged) {
             const parentFilters: IDashboardAttributeFilterParent[] = [];
             parents.forEach((parentItem) => {
-                if (parentItem.isSelected && parentItem.overAttributes?.length) {
+                if (!parentItem.isSelected) {
+                    return;
+                }
+
+                if (!supportsSettingConnectingAttributes) {
+                    parentFilters.push({
+                        filterLocalIdentifier: parentItem.localIdentifier,
+                        over: { attributes: [] },
+                    });
+                    return;
+                }
+
+                if (parentItem.overAttributes?.length) {
                     const overAttribute =
                         parentItem.selectedConnectingAttribute || parentItem.overAttributes[0];
                     parentFilters.push({
@@ -83,7 +102,13 @@ export function useParentsConfiguration(
             });
             saveParentFilterCommand(currentFilter.attributeFilter.localIdentifier!, parentFilters);
         }
-    }, [parents, configurationChanged, currentFilter, saveParentFilterCommand]);
+    }, [
+        parents,
+        configurationChanged,
+        currentFilter,
+        saveParentFilterCommand,
+        supportsSettingConnectingAttributes,
+    ]);
 
     const onConfigurationClose = useCallback(() => {
         setParents(originalState);

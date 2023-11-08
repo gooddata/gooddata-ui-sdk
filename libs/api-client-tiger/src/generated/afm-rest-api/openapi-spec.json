@@ -595,6 +595,32 @@
                 },
                 "description": "Object identifier."
             },
+            "DependsOn": {
+                "required": ["label", "values"],
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "Specifies on which label the filter depends on.",
+                        "default": "null"
+                    },
+                    "values": {
+                        "type": "array",
+                        "description": "Specifies values of the label for element filtering.",
+                        "items": {
+                            "type": "string",
+                            "description": "Specifies values of the label for element filtering.",
+                            "default": "null"
+                        }
+                    },
+                    "complementFilter": {
+                        "type": "boolean",
+                        "description": "Inverse filtering mode.",
+                        "default": false
+                    }
+                },
+                "nullable": true
+            },
             "ElementsRequest": {
                 "required": ["label"],
                 "type": "object",
@@ -633,6 +659,13 @@
                         "items": {
                             "type": "string",
                             "nullable": true
+                        }
+                    },
+                    "dependsOn": {
+                        "type": "array",
+                        "description": "Return only items, whose are not filtered out by the parent filters.",
+                        "items": {
+                            "$ref": "#/components/schemas/DependsOn"
                         }
                     },
                     "dataSamplingPercentage": {
@@ -1823,7 +1856,7 @@
                         "items": {
                             "type": "string",
                             "example": "facts",
-                            "enum": ["facts", "attributes", "measures", "UNRECOGNIZED"]
+                            "enum": ["facts", "attributes", "measures"]
                         }
                     },
                     "afm": {

@@ -90,6 +90,7 @@ export type AttributeFilterControllerCallbacks = {
     onSearch: (search: string) => void;
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onReset: () => void;
+    onOpen: () => void;
 };
 
 // @public

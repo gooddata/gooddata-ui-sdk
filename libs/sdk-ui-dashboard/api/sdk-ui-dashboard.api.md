@@ -2179,7 +2179,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes;
 
 // @beta
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -2230,7 +2230,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
 
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
@@ -5285,6 +5285,19 @@ export type QueryCacheEntryResult<TResult> = {
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
 
 // @alpha (undocumented)
+export interface QueryConnectedAttributes extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly ref: ObjRef;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+}
+
+// @alpha
+export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): QueryConnectedAttributes;
+
+// @alpha (undocumented)
 export interface QueryConnectingAttributes extends IDashboardQuery {
     // (undocumented)
     payload: {
@@ -6162,6 +6175,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 // @public
 export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boolean>;
 
@@ -6357,6 +6373,9 @@ export const selectIsInEditMode: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
 
+// @internal
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
+
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
@@ -6502,10 +6521,16 @@ export const selectSupportsElementUris: DashboardSelector<boolean>;
 export const selectSupportsHierarchicalWorkspacesCapability: DashboardSelector<boolean>;
 
 // @internal
+export const selectSupportsKeepingDependentFiltersSelection: DashboardSelector<boolean>;
+
+// @internal
 export const selectSupportsKpiWidgetCapability: DashboardSelector<boolean>;
 
 // @internal
 export const selectSupportsObjectUris: DashboardSelector<boolean>;
+
+// @internal
+export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
