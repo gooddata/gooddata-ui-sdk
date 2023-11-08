@@ -4088,3 +4088,27 @@ export const tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column: IReferencePo
         sortItems: [],
     },
 };
+
+export const tableWith50MeasuresAndDerivedMeasuresNoRowsNoColumns: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [...generateMeasuresItems(50), ...generateDerivedMeasuresItems(50)],
+        },
+        {
+            localIdentifier: "attribute",
+            items: [],
+        },
+        {
+            localIdentifier: "columns",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [overTimeComparisonDateItem],
+    },
+    properties: {
+        sortItems: [],
+    },
+};

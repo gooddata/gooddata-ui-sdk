@@ -552,7 +552,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
         "icon": "local:treemap/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
-        "itemsLimit": 20,
+        "itemsLimit": 40,
         "title": "Measures",
       },
       "segment": {
@@ -692,7 +692,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
         "icon": "local:treemap/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
-        "itemsLimit": 20,
+        "itemsLimit": 40,
         "title": "Measures",
       },
       "segment": {
@@ -798,7 +798,7 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
         "icon": "local:treemap/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
-        "itemsLimit": 20,
+        "itemsLimit": 40,
         "title": "Measures",
       },
       "segment": {
