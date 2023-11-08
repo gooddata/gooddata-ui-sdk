@@ -9,7 +9,11 @@ import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-mo
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
+import {
+    DEFAULT_LINE_UICONFIG,
+    LINE_UICONFIG_WITH_MULTIPLE_DATES,
+    MAX_METRICS_COUNT,
+} from "../../../constants/uiConfig.js";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -32,6 +36,7 @@ import {
     isDateBucketItem,
     sanitizeFilters,
     getBucketItems,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -166,6 +171,13 @@ export class PluggableLineChart extends PluggableBaseChart {
         });
     }
 
+    private getBucketMeasures(extendedReferencePoint: IExtendedReferencePoint) {
+        const buckets = extendedReferencePoint?.buckets ?? [];
+        const limit = this.getMeasuresMaxItemCount(extendedReferencePoint);
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, limit, true);
+        return getFilteredMeasuresForStackedCharts(limitedBuckets);
+    }
+
     protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
         if (this.isMultipleDatesEnabled()) {
             this.configureBucketsWithMultipleDates(newReferencePoint);
@@ -209,7 +221,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: getFilteredMeasuresForStackedCharts(buckets),
+                items: this.getBucketMeasures(newReferencePoint),
             },
             {
                 localIdentifier: BucketNames.TREND,
@@ -282,7 +294,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: getFilteredMeasuresForStackedCharts(buckets),
+                items: this.getBucketMeasures(newReferencePoint),
             },
             {
                 localIdentifier: BucketNames.TREND,
@@ -350,5 +362,9 @@ export class PluggableLineChart extends PluggableBaseChart {
             disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
             disabledExplanation,
         };
+    }
+
+    private getMeasuresMaxItemCount(referencePoint: IExtendedReferencePoint): number {
+        return referencePoint.uiConfig?.buckets?.[BucketNames.MEASURES]?.itemsLimit ?? MAX_METRICS_COUNT;
     }
 }

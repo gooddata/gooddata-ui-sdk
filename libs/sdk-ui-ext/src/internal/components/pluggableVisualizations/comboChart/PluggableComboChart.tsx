@@ -20,7 +20,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig.js";
+import { COMBO_CHART_UICONFIG, MAX_METRICS_COUNT } from "../../../constants/uiConfig.js";
 
 import {
     IBucketItem,
@@ -48,6 +48,7 @@ import {
     sanitizeFilters,
     setMeasuresShowOnSecondaryAxis,
     getBucketItems,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
 import {
@@ -176,6 +177,10 @@ export class PluggableComboChart extends PluggableBaseChart {
         return isAreaChart(this.primaryChartType);
     }
 
+    private getMeasuresMaxItemCount(referencePoint: IExtendedReferencePoint): number {
+        return referencePoint.uiConfig?.buckets?.[BucketNames.MEASURES]?.itemsLimit ?? MAX_METRICS_COUNT;
+    }
+
     protected configureBuckets(extReferencePoint: IExtendedReferencePoint): void {
         const buckets = extReferencePoint?.buckets ?? [];
         const attributes = getAllAttributeItemsWithPreference(buckets, [
@@ -188,6 +193,7 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         // ref. point has both my buckets -> reuse them fully
         if (hasBucket(buckets, BucketNames.MEASURES) && hasBucket(buckets, BucketNames.SECONDARY_MEASURES)) {
+            // TODO: both must be limited by 20 non derived measures
             measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
             secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
 
@@ -199,7 +205,15 @@ export class PluggableComboChart extends PluggableBaseChart {
             secondaryMeasures = secondaryMeasures.concat(restMeasures);
         } else {
             // transform from dual axis chart to combo chart
-            const allMeasures = getMeasureItems(buckets);
+            // TODO: bad idea to restric it here, currently works but not future proof
+            const allMeasures = getMeasureItems(
+                limitNumberOfMeasuresInBuckets(
+                    buckets,
+                    this.getMeasuresMaxItemCount(extReferencePoint),
+                    true,
+                ),
+            );
+            // TODO: both must be limited by 20 non derived measures
             secondaryMeasures = getAllMeasuresShowOnSecondaryAxis(buckets);
             measures = without(allMeasures, ...secondaryMeasures);
         }

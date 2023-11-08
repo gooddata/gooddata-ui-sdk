@@ -8,7 +8,7 @@ import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BUCKETS, DATE, ATTRIBUTE } from "../../../constants/bucket.js";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 
-import { getTreemapUiConfig } from "../../../constants/uiConfig.js";
+import { MAX_METRICS_COUNT, getTreemapUiConfig } from "../../../constants/uiConfig.js";
 import {
     IDrillDownContext,
     IExtendedReferencePoint,
@@ -82,9 +82,20 @@ export class PluggableTreemap extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    private getBucketItemsWithMultipleDates(newReferencePoint: IReferencePoint): any {
+    private getMeasuresMaxItemCount(referencePoint: IExtendedReferencePoint): number {
+        return referencePoint.uiConfig?.buckets?.[BucketNames.MEASURES]?.itemsLimit ?? MAX_METRICS_COUNT;
+    }
+
+    private getBucketMeasures(extendedReferencePoint: IExtendedReferencePoint) {
+        const buckets = extendedReferencePoint?.buckets ?? [];
+        const limit = this.getMeasuresMaxItemCount(extendedReferencePoint);
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, limit, true);
+        return getMeasureItems(limitedBuckets);
+    }
+
+    private getBucketItemsWithMultipleDates(newReferencePoint: IExtendedReferencePoint): any {
         const buckets = newReferencePoint?.buckets ?? [];
-        let measures = getMeasureItems(buckets);
+        let measures = this.getBucketMeasures(newReferencePoint);
         let stacks = getStackItems(buckets, [ATTRIBUTE, DATE]);
         const nonStackAttributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]);
         const view = nonStackAttributes.slice(0, 1);
@@ -102,9 +113,9 @@ export class PluggableTreemap extends PluggableBaseChart {
         return { measures, view, stacks };
     }
 
-    private getBucketItems(newReferencePoint: IReferencePoint) {
+    private getBucketItems(newReferencePoint: IExtendedReferencePoint) {
         const buckets = newReferencePoint?.buckets ?? [];
-        let measures = getMeasureItems(buckets);
+        let measures = this.getBucketMeasures(newReferencePoint);
         let stacks = getStackItems(buckets);
         const nonStackAttributes = getAttributeItemsWithoutStacks(buckets);
         const view = nonStackAttributes.slice(0, 1);
