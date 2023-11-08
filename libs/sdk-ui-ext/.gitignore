@@ -1,4 +1,6 @@
 styles/css
 styles/internal/css
+# ignore localisations TS files, used to avoid ESM errors on node runtime
+src/internal/translations/*.ts
 # ignore the NOTICE that gets copied here on publish, the source of truth is the root of the repo
 NOTICE

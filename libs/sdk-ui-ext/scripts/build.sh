@@ -17,7 +17,8 @@ _common-build() {
     cp -rf src/internal/assets esm/internal/
     # then use svgo to optimize all the SVGs there
     svgo -rqf src/internal/assets esm/internal/assets
-    cp -rf src/internal/translations esm/internal/
+
+    node scripts/convertJsonToTS.mjs
 
     _build_styles
 }

@@ -3,16 +3,16 @@ import merge from "lodash/merge.js";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
-import enUS from "./bundles/en-US.json";
-import deDE from "./bundles/de-DE.json";
-import esES from "./bundles/es-ES.json";
-import frFR from "./bundles/fr-FR.json";
-import jaJP from "./bundles/ja-JP.json";
-import nlNL from "./bundles/nl-NL.json";
-import ptBR from "./bundles/pt-BR.json";
-import ptPT from "./bundles/pt-PT.json";
-import zhHans from "./bundles/zh-Hans.json";
-import ruRU from "./bundles/ru-RU.json";
+import enUS from "./bundles/en-US.js";
+import deDE from "./bundles/de-DE.js";
+import esES from "./bundles/es-ES.js";
+import frFR from "./bundles/fr-FR.js";
+import jaJP from "./bundles/ja-JP.js";
+import nlNL from "./bundles/nl-NL.js";
+import ptBR from "./bundles/pt-BR.js";
+import ptPT from "./bundles/pt-PT.js";
+import zhHans from "./bundles/zh-Hans.js";
+import ruRU from "./bundles/ru-RU.js";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),

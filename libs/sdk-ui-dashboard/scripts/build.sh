@@ -18,8 +18,7 @@ _common-build() {
 
     _build_styles
 
-    mkdir -p esm/presentation/localization/bundles
-    cp -rf src/presentation/localization/bundles esm/presentation/localization
+    node scripts/convertJsonToTS.mjs
 
     # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
     echo '// (C) 2021 GoodData Corporation' >src/__version.ts

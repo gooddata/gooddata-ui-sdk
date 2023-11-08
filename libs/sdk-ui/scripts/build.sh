@@ -7,7 +7,8 @@ _clean() {
 
 _common-build() {
     mkdir -p esm/base/localization/bundles
-    cp -rf src/base/localization/bundles esm/base/localization
+
+    node scripts/convertJsonToTS.mjs
 }
 
 build() {

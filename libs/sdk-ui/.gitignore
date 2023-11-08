@@ -1,2 +1,4 @@
 styles/css
 styles/internal/css
+# ignore localisations TS files, used to avoid ESM errors on node runtime
+src/base/localization/bundles/*.ts

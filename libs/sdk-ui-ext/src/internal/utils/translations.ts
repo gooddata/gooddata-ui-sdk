@@ -4,16 +4,16 @@ import merge from "lodash/merge.js";
 import { translationUtils } from "@gooddata/util";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 
-import enUS from "../translations/en-US.json";
-import deDE from "../translations/de-DE.json";
-import esES from "../translations/es-ES.json";
-import frFR from "../translations/fr-FR.json";
-import jaJP from "../translations/ja-JP.json";
-import nlNL from "../translations/nl-NL.json";
-import ptBR from "../translations/pt-BR.json";
-import ptPT from "../translations/pt-PT.json";
-import zhHans from "../translations/zh-Hans.json";
-import ruRU from "../translations/ru-RU.json";
+import enUS from "../translations/en-US.js";
+import deDE from "../translations/de-DE.js";
+import esES from "../translations/es-ES.js";
+import frFR from "../translations/fr-FR.js";
+import jaJP from "../translations/ja-JP.js";
+import nlNL from "../translations/nl-NL.js";
+import ptBR from "../translations/pt-BR.js";
+import ptPT from "../translations/pt-PT.js";
+import zhHans from "../translations/zh-Hans.js";
+import ruRU from "../translations/ru-RU.js";
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(
