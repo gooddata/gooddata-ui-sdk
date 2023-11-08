@@ -34,7 +34,7 @@ export const useUser = (
     userId: string,
     organizationId: string,
     isAdmin: boolean,
-    onUserChanged: () => void,
+    onSuccess: () => void,
 ) => {
     const [user, setUser] = useState<IUser>();
     const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
@@ -53,7 +53,7 @@ export const useUser = (
     const onUserDetailsChanged = (user: IUser, isAdmin: boolean) => {
         setUser(user);
         setIsAdmin(isAdmin);
-        onUserChanged();
+        onSuccess();
     };
 
     return {
@@ -63,7 +63,7 @@ export const useUser = (
     };
 };
 
-export const useUserGroup = (userGroupId: string, organizationId: string, onUserChanged: () => void) => {
+export const useUserGroup = (userGroupId: string, organizationId: string, onSuccess: () => void) => {
     const [userGroup, setUserGroup] = useState<IUserGroup>();
     const backend = useBackendStrict();
 
@@ -78,7 +78,7 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onUser
 
     const onUserGroupDetailsChanged = (userGroup: IUserGroup) => {
         setUserGroup(userGroup);
-        onUserChanged();
+        onSuccess();
     };
 
     return {
@@ -90,7 +90,7 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onUser
 export const useDeleteUser = (
     userId: string,
     organizationId: string,
-    onUserChanged: () => void,
+    onSuccess: () => void,
     onClose: () => void,
 ) => {
     const backend = useBackendStrict();
@@ -103,7 +103,7 @@ export const useDeleteUser = (
             .deleteUser(userId)
             .then(() => {
                 addSuccess(userManagementMessages.userDeleteSuccess);
-                onUserChanged();
+                onSuccess();
                 onClose();
             })
             .catch((error) => {
@@ -115,7 +115,7 @@ export const useDeleteUser = (
 export const useDeleteUserGroup = (
     userGroupId: string,
     organizationId: string,
-    onUserGroupChanged: () => void,
+    onSuccess: () => void,
     onClose: () => void,
 ) => {
     const backend = useBackendStrict();
@@ -128,7 +128,7 @@ export const useDeleteUserGroup = (
             .deleteUserGroup(userGroupId)
             .then(() => {
                 addSuccess(userManagementMessages.userGroupDeleteSuccess);
-                onUserGroupChanged();
+                onSuccess();
                 onClose();
             })
             .catch((error) => {
@@ -160,7 +160,7 @@ export const useWorkspaces = (
     id: string,
     subjectType: WorkspacePermissionSubject,
     organizationId: string,
-    onUserChanged: () => void,
+    onSuccess: () => void,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -208,7 +208,7 @@ export const useWorkspaces = (
             .then(() => {
                 addSuccess(userManagementMessages.workspaceRemovedSuccess);
                 setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== workspace.id));
-                onUserChanged();
+                onSuccess();
             })
             .catch((error) => {
                 console.error("Removal of workspace permission failed", error);
@@ -238,7 +238,7 @@ export const useWorkspaces = (
             (item) => !workspaces.some((w) => w.id === item.id),
         );
         setGrantedWorkspaces([...unchangedWorkspaces, ...workspaces].sort(sortByName));
-        onUserChanged();
+        onSuccess();
     };
 
     return {
@@ -249,7 +249,7 @@ export const useWorkspaces = (
     };
 };
 
-export const useUserGroups = (userId: string, organizationId: string, onUserChanged: () => void) => {
+export const useUserGroups = (userId: string, organizationId: string, onSuccess: () => void) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[]>(undefined);
@@ -278,7 +278,7 @@ export const useUserGroups = (userId: string, organizationId: string, onUserChan
             .then(() => {
                 addSuccess(userManagementMessages.userGroupRemovedSuccess);
                 setGrantedUserGroups(grantedUserGroups.filter((item) => item.id !== grantedUserGroup.id));
-                onUserChanged();
+                onSuccess();
             })
             .catch((error) => {
                 console.error("Removal of user group failed", error);
@@ -292,7 +292,7 @@ export const useUserGroups = (userId: string, organizationId: string, onUserChan
             (item) => !userGroups.some((userGroup) => userGroup.id === item.id),
         );
         setGrantedUserGroups([...unchangedUserGroups, ...userGroups].sort(sortByName));
-        onUserChanged();
+        onSuccess();
     };
 
     return {
@@ -302,7 +302,7 @@ export const useUserGroups = (userId: string, organizationId: string, onUserChan
     };
 };
 
-export const useUsers = (userGroupId: string, organizationId: string, onUserChanged: () => void) => {
+export const useUsers = (userGroupId: string, organizationId: string, onSuccess: () => void) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUsers, setGrantedUsers] = useState<IUserMember[]>(undefined);
@@ -332,7 +332,7 @@ export const useUsers = (userGroupId: string, organizationId: string, onUserChan
             .then(() => {
                 addSuccess(userManagementMessages.usersRemovedSuccess);
                 setGrantedUsers(grantedUsers.filter((item) => item.id !== grantedUser.id));
-                onUserChanged();
+                onSuccess();
             })
             .catch((error) => {
                 console.error("Removal of user failed", error);
@@ -344,7 +344,7 @@ export const useUsers = (userGroupId: string, organizationId: string, onUserChan
     const onUsersChanged = (users: IUserMember[]) => {
         const unchangedUsers = grantedUsers.filter((item) => !users.some((g) => g.id === item.id));
         setGrantedUsers([...unchangedUsers, ...users].sort(sortByName));
-        onUserChanged();
+        onSuccess();
     };
 
     return {

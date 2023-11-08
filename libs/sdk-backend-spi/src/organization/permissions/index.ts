@@ -40,6 +40,19 @@ export interface IOrganizationPermissionService {
     ): Promise<void>;
 
     /**
+     * Update assigned workspaces of the users and their permissions.
+     *
+     * @param userIds - IDs of the users.
+     * @param permissions - list of updated permissions.
+     *
+     * @returns promise
+     */
+    updateWorkspacePermissionsForUsers(
+        userIds: string[],
+        permissions: IWorkspacePermissionAssignment[],
+    ): Promise<void>;
+
+    /**
      * Update assigned workspaces of the user group and their permissions.
      *
      * @param userGroupId - ID of the user group.
@@ -49,6 +62,19 @@ export interface IOrganizationPermissionService {
      */
     updateWorkspacePermissionsForUserGroup(
         userGroupId: string,
+        permissions: IWorkspacePermissionAssignment[],
+    ): Promise<void>;
+
+    /**
+     * Update assigned workspaces of the user groups and their permissions.
+     *
+     * @param userGroupIds - IDs of the user groups.
+     * @param permissions - list of updated permissions.
+     *
+     * @returns promise
+     */
+    updateWorkspacePermissionsForUserGroups(
+        userGroupIds: string[],
         permissions: IWorkspacePermissionAssignment[],
     ): Promise<void>;
 

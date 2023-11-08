@@ -63,6 +63,15 @@ export interface IOrganizationUserService {
     deleteUser(id: string): Promise<void>;
 
     /**
+     * Delete users by ID.
+     *
+     * @param ids - ID of the user.
+     *
+     * @returns promise
+     */
+    deleteUsers(ids: string[]): Promise<void>;
+
+    /**
      * Delete user group by ID.
      *
      * @param id - ID of the user group.
@@ -70,6 +79,15 @@ export interface IOrganizationUserService {
      * @returns promise
      */
     deleteUserGroup(id: string): Promise<void>;
+
+    /**
+     * Delete user groups by ID.
+     *
+     * @param ids - ID of the user group.
+     *
+     * @returns promise
+     */
+    deleteUserGroups(ids: string[]): Promise<void>;
 
     /**
      * Get list of users.
@@ -112,6 +130,16 @@ export interface IOrganizationUserService {
      * @returns promise
      */
     addUserGroupToUsers(userGroupId: string, userIds: string[]): Promise<void>;
+
+    /**
+     * Add user groups to multiple users.
+     *
+     * @param userGroupIds - IDs of the user groups that will be assigned to the users.
+     * @param userIds - IDs of the users that will have the new user groups assigned.
+     *
+     * @returns promise
+     */
+    addUserGroupsToUsers(userGroupIds: string[], userIds: string[]): Promise<void>;
 
     /**
      * Add user to multiple user groups.

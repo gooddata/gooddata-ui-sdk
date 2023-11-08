@@ -737,17 +737,22 @@ class DummyOrganization implements IOrganization {
             getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
             updateUserOrganizationAdminStatus: () => Promise.resolve(),
             updateWorkspacePermissionsForUser: () => Promise.resolve(),
+            updateWorkspacePermissionsForUsers: () => Promise.resolve(),
             updateWorkspacePermissionsForUserGroup: () => Promise.resolve(),
+            updateWorkspacePermissionsForUserGroups: () => Promise.resolve(),
         };
     }
 
     users(): IOrganizationUserService {
         return {
             addUserGroupToUsers: () => Promise.resolve(),
+            addUserGroupsToUsers: () => Promise.resolve(),
             addUserToUserGroups: () => Promise.resolve(),
             createUserGroup: () => Promise.resolve(),
             deleteUser: () => Promise.resolve(),
+            deleteUsers: () => Promise.resolve(),
             deleteUserGroup: () => Promise.resolve(),
+            deleteUserGroups: () => Promise.resolve(),
             getUser: () => Promise.resolve(undefined),
             getUserGroup: () => Promise.resolve(undefined),
             getUserGroups: () => Promise.resolve([]),

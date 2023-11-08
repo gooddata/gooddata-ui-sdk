@@ -51,6 +51,23 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         });
     };
 
+    public updateWorkspacePermissionsForUsers = async (
+        userIds: string[],
+        permissions: IWorkspacePermissionAssignment[],
+    ): Promise<void> => {
+        return this.authCall(async (client) => {
+            // this is not ideal, but this can be replaced when bulk API is created
+            await Promise.all(
+                userIds.map((userId) =>
+                    client.actions.manageWorkspacePermissionsForUser({
+                        userId,
+                        workspacePermissionAssignments: { assignments: permissions },
+                    }),
+                ),
+            );
+        });
+    };
+
     public updateWorkspacePermissionsForUserGroup = async (
         userGroupId: string,
         permissions: IWorkspacePermissionAssignment[],
@@ -60,6 +77,23 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
                 userGroupId,
                 workspacePermissionAssignments: { assignments: permissions },
             });
+        });
+    };
+
+    public updateWorkspacePermissionsForUserGroups = async (
+        userGroupIds: string[],
+        permissions: IWorkspacePermissionAssignment[],
+    ): Promise<void> => {
+        return this.authCall(async (client) => {
+            // this is not ideal, but this can be replaced when bulk API is created
+            await Promise.all(
+                userGroupIds.map((userGroupId) =>
+                    client.actions.manageWorkspacePermissionsForUserGroup({
+                        userGroupId,
+                        workspacePermissionAssignments: { assignments: permissions },
+                    }),
+                ),
+            );
         });
     };
 }

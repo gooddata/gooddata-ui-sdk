@@ -11,7 +11,7 @@ import { useToastMessage } from "../../../Messages/index.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 
 export const useAddWorkspace = (
-    id: string,
+    ids: string[],
     subjectType: WorkspacePermissionSubject,
     onSubmit: (workspaces: IGrantedWorkspace[]) => void,
     onCancel: () => void,
@@ -32,21 +32,49 @@ export const useAddWorkspace = (
     };
 
     const onAdd = () => {
-        const updateWorkspacePermissionsForUser =
-            subjectType === "user"
-                ? backend.organization(organizationId).permissions().updateWorkspacePermissionsForUser
-                : backend.organization(organizationId).permissions().updateWorkspacePermissionsForUserGroup;
+        if (ids.length === 1) {
+            const updateWorkspacePermissionsForSubject =
+                subjectType === "user"
+                    ? backend.organization(organizationId).permissions().updateWorkspacePermissionsForUser
+                    : backend.organization(organizationId).permissions()
+                          .updateWorkspacePermissionsForUserGroup;
 
-        updateWorkspacePermissionsForUser(id, addedWorkspaces.map(asPermissionAssignment))
-            .then(() => {
-                addSuccess(userManagementMessages.workspaceAddedSuccess);
-                onSubmit(addedWorkspaces);
-                onCancel();
-            })
-            .catch((error) => {
-                console.error("Addition of workspace permission failed", error);
-                addError(userManagementMessages.workspaceAddedError);
-            });
+            updateWorkspacePermissionsForSubject(ids[0], addedWorkspaces.map(asPermissionAssignment))
+                .then(() => {
+                    addSuccess(userManagementMessages.workspaceAddedSuccess);
+                    onSubmit(addedWorkspaces);
+                    onCancel();
+                })
+                .catch((error) => {
+                    console.error("Addition of workspace permission failed", error);
+                    addError(userManagementMessages.workspaceAddedError);
+                });
+        } else {
+            const updateWorkspacePermissionsForSubjects =
+                subjectType === "user"
+                    ? backend.organization(organizationId).permissions().updateWorkspacePermissionsForUsers
+                    : backend.organization(organizationId).permissions()
+                          .updateWorkspacePermissionsForUserGroups;
+
+            updateWorkspacePermissionsForSubjects(ids, addedWorkspaces.map(asPermissionAssignment))
+                .then(() => {
+                    addSuccess(
+                        subjectType === "user"
+                            ? userManagementMessages.workspacesAddedToUsersSuccess
+                            : userManagementMessages.workspacesAddedToUserGroupsSuccess,
+                    );
+                    onSubmit(addedWorkspaces);
+                    onCancel();
+                })
+                .catch((error) => {
+                    console.error("Addition of workspace permissions failed", error);
+                    addError(
+                        subjectType === "user"
+                            ? userManagementMessages.workspacesAddedToUsersError
+                            : userManagementMessages.workspacesAddedToUserGroupsError,
+                    );
+                });
+        }
     };
 
     const onSelect = ({ id, title }: IWorkspaceDescriptor) => {

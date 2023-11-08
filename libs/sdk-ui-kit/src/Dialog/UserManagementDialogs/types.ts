@@ -32,6 +32,9 @@ export type ListMode = "VIEW" | "EDIT";
 
 export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
+/**
+ * @alpha
+ */
 export type WorkspacePermissionSubject = "user" | "userGroup";
 
 export interface IGrantedWorkspace {

@@ -19,7 +19,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  */
 export interface ICreateUserGroupDialogProps {
     organizationId: string;
-    onGroupCreated: () => void;
+    onSuccess: () => void;
     onCancel: () => void;
 }
 
@@ -28,7 +28,7 @@ export interface ICreateUserGroupDialogProps {
  */
 export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
     organizationId,
-    onGroupCreated,
+    onSuccess,
     onCancel,
 }) => {
     const intl = useIntl();
@@ -47,7 +47,7 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
             })
             .then(() => {
                 addSuccess(userManagementMessages.userGroupCreatedSuccess);
-                onGroupCreated();
+                onSuccess();
                 onCancel();
             })
             .catch(() => {

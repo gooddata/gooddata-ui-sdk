@@ -12,22 +12,24 @@ import { useAddUsers } from "./usersHooks.js";
 import { userManagementMessages } from "../../../locales.js";
 
 export interface IAddUserProps {
-    userGroupId: string;
+    userGroupIds: string[];
     grantedUsers: IUserMember[];
+    enableBackButton?: boolean;
     onSubmit: (users: IUserMember[]) => void;
     onCancel: () => void;
     onClose: () => void;
 }
 
 export const AddUser: React.FC<IAddUserProps> = ({
-    userGroupId,
+    userGroupIds,
     grantedUsers,
+    enableBackButton,
     onSubmit,
     onCancel,
     onClose,
 }) => {
     const intl = useIntl();
-    const { addedUsers, onSelect, onAdd, onDelete } = useAddUsers(userGroupId, onSubmit, onCancel);
+    const { addedUsers, onSelect, onAdd, onDelete } = useAddUsers(userGroupIds, onSubmit, onCancel);
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onCancel} className="s-user-management-navigate-back" />;
@@ -45,7 +47,7 @@ export const AddUser: React.FC<IAddUserProps> = ({
             onCancel={onCancel}
             onSubmit={onAdd}
             onClose={onClose}
-            headerLeftButtonRenderer={backButtonRenderer}
+            headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
             <AddUserContent
                 grantedUsers={grantedUsers}

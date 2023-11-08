@@ -545,6 +545,8 @@ export interface IOrganizationPermissionService {
     updateUserOrganizationAdminStatus(userId: string, isOrganizationAdmin: boolean): Promise<void>;
     updateWorkspacePermissionsForUser(userId: string, permissions: IWorkspacePermissionAssignment[]): Promise<void>;
     updateWorkspacePermissionsForUserGroup(userGroupId: string, permissions: IWorkspacePermissionAssignment[]): Promise<void>;
+    updateWorkspacePermissionsForUserGroups(userGroupIds: string[], permissions: IWorkspacePermissionAssignment[]): Promise<void>;
+    updateWorkspacePermissionsForUsers(userIds: string[], permissions: IWorkspacePermissionAssignment[]): Promise<void>;
 }
 
 // @public
@@ -586,11 +588,14 @@ export interface IOrganizationStylingService {
 
 // @alpha
 export interface IOrganizationUserService {
+    addUserGroupsToUsers(userGroupIds: string[], userIds: string[]): Promise<void>;
     addUserGroupToUsers(userGroupId: string, userIds: string[]): Promise<void>;
     addUserToUserGroups(userId: string, userGroupIds: string[]): Promise<void>;
     createUserGroup(group: IUserGroup): Promise<void>;
     deleteUser(id: string): Promise<void>;
     deleteUserGroup(id: string): Promise<void>;
+    deleteUserGroups(ids: string[]): Promise<void>;
+    deleteUsers(ids: string[]): Promise<void>;
     getUser(id: string): Promise<IUser | undefined>;
     getUserGroup(id: string): Promise<IUserGroup | undefined>;
     getUserGroups(): Promise<IOrganizationUserGroup[]>;

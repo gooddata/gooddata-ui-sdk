@@ -14,7 +14,7 @@ import { useDeleteUserGroup } from "./dialogHooks.js";
 export interface IDeleteUserGroupDialogProps {
     userGroupId: string;
     organizationId: string;
-    onDeleteUserGroup: () => void;
+    onSuccess: () => void;
     onClose: () => void;
 }
 
@@ -24,11 +24,11 @@ export interface IDeleteUserGroupDialogProps {
 export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
     userGroupId,
     organizationId,
-    onDeleteUserGroup,
+    onSuccess,
     onClose,
 }) => {
     const intl = useIntl();
-    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onDeleteUserGroup, onClose);
+    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmTitle)}
