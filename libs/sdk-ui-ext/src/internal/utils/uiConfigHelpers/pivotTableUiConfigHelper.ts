@@ -82,6 +82,11 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
     return updatedUiConfig;
 }
 
+export function getPivotTableMeasuresLimit(settings: ISettings) {
+    const isLimitIncreased = settings?.enablePivotTableIncreaseBucketSize;
+    return isLimitIncreased ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT;
+}
+
 export function setPivotTableUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,

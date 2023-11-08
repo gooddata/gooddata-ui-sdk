@@ -2,7 +2,6 @@
 import React from "react";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
-import without from "lodash/without.js";
 import isEmpty from "lodash/isEmpty.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
@@ -20,7 +19,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig.js";
+import { COMBO_CHART_UICONFIG, MAX_METRICS_COUNT } from "../../../constants/uiConfig.js";
 
 import {
     IBucketItem,
@@ -48,6 +47,8 @@ import {
     sanitizeFilters,
     setMeasuresShowOnSecondaryAxis,
     getBucketItems,
+    limitNumberOfMeasuresInBuckets,
+    isShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
 import {
@@ -186,7 +187,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         let measures: IBucketItem[] = [];
         let secondaryMeasures: IBucketItem[] = [];
 
-        // ref. point has both my buckets -> reuse them fully
+        // ref. point has both my buckets -> reuse them fully and expect limits are correct
         if (hasBucket(buckets, BucketNames.MEASURES) && hasBucket(buckets, BucketNames.SECONDARY_MEASURES)) {
             measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
             secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
@@ -199,9 +200,15 @@ export class PluggableComboChart extends PluggableBaseChart {
             secondaryMeasures = secondaryMeasures.concat(restMeasures);
         } else {
             // transform from dual axis chart to combo chart
-            const allMeasures = getMeasureItems(buckets);
+            measures = getMeasureItems(
+                limitNumberOfMeasuresInBuckets(
+                    buckets,
+                    MAX_METRICS_COUNT,
+                    true,
+                    (m) => !isShowOnSecondaryAxis(m),
+                ),
+            );
             secondaryMeasures = getAllMeasuresShowOnSecondaryAxis(buckets);
-            measures = without(allMeasures, ...secondaryMeasures);
         }
 
         const isDualAxisEnabled = isDualAxisOrSomeSecondaryAxisMeasure(extReferencePoint, secondaryMeasures);

@@ -22,6 +22,7 @@ import {
     AREA_UICONFIG_WITH_MULTIPLE_DATES,
     DEFAULT_AREA_UICONFIG,
     MAX_CATEGORIES_COUNT,
+    MAX_METRICS_COUNT,
     MAX_STACKS_COUNT,
     MAX_VIEW_COUNT,
 } from "../../../constants/uiConfig.js";
@@ -51,6 +52,7 @@ import {
     sanitizeFilters,
     getMainDateItem,
     getBucketItems,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -298,9 +300,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return bucketItems.filter(isNotDateBucketItem).slice(0, MAX_STACKS_COUNT);
     }
 
-    private getBucketItems(referencePoint: IReferencePoint) {
+    private getBucketItems(referencePoint: IExtendedReferencePoint) {
         const buckets = referencePoint?.buckets ?? [];
-        const measures = getFilteredMeasuresForStackedCharts(buckets);
+        const measures = this.getBucketMeasures(buckets);
         const dateItems = getDateItems(buckets);
         const mainDateItem = getMainDateItem(dateItems);
 
@@ -333,9 +335,14 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return referencePoint.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
     }
 
+    private getBucketMeasures(buckets: IBucketOfFun[] = []) {
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
+        return getFilteredMeasuresForStackedCharts(limitedBuckets);
+    }
+
     private getBucketItemsWithMultipleDates(referencePoint: IExtendedReferencePoint) {
         const buckets = referencePoint?.buckets ?? [];
-        const measures = getFilteredMeasuresForStackedCharts(buckets);
+        const measures = this.getBucketMeasures(buckets);
         const viewByMaxItemCount = this.getViewByMaxItemCount(referencePoint);
         const stacks: IBucketItem[] = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
