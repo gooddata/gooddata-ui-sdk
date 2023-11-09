@@ -19,8 +19,10 @@ export interface IOrganization {
 
     /**
      * Returns details about the organization.
+     *
+     * @param includeAdditionalDetails - include additional details such as bootstrap user and user group.
      */
-    getDescriptor(): Promise<IOrganizationDescriptor>;
+    getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
 
     /**
      * Returns service that can be used to query and update organization security settings.

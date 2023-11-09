@@ -2488,6 +2488,21 @@
         "comment": "",
         "limit": 0
     },
+    "userManagement.deleteDialog.user.disabledTooltip": {
+        "value": "User cannot be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.userGroup.adminDisabledTooltip": {
+        "value": "This group cannot be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.deleteDialog.userGroup.nonEmptyDisabledTooltip": {
+        "value": "This group cannot be deleted, because it contains members. ",
+        "comment": "",
+        "limit": 0
+    },
     "userManagement.deleteDialog.multipleUsers.title": {
         "value": "Delete users?",
         "comment": "",

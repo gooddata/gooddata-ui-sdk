@@ -223,8 +223,8 @@ class OrganizationDecorator implements IOrganization {
         this.organizationId = decorated.organizationId;
     }
 
-    public getDescriptor(): Promise<IOrganizationDescriptor> {
-        return this.decorated.getDescriptor();
+    public getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor> {
+        return this.decorated.getDescriptor(includeAdditionalDetails);
     }
 
     public securitySettings(): ISecuritySettingsService {

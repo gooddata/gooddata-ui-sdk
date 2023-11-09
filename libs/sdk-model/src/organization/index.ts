@@ -1,5 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
+import { ObjRef } from "../objRef/index.js";
+
 /**
  * Organization descriptor contains details about the organization that services analytical workspaces.
  *
@@ -8,6 +10,8 @@
 export interface IOrganizationDescriptor {
     id: string;
     title: string;
+    bootstrapUser?: ObjRef;
+    bootstrapUserGroup?: ObjRef;
 }
 
 /**

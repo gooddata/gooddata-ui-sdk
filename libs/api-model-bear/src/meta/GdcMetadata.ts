@@ -50,7 +50,9 @@ export type ObjectCategory =
     | "visualizationWidget"
     | "theme"
     | "colorPalette"
-    | "attributeHierarchy";
+    | "attributeHierarchy"
+    | "user"
+    | "userGroup";
 
 /**
  * @public

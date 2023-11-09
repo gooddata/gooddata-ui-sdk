@@ -23,6 +23,7 @@ import {
     useUserDialogMode,
     useDeleteUser,
     useDeleteDialog,
+    useIsOrganizationBootstrapUser,
 } from "./dialogHooks.js";
 import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
@@ -83,6 +84,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         dialogWrapperClassNames,
     } = useDeleteDialog();
     const deleteUser = useDeleteUser(userId, organizationId, onSuccess, onClose);
+    const isBootstrapUser = useIsOrganizationBootstrapUser(organizationId, user);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userDialogTabsMessageLabels.workspaces.id) {
@@ -132,6 +134,8 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <ViewDialog
                             dialogTitle={extractUserName(user)}
                             isAdmin={isCurrentlyAdmin}
+                            isDeleteLinkEnabled={!isBootstrapUser}
+                            deleteLinkDisabledTooltipTextId={userManagementMessages.deleteUserDisabledTooltip.id}
                             deleteLinkText={intl.formatMessage(userManagementMessages.deleteUserLink)}
                             onOpenDeleteDialog={onOpenDeleteDialog}
                             onClose={onClose}

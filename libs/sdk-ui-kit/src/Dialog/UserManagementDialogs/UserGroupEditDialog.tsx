@@ -19,6 +19,7 @@ import {
     useDeleteUserGroup,
     useUserGroupDialogTabs,
     useUserGroupDialogMode,
+    useIsOrganizationBootstrapUserGroup,
 } from "./dialogHooks.js";
 import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
@@ -57,11 +58,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
-    const { userGroup, onUserGroupDetailsChanged } = useUserGroup(
-        userGroupId,
-        organizationId,
-        onSuccess,
-    );
+    const { userGroup, onUserGroupDetailsChanged } = useUserGroup(userGroupId, organizationId, onSuccess);
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
         useWorkspaces(userGroupId, "userGroup", organizationId, onSuccess);
     const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
@@ -82,6 +79,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         dialogWrapperClassNames,
     } = useDeleteDialog();
     const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
+    const isBootstrapUserGroup = useIsOrganizationBootstrapUserGroup(organizationId, userGroup);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessageLabels.workspaces.id) {
@@ -131,6 +129,12 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                         <ViewDialog
                             dialogTitle={extractUserGroupName(userGroup)}
                             isAdmin={isAdmin}
+                            isDeleteLinkEnabled={!isBootstrapUserGroup && grantedUsers?.length === 0}
+                            deleteLinkDisabledTooltipTextId={
+                                isBootstrapUserGroup
+                                    ? userManagementMessages.deleteAdminUserGroupTooltip.id
+                                    : userManagementMessages.deleteNonEmptyUserGroupTooltip.id
+                            }
                             deleteLinkText={intl.formatMessage(userManagementMessages.deleteUserGroupLink)}
                             onOpenDeleteDialog={onOpenDeleteDialog}
                             onClose={onClose}

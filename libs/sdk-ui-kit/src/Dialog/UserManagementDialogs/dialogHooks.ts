@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import { IUser, IUserGroup } from "@gooddata/sdk-model";
+import { IOrganizationDescriptor, IUser, IUserGroup, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
 
 import { useToastMessage } from "../../Messages/index.js";
@@ -30,12 +30,7 @@ import {
     UserGroupEditDialogMode,
 } from "./types.js";
 
-export const useUser = (
-    userId: string,
-    organizationId: string,
-    isAdmin: boolean,
-    onSuccess: () => void,
-) => {
+export const useUser = (userId: string, organizationId: string, isAdmin: boolean, onSuccess: () => void) => {
     const [user, setUser] = useState<IUser>();
     const [isCurrentlyAdmin, setIsAdmin] = useState(isAdmin);
 
@@ -430,4 +425,34 @@ export const useUserGroupDialogMode = (initialView: UserGroupEditDialogMode) => 
         dialogMode,
         setDialogMode,
     };
+};
+
+const useOrganization = (organizationId: string) => {
+    const backend = useBackendStrict();
+    const [organization, setOrganization] = useState<IOrganizationDescriptor>();
+
+    // initial load of organization details
+    useEffect(() => {
+        backend
+            .organization(organizationId)
+            .getDescriptor(true)
+            .then((organization) => {
+                setOrganization(organization);
+            });
+    }, [backend, organizationId]);
+
+    return {
+        bootstrapUser: organization?.bootstrapUser,
+        bootstrapUserGroup: organization?.bootstrapUserGroup,
+    };
+};
+
+export const useIsOrganizationBootstrapUser = (organizationId: string, user: IUser) => {
+    const { bootstrapUser } = useOrganization(organizationId);
+    return areObjRefsEqual(bootstrapUser, user?.ref);
+};
+
+export const useIsOrganizationBootstrapUserGroup = (organizationId: string, userGroup: IUserGroup) => {
+    const { bootstrapUserGroup } = useOrganization(organizationId);
+    return areObjRefsEqual(bootstrapUserGroup, userGroup?.ref);
 };
