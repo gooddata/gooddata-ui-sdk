@@ -4,7 +4,7 @@ import { IDashboardCommand } from "./base.js";
 import {
     isObjRef,
     ObjRef,
-    ObjRefInScope,
+    LocalIdRef,
     VisualizationProperties,
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
@@ -563,7 +563,7 @@ export function modifyDrillsForInsightWidget(
 /**
  * @beta
  */
-export type RemoveDrillsSelector = ObjRefInScope[] | "*";
+export type RemoveDrillsSelector = LocalIdRef[] | "*";
 
 /**
  * Type guard resolved all drill selector
@@ -585,9 +585,9 @@ export interface RemoveDrillsForInsightWidgetPayload {
     readonly ref: ObjRef;
 
     /**
-     * Specify measure or attribute localIdentifiers whose drills to remove or '*' to remove all defined drills.
+     * Specify drill localIdentifiers whose drills to remove or '*' to remove all defined drills.
      */
-    readonly origins: RemoveDrillsSelector;
+    readonly localIdentifiers: RemoveDrillsSelector;
 }
 
 /**
@@ -603,7 +603,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  * drill definition for the provided measure.
  *
  * @param ref - reference of insight widget whose drill should be removed
- * @param origins - measure or attribute localIdentifiers whose drill definitions should be removed
+ * @param localIdentifiers - drill localIdentifiers whose drill definitions should be removed
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -611,7 +611,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  */
 export function removeDrillsForInsightWidget(
     ref: ObjRef,
-    origins: RemoveDrillsSelector,
+    localIdentifiers: RemoveDrillsSelector,
     correlationId?: string,
 ): RemoveDrillsForInsightWidget {
     return {
@@ -619,7 +619,7 @@ export function removeDrillsForInsightWidget(
         correlationId,
         payload: {
             ref,
-            origins,
+            localIdentifiers,
         },
     };
 }

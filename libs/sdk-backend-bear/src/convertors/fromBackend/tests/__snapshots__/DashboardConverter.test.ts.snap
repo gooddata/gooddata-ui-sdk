@@ -178,6 +178,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",
@@ -224,6 +225,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",
@@ -340,6 +342,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",
@@ -387,6 +390,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",
@@ -503,6 +507,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",
@@ -585,6 +590,7 @@ exports[`dashboard converter > convert dashboard > should convert dashboard with
               "description": "",
               "drills": [
                 {
+                  "localIdentifier": "mockeduuid",
                   "origin": {
                     "measure": {
                       "localIdentifier": "m1",

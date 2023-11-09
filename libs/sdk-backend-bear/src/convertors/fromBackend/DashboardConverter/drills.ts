@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-
+import { v4 as uuidv4 } from "uuid";
 import {
     DrillFromType,
     IDrillDefinition,
@@ -20,6 +20,8 @@ import {
     InsightDrillDefinition,
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+
+export const generateDrillLocalIdentifier = () => uuidv4().replace(/-/g, "");
 
 /**
  * @internal
@@ -62,11 +64,13 @@ export const convertDrillOrigin = (from: DrillFromType): DrillOrigin => {
  * @internal
  */
 export const convertVisualizationWidgetDrill = (drill: IDrillDefinition): InsightDrillDefinition => {
+    const localIdentifier = generateDrillLocalIdentifier();
     if (isDrillToDashboard(drill)) {
         const {
             drillToDashboard: { toDashboard, target, from },
         } = drill;
         return {
+            localIdentifier,
             type: "drillToDashboard",
             origin: convertDrillOrigin(from),
             target: toDashboard !== undefined ? idRef(toDashboard) : undefined,
@@ -77,6 +81,7 @@ export const convertVisualizationWidgetDrill = (drill: IDrillDefinition): Insigh
             drillToVisualization: { toVisualization, target, from },
         } = drill;
         return {
+            localIdentifier,
             type: "drillToInsight",
             origin: convertDrillOrigin(from),
             target: uriRef(toVisualization.uri),
@@ -87,6 +92,7 @@ export const convertVisualizationWidgetDrill = (drill: IDrillDefinition): Insigh
             drillToCustomUrl: { target, customUrl, from },
         } = drill;
         return {
+            localIdentifier,
             type: "drillToCustomUrl",
             origin: convertDrillOrigin(from),
             target: {
@@ -99,6 +105,7 @@ export const convertVisualizationWidgetDrill = (drill: IDrillDefinition): Insigh
             drillToAttributeUrl: { drillToAttributeDisplayForm, insightAttributeDisplayForm, target, from },
         } = drill;
         return {
+            localIdentifier,
             type: "drillToAttributeUrl",
             origin: convertDrillOrigin(from),
             target: {

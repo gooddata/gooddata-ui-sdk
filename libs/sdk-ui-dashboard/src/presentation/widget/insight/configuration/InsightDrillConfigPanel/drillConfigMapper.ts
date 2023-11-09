@@ -71,15 +71,16 @@ const createInsightConfig = (
     drillData: IDrillToInsight,
     supportedItemsForWidget: IAvailableDrillTargets,
 ): IDrillToInsightConfig => {
-    const localIdentifier = isDrillFromAttribute(drillData.origin)
+    const originLocalIdentifier = isDrillFromAttribute(drillData.origin)
         ? getLocalIdentifierOrDie(drillData.origin?.attribute)
         : getLocalIdentifierOrDie(drillData.origin?.measure);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
         insightRef: drillData.target,
         complete: true,
@@ -90,15 +91,16 @@ const createDashboardConfig = (
     drillData: IDrillToDashboard,
     supportedItemsForWidget: IAvailableDrillTargets,
 ): IDrillToDashboardConfig => {
-    const localIdentifier = isDrillFromAttribute(drillData.origin)
+    const originLocalIdentifier = isDrillFromAttribute(drillData.origin)
         ? getLocalIdentifierOrDie(drillData.origin?.attribute)
         : getLocalIdentifierOrDie(drillData.origin?.measure);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
         dashboard: drillData.target,
         complete: true,
@@ -114,15 +116,16 @@ const createUrlConfig = (
     supportedItemsForWidget: IAvailableDrillTargets,
     invalidCustomUrlDrillLocalIds: string[],
 ): IDrillToUrlConfig => {
-    const localIdentifier = getDrillOriginLocalIdentifier(drillData);
+    const originLocalIdentifier = getDrillOriginLocalIdentifier(drillData);
 
-    const hasWarning = invalidCustomUrlDrillLocalIds.includes(localIdentifier);
+    const hasWarning = invalidCustomUrlDrillLocalIds.includes(originLocalIdentifier);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
         urlDrillTarget: buildUrlDrillTarget(drillData),
         complete: true,

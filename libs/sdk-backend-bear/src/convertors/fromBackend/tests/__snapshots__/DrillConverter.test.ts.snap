@@ -2,6 +2,7 @@
 
 exports[`convert drill > definition > should convert drill to dashboard with drill from attribute 1`] = `
 {
+  "localIdentifier": "mockeduuid",
   "origin": {
     "attribute": {
       "localIdentifier": "attributeLocalIdentifier",
@@ -18,6 +19,7 @@ exports[`convert drill > definition > should convert drill to dashboard with dri
 
 exports[`convert drill > definition > should convert drill to dashboard with drill from measure 1`] = `
 {
+  "localIdentifier": "mockeduuid",
   "origin": {
     "measure": {
       "localIdentifier": "measureLocalIdentifier",
