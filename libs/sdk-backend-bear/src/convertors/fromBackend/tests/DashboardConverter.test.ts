@@ -1,4 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
+import * as uuid from "uuid";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { convertDashboard } from "../DashboardConverter/index.js";
 import {
@@ -18,10 +20,17 @@ import {
     dashboardWithExtendedDateFilterConfig,
     dashboardWithLayoutAndCustomGridHeight,
 } from "./DashboardConverter.fixtures.js";
-import { describe, expect, it } from "vitest";
 
 describe("dashboard converter", () => {
     describe("convert dashboard", () => {
+        beforeEach(() => {
+            vi.spyOn(uuid, "v4").mockReturnValue("mocked-uuid");
+        });
+
+        afterEach(() => {
+            vi.clearAllMocks();
+        });
+
         it("should convert empty dashboard", () => {
             const convertedDashboard = convertDashboard(emptyDashboard, emptyDashboardDependencies);
             expect(convertedDashboard).toMatchSnapshot();

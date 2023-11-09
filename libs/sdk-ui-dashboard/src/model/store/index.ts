@@ -16,6 +16,7 @@ export {
     selectSupportsObjectUris,
     selectSupportsSettingConnectingAttributes,
     selectSupportsKeepingDependentFiltersSelection,
+    selectAllowMultipleInteractionsPerAttributeAndMeasure,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {

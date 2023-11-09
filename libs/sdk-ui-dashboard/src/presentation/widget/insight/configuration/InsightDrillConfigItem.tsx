@@ -78,7 +78,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
             <DrillOriginItem
                 type={item.type}
                 title={item.title}
-                localIdentifier={item.localIdentifier}
+                localIdentifier={item.originLocalIdentifier}
                 onDelete={onDeleteClick}
                 isDateAttribute={isFromDateAttribute}
             />
@@ -122,7 +122,7 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
 
     return useMemo(() => {
         const attributeTarget = drillTargets?.availableDrillTargets?.attributes?.find(
-            (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.localIdentifier,
+            (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.originLocalIdentifier,
         );
 
         const isFromDateAttribute = !!(
@@ -159,8 +159,9 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         dateAttributes,
         item.type,
         item.attributes,
-        item.drillTargetType,
         item.localIdentifier,
+        item.drillTargetType,
+        item.originLocalIdentifier,
     ]);
 }
 
