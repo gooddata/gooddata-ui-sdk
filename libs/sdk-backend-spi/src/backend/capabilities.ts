@@ -231,6 +231,14 @@ export interface IBackendCapabilities {
     supportsHiddenAndLockedFiltersOnUI?: boolean;
 
     /**
+     * Indicates whether the UI supports multiple interactions per attribute and measure.
+     *
+     * IF set to true, the user interface (UI) provides functionality for managing multiple interactions per attribute and measure.
+     * If set to false or undefined, the UI does not support these features.
+     */
+    allowMultipleInteractionsPerAttributeAndMeasure?: boolean;
+
+    /**
      * Indicates whether the UI supports attribute hierarchies.
      *
      * If set to true, the user interface (UI) provides functionality for managing attribute hierarchies

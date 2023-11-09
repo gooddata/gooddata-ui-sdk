@@ -227,6 +227,7 @@ export interface IAuthenticationProvider {
 // @public
 export interface IBackendCapabilities {
     [key: string]: undefined | boolean | number | string;
+    allowMultipleInteractionsPerAttributeAndMeasure?: boolean;
     allowsInconsistentRelations?: boolean;
     canCalculateGrandTotals?: boolean;
     canCalculateNativeTotals?: boolean;
