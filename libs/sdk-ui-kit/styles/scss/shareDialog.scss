@@ -177,7 +177,6 @@
         border: 1px dashed variables.$is-focused-background;
         line-height: 36px;
         text-align: center;
-        border-style: dashed;
     }
 
     .gd-grantee-item-icon-left {
@@ -374,6 +373,7 @@
 
 .gd-user-management-dialog-buttons-right {
     display: flex;
+    align-items: center;
     gap: 5px;
 }
 
@@ -473,4 +473,12 @@
         padding: 0;
         border: 0;
     }
+}
+
+.gd-button-link-dimmed-disabled {
+    text-decoration: underline;
+    color: variables.$gd-color-disabled;
+    cursor: default;
+    line-height: 20px;
+    padding: 0 7px;
 }

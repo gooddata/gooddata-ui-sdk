@@ -9,10 +9,14 @@ import { Typography } from "../../Typography/index.js";
 import { Button } from "../../Button/index.js";
 import { userManagementMessages } from "../../locales.js";
 
+import { DeleteLink } from "./DeleteLink.js";
+
 export interface IViewDialogProps {
     children: React.ReactNode;
     dialogTitle: string;
     isAdmin: boolean;
+    isDeleteLinkEnabled: boolean;
+    deleteLinkDisabledTooltipTextId?: string;
     deleteLinkText: string;
     onOpenDeleteDialog: () => void;
     onClose: () => void;
@@ -29,6 +33,8 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
     editButtonText,
     children,
     deleteLinkText,
+    isDeleteLinkEnabled,
+    deleteLinkDisabledTooltipTextId,
     onOpenDeleteDialog,
     onClose,
 }) => {
@@ -64,10 +70,11 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
                         />
                     </div>
                     <div className="gd-user-management-dialog-buttons-right">
-                        <Button
-                            className="gd-button gd-button-link-dimmed gd-user-management-dialog-button-underlined"
-                            value={deleteLinkText}
-                            onClick={onOpenDeleteDialog}
+                        <DeleteLink
+                            deleteLinkText={deleteLinkText}
+                            onOpenDeleteDialog={onOpenDeleteDialog}
+                            isDeleteLinkEnabled={isDeleteLinkEnabled}
+                            disabledLinkTooltipTextId={deleteLinkDisabledTooltipTextId}
                         />
                         <Button
                             className="gd-button gd-button-secondary"

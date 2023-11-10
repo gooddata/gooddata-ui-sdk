@@ -529,7 +529,7 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
-    getDescriptor(): Promise<IOrganizationDescriptor>;
+    getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     readonly organizationId: string;
     permissions(): IOrganizationPermissionService;
     securitySettings(): ISecuritySettingsService;

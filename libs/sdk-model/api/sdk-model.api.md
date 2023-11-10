@@ -1856,6 +1856,10 @@ export interface IObjectInteractions {
 // @public
 export interface IOrganizationDescriptor {
     // (undocumented)
+    bootstrapUser?: ObjRef;
+    // (undocumented)
+    bootstrapUserGroup?: ObjRef;
+    // (undocumented)
     id: string;
     // (undocumented)
     title: string;
@@ -3387,7 +3391,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "widgetAlert";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "widgetAlert" | "user" | "userGroup";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

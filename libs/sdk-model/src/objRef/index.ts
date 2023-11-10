@@ -51,7 +51,9 @@ export type ObjectType =
     | "filterContext"
     | "dashboardPlugin"
     | "attributeHierarchy"
-    | "widgetAlert";
+    | "widgetAlert"
+    | "user"
+    | "userGroup";
 
 /**
  * Model object reference using object's unique identifier.
