@@ -16,6 +16,4 @@ import { ISettings } from "@gooddata/sdk-model";
  * Add disabled FF for your feature, when it is not completed yet, but UI SDK needs to be released.
  * It will prevent this feature from being accidentally turned on in WIP state by its platform setting when used in this version of UI SDK as part of old plugin.
  */
-export const disabledUnfinishedFeatureSettings: ISettings = {
-    enableAttributeHierarchies: false,
-};
+export const disabledUnfinishedFeatureSettings: ISettings = {};
