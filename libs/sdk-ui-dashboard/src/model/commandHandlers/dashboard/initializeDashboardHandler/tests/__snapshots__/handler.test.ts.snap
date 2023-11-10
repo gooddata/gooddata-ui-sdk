@@ -196,7 +196,6 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
     "thousand": ",",
   },
   "settings": {
-    "enableAttributeHierarchies": false,
     "enableKPIDashboardDrillFromAttribute": true,
   },
   "widgetsOverlay": {},
