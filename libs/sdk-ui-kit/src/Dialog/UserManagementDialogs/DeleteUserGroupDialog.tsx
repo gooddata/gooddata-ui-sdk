@@ -32,9 +32,7 @@ export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmTitle)}
-            bodyText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmBody, {
-                br: <br />,
-            })}
+            bodyText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmBody)}
             onConfirm={deleteUserGroup}
             onCancel={onClose}
         />

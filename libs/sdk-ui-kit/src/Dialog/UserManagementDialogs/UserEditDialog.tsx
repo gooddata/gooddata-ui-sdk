@@ -118,9 +118,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
             {isConfirmDeleteOpened ? (
                 <DeleteConfirmDialog
                     titleText={intl.formatMessage(userManagementMessages.deleteUserConfirmTitle)}
-                    bodyText={intl.formatMessage(userManagementMessages.deleteUserConfirmBody, {
-                        br: <br />,
-                    })}
+                    bodyText={intl.formatMessage(userManagementMessages.deleteUserConfirmBody)}
                     onConfirm={deleteUser}
                     onCancel={onCloseDeleteDialog}
                 />
@@ -138,7 +136,9 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             dialogTitle={extractUserName(user)}
                             isAdmin={isCurrentlyAdmin}
                             isDeleteLinkEnabled={!isBootstrapUser}
-                            deleteLinkDisabledTooltipTextId={userManagementMessages.deleteUserDisabledTooltip.id}
+                            deleteLinkDisabledTooltipTextId={
+                                userManagementMessages.deleteUserDisabledTooltip.id
+                            }
                             deleteLinkText={intl.formatMessage(userManagementMessages.deleteUserLink)}
                             onOpenDeleteDialog={onOpenDeleteDialog}
                             onClose={onClose}
@@ -162,6 +162,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             {selectedTabId.id === userDialogTabsMessageLabels.workspaces.id && (
                                 <WorkspaceList
                                     workspaces={grantedWorkspaces}
+                                    subjectType="user"
                                     mode="VIEW"
                                     onDelete={removeGrantedWorkspace}
                                     onChange={updateGrantedWorkspace}
@@ -175,7 +176,12 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                                 />
                             )}
                             {selectedTabId.id === userDialogTabsMessageLabels.details.id && (
-                                <UserDetailsView user={user} isAdmin={isCurrentlyAdmin} mode="VIEW" />
+                                <UserDetailsView
+                                    user={user}
+                                    isAdmin={isCurrentlyAdmin}
+                                    isBootstrapUser={isBootstrapUser}
+                                    mode="VIEW"
+                                />
                             )}
                         </ViewDialog>
                     )}
@@ -204,6 +210,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <EditUserDetails
                             user={user}
                             isAdmin={isCurrentlyAdmin}
+                            isBootstrapUser={isBootstrapUser}
                             enableBackButton={!isOpenedInEditMode}
                             changeUserMembership={changeUserMembership}
                             onSubmit={onUserDetailsChanged}

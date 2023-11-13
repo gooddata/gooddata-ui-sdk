@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import React from "react";
 import cx from "classnames";
 
@@ -29,11 +29,6 @@ const RemoveIcon: React.FC<IRemoveIconProps> = ({ mode, onClick }) => {
                 {mode === "VIEW"
                     ? intl.formatMessage(userManagementMessages.removeSavedUserGroupTooltip)
                     : intl.formatMessage(userManagementMessages.removeUnsavedUserGroupTooltip)}
-                {mode === "VIEW" ? (
-                    <FormattedMessage id="userManagement.userGroups.removeTooltip" />
-                ) : (
-                    <FormattedMessage id="shareDialog.share.grantee.item.remove.selection" />
-                )}
             </Bubble>
         </BubbleHoverTrigger>
     );

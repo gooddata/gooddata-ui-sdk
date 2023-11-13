@@ -4,6 +4,9 @@ import React from "react";
 
 import { Button } from "../../Button/index.js";
 import { withBubble } from "../../Bubble/index.js";
+import { IAlignPoint } from "../../typings/positioning.js";
+
+const alignPoints: IAlignPoint[] = [{ align: "bc tc" }];
 
 export interface IDeleteLinkProps {
     isDeleteLinkEnabled: boolean;
@@ -30,17 +33,16 @@ export const DeleteLink: React.FC<IDeleteLinkProps> = (props) => {
     const { isDeleteLinkEnabled, disabledLinkTooltipTextId } = props;
     return (
         <div>
-            {
-                isDeleteLinkEnabled ? (
-                    <Link {...props} />
-                ) : (
-                    <DisabledLinKWithBubble
-                        {...props}
-                        showBubble={true}
-                        bubbleTextId={disabledLinkTooltipTextId}
-                    />
-                )
-            }
+            {isDeleteLinkEnabled ? (
+                <Link {...props} />
+            ) : (
+                <DisabledLinKWithBubble
+                    {...props}
+                    showBubble={true}
+                    bubbleTextId={disabledLinkTooltipTextId}
+                    alignPoints={alignPoints}
+                />
+            )}
         </div>
     );
 };

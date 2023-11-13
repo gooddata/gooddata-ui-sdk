@@ -14,6 +14,7 @@ import { userManagementMessages } from "../../../locales.js";
 
 export interface IEditUserDetailsProps {
     isAdmin: boolean;
+    isBootstrapUser: boolean;
     user: IUser;
     enableBackButton?: boolean;
     changeUserMembership?: boolean;
@@ -24,6 +25,7 @@ export interface IEditUserDetailsProps {
 
 export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
     user,
+    isBootstrapUser,
     isAdmin,
     enableBackButton,
     changeUserMembership,
@@ -65,7 +67,13 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
             onClose={onClose}
             headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
-            <UserDetailsView user={updatedUser} isAdmin={isUpdatedAdmin} mode="EDIT" onChange={onChange} />
+            <UserDetailsView
+                user={updatedUser}
+                isAdmin={isUpdatedAdmin}
+                isBootstrapUser={isBootstrapUser}
+                mode="EDIT"
+                onChange={onChange}
+            />
         </ConfirmDialogBase>
     );
 };

@@ -55,13 +55,13 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
 
 // @internal (undocumented)
@@ -356,16 +356,16 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
@@ -784,7 +784,7 @@ export interface IAddGranteeBaseProps {
     sharedObject: IAffectedSharedObject;
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IAddUserGroupsToUsersDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -796,7 +796,7 @@ export interface IAddUserGroupsToUsersDialogProps {
     userIds: string[];
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IAddUsersToUserGroupsDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -808,7 +808,7 @@ export interface IAddUsersToUserGroupsDialogProps {
     userGroupIds: string[];
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IAddWorkspaceToSubjectsProps {
     // (undocumented)
     ids: string[];
@@ -1312,7 +1312,7 @@ export interface IDateTimeConfigOptions {
     now?: Date;
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IDeleteUserDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -1324,7 +1324,7 @@ export interface IDeleteUserDialogProps {
     userId: string;
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IDeleteUserGroupDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -1336,7 +1336,7 @@ export interface IDeleteUserGroupDialogProps {
     userGroupId: string;
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IDeleteUserGroupsDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -1348,7 +1348,7 @@ export interface IDeleteUserGroupsDialogProps {
     userGroupIds: string[];
 }
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export interface IDeleteUsersDialogProps {
     // (undocumented)
     onClose: () => void;
@@ -4043,6 +4043,8 @@ export interface IUiSettings {
 // @internal (undocumented)
 export interface IUserEditDialogProps {
     // (undocumented)
+    changeUserMembership?: boolean;
+    // (undocumented)
     initialView?: UserEditDialogMode;
     // (undocumented)
     isAdmin: boolean;
@@ -4699,7 +4701,7 @@ export const useOverlayZIndex: (uuid: string) => number;
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
 
 // @internal
@@ -4708,7 +4710,7 @@ export const useResponsiveContext: () => IResponsiveConfig;
 // @internal (undocumented)
 export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
 // @internal (undocumented)
@@ -4738,7 +4740,7 @@ export interface UseToastMessageType {
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export type WorkspacePermissionSubject = "user" | "userGroup";
 
 // @internal (undocumented)

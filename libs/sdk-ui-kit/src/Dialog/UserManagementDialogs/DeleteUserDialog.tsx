@@ -32,9 +32,7 @@ export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(userManagementMessages.deleteUserConfirmTitle)}
-            bodyText={intl.formatMessage(userManagementMessages.deleteUserConfirmBody, {
-                br: <br />,
-            })}
+            bodyText={intl.formatMessage(userManagementMessages.deleteUserConfirmBody)}
             onConfirm={deleteUser}
             onCancel={onClose}
         />

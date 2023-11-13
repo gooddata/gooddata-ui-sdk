@@ -6,7 +6,12 @@ import cx from "classnames";
 
 import { userManagementWorkspacePermissionMessages } from "../../../../locales.js";
 import { withBubble } from "../../../../Bubble/index.js";
-import { WorkspacePermission, IPermissionsItem, IGrantedWorkspace } from "../../types.js";
+import {
+    WorkspacePermission,
+    IPermissionsItem,
+    IGrantedWorkspace,
+    WorkspacePermissionSubject,
+} from "../../types.js";
 
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 
@@ -35,6 +40,7 @@ const items: IPermissionsItem[] = [
 
 interface IGranularPermissionsDropdownProps {
     workspace: IGrantedWorkspace;
+    subjectType: WorkspacePermissionSubject;
     isDropdownDisabled?: boolean;
     isDropdownOpen: boolean;
     toggleDropdown: () => void;
@@ -45,6 +51,7 @@ interface IGranularPermissionsDropdownProps {
 
 const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     workspace,
+    subjectType,
     isDropdownDisabled,
     isDropdownOpen,
     toggleDropdown,
@@ -98,6 +105,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             <PermissionsDropdownList
                 selectedPermission={selectedPermission}
                 items={items}
+                subjectType={subjectType}
                 onSelect={handleOnSelect}
                 onDelete={handleOnDelete}
                 toggleDropdown={toggleDropdown}

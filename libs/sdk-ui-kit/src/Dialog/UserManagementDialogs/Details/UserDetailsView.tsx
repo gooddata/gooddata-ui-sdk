@@ -13,12 +13,19 @@ import { userManagementMessages } from "../../../locales.js";
 
 export interface IDetailsViewProps {
     isAdmin: boolean;
+    isBootstrapUser: boolean;
     user: IUser;
     mode: ListMode;
     onChange?: (user: IUser, isAdmin: boolean) => void;
 }
 
-export const UserDetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin, mode, onChange }) => {
+export const UserDetailsView: React.FC<IDetailsViewProps> = ({
+    user,
+    isAdmin,
+    isBootstrapUser,
+    mode,
+    onChange,
+}) => {
     const intl = useIntl();
 
     if (!user) {
@@ -56,6 +63,7 @@ export const UserDetailsView: React.FC<IDetailsViewProps> = ({ user, isAdmin, mo
                             : intl.formatMessage(userManagementMessages.userIsRegularUser))}
                     {mode === "EDIT" && (
                         <OrganizationMemberDropdown
+                            isDisabled={isBootstrapUser}
                             isAdmin={isAdmin}
                             onChange={(isAdminNow) => onChange(user, isAdminNow)}
                         />
