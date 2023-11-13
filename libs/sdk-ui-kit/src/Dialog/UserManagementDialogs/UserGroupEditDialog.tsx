@@ -104,6 +104,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     }, [intl, selectedTabId]);
 
     const isLoaded = userGroup !== undefined && grantedWorkspaces !== undefined && grantedUsers !== null;
+    const isOpenedInEditMode = initialView !== "VIEW";
 
     return (
         <OrganizationIdProvider organizationId={organizationId}>
@@ -169,8 +170,9 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             ids={[userGroupId]}
                             subjectType="userGroup"
                             grantedWorkspaces={grantedWorkspaces}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onWorkspacesChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
@@ -178,16 +180,18 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                         <AddUser
                             userGroupIds={[userGroupId]}
                             grantedUsers={grantedUsers}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onUsersChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
                     {dialogMode === "DETAIL" && (
                         <EditUserGroupDetails
                             userGroup={userGroup}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onUserGroupDetailsChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}

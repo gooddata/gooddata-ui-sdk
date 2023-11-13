@@ -41,6 +41,7 @@ export interface IUserEditDialogProps {
     organizationId: string;
     isAdmin: boolean;
     initialView?: UserEditDialogMode;
+    changeUserMembership?: boolean;
     onSuccess: () => void;
     onClose: () => void;
 }
@@ -55,6 +56,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
     onSuccess,
     onClose,
     initialView = "VIEW",
+    changeUserMembership = false,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -109,6 +111,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
     }, [intl, selectedTabId]);
 
     const isLoaded = user !== undefined && grantedWorkspaces !== null && grantedUserGroups !== null;
+    const isOpenedInEditMode = initialView !== "VIEW";
 
     return (
         <OrganizationIdProvider organizationId={organizationId}>
@@ -181,8 +184,9 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                             ids={[userId]}
                             subjectType="user"
                             grantedWorkspaces={grantedWorkspaces}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onWorkspacesChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
@@ -190,8 +194,9 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <AddUserGroup
                             userIds={[userId]}
                             grantedUserGroups={grantedUserGroups}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onUserGroupsChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
@@ -199,8 +204,10 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <EditUserDetails
                             user={user}
                             isAdmin={isCurrentlyAdmin}
+                            enableBackButton={!isOpenedInEditMode}
+                            changeUserMembership={changeUserMembership}
                             onSubmit={onUserDetailsChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
