@@ -89,7 +89,7 @@ The GoodData platform, GoodData Cloud and GoodData.CN all implement a concept of
 and is linked to the data source that contains data conforming to this LDM.
 
 The workspace LDM consists of datasets that are composed of facts and attributes. Additionally, the workspace may define
-complex measures using the powerful **Multi-Dimensional Analytical Query Language** ([MAQL](https://www.gooddata.com/developers/cloud-native/doc/cloud/create-metrics/maql/)). These complex measures work on top
+complex measures using the powerful **Multi-Dimensional Analytical Query Language** ([MAQL](https://www.gooddata.com/docs/cloud/create-metrics/maql/)). These complex measures work on top
 of the facts and attributes in your LDM.
 
 The LDM and complex MAQL measures essentially form a semantic layer on top of your data. This semantic layer hides a

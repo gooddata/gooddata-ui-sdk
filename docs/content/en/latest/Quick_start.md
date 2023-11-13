@@ -176,7 +176,7 @@ Read more about the [theming](../learn/apply_theming/) and check out [an example
 
 ### Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers
 
-By default, GoodData React SDK is connecting to [the same demo data](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/connect-data/#example-database)
+By default, GoodData React SDK is connecting to [the same demo data](https://www.gooddata.com/docs/cloud/getting-started/connect-data/#example-database)
 as you would get in your GoodData Cloud or GoodData.CN trial account.
 
 Here are a few steps on how to connect to
@@ -189,7 +189,7 @@ your own data:
     +    "hostname": "https://<your-gooddata-instance-host>",
     +    "workspaceId": "<your-workspace-id>",
     ```
-2. Generate an [API Token](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/create-api-token/)and add it to the `.env` file:
+2. Generate an [API Token](https://www.gooddata.com/docs/cloud/getting-started/create-api-token/)and add it to the `.env` file:
     ```
     TIGER_API_TOKEN=<your_api_token>
     ```
