@@ -62,7 +62,13 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
                 grantedWorkspaces={grantedWorkspaces}
                 onSelectWorkspace={onSelect}
             />
-            <WorkspaceList mode="EDIT" workspaces={addedWorkspaces} onDelete={onDelete} onChange={onChange} />
+            <WorkspaceList
+                subjectType={subjectType}
+                mode="EDIT"
+                workspaces={addedWorkspaces}
+                onDelete={onDelete}
+                onChange={onChange}
+            />
         </ConfirmDialogBase>
     );
 };

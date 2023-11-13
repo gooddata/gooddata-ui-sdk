@@ -14,8 +14,7 @@ export const WorkspaceListEmpty: React.FC<IWorkspaceListEmptyProps> = ({ mode })
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-user-management-empty-selection gd-user-management-dialog-list-empty">
             <span>
-                {mode === "VIEW" &&
-                    intl.formatMessage(userManagementMessages.viewWorkspaceListEmpty, { br: <br /> })}
+                {mode === "VIEW" && intl.formatMessage(userManagementMessages.viewWorkspaceListEmpty)}
                 {mode === "EDIT" && intl.formatMessage(userManagementMessages.editWorkspaceListEmpty)}
             </span>
         </div>

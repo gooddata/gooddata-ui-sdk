@@ -9,14 +9,16 @@ import { Overlay } from "../../../../Overlay/index.js";
 import { IAlignPoint } from "../../../../typings/positioning.js";
 import {
     userManagementWorkspacePermissionMessages,
-    userManagementWorkspacePermissionTooltipMessages,
+    userGroupWorkspacePermissionTooltipMessages,
+    userWorkspacePermissionTooltipMessages,
 } from "../../../../locales.js";
-import { IPermissionsItem, WorkspacePermission } from "../../types.js";
+import { IPermissionsItem, WorkspacePermission, WorkspacePermissionSubject } from "../../types.js";
 
 import { PermissionDropdownItem } from "./PermissionDropdownItem.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
+    subjectType: WorkspacePermissionSubject;
     selectedPermission: WorkspacePermission;
     items: IPermissionsItem[];
     isShowDropdown: boolean;
@@ -46,6 +48,7 @@ const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ dis
 
 export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyProps> = ({
     items,
+    subjectType,
     alignTo,
     isShowDropdown,
     selectedPermission,
@@ -53,6 +56,11 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
     onSelect,
     onDelete,
 }) => {
+    const tooltipSource =
+        subjectType === "user"
+            ? userWorkspacePermissionTooltipMessages
+            : userGroupWorkspacePermissionTooltipMessages;
+
     const handleOnSelect = useCallback(
         (permission: WorkspacePermission) => {
             onSelect(permission);
@@ -90,9 +98,7 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
                             selectedPermission={selectedPermission}
                             toggleDropdown={toggleDropdown}
                             onSelect={handleOnSelect}
-                            bubbleTextId={
-                                userManagementWorkspacePermissionTooltipMessages[permissionItem.id].id
-                            }
+                            bubbleTextId={tooltipSource[permissionItem.id].id}
                         />
                     );
                 })}

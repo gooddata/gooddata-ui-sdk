@@ -2,19 +2,26 @@
 import React, { useMemo } from "react";
 
 import { sortByName } from "../utils.js";
-import { IGrantedWorkspace, ListMode } from "../types.js";
+import { IGrantedWorkspace, ListMode, WorkspacePermissionSubject } from "../types.js";
 
 import { WorkspaceItem } from "./WorkspaceItem/WorkspaceItem.js";
 import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";
 
 export interface IWorkspaceListProps {
     workspaces: IGrantedWorkspace[];
+    subjectType: WorkspacePermissionSubject;
     mode: ListMode;
     onDelete: (workspace: IGrantedWorkspace) => void;
     onChange?: (workspace: IGrantedWorkspace) => void;
 }
 
-export const WorkspaceList: React.FC<IWorkspaceListProps> = ({ workspaces, mode, onChange, onDelete }) => {
+export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
+    workspaces,
+    subjectType,
+    mode,
+    onChange,
+    onDelete,
+}) => {
     const sortedWorkspaces = useMemo(() => {
         return workspaces ? [...workspaces].sort(sortByName) : [];
     }, [workspaces]);
@@ -30,6 +37,7 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({ workspaces, mode,
                     <WorkspaceItem
                         key={workspace.id}
                         workspace={workspace}
+                        subjectType={subjectType}
                         onChange={onChange}
                         onDelete={onDelete}
                     />

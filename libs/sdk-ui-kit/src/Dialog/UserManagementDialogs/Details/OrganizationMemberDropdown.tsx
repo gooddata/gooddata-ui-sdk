@@ -15,11 +15,13 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 export interface IOrganizationMemberDropdownProps {
     isAdmin: boolean;
+    isDisabled: boolean;
     onChange: (isAdmin: boolean) => void;
 }
 
 export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownProps> = ({
     isAdmin,
+    isDisabled,
     onChange,
 }) => {
     const intl = useIntl();
@@ -100,12 +102,13 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
             <DropdownButton
                 value={selectedValue}
                 isOpen={isOpen}
+                disabled={isDisabled}
                 onClick={openDropdown}
                 isSmall={false}
                 className="gd-user-management-dialog-detail-organization-membership gd-user-management-dialog-detail-input s-user-management-permission-dropdown"
             />
         ),
-        [selectedValue],
+        [selectedValue, isDisabled],
     );
 
     return <Dropdown renderBody={renderDropdownBody} renderButton={renderDropdownButton} />;

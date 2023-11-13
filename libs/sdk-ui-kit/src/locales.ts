@@ -59,12 +59,20 @@ export const userManagementWorkspacePermissionMessages = defineMessages({
     remove: { id: "userManagement.workspace.permission.remove" },
 });
 
-export const userManagementWorkspacePermissionTooltipMessages = defineMessages({
-    VIEW: { id: "userManagement.workspace.permission.view.tooltip" },
-    VIEW_AND_EXPORT: { id: "userManagement.workspace.permission.viewExport.tooltip" },
-    ANALYZE: { id: "userManagement.workspace.permission.analyze.tooltip" },
-    ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permission.analyzeExport.tooltip" },
-    MANAGE: { id: "userManagement.workspace.permission.manage.tooltip" },
+export const userWorkspacePermissionTooltipMessages = defineMessages({
+    VIEW: { id: "userManagement.workspace.permissionUser.view.tooltip" },
+    VIEW_AND_EXPORT: { id: "userManagement.permissionUser.permission.viewExport.tooltip" },
+    ANALYZE: { id: "userManagement.workspace.permissionUser.analyze.tooltip" },
+    ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permissionUser.analyzeExport.tooltip" },
+    MANAGE: { id: "userManagement.workspace.permissionUser.manage.tooltip" },
+});
+
+export const userGroupWorkspacePermissionTooltipMessages = defineMessages({
+    VIEW: { id: "userManagement.workspace.permissionGroup.view.tooltip" },
+    VIEW_AND_EXPORT: { id: "userManagement.workspace.permissionGroup.viewExport.tooltip" },
+    ANALYZE: { id: "userManagement.workspace.permissionGroup.analyze.tooltip" },
+    ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permissionGroup.analyzeExport.tooltip" },
+    MANAGE: { id: "userManagement.workspace.permissionGroup.manage.tooltip" },
 });
 
 export const userDialogTabsMessageLabels = defineMessages({
@@ -184,6 +192,7 @@ export const userManagementMessages = defineMessages({
     removeSavedUserGroupTooltip: { id: "userManagement.userGroups.removeTooltip" },
     removeUnsavedUserGroupTooltip: { id: "userManagement.userGroups.removeUserGroupFromSelection" },
     adminAlert: { id: "userManagement.admin.alert" },
+    adminGroupAlert: { id: "userManagement.adminGroup.alert" },
     adminPill: { id: "userManagement.admin.pill" },
 });
 

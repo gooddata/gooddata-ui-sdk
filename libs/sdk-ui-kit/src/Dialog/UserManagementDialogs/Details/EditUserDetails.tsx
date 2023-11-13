@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { IUser } from "@gooddata/sdk-model";
 
 import { BackButton } from "../../BackButton.js";
@@ -14,7 +14,10 @@ import { userManagementMessages } from "../../../locales.js";
 
 export interface IEditUserDetailsProps {
     isAdmin: boolean;
+    isBootstrapUser: boolean;
     user: IUser;
+    enableBackButton?: boolean;
+    changeUserMembership?: boolean;
     onSubmit: (user: IUser, isAdmin: boolean) => void;
     onCancel: () => void;
     onClose: () => void;
@@ -22,7 +25,10 @@ export interface IEditUserDetailsProps {
 
 export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
     user,
+    isBootstrapUser,
     isAdmin,
+    enableBackButton,
+    changeUserMembership,
     onSubmit,
     onCancel,
     onClose,
@@ -34,6 +40,14 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
         onSubmit,
         onCancel,
     );
+
+    // change user membership if dialog was opened for that reason, enable Save button, do it just once
+    useEffect(() => {
+        if (changeUserMembership) {
+            onChange(updatedUser, !isUpdatedAdmin);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onCancel} className="s-user-management-navigate-back" />;
@@ -51,9 +65,15 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
             onCancel={onCancel}
             onSubmit={onSave}
             onClose={onClose}
-            headerLeftButtonRenderer={backButtonRenderer}
+            headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
-            <UserDetailsView user={updatedUser} isAdmin={isUpdatedAdmin} mode="EDIT" onChange={onChange} />
+            <UserDetailsView
+                user={updatedUser}
+                isAdmin={isUpdatedAdmin}
+                isBootstrapUser={isBootstrapUser}
+                mode="EDIT"
+                onChange={onChange}
+            />
         </ConfirmDialogBase>
     );
 };

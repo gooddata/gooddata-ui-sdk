@@ -104,15 +104,14 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
     }, [intl, selectedTabId]);
 
     const isLoaded = userGroup !== undefined && grantedWorkspaces !== undefined && grantedUsers !== null;
+    const isOpenedInEditMode = initialView !== "VIEW";
 
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             {isConfirmDeleteOpened ? (
                 <DeleteConfirmDialog
                     titleText={extractUserGroupName(userGroup)}
-                    bodyText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmBody, {
-                        br: <br />,
-                    })}
+                    bodyText={intl.formatMessage(userManagementMessages.deleteUserGroupConfirmBody)}
                     onConfirm={deleteUserGroup}
                     onCancel={onCloseDeleteDialog}
                 />
@@ -142,6 +141,13 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             editButtonText={editButtonText}
                             editButtonIconClassName={editButtonIconClassName}
                         >
+                            {isAdmin ? (
+                                <div className="gd-message progress gd-user-management-admin-alert s-admin-message">
+                                    <div className="gd-message-text">
+                                        {intl.formatMessage(userManagementMessages.adminGroupAlert)}
+                                    </div>
+                                </div>
+                            ) : null}
                             <Tabs
                                 selectedTabId={selectedTabId.id}
                                 onTabSelect={setSelectedTabId}
@@ -151,6 +157,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             {selectedTabId.id === userGroupDialogTabsMessageLabels.workspaces.id && (
                                 <WorkspaceList
                                     workspaces={grantedWorkspaces}
+                                    subjectType="userGroup"
                                     mode="VIEW"
                                     onDelete={removeGrantedWorkspace}
                                     onChange={updateGrantedWorkspace}
@@ -169,8 +176,9 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                             ids={[userGroupId]}
                             subjectType="userGroup"
                             grantedWorkspaces={grantedWorkspaces}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onWorkspacesChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
@@ -178,16 +186,18 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                         <AddUser
                             userGroupIds={[userGroupId]}
                             grantedUsers={grantedUsers}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onUsersChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}
                     {dialogMode === "DETAIL" && (
                         <EditUserGroupDetails
                             userGroup={userGroup}
+                            enableBackButton={!isOpenedInEditMode}
                             onSubmit={onUserGroupDetailsChanged}
-                            onCancel={() => setDialogMode("VIEW")}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
                         />
                     )}

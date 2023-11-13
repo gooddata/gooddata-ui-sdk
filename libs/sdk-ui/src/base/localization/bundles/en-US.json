@@ -2104,7 +2104,7 @@
         "limit": 0
     },
     "userManagement.workspace.emptySelection.view": {
-        "value": "This user does not have any workspaces.{br}Add one now.",
+        "value": "This user does not have permissions for any workspaces or data sources.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
     },
@@ -2115,7 +2115,7 @@
     },
     "userManagement.workspace.title": {
         "value": "Add workspace permission",
-        "comment": "Title of dialog used for granting workspace permission to users or user groups.",
+        "comment": "Title of dialog used for granting workspace permission to users or groups.",
         "limit": 0
     },
     "userManagement.workspace.addButton": {
@@ -2164,7 +2164,7 @@
         "limit": 0
     },
     "userManagement.buttons.addUser": {
-        "value": "Add user",
+        "value": "Add members",
         "comment": "",
         "limit": 0
     },
@@ -2179,7 +2179,7 @@
         "limit": 0
     },
     "userManagement.userGroups.deleteLink": {
-        "value": "Delete user group",
+        "value": "Delete group",
         "comment": "",
         "limit": 0
     },
@@ -2189,62 +2189,62 @@
         "limit": 0
     },
     "userManagement.workspace.removeSuccess": {
-        "value": "Great! We deleted the permission!",
+        "value": "Great! You have successfully deleted the permission.",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.removeError": {
-        "value": "Deletion of the permission failed!",
+        "value": "Deletion of the permission failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.addSuccess": {
-        "value": "Great! We added the permission(s)!",
+        "value": "Great! You have successfully added the permission(s).",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.addError": {
-        "value": "Addition of the permission(s) failed!",
+        "value": "Addition of the permission(s) failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addSuccess": {
-        "value": "Addition of the permission to the users failed!",
+        "value": "Great! You have successfully added permissions to the users.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the users failed!",
+        "value": "Addition of the permission to the users failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addSuccess": {
-        "value": "Addition of the permission to the groups failed!",
+        "value": "Great! You have successfully added permissions to the groups.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the groups failed!",
+        "value": "Addition of the permission to the groups failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.changeSuccess": {
-        "value": "Great! We changed the permission(s)!",
+        "value": "Great! You have successfully changed the permission(s).",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.changeError": {
-        "value": "Change of the permission(s) failed!",
+        "value": "Change of the permission(s) failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.yes": {
-        "value": "Hierarchy bellow",
+        "value": "Include sub-hierarchy",
         "comment": "",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.yes.tooltip": {
-        "value": "Apply permission also to all child workspaces of this workspace.",
+        "value": "Apply the permission to this workspace and all its child workspaces.",
         "comment": "",
         "limit": 0
     },
@@ -2254,7 +2254,7 @@
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.no.tooltip": {
-        "value": "Apply permission only on this workspace.",
+        "value": "Apply the permission only to this workspace.",
         "comment": "",
         "limit": 0
     },
@@ -2263,8 +2263,13 @@
         "comment": "",
         "limit": 0
     },
-    "userManagement.workspace.permission.view.tooltip": {
-        "value": "Allow to view the objects in the workspace.",
+    "userManagement.workspace.permissionUser.view.tooltip": {
+        "value": "The user can view dashboards that have been shared with them.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permissionGroup.view.tooltip": {
+        "value": "The group members can view dashboards that have been shared with the group.",
         "comment": "",
         "limit": 0
     },
@@ -2273,8 +2278,13 @@
         "comment": "",
         "limit": 0
     },
-    "userManagement.workspace.permission.viewExport.tooltip": {
-        "value": "Allow to view and export the objects from the workspace.",
+    "userManagement.workspace.permissionUser.viewExport.tooltip": {
+        "value": "Covers the View permission. Additionally, the user can export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permissionGroup.viewExport.tooltip": {
+        "value": "Covers the View permission. Additionally, the  group members can export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
         "comment": "",
         "limit": 0
     },
@@ -2283,8 +2293,13 @@
         "comment": "",
         "limit": 0
     },
-    "userManagement.workspace.permission.analyze.tooltip": {
-        "value": "Allow to analyze the objects in the workspace.",
+    "userManagement.workspace.permissionUser.analyze.tooltip": {
+        "value": "Covers the View permission. Additionally, the user can create, edit or delete dashboards and visualizations, and view the LDM and metrics.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permissionGroup.analyze.tooltip": {
+        "value": "Covers the View permission. Additionally, the  group members can create, edit or delete dashboards and visualizations, and view the LDM and metrics.",
         "comment": "",
         "limit": 0
     },
@@ -2293,8 +2308,13 @@
         "comment": "",
         "limit": 0
     },
-    "userManagement.workspace.permission.analyzeExport.tooltip": {
-        "value": "Allow to analyze and export the objects from the workspace.",
+    "userManagement.workspace.permissionUser.analyzeExport.tooltip": {
+        "value": "Covers the Analyze permission. Additionally, the user can create, edit or delete dashboards and visualizations, and view the LDM and metrics. They can also export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permissionGroup.analyzeExport.tooltip": {
+        "value": "Covers the Analyze permission. Additionally, the  group members can create, edit or delete dashboards and visualizations, and view the LDM and metrics. They can also export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
         "comment": "",
         "limit": 0
     },
@@ -2303,8 +2323,13 @@
         "comment": "",
         "limit": 0
     },
-    "userManagement.workspace.permission.manage.tooltip": {
-        "value": "Allow to manage the objects in the workspace.",
+    "userManagement.workspace.permissionUser.manage.tooltip": {
+        "value": "Covers the View, Analyze, and Export permissions. Additionally, the user can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.workspace.permissionGroup.manage.tooltip": {
+        "value": "Covers the View, Analyze, and Export permissions. Additionally, the group members can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
         "comment": "",
         "limit": 0
     },
@@ -2374,7 +2399,7 @@
         "limit": 0
     },
     "userManagement.userGroups.emptySelection.view": {
-        "value": "This user does not belong to any group.{br}Add him to a group now.",
+        "value": "This user is not a member of any groups.",
         "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
         "limit": 0
     },
@@ -2404,42 +2429,42 @@
         "limit": 0
     },
     "userManagement.userDetails.updatedSuccess": {
-        "value": "Great! We changed the user details!",
+        "value": "Great! You have successfully changed the user details.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userDetails.updatedFailure": {
-        "value": "Change of the user details failed!",
+        "value": "Change of the user details failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.groupDetails.updatedSuccess": {
-        "value": "Great! We changed the user group details!",
+        "value": "Great! You have successfully changed the group details.",
         "comment": "",
         "limit": 0
     },
     "userManagement.groupDetails.updatedFailure": {
-        "value": "Change of the user details group failed!",
+        "value": "Change of the user details group failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroup.addSuccess": {
-        "value": "Great! We added the group(s)!",
+        "value": "Great! You have successfully added the group(s).",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroup.addError": {
-        "value": "Addition of the group(s) failed!",
+        "value": "Addition of the group(s) failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUserGroup.addSuccess": {
-        "value": "Great! We added users to the group!",
+        "value": "Great! You have successfully added users to the group.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUserGroup.addError": {
-        "value": "Addition of the users to groups failed!",
+        "value": "Addition of the users to groups failed.",
         "comment": "",
         "limit": 0
     },
@@ -2464,12 +2489,12 @@
         "limit": 0
     },
     "userManagement.userGroups.removeSuccess": {
-        "value": "Great! We deleted the group!",
+        "value": "Great! You have successfully deleted the group.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.removeFailure": {
-        "value": "Deletion of the group failed!",
+        "value": "Deletion of the group failed.",
         "comment": "",
         "limit": 0
     },
@@ -2484,7 +2509,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.user.body": {
-        "value": "User will be permanently and irreversibly deleted.{br}Their insights and dashboards will not be deleted.",
+        "value": "The user will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
         "comment": "",
         "limit": 0
     },
@@ -2519,7 +2544,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.group.body": {
-        "value": "User group will be permanently and irreversibly deleted.{br}Their users will not be deleted.",
+        "value": "The group will be irreversibly deleted. All its members will lose the rights defined by the group's permissions.",
         "comment": "",
         "limit": 0
     },
@@ -2529,7 +2554,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.multipleGroups.body": {
-        "value": "<b>{count} groups</b> will be permanently and irreversibly deleted.{br}All users in groups will loose access define by group permission.",
+        "value": "<b>{count} groups</b> will be irreversibly deleted. All their members will lose the rights defined by the group-specific permissions.",
         "comment": "",
         "limit": 0
     },
@@ -2544,52 +2569,52 @@
         "limit": 0
     },
     "userManagement.userGroups.deleteSuccess": {
-        "value": "Great! We deleted the user group!",
+        "value": "Great! You have successfully deleted the group.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.deleteFailure": {
-        "value": "Deletion of the user group failed!",
+        "value": "Deletion of the group failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUserGroups.deleteSuccess": {
-        "value": "Great! We deleted the user groups!",
+        "value": "Great! You have successfully deleted the groups.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUserGroups.deleteFailure": {
-        "value": "Deletion of the user groups failed!",
+        "value": "Deletion of the groups failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.createUserGroup.createSuccess": {
-        "value": "Great! We created the user group!",
+        "value": "Great! You have successfully created the group.",
         "comment": "",
         "limit": 0
     },
     "userManagement.createUserGroup.createFailure": {
-        "value": "Creation of the user group failed!",
+        "value": "Creation of the group failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.deleteSuccess": {
-        "value": "Great! We deleted the user!",
+        "value": "Great! You have successfully deleted the user.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.deleteFailure": {
-        "value": "Deletion of the user failed!",
+        "value": "Deletion of the user failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUsers.deleteSuccess": {
-        "value": "Great! We deleted the users!",
+        "value": "Great! You have successfully deleted the users.",
         "comment": "",
         "limit": 0
     },
     "userManagement.multipleUsers.deleteFailure": {
-        "value": "Deletion of the users failed!",
+        "value": "Deletion of the users failed.",
         "comment": "",
         "limit": 0
     },
@@ -2599,7 +2624,7 @@
         "limit": 0
     },
     "userManagement.users.emptySelection.view": {
-        "value": "This group does not have any member.{br}Add one now.",
+        "value": "This group does not have any members.",
         "comment": "",
         "limit": 0
     },
@@ -2614,12 +2639,12 @@
         "limit": 0
     },
     "userManagement.users.removeUserFromSelection": {
-        "value": "Remove from selection.",
+        "value": "Remove.",
         "comment": "",
         "limit": 0
     },
     "userManagement.userGroups.removeUserGroupFromSelection": {
-        "value": "Remove from selection.",
+        "value": "Remove.",
         "comment": "",
         "limit": 0
     },
@@ -2649,32 +2674,32 @@
         "limit": 0
     },
     "userManagement.users.addSuccess": {
-        "value": "Great! We added the user(s)!",
+        "value": "Great! You have successfully added the user(s).",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.addFailure": {
-        "value": "Addition of the user(s) failed!",
+        "value": "Addition of the user(s) failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.addToUserGroupsSuccess": {
-        "value": "Great! We added users to the groups!",
+        "value": "Great! You have successfully added users to the groups.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.addToUserGroupsFailure": {
-        "value": "Addition of the users to groups failed!",
+        "value": "Addition of the users to groups failed.",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.removeSuccess": {
-        "value": "Great! We removed the user(s)!",
+        "value": "Great! You have successfully removed the user(s).",
         "comment": "",
         "limit": 0
     },
     "userManagement.users.removeFailure": {
-        "value": "Removal of the user(s) failed!",
+        "value": "Removal of the user(s) failed.",
         "comment": "",
         "limit": 0
     },
@@ -2684,7 +2709,12 @@
         "limit": 0
     },
     "userManagement.admin.alert": {
-        "value": "Administrators have full access to any workspace.",
+        "value": "Admins have full access to all workspaces, resources, and actions.",
+        "comment": "",
+        "limit": 0
+    },
+    "userManagement.adminGroup.alert": {
+        "value": "Members have full access to all workspaces, resources, and actions.",
         "comment": "",
         "limit": 0
     },
@@ -2704,7 +2734,7 @@
         "limit": 0
     },
     "userManagement.createUserGroup.dialogTitle": {
-        "value": "Create user group",
+        "value": "Create group",
         "comment": "",
         "limit": 0
     },

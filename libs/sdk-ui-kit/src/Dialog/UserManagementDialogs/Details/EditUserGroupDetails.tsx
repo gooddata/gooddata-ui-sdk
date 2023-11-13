@@ -14,6 +14,7 @@ import { userManagementMessages } from "../../../locales.js";
 
 export interface IEditUserGroupDetailsProps {
     userGroup: IUserGroup;
+    enableBackButton?: boolean;
     onSubmit: (userGroup: IUserGroup) => void;
     onCancel: () => void;
     onClose: () => void;
@@ -21,6 +22,7 @@ export interface IEditUserGroupDetailsProps {
 
 export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
     userGroup,
+    enableBackButton,
     onSubmit,
     onCancel,
     onClose,
@@ -48,7 +50,7 @@ export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
             onCancel={onCancel}
             onSubmit={onSave}
             onClose={onClose}
-            headerLeftButtonRenderer={backButtonRenderer}
+            headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
         >
             <UserGroupDetailsView userGroup={updatedUserGroup} mode="EDIT" onChange={onChange} />
         </ConfirmDialogBase>

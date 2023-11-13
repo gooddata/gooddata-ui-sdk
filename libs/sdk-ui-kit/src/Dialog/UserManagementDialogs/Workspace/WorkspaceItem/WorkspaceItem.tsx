@@ -4,7 +4,7 @@ import React from "react";
 import cx from "classnames";
 
 import { WorkspaceIcon } from "../../../ShareDialog/ShareDialogBase/GranteeIcons.js";
-import { IGrantedWorkspace } from "../../types.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
 
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
@@ -12,12 +12,14 @@ import { HierarchicalPermissionsDropdown } from "./HierarchicalPermissionsDropdo
 
 interface IGranularGranteeUserGroupItemProps {
     workspace: IGrantedWorkspace;
+    subjectType: WorkspacePermissionSubject;
     onChange: (grantee: IGrantedWorkspace) => void;
     onDelete: (grantee: IGrantedWorkspace) => void;
 }
 
 export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
     workspace,
+    subjectType,
     onChange,
     onDelete,
 }) => {
@@ -40,6 +42,7 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
             />
             <PermissionsDropdown
                 workspace={workspace}
+                subjectType={subjectType}
                 isDropdownOpen={isDropdownOpen}
                 toggleDropdown={toggleDropdown}
                 onChange={onChange}

@@ -10,7 +10,7 @@ import { useToastMessage } from "../../Messages/index.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 
 /**
- * @alpha
+ * @internal
  */
 export interface IDeleteUsersDialogProps {
     userIds: string[];
@@ -20,7 +20,7 @@ export interface IDeleteUsersDialogProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
     userIds,
