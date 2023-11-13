@@ -36,6 +36,8 @@ import {
     IOrganizationStylingService,
     IOrganizationSettingsService,
     IEntitlements,
+    IOrganizationPermissionService,
+    IOrganizationUserService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -354,6 +356,31 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+            };
+        },
+        permissions(): IOrganizationPermissionService {
+            return {
+                getWorkspacePermissionsForUser: () => Promise.resolve([]),
+                getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
+                updateOrganizationPermissions: () => Promise.resolve(),
+                updateWorkspacePermissions: () => Promise.resolve(),
+            };
+        },
+        users(): IOrganizationUserService {
+            return {
+                addUsersToUserGroups: () => Promise.resolve(),
+                createUserGroup: () => Promise.resolve(),
+                deleteUsers: () => Promise.resolve(),
+                deleteUserGroups: () => Promise.resolve(),
+                getUser: () => Promise.resolve(undefined),
+                getUserGroup: () => Promise.resolve(undefined),
+                getUserGroups: () => Promise.resolve([]),
+                getUserGroupsOfUser: () => Promise.resolve([]),
+                getUsersOfUserGroup: () => Promise.resolve([]),
+                getUsers: () => Promise.resolve([]),
+                removeUsersFromUserGroups: () => Promise.resolve(),
+                updateUser: () => Promise.resolve(),
+                updateUserGroup: () => Promise.resolve(),
             };
         },
     };

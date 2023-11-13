@@ -1,29 +1,13 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { Button } from "../../../Button/index.js";
+
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { BackButton } from "../../BackButton.js";
+import { ContentDivider } from "../../ContentDivider.js";
+
 import { AddGranteeContent } from "./AddGranteeContent.js";
-import { ContentDivider } from "./ContentDivider.js";
 import { IAddGranteeBaseProps } from "./types.js";
-
-interface IBackButtonProps {
-    onClick: () => void;
-}
-
-const BackButton: React.FC<IBackButtonProps> = (props) => {
-    const { onClick: onBackClick } = props;
-
-    return (
-        <Button
-            value={""}
-            className={
-                "gd-button-primary gd-button-icon-only gd-icon-navigateleft gd-share-dialog-header-back-button s-share-dialog-navigate-back"
-            }
-            onClick={onBackClick}
-        />
-    );
-};
 
 /**
  * @internal
@@ -51,7 +35,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
     } = sharedObject;
 
     const backButtonRenderer = useCallback(() => {
-        return <BackButton onClick={onBackClick} />;
+        return <BackButton onClick={onBackClick} className="s-share-dialog-navigate-back" />;
     }, [onBackClick]);
 
     return (

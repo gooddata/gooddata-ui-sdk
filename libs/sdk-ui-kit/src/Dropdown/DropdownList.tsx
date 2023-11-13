@@ -21,6 +21,7 @@ export interface IDropdownListNoDataRenderProps {
  * @internal
  */
 export interface IDropdownListProps<T> extends IListProps<T> {
+    title?: string;
     className?: string;
 
     height?: number;
@@ -80,6 +81,7 @@ const defaultNoData = injectIntl(
  */
 export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     const {
+        title,
         className = "",
 
         width,
@@ -136,6 +138,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
     return (
         <React.Fragment>
+            {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <Input
                     className={searchFieldClassNames}

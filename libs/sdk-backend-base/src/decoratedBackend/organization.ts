@@ -4,6 +4,8 @@ import {
     ISecuritySettingsService,
     IOrganizationStylingService,
     IOrganizationSettingsService,
+    IOrganizationUserService,
+    IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import { DecoratorFactories } from "./types.js";
@@ -19,8 +21,8 @@ export class OrganizationDecorator implements IOrganization {
         this.organizationId = decorated.organizationId;
     }
 
-    public getDescriptor(): Promise<IOrganizationDescriptor> {
-        return this.decorated.getDescriptor();
+    public getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor> {
+        return this.decorated.getDescriptor(includeAdditionalDetails);
     }
 
     public securitySettings(): ISecuritySettingsService {
@@ -39,5 +41,13 @@ export class OrganizationDecorator implements IOrganization {
 
     public settings(): IOrganizationSettingsService {
         return this.decorated.settings();
+    }
+
+    public users(): IOrganizationUserService {
+        return this.decorated.users();
+    }
+
+    public permissions(): IOrganizationPermissionService {
+        return this.decorated.permissions();
     }
 }

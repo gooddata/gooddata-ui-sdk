@@ -94,6 +94,9 @@ export class AutoSize extends Component<IAutoSizeProps> {
 }
 
 // @internal (undocumented)
+export const BackButton: React_2.FC<IBackButtonProps>;
+
+// @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     constructor(props: IBubbleProps);
     // (undocumented)
@@ -310,7 +313,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.VFC;
+export const ContentDivider: React_2.FC;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
@@ -570,6 +573,9 @@ export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
 
 // @internal (undocumented)
 export function formatTime(h: number, m: number, format?: string): string;
+
+// @internal (undocumented)
+export type FormatXMLElementFn<T, R = string | T | (string | T)[]> = (parts: Array<string | T>) => R;
 
 // @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
@@ -903,6 +909,14 @@ export interface IAvailableSortsGroup {
     itemId: LocalIdRef;
     // (undocumented)
     metricSorts?: MeasureSortSuggestion[];
+}
+
+// @internal (undocumented)
+export interface IBackButtonProps {
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    onClick: () => void;
 }
 
 // @internal
@@ -1471,6 +1485,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     showTabs?: boolean;
     // (undocumented)
     tabs?: ITab[];
+    // (undocumented)
+    title?: string;
     // (undocumented)
     width?: number;
 }
@@ -3809,6 +3825,8 @@ export interface ISyntaxHighlightingInputProps {
 export interface ITab {
     // (undocumented)
     id: string;
+    // (undocumented)
+    values?: Record<string, string | number | boolean | null | undefined | Date | FormatXMLElementFn<string, string>>;
 }
 
 // @internal (undocumented)

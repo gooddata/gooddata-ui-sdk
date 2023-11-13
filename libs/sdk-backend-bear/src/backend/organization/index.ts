@@ -7,6 +7,8 @@ import {
     IOrganizationStylingService,
     ISecuritySettingsService,
     NotSupported,
+    IOrganizationUserService,
+    IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 
@@ -48,6 +50,14 @@ export class BearOrganization implements IOrganization {
 
     public settings(): IOrganizationSettingsService {
         throw new NotSupported("Backend does not support organization settings service");
+    }
+
+    public users(): IOrganizationUserService {
+        throw new NotSupported("Backend does not support organization user service");
+    }
+
+    public permissions(): IOrganizationPermissionService {
+        throw new NotSupported("Backend does not support organization permission service");
     }
 }
 

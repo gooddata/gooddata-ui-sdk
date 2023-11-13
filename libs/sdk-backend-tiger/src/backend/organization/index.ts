@@ -6,13 +6,17 @@ import {
     IOrganizationSettingsService,
     IOrganizationStylingService,
     ISecuritySettingsService,
+    IOrganizationUserService,
+    IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor } from "@gooddata/sdk-model";
+import { IOrganizationDescriptor, idRef } from "@gooddata/sdk-model";
 
 import { SecuritySettingsService } from "./securitySettings.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { OrganizationStylingService } from "./styling.js";
 import { OrganizationSettingsService } from "./settings.js";
+import { OrganizationUsersService } from "./users.js";
+import { OrganizationPermissionService } from "./permissions.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -21,12 +25,36 @@ export class TigerOrganization implements IOrganization {
         public readonly organizationName?: string,
     ) {}
 
-    public async getDescriptor(): Promise<IOrganizationDescriptor> {
+    public async getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor> {
         // if we already have the data, no reason to download them again
-        if (this.organizationName) {
+        if (this.organizationName && !includeAdditionalDetails) {
             return {
                 id: this.organizationId,
                 title: this.organizationName,
+            };
+        }
+
+        if (includeAdditionalDetails) {
+            const result = await this.authCall((client) =>
+                client.entities.getEntityOrganizations({
+                    id: this.organizationId,
+                    // we are interested only in these for now (can be extended in future)
+                    include: ["bootstrapUser", "bootstrapUserGroup"],
+                }),
+            );
+
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            const organizationName = result.data.data.attributes?.name!;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            const bootstrapUser = result.data.data?.relationships?.bootstrapUser?.data!;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data!;
+
+            return {
+                id: this.organizationId,
+                title: organizationName,
+                bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
+                bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
             };
         }
 
@@ -49,6 +77,14 @@ export class TigerOrganization implements IOrganization {
 
     public settings(): IOrganizationSettingsService {
         return new OrganizationSettingsService(this.authCall);
+    }
+
+    public users(): IOrganizationUserService {
+        return new OrganizationUsersService(this.authCall);
+    }
+
+    public permissions(): IOrganizationPermissionService {
+        return new OrganizationPermissionService(this.authCall);
     }
 }
 
