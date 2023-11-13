@@ -64,11 +64,11 @@ This configuration is for the `catalog-export` tool, which exports all available
 export TIGER_API_TOKEN=<your-api-token>
 ```
 
-*Note: more info on how to get API token is in the [documentation](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/create-api-token/).*
+*Note: more info on how to get API token is in the [documentation](https://www.gooddata.com/docs/cloud/getting-started/create-api-token/).*
 
 ### Step 5: Configure CORS in GoodData
 
-If your Next.js application runs on a different domain than GoodData (which is the most probable scenario), you need to configure CORS. Basically, you need to go to `<your-gooddata-host>/settings` and add Cross-origin resource sharing (CORS). If your Next.js application runs on domain *https://super-cool-app.com*, you need to add *https://super-cool-app.com* to CORS. You can find more information in the [documentation](https://www.gooddata.com/developers/cloud-native/doc/cloud/manage-organization/set-up-cors-for-organization/).
+If your Next.js application runs on a different domain than GoodData (which is the most probable scenario), you need to configure CORS. Basically, you need to go to `<your-gooddata-host>/settings` and add Cross-origin resource sharing (CORS). If your Next.js application runs on domain *https://super-cool-app.com*, you need to add *https://super-cool-app.com* to CORS. You can find more information in the [documentation](https://www.gooddata.com/docs/cloud/manage-organization/set-up-cors-for-organization/).
 
 ### Step 6: Run catalog-export tool to export metrics and attributes
 
