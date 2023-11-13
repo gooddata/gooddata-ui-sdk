@@ -2312,6 +2312,8 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     nextPageItemPlaceholdersCount?: number;
     // (undocumented)
+    numberOfHiddenSelectedItems?: number;
+    // (undocumented)
     onLoadNextPage?: () => void;
     // (undocumented)
     onSearch?: (search: string) => void;
