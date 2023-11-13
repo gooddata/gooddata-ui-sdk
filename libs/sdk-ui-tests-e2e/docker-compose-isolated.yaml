@@ -43,7 +43,7 @@ services:
             - backend-mock
 
     backend-mock:
-        image: wiremock/wiremock:2.35.0
+        image: wiremock/wiremock:3.3.1
         # Use "--print-all-network-traffic --verbose" for verbose logging
         # Note that we need --preserve-host-header for BEAR backend only and it must be missing for TIGER (see run_isolated.sh)
         command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
