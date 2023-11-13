@@ -151,6 +151,11 @@ export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribu
  */
 export interface IDrill {
     /**
+     * The identifier of the drill
+     */
+    localIdentifier?: string;
+
+    /**
      * Drill type
      */
     type: DrillType;

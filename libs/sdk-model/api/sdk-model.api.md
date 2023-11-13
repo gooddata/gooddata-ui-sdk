@@ -1160,6 +1160,7 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @alpha
 export interface IDrill {
+    localIdentifier?: string;
     origin: DrillOrigin;
     transition: DrillTransition;
     type: DrillType;

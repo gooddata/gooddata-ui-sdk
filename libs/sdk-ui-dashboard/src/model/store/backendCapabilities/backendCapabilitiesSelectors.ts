@@ -132,3 +132,14 @@ export const selectSupportsCircularDependencyInFilters: DashboardSelector<boolea
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsCircularDependencyInFilters ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.allowMultipleInteractionsPerAttributeAndMeasure}
+ *
+ * @internal
+ */
+export const selectAllowMultipleInteractionsPerAttributeAndMeasure: DashboardSelector<boolean> =
+    createSelector(
+        selectBackendCapabilities,
+        (capabilities) => capabilities.allowMultipleInteractionsPerAttributeAndMeasure ?? false,
+    );

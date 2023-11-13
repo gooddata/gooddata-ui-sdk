@@ -5543,16 +5543,16 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
 }
 
 // @beta
-export function removeDrillsForInsightWidget(ref: ObjRef, origins: RemoveDrillsSelector, correlationId?: string): RemoveDrillsForInsightWidget;
+export function removeDrillsForInsightWidget(ref: ObjRef, localIdentifiers: RemoveDrillsSelector, correlationId?: string): RemoveDrillsForInsightWidget;
 
 // @beta
 export interface RemoveDrillsForInsightWidgetPayload {
-    readonly origins: RemoveDrillsSelector;
+    readonly localIdentifiers: RemoveDrillsSelector;
     readonly ref: ObjRef;
 }
 
 // @beta (undocumented)
-export type RemoveDrillsSelector = ObjRefInScope[] | "*";
+export type RemoveDrillsSelector = LocalIdRef[] | "*";
 
 // @beta (undocumented)
 export interface RemoveLayoutSection extends IDashboardCommand {
@@ -5910,6 +5910,9 @@ export const selectAllKpiWidgets: DashboardSelector<IKpiWidget[]>;
 
 // @internal
 export const selectAllowCreateInsightRequest: DashboardSelector<boolean>;
+
+// @internal
+export const selectAllowMultipleInteractionsPerAttributeAndMeasure: DashboardSelector<boolean>;
 
 // @internal
 export const selectAllowUnfinishedFeatures: DashboardSelector<boolean>;

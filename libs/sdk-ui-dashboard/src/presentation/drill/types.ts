@@ -137,6 +137,7 @@ export enum DRILL_TARGET_TYPE {
 export interface IDrillConfigItemBase {
     type: "measure" | "attribute";
     title: string;
+    originLocalIdentifier: string;
     localIdentifier: string;
     drillTargetType?: DRILL_TARGET_TYPE;
     complete: boolean;

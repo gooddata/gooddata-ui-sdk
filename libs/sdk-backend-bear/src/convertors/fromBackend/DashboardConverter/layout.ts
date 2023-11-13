@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-
+import isEmpty from "lodash/isEmpty.js";
 import {
     IFluidLayoutColSize,
     IFluidLayoutColumn,
@@ -25,8 +25,11 @@ import {
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
     ScreenSize,
+    isInsightWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-model";
 import { BearDashboardDependency } from "./types.js";
+import { generateDrillLocalIdentifier } from "./drills.js";
 
 // Default layout column size for the kpi widget, when generating implicit layout
 const KPI_SIZE = 2;
@@ -86,7 +89,7 @@ const convertLayoutItem = (
         return {
             type: "IDashboardLayoutItem",
             size: convertLayoutItemSize(column.size),
-            widget,
+            widget: prepareDrillLocalIdentifierIfMissing(widget),
         };
     } else if (isFluidLayout(content)) {
         return {
@@ -99,6 +102,20 @@ const convertLayoutItem = (
     return {
         type: "IDashboardLayoutItem",
         size: convertLayoutItemSize(column.size),
+    };
+};
+
+const prepareDrillLocalIdentifierIfMissing = (widget?: IDashboardWidget) => {
+    if (isEmpty(widget) || !isInsightWidget(widget)) {
+        return widget;
+    }
+
+    return {
+        ...widget,
+        drills: widget?.drills?.map((it) => ({
+            ...it,
+            localIdentifier: it.localIdentifier ?? generateDrillLocalIdentifier(),
+        })),
     };
 };
 

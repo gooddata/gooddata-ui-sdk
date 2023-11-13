@@ -33,6 +33,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     const { item } = props;
     const onInsightTargetSelect = (targetItem: IInsight) => {
         const drillConfigItem: IDrillToInsight = {
+            localIdentifier: item.localIdentifier,
             transition: "pop-up",
             origin: getOrigin(item),
             type: "drillToInsight",
@@ -44,6 +45,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     const onDashboardTargetSelect = (targetItem: IDrillableDashboardListItem) => {
         const dashboard = idRef(targetItem.identifier, "analyticalDashboard");
         const drillConfigItem: IDrillToDashboard = {
+            localIdentifier: item.localIdentifier,
             transition: "in-place",
             origin: getOrigin(item),
             type: "drillToDashboard",
@@ -55,6 +57,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     const onCustomUrlTargetSelect = (urlDrillTarget: UrlDrillTarget) => {
         if (isDrillToCustomUrlConfig(urlDrillTarget)) {
             const drillConfigItem: IDrillToCustomUrl = {
+                localIdentifier: item.localIdentifier,
                 transition: "new-window",
                 origin: getOrigin(item),
                 type: "drillToCustomUrl",
@@ -66,6 +69,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         }
         if (isDrillToAttributeUrlConfig(urlDrillTarget)) {
             const drillConfigItem: IDrillToAttributeUrl = {
+                localIdentifier: item.localIdentifier,
                 transition: "new-window",
                 origin: getOrigin(item),
                 type: "drillToAttributeUrl",
@@ -113,10 +117,10 @@ function getOrigin(item: IDrillConfigItem): DrillOrigin {
     return item.type === "attribute"
         ? {
               type: "drillFromAttribute",
-              attribute: { localIdentifier: item.localIdentifier },
+              attribute: { localIdentifier: item.originLocalIdentifier },
           }
         : {
               type: "drillFromMeasure",
-              measure: { localIdentifier: item.localIdentifier },
+              measure: { localIdentifier: item.originLocalIdentifier },
           };
 }

@@ -4,7 +4,7 @@ import {
     idRef,
     IInsight,
     ObjRef,
-    ObjRefInScope,
+    LocalIdRef,
     objRefToString,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
@@ -22,10 +22,10 @@ import {
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
+
 import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDrillOriginLocalIdentifier,
-    getLocalIdentifierOrDie,
 } from "../../../../_staging/drills/drillingUtils.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
@@ -70,10 +70,8 @@ export function existsDrillDefinitionInArray(
     drillDefinition: InsightDrillDefinition,
     drillDefinitionArray: InsightDrillDefinition[] = [],
 ): boolean {
-    const drillId = getDrillOriginLocalIdentifier(drillDefinition);
-
-    return drillDefinitionArray.some((x) => {
-        return drillId === getDrillOriginLocalIdentifier(x);
+    return drillDefinitionArray.some((it) => {
+        return it.localIdentifier === drillDefinition.localIdentifier;
     });
 }
 
@@ -81,20 +79,17 @@ export function getDrillDefinitionFromArray(
     drillDefinition: InsightDrillDefinition,
     drillDefinitionArray: InsightDrillDefinition[] = [],
 ): InsightDrillDefinition | undefined {
-    const drillId = getDrillOriginLocalIdentifier(drillDefinition);
-
-    return drillDefinitionArray.find((x) => {
-        return drillId === getDrillOriginLocalIdentifier(x);
+    return drillDefinitionArray.find((it) => {
+        return it.localIdentifier === drillDefinition.localIdentifier;
     });
 }
 
 export function validateDrillDefinitionByLocalIdentifier(
-    ref: ObjRefInScope,
+    ref: LocalIdRef,
     drillDefinitionArray: InsightDrillDefinition[] = [],
 ): InsightDrillDefinition {
-    const localIdentifier: string = getLocalIdentifierOrDie(ref);
     const result = drillDefinitionArray.find((item) => {
-        return localIdentifier === getDrillOriginLocalIdentifier(item);
+        return item.localIdentifier === ref.localIdentifier;
     });
 
     if (!result) {

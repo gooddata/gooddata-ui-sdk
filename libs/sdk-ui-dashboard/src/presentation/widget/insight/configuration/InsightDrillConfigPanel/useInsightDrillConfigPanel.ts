@@ -1,23 +1,25 @@
 // (C) 2022-2023 GoodData Corporation
-import { InsightDrillDefinition, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import { useCallback, useMemo } from "react";
 import { defineMessages } from "react-intl";
+import { invariant } from "ts-invariant";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { InsightDrillDefinition, isInsightWidget, localIdRef, ObjRef } from "@gooddata/sdk-model";
 
 import {
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
     selectDrillTargetsByWidgetRef,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
+    selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectSettings,
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
+    selectEnableAttributeHierarchies,
 } from "../../../../../model/index.js";
-import { invariant } from "ts-invariant";
 import { getMappedConfigForWidget } from "./drillConfigMapper.js";
 import { IDrillConfigItem } from "../../../../drill/types.js";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
 const messages = defineMessages({
@@ -48,13 +50,22 @@ const mergeDrillConfigItems = (
 const getUnusedDrillTargets = (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     mergedItems: IDrillConfigItem[],
+    allowMultipleInteractionsPerAttributeAndMeasure: boolean,
+    enableAttributeHierarchies: boolean,
 ) => {
+    if (allowMultipleInteractionsPerAttributeAndMeasure && enableAttributeHierarchies) {
+        return {
+            measures: availableDrillTargets?.measures,
+            attributes: availableDrillTargets?.attributes,
+        };
+    }
+
     const availableDrillTargetMeasures = availableDrillTargets?.measures?.filter(
         (measure) =>
             !mergedItems.some(
                 (item) =>
                     item.type === "measure" &&
-                    item.localIdentifier === measure.measure.measureHeaderItem.localIdentifier,
+                    item.originLocalIdentifier === measure.measure.measureHeaderItem.localIdentifier,
             ),
     );
     const availableDrillTargetAttributes = availableDrillTargets?.attributes?.filter(
@@ -62,7 +73,7 @@ const getUnusedDrillTargets = (
             !mergedItems.some(
                 (item) =>
                     item.type === "attribute" &&
-                    item.localIdentifier === attribute.attribute.attributeHeader.localIdentifier,
+                    item.originLocalIdentifier === attribute.attribute.attributeHeader.localIdentifier,
             ),
     );
 
@@ -95,6 +106,11 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const { addSuccess } = useToastMessage();
     const dispatch = useDashboardDispatch();
 
+    const enableAttributeHierarchies = useDashboardSelector(selectEnableAttributeHierarchies);
+    const allowMultipleInteractionsPerAttributeAndMeasure = useDashboardSelector(
+        selectAllowMultipleInteractionsPerAttributeAndMeasure,
+    );
+
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const invalidCustomUrlDrillLocalIds = useDashboardSelector(
         selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef(widgetRef),
@@ -116,8 +132,19 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     );
 
     const originSelectorItems = useMemo(
-        () => getUnusedDrillTargets(availableDrillTargets, mergedItems),
-        [availableDrillTargets, mergedItems],
+        () =>
+            getUnusedDrillTargets(
+                availableDrillTargets,
+                mergedItems,
+                allowMultipleInteractionsPerAttributeAndMeasure,
+                enableAttributeHierarchies,
+            ),
+        [
+            availableDrillTargets,
+            mergedItems,
+            allowMultipleInteractionsPerAttributeAndMeasure,
+            enableAttributeHierarchies,
+        ],
     );
 
     const onSetupItem = useCallback(
@@ -137,7 +164,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const onDeleteItem = useCallback(
         (item: IDrillConfigItem) => {
             if (item.complete) {
-                dispatch(removeDrillsForInsightWidget(widgetRef, [item]));
+                dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
             }
             deleteIncompleteItem(item);
         },

@@ -1,4 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
+import { v4 as uuidv4 } from "uuid";
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
@@ -83,7 +84,9 @@ function getConvertedAnalyticalDashboardContent(
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
         layout: convertDrillToCustomUrlInLayoutFromBackend(
-            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+            prepareDrillLocalIdentifierIfMissing(
+                setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+            ),
         ),
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
     };
@@ -194,4 +197,29 @@ export function convertDashboardPluginWithLinks(
         updated: modifiedAt,
         updatedBy: convertUserIdentifier(modifiedBy, included),
     };
+}
+
+export function prepareDrillLocalIdentifierIfMissing(layout?: IDashboardLayout) {
+    if (!layout) {
+        return;
+    }
+
+    const widgetsPaths: LayoutPath[] = [];
+    walkLayout(layout, {
+        widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
+    });
+
+    return widgetsPaths.reduce((layout, widgetPath) => {
+        return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
+            const drills = widget?.drills.map((it) => ({
+                ...it,
+                localIdentifier: it.localIdentifier ?? uuidv4().replace(/-/g, ""),
+            }));
+
+            return {
+                ...widget,
+                drills,
+            };
+        });
+    }, layout);
 }
