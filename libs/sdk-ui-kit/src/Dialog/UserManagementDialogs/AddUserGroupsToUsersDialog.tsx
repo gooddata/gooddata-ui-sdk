@@ -11,7 +11,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedUserGroups: IGrantedUserGroup[] = [];
 
 /**
- * @alpha
+ * @internal
  */
 export interface IAddUserGroupsToUsersDialogProps {
     userIds: string[];
@@ -21,7 +21,7 @@ export interface IAddUserGroupsToUsersDialogProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export const AddUserGroupsToUsersDialog: React.FC<IAddUserGroupsToUsersDialogProps> = ({
     userIds,

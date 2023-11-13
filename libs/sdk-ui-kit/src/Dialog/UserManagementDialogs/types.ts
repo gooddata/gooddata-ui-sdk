@@ -19,12 +19,12 @@ export const isWorkspaceItem = (obj: unknown): obj is IWorkspaceDescriptor => {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
 
 /**
- * @alpha
+ * @internal
  */
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
@@ -33,7 +33,7 @@ export type ListMode = "VIEW" | "EDIT";
 export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 /**
- * @alpha
+ * @internal
  */
 export type WorkspacePermissionSubject = "user" | "userGroup";
 

@@ -11,7 +11,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedWorkspaces: IGrantedWorkspace[] = [];
 
 /**
- * @alpha
+ * @internal
  */
 export interface IAddWorkspaceToSubjectsProps {
     ids: string[];
@@ -22,7 +22,7 @@ export interface IAddWorkspaceToSubjectsProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export const AddWorkspaceToSubjects: React.FC<IAddWorkspaceToSubjectsProps> = ({
     ids,

@@ -9,7 +9,7 @@ import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUserGroup } from "./dialogHooks.js";
 
 /**
- * @alpha
+ * @internal
  */
 export interface IDeleteUserGroupDialogProps {
     userGroupId: string;
@@ -19,7 +19,7 @@ export interface IDeleteUserGroupDialogProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
     userGroupId,

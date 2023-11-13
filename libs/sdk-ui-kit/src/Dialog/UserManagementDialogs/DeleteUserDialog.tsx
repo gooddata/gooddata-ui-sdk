@@ -9,7 +9,7 @@ import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUser } from "./dialogHooks.js";
 
 /**
- * @alpha
+ * @internal
  */
 export interface IDeleteUserDialogProps {
     userId: string;
@@ -19,7 +19,7 @@ export interface IDeleteUserDialogProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
     userId,
