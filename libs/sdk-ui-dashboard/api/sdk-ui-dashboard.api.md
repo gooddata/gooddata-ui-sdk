@@ -621,7 +621,7 @@ export interface ChangeInsightWidgetInsightPayload {
     readonly visualizationProperties?: VisualizationProperties;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
     // (undocumented)
     readonly payload: ChangeInsightWidgetVisConfigurationPayload;
@@ -629,10 +629,10 @@ export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
 }
 
-// @beta
+// @public
 export function changeInsightWidgetVisConfiguration(ref: ObjRef, config: IInsightWidgetConfiguration | undefined, correlationId?: string): ChangeInsightWidgetVisConfiguration;
 
-// @beta
+// @public
 export interface ChangeInsightWidgetVisConfigurationPayload {
     readonly config: IInsightWidgetConfiguration | undefined;
     readonly ref: ObjRef;
@@ -755,7 +755,7 @@ export interface ChangeKpiWidgetMeasurePayload {
     readonly ref: ObjRef;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
     // (undocumented)
     readonly payload: ChangeLayoutSectionHeaderPayload;
@@ -763,10 +763,10 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
 }
 
-// @beta
+// @public
 export function changeLayoutSectionHeader(index: number, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
 
-// @beta
+// @public
 export interface ChangeLayoutSectionHeaderPayload {
     readonly header: IDashboardLayoutSectionHeader;
     readonly index: number;
@@ -984,7 +984,7 @@ export type CustomEmptyLayoutDropZoneBodyComponent = ComponentType;
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
 
 // @alpha (undocumented)
@@ -3858,7 +3858,7 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
     type: "drillDown";
 }
 
-// @beta
+// @public
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @beta
@@ -3878,7 +3878,7 @@ export interface IInaccessibleDashboard extends IDashboardObjectIdentity {
     title: string;
 }
 
-// @alpha
+// @public
 export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     backend: IAnalyticalBackend;
     colorPalette: IColorPalette | undefined;
@@ -6402,7 +6402,7 @@ export const selectIsExport: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 
-// @internal (undocumented)
+// @public
 export const selectIsInEditMode: DashboardSelector<boolean>;
 
 // @internal (undocumented)
@@ -6474,7 +6474,7 @@ export const selectKpiWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidg
 // @internal (undocumented)
 export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
 
-// @alpha
+// @public
 export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>>;
 
 // @alpha

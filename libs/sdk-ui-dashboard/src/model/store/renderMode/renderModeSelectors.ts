@@ -26,7 +26,9 @@ export const selectIsInViewMode: DashboardSelector<boolean> = createSelector(
 );
 
 /**
- * @internal
+ * Returns whether the current Dashboard is on edit mode.
+ *
+ * @public
  */
 export const selectIsInEditMode: DashboardSelector<boolean> = createSelector(
     selectRenderMode,

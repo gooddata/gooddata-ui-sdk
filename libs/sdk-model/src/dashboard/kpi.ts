@@ -4,7 +4,7 @@ import { ObjRef } from "../objRef/index.js";
 
 /**
  * Kpi
- * @alpha
+ * @public
  */
 export type IKpi = IKpiWithComparison | IKpiWithoutComparison;
 
@@ -18,7 +18,7 @@ export function isKpi(obj: unknown): obj is IKpi {
 
 /**
  * Common kpi properties
- * @alpha
+ * @public
  */
 export interface IKpiBase {
     comparisonType: IKpiComparisonTypeComparison;
@@ -28,13 +28,13 @@ export interface IKpiBase {
 
 /**
  * Kpi with comparison
- * @alpha
+ * @public
  */
 export type IKpiWithComparison = IKpiWithPreviousPeriodComparison | IKpiWithPopComparison;
 
 /**
  * Kpi with previous period comparison
- * @alpha
+ * @public
  */
 export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
     comparisonType: "previousPeriod";
@@ -43,7 +43,7 @@ export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
 
 /**
  * Kpi with period over period comparison
- * @alpha
+ * @public
  */
 export interface IKpiWithPopComparison extends IKpiBase {
     comparisonType: "lastYear";
@@ -64,7 +64,7 @@ export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison {
 
 /**
  * Kpi without comparison
- * @alpha
+ * @public
  */
 export interface IKpiWithoutComparison extends IKpiBase {
     comparisonType: "none";
@@ -80,7 +80,7 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 
 /**
  * Kpi comparison type
- * @alpha
+ * @public
  */
 export type IKpiComparisonTypeComparison =
     | IKpiWithPreviousPeriodComparison["comparisonType"]
@@ -89,6 +89,6 @@ export type IKpiComparisonTypeComparison =
 
 /**
  * Kpi comparison direction
- * @alpha
+ * @public
  */
 export type IKpiComparisonDirection = "growIsGood" | "growIsBad";

@@ -13,12 +13,12 @@ import {
 
 /**
  * See {@link IWidget}]
- * @alpha
+ * @public
  */
 export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
 /**
- * @alpha
+ * @public
  */
 export type IWidget = IKpiWidget | IInsightWidget;
 
@@ -105,7 +105,7 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType {
  *
  * @param widget - widget to get title of
  * @returns the widget title
- * @alpha
+ * @public
  */
 export function widgetTitle(widget: IWidget): string {
     invariant(widget, "widget to get title of must be specified");

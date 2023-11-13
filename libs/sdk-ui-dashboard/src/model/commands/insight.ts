@@ -233,7 +233,7 @@ export function replaceInsightWidgetIgnoredFilters(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @beta
+ * @public
  */
 export function ignoreFilterOnInsightWidget(
     ref: ObjRef,
@@ -358,7 +358,7 @@ export function changeInsightWidgetVisProperties(
 
 /**
  * Payload of the {@link ChangeInsightWidgetVisConfiguration} command.
- * @beta
+ * @public
  */
 export interface ChangeInsightWidgetVisConfigurationPayload {
     /**
@@ -376,7 +376,7 @@ export interface ChangeInsightWidgetVisConfigurationPayload {
 }
 
 /**
- * @beta
+ * @public
  */
 export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
@@ -397,7 +397,7 @@ export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @beta
+ * @public
  */
 export function changeInsightWidgetVisConfiguration(
     ref: ObjRef,

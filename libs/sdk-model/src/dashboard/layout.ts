@@ -13,7 +13,7 @@ export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 /**
  * Default dashboard widgets - kpi widget, insight widget, or nested layout.
  *
- * @alpha
+ * @public
  */
 export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
@@ -28,7 +28,7 @@ export const isDashboardWidget = (obj: unknown): obj is IDashboardWidget =>
  * Dashboard layout item - usually contains kpi widget, insight widget or another nested layout.
  * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
     /**
@@ -59,7 +59,7 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
  * Dashboard layout describes the data to be displayed on the dashboard, and their structure for UI rendering.
  * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
- * @alpha
+ * @public
  */
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
     /**
@@ -91,7 +91,7 @@ export function isDashboardLayout<TWidget = IDashboardWidget>(
 /**
  * Dashboard layout size configuration, defined by screen type.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutSizeByScreenSize {
     /**
@@ -127,7 +127,7 @@ export interface IDashboardLayoutSizeByScreenSize {
 /**
  * Dashboard layout size definition.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutSize {
     /**
@@ -152,7 +152,7 @@ export interface IDashboardLayoutSize {
 
 /**
  * Dashboard layout section represents a group of widgets on the dashboard with a title and description.
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     /**
@@ -182,7 +182,7 @@ export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboa
 /**
  * Dashboard layout section header definition.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardLayoutSectionHeader {
     /**
