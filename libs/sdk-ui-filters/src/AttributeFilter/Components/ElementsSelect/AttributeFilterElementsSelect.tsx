@@ -95,6 +95,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                 isLoadingNextPage={isLoadingNextPage}
                 nextPageItemPlaceholdersCount={nextPageSize}
                 onLoadNextPage={onLoadNextPage}
+                numberOfHiddenSelectedItems={irrelevantSelection.length}
                 renderItem={(props) => {
                     return <ElementsSelectItemComponent {...props} fullscreenOnMobile={fullscreenOnMobile} />;
                 }}
