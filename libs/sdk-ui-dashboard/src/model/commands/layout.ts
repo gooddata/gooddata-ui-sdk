@@ -221,7 +221,7 @@ export function removeLayoutSection(
 
 /**
  * Payload of the {@link ChangeLayoutSectionHeader} command.
- * @beta
+ * @public
  */
 export interface ChangeLayoutSectionHeaderPayload {
     /**
@@ -247,7 +247,7 @@ export interface ChangeLayoutSectionHeaderPayload {
 }
 
 /**
- * @beta
+ * @public
  */
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
@@ -266,7 +266,7 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @beta
+ * @public
  */
 export function changeLayoutSectionHeader(
     index: number,

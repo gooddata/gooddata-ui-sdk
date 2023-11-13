@@ -9,7 +9,7 @@ import { IKpi } from "./kpi.js";
 /**
  * Reserved type names used for dashboard's built-in analytical widgets.
  *
- * @alpha
+ * @public
  */
 export type AnalyticalWidgetType = "kpi" | "insight";
 
@@ -17,7 +17,7 @@ export type AnalyticalWidgetType = "kpi" | "insight";
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
  * insights (reports) or KPIs rendering measure values optionally with their comparison.
  *
- * @alpha
+ * @public
  */
 export interface IAnalyticalWidget
     extends IBaseWidget,
@@ -28,7 +28,7 @@ export interface IAnalyticalWidget
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IKpiWidgetBase extends IAnalyticalWidget {
     readonly type: "kpi";
@@ -50,7 +50,7 @@ export interface IKpiWidgetBase extends IAnalyticalWidget {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IKpiWidgetConfiguration {
     description?: IKpiWidgetDescriptionConfiguration;
@@ -58,7 +58,7 @@ export interface IKpiWidgetConfiguration {
 
 /**
  * Configuration of kpi's description
- * @alpha
+ * @public
  */
 export interface IKpiWidgetDescriptionConfiguration {
     /**
@@ -72,22 +72,22 @@ export interface IKpiWidgetDescriptionConfiguration {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 /**
- * @alpha
+ * @public
  */
 export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {}
 
 /**
- * @alpha
+ * @public
  */
 export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {}
 
 /**
- * @alpha
+ * @public
  */
 export interface IInsightWidgetBase extends IAnalyticalWidget {
     readonly type: "insight";
@@ -119,7 +119,7 @@ export interface IInsightWidgetBase extends IAnalyticalWidget {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IInsightWidgetConfiguration {
     hideTitle?: boolean;
@@ -128,7 +128,7 @@ export interface IInsightWidgetConfiguration {
 
 /**
  * Configuration of widget's description
- * @alpha
+ * @public
  */
 export interface IInsightWidgetDescriptionConfiguration {
     /**
@@ -146,16 +146,16 @@ export interface IInsightWidgetDescriptionConfiguration {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 /**
- * @alpha
+ * @public
  */
 export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {}
 
 /**
- * @alpha
+ * @public
  */
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}

@@ -66,7 +66,7 @@ export const selectUndoableLayoutCommands: DashboardSelector<UndoableCommand<Das
  * This selector returns dashboard's layout. It is expected that the selector is called only after the layout state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @alpha
+ * @public
  */
 export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>> = createSelector(
     selectSelf,
