@@ -813,6 +813,13 @@ export {
     isGranularUserGroupAccessGrantee,
     isGranularUserAccess,
     isGranularUserGroupAccess,
+    isGranularRulesAccessGrantee,
+    WorkspaceAccessPermission,
+    IWorkspaceAccess,
+    IUserWorkspaceAccessGrantee,
+    IUserGroupWorkspaceAccessGrantee,
+    isUserWorkspaceAccessGrantee,
+    isUserGroupWorkspaceAccessGrantee,
     WorkspaceAccessPermission,
     IWorkspaceAccess,
     IUserWorkspaceAccessGrantee,
@@ -821,6 +828,17 @@ export {
     isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
 
+export {
+    IOrganizationDescriptor,
+    IWorkspacePermissionAssignment,
+    IAssignedWorkspace,
+    AssignedWorkspacePermission,
+    AssignedWorkspacePermissionValue,
+    IOrganizationPermissionAssignment,
+    OrganizationPermissionAssignment,
+    OrganizationPermissionAssignmentValue,
+    IOrganizationAssignee,
+} from "./organization/index.js";
 export {
     IOrganizationDescriptor,
     IWorkspacePermissionAssignment,

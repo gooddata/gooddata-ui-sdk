@@ -54,15 +54,6 @@ export interface IOrganizationUserService {
     updateUserGroup(group: IUserGroup): Promise<void>;
 
     /**
-     * Delete user by ID.
-     *
-     * @param id - ID of the user.
-     *
-     * @returns promise
-     */
-    deleteUser(id: string): Promise<void>;
-
-    /**
      * Delete users by ID.
      *
      * @param ids - ID of the user.
@@ -70,15 +61,6 @@ export interface IOrganizationUserService {
      * @returns promise
      */
     deleteUsers(ids: string[]): Promise<void>;
-
-    /**
-     * Delete user group by ID.
-     *
-     * @param id - ID of the user group.
-     *
-     * @returns promise
-     */
-    deleteUserGroup(id: string): Promise<void>;
 
     /**
      * Delete user groups by ID.
@@ -122,42 +104,22 @@ export interface IOrganizationUserService {
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
 
     /**
-     * Add user group to multiple users.
+     * Add users to multiple user groups.
      *
-     * @param userGroupId - ID of the user group that will be assigned to the users.
-     * @param userIds - IDs of the users that will have the new user group assigned.
-     *
-     * @returns promise
-     */
-    addUserGroupToUsers(userGroupId: string, userIds: string[]): Promise<void>;
-
-    /**
-     * Add user groups to multiple users.
-     *
-     * @param userGroupIds - IDs of the user groups that will be assigned to the users.
-     * @param userIds - IDs of the users that will have the new user groups assigned.
-     *
-     * @returns promise
-     */
-    addUserGroupsToUsers(userGroupIds: string[], userIds: string[]): Promise<void>;
-
-    /**
-     * Add user to multiple user groups.
-     *
-     * @param userId - ID of the user that will be assigned to user groups.
+     * @param userIds - IDs of the users that will be assigned to user groups.
      * @param userGroupIds - IDs of the users groups to which user will be assigned.
      *
      * @returns promise
      */
-    addUserToUserGroups(userId: string, userGroupIds: string[]): Promise<void>;
+    addUsersToUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
 
     /**
-     * Remove user from user group.
+     * Remove users from user groups.
      *
-     * @param userId - ID of the user.
-     * @param userGroupId - ID of the user group.
+     * @param userIds - IDs of the users.
+     * @param userGroupIds - IDs of the user groups.
      *
      * @returns promise
      */
-    removeUserFromUserGroup(userId: string, userGroupId: string): Promise<void>;
+    removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
 }

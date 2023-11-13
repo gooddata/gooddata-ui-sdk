@@ -54,7 +54,6 @@ export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
 export {
     DeclarativeModel,
     GenerateLdmRequest,
-    DeclarativePdm,
     ApiEntitlement,
     ApiEntitlementNameEnum,
 } from "@gooddata/api-client-tiger";
@@ -73,10 +72,6 @@ export {
     TigerSpecificFunctions,
     IApiToken,
     IApiTokenExtended,
-    IDataSource,
-    ScanRequest,
-    ScanResult,
-    PublishPdmResult,
     Entitlement,
     IDataSourceApiResult,
     IDataSourceUpsertRequest,
@@ -90,8 +85,6 @@ export {
     GenerateLogicalModelRequest,
     DeclarativeLogicalModel,
     DeclarativeAnalyticsModel,
-    PhysicalDataModel,
-    SetPdmLayoutRequest,
     PutWorkspaceLayoutRequest,
     DataSourceDefinition,
     IDataSourceDeletedResponse,

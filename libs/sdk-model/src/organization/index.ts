@@ -47,12 +47,43 @@ export type AssignedWorkspacePermission =
     typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
 
 /**
+ * @alpha
+ */
+export interface IOrganizationAssignee {
+    id: string;
+    type: "user" | "userGroup";
+}
+
+/**
  * Descriptor contains details about workspace permission of organization user or user group.
  *
  * @alpha
  */
 export interface IWorkspacePermissionAssignment {
+    assigneeIdentifier: IOrganizationAssignee;
     workspace: IAssignedWorkspace;
     permissions: AssignedWorkspacePermission[];
     hierarchyPermissions: AssignedWorkspacePermission[];
+}
+
+/**
+ * @alpha
+ */
+export const OrganizationPermissionAssignmentValue = {
+    MANAGE: "MANAGE",
+    SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN",
+} as const;
+
+/**
+ * @alpha
+ */
+export type OrganizationPermissionAssignment =
+    typeof OrganizationPermissionAssignmentValue[keyof typeof OrganizationPermissionAssignmentValue];
+
+/**
+ * @alpha
+ */
+export interface IOrganizationPermissionAssignment {
+    assigneeIdentifier: IOrganizationAssignee;
+    permissions: OrganizationPermissionAssignment[];
 }

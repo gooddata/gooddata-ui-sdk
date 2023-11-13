@@ -5,11 +5,17 @@ import cx from "classnames";
 
 import { Button } from "../Button/index.js";
 
-interface IBackButtonProps {
+/**
+ * @internal
+ */
+export interface IBackButtonProps {
     onClick: () => void;
     className: string;
 }
 
+/**
+ * @internal
+ */
 export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) => {
     return (
         <Button

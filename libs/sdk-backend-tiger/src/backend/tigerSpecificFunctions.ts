@@ -9,6 +9,12 @@ import {
     DataSourceParameter,
     DeclarativeAnalytics,
     DeclarativeModel,
+    JsonApiDataSourceInDocument,
+    LayoutApiPutWorkspaceLayoutRequest,
+    jsonApiHeaders,
+    JsonApiOrganizationPatchTypeEnum,
+    JsonApiApiTokenOutList,
+    MetadataUtilities,
     DeclarativePdm,
     DeclarativeTables,
     DeclarativeWorkspaceDataFilters,
@@ -34,6 +40,8 @@ import {
     JsonApiDataSourceInDocument,
     JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceOutDocument,
+    JsonApiDataSourceIdentifierOutDocument,
+    DeclarativeAnalytics,
     JsonApiFilterContextOutWithLinks,
     jsonApiHeaders,
     JsonApiOrganizationOutMetaPermissionsEnum,
@@ -84,43 +92,6 @@ export interface IApiToken {
  */
 export interface IApiTokenExtended extends IApiToken {
     bearerToken: string | undefined;
-}
-
-/**
- * Copy of interface from gooddata/data-source-management
- * This should be refactored to have the source of truth here in SDK and not expose JSON API entities
- *
- * @internal
- */
-export interface IDataSource {
-    entity: JsonApiDataSourceInDocument;
-    pdm: DeclarativePdm;
-}
-
-/**
- * @internal
- */
-export interface ScanRequest {
-    scanTables: boolean;
-    scanViews: boolean;
-    separator: string;
-    tablePrefix: string;
-    viewPrefix: string;
-    schemata: string[];
-}
-
-/**
- * @internal
- */
-export interface ScanResult {
-    pdm: DeclarativeTables;
-}
-
-/**
- * @internal
- */
-export interface PublishPdmResult {
-    status: string;
 }
 
 /**
@@ -286,16 +257,6 @@ export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
 /**
  * @internal
  */
-export type PhysicalDataModel = DeclarativePdm;
-
-/**
- * @internal
- */
-export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
-
-/**
- * @internal
- */
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 /**
@@ -416,11 +377,8 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         generateLogicalModelRequest: GenerateLogicalModelRequest,
     ) => Promise<DeclarativeLogicalModel>;
-    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
-    publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
@@ -442,7 +400,6 @@ export type TigerSpecificFunctions = {
     ) => Promise<IDataSourceTestConnectionResponse>;
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
-    getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
     getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
     getDependentEntitiesGraphFromEntryPoints?: (
         workspaceId: string,
@@ -943,41 +900,6 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
-        try {
-            return await authApiCall(async (sdk) => {
-                return await sdk.scanModel
-                    .scanDataSource({
-                        dataSourceId,
-                        scanRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-    publishPdm: async (dataSourceId: string, declarativePdm: DeclarativePdm) => {
-        return await authApiCall(async (sdk) => {
-            return await sdk.declarativeLayout
-                .setPdmLayout({
-                    dataSourceId,
-                    declarativePdm,
-                })
-                .then(
-                    () => {
-                        return {
-                            status: "success",
-                        };
-                    },
-                    (error) => {
-                        return Promise.reject(error);
-                    },
-                );
-        });
-    },
     createDemoWorkspace: async (sampleWorkspace: WorkspaceDefinition) => {
         try {
             return await authApiCall(async (sdk) => {
@@ -997,15 +919,6 @@ export const buildTigerSpecificFunctions = (
                     jsonApiDataSourceInDocument: sampleDataSource,
                 });
                 return result.data.data.id;
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-    setPdmLayout: async (requestParameters: LayoutApiSetPdmLayoutRequest) => {
-        try {
-            return await authApiCall(async (sdk) => {
-                await sdk.declarativeLayout.setPdmLayout(requestParameters);
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1300,17 +1213,6 @@ export const buildTigerSpecificFunctions = (
             return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res) => {
                 return res?.data.schemaNames;
             });
-        });
-    },
-    getPdm: async (dataSourceId: string) => {
-        return await authApiCall(async (sdk) => {
-            return await sdk.declarativeLayout
-                .getPdmLayout({
-                    dataSourceId,
-                })
-                .then((res) => {
-                    return res?.data;
-                });
         });
     },
     getAllDataSources: async () => {

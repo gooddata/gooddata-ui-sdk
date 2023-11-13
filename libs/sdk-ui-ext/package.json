@@ -86,7 +86,9 @@
         "react-transition-group": "^4.4.2",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "debounce-promise": "^3.1.2",
+        "json-stable-stringify": "^1.0.1"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
@@ -142,6 +144,8 @@
         "svgo": "^2.8.0",
         "typescript": "5.0.2",
         "vitest": "0.31.4",
-        "vitest-dom": "0.1.0"
+        "vitest-dom": "0.1.0",
+        "@types/debounce-promise": "^3.1.4",
+        "@types/json-stable-stringify": "^1.0.32"
     }
 }

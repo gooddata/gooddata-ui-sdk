@@ -72,6 +72,28 @@ export interface IUserGroup {
 }
 
 /**
+ * Represents platform user group.
+ *
+ * @alpha
+ */
+export interface IUserGroup {
+    /**
+     * Stored user reference.
+     */
+    ref: ObjRef;
+
+    /**
+     * ID of the user group.
+     */
+    id: string;
+
+    /**
+     * Optional name of the user group;
+     */
+    name?: string;
+}
+
+/**
  * Represents platform user in context of the workspace.
  *
  * @public

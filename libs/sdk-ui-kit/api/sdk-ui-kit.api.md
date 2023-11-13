@@ -103,6 +103,9 @@ export class AutoSize extends Component<IAutoSizeProps> {
 }
 
 // @internal (undocumented)
+export const BackButton: React_2.FC<IBackButtonProps>;
+
+// @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     constructor(props: IBubbleProps);
     // (undocumented)
@@ -319,7 +322,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.VFC;
+export const ContentDivider: React_2.FC;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
@@ -973,6 +976,14 @@ export interface IAvailableSortsGroup {
     metricSorts?: MeasureSortSuggestion[];
 }
 
+// @internal (undocumented)
+export interface IBackButtonProps {
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    onClick: () => void;
+}
+
 // @internal
 export type IBreakpointsConfig = {
     [s in ResponsiveScreenType]: number;
@@ -1599,6 +1610,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     showTabs?: boolean;
     // (undocumented)
     tabs?: ITab[];
+    // (undocumented)
+    title?: string;
     // (undocumented)
     width?: number;
 }

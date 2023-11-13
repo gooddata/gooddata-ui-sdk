@@ -373,9 +373,6 @@ function dummyExecutionResult(
         transform(): IPreparedExecution {
             return executionFactory.forDefinition(definition);
         },
-        getResultId(): string {
-            throw new NotSupported("...");
-        },
     };
 
     return result;
@@ -740,23 +737,16 @@ class DummyOrganization implements IOrganization {
         return {
             getWorkspacePermissionsForUser: () => Promise.resolve([]),
             getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
-            updateUserOrganizationAdminStatus: () => Promise.resolve(),
-            updateWorkspacePermissionsForUser: () => Promise.resolve(),
-            updateWorkspacePermissionsForUsers: () => Promise.resolve(),
-            updateWorkspacePermissionsForUserGroup: () => Promise.resolve(),
-            updateWorkspacePermissionsForUserGroups: () => Promise.resolve(),
+            updateOrganizationPermissions: () => Promise.resolve(),
+            updateWorkspacePermissions: () => Promise.resolve(),
         };
     }
 
     users(): IOrganizationUserService {
         return {
-            addUserGroupToUsers: () => Promise.resolve(),
-            addUserGroupsToUsers: () => Promise.resolve(),
-            addUserToUserGroups: () => Promise.resolve(),
+            addUsersToUserGroups: () => Promise.resolve(),
             createUserGroup: () => Promise.resolve(),
-            deleteUser: () => Promise.resolve(),
             deleteUsers: () => Promise.resolve(),
-            deleteUserGroup: () => Promise.resolve(),
             deleteUserGroups: () => Promise.resolve(),
             getUser: () => Promise.resolve(undefined),
             getUserGroup: () => Promise.resolve(undefined),
@@ -764,7 +754,7 @@ class DummyOrganization implements IOrganization {
             getUserGroupsOfUser: () => Promise.resolve([]),
             getUsersOfUserGroup: () => Promise.resolve([]),
             getUsers: () => Promise.resolve([]),
-            removeUserFromUserGroup: () => Promise.resolve(),
+            removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
         };
