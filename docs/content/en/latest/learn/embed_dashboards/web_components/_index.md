@@ -130,6 +130,6 @@ WebComponents script will inject a CSS `<link>` to the `<head>` of your HTML pag
 possible that CSS class names may collide with the class names used by your own code. If this happens, please consider
 <a target="_blank" href="https://github.com/gooddata/gooddata-ui-sdk/issues/new" rel="noopener noreferrer">opening a GitHub issue</a>.
 
-[3]:https://www.gooddata.com/developers/cloud-native/doc/latest/manage-deployment/set-up-organizations/set-up-cors-for-organization/
-[4]:https://www.gooddata.com/developers/cloud-native/doc/cloud/manage-deployment/set-up-organizations/set-up-cors-for-organization/
-[10]:https://www.gooddata.com/developers/cloud-native/doc/cloud/embed-visualizations/iframes/
+[3]:https://www.gooddata.com/docs/cloud/manage-organization/set-up-cors-for-organization/
+[4]:https://www.gooddata.com/docs/cloud/manage-deployment/set-up-organizations/set-up-cors-for-organization/
+[10]:https://www.gooddata.com/docs/cloud/embed-visualizations/iframes/

@@ -54,9 +54,9 @@ This type of authentication uses JWT (JSON Web Token) as bearer of authenticatio
 
 You can read more about it at the [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519) page or [here](https://jwt.io/introduction).
 
-You can read [help page](https://www.gooddata.com/developers/cloud-native/doc/cloud/manage-organization/jwt-access-token/) that will guide you
+You can read [help page](https://www.gooddata.com/docs/cloud/manage-organization/jwt-access-token/) that will guide you
 through the process of generating JWK (JSON Web Key) and registering it in your organization. It covers the generation of JWT as well. 
-The guide uses GoodData Python SDK. Alternatively, you can follow [JavaScript guide](https://www.gooddata.com/developers/cloud-native/doc/cloud/manage-organization/jwt-access-token/jwt-javascript-example/) 
+The guide uses GoodData Python SDK. Alternatively, you can follow [JavaScript guide](https://www.gooddata.com/docs/cloud/manage-organization/jwt-access-token/jwt-javascript-example/) 
 to achieve the same via a Node.JS script.
 
 It's meant to be used in GoodData Cloud and GoodData.CN UI applications.
