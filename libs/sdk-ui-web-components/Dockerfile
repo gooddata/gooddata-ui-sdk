@@ -6,7 +6,7 @@
 # !!! Do not change base image to Alpine flavors due to compliance reasons !!!
 # REPO_PREFIX MUST end with trailing slash
 ARG REPO_PREFIX=
-FROM ${REPO_PREFIX}nginxinc/nginx-unprivileged:1.25.1
+FROM ${REPO_PREFIX}nginxinc/nginx-unprivileged:1.25.3
 #COPY readme.txt / # TODO - There are some auto-generated license files in the bundle, do we need to add extra onces?
 ADD web-components.tar.gz /usr/share/nginx/html/components/
 COPY nginx.conf /etc/nginx/nginx.conf
