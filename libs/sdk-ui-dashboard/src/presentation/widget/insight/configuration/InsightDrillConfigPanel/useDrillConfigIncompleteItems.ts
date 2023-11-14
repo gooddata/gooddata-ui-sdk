@@ -8,7 +8,7 @@ import { usePrevious } from "@gooddata/sdk-ui";
 import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
-export const generatelocalIdentifier = () => uuidv4().replace(/-/g, "");
+export const generateLocalIdentifier = () => uuidv4().replace(/-/g, "");
 
 const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newItem: IDrillConfigItem) => {
     const found = drillConfigItems.findIndex(
@@ -97,7 +97,7 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
 
     const onOriginSelect = useCallback(
         (selectedItem: IAvailableDrillTargetItem) => {
-            const localIdentifier = generatelocalIdentifier();
+            const localIdentifier = generateLocalIdentifier();
             if (isAvailableDrillTargetMeasure(selectedItem)) {
                 const incompleteMeasureItem: IDrillConfigItem = {
                     type: "measure",

@@ -1,11 +1,12 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { Dropdown, DropdownList, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
-import { ButtonWithIcon } from "./ButtonWithIcon.js";
-import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
-import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
+import { ButtonWithIcon } from "../ButtonWithIcon.js";
+import { DRILL_TARGET_TYPE } from "../../../../drill/types.js";
+import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
+import DrillTargetTypeListItem from "./DrillTargetTypeListItem.js";
 
 export interface IDrillTargetProps {
     onSelect: (target: DRILL_TARGET_TYPE) => void;
@@ -27,6 +28,7 @@ const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) =
     const icons = {
         [DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD]: "gd-icon-drill-to-dashboard",
         [DRILL_TARGET_TYPE.DRILL_TO_INSIGHT]: "gd-icon-drill-to-insight",
+        [DRILL_TARGET_TYPE.DRILL_DOWN]: "gd-icon-drill-down",
         [DRILL_TARGET_TYPE.DRILL_TO_URL]: "gd-icon-hyperlink-disabled",
     };
 
@@ -64,6 +66,7 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
                     value={buttonValue}
                     icon={getIconClassNameBySelection(selection)}
                     isOpen={isOpen}
+                    disabled={selection === DRILL_TARGET_TYPE.DRILL_DOWN}
                     onClick={toggleDropdown}
                 />
             )}
@@ -78,9 +81,9 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
                         const drillIconClassName = getIconClassNameBySelection(item.id);
 
                         return (
-                            <SingleSelectListItem
-                                className={drillIconClassName}
-                                title={item.title}
+                            <DrillTargetTypeListItem
+                                item={item}
+                                icon={drillIconClassName}
                                 isSelected={isSelected}
                                 onClick={() => {
                                     onSelect(item);

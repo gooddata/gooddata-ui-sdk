@@ -143,3 +143,13 @@ export const selectAllowMultipleInteractionsPerAttributeAndMeasure: DashboardSel
         selectBackendCapabilities,
         (capabilities) => capabilities.allowMultipleInteractionsPerAttributeAndMeasure ?? false,
     );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.selectSupportsAttributeHierarchies}
+ *
+ * @internal
+ */
+export const selectSupportsAttributeHierarchies: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsAttributeHierarchies ?? false,
+);

@@ -1686,6 +1686,11 @@
         "translate": false,
         "limit": 0
     },
+    "configurationPanel.drillConfig.drillDown": {
+        "value": "Drill down",
+        "comment": "Name of an option in dropdown that is used to select drill down type of dashboard drill.",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.drillIntoUrl": {
         "value": "Drill into URL",
         "comment": "Name of an option in dropdown that is used to select type of dashboard drill.",
