@@ -4,7 +4,7 @@ import { Table } from "../../tools/table";
 
 const table = new Table(".s-pivot-table");
 
-describe("Insight with MAX/MIN functions", { tags: "checklist_integrated_tiger" }, () => {
+describe("Insight with MAX/MIN functions", { tags: "checklist_integrated_tiger_cal" }, () => {
     it(`check insight with MAX function of Year macro`, () => {
         Navigation.visit("visualizations/pivot-table/maxmin/pivot-table-of-max-with-macro-year");
         table.waitLoaded();
@@ -91,7 +91,7 @@ describe("Insight with MAX/MIN functions", { tags: "checklist_integrated_tiger" 
     });
 });
 
-describe("Insight with Date arithmetics functions", { tags: "checklist_integrated_tiger" }, () => {
+describe("Insight with Date arithmetics functions", { tags: "checklist_integrated_tiger_cal" }, () => {
     it(`check insight with DATETIME_ADD function of between`, () => {
         Navigation.visit(
             "visualizations/pivot-table/datearithmetics/pivot-table-of-datetime-add-with-between",
@@ -228,7 +228,7 @@ describe("Insight with Date arithmetics functions", { tags: "checklist_integrate
     });
 });
 
-describe("Insight with FIRST_VALUE/LAST_VALUE functions", { tags: "checklist_integrated_tiger" }, () => {
+describe("Insight with FIRST_VALUE/LAST_VALUE functions", { tags: "checklist_integrated_tiger_cal" }, () => {
     it(`check insight with FIRST_VALUE, LAST_VALUE function of order`, () => {
         Navigation.visit(
             "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-order",
