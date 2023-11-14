@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`drillConfigMapper > getGlobalDrillDownMappedConfigForWidget > should map global drill downs to drill down attribute hierarchy configs 1`] = `
+[
+  {
+    "attributeHierarchyRef": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+      "type": "attributeHierarchy",
+    },
+    "attributes": [],
+    "complete": true,
+    "drillTargetType": "DrillDown",
+    "localIdentifier": "458cb8556b604396be5d736ada2aa833_477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+    "originLocalIdentifier": "458cb8556b604396be5d736ada2aa833",
+    "title": "Region",
+    "type": "attribute",
+  },
+  {
+    "attributeHierarchyRef": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+      "type": "attributeHierarchy",
+    },
+    "attributes": [],
+    "complete": true,
+    "drillTargetType": "DrillDown",
+    "localIdentifier": "f20e093c6af5439dbfce10ee37620fc8_477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+    "originLocalIdentifier": "f20e093c6af5439dbfce10ee37620fc8",
+    "title": "Department",
+    "type": "attribute",
+  },
+  {
+    "attributeHierarchyRef": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+      "type": "attributeHierarchy",
+    },
+    "attributes": [],
+    "complete": true,
+    "drillTargetType": "DrillDown",
+    "localIdentifier": "458cb8556b604396be5d736ada2aa833_477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+    "originLocalIdentifier": "458cb8556b604396be5d736ada2aa833",
+    "title": "Region",
+    "type": "attribute",
+  },
+  {
+    "attributeHierarchyRef": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+      "type": "attributeHierarchy",
+    },
+    "attributes": [],
+    "complete": true,
+    "drillTargetType": "DrillDown",
+    "localIdentifier": "f20e093c6af5439dbfce10ee37620fc8_477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+    "originLocalIdentifier": "f20e093c6af5439dbfce10ee37620fc8",
+    "title": "Department",
+    "type": "attribute",
+  },
+]
+`;

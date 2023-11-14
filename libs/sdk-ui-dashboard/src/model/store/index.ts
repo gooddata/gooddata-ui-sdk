@@ -17,6 +17,7 @@ export {
     selectSupportsSettingConnectingAttributes,
     selectSupportsKeepingDependentFiltersSelection,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
+    selectSupportsAttributeHierarchies,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -136,6 +137,7 @@ export {
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsToUrlByWidgetRef,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
     IImplicitDrillWithPredicates,
 } from "./widgetDrills/widgetDrillSelectors.js";
 export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors.js";
@@ -202,6 +204,7 @@ export {
     selectHasCatalogMeasures,
     selectHasCatalogDateDatasets,
     selectHasCatalogFacts,
+    selectCatalogAttributeHierarchies,
 } from "./catalog/catalogSelectors.js";
 export { selectDrillableItems } from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";

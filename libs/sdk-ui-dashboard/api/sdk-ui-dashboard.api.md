@@ -3850,6 +3850,14 @@ export interface IFluidLayoutCustomizer {
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
 }
 
+// @internal (undocumented)
+export interface IGlobalDrillDownAttributeHierarchyDefinition {
+    origin: LocalIdRef;
+    target: ObjRef;
+    // (undocumented)
+    type: "drillDown";
+}
+
 // @beta
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
@@ -6037,6 +6045,9 @@ export const selectCanViewDashboardPermission: DashboardSelector<boolean>;
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]>;
 
+// @beta (undocumented)
+export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttributeHierarchy[]>;
+
 // @public (undocumented)
 export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]>;
 
@@ -6267,6 +6278,9 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 
 // @internal
 export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIdentity | undefined>;
+
+// @internal (undocumented)
+export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (ref: ObjRef) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]>;
 
 // @alpha (undocumented)
 export const selectHasCatalogAttributes: DashboardSelector<boolean>;
@@ -6537,6 +6551,9 @@ export const selectStash: DashboardSelector<LayoutStash>;
 
 // @internal
 export const selectSupportsAccessControlCapability: DashboardSelector<boolean>;
+
+// @internal
+export const selectSupportsAttributeHierarchies: DashboardSelector<boolean>;
 
 // @public
 export const selectSupportsElementsQueryParentFiltering: DashboardSelector<boolean>;

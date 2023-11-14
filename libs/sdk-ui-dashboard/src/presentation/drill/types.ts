@@ -131,6 +131,7 @@ export function isDrillToUrl(drillDefinition: unknown): drillDefinition is IDril
 export enum DRILL_TARGET_TYPE {
     DRILL_TO_DASHBOARD = "DrillToDashboard",
     DRILL_TO_INSIGHT = "DrillToInsight",
+    DRILL_DOWN = "DrillDown",
     DRILL_TO_URL = "DrillToUrl",
 }
 
@@ -145,11 +146,16 @@ export interface IDrillConfigItemBase {
     attributes: IAvailableDrillTargetMeasure["attributes"];
 }
 
-export type IDrillConfigItem = IDrillToDashboardConfig | IDrillToInsightConfig | IDrillToUrlConfig;
+export type IDrillConfigItem =
+    | IDrillToDashboardConfig
+    | IDrillToInsightConfig
+    | IDrillToUrlConfig
+    | IDrillDownAttributeHierarchyConfig;
 export type IDrillConfigItemTarget =
     | IDrillToDashboardConfigTarget
     | IDrillToInsightConfigTarget
-    | IDrillToUrlConfigTarget;
+    | IDrillToUrlConfigTarget
+    | IDrillDownAttributeHierarchyTarget;
 
 export interface IDrillToDashboardConfigTarget {
     dashboard?: ObjRef;
@@ -199,6 +205,13 @@ export type IDrillToUrlConfig = IDrillConfigItemBase & IDrillToUrlConfigTarget;
 export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
+
+export interface IDrillDownAttributeHierarchyTarget {
+    type: "attribute";
+    attributeHierarchyRef: ObjRef;
+}
+
+export type IDrillDownAttributeHierarchyConfig = IDrillConfigItemBase & IDrillDownAttributeHierarchyTarget;
 
 // check type AttributeDisplayFormType from @gooddata/sdk-model to keep it in sync
 export enum AttributeDisplayFormType {

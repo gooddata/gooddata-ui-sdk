@@ -1,28 +1,30 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import {
+    DrillOrigin,
     idRef,
+    IDrillToAttributeUrl,
+    IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
     IInsight,
     InsightDrillDefinition,
-    IDrillToCustomUrl,
-    IDrillToAttributeUrl,
-    DrillOrigin,
 } from "@gooddata/sdk-model";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
+    IDrillDownAttributeHierarchyConfig,
+    isDrillToAttributeUrlConfig,
+    isDrillToCustomUrlConfig,
     isDrillToDashboardConfig,
     isDrillToUrlConfig,
     UrlDrillTarget,
-    isDrillToCustomUrlConfig,
-    isDrillToAttributeUrlConfig,
 } from "../../../../drill/types.js";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
 import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
 import { IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
+import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyItem.js";
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;
@@ -100,6 +102,8 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
                     onSelect={onCustomUrlTargetSelect}
                 />
             );
+        case DRILL_TARGET_TYPE.DRILL_DOWN:
+            return <DrillTargetAttributeHierarchyItem config={item as IDrillDownAttributeHierarchyConfig} />;
         case undefined:
             return null;
         default:

@@ -17,6 +17,7 @@ import {
     ICatalogAttribute,
     ICatalogDateAttribute,
     objRefToString,
+    ICatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -26,7 +27,7 @@ import {
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { DashboardDrillDefinition } from "../../../types.js";
+import { DashboardDrillDefinition, IGlobalDrillDownAttributeHierarchyDefinition } from "../../../types.js";
 import { selectWidgetDrills } from "../layout/layoutSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
@@ -34,6 +35,7 @@ import {
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
+    selectCatalogAttributeHierarchies,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
@@ -45,12 +47,14 @@ import {
     selectIsDrillDownEnabled,
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
+    selectEnableAttributeHierarchies,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 /**
  * @internal
@@ -174,6 +178,40 @@ function getDrillDefinitionsWithPredicates(
     });
 }
 
+function getGlobalDrillDownAttributeHierarchyDefinitions(
+    catalogAttributeHierarchies: ICatalogAttributeHierarchy[],
+    availableDrillTargets?: IAvailableDrillTargets,
+) {
+    const availableAttributes = availableDrillTargets?.attributes ?? [];
+    const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [];
+    catalogAttributeHierarchies
+        .map((it) => ({
+            // we need to remove the last attribute from the hierarchy
+            // because it does not have any descendants so that the widget cannot drill down to it
+            attributeIdentifiers: it.attributeHierarchy.attributes
+                .slice(0, it.attributeHierarchy.attributes.length - 1)
+                .map((it) => objRefToString(it)),
+            ref: it.attributeHierarchy.ref,
+        }))
+        .forEach(({ attributeIdentifiers, ref }) => {
+            availableAttributes.forEach((availableAttribute) => {
+                const attributeHeader = availableAttribute.attribute.attributeHeader;
+                const isAttributeInHierarchy = attributeIdentifiers.includes(
+                    objRefToString(attributeHeader.formOf.ref),
+                );
+                if (isAttributeInHierarchy) {
+                    globalDrillDowns.push({
+                        type: "drillDown",
+                        origin: localIdRef(attributeHeader.localIdentifier),
+                        target: ref,
+                    });
+                }
+            });
+        });
+
+    return globalDrillDowns;
+}
+
 //
 // Following selectors are for the 1st level insight widget (insight widget on the dashboard)
 //
@@ -208,6 +246,36 @@ export const selectImplicitDrillsDownByWidgetRef: (
             return [];
         },
     ),
+);
+
+/**
+ * @internal
+ */
+export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]> = createMemoizedSelector(
+    (ref: ObjRef) =>
+        createSelector(
+            selectDrillTargetsByWidgetRef(ref),
+            selectCatalogAttributeHierarchies,
+            selectEnableAttributeHierarchies,
+            selectSupportsAttributeHierarchies,
+            (
+                availableDrillTargets,
+                catalogAttributeHierarchies,
+                enableAttributeHierarchies,
+                supportAttributeHierarchies,
+            ) => {
+                if (enableAttributeHierarchies && supportAttributeHierarchies) {
+                    return getGlobalDrillDownAttributeHierarchyDefinitions(
+                        catalogAttributeHierarchies,
+                        availableDrillTargets?.availableDrillTargets,
+                    );
+                }
+
+                return [];
+            },
+        ),
 );
 
 /**

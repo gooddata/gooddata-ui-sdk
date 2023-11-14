@@ -70,4 +70,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     dateFilterDropdownConfigurationHeader: { id: "dateFilterDropdown.configuration" },
     dateFilterDropdownConfigurationSaveText: { id: "dateFilterDropdown.save" },
     dateFilterDropdownConfigurationCancelText: { id: "gs.list.cancel" },
+
+    drillToDashboardConfig: { id: "configurationPanel.drillConfig.drillIntoDashboard" },
+    drillIntoInsight: { id: "configurationPanel.drillConfig.drillIntoInsight" },
+    drillDownConfig: { id: "configurationPanel.drillConfig.drillDown" },
+    drillToUrlConfig: { id: "configurationPanel.drillConfig.drillIntoUrl" },
 });

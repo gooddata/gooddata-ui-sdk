@@ -3,10 +3,11 @@ import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
+
 import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
-import { DrillTargetType } from "./DrillTargetType.js";
+import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import {
     areObjRefsEqual,
@@ -78,9 +79,9 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
             <DrillOriginItem
                 type={item.type}
                 title={item.title}
-                localIdentifier={item.originLocalIdentifier}
                 onDelete={onDeleteClick}
                 isDateAttribute={isFromDateAttribute}
+                readonly={item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN}
             />
             <div className={targetClassNames}>
                 <div className="drill-config-target-box">
