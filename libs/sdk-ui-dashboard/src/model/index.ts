@@ -112,3 +112,4 @@ export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashb
 export * from "./headlessDashboard/index.js";
 
 export { isTemporaryIdentity } from "./utils/dashboardItemUtils.js";
+export { existBlacklistHierarchyPredicate } from "./utils/attributeHierarchyUtils.js";

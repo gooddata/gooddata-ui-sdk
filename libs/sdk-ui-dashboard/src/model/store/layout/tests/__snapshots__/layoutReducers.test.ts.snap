@@ -396,6 +396,74 @@ exports[`layout slice reducer > removeSection action > should correctly handle r
 }
 `;
 
+exports[`layout slice reducer > replaceWidgetBlacklistHierarchies action > should correctly handle replace widget blacklist hierarchies and create undo entry 1`] = `
+{
+  "undoPointer": 0,
+  "undoStack": [
+    {
+      "cmd": {
+        "correlationId": "correlation",
+        "payload": {
+          "attributeHierarchy": {
+            "identifier": "test_attribute_hierarchies_1",
+            "type": "attributeHierarchy",
+          },
+          "attributeIdentifier": {
+            "identifier": "f_owner.department_id",
+            "type": "displayForm",
+          },
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1310",
+          },
+        },
+        "type": "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN",
+      },
+      "redoPatches": [
+        {
+          "op": "add",
+          "path": [
+            "layout",
+            "sections",
+            1,
+            "items",
+            0,
+            "widget",
+            "ignoredDrillDownHierarchies",
+          ],
+          "value": [
+            {
+              "attributeHierarchy": {
+                "identifier": "test_attribute_hierarchies_1",
+                "type": "attributeHierarchy",
+              },
+              "label": {
+                "identifier": "f_owner.department_id",
+                "type": "displayForm",
+              },
+              "type": "attributeHierarchyReference",
+            },
+          ],
+        },
+      ],
+      "undoPatches": [
+        {
+          "op": "remove",
+          "path": [
+            "layout",
+            "sections",
+            1,
+            "items",
+            0,
+            "widget",
+            "ignoredDrillDownHierarchies",
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
 exports[`layout slice reducer > replaceWidgetDrill action > should correctly handle replace widget drill and create undo entry 1`] = `
 {
   "undoPointer": 0,

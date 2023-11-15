@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "../objRef/index.js";
-import { DrillDefinition } from "./drill.js";
+import { DrillDefinition, IDrillDownReference } from "./drill.js";
 import { IDashboardFilterReference } from "./filterContext.js";
 
 /**
@@ -35,6 +35,12 @@ export interface IDrillableWidget {
      * Widget drills
      */
     readonly drills: DrillDefinition[];
+
+    /**
+     * Ignore particular drill down hierarchies in the current widget
+     * @alpha
+     */
+    readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
 }
 
 /**

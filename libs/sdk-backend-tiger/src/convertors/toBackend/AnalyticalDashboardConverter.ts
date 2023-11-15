@@ -4,7 +4,6 @@ import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
     IFilterContextDefinition,
-    IDrillToCustomUrl,
     isDrillToCustomUrl,
     isInsightWidgetDefinition,
     isInsightWidget,
@@ -16,9 +15,8 @@ import {
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import isEmpty from "lodash/isEmpty.js";
 import update from "lodash/fp/update.js";
-import { splitDrillUrlParts } from "@gooddata/sdk-model/internal";
+import { convertLayout } from "../shared/layoutConverter.js";
 
 function removeIdentifiers(widget: IDashboardWidget) {
     return omit(widget, ["ref", "uri", "identifier"]);
@@ -43,9 +41,7 @@ export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
-    const layout = convertDrillToCustomUrlInLayoutToBackend(
-        removeWidgetIdentifiersInLayout(dashboard.layout),
-    );
+    const layout = convertLayout(false, removeWidgetIdentifiersInLayout(dashboard.layout));
 
     return {
         dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
@@ -105,23 +101,4 @@ export function getDrillToCustomUrlPaths(layout: IDashboardLayout) {
     });
 
     return paths;
-}
-
-function convertTargetUrlToParts(drill: IDrillToCustomUrl) {
-    return update(["target", "url"], splitDrillUrlParts, drill);
-}
-
-export function convertDrillToCustomUrlInLayoutToBackend(layout?: IDashboardLayout) {
-    if (!layout) {
-        return;
-    }
-
-    const paths = getDrillToCustomUrlPaths(layout);
-    if (isEmpty(paths)) {
-        return layout;
-    }
-
-    return paths.reduce((layout: IDashboardLayout, path: LayoutPath) => {
-        return update(path, convertTargetUrlToParts, layout);
-    }, layout);
 }

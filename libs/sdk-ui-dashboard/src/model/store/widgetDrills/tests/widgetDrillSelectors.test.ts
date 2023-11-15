@@ -7,10 +7,12 @@ import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDr
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
+    ignoredHierarchies,
     widgetRef,
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
 import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
+import * as layoutSelectors from "../../layout/layoutSelectors.js";
 
 let isDisableDrillDown = false;
 vi.mock("../../insights/insightsSelectors.js", () => ({
@@ -60,6 +62,16 @@ describe("widgetDrillSelectors", () => {
                     }
 
                     return () => undefined;
+                },
+            );
+
+            vi.spyOn(layoutSelectors, "selectIgnoredDrillDownHierarchiesByWidgetRef").mockImplementation(
+                (widget: ObjRef) => {
+                    if (objRefToString(widget) === objRefToString(widgetRef)) {
+                        return () => ignoredHierarchies;
+                    }
+
+                    return () => [];
                 },
             );
         });

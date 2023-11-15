@@ -11,6 +11,7 @@ import {
     IKpiWidget,
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
@@ -195,6 +196,15 @@ export const selectAnalyticalWidgetByRef: (
 
         return widget;
     }),
+);
+
+/**
+ * @alpha
+ */
+export const selectIgnoredDrillDownHierarchiesByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IDrillDownReference[]> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.ignoredDrillDownHierarchies ?? []),
 );
 
 /**

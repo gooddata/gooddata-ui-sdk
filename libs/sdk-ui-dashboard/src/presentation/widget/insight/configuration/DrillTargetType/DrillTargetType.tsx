@@ -12,6 +12,7 @@ export interface IDrillTargetProps {
     onSelect: (target: DRILL_TARGET_TYPE) => void;
     selection?: DRILL_TARGET_TYPE;
     enabledDrillTargetTypeItems: IDrillTargetType[];
+    isButtonDisabled: boolean;
 }
 
 const ITEM_HEIGHT = 25;
@@ -36,7 +37,7 @@ const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) =
 };
 
 export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (props) => {
-    const { selection, enabledDrillTargetTypeItems } = props;
+    const { selection, enabledDrillTargetTypeItems, isButtonDisabled } = props;
     const intl = useIntl();
     const targetBySelection = getTargetBySelection(selection, enabledDrillTargetTypeItems);
     const buttonValue = targetBySelection
@@ -66,7 +67,7 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
                     value={buttonValue}
                     icon={getIconClassNameBySelection(selection)}
                     isOpen={isOpen}
-                    disabled={selection === DRILL_TARGET_TYPE.DRILL_DOWN}
+                    disabled={isButtonDisabled}
                     onClick={toggleDropdown}
                 />
             )}

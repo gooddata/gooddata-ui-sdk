@@ -47,6 +47,12 @@ export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogP
 // @internal (undocumented)
 export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
 
+// @internal (undocumented)
+export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetailBubbleProps>;
+
+// @internal (undocumented)
+export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetailPanelProps>;
+
 // @public
 export function clearInsightViewCaches(): void;
 
@@ -145,6 +151,32 @@ export interface IAddWorkspaceToSubjectsProps {
     organizationId: string;
     // (undocumented)
     subjectType: WorkspacePermissionSubject;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailBubbleProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailItem {
+    // (undocumented)
+    isDate: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailPanelProps {
+    // (undocumented)
+    attributes: IAttributeHierarchyDetailItem[];
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
