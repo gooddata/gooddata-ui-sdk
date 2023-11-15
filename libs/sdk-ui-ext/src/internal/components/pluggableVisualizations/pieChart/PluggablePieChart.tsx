@@ -221,6 +221,10 @@ export class PluggablePieChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <PieChartConfigurationPanel
                     locale={this.locale}
@@ -234,6 +238,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     references={this.references}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

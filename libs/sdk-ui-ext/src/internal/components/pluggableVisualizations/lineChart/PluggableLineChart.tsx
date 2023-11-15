@@ -237,6 +237,10 @@ export class PluggableLineChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -251,6 +255,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

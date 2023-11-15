@@ -18,6 +18,7 @@ import {
     useDashboardSelector,
     selectEnableAttributeHierarchies,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+    selectInsightByRef,
 } from "../../../../../model/index.js";
 import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import { IDrillConfigItem } from "../../../../drill/types.js";
@@ -100,7 +101,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const { widgetRef } = props;
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget");
-
+    const insight = useDashboardSelector(selectInsightByRef(widget.insight));
     const { drills: widgetDrills } = widget;
     const { incompleteItems, deleteIncompleteItem, onChangeItem, onOriginSelect, completeItem, isItemNew } =
         useIncompleteItems({ widgetDrills });
@@ -184,6 +185,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
 
     return {
         widget,
+        insight,
         enableKDZooming,
         drillConfigItems: mergedItems,
         originSelectorItems,

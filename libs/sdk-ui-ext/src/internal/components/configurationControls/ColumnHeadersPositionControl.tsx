@@ -10,7 +10,6 @@ import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { messages } from "../../../locales.js";
 import ConfigSubsection from "./ConfigSubsection.js";
-import { ConfigDummySection } from "./ConfigDummySection.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 
 export interface IColumnHeadersPositionControlProps {
@@ -37,20 +36,18 @@ class ColumnHeadersPositionControl extends React.Component<
             : defaultValue;
 
         return (
-            <ConfigDummySection id="column_header_position_section">
-                <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
-                    <DropdownControl
-                        value={columnHeadersPosition}
-                        valuePath="columnHeadersPosition"
-                        labelText={messages.columnHeaderPositionLabel.id}
-                        disabled={isDisabled}
-                        properties={properties}
-                        pushData={pushData}
-                        items={getTranslatedDropdownItems(columnHeadersPositionDropdownItems, intl)}
-                        showDisabledMessage={isDisabled}
-                    />
-                </ConfigSubsection>
-            </ConfigDummySection>
+            <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
+                <DropdownControl
+                    value={columnHeadersPosition}
+                    valuePath="columnHeadersPosition"
+                    labelText={messages.columnHeaderPositionLabel.id}
+                    disabled={isDisabled}
+                    properties={properties}
+                    pushData={pushData}
+                    items={getTranslatedDropdownItems(columnHeadersPositionDropdownItems, intl)}
+                    showDisabledMessage={isDisabled}
+                />
+            </ConfigSubsection>
         );
     }
 }

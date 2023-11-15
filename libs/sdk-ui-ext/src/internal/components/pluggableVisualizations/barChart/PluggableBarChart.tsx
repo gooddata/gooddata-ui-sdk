@@ -63,7 +63,6 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         this.defaultControlsProperties = {
             stackMeasures: false,
         };
-
         this.initializeProperties(props.visualizationProperties);
     }
 
@@ -75,6 +74,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <BarChartConfigurationPanel
                     locale={this.locale}
@@ -89,6 +92,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

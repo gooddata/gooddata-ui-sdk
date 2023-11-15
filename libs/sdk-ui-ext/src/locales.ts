@@ -208,6 +208,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     columnHeaderPositionLabel: { id: "properties.column.headers.position" },
     columnHeaderPositionTop: { id: "properties.column.headers.position.top" },
     columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
+    interactions: { id: "properties.interactions.title" },
+    interactionsDrillDown: { id: "properties.interactions.drillDown" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

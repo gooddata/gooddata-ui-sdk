@@ -2,10 +2,11 @@
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { createSelector } from "@reduxjs/toolkit";
-import { IInsight, insightRef, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, insightRef, ObjRef } from "@gooddata/sdk-model";
 import { ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
+import { selectWidgetByRef } from "../layout/layoutSelectors.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 
@@ -55,5 +56,17 @@ export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<
     createMemoizedSelector((ref: ObjRef | undefined) => {
         return createSelector(selectInsightsMap, (insights) => {
             return ref && insights.get(ref);
+        });
+    });
+
+/**
+ * Selects insight used on a dashboard by widget ref.
+ *
+ * @alpha
+ */
+export const selectInsightByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined> =
+    createMemoizedSelector((ref: ObjRef | undefined) => {
+        return createSelector(selectWidgetByRef(ref), selectInsightsMap, (widget, insights) => {
+            return insights.get((widget as IInsightWidget)?.insight);
         });
     });

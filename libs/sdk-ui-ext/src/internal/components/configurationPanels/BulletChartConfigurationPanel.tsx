@@ -104,6 +104,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                         />
                     </ConfigSection>
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
                         title={messages.canvasTitle.id}

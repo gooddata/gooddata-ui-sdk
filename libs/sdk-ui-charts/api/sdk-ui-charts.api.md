@@ -264,6 +264,8 @@ export interface IChartConfig {
     continuousLine?: IContinuousLineConfig;
     dataLabels?: IDataLabelsConfig;
     dataPoints?: IDataPointsConfig;
+    // @internal
+    disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
     enableChartSorting?: boolean;

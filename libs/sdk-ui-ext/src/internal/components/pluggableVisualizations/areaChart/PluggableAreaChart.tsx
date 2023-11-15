@@ -225,8 +225,12 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
         const configPanelElement = this.getConfigPanelElement();
-
         if (configPanelElement) {
+            const panelConfig = {
+                isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAccessControl,
+            };
+
             this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -240,9 +244,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
-                    panelConfig={{
-                        isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
-                    }}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

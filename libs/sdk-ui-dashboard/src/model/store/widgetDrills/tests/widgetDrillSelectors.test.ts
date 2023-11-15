@@ -1,6 +1,8 @@
 // (C) 2023 GoodData Corporation
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+
 import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
 import {
     availableDrillTargets,
@@ -9,7 +11,19 @@ import {
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
 import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+
+let isDisableDrillDown = false;
+vi.mock("../../insights/insightsSelectors.js", () => ({
+    selectInsightByWidgetRef: () => () => ({
+        insight: {
+            properties: {
+                controls: {
+                    disableDrillDown: isDisableDrillDown,
+                },
+            },
+        },
+    }),
+}));
 
 describe("widgetDrillSelectors", () => {
     describe("selectGlobalDrillsDownAttributeHierarchyByWidgetRef", () => {
@@ -82,6 +96,19 @@ describe("widgetDrillSelectors", () => {
         });
 
         it("should return empty array if no drill targets are available", () => {
+            const initialState = createInitialState({
+                enableAttributeHierarchies: true,
+                supportsAttributeHierarchies: true,
+            });
+            expect(
+                selectGlobalDrillsDownAttributeHierarchyByWidgetRef(widgetRefWithoutAvailableDrillTargets)(
+                    initialState,
+                ),
+            ).toEqual([]);
+        });
+
+        it("should return empty array if the disableDrillDown is true", () => {
+            isDisableDrillDown = true;
             const initialState = createInitialState({
                 enableAttributeHierarchies: true,
                 supportsAttributeHierarchies: true,

@@ -6322,6 +6322,9 @@ export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) =>
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
 
+// @alpha
+export const selectInsightByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
+
 // @internal (undocumented)
 export const selectInsightListLastUpdateRequested: DashboardSelector<number>;
 

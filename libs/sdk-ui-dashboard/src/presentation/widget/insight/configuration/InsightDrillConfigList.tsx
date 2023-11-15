@@ -11,11 +11,12 @@ export interface IDrillConfigListProps {
     onDelete: (item: IDrillConfigItem) => void;
     onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
+    disableDrillDown?: boolean;
 }
 
 export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListProps> = (props) => {
-    const { drillConfigItems = [], onDelete, onSetup, onIncompleteChange } = props;
-    const enabledDrillTargetTypeItems = useDrillTargetTypeItems();
+    const { drillConfigItems = [], disableDrillDown, onDelete, onSetup, onIncompleteChange } = props;
+    const enabledDrillTargetTypeItems = useDrillTargetTypeItems(disableDrillDown);
 
     const shouldScrollToContainer = (item: IDrillConfigItem, isLast: boolean): boolean => {
         return !item.complete && isLast;
