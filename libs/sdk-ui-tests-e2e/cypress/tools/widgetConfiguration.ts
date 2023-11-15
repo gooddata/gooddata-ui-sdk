@@ -176,10 +176,11 @@ export class WidgetConfiguration {
 
     hasInteractionsCount(count: number) {
         cy.get(".s-drill-config-item").should("have.length", count);
+        return this;
     }
 
-    getDrillConfigItem(itemName: string) {
-        return new DrillConfigItem(itemName);
+    getDrillConfigItem(itemName: string, itemIndex: number = 0) {
+        return new DrillConfigItem(itemName, itemIndex);
     }
 
     checkEdit() {
@@ -222,11 +223,16 @@ export class WidgetConfiguration {
 type DrillType = "Drill into insight" | "Drill into dashboard" | "Drill into URL";
 
 class DrillConfigItem {
-    constructor(private itemName: string) {}
+    private readonly itemName: string;
+    private readonly itemIndex: number;
+    constructor(itemName: string, itemIndex: number = 0) {
+        this.itemName = itemName;
+        this.itemIndex = itemIndex;
+    }
 
     getElement() {
         const selector = getTestClassByTitle(this.itemName, "drill-config-item-");
-        cy.get(selector).contains("Loading…").should("not.exist");
+        cy.get(selector).eq(this.itemIndex ?? 0).contains("Loading…").should("not.exist");
         return cy.get(selector);
     }
 

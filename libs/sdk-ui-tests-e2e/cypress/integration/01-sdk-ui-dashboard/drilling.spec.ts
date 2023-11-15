@@ -82,6 +82,109 @@ describe("Interaction", () => {
             message.hasWarningMessage(false);
         },
     );
+
+    it(
+        "Users can create multiple interactions per attribute/measure",
+        { tags: ["pre-merge_isolated_tiger"] },
+        () => {
+            Navigation.visit("dashboard/drill-to-dashboard", { enableAttributeHierarchies: true });
+            editMode.edit();
+
+            const widget = new Widget(1);
+            const widgetConfig = new WidgetConfiguration(1);
+            widget.waitChartLoaded().focus();
+            widgetConfig
+                .openInteractions()
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 1)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard Hide Filters");
+
+            widgetConfig
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 2)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard order");
+
+            widgetConfig
+                .addInteraction("Sales Rep", "attribute")
+                .getDrillConfigItem("Sales Rep", 0)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard Hide Filters");
+
+            widgetConfig
+                .addInteraction("Sales Rep", "attribute")
+                .getDrillConfigItem("Sales Rep", 1)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard order");
+
+            widgetConfig.hasInteractionsCount(5).close().openInteractions().hasInteractionsCount(5);
+        },
+    );
+
+    it(
+        "Users can delete interaction in case attr/measure have multiple interactions",
+        { tags: ["pre-merge_isolated_tiger"] },
+        () => {
+            Navigation.visit("dashboard/drill-to-dashboard", { enableAttributeHierarchies: true });
+            editMode.edit();
+
+            const widget = new Widget(1);
+            const widgetConfig = new WidgetConfiguration(1);
+            widget.waitChartLoaded().focus();
+            widgetConfig
+                .openInteractions()
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 1)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard Hide Filters");
+            widgetConfig
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 2)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard order");
+
+            widgetConfig.hasInteractionsCount(3).getDrillConfigItem("Amount", 1).remove();
+
+            widgetConfig.hasInteractionsCount(2);
+            widgetConfig.getDrillConfigItem("Amount", 0).hasDashboardTarget("KPIs");
+            widgetConfig.getDrillConfigItem("Amount", 1).hasDashboardTarget("Dashboard order");
+        },
+    );
+
+    it(
+        "Users can edit interaction in case attr/measure have multiple interactions",
+        { tags: ["pre-merge_isolated_tiger"] },
+        () => {
+            Navigation.visit("dashboard/drill-to-dashboard", { enableAttributeHierarchies: true });
+            editMode.edit();
+
+            const widget = new Widget(1);
+            const widgetConfig = new WidgetConfiguration(1);
+            widget.waitChartLoaded().focus();
+            widgetConfig
+                .openInteractions()
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 1)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard Hide Filters");
+            widgetConfig
+                .addInteraction("Amount", "measure")
+                .getDrillConfigItem("Amount", 2)
+                .chooseAction("Drill into dashboard")
+                .chooseTargetDashboard("Dashboard order");
+
+            widgetConfig
+                .hasInteractionsCount(3)
+                .getDrillConfigItem("Amount", 1)
+                .chooseTargetDashboard("Dashboard Testing");
+
+            widgetConfig.hasInteractionsCount(3);
+            widgetConfig.getDrillConfigItem("Amount", 0).hasDashboardTarget("KPIs");
+            widgetConfig.getDrillConfigItem("Amount", 1).hasDashboardTarget("Dashboard Testing");
+            widgetConfig.getDrillConfigItem("Amount", 2).hasDashboardTarget("Dashboard order");
+        },
+    );
 });
 
 describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
