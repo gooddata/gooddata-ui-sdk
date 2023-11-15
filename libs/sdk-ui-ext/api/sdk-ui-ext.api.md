@@ -47,6 +47,12 @@ export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogP
 // @internal (undocumented)
 export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
 
+// @alpha (undocumented)
+export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetailBubbleProps>;
+
+// @alpha (undocumented)
+export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetailPanelProps>;
+
 // @public
 export function clearInsightViewCaches(): void;
 
@@ -145,6 +151,32 @@ export interface IAddWorkspaceToSubjectsProps {
     organizationId: string;
     // (undocumented)
     subjectType: WorkspacePermissionSubject;
+}
+
+// @alpha (undocumented)
+export interface IAttributeHierarchyDetailBubbleProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeHierarchyDetailItem {
+    // (undocumented)
+    isDate: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeHierarchyDetailPanelProps {
+    // (undocumented)
+    attributes: IAttributeHierarchyDetailItem[];
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
@@ -422,6 +454,11 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 
 // @alpha (undocumented)
 export type LayoutType = "fluid";
+
+// @alpha (undocumented)
+export const PANEL_ALIGN_POINTS: {
+    align: string;
+}[];
 
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {

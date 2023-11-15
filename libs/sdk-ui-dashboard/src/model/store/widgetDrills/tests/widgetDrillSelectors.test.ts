@@ -5,11 +5,13 @@ import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDr
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
+    ignoredHierarchies,
     widgetRef,
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
 import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import * as layoutSelectors from "../../layout/layoutSelectors.js";
 
 describe("widgetDrillSelectors", () => {
     describe("selectGlobalDrillsDownAttributeHierarchyByWidgetRef", () => {
@@ -46,6 +48,16 @@ describe("widgetDrillSelectors", () => {
                     }
 
                     return () => undefined;
+                },
+            );
+
+            vi.spyOn(layoutSelectors, "selectIgnoredDrillDownHierarchiesByWidgetRef").mockImplementation(
+                (widget: ObjRef) => {
+                    if (objRefToString(widget) === objRefToString(widgetRef)) {
+                        return () => ignoredHierarchies;
+                    }
+
+                    return () => [];
                 },
             );
         });

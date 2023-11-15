@@ -12,6 +12,8 @@ import {
     ObjRef,
     areObjRefsEqual,
     objRefToString,
+    isAttributeHierarchyReference,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 
 import {
@@ -29,6 +31,8 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
 import isEmpty from "lodash/isEmpty.js";
 import negate from "lodash/negate.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../layout/layoutSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -152,43 +156,51 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
  *
  * @beta
  */
-export const selectAttributesWithHierarchyDescendants: DashboardSelector<Record<string, ObjRef[]>> =
+export const selectAttributesWithHierarchyDescendants: (
+    ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector(
+    (ignoredDrillDownHierarchies: IDrillDownReference[] | undefined) =>
+        createSelector(
+            [selectCatalogAttributes, selectCatalogDateAttributes, selectCatalogAttributeHierarchies],
+            (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
+                return getAttributesWithHierarchyDescendants(
+                    attributes,
+                    dateAttributes,
+                    attributeHierarchies,
+                    ignoredDrillDownHierarchies,
+                );
+            },
+        ),
+);
+
+/**
+ * @alpha
+ */
+export const selectAttributesWithHierarchyDescendantsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
-        [selectCatalogAttributes, selectCatalogDateAttributes, selectCatalogAttributeHierarchies],
-        (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
-            const allCatalogAttributes = [...attributes, ...dateAttributes];
-            const attributeDescendants: Record<string, ObjRef[]> = {};
-
-            allCatalogAttributes.forEach((attribute) => {
-                const attributeRef = attribute.attribute.ref;
-                attributeHierarchies.forEach((hierarchy) => {
-                    const hierarchyAttributes = hierarchy.attributeHierarchy.attributes;
-                    const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
-                        areObjRefsEqual(ref, attributeRef),
-                    );
-
-                    if (foundAttributeIndex < 0) {
-                        return;
-                    }
-
-                    const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
-
-                    if (!foundDescendant) {
-                        return;
-                    }
-
-                    const attributeRefAsString = objRefToString(attributeRef);
-                    if (attributeDescendants[attributeRefAsString]) {
-                        attributeDescendants[attributeRefAsString].push(foundDescendant);
-                    } else {
-                        attributeDescendants[attributeRefAsString] = [foundDescendant];
-                    }
-                });
-            });
-
-            return attributeDescendants;
+        [
+            selectCatalogAttributes,
+            selectCatalogDateAttributes,
+            selectCatalogAttributeHierarchies,
+            selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
+        ],
+        (
+            attributes = [],
+            dateAttributes = [],
+            attributeHierarchies = [],
+            ignoredDrillDownHierarchies = [],
+        ) => {
+            return getAttributesWithHierarchyDescendants(
+                attributes,
+                dateAttributes,
+                attributeHierarchies,
+                ignoredDrillDownHierarchies,
+            );
         },
-    );
+    ),
+);
 
 /**
  * @internal
@@ -281,3 +293,58 @@ export const selectCatalogDateAttributeToDataset: DashboardSelector<
         capabilities.hasTypeScopedIdentifiers,
     );
 });
+
+function getAttributesWithHierarchyDescendants(
+    attributes: ICatalogAttribute[],
+    dateAttributes: ICatalogDateAttribute[],
+    attributeHierarchies: ICatalogAttributeHierarchy[],
+    ignoredDrillDownHierarchies: IDrillDownReference[] = [],
+): Record<string, ObjRef[]> {
+    const allCatalogAttributes = [...attributes, ...dateAttributes];
+    const attributeDescendants: Record<string, ObjRef[]> = {};
+
+    allCatalogAttributes.forEach((attribute) => {
+        const attributeRef = attribute.attribute.ref;
+        attributeHierarchies.forEach((hierarchy) => {
+            const hierarchyAttributes = hierarchy.attributeHierarchy.attributes.filter((attrRef) => {
+                const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) => {
+                    if (isAttributeHierarchyReference(reference)) {
+                        return (
+                            areObjRefsEqual(reference.attributeHierarchy, hierarchy.attributeHierarchy.ref) &&
+                            objRefToString(reference.label) === objRefToString(attrRef)
+                        );
+                    } else {
+                        return (
+                            areObjRefsEqual(
+                                reference.dateHierarchyTemplate,
+                                hierarchy.attributeHierarchy.ref,
+                            ) && objRefToString(reference.dateDatasetAttribute) === objRefToString(attrRef)
+                        );
+                    }
+                });
+                return ignoredIndex < 0;
+            });
+            const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
+                areObjRefsEqual(ref, attributeRef),
+            );
+
+            if (foundAttributeIndex < 0) {
+                return;
+            }
+
+            const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
+
+            if (!foundDescendant) {
+                return;
+            }
+
+            const attributeRefAsString = objRefToString(attributeRef);
+            if (attributeDescendants[attributeRefAsString]) {
+                attributeDescendants[attributeRefAsString].push(foundDescendant);
+            } else {
+                attributeDescendants[attributeRefAsString] = [foundDescendant];
+            }
+        });
+    });
+    return attributeDescendants;
+}

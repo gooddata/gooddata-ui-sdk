@@ -2,6 +2,7 @@
 import React from "react";
 import {
     DrillOrigin,
+    ICatalogAttributeHierarchy,
     idRef,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
@@ -28,11 +29,14 @@ import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyIt
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;
-    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
+    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
 }
 
 export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props) => {
     const { item } = props;
+    const onDrillDownTargetSelect = (targetItem: ICatalogAttributeHierarchy) => {
+        props.onSetup(undefined, { ...item, attributeHierarchyRef: targetItem.attributeHierarchy.ref });
+    };
     const onInsightTargetSelect = (targetItem: IInsight) => {
         const drillConfigItem: IDrillToInsight = {
             localIdentifier: item.localIdentifier,
@@ -103,7 +107,12 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
                 />
             );
         case DRILL_TARGET_TYPE.DRILL_DOWN:
-            return <DrillTargetAttributeHierarchyItem config={item as IDrillDownAttributeHierarchyConfig} />;
+            return (
+                <DrillTargetAttributeHierarchyItem
+                    onSelect={onDrillDownTargetSelect}
+                    config={item as IDrillDownAttributeHierarchyConfig}
+                />
+            );
         case undefined:
             return null;
         default:

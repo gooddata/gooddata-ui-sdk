@@ -18,6 +18,8 @@ import {
     ICatalogDateAttribute,
     objRefToString,
     ICatalogAttributeHierarchy,
+    IDrillDownReference,
+    isAttributeHierarchyReference,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -28,13 +30,17 @@ import {
 } from "@gooddata/sdk-ui";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { DashboardDrillDefinition, IGlobalDrillDownAttributeHierarchyDefinition } from "../../../types.js";
-import { selectWidgetDrills } from "../layout/layoutSelectors.js";
+import {
+    selectIgnoredDrillDownHierarchiesByWidgetRef,
+    selectWidgetDrills,
+} from "../layout/layoutSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
+    selectAttributesWithHierarchyDescendantsByWidgetRef,
     selectCatalogAttributeHierarchies,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
@@ -181,6 +187,7 @@ function getDrillDefinitionsWithPredicates(
 function getGlobalDrillDownAttributeHierarchyDefinitions(
     catalogAttributeHierarchies: ICatalogAttributeHierarchy[],
     availableDrillTargets?: IAvailableDrillTargets,
+    ignoredDrillDownHierarchies: IDrillDownReference[] = [],
 ) {
     const availableAttributes = availableDrillTargets?.attributes ?? [];
     const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [];
@@ -199,7 +206,20 @@ function getGlobalDrillDownAttributeHierarchyDefinitions(
                 const isAttributeInHierarchy = attributeIdentifiers.includes(
                     objRefToString(attributeHeader.formOf.ref),
                 );
-                if (isAttributeInHierarchy) {
+                const inBlacklistIndex = ignoredDrillDownHierarchies.findIndex((reference) => {
+                    if (isAttributeHierarchyReference(reference)) {
+                        return (
+                            areObjRefsEqual(reference.attributeHierarchy, ref) &&
+                            objRefToString(reference.label) === attributeHeader.identifier
+                        );
+                    } else {
+                        return (
+                            areObjRefsEqual(reference.dateHierarchyTemplate, ref) &&
+                            objRefToString(reference.dateDatasetAttribute) === attributeHeader.identifier
+                        );
+                    }
+                });
+                if (isAttributeInHierarchy && inBlacklistIndex < 0) {
                     globalDrillDowns.push({
                         type: "drillDown",
                         origin: localIdRef(attributeHeader.localIdentifier),
@@ -224,7 +244,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
-        selectAttributesWithHierarchyDescendants,
+        selectAttributesWithHierarchyDescendantsByWidgetRef(ref),
         selectAllCatalogAttributesMap,
         selectIsDrillDownEnabled,
         (
@@ -258,11 +278,13 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
         createSelector(
             selectDrillTargetsByWidgetRef(ref),
             selectCatalogAttributeHierarchies,
+            selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
             selectEnableAttributeHierarchies,
             selectSupportsAttributeHierarchies,
             (
                 availableDrillTargets,
                 catalogAttributeHierarchies,
+                ignoredDrillDownHierarchies,
                 enableAttributeHierarchies,
                 supportAttributeHierarchies,
             ) => {
@@ -270,6 +292,7 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
                     return getGlobalDrillDownAttributeHierarchyDefinitions(
                         catalogAttributeHierarchies,
                         availableDrillTargets?.availableDrillTargets,
+                        ignoredDrillDownHierarchies,
                     );
                 }
 
@@ -481,11 +504,15 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
  */
 export const selectImplicitDrillsByAvailableDrillTargets: (
     availableDrillTargets: IAvailableDrillTargets | undefined,
+    ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector(
-    (availableDrillTargets: IAvailableDrillTargets | undefined) =>
+    (
+        availableDrillTargets: IAvailableDrillTargets | undefined,
+        ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+    ) =>
         createSelector(
             selectAttributesWithDisplayFormLink,
-            selectAttributesWithHierarchyDescendants,
+            selectAttributesWithHierarchyDescendants(ignoredDrillDownHierarchies),
             selectAllCatalogAttributesMap,
             selectIsDrillDownEnabled,
             (
@@ -517,10 +544,14 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
  */
 export const selectDrillableItemsByAvailableDrillTargets: (
     availableDrillTargets: IAvailableDrillTargets | undefined,
+    ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
 ) => DashboardSelector<IHeaderPredicate[]> = createMemoizedSelector(
-    (availableDrillTargets: IAvailableDrillTargets | undefined) =>
+    (
+        availableDrillTargets: IAvailableDrillTargets | undefined,
+        ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+    ) =>
         createSelector(
-            selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets),
+            selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets, ignoredDrillDownHierarchies),
             (implicitDrillDowns) => {
                 return flatMap(implicitDrillDowns, (implicitDrill) => implicitDrill.predicates);
             },

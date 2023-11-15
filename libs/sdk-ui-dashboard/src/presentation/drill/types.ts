@@ -144,6 +144,7 @@ export interface IDrillConfigItemBase {
     complete: boolean;
     warning?: string;
     attributes: IAvailableDrillTargetMeasure["attributes"];
+    widgetRef: ObjRef;
 }
 
 export type IDrillConfigItem =

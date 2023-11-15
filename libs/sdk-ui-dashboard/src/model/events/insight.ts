@@ -9,6 +9,7 @@ import {
     IInsightWidgetDefinition,
     ICatalogDateDataset,
     IInsightWidgetConfiguration,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base.js";
@@ -518,6 +519,100 @@ export function insightWidgetDrillsRemoved(
 export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsightWidgetDrillsRemoved>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
 );
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownRemovedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Drill down references that were removed.
+     */
+    readonly removed: IDrillDownReference[];
+}
+
+/**
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED";
+    readonly payload: DashboardInsightWidgetDrillDownRemovedPayload;
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetDrillDownRemoved(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    removed: IDrillDownReference[],
+    correlationId?: string,
+): DashboardInsightWidgetDrillDownRemoved {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            removed,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownAddedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Drill down references that were added.
+     */
+    readonly added: IDrillDownReference[];
+}
+
+/**
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownAdded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED";
+    readonly payload: DashboardInsightWidgetDrillDownAddedPayload;
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetDrillDownAdded(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    added: IDrillDownReference[],
+    correlationId?: string,
+): DashboardInsightWidgetDrillDownAdded {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            added,
+        },
+    };
+}
 
 //
 //

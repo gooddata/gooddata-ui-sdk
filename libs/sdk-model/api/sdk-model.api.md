@@ -625,6 +625,16 @@ export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdenti
     type: "attributeHierarchy";
 }
 
+// @alpha (undocumented)
+export interface IAttributeHierarchyReference {
+    // (undocumented)
+    attributeHierarchy: ObjRef;
+    // (undocumented)
+    label: ObjRef;
+    // (undocumented)
+    type: "attributeHierarchyReference";
+}
+
 // @public
 export interface IAttributeLocatorItem {
     // (undocumented)
@@ -1143,6 +1153,16 @@ export interface IDateFilterOption {
     visible: boolean;
 }
 
+// @alpha (undocumented)
+export interface IDateHierarchyReference {
+    // (undocumented)
+    dateDatasetAttribute: ObjRef;
+    // (undocumented)
+    dateHierarchyTemplate: ObjRef;
+    // (undocumented)
+    type: "dateHierarchyReference";
+}
+
 // @public
 export type Identifier = string;
 
@@ -1190,7 +1210,12 @@ export interface IDrill {
 // @public
 export interface IDrillableWidget {
     readonly drills: DrillDefinition[];
+    // @alpha
+    readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
 }
+
+// @alpha (undocumented)
+export type IDrillDownReference = IAttributeHierarchyReference | IDateHierarchyReference;
 
 // @public
 export interface IDrillFromAttribute extends IDrillOrigin {
@@ -2199,6 +2224,9 @@ export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
 
 // @public
 export function isAttributeHierarchyMetadataObject(obj: unknown): obj is IAttributeHierarchyMetadataObject;
+
+// @alpha
+export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHierarchyReference;
 
 // @public
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;

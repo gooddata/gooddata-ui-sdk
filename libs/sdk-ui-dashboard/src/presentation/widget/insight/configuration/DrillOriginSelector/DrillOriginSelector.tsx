@@ -6,10 +6,12 @@ import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import DrillOriginSelectorBody from "./DrillOriginSelectorBody.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+import { ObjRef } from "@gooddata/sdk-model";
 
 export interface IDrillOriginSelectorProps {
     items: IAvailableDrillTargets;
-    onSelect: (item: IAvailableDrillTargetItem) => void;
+    onSelect: (item: IAvailableDrillTargetItem, widgetRef: ObjRef) => void;
+    widgetRef: ObjRef;
 }
 
 const DROPDOWN_ALIGN_POINTS = [
@@ -30,10 +32,10 @@ const DROPDOWN_ALIGN_POINTS = [
 ];
 
 export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorProps> = (props) => {
-    const { items } = props;
+    const { items, widgetRef } = props;
 
     const onSelect = (selected: IAvailableDrillTargetItem) => {
-        props.onSelect(selected);
+        props.onSelect(selected, widgetRef);
     };
     const intl = useIntl();
 

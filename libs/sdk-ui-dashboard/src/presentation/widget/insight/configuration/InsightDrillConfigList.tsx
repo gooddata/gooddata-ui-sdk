@@ -9,7 +9,7 @@ import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 export interface IDrillConfigListProps {
     drillConfigItems?: IDrillConfigItem[];
     onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
+    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
 }
 

@@ -2,8 +2,12 @@
 import React from "react";
 import noop from "lodash/noop.js";
 import cx from "classnames";
-import { SingleSelectListItem, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
-
+import {
+    SingleSelectListItem,
+    ISingleSelectListItemProps,
+    BubbleHoverTrigger,
+    Bubble,
+} from "@gooddata/sdk-ui-kit";
 import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
 
 interface IDrillTargetTypeListItemProps extends ISingleSelectListItemProps {
@@ -25,12 +29,23 @@ const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
     });
 
     return (
-        <SingleSelectListItem
-            className={className}
-            title={item.title}
-            isSelected={isSelected}
-            onClick={handleClick}
-        />
+        <BubbleHoverTrigger hideDelay={0} showDelay={0}>
+            <SingleSelectListItem
+                className={className}
+                title={item.title}
+                isSelected={isSelected}
+                onClick={handleClick}
+            />
+            {item.disabled && item.disableTooltipMessage ? (
+                <Bubble
+                    className="bubble-primary"
+                    alignPoints={[{ align: "cr cl" }]}
+                    arrowOffsets={{ "cr cl": [15, 0] }}
+                >
+                    {item.disableTooltipMessage}
+                </Bubble>
+            ) : null}
+        </BubbleHoverTrigger>
     );
 };
 

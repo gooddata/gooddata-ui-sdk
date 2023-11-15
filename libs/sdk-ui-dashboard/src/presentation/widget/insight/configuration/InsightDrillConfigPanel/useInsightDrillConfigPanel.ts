@@ -4,23 +4,36 @@ import { defineMessages } from "react-intl";
 import { invariant } from "ts-invariant";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { InsightDrillDefinition, isInsightWidget, localIdRef, ObjRef } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IDrillDownReference,
+    InsightDrillDefinition,
+    isInsightWidget,
+    localIdRef,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 import {
     modifyDrillsForInsightWidget,
+    removeDrillDownForInsightWidget,
     removeDrillsForInsightWidget,
-    selectDrillTargetsByWidgetRef,
-    selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
+    selectDrillTargetsByWidgetRef,
+    selectEnableAttributeHierarchies,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+    selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectSettings,
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
-    selectEnableAttributeHierarchies,
-    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+    addDrillDownForInsightWidget,
 } from "../../../../../model/index.js";
 import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
-import { IDrillConfigItem } from "../../../../drill/types.js";
+import {
+    DRILL_TARGET_TYPE,
+    IDrillConfigItem,
+    IDrillDownAttributeHierarchyConfig,
+} from "../../../../drill/types.js";
 import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
 const messages = defineMessages({
@@ -127,13 +140,22 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
 
     const drillItems = useMemo(() => {
         return availableDrillTargets
-            ? getMappedConfigForWidget(widgetDrills, availableDrillTargets, invalidCustomUrlDrillLocalIds)
+            ? getMappedConfigForWidget(
+                  widgetDrills,
+                  availableDrillTargets,
+                  invalidCustomUrlDrillLocalIds,
+                  widgetRef,
+              )
             : [];
     }, [availableDrillTargets, widgetDrills, invalidCustomUrlDrillLocalIds]);
 
     const globalDrillDownItems = useMemo(() => {
         return availableDrillTargets
-            ? getGlobalDrillDownMappedConfigForWidget(widgetGlobalDrillDowns, availableDrillTargets)
+            ? getGlobalDrillDownMappedConfigForWidget(
+                  widgetGlobalDrillDowns,
+                  availableDrillTargets,
+                  widgetRef,
+              )
             : [];
     }, [widgetGlobalDrillDowns, availableDrillTargets]);
 
@@ -159,14 +181,30 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     );
 
     const onSetupItem = useCallback(
-        (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
+        (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => {
             const isNew = isItemNew(changedItem);
-            dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+            if (drill) {
+                dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+            }
 
             // we are not able remove incomplete items directly,it will change items in panel while command is processing
             // and this will not keep correct scroll.
             // we mark item complete and remove is done in useIncompleteItems when widget drills changed
             completeItem(changedItem);
+
+            if (changedItem.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN) {
+                const attributeDescriptor = changedItem.attributes.find(
+                    (attr) => attr.attributeHeader.localIdentifier === changedItem.originLocalIdentifier,
+                );
+                dispatch(
+                    addDrillDownForInsightWidget(
+                        widgetRef,
+                        idRef(attributeDescriptor!.attributeHeader.identifier, "displayForm"),
+                        (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+                    ),
+                );
+                deleteIncompleteItem(changedItem);
+            }
             addSuccess(isNew ? messages.added : messages.modified, { duration: 3000 });
         },
         [widgetRef, completeItem, addSuccess, isItemNew, dispatch],
@@ -175,7 +213,14 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const onDeleteItem = useCallback(
         (item: IDrillConfigItem) => {
             if (item.complete) {
-                dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
+                item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN
+                    ? dispatch(
+                          removeDrillDownForInsightWidget(
+                              widgetRef,
+                              buildBlacklistHierarchies(item as IDrillDownAttributeHierarchyConfig),
+                          ),
+                      )
+                    : dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
             }
             deleteIncompleteItem(item);
         },
@@ -195,3 +240,29 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         onDeleteItem,
     };
 };
+
+function buildBlacklistHierarchies(item: IDrillDownAttributeHierarchyConfig): IDrillDownReference[] {
+    const attributeDescriptor = item.attributes.find(
+        (attr) => attr.attributeHeader.localIdentifier === item.originLocalIdentifier,
+    );
+    if (!attributeDescriptor) {
+        return [];
+    }
+    const isDateAttribute = !!attributeDescriptor.attributeHeader.granularity;
+    if (isDateAttribute) {
+        return [
+            {
+                type: "dateHierarchyReference",
+                dateHierarchyTemplate: item.attributeHierarchyRef,
+                dateDatasetAttribute: idRef(attributeDescriptor.attributeHeader.identifier, "displayForm"),
+            },
+        ];
+    }
+    return [
+        {
+            type: "attributeHierarchyReference",
+            attributeHierarchy: item.attributeHierarchyRef,
+            label: idRef(attributeDescriptor.attributeHeader.identifier, "displayForm"),
+        },
+    ];
+}

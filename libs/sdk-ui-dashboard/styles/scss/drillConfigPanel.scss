@@ -145,6 +145,59 @@
     }
 }
 
+.hierarchies-dropdown-body {
+    height: 100px;
+}
+
+.drill-config-empty-hierarchy-target {
+    margin: 10px 0;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.attribute-hierarchy-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        color: kit-variables.$gd-palette-primary-base;
+    }
+}
+
+.attribute-hierarchy-list-item-content {
+    padding-left: 25px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    text-decoration: none;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 12px;
+        display: block;
+        width: 18px;
+        height: 24px;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: contain;
+    }
+}
+
+.attribute-hierarchy-list-item-description {
+    opacity: 0;
+
+    .attribute-hierarchy-list-item:hover & {
+        opacity: 1;
+    }
+}
+
 .gd-drill-config-measure-item {
     display: inline-flex;
     flex-wrap: nowrap;

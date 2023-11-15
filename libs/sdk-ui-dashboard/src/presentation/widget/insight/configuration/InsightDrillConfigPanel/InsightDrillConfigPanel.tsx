@@ -48,7 +48,11 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                     onIncompleteChange={onChangeItem}
                 />
                 {isOriginSelectorVisible ? (
-                    <DrillOriginSelector items={originSelectorItems} onSelect={onOriginSelect} />
+                    <DrillOriginSelector
+                        widgetRef={widgetRef}
+                        items={originSelectorItems}
+                        onSelect={onOriginSelect}
+                    />
                 ) : !isLoaded ? (
                     <div className="gd-spinner small" />
                 ) : null}

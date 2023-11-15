@@ -16,6 +16,7 @@ export interface IDrillTargetType {
     id: DRILL_TARGET_TYPE;
     title: string;
     disabled?: boolean;
+    disableTooltipMessage?: string;
 }
 
 export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
@@ -46,7 +47,6 @@ export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_DOWN,
             title: intl.formatMessage(messages.drillDownConfig),
-            disabled: true,
         });
     }
 
