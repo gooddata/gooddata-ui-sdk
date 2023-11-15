@@ -2015,5 +2015,190 @@
         "value": "Show less",
         "comment": "The button title which will display less description text.",
         "limit": 0
+    },
+    "configurationPanel.drillConfig.learn.more.link": {
+        "value": "Learn more",
+        "comment": "Link with additional info",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToDashboard.tooltip": {
+        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context.",
+        "comment": "Tooltip that explain what happens when drilling to dashboard",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToInsight.tooltip": {
+        "value": "Open a related insight, maintaining the applied filters from the original view.",
+        "comment": "Tooltip that explain what happens when drilling to insight",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToUrl.tooltip": {
+        "value": "Open a custom URL with dynamic parameters based on the selected data point.",
+        "comment": "Tooltip that explain what happens when drilling to custom URL",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown": {
+        "value": "Drill down",
+        "comment": "The title of the drill down action.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip": {
+        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level.",
+        "comment": "Tooltip that explain what happens when drilling down",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
+        "value": "Drill down is turned off in this insight's configuration.",
+        "comment": "Tooltip that explain drill down is disabled by insight's configuration",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric": {
+        "value": "Drill down can only be set for attributes, not metrics.",
+        "comment": "Tooltip that explain drill down is disabled for metrics",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.emtpy.hierarchy.info": {
+        "value": "Attribute must be in a hierarchy to enable drill down.",
+        "comment": "Label show on drill down configuration that there is no hierarchy defined for the attribute",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.create.hierarchy": {
+        "value": "Create attribute hierarchy",
+        "comment": "Link to create attribute hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.untitled": {
+        "value": "Untitled attribute hierarchy",
+        "comment": "Default title in attribute hierarchy editor",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.hierarchy.levels": {
+        "value": "Hierarchy levels",
+        "comment": "Label show hierarchy levels",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.cancel": {
+        "value": "Cancel",
+        "comment": "Text of cancel button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.create": {
+        "value": "Create hierarchy",
+        "comment": "Text of create button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.save": {
+        "value": "Save changes",
+        "comment": "Text of save button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.delete": {
+        "value": "Delete",
+        "comment": "Text of delete button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.delete.confirm.title": {
+        "value": "Delete attribute hierarchy?",
+        "comment": "Title in confirm dialog when deleting hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.delete.confirm.message": {
+        "value": "All existing drill down interactions using this hierarchy will be removed.",
+        "comment": "Text in confirm dialog when deleting hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.remove.attribute": {
+        "value": "Remove",
+        "comment": "Tooltip for button remove attribute in hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute": {
+        "value": "Add attribute",
+        "comment": "Text for button add attribute in hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute.above": {
+        "value": "Add attribute above",
+        "comment": "Text for button add attribute above the current item",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute.bellow": {
+        "value": "Add attribute bellow",
+        "comment": "Text for button add attribute bellow the current item",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howToWork.link": {
+        "value": "How to work with hierarchies",
+        "comment": "Link to document describe how attribute hierarchy works",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.attribute.dropdown.title": {
+        "value": "Choose attribute ...",
+        "comment": "",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.attribute.dropdown.search": {
+        "value": "Search ...",
+        "comment": "",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.note.title": {
+        "value": "Note:",
+        "comment": "",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.note.message": {
+        "value": "Hierarchy is applied to all visualizations containing one of its attribute.",
+        "comment": "",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.title": {
+        "value": "How it works",
+        "comment": "Title of description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.message.heading": {
+        "value": "Hierarchy is applied to all visualizations.",
+        "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.message.content": {
+        "value": "Drill down interaction will be enabled to not only this visualization, but all visualization containing one of the attributes in hierarchy.",
+        "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.generic.date.title": {
+        "value": "Generic date",
+        "comment": "Title of hierarchy for date",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.generic.date.info": {
+        "value": "This hierarchy is generated automatically and applies to any date dimension.",
+        "comment": "Text show in date hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.hierarchy.levels": {
+        "value": "Hierarchy levels",
+        "comment": "",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.button.edit": {
+        "value": "Edit",
+        "comment": "Text for edit button",
+        "limit": 0
+    },
+    "catalog.attribute.tooltip.hierarchy.title": {
+        "value": "Hierarchy",
+        "comment": "Title of hierarchy section",
+        "limit": 0
+    },
+    "visualizationConfig.interactions.section.title": {
+        "value": "Interactions",
+        "comment": "Title of interactions section",
+        "limit": 0
+    },
+    "visualizationConfig.interactions.section.drilldown": {
+        "value": "Drill down",
+        "comment": "Text of drill down option",
+        "limit": 0
     }
 }
