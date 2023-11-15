@@ -18,7 +18,7 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
 
     return (
         <DropdownButton
-            className="gd-button-small s-visualization-button-target-insight"
+            className="gd-button-small s-visualization-button-target-hierarchy"
             value={selectedCatalogAttributeHierarchy?.attributeHierarchy.title}
             disabled={true}
             isSmall={false}
