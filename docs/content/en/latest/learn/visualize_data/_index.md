@@ -19,11 +19,11 @@ This article explains how these methods differ and helps you decide which method
 ## InsightView component
 
 Using the [InsightView component](./insightview/) is the simplest method to implement because it requires the smallest amount of code to get going.
-The InsightView component allows you to embed insights created in [Analytical Designer](https://www.gooddata.com/developers/cloud-native/doc/cloud/create-visualizations/analytical-designer/) into your application as React components.
+The InsightView component allows you to embed insights created in [Analytical Designer](https://www.gooddata.com/docs/cloud/create-visualizations/analytical-designer/) into your application as React components.
 It always reflects the current state of an insight: if any changes are made to the insight in Analytical Designer,
 the InsightView component in your application will pick them up and show the up-to-date version of the insight without any actions needed from your side.
 
-You can [generate the code](https://www.gooddata.com/developers/cloud-native/doc/cloud/embed-visualizations/react-sdk/) for a particular InsightView directly in Analytical Designer.
+You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/) for a particular InsightView directly in Analytical Designer.
 
 ### When to use
 
@@ -53,7 +53,7 @@ GoodData.UI comes with several types of visualizations that you can use out of t
 They require more coding than the [InsightView component](#insightview-component) but at the same time offer more flexibility.
 For more information, see [Charts and Plots](./charts_and_plots/) .
 
-You can [generate the code](https://www.gooddata.com/developers/cloud-native/doc/cloud/embed-visualizations/react-sdk/#EmbedVisualizationsUsingReactSDK-EmbedVisualization) for a particular visual component directly in Analytical Designer.
+You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/#EmbedVisualizationsUsingReactSDK-EmbedVisualization) for a particular visual component directly in Analytical Designer.
 
 ### When to use
 
