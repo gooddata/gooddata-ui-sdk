@@ -56,13 +56,16 @@ This is how it works:
 
 1.  The program searches the `package.json` file for `gooddata` entry. If found, the program reads input parameters from this file.
 
+
+    TypeScript or JavaScript output files are generated based on the filename extension specified in the output parameter.
+
     The configuration can contain some, or all, of the parameters that you would typically provide on the command line:
 
     ```json
     {
         ...
         "gooddata": {
-            "hostname": "your.gooddata.hostname.com",
+            "hostname": "https://your.gooddata.hostname.com",
             "workspaceId": "your_gooddata_workspaceid",
             "catalogOutput": "desired_file_name.ts|js",
             "backend": "tiger|bear"
@@ -70,8 +73,11 @@ This is how it works:
         ...
     }
     ```
+{{% alert title="Hostname protocol" %}}
 
-    **NOTE:** TypeScript or JavaScript output files are generated based on the filename extension specified in the output parameter.
+The hostname has to include the protocol (`http://` / `https://`), otherwise you will get a fairly generic `connection refused` error, when trying to connect.
+
+{{% /alert %}}
 
 2.  It is not possible to specify credentials (`token`, `username` and `password` parameters) in `package.json` file, as it is typically saved in VCS (e.g. Git). Instead, credentials can be specified through environmental variables. We also load `.env` file if it's present in the same folder.
     
@@ -105,7 +111,7 @@ The `@gooddata/catalog-export` tool can work on top of either the GoodData Cloud
     {
         ...
         "gooddata": {
-            "hostname": "your.gooddata.hostname.com",
+            "hostname": "https://your.gooddata.hostname.com",
             "workspaceId": "your_gooddata_workspaceid",
             "catalogOutput": "desired_file_name.ts|js",
             "backend": "bear"
@@ -113,6 +119,12 @@ The `@gooddata/catalog-export` tool can work on top of either the GoodData Cloud
         ...
     }
     ```
+  
+{{% alert title="Hostname protocol" %}}
+
+The hostname has to include the protocol (`http://` / `https://`), otherwise you will get a fairly generic `connection refused` error, when trying to connect.
+
+{{% /alert %}}
 
 The tool uses Bearer token authentication when communicating with your GoodData Cloud instance or your GoodData.CN installation. For more information about how to obtain API tokens, see the [GoodData Cloud and GoodData.CN authentication page](../../integrate_and_authenticate/cn_and_cloud_authentication/).
 
