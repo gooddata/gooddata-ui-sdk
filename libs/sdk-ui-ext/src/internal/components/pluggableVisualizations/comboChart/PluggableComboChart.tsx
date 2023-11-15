@@ -422,6 +422,12 @@ export class PluggableComboChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
+                isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -436,10 +442,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
-                    panelConfig={{
-                        isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
-                        isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
-                    }}
+                    panelConfig={panelConfig}
                     dataLabelDefaultValue="auto"
                 />,
                 configPanelElement,

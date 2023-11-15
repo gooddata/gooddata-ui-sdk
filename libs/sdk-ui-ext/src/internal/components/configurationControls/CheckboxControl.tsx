@@ -16,6 +16,7 @@ export interface ICheckboxControlProps {
     showDisabledMessage?: boolean;
     disabledMessageId?: string;
     pushData(data: any): void;
+    isValueInverted?: boolean;
 }
 
 class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedComponentProps> {
@@ -52,10 +53,14 @@ class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedCom
     }
 
     private onValueChanged(event: React.ChangeEvent<HTMLInputElement>) {
-        const { valuePath, properties, pushData } = this.props;
+        const { valuePath, properties, pushData, isValueInverted = false } = this.props;
 
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+        set(
+            clonedProperties,
+            `controls.${valuePath}`,
+            isValueInverted ? !event.target.checked : event.target.checked,
+        );
 
         pushData({ properties: clonedProperties });
     }

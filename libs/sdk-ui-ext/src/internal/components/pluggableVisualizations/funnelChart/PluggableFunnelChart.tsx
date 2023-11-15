@@ -57,6 +57,10 @@ export class PluggableFunnelChart extends PluggablePieChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <FunnelChartConfigurationPanel
                     locale={this.locale}
@@ -70,6 +74,7 @@ export class PluggableFunnelChart extends PluggablePieChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     references={this.references}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

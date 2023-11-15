@@ -95,6 +95,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         />
                     </ConfigSection>
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
                         title={messages.canvasTitle.id}

@@ -1,15 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
+import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
 
 import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { IColorConfiguration } from "../../interfaces/Colors.js";
 import ColorsSection from "../configurationControls/colors/ColorsSection.js";
 import LegendSection from "../configurationControls/legend/LegendSection.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
-import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
-import noop from "lodash/noop.js";
+import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -98,5 +99,18 @@ export default abstract class ConfigurationPanelContent<
                 pushData={pushData}
             />
         );
+    }
+
+    protected renderInteractionsSection(): React.ReactNode {
+        const { featureFlags, pushData, properties, propertiesMeta, panelConfig } = this.props;
+
+        return featureFlags.enableAttributeHierarchies && panelConfig.supportsAttributeHierarchies ? (
+            <InteractionsSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                pushData={pushData}
+            />
+        ) : null;
     }
 }

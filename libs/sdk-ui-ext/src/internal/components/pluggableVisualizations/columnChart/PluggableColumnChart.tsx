@@ -53,7 +53,6 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         this.defaultControlsProperties = {
             stackMeasures: false,
         };
-
         this.initializeProperties(props.visualizationProperties);
     }
 

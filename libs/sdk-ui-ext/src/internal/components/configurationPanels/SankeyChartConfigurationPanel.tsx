@@ -24,6 +24,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
                 <div>
                     {this.renderColorSection()}
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
                 </div>
                 <Bubble

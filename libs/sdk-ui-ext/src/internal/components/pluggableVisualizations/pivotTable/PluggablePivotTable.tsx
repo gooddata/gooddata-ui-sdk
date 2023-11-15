@@ -530,6 +530,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 : properties;
 
             if (tableTranspositionEnabled(this.settings)) {
+                const panelConfig = {
+                    supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                };
+
                 this.renderFun(
                     <PivotTableConfigurationPanel
                         locale={this.locale}
@@ -540,6 +544,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         isError={this.getIsError()}
                         isLoading={this.isLoading}
                         featureFlags={this.settings}
+                        panelConfig={panelConfig}
                     />,
                     configPanelElement,
                 );

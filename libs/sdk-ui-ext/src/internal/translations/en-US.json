@@ -1378,6 +1378,16 @@
         "comment": "",
         "limit": 0
     },
+    "properties.interactions.title": {
+        "value": "Interactions",
+        "comment": "The title for the interactions configuration section",
+        "limit": 0
+    },
+    "properties.interactions.drillDown": {
+        "value": "Drill down",
+        "comment": "The text for the drill down checkbox",
+        "limit": 0
+    },
     "properties.comparison.title": {
         "value": "Comparison",
         "comment": "The title of comparison section",

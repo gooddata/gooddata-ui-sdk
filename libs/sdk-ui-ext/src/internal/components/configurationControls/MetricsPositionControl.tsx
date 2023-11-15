@@ -8,7 +8,6 @@ import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { messages } from "../../../locales.js";
 import ConfigSubsection from "./ConfigSubsection.js";
-import { ConfigDummySection } from "./ConfigDummySection.js";
 
 export interface IMetricsPositionControlProps {
     pushData: (data: any) => any;
@@ -28,20 +27,18 @@ class MetricsPositionControl extends React.Component<IMetricsPositionControlProp
         const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
 
         return (
-            <ConfigDummySection id="metric_position_section">
-                <ConfigSubsection title={messages.metricsPositionTitle.id}>
-                    <DropdownControl
-                        value={metricsPosition}
-                        valuePath="measureGroupDimension"
-                        labelText={messages.metricsPositionLabel.id}
-                        disabled={isDisabled}
-                        properties={properties}
-                        pushData={pushData}
-                        items={getTranslatedDropdownItems(metricsPositionDropdownItems, intl)}
-                        showDisabledMessage={showDisabledMessage}
-                    />
-                </ConfigSubsection>
-            </ConfigDummySection>
+            <ConfigSubsection title={messages.metricsPositionTitle.id}>
+                <DropdownControl
+                    value={metricsPosition}
+                    valuePath="measureGroupDimension"
+                    labelText={messages.metricsPositionLabel.id}
+                    disabled={isDisabled}
+                    properties={properties}
+                    pushData={pushData}
+                    items={getTranslatedDropdownItems(metricsPositionDropdownItems, intl)}
+                    showDisabledMessage={showDisabledMessage}
+                />
+            </ConfigSubsection>
         );
     }
 }

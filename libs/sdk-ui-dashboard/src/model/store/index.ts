@@ -184,6 +184,7 @@ export {
     selectInsightRefs,
     selectInsightsMap,
     selectInsightByRef,
+    selectInsightByWidgetRef,
 } from "./insights/insightsSelectors.js";
 export { CatalogState } from "./catalog/catalogState.js";
 export {

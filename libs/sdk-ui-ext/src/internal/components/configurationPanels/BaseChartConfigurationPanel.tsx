@@ -79,6 +79,7 @@ export default class BaseChartConfigurationPanel<
                     {this.renderColorSection()}
                     {this.getBaseChartAxisSection(axes)}
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
                 </div>
                 <Bubble

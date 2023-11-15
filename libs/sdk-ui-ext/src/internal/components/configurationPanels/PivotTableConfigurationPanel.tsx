@@ -16,33 +16,17 @@ import {
 import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
 import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import { messages } from "../../../locales.js";
+import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
-        const { properties, featureFlags, insight, pushData, isLoading } = this.props;
-        const metricPositionControlsDisabled = this.isPositionControlDisabled();
-        const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
-                    {featureFlags.enablePivotTableTransposition ? (
-                        <MetricsPositionControl
-                            isDisabled={metricPositionControlsDisabled}
-                            showDisabledMessage={metricPositionControlsDisabled ? !isLoading : false}
-                            properties={properties}
-                            pushData={pushData}
-                        />
-                    ) : null}
-                    {featureFlags.enablePivotTableTransposition &&
-                    featureFlags.enableColumnHeadersPosition ? (
-                        <ColumnHeadersPositionControl
-                            isDisabled={columnHeadersControlsDisabled}
-                            showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
-                            properties={properties}
-                            pushData={pushData}
-                            insight={insight}
-                        />
-                    ) : null}
+                    {this.renderInteractionsSection()}
+                    {this.renderCanvasSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}
@@ -80,5 +64,46 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
             : false;
 
         return !insight || isError || isLoading || !columnHeadersLeftPositionAllowed;
+    }
+
+    private renderCanvasSection() {
+        const { properties, featureFlags, insight, pushData, isLoading, propertiesMeta, panelConfig } =
+            this.props;
+        const metricPositionControlsDisabled = this.isPositionControlDisabled();
+        const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
+        const canvasSection = (
+            <ConfigDummySection id="metric_col_header_position_section">
+                {featureFlags.enablePivotTableTransposition ? (
+                    <MetricsPositionControl
+                        isDisabled={metricPositionControlsDisabled}
+                        showDisabledMessage={metricPositionControlsDisabled ? !isLoading : false}
+                        properties={properties}
+                        pushData={pushData}
+                    />
+                ) : null}
+                {featureFlags.enablePivotTableTransposition && featureFlags.enableColumnHeadersPosition ? (
+                    <ColumnHeadersPositionControl
+                        isDisabled={columnHeadersControlsDisabled}
+                        showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
+                        properties={properties}
+                        pushData={pushData}
+                        insight={insight}
+                    />
+                ) : null}
+            </ConfigDummySection>
+        );
+
+        return featureFlags.enableAttributeHierarchies && panelConfig.supportsAttributeHierarchies ? (
+            <ConfigSection
+                id="canvas_section"
+                className="gd-table-canvas-section"
+                title={messages.canvasTitle.id}
+                propertiesMeta={propertiesMeta}
+            >
+                {canvasSection}
+            </ConfigSection>
+        ) : (
+            canvasSection
+        );
     }
 }

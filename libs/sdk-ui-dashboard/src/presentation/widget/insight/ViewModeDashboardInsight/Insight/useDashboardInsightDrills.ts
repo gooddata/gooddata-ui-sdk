@@ -41,6 +41,7 @@ export const useDashboardInsightDrills = ({
     const dispatch = useDashboardDispatch();
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
+    const disableDrillDownOnWidget = insight.insight.properties.controls?.disableDrillDown;
 
     const onPushData = useCallback(
         (data: IPushData): void => {
@@ -71,8 +72,13 @@ export const useDashboardInsightDrills = ({
               const facade = DataViewFacade.for(event.dataView);
 
               const matchingImplicitDrillDefinitions = implicitDrillDefinitions.filter((info) => {
-                  return event.drillContext.intersection?.some((intersection) =>
-                      isSomeHeaderPredicateMatched(info.predicates, intersection.header, facade),
+                  const isDrillDownDisabled =
+                      disableDrillDownOnWidget && info.drillDefinition.type === "drillDown";
+                  return (
+                      !isDrillDownDisabled &&
+                      event.drillContext.intersection?.some((intersection) =>
+                          isSomeHeaderPredicateMatched(info.predicates, intersection.header, facade),
+                      )
                   );
               });
 
