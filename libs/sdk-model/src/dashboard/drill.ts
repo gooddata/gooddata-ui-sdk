@@ -328,3 +328,37 @@ export interface IDrillToAttributeUrl extends IDrill {
 export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl {
     return !isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";
 }
+
+/**
+ *
+ * @alpha
+ */
+export interface IAttributeHierarchyReference {
+    type: "attributeHierarchyReference";
+    attributeHierarchy: ObjRef;
+    label: ObjRef;
+}
+
+/**
+ *
+ * @alpha
+ */
+export interface IDateHierarchyReference {
+    type: "dateHierarchyReference";
+    dateHierarchyTemplate: ObjRef;
+    dateDatasetAttribute: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IAttributeHierarchyReference}.
+ * @alpha
+ */
+export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHierarchyReference {
+    return !isEmpty(obj) && (obj as IAttributeHierarchyReference).type === "attributeHierarchyReference";
+}
+
+/**
+ *
+ * @alpha
+ */
+export type IDrillDownReference = IAttributeHierarchyReference | IDateHierarchyReference;

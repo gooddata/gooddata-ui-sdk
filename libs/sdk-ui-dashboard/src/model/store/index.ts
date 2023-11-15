@@ -165,6 +165,7 @@ export {
     selectInsightWidgetPlaceholderCoordinates,
     selectKpiWidgetPlaceholder,
     selectKpiWidgetPlaceholderCoordinates,
+    selectIgnoredDrillDownHierarchiesByWidgetRef,
 } from "./layout/layoutSelectors.js";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
 export {
@@ -206,6 +207,7 @@ export {
     selectHasCatalogDateDatasets,
     selectHasCatalogFacts,
     selectCatalogAttributeHierarchies,
+    selectCatalogDateAttributes,
 } from "./catalog/catalogSelectors.js";
 export { selectDrillableItems } from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";

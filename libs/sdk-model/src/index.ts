@@ -497,6 +497,9 @@ export {
     DrillTransition,
     DrillType,
     IDrill,
+    IDrillDownReference,
+    IDateHierarchyReference,
+    IAttributeHierarchyReference,
     IDrillFromAttribute,
     IDrillFromMeasure,
     IDrillOrigin,
@@ -517,6 +520,7 @@ export {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
+    isAttributeHierarchyReference,
 } from "./dashboard/drill.js";
 
 export {

@@ -47,7 +47,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_DOWN,
             title: intl.formatMessage(messages.drillDownConfig),
-            disabled: true,
+            disabled: disableDrillDown,
             disableTooltipMessage: disableDrillDown
                 ? intl.formatMessage(messages.disableDrillDownToolTip)
                 : undefined,

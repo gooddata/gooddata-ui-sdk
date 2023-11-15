@@ -1,0 +1,54 @@
+// (C) 2023 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-attribute-hierarchy-detail-panel {
+    width: 200px;
+    padding: 8px 5px;
+    font-style: normal;
+    font-weight: 400;
+    color: kit-variables.$gd-color-text;
+
+    .gd-attribute-hierarchy-detail-title {
+        font-size: 14px;
+        line-height: 23px;
+        margin-bottom: 10px;
+    }
+
+    .gd-attribute-hierarchy-detail-levels {
+        font-size: 10px;
+        line-height: normal;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-attribute-hierarchy-detail-item {
+        font-size: 12px;
+        line-height: 20px;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .is-attribute::before {
+        content: "";
+        width: 18px;
+        height: 20px;
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/attribute.svg");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+    }
+
+    .is-date::before {
+        content: "";
+        width: 18px;
+        height: 20px;
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/date.svg");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+    }
+}

@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { ICatalogAttributeHierarchy, idRef, IDrillDownReference, ObjRef } from "@gooddata/sdk-model";
 
 import { IDrillTargets } from "../../drillTargets/drillTargetsTypes.js";
 
@@ -337,5 +337,16 @@ export const catalogAttributeHierarchies: ICatalogAttributeHierarchy[] = [
             deprecated: false,
             unlisted: false,
         },
+    },
+];
+
+export const ignoredHierarchies: IDrillDownReference[] = [
+    {
+        type: "attributeHierarchyReference",
+        attributeHierarchy: idRef(
+            "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+            "attributeHierarchy",
+        ),
+        label: idRef("f_owner.department_id", "displayForm"),
     },
 ];

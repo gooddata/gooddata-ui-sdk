@@ -37,6 +37,8 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    RemoveDrillDownForInsightWidget,
+    AddDrillDownForInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -328,6 +330,12 @@ export {
     RemoveDrillsForInsightWidget,
     RemoveDrillsForInsightWidgetPayload,
     removeDrillsForInsightWidget,
+    RemoveDrillDownForInsightWidget,
+    RemoveDrillDownForInsightWidgetPayload,
+    removeDrillDownForInsightWidget,
+    AddDrillDownForInsightWidget,
+    AddDrillDownForInsightWidgetPayload,
+    addDrillDownForInsightWidget,
     RemoveDrillsSelector,
     RefreshInsightWidget,
     RefreshInsightWidgetPayload,
@@ -442,5 +450,7 @@ export type DashboardCommands =
     | AddDrillTargets
     | SetDashboardDateFilterConfigMode
     | SetDashboardAttributeFilterConfigMode
+    | RemoveDrillDownForInsightWidget
+    | AddDrillDownForInsightWidget
     // fast track
     | PredictionResult;

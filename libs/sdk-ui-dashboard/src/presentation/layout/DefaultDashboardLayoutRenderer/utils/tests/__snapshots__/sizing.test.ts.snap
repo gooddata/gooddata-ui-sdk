@@ -296,6 +296,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "area",
             },
@@ -331,6 +332,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "bar",
             },
@@ -366,6 +368,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "bubble",
             },
@@ -401,6 +404,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "bullet",
             },
@@ -436,6 +440,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "column",
             },
@@ -471,6 +476,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "combo",
             },
@@ -506,6 +512,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "combo2",
             },
@@ -541,6 +548,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "donut",
             },
@@ -576,6 +584,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "funnel",
             },
@@ -611,6 +620,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "headline",
             },
@@ -646,6 +656,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "heatmap",
             },
@@ -681,6 +692,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "line",
             },
@@ -721,6 +733,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "pushpin",
             },
@@ -756,6 +769,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "pie",
             },
@@ -791,6 +805,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "scatter",
             },
@@ -826,6 +841,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "table",
             },
@@ -861,6 +877,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "treemap",
             },
@@ -896,6 +913,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "xirr",
             },

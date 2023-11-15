@@ -145,6 +145,76 @@
     }
 }
 
+.drill-config-empty-hierarchy-target {
+    margin: 10px 0;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    color: kit-variables.$gd-color-link;
+}
+
+.attribute-hierarchy-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    font-weight: 400;
+    cursor: pointer;
+    color: kit-variables.$gd-color-text;
+
+    &.is-disabled {
+        opacity: 0.5;
+        &:hover {
+            opacity: 0.5;
+            color: kit-variables.$gd-color-text;
+            font-weight: 400;
+        }
+    }
+
+    &:hover {
+        color: kit-variables.$gd-palette-primary-base;
+        font-weight: 700;
+    }
+}
+
+.attribute-hierarchy-list-item-content {
+    padding-left: 25px;
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+    max-width: 130px;
+    white-space: nowrap;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 12px;
+        display: block;
+        width: 18px;
+        height: 24px;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: contain;
+    }
+
+    .attribute-hierarchy-title {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+    }
+}
+
+.attribute-hierarchy-list-item-description {
+    opacity: 0;
+
+    .attribute-hierarchy-list-item:hover & {
+        opacity: 1;
+    }
+}
+
 .gd-drill-config-measure-item {
     display: inline-flex;
     flex-wrap: nowrap;

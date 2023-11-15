@@ -23,8 +23,8 @@ import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
-import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
+import { convertLayout } from "../../../shared/layoutConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -62,7 +62,8 @@ function getConvertedAnalyticalDashboardContent(
 ): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.dateFilterConfig),
-        layout: convertDrillToCustomUrlInLayoutFromBackend(
+        layout: convertLayout(
+            true,
             setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.layout)),
         ),
     };
