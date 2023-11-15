@@ -8,6 +8,7 @@ import {
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { defineMessage } from "react-intl";
@@ -20,6 +21,7 @@ import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     IDrillConfigItemBase,
+    IDrillDownAttributeHierarchyConfig,
     IDrillToDashboardConfig,
     IDrillToInsightConfig,
     IDrillToUrl,
@@ -27,6 +29,7 @@ import {
     isDrillToUrl,
     UrlDrillTarget,
 } from "../../../../drill/types.js";
+import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../types.js";
 
 function getTitleFromDrillableItemPushData(items: IAvailableDrillTargets, itemId: string): string {
     const measureItems = items.measures || [];
@@ -168,4 +171,28 @@ export const getMappedConfigForWidget = (
     return configForWidget.map((item) =>
         createConfig(item, supportedItemsForWidget, invalidCustomUrlDrillLocalIds),
     );
+};
+
+/**
+ * @internal
+ */
+export const getGlobalDrillDownMappedConfigForWidget = (
+    widgetGlobalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[],
+    supportedItemsForWidget: IAvailableDrillTargets,
+): IDrillDownAttributeHierarchyConfig[] => {
+    return widgetGlobalDrillDowns.map((globalDrillDown) => {
+        const originLocalIdentifier = getDrillOriginLocalIdentifier(globalDrillDown);
+        const localIdentifier = `${originLocalIdentifier}_${objRefToString(globalDrillDown.target)}`;
+
+        return {
+            type: "attribute",
+            drillTargetType: DRILL_TARGET_TYPE.DRILL_DOWN,
+            attributeHierarchyRef: globalDrillDown.target,
+            originLocalIdentifier: originLocalIdentifier,
+            title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+            attributes: [],
+            localIdentifier,
+            complete: true,
+        };
+    });
 };

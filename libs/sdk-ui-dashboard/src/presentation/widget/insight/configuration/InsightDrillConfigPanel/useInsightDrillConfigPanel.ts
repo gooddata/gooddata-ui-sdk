@@ -17,8 +17,9 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     selectEnableAttributeHierarchies,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "../../../../../model/index.js";
-import { getMappedConfigForWidget } from "./drillConfigMapper.js";
+import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import { IDrillConfigItem } from "../../../../drill/types.js";
 import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
@@ -29,6 +30,7 @@ const messages = defineMessages({
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
+    globalDrillDownItems: IDrillConfigItem[],
     incompleteItems: IDrillConfigItem[],
 ): IDrillConfigItem[] => {
     return incompleteItems.reduce(
@@ -43,7 +45,7 @@ const mergeDrillConfigItems = (
             }
             return acc;
         },
-        [...drillConfigItems],
+        [...(globalDrillDownItems ?? []), ...(drillConfigItems ?? [])],
     );
 };
 
@@ -110,6 +112,9 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const allowMultipleInteractionsPerAttributeAndMeasure = useDashboardSelector(
         selectAllowMultipleInteractionsPerAttributeAndMeasure,
     );
+    const widgetGlobalDrillDowns = useDashboardSelector(
+        selectGlobalDrillsDownAttributeHierarchyByWidgetRef(widgetRef),
+    );
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const invalidCustomUrlDrillLocalIds = useDashboardSelector(
@@ -126,9 +131,15 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
             : [];
     }, [availableDrillTargets, widgetDrills, invalidCustomUrlDrillLocalIds]);
 
+    const globalDrillDownItems = useMemo(() => {
+        return availableDrillTargets
+            ? getGlobalDrillDownMappedConfigForWidget(widgetGlobalDrillDowns, availableDrillTargets)
+            : [];
+    }, [widgetGlobalDrillDowns, availableDrillTargets]);
+
     const mergedItems = useMemo(
-        () => mergeDrillConfigItems(drillItems, incompleteItems),
-        [drillItems, incompleteItems],
+        () => mergeDrillConfigItems(drillItems, globalDrillDownItems, incompleteItems),
+        [drillItems, globalDrillDownItems, incompleteItems],
     );
 
     const originSelectorItems = useMemo(

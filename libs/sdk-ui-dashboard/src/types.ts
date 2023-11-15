@@ -261,3 +261,20 @@ export interface ILayoutCoordinates {
      */
     itemIndex: number;
 }
+
+/**
+ * @internal
+ */
+export interface IGlobalDrillDownAttributeHierarchyDefinition {
+    type: "drillDown";
+
+    /**
+     * Local identifier of the attribute that triggered the drill down.
+     */
+    origin: LocalIdRef;
+
+    /**
+     * Target attribute hierarchy for drill down.
+     */
+    target: ObjRef;
+}
