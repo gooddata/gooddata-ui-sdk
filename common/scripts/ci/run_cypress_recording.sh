@@ -2,7 +2,7 @@
 
 set -e
 
-CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311081106.6a436ce'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/gdc-testing/gdc-frontend-cypress-factory:dev-202311151055.2299f2b'
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e

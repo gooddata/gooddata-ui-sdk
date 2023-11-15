@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     isolated-tests:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311081106.6a436ce
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/gdc-testing/gdc-frontend-cypress-factory:dev-202311151055.2299f2b
         entrypoint:
             [
                 "bash",
