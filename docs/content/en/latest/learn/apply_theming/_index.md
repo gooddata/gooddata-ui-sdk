@@ -6,7 +6,7 @@ no_list: true
 icon: "visualize.svg"
 ---
 
-When applying theming with GD.UI, you will need to use the **Theme Provider component**, which allows you to customize the visual style of your dashboards by applying a theme (see [Create Custom Themes](https://www.gooddata.com/developers/cloud-native/doc/cloud/customize-appearance/create-custom-themes/)).
+When applying theming with GD.UI, you will need to use the **Theme Provider component**, which allows you to customize the visual style of your dashboards by applying a theme (see [Create Custom Themes](https://www.gooddata.com/docs/cloud/customize-appearance/create-custom-themes/)).
 
 To be able to use the Theme Provider component, set up the `backend` and `workspace` properties in your application (see [Connecting to a GoodData Cloud or GoodData.CN Analytical Backend](../integrate_and_authenticate/cn_and_cloud_authentication/)).
 
