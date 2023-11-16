@@ -6,7 +6,7 @@ ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 # go one level up to "see" the gooddata-ui-apidocs too
 ROOT_DIR="$ROOT_DIR/.."
 
-IMAGE="node:18.17.0-bullseye"
+IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18"
 
 echo "Running apidocs build using ${IMAGE} in root directory ${ROOT_DIR}"
 
