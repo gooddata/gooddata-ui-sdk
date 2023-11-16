@@ -177,7 +177,6 @@
         border: 1px dashed variables.$is-focused-background;
         line-height: 36px;
         text-align: center;
-        border-style: dashed;
     }
 
     .gd-grantee-item-icon-left {
@@ -355,8 +354,4 @@
             margin-top: 2px;
         }
     }
-}
-
-.gd-granular-permissions-remove {
-    border-top: 1px solid variables.$gd-border-color;
 }

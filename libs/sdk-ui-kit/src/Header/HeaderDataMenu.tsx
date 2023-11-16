@@ -55,6 +55,7 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
                             className={classNames}
                             value={intl.formatMessage({ id: `${key}` })}
                             disabled={isDisable}
+                            iconLeft={item.iconName}
                         />
                         {tooltipText && isDisable ? (
                             <Bubble

@@ -188,3 +188,6 @@ export {
 } from "./workspace/userGroups/index.js";
 
 export { IWorkspaceAccessControlService } from "./workspace/accessControl/index.js";
+
+export { IOrganizationUserService } from "./organization/users/index.js";
+export { IOrganizationPermissionService } from "./organization/permissions/index.js";

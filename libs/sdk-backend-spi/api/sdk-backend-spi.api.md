@@ -56,6 +56,9 @@ import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
+import { IOrganizationUser } from '@gooddata/sdk-model';
+import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
@@ -68,12 +71,14 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserGroup } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
+import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
@@ -529,11 +534,21 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
-    getDescriptor(): Promise<IOrganizationDescriptor>;
+    getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     readonly organizationId: string;
+    permissions(): IOrganizationPermissionService;
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
+    users(): IOrganizationUserService;
+}
+
+// @alpha
+export interface IOrganizationPermissionService {
+    getWorkspacePermissionsForUser(userId: string): Promise<IWorkspacePermissionAssignment[]>;
+    getWorkspacePermissionsForUserGroup(userGroupId: string): Promise<IWorkspacePermissionAssignment[]>;
+    updateOrganizationPermissions(permissionAssignments: IOrganizationPermissionAssignment[]): Promise<void>;
+    updateWorkspacePermissions(permissions: IWorkspacePermissionAssignment[]): Promise<void>;
 }
 
 // @public
@@ -571,6 +586,23 @@ export interface IOrganizationStylingService {
     setActiveTheme(themeRef: ObjRef): Promise<void>;
     updateColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
     updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+}
+
+// @alpha
+export interface IOrganizationUserService {
+    addUsersToUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
+    createUserGroup(group: IUserGroup): Promise<void>;
+    deleteUserGroups(ids: string[]): Promise<void>;
+    deleteUsers(ids: string[]): Promise<void>;
+    getUser(id: string): Promise<IUser | undefined>;
+    getUserGroup(id: string): Promise<IUserGroup | undefined>;
+    getUserGroups(): Promise<IOrganizationUserGroup[]>;
+    getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
+    getUsers(): Promise<IOrganizationUser[]>;
+    getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
+    removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
+    updateUser(user: IUser): Promise<void>;
+    updateUserGroup(group: IUserGroup): Promise<void>;
 }
 
 // @public
