@@ -211,7 +211,7 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
         "isShowInPercentVisible": true,
         "isTotalMeasureEnabled": true,
         "isTotalMeasureVisible": true,
-        "itemsLimit": 20,
+        "itemsLimit": 40,
         "title": "Measures",
       },
       "view": {

@@ -1,6 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
 import set from "lodash/set.js";
-import uniq from "lodash/uniq.js";
 import uniqBy from "lodash/uniqBy.js";
 import negate from "lodash/negate.js";
 import includes from "lodash/includes.js";
@@ -771,53 +770,56 @@ export function limitNumberOfMeasuresInBuckets(
     buckets: IBucketOfFun[],
     measuresLimitCount: number,
     tryToSelectDerivedWithMaster: boolean = false,
+    filterMeasureFn: (m: IBucketItem) => boolean = () => true,
 ): IBucketOfFun[] {
     const allMeasures = getAllMeasures(buckets);
 
-    let selectedMeasuresLocalIdentifiers: string[] = [];
+    let selectedMeasures: IBucketItem[] = [];
 
     // try to select measures one per bucket
     buckets.forEach((bucket: IBucketOfFun) => {
-        const currentBucketMeasures: IBucketItem[] = getAllBucketItemsByType(bucket, [METRIC]);
+        const currentBucketMeasures: IBucketItem[] = getAllBucketItemsByType(bucket, [METRIC]).filter(
+            filterMeasureFn,
+        );
 
         if (currentBucketMeasures.length === 0) {
             return;
         }
 
-        selectedMeasuresLocalIdentifiers = getLimitedMeasuresLocalIdentifiers(
+        selectedMeasures = getLimitedMeasures(
             currentBucketMeasures,
             1,
             allMeasures,
             measuresLimitCount,
             tryToSelectDerivedWithMaster,
-            selectedMeasuresLocalIdentifiers,
+            selectedMeasures,
         );
     });
 
     // if it was not possible to select all measures one per bucket then limit them globally
-    if (selectedMeasuresLocalIdentifiers.length < measuresLimitCount) {
-        selectedMeasuresLocalIdentifiers = getLimitedMeasuresLocalIdentifiers(
-            allMeasures,
+    if (selectedMeasures.length < measuresLimitCount) {
+        selectedMeasures = getLimitedMeasures(
+            allMeasures.filter(filterMeasureFn),
             measuresLimitCount,
             allMeasures,
             measuresLimitCount,
             tryToSelectDerivedWithMaster,
-            selectedMeasuresLocalIdentifiers,
+            selectedMeasures,
         );
     }
 
-    return pruneBucketMeasureItems(buckets, selectedMeasuresLocalIdentifiers);
+    return pruneBucketMeasureItems(buckets, selectedMeasures);
 }
 
-function getLimitedMeasuresLocalIdentifiers(
+function getLimitedMeasures(
     measures: IBucketItem[],
     measuresLimitCount: number,
     allMeasures: IBucketItem[],
     allMeasuresLimitCount: number,
     tryToSelectDerivedWithMaster: boolean,
-    alreadySelectedMeasures: string[],
-): string[] {
-    let selectedMeasures: string[] = alreadySelectedMeasures;
+    alreadySelectedMeasures: IBucketItem[],
+): IBucketItem[] {
+    let selectedMeasures: IBucketItem[] = alreadySelectedMeasures;
 
     // try to select measures one by one together with their dependencies
     measures.forEach((measure: IBucketItem) => {
@@ -825,11 +827,11 @@ function getLimitedMeasuresLocalIdentifiers(
             return;
         }
 
-        const measureDependencies = getDependenciesLocalIdentifiers(measure, allMeasures);
-        const measureWithDependencies = [measure.localIdentifier, ...measureDependencies];
+        const measureDependencies = getMeasureDependencies(measure, allMeasures);
+        const measureWithDependencies: IBucketItem[] = [measure, ...measureDependencies];
 
         if (tryToSelectDerivedWithMaster) {
-            const derivedMeasures = getDerivedLocalIdentifiers(measure, allMeasures);
+            const derivedMeasures = findDerivedBucketItems(measure, allMeasures);
             const masterDerivedAndDependencies = [...measureWithDependencies, ...derivedMeasures];
 
             selectedMeasures = tryToSelectMeasures(
@@ -849,11 +851,6 @@ function getLimitedMeasuresLocalIdentifiers(
     return selectedMeasures;
 }
 
-function getDerivedLocalIdentifiers(measure: IBucketItem, allMeasures: IBucketItem[]): string[] {
-    const derivedMeasures = findDerivedBucketItems(measure, allMeasures);
-    return derivedMeasures.map((derivedMeasure: IBucketItem) => derivedMeasure.localIdentifier);
-}
-
 function findMeasureByLocalIdentifier(
     localIdentifier: string,
     measures: IBucketItem[],
@@ -861,11 +858,14 @@ function findMeasureByLocalIdentifier(
     return measures.find((measure: IBucketItem) => measure.localIdentifier === localIdentifier);
 }
 
-function getDependenciesLocalIdentifiers(measure: IBucketItem, allMeasures: IBucketItem[]): string[] {
-    const directDependencies: string[] = [];
+function getMeasureDependencies(measure: IBucketItem, allMeasures: IBucketItem[]): IBucketItem[] {
+    const directDependencies: IBucketItem[] = [];
 
     if (measure.masterLocalIdentifier) {
-        directDependencies.push(measure.masterLocalIdentifier);
+        const masterMeasure = findMeasureByLocalIdentifier(measure.masterLocalIdentifier, allMeasures);
+        if (masterMeasure !== undefined) {
+            directDependencies.push(masterMeasure);
+        }
     }
 
     if (measure.operandLocalIdentifiers) {
@@ -874,40 +874,46 @@ function getDependenciesLocalIdentifiers(measure: IBucketItem, allMeasures: IBuc
             .forEach((operandLocalIdentifier: string) => {
                 const operandMeasure = findMeasureByLocalIdentifier(operandLocalIdentifier, allMeasures);
                 if (operandMeasure !== undefined) {
-                    directDependencies.push(operandLocalIdentifier);
+                    directDependencies.push(operandMeasure);
                 }
             });
     }
 
-    const indirectDependencies: string[] = [];
+    const indirectDependencies: IBucketItem[] = [];
 
-    directDependencies.forEach((dependencyLocalIdentifier: string) => {
-        const dependencyMeasure = findMeasureByLocalIdentifier(dependencyLocalIdentifier, allMeasures);
-        const dependenciesOfDependency = getDependenciesLocalIdentifiers(dependencyMeasure, allMeasures);
+    directDependencies.forEach((directDependency: IBucketItem) => {
+        const dependenciesOfDependency = getMeasureDependencies(directDependency, allMeasures);
         indirectDependencies.push(...dependenciesOfDependency);
     });
 
-    return uniq([...directDependencies, ...indirectDependencies]);
+    return uniqBy(
+        [...directDependencies, ...indirectDependencies],
+        (dependency) => dependency.localIdentifier,
+    );
 }
 
-function tryToSelectMeasures(measures: string[], alreadySelectedMeasures: string[], limit: number): string[] {
+function tryToSelectMeasures(
+    measures: IBucketItem[],
+    alreadySelectedMeasures: IBucketItem[],
+    limit: number,
+): IBucketItem[] {
     const measuresToBePlaced = without(measures, ...alreadySelectedMeasures);
 
-    if (measuresToBePlaced.length <= limit - alreadySelectedMeasures.length) {
+    if (measuresToBePlaced.length + alreadySelectedMeasures.length <= limit) {
         return [...alreadySelectedMeasures, ...measuresToBePlaced];
     }
 
     return alreadySelectedMeasures;
 }
 
-function pruneBucketMeasureItems(
-    buckets: IBucketOfFun[],
-    measureLocalIdentifiersToBeKept: string[],
-): IBucketOfFun[] {
+function pruneBucketMeasureItems(buckets: IBucketOfFun[], measuresToBeKept: IBucketItem[]): IBucketOfFun[] {
     return buckets.map((bucket: IBucketOfFun): IBucketOfFun => {
         const prunedItems = bucket.items.filter(
             (item: IBucketItem) =>
-                measureLocalIdentifiersToBeKept.indexOf(item.localIdentifier) > -1 || item.type !== METRIC,
+                item.type !== METRIC ||
+                measuresToBeKept.some(
+                    (measureToBeKept) => measureToBeKept.localIdentifier === item.localIdentifier,
+                ),
         );
 
         return {
@@ -917,7 +923,7 @@ function pruneBucketMeasureItems(
     });
 }
 
-function isShowOnSecondaryAxis(item: IBucketItem): boolean {
+export function isShowOnSecondaryAxis(item: IBucketItem): boolean {
     return item?.showOnSecondaryAxis ?? false;
 }
 
