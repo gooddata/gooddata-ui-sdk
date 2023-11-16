@@ -177,6 +177,8 @@ export interface IAnalyticalBackendConfig {
 // @public
 export interface IAnalyticalWorkspace {
     accessControl(): IWorkspaceAccessControlService;
+    // @alpha
+    attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
     catalog(): IWorkspaceCatalogFactory;
     dashboards(): IWorkspaceDashboardsService;
@@ -202,6 +204,13 @@ export interface IAttributeElementExpressionToken {
     deleted?: boolean;
     type: "attributeElement";
     value: string | undefined;
+}
+
+// @alpha
+export interface IAttributeHierarchiesService {
+    createAttributeHierarchy(title: string, attributes: ObjRef[]): Promise<ICatalogAttributeHierarchy>;
+    getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
+    updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
 
 // @public

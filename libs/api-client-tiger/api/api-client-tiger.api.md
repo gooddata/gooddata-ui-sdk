@@ -6239,6 +6239,8 @@ export interface ITigerClient {
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     setApiToken: (token: string | undefined) => void;
     // (undocumented)
+    validDescendants: ReturnType<typeof tigerValidDescendantsClientFactory>;
+    // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
 }
 
@@ -13078,6 +13080,9 @@ export const tigerProfileClientFactory: (axios: AxiosInstance) => ProfileApiInte
 
 // @public (undocumented)
 export const tigerScanModelClientFactory: (axios: AxiosInstance) => ScanModelActionsApiInterface;
+
+// @public (undocumented)
+export const tigerValidDescendantsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidDescendants">;
 
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;

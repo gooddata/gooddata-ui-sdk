@@ -15,6 +15,7 @@ import { IWorkspaceMeasuresService } from "./measures/index.js";
 import { IWorkspaceFactsService } from "./facts/index.js";
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
+import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -115,6 +116,12 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to manage access control records for the workspace.
      */
     accessControl(): IWorkspaceAccessControlService;
+
+    /**
+     * Returns service that operates over attribute hierarchies
+     * @alpha
+     */
+    attributeHierarchies(): IAttributeHierarchiesService;
 }
 
 /**
