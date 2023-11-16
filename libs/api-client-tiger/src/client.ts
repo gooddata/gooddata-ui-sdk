@@ -51,6 +51,7 @@ import {
     ScanModelActionsApiInterface,
     tigerScanModelClientFactory,
 } from "./scanModel.js";
+import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
 
 export {
     tigerExecutionClientFactory,
@@ -58,6 +59,7 @@ export {
     tigerExecutionResultClientFactory,
     tigerLabelElementsClientFactory,
     tigerValidObjectsClientFactory,
+    tigerValidDescendantsClientFactory,
     tigerLayoutClientFactory,
     tigerAfmExplainClientFactory,
     tigerProfileClientFactory,
@@ -97,6 +99,7 @@ export interface ITigerClient {
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+    validDescendants: ReturnType<typeof tigerValidDescendantsClientFactory>;
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
@@ -127,6 +130,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const executionResult = tigerExecutionResultClientFactory(axios);
     const labelElements = tigerLabelElementsClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
+    const validDescendants = tigerValidDescendantsClientFactory(axios);
     const declarativeLayout = tigerLayoutClientFactory(axios);
     const explain = tigerAfmExplainClientFactory(axios);
     const entities = tigerEntitiesObjectsClientFactory(axios);
@@ -144,6 +148,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         executionResult,
         labelElements,
         validObjects,
+        validDescendants,
         declarativeLayout,
         explain,
         entities,

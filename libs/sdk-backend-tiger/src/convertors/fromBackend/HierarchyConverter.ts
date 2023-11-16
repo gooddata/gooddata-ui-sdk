@@ -1,13 +1,34 @@
 // (C) 2023 GoodData Corporation
 
 import { ICatalogAttributeHierarchy, ObjectType, idRef } from "@gooddata/sdk-model";
-import { JsonApiAttributeHierarchyOutWithLinks } from "@gooddata/api-client-tiger";
+import {
+    JsonApiAttributeHierarchyOut,
+    JsonApiAttributeHierarchyOutAttributes,
+    JsonApiAttributeHierarchyOutWithLinks,
+    ObjectLinks,
+} from "@gooddata/api-client-tiger";
 import compact from "lodash/compact.js";
 
 export function convertAttributeHierarchy(
     hierarchyOut: JsonApiAttributeHierarchyOutWithLinks,
 ): ICatalogAttributeHierarchy {
     const { id, type, attributes, links } = hierarchyOut;
+    return convertToCatalogAttributeHierarchy(id, type, attributes, links);
+}
+
+export function convertAttributeHierarchyWithoutLinks(
+    hierarchyOut: JsonApiAttributeHierarchyOut,
+): ICatalogAttributeHierarchy {
+    const { id, type, attributes } = hierarchyOut;
+    return convertToCatalogAttributeHierarchy(id, type, attributes);
+}
+
+function convertToCatalogAttributeHierarchy(
+    id: string,
+    type: ObjectType,
+    attributes?: JsonApiAttributeHierarchyOutAttributes,
+    links?: ObjectLinks,
+): ICatalogAttributeHierarchy {
     const orderedAttributes = (attributes?.content as any)?.attributes ?? [];
     const convertedAttributes = orderedAttributes.map(
         (attribute: { identifier: { id: string; type: ObjectType } }) => {

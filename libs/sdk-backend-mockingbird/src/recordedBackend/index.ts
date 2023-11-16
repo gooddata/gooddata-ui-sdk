@@ -38,6 +38,7 @@ import {
     IEntitlements,
     IOrganizationPermissionService,
     IOrganizationUserService,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -253,6 +254,9 @@ function recordedWorkspace(
         },
         accessControl(): IWorkspaceAccessControlService {
             return recordedAccessControlFactory(implConfig);
+        },
+        attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
         },
     };
 }

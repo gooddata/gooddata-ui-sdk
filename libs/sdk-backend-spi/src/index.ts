@@ -115,6 +115,8 @@ export {
     IWorkspaceDescriptor,
 } from "./workspace/index.js";
 
+export { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";
+
 export { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
 export { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
