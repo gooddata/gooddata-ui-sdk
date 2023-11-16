@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-bear",
-    "version": "9.4.0-alpha.21",
+    "version": "9.4.0-beta.0",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the GoodData platform",
     "repository": {
