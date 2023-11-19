@@ -221,6 +221,14 @@ export class Table {
         return this;
     }
 
+    hasHeaderColumnWidth(width: number) {
+        cy.get(".s-header-cell-label span")
+            .invoke("width")
+            .should("be.gte", width)
+            .should("be.lte", width + 2);
+        return this;
+    }
+
     isCellUnderlined(cellName: string, isUnderlined = true) {
         cy.get(`.s-header-cell-label.gd-pivot-table-header-label`)
             .contains(cellName)
