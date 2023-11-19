@@ -139,6 +139,10 @@ export class Chart {
             });
         return this;
     }
+    public hasTooltipTitleWidth(tooltipEl: string, width: number) {
+        cy.get(tooltipEl).should("have.attr", "style", `max-width: ${width}px;`);
+        return this;
+    }
 
     hoverOnHighChartSeries(index: number, pointIndex = 0) {
         this.getElement()

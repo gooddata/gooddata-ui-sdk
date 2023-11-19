@@ -52,7 +52,14 @@ export class SectionHeader {
     }
 
     setDescription(text: string) {
-        this.getDescriptionInputWrapper().click().find("textarea").type(`${text}{enter}`);
+        const textField = this.getDescriptionInputWrapper().click().find("textarea");
+        const length = text.length - 1;
+        const value = text.substring(0, length);
+        const last = text[length];
+
+        textField.wait(500);
+        textField.invoke("val", value);
+        textField.type(last, { parseSpecialCharSequences: false, delay: 100 }).type("{enter}");
         return this;
     }
 
@@ -72,7 +79,7 @@ export class SectionHeader {
     }
 
     selectDescriptionInput() {
-        this.getDescriptionInputWrapper().click();
+        this.getDescriptionInputWrapper().click("center");
         return this;
     }
 
