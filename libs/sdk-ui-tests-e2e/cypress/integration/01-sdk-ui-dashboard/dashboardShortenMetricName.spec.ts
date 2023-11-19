@@ -22,6 +22,6 @@ describe("Dashboard Shorten Metric Name", { tags: ["checklist_integrated_tiger"]
         chart.waitLoaded();
         chart.assertShortenMetricName(LEGEND_NAME_CSS, 176);
         chart.clickSeriesPoint(0);
-        chart.assertShortenMetricName(TOOLTIP_TITLE_CSS, 299.982421875);
+        chart.hasTooltipTitleWidth(TOOLTIP_TITLE_CSS, 300);
     });
 });
