@@ -2,6 +2,9 @@
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
+/**
+ * @internal
+ */
 export const messages: Record<string, MessageDescriptor> = defineMessages({
     sum: { id: "visualizations.measure.arithmetic.sum.title" },
     difference: { id: "visualizations.measure.arithmetic.difference.title" },
@@ -27,6 +30,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     },
     drilldownTooltipDisabledMetric: {
         id: "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric",
+    },
+    drilldownSelectHierarchy: {
+        id: "configurationPanel.drillConfig.selectHierarchy",
     },
     emtpyHierarchyInfo: { id: "configurationPanel.drillConfig.drilldown.emtpy.hierarchy.info" },
     createHierarchy: { id: "configurationPanel.drillConfig.drilldown.create.hierarchy" },
