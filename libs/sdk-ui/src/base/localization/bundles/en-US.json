@@ -2101,6 +2101,11 @@
         "comment": "Label show on drill down configuration that there is no hierarchy defined for the attribute",
         "limit": 0
     },
+    "configurationPanel.drillConfig.selectHierarchy": {
+        "value": "Choose hierarchy…",
+        "comment": "Hint guiding users that attribute hierarchy in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.drilldown.create.hierarchy": {
         "value": "Create attribute hierarchy",
         "comment": "Link to create attribute hierarchy",
@@ -2172,23 +2177,23 @@
         "limit": 0
     },
     "attributeHierarchyEditor.attribute.dropdown.title": {
-        "value": "Choose attribute ...",
-        "comment": "",
+        "value": "Choose attribute…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "attributeHierarchyEditor.attribute.dropdown.search": {
-        "value": "Search ...",
-        "comment": "",
+        "value": "Search…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "attributeHierarchyEditor.note.title": {
         "value": "Note:",
-        "comment": "",
+        "comment": "Label for a note title",
         "limit": 0
     },
     "attributeHierarchyEditor.note.message": {
         "value": "Hierarchy is applied to all visualizations containing one of its attribute.",
-        "comment": "",
+        "comment": "Information shown in create hierarchy editor",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.title": {
@@ -2218,7 +2223,7 @@
     },
     "attributeHierarchyList.tooltip.hierarchy.levels": {
         "value": "Hierarchy levels",
-        "comment": "",
+        "comment": "Label show hierarchy levels",
         "limit": 0
     },
     "attributeHierarchyList.tooltip.button.edit": {
