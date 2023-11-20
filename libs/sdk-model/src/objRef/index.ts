@@ -160,7 +160,7 @@ export function isLocalIdRef(obj: unknown): obj is LocalIdRef {
  * Retrieves string representation of object reference. This is purely for for representation of
  * references in text, debug and tests.
  *
- * @internal
+ * @public
  */
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
     invariant(objRef, "object reference must be specified");

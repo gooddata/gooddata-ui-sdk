@@ -476,7 +476,7 @@ export function insightProperties(insight: IInsightDefinition): VisualizationPro
  * is in format "local:visName" (as in "local:bar" for BarChart)
  *
  * @param insight - insight to get visualization URL from
- * @alpha
+ * @public
  */
 export function insightVisualizationUrl(insight: IInsightDefinition): string {
     invariant(insight, "insight to get vis class URI from must be specified");

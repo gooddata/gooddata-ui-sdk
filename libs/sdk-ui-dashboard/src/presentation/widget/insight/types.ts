@@ -158,7 +158,7 @@ export interface IDashboardInsightProps {
 /**
  * Insight body props.
  *
- * @alpha
+ * @public
  */
 export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     /**
@@ -240,6 +240,6 @@ export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightPro
  * as possible to the component (especially the drill-related props and members of the {@link @gooddata/sdk-ui#IVisualizationCallbacks}).
  * This will ensure the integration with the rest of the widget is as complete as possible.
  *
- * @alpha
+ * @public
  */
 export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
