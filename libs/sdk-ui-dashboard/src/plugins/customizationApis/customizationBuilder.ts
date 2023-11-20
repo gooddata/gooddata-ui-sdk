@@ -54,7 +54,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly filterBarCustomizer: DefaultFilterBarCustomizer = new DefaultFilterBarCustomizer(
         this.logger,
     );
-    private readonly filtersCustomizer: DefaultFiltersCustomizer = new DefaultFiltersCustomizer(this.logger);
+    private readonly filtersCustomizer: DefaultFiltersCustomizer = new DefaultFiltersCustomizer(
+        this.logger,
+        this.mutations,
+    );
     private widgetOverlays: Record<string, IDashboardWidgetOverlay> = {};
 
     private sealCustomizers = (): void => {

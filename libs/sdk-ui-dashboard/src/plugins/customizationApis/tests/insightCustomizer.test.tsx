@@ -136,6 +136,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["tag"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -147,6 +148,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["tag"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -160,6 +162,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["tag"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -173,6 +176,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["tag"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -193,6 +197,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: [],
+                attributeFilter: [],
                 layouts: {},
             });
 
@@ -213,6 +218,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["provider"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -228,6 +234,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["provider"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -254,6 +261,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["provider"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
@@ -268,6 +276,7 @@ describe("insight customizer", () => {
             expect(mutationContext).toEqual({
                 kpi: [],
                 insight: ["decorator"],
+                attributeFilter: [],
                 layouts: {},
             });
         });
