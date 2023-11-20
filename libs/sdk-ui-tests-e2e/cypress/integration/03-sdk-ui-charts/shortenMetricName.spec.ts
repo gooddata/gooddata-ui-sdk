@@ -20,6 +20,6 @@ describe("Shorten Metric Name", { tags: ["checklist_integrated_tiger"] }, () => 
         Navigation.visit("visualizations/shortenmetricname/shorten-metric-name-table-scenario");
         const table = new Table(".s-pivot-table");
         table.waitLoaded();
-        table.assertShortenMetricName(1353.359375);
+        table.hasHeaderColumnWidth(1352);
     });
 });
