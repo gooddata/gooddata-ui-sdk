@@ -11,6 +11,7 @@ import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualizati
 import {
     UICONFIG,
     MAX_TABLE_CATEGORIES_COUNT,
+    MAX_METRICS_COUNT,
     measuresBase,
     viewBase,
     defaultFilters,
@@ -84,7 +85,7 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
 
 export function getPivotTableMeasuresLimit(settings: ISettings) {
     const isLimitIncreased = settings?.enablePivotTableIncreaseBucketSize;
-    return isLimitIncreased ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT;
+    return isLimitIncreased ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
 }
 
 export function setPivotTableUiConfig(
