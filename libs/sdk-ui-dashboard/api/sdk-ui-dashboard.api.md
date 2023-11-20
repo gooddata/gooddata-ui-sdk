@@ -3167,6 +3167,7 @@ export type IAttributeFilterDraggingComponentProps = {
 
 // @public
 export interface IAttributeFiltersCustomizer {
+    withCustomDecorator(providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
     withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
 }
 

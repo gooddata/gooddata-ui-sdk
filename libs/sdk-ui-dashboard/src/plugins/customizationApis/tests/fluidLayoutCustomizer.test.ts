@@ -64,6 +64,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {
                 "1": "inserted",
                 "2": "inserted",
@@ -84,6 +85,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {},
         });
     });
@@ -111,6 +113,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {},
         });
     });
@@ -125,6 +128,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {
                 "1": "inserted",
             },
@@ -146,6 +150,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {},
         });
     });
@@ -168,6 +173,7 @@ describe("fluid layout customizer", () => {
         expect(mutationContext).toEqual({
             kpi: [],
             insight: [],
+            attributeFilter: [],
             layouts: {
                 "1": "inserted",
                 "2": "inserted",

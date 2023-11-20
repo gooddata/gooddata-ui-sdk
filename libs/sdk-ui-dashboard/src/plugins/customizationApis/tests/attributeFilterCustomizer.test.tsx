@@ -1,41 +1,46 @@
 // (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import {
-    IDashboardKpiProps,
-    KpiComponentProvider,
-    OptionalKpiComponentProvider,
-} from "../../../presentation/index.js";
-import { idRef, measureItem, IKpiWidget, IKpi } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 import { render } from "@testing-library/react";
-import { invariant } from "ts-invariant";
-import { DefaultKpiCustomizer } from "../kpiCustomizer.js";
-import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
+import { invariant } from "ts-invariant";
+import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+
+import {
+    AttributeFilterComponentProvider,
+    IDashboardAttributeFilterProps,
+    OptionalAttributeFilterComponentProvider,
+} from "../../../presentation/index.js";
+
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+
+import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
 
 //
 //
 //
 
-const TestKpiWidget: IKpiWidget = {
-    type: "kpi",
-    title: "Test KPI",
-    ref: idRef("testKpi"),
-    identifier: "testKpi",
-    description: "Test KPI Widget",
-    uri: "/uri/testKpi",
-    kpi: {
-        comparisonDirection: "growIsGood",
-        metric: measureItem(ReferenceMd.Amount),
-        comparisonType: "previousPeriod",
+const TestAttributeFilter: IDashboardAttributeFilter = {
+    attributeFilter: {
+        attributeElements: {
+            uris: [],
+        },
+        displayForm: {
+            uri: "/gdc/md/test/attribute-filter",
+        },
+        filterElementsBy: [],
+        localIdentifier: "test-attribute-filter",
+        negativeSelection: true,
+        title: "Test Attr Filter Title",
     },
-    drills: [],
-    ignoreDashboardFilters: [],
 };
+
 const CustomTitle = "TestTitle";
-const TestKpiWidgetWithCustomTitle: IKpiWidget = { ...TestKpiWidget, title: CustomTitle };
+
+const TestAttributeFilterWithCustomTitle: IDashboardAttributeFilter = {
+    attributeFilter: { ...TestAttributeFilter.attributeFilter, title: CustomTitle },
+};
 
 //
 //
@@ -51,12 +56,12 @@ function createTestComponent(name: string): React.FC {
 
 function createTestComponentProvider(
     name: string,
-    predicate: (kpi: IKpi, widget: IKpiWidget) => boolean,
-): OptionalKpiComponentProvider {
+    predicate: (filter: IDashboardAttributeFilter) => boolean,
+): OptionalAttributeFilterComponentProvider {
     const Component = createTestComponent(name);
 
-    return (kpi, widget) => {
-        if (!predicate(kpi, widget)) {
+    return (filter) => {
+        if (!predicate(filter)) {
             return undefined;
         }
 
@@ -64,15 +69,15 @@ function createTestComponentProvider(
     };
 }
 
-function createTestDecoratorFactory(name: string, predicate: (kpi: IKpi, widget: IKpiWidget) => boolean) {
-    return (next: KpiComponentProvider): OptionalKpiComponentProvider => {
-        return (kpi, widget) => {
-            if (!predicate(kpi, widget)) {
+function createTestDecoratorFactory(name: string, predicate: (filter: IDashboardAttributeFilter) => boolean) {
+    return (next: AttributeFilterComponentProvider): OptionalAttributeFilterComponentProvider => {
+        return (filter) => {
+            if (!predicate(filter)) {
                 return undefined;
             }
 
-            function Decorator(props: IDashboardKpiProps) {
-                const Decorated = next(kpi, widget)!;
+            function Decorator(props: IDashboardAttributeFilterProps) {
+                const Decorated = next(filter)!;
 
                 return (
                     <div id={name}>
@@ -86,19 +91,19 @@ function createTestDecoratorFactory(name: string, predicate: (kpi: IKpi, widget:
     };
 }
 
-const DefaultTestComponentProvider: KpiComponentProvider = createTestComponentProvider(
+const DefaultTestComponentProvider: AttributeFilterComponentProvider = createTestComponentProvider(
     "default",
     () => true,
-) as KpiComponentProvider;
+) as AttributeFilterComponentProvider;
 
 //
 //
 //
 
-function renderToHtml(customizer: DefaultKpiCustomizer, widget: IKpiWidget) {
-    const provider = customizer.getKpiProvider();
-    const Component = provider(widget.kpi, widget);
-    const dummyProps: IDashboardKpiProps = { dummyKpiProps: true } as any;
+function renderToHtml(customizer: DefaultAttributeFiltersCustomizer, filter: IDashboardAttributeFilter) {
+    const provider = customizer.getAttributeFilterProvider();
+    const Component = provider(filter);
+    const dummyProps: IDashboardAttributeFilterProps = { dummyAttributeFilterProps: true } as any;
 
     // this should not happen; if it does something is seriously hosed in the customizer
     invariant(Component);
@@ -107,13 +112,13 @@ function renderToHtml(customizer: DefaultKpiCustomizer, widget: IKpiWidget) {
     return container.innerHTML;
 }
 
-describe("KPI customizer", () => {
-    let Customizer: DefaultKpiCustomizer;
+describe("Attribute Filter customizer", () => {
+    let Customizer: DefaultAttributeFiltersCustomizer;
     let mutationContext: CustomizerMutationsContext;
 
     beforeEach(() => {
         mutationContext = createCustomizerMutationsContext();
-        Customizer = new DefaultKpiCustomizer(
+        Customizer = new DefaultAttributeFiltersCustomizer(
             new DashboardCustomizationLogger(),
             mutationContext,
             DefaultTestComponentProvider,
@@ -121,65 +126,65 @@ describe("KPI customizer", () => {
     });
 
     it("should fallback to rendering default component", () => {
-        expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+        expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
     });
 
     describe("withCustomProvider", () => {
-        it("should work for KPI that matches predicate", () => {
+        it("should work for attribute filter that matches predicate", () => {
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["provider"],
                 layouts: {},
             });
         });
 
-        it("should fallback to default component if insight does not match provider criteria", () => {
+        it("should fallback to default component if attribute filter does not match provider criteria", () => {
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
-            expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["provider"],
                 layouts: {},
             });
         });
 
-        it("should use component from latest registered provider that matches the insight", () => {
+        it("should use component from latest registered provider that matches the filter", () => {
             const provider1 = createTestComponentProvider(
                 "fromCustomProvider1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const provider2 = createTestComponentProvider(
                 "fromCustomProvider2",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const provider3 = createTestComponentProvider(
                 "fromCustomProvider3",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomProvider(provider1);
             Customizer.withCustomProvider(provider2);
             Customizer.withCustomProvider(provider3);
 
             // component from last registered and matching provider is `fromCustomProvider3`
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["provider"],
                 layouts: {},
             });
         });
@@ -190,129 +195,129 @@ describe("KPI customizer", () => {
             const factory = createTestDecoratorFactory("decorator1", () => true);
             Customizer.withCustomDecorator(factory);
 
-            expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator"],
                 layouts: {},
             });
         });
 
-        it("should decorate custom component registered for an insight", () => {
+        it("should decorate custom component registered for an attribute filter", () => {
             const factory = createTestDecoratorFactory("decorator1", () => true);
             Customizer.withCustomDecorator(factory);
 
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator", "provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator", "provider"],
                 layouts: {},
             });
         });
 
-        it("should decorate default component if insight does not match custom component criteria ", () => {
+        it("should decorate default component if attribute filter does not match custom component criteria ", () => {
             const factory = createTestDecoratorFactory("decorator1", () => true);
             Customizer.withCustomDecorator(factory);
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
-            expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator", "provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator", "provider"],
                 layouts: {},
             });
         });
 
-        it("should decorate if insight matches criteria", () => {
+        it("should decorate if attribute filter matches criteria", () => {
             const factory = createTestDecoratorFactory(
                 "decorator1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomDecorator(factory);
 
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator"],
                 layouts: {},
             });
         });
 
-        it("should not decorate if insight does not match criteria", () => {
+        it("should not decorate if attribute filter does not match criteria", () => {
             const factory = createTestDecoratorFactory(
                 "decorator1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomDecorator(factory);
 
-            expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator"],
                 layouts: {},
             });
         });
 
-        it("should use multiple decorators if insight matches criteria", () => {
+        it("should use multiple decorators if attribute filter matches criteria", () => {
             const factory1 = createTestDecoratorFactory(
                 "decorator1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomDecorator(factory1);
             Customizer.withCustomDecorator(factory2);
 
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> default component
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator"],
                 layouts: {},
             });
         });
 
-        it("should use multiple decorators and custom component if insight matches criteria", () => {
+        it("should use multiple decorators and custom component if attribute fiter matches criteria", () => {
             const factory1 = createTestDecoratorFactory(
                 "decorator1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const provider = createTestComponentProvider(
                 "customProvider1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             Customizer.withCustomDecorator(factory1);
             Customizer.withCustomDecorator(factory2);
             Customizer.withCustomProvider(provider);
 
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> custom component
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator", "provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator", "provider"],
                 layouts: {},
             });
         });
@@ -321,11 +326,11 @@ describe("KPI customizer", () => {
             const factory1 = createTestDecoratorFactory("decorator1", () => false);
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
             const provider = createTestComponentProvider(
                 "customProvider1",
-                (_kpi, widget) => widget.title === CustomTitle,
+                (filter) => filter.attributeFilter.title === CustomTitle,
             );
 
             Customizer.withCustomDecorator(factory1);
@@ -333,11 +338,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomProvider(provider);
 
             // This will use decorator2 on top of customProvider1
-            expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: ["decorator", "provider"],
+                kpi: [],
                 insight: [],
-                attributeFilter: [],
+                attributeFilter: ["decorator", "provider"],
                 layouts: {},
             });
         });
