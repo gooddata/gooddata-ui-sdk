@@ -40,6 +40,7 @@ import {
     ExplainType,
     IExplainProvider,
     IEntitlements,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -236,6 +237,10 @@ function recordedWorkspace(
         },
 
         accessControl(): IWorkspaceAccessControlService {
+            throw new NotSupported("not supported");
+        },
+
+        attributeHierarchies(): IAttributeHierarchiesService {
             throw new NotSupported("not supported");
         },
     };
