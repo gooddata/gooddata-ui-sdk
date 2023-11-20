@@ -18,6 +18,7 @@
 export * from "./base/index.js";
 export * from "./execution/index.js";
 export * from "./kpi/index.js";
+export * from "./locales.js";
 
 /**
  * Common interface uses to specify number separators for the different SDK components.

@@ -1412,6 +1412,9 @@ export type MeasureOrPlaceholder = ValueOrPlaceholder<AnyMeasure>;
 export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
 
 // @internal (undocumented)
+export const messages: Record<string, MessageDescriptor>;
+
+// @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
 };
