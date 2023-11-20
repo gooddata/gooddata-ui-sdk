@@ -3039,6 +3039,13 @@ export interface IUserGroup {
 }
 
 // @alpha
+export interface IUserGroup {
+    id: string;
+    name?: string;
+    ref: ObjRef;
+}
+
+// @alpha
 export interface IUserGroupAccess {
     type: "group";
     userGroup: IWorkspaceUserGroup;

@@ -12,8 +12,6 @@ import {
     IOrganization,
     IOrganizations,
     IEntitlements,
-    IOrganizationUserService,
-    IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { DecoratorFactories } from "./types.js";
