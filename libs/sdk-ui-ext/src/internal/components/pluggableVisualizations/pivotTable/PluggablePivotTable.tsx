@@ -202,7 +202,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         const buckets = newReferencePoint.buckets;
 
-        const limit = getPivotTableMeasuresLimit(this.settings);
+        const limit = getPivotTableMeasuresLimit(this.settings, buckets);
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, limit, true);
         const measures = getAllItemsByType(limitedBuckets, [METRIC]);
         const rowAttributes = getRowAttributes(buckets);
