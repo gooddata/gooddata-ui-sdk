@@ -6,7 +6,7 @@ import { IntlShape } from "react-intl";
 
 import { ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import { IExtendedReferencePoint, IUiConfig, IBucketOfFun } from "../../interfaces/Visualization.js";
 
 import {
     UICONFIG,
@@ -24,8 +24,9 @@ import { BUCKETS } from "../../constants/bucket.js";
 
 import {
     hasNoColumns,
-    hasNoMoreThan20ItemsOnMeasuresOrRows,
-    canTableMeasuresOrAttributesAddMoreItems,
+    hasMeasuresOrRowsUnderLowerLimit,
+    canIncreasedTableMeasuresAddMoreItems,
+    canIncreasedTableAttributesAddMoreItems,
 } from "../bucketRules.js";
 import { setBucketTitles } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
@@ -37,10 +38,6 @@ import { messages } from "../../../locales.js";
 const tableMeasuresIcon = "local:table/bucket-title-measures.svg";
 const tableRowsIcon = "local:table/bucket-title-rows.svg";
 const tableColumnsIcon = "local:table/bucket-title-columns.svg";
-
-function getLimitValue(newLimit: number) {
-    return newLimit - MAX_TABLE_CATEGORIES_COUNT;
-}
 
 function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets;
@@ -64,11 +61,11 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
 
                 if (bucket.localIdentifier === BucketNames.MEASURES) {
                     warningMessageValues = {
-                        limit: getLimitValue(INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT),
+                        limit: INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT - MAX_METRICS_COUNT,
                     };
                 } else {
                     warningMessageValues = {
-                        limit: getLimitValue(INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT),
+                        limit: INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT - MAX_TABLE_CATEGORIES_COUNT,
                     };
                 }
             }
@@ -83,9 +80,13 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
     return updatedUiConfig;
 }
 
-export function getPivotTableMeasuresLimit(settings: ISettings) {
+export function getPivotTableMeasuresLimit(settings: ISettings, buckets: IBucketOfFun[]) {
     const isLimitIncreased = settings?.enablePivotTableIncreaseBucketSize;
-    return isLimitIncreased ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
+    if (hasNoColumns(buckets)) {
+        return isLimitIncreased ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
+    }
+
+    return MAX_METRICS_COUNT;
 }
 
 export function setPivotTableUiConfig(
@@ -108,14 +109,11 @@ export function setPivotTableUiConfig(
     }
 
     if (settings?.enablePivotTableIncreaseBucketSize) {
-        const canMeasuresAddItems = canTableMeasuresOrAttributesAddMoreItems(buckets, BucketNames.MEASURES);
-        const canAttributesAddItems = canTableMeasuresOrAttributesAddMoreItems(
-            buckets,
-            BucketNames.ATTRIBUTE,
-        );
-        const columnsCanAddItems = hasNoMoreThan20ItemsOnMeasuresOrRows(buckets);
+        const canMeasuresAddItems = canIncreasedTableMeasuresAddMoreItems(buckets);
+        const canAttributesAddItems = canIncreasedTableAttributesAddMoreItems(buckets);
+        const columnsCanAddItems = hasMeasuresOrRowsUnderLowerLimit(buckets);
 
-        const measuresOrRowsCanAddMoreThan20Items = hasNoColumns(buckets);
+        const columnsEmpty = hasNoColumns(buckets);
 
         set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], canMeasuresAddItems);
         set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAttributesAddItems);
@@ -124,16 +122,12 @@ export function setPivotTableUiConfig(
         set(
             referencePoint,
             [UICONFIG, BUCKETS, BucketNames.MEASURES, "itemsLimit"],
-            measuresOrRowsCanAddMoreThan20Items
-                ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT
-                : MAX_TABLE_CATEGORIES_COUNT,
+            columnsEmpty ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT,
         );
         set(
             referencePoint,
             [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "itemsLimit"],
-            measuresOrRowsCanAddMoreThan20Items
-                ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT
-                : MAX_TABLE_CATEGORIES_COUNT,
+            columnsEmpty ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT,
         );
 
         set(referencePoint, UICONFIG, setPivotTableBucketWarningMessages(referencePoint, intl));
