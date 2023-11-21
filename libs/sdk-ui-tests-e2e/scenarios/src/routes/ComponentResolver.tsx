@@ -117,6 +117,7 @@ import {
 import { DashboardTigerHideFilters } from "../components/Scenarios/Dashboard/DashboardTigerHideFilters";
 import { DashboardTigerReadonlyDateFilter } from "../components/Scenarios/Dashboard/DashboardTigerReadonlyDateFilter";
 import { DashboardDrilldownOnChart } from "../components/Scenarios/Dashboard/DashboardDrilldownonChartScenario";
+import { DependentFiltersScenario } from "../components/Scenarios/Dashboard/DependentFiltersScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -127,6 +128,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
     DASHBOARD_TIGER_HIDE_FILTERS: "dashboard/dashboard-tiger-hide-filters",
+    DASHBOARD_DEPENDENT_FILTERS: "dashboard/dashboard-dependent-filters",
     DASHBOARD_TIGER_READONLY_DATE_FILTER: "dashboard/dashboard-tiger-readonly-date-filter",
     DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
     DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS: "dashboard/dashboard-tiger-unknown-visualization",
@@ -261,6 +263,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
     [SCENARIO_KEYS.DASHBOARD_TIGER_HIDE_FILTERS, DashboardTigerHideFilters],
+    [SCENARIO_KEYS.DASHBOARD_DEPENDENT_FILTERS, DependentFiltersScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER_READONLY_DATE_FILTER, DashboardTigerReadonlyDateFilter],
     [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],
     [SCENARIO_KEYS.DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS, DashboardScenarioTigerUnknownVisualization],
