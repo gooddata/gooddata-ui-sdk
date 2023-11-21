@@ -72,10 +72,12 @@ export function createAttributeFilterHandlerStore(
                 commited: {
                     keys: elementKeys,
                     isInverted,
+                    irrelevantKeys: [],
                 },
                 working: {
                     keys: elementKeys,
                     isInverted,
+                    irrelevantKeys: [],
                 },
             },
             config: {

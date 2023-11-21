@@ -128,6 +128,7 @@ export interface IInvertableSelectProps<T> {
     selectedItems: T[];
     selectedItemsLimit?: number;
     onSelect?: (items: T[], isInverted: boolean) => void;
+    numberOfHiddenSelectedItems?: number;
 
     searchString?: string;
     searchPlaceholder?: string;

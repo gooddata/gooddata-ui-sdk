@@ -133,6 +133,18 @@ export type AttributeFilterControllerData = {
      * Current attribute filter display form {@link @gooddata/sdk-model#ObjRef}.
      */
     currentDisplayFormRef: ObjRef;
+
+    /**
+     * This enables "show filtered elements" option which manages showing filtered elements.
+     */
+    enableShowingFilteredElements?: boolean;
+
+    /**
+     * Irrelevant/filtered out selection elements which are still effective.
+     *
+     * @remarks Used only when showing filtered elements is enabled.
+     */
+    irrelevantSelection?: IAttributeElement[];
 };
 
 /**
@@ -170,6 +182,16 @@ export type AttributeFilterControllerCallbacks = {
      * Filter open callback.
      */
     onOpen: () => void;
+
+    /**
+     * Request to see filtered elements when some are filtered out by limiting filters.
+     */
+    onShowFilteredElements: () => void;
+
+    /**
+     * Clear irrelevant/filtered out selection callback.
+     */
+    onClearIrrelevantSelection: () => void;
 };
 
 /**

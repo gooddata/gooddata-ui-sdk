@@ -44,6 +44,10 @@ import {
     OnInitTotalCountCancelCallbackPayload,
     OnInitTotalCountErrorCallbackPayload,
     OnInitTotalCountSuccessCallbackPayload,
+    OnLoadIrrelevantElementsStartCallbackPayload,
+    OnLoadIrrelevantElementsSuccessCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
 } from "../types/index.js";
 import {
     actions,
@@ -337,6 +341,45 @@ export class AttributeFilterReduxBridge {
     };
 
     //
+    // Irrelevant elements
+    //
+
+    loadIrrelevantElements = (correlation?: Correlation): void => {
+        this.redux.dispatch(actions.loadIrrelevantElementsRequest({ correlation: correlation }));
+    };
+
+    cancelIrrelevantElementsLoad(correlation?: Correlation): void {
+        this.redux.dispatch(actions.loadIrrelevantElementsCancelRequest({ correlation: correlation }));
+    }
+
+    onLoadIrrelevantElementsStart: CallbackRegistration<OnLoadIrrelevantElementsStartCallbackPayload> = (
+        cb,
+    ) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.loadIrrelevantElementsStart);
+    };
+
+    onLoadIrrelevantElementsSuccess: CallbackRegistration<OnLoadIrrelevantElementsSuccessCallbackPayload> = (
+        cb,
+    ) => {
+        return this.callbacks.registerCallback(
+            cb,
+            this.callbacks.registrations.loadIrrelevantElementsSuccess,
+        );
+    };
+
+    onLoadIrrelevantElementsError: CallbackRegistration<OnLoadIrrelevantElementsErrorCallbackPayload> = (
+        cb,
+    ) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.loadIrrelevantElementsError);
+    };
+
+    onLoadIrrelevantElementsCancel: CallbackRegistration<OnLoadIrrelevantElementsCancelCallbackPayload> = (
+        cb,
+    ) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.loadIrrelevantElementsCancel);
+    };
+
+    //
     // Elements options
     //
 
@@ -421,11 +464,16 @@ export class AttributeFilterReduxBridge {
     // Multi select
     //
 
-    changeMultiSelection = ({ keys, isInverted }: InvertableAttributeElementSelection): void => {
+    changeMultiSelection = ({
+        keys,
+        isInverted,
+        irrelevantKeys,
+    }: InvertableAttributeElementSelection): void => {
         this.redux.dispatch(
             actions.changeSelection({
                 selection: keys,
                 isInverted,
+                irrelevantSelection: irrelevantKeys,
             }),
         );
     };

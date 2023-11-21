@@ -262,6 +262,11 @@ export interface IBackendCapabilities {
     supportsCircularDependencyInFilters?: boolean;
 
     /**
+     * Indicates whether backend supports to show elements filtered out by limiting filters.
+     */
+    supportsShowingFilteredElements?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

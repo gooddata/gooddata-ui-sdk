@@ -7,13 +7,19 @@ import {
     selectCommittedSelection,
     selectIsCommittedSelectionInverted,
     selectIsWorkingSelectionInverted,
+    selectIrrelevantWorkingSelection,
     selectWorkingSelection,
+    selectIrrelevantCommittedSelection,
 } from "./selectionSelectors.js";
 
 const changeSelection: AttributeFilterReducer<
-    PayloadAction<{ selection: string[]; isInverted?: boolean }>
+    PayloadAction<{ selection: string[]; isInverted?: boolean; irrelevantSelection?: string[] }>
 > = (state, action) => {
     state.selection.working.keys = action.payload.selection;
+
+    if (action.payload.irrelevantSelection) {
+        state.selection.working.irrelevantKeys = action.payload.irrelevantSelection;
+    }
 
     if (!isNil(action.payload.isInverted)) {
         state.selection.working.isInverted = action.payload.isInverted;
@@ -23,17 +29,21 @@ const changeSelection: AttributeFilterReducer<
 const revertSelection: AttributeFilterReducer = (state) => {
     const committedSelection = selectCommittedSelection(state);
     const isCommittedSelectionInverted = selectIsCommittedSelectionInverted(state);
+    const irrelevantCommitedSelection = selectIrrelevantCommittedSelection(state);
 
     state.selection.working.keys = committedSelection;
     state.selection.working.isInverted = isCommittedSelectionInverted;
+    state.selection.working.irrelevantKeys = irrelevantCommitedSelection;
 };
 
 const commitSelection: AttributeFilterReducer = (state) => {
     const workingSelection = selectWorkingSelection(state);
     const isWorkingSelectionInverted = selectIsWorkingSelectionInverted(state);
+    const irrelevantWorkingSelection = selectIrrelevantWorkingSelection(state);
 
     state.selection.commited.keys = workingSelection;
     state.selection.commited.isInverted = isWorkingSelectionInverted;
+    state.selection.commited.irrelevantKeys = irrelevantWorkingSelection;
 };
 
 const invertSelection: AttributeFilterReducer = (state) => {

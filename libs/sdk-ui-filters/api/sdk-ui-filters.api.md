@@ -91,6 +91,8 @@ export type AttributeFilterControllerCallbacks = {
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onReset: () => void;
     onOpen: () => void;
+    onShowFilteredElements: () => void;
+    onClearIrrelevantSelection: () => void;
 };
 
 // @public
@@ -119,6 +121,8 @@ export type AttributeFilterControllerData = {
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
+    enableShowingFilteredElements?: boolean;
+    irrelevantSelection?: IAttributeElement[];
 };
 
 // @internal (undocumented)
@@ -287,6 +291,7 @@ export interface IAttributeDropdownItem {
 export interface IAttributeElementLoader {
     cancelCustomElementsLoad(correlation?: Correlation): void;
     cancelInitialElementsPageLoad(): void;
+    cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
@@ -309,6 +314,7 @@ export interface IAttributeElementLoader {
     initTotalCount(correlation?: Correlation): void;
     loadCustomElements(options: ILoadElementsOptions, correlation?: Correlation): void;
     loadInitialElementsPage(correlation?: Correlation): void;
+    loadIrrelevantElements(correlation?: Correlation): void;
     loadNextElementsPage(correlation?: Correlation): void;
     onInitTotalCountCancel: CallbackRegistration<OnInitTotalCountCancelCallbackPayload>;
     onInitTotalCountError: CallbackRegistration<OnInitTotalCountErrorCallbackPayload>;
@@ -322,6 +328,10 @@ export interface IAttributeElementLoader {
     onLoadInitialElementsPageError: CallbackRegistration<OnLoadInitialElementsPageErrorCallbackPayload>;
     onLoadInitialElementsPageStart: CallbackRegistration<OnLoadInitialElementsPageStartCallbackPayload>;
     onLoadInitialElementsPageSuccess: CallbackRegistration<OnLoadInitialElementsPageSuccessCallbackPayload>;
+    onLoadIrrelevantElementsCancel: CallbackRegistration<OnLoadIrrelevantElementsCancelCallbackPayload>;
+    onLoadIrrelevantElementsError: CallbackRegistration<OnLoadIrrelevantElementsErrorCallbackPayload>;
+    onLoadIrrelevantElementsStart: CallbackRegistration<OnLoadIrrelevantElementsStartCallbackPayload>;
+    onLoadIrrelevantElementsSuccess: CallbackRegistration<OnLoadIrrelevantElementsSuccessCallbackPayload>;
     onLoadNextElementsPageCancel: CallbackRegistration<OnLoadNextElementsPageCancelCallbackPayload>;
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
@@ -337,7 +347,11 @@ export interface IAttributeElementLoader {
 // @beta
 export interface IAttributeFilterAllValuesFilteredResultProps {
     // (undocumented)
+    enableShowingFilteredElements: boolean;
+    // (undocumented)
     parentFilterTitles: string[];
+    // (undocumented)
+    searchString: string;
 }
 
 // @public (undocumented)
@@ -497,16 +511,21 @@ export interface IAttributeFilterElementsSelectLoadingProps {
 
 // @beta
 export interface IAttributeFilterElementsSelectProps {
+    attributeTitle?: string;
+    enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
+    irrelevantSelection?: IAttributeElement[];
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     isLoading: boolean;
     isLoadingNextPage: boolean;
     items: IAttributeElement[];
     nextPageSize: number;
+    onClearIrrelevantSelection?: () => void;
     onLoadNextPage: () => void;
     onSearch: (searchString: string) => void;
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onShowFilteredElements?: () => void;
     parentFilterTitles: string[];
     searchString: string;
     selectedItems: IAttributeElement[];
@@ -516,6 +535,7 @@ export interface IAttributeFilterElementsSelectProps {
 
 // @beta
 export interface IAttributeFilterEmptyResultProps {
+    enableShowingFilteredElements?: boolean;
     height: number;
     isFilteredByParentFilters: boolean;
     parentFilterTitles?: string[];
@@ -584,9 +604,14 @@ export interface IAttributeFilterSelectionStatusProps {
 
 // @beta
 export interface IAttributeFilterStatusBarProps {
+    attributeTitle?: string;
+    enableShowingFilteredElements?: boolean;
     getItemTitle: (item: IAttributeElement) => string;
+    irrelevantSelection?: IAttributeElement[];
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
+    onClearIrrelevantSelection?: () => void;
+    onShowFilteredElements?: () => void;
     parentFilterTitles: string[];
     selectedItems: IAttributeElement[];
     selectedItemsLimit: number;
@@ -772,6 +797,12 @@ export interface ILoadElementsResult {
     totalCount: number;
 }
 
+// @public
+export interface ILoadIrrelevantElementsResult {
+    // (undocumented)
+    elementTitles: string[];
+}
+
 // @beta (undocumented)
 export interface IMeasureDropdownItem {
     // (undocumented)
@@ -849,6 +880,8 @@ export type InvertableAttributeElementSelection = InvertableSelection<AttributeE
 
 // @public (undocumented)
 export interface InvertableSelection<T> {
+    // (undocumented)
+    irrelevantKeys?: T[];
     // (undocumented)
     isInverted: boolean;
     // (undocumented)
@@ -1103,6 +1136,20 @@ export type OnLoadInitialElementsPageStartCallbackPayload = CallbackPayloadWithC
 
 // @public
 export type OnLoadInitialElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @public
+export type OnLoadIrrelevantElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+// @public
+export type OnLoadIrrelevantElementsErrorCallbackPayload = Partial<CallbackPayloadWithCorrelation> & {
+    error: GoodDataSdkError;
+};
+
+// @public
+export type OnLoadIrrelevantElementsStartCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+// @public
+export type OnLoadIrrelevantElementsSuccessCallbackPayload = Partial<CallbackPayloadWithCorrelation> & ILoadIrrelevantElementsResult;
 
 // @public
 export type OnLoadNextElementsPageCancelCallbackPayload = CallbackPayloadWithCorrelation;

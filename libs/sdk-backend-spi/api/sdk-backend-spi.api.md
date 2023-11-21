@@ -280,6 +280,7 @@ export interface IBackendCapabilities {
     supportsSeparateLatitudeLongitudeLabels?: boolean;
     supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;
+    supportsShowingFilteredElements?: boolean;
     supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;
