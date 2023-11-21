@@ -413,6 +413,9 @@ export type AttributeFilterDraggableItem = {
 // @internal (undocumented)
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
 
+// @beta (undocumented)
+export type AttributeFilterInteractionType = "attributeFilterTitleResetClicked" | "attributeFilterConfigurationOpened" | "attributeFilterClearIrrelevantValuesClicked" | "attributeFilterShowAllValuesClicked";
+
 // @internal (undocumented)
 export type AttributeFilterPlaceholderDraggableItem = {
     type: "attributeFilter-placeholder";
@@ -433,7 +436,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "attributeFilterTitleResetClicked";
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | AttributeFilterInteractionType;
 }
 
 // @beta (undocumented)
@@ -7525,7 +7528,7 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
     descriptionTooltipOpened: (eventData: DescriptionTooltipOpenedData) => void;
     shareDialogInteraction: (eventData: ShareDialogInteractionData) => void;
-    attributeFilterTitleResetClicked: () => void;
+    attributeFilterInteraction: (eventType: AttributeFilterInteractionType) => void;
 };
 
 // @internal (undocumented)

@@ -88,8 +88,17 @@ export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<
 /**
  * @beta
  */
+export type AttributeFilterInteractionType =
+    | "attributeFilterTitleResetClicked"
+    | "attributeFilterConfigurationOpened"
+    | "attributeFilterClearIrrelevantValuesClicked"
+    | "attributeFilterShowAllValuesClicked";
+
+/**
+ * @beta
+ */
 export interface BareUserInteractionPayload {
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "attributeFilterTitleResetClicked";
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | AttributeFilterInteractionType;
 }
 
 /**
