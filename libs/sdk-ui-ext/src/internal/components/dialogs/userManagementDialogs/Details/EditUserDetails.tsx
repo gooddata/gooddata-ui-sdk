@@ -5,10 +5,11 @@ import React, { useCallback, useEffect } from "react";
 import { IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
-import { UserDetailsView } from "./UserDetailsView.js";
-import { useUserDetails } from "./detailsHooks.js";
 import { extractUserName } from "../utils.js";
 import { messages } from "../locales.js";
+
+import { UserDetailsView } from "./UserDetailsView.js";
+import { useUserDetails } from "./detailsHooks.js";
 
 export interface IEditUserDetailsProps {
     isAdmin: boolean;
@@ -19,6 +20,7 @@ export interface IEditUserDetailsProps {
     onSubmit: (user: IUser, isAdmin: boolean) => void;
     onCancel: () => void;
     onClose: () => void;
+    removeAdminGroup: () => void;
 }
 
 export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
@@ -30,6 +32,7 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
     onSubmit,
     onCancel,
     onClose,
+    removeAdminGroup,
 }) => {
     const intl = useIntl();
     const { updatedUser, isUpdatedAdmin, onSave, onChange, isDirty } = useUserDetails(
@@ -37,6 +40,7 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
         isAdmin,
         onSubmit,
         onCancel,
+        removeAdminGroup,
     );
 
     // change user membership if dialog was opened for that reason, enable Save button, do it just once

@@ -20,7 +20,7 @@ import {
     useUserDialogMode,
     useDeleteUser,
     useDeleteDialog,
-    useIsOrganizationBootstrapUser,
+    useOrganizationDetails,
 } from "./dialogHooks.js";
 import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
@@ -57,19 +57,17 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
-    const { user, isCurrentlyAdmin, onUserDetailsChanged } = useUser(
+    const { user, isCurrentlyAdmin, onUserDetailsChanged, setIsAdmin } = useUser(
         userId,
         organizationId,
         isAdmin,
         onSuccess,
     );
+    const { isBootstrapUser, bootstrapUserGroupId } = useOrganizationDetails(organizationId);
     const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
         useWorkspaces(userId, "user", organizationId, onSuccess);
-    const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup } = useUserGroups(
-        userId,
-        organizationId,
-        onSuccess,
-    );
+    const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup, removeAdminGroup } =
+        useUserGroups(userId, organizationId, bootstrapUserGroupId, onSuccess, setIsAdmin);
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
         grantedUserGroups,
@@ -83,7 +81,6 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         dialogWrapperClassNames,
     } = useDeleteDialog();
     const deleteUser = useDeleteUser(userId, organizationId, onSuccess, onClose);
-    const isBootstrapUser = useIsOrganizationBootstrapUser(organizationId, user);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userDialogTabsMessages.workspaces.id) {
@@ -132,7 +129,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <ViewDialog
                             dialogTitle={extractUserName(user)}
                             isAdmin={isCurrentlyAdmin}
-                            isDeleteLinkEnabled={!isBootstrapUser}
+                            isDeleteLinkEnabled={!isBootstrapUser(user)}
                             deleteLinkDisabledTooltipTextId={messages.deleteUserDisabledTooltip.id}
                             deleteLinkText={intl.formatMessage(messages.deleteUserLink)}
                             onOpenDeleteDialog={onOpenDeleteDialog}
@@ -174,7 +171,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                                 <UserDetailsView
                                     user={user}
                                     isAdmin={isCurrentlyAdmin}
-                                    isBootstrapUser={isBootstrapUser}
+                                    isBootstrapUser={isBootstrapUser(user)}
                                     mode="VIEW"
                                 />
                             )}
@@ -205,12 +202,13 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                         <EditUserDetails
                             user={user}
                             isAdmin={isCurrentlyAdmin}
-                            isBootstrapUser={isBootstrapUser}
+                            isBootstrapUser={isBootstrapUser(user)}
                             enableBackButton={!isOpenedInEditMode}
                             changeUserMembership={changeUserMembership}
                             onSubmit={onUserDetailsChanged}
                             onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
+                            removeAdminGroup={removeAdminGroup}
                         />
                     )}
                 </div>

@@ -83,6 +83,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 
 // @public
@@ -556,6 +557,8 @@ export interface IOrganization {
 
 // @alpha
 export interface IOrganizationPermissionService {
+    getOrganizationPermissionForUser(userId: string): Promise<OrganizationPermissionAssignment[]>;
+    getOrganizationPermissionForUserGroup(userGroupId: string): Promise<OrganizationPermissionAssignment[]>;
     getWorkspacePermissionsForUser(userId: string): Promise<IWorkspacePermissionAssignment[]>;
     getWorkspacePermissionsForUserGroup(userGroupId: string): Promise<IWorkspacePermissionAssignment[]>;
     updateUserOrganizationAdminStatus(userId: string, isOrganizationAdmin: boolean): Promise<void>;

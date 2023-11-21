@@ -1,9 +1,14 @@
 // (C) 2023 GoodData Corporation
 
 import { IOrganizationPermissionService } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissionAssignment, IOrganizationPermissionAssignment } from "@gooddata/sdk-model";
+import {
+    IWorkspacePermissionAssignment,
+    IOrganizationPermissionAssignment,
+    OrganizationPermissionAssignment,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { ITigerClient } from "@gooddata/api-client-tiger";
 
 type GroupedWorkspacePermissions = { [key: string]: IWorkspacePermissionAssignment[] };
 
@@ -31,6 +36,17 @@ const mapWorkspaceAssignments = (workspaceAssignments: IWorkspacePermissionAssig
             hierarchyPermissions,
         }),
     );
+
+const fetchOrganizationPermissions = async (client: ITigerClient, userId: string) => {
+    return client.declarativeLayout
+        .getOrganizationPermissions()
+        .then((response) => response.data)
+        .then((permissions) =>
+            permissions
+                .filter((permission) => permission.assignee.id === userId)
+                .map((permission) => permission.name),
+        );
+};
 
 export class OrganizationPermissionService implements IOrganizationPermissionService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -78,6 +94,22 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
                         ...assignment,
                     })),
                 );
+        });
+    };
+
+    public getOrganizationPermissionForUser = async (
+        userId: string,
+    ): Promise<OrganizationPermissionAssignment[]> => {
+        return this.authCall(async (client) => {
+            return fetchOrganizationPermissions(client, userId);
+        });
+    };
+
+    public getOrganizationPermissionForUserGroup = async (
+        userGroupId: string,
+    ): Promise<OrganizationPermissionAssignment[]> => {
+        return this.authCall(async (client) => {
+            return fetchOrganizationPermissions(client, userGroupId);
         });
     };
 

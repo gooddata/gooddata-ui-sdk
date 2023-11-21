@@ -2,7 +2,13 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import { IOrganizationDescriptor, IUser, IUserGroup, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    IOrganizationDescriptor,
+    IUser,
+    IUserGroup,
+    areObjRefsEqual,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import cx from "classnames";
 import { useToastMessage, ITab } from "@gooddata/sdk-ui-kit";
 
@@ -50,6 +56,7 @@ export const useUser = (userId: string, organizationId: string, isAdmin: boolean
         user,
         onUserDetailsChanged,
         isCurrentlyAdmin,
+        setIsAdmin,
     };
 };
 
@@ -241,7 +248,13 @@ export const useWorkspaces = (
     };
 };
 
-export const useUserGroups = (userId: string, organizationId: string, onSuccess: () => void) => {
+export const useUserGroups = (
+    userId: string,
+    organizationId: string,
+    bootstrapUserGroupId: string,
+    onSuccess: () => void,
+    setIsAdmin: (isAdmin: boolean) => void,
+) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[]>(undefined);
@@ -278,12 +291,34 @@ export const useUserGroups = (userId: string, organizationId: string, onSuccess:
             });
     };
 
+    const hasBootstrapUserGroup = (userGroups: IGrantedUserGroup[]) =>
+        userGroups.some((group) => group.id === bootstrapUserGroupId);
+
+    // removes admin group from the user if he is its member, update internal array of groups
+    const removeAdminGroup = () => {
+        hasBootstrapUserGroup(grantedUserGroups)
+            ? backend
+                  .organization(organizationId)
+                  .users()
+                  .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
+                  .then(() =>
+                      setGrantedUserGroups(
+                          grantedUserGroups.filter((item) => item.id !== bootstrapUserGroupId),
+                      ),
+                  )
+            : Promise.resolve();
+    };
+
     // update internal array with user groups after applied changed in groups edit mode
     const onUserGroupsChanged = (userGroups: IGrantedUserGroup[]) => {
         const unchangedUserGroups = grantedUserGroups.filter(
             (item) => !userGroups.some((userGroup) => userGroup.id === item.id),
         );
-        setGrantedUserGroups([...unchangedUserGroups, ...userGroups].sort(sortByName));
+        const newUserGroups = [...unchangedUserGroups, ...userGroups].sort(sortByName);
+        setGrantedUserGroups(newUserGroups);
+        if (hasBootstrapUserGroup(newUserGroups)) {
+            setIsAdmin(true);
+        }
         onSuccess();
     };
 
@@ -291,6 +326,7 @@ export const useUserGroups = (userId: string, organizationId: string, onSuccess:
         grantedUserGroups,
         onUserGroupsChanged,
         removeGrantedUserGroup,
+        removeAdminGroup,
     };
 };
 
@@ -444,12 +480,12 @@ const useOrganization = (organizationId: string) => {
     };
 };
 
-export const useIsOrganizationBootstrapUser = (organizationId: string, user: IUser) => {
-    const { bootstrapUser } = useOrganization(organizationId);
-    return areObjRefsEqual(bootstrapUser, user?.ref);
-};
-
-export const useIsOrganizationBootstrapUserGroup = (organizationId: string, userGroup: IUserGroup) => {
-    const { bootstrapUserGroup } = useOrganization(organizationId);
-    return areObjRefsEqual(bootstrapUserGroup, userGroup?.ref);
+export const useOrganizationDetails = (organizationId: string) => {
+    const { bootstrapUser, bootstrapUserGroup } = useOrganization(organizationId);
+    return {
+        isBootstrapUser: (user: IUser) => areObjRefsEqual(bootstrapUser, user?.ref),
+        isBootstrapUserGroup: (userGroup: IUserGroup) => areObjRefsEqual(bootstrapUserGroup, userGroup?.ref),
+        bootstrapUserId: bootstrapUser ? objRefToString(bootstrapUser) : undefined,
+        bootstrapUserGroupId: bootstrapUserGroup ? objRefToString(bootstrapUserGroup) : undefined,
+    };
 };
