@@ -26,11 +26,15 @@ import {
     isDateBucketItem,
     isMeasureValueFilter,
     isRankingFilter,
-    filterOutDerivedMeasures,
 } from "./bucketHelper.js";
 
 import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
-import { MAX_TABLE_CATEGORIES_COUNT } from "../constants/uiConfig.js";
+import {
+    INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
+    INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
+    MAX_METRICS_COUNT,
+    MAX_TABLE_CATEGORIES_COUNT,
+} from "../constants/uiConfig.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
@@ -78,12 +82,10 @@ export function hasNoAttribute(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.ATTRIBUTE) === 0;
 }
 
-export function hasNoMoreThan20ItemsOnMeasuresOrRows(buckets: IBucketOfFun[]): boolean {
-    const measures = filterOutDerivedMeasures(getBucketItems(buckets, BucketNames.MEASURES));
-
+export function hasMeasuresOrRowsUnderLowerLimit(buckets: IBucketOfFun[]): boolean {
     return (
         getItemsCount(buckets, BucketNames.ATTRIBUTE) <= MAX_TABLE_CATEGORIES_COUNT &&
-        measures.length <= MAX_TABLE_CATEGORIES_COUNT
+        getItemsCount(buckets, BucketNames.MEASURES) <= MAX_METRICS_COUNT
     );
 }
 
@@ -287,8 +289,16 @@ export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): bo
     return allRulesMet(rules, buckets);
 }
 
-export function canTableMeasuresOrAttributesAddMoreItems(buckets: IBucketOfFun[], localIdentifier: string) {
-    const itemsCount = getItemsCount(buckets, localIdentifier);
+export function canIncreasedTableMeasuresAddMoreItems(buckets: IBucketOfFun[]) {
+    const itemsCount = getItemsCount(buckets, BucketNames.MEASURES);
+    const limit = hasNoColumns(buckets) ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
+    return itemsCount < limit;
+}
 
-    return hasNoColumns(buckets) ? true : itemsCount < MAX_TABLE_CATEGORIES_COUNT;
+export function canIncreasedTableAttributesAddMoreItems(buckets: IBucketOfFun[]) {
+    const itemsCount = getItemsCount(buckets, BucketNames.ATTRIBUTE);
+    const limit = hasNoColumns(buckets)
+        ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT
+        : MAX_TABLE_CATEGORIES_COUNT;
+    return itemsCount < limit;
 }
