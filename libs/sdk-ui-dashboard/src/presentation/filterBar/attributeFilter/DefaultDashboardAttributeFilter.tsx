@@ -37,6 +37,7 @@ import {
     selectBackendCapabilities,
     selectAttributeFilterConfigsModeMap,
     selectEnableKDDependentFilters,
+    useDashboardUserInteraction,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -66,6 +67,7 @@ export const DefaultDashboardAttributeFilter = (
     const enableKDDependentFilters = useDashboardSelector(selectEnableKDDependentFilters);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+    const userInteraction = useDashboardUserInteraction();
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -207,6 +209,9 @@ export const DefaultDashboardAttributeFilter = (
                             onConfigurationButtonClick={() => {
                                 setIsConfigurationOpen(true);
                                 onConfigurationClose();
+                                userInteraction.attributeFilterInteraction(
+                                    "attributeFilterConfigurationOpened",
+                                );
                             }}
                             onDeleteButtonClick={() => {
                                 handleRemoveAttributeFilter();
@@ -287,13 +292,23 @@ export const DefaultDashboardAttributeFilter = (
             return (
                 <AttributeFilterStatusBar
                     {...props}
+                    onShowFilteredElements={() => {
+                        props.onShowFilteredElements?.();
+                        userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
+                    }}
+                    onClearIrrelevantSelection={() => {
+                        props.onClearIrrelevantSelection?.();
+                        userInteraction.attributeFilterInteraction(
+                            "attributeFilterClearIrrelevantValuesClicked",
+                        );
+                    }}
                     enableShowingFilteredElements={
                         !!capabilities.supportsShowingFilteredElements && enableKDDependentFilters
                     }
                 />
             );
         };
-    }, [enableKDDependentFilters, capabilities]);
+    }, [enableKDDependentFilters, capabilities, userInteraction]);
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
