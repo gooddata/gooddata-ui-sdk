@@ -14,6 +14,11 @@ export class Table {
         return cy.get(this.parentSelector).find(".s-pivot-table");
     }
 
+    public isEmpty() {
+        this.getElement().should("not.exist");
+        return this;
+    }
+
     public waitLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
         this.getElement().find(".s-loading-done").should("exist");

@@ -77,6 +77,16 @@ export class AttributeFilter {
         return cy.wrap(result);
     }
 
+    hasValueList(values: string[]) {
+        if (values.length === 0) {
+            cy.get(".s-isLoading").should("not.exist");
+            cy.get(`.s-attribute-filter-list-item .input-label-text`).should("not.exist");
+        } else {
+            this.getValueList().should("deep.equal", values);
+        }
+        return this;
+    }
+
     getSelectedValueList() {
         const result = [] as string[];
         cy.get(`.s-attribute-filter-list-item.s-attribute-filter-list-item-selected .input-label-text`).each(
@@ -85,6 +95,18 @@ export class AttributeFilter {
             },
         );
         return cy.wrap(result);
+    }
+
+    hasSelectedValueList(values: string[]) {
+        if (values.length === 0) {
+            cy.get(".s-isLoading").should("not.exist");
+            cy.get(
+                `.s-attribute-filter-list-item.s-attribute-filter-list-item-selected .input-label-text`,
+            ).should("not.exist");
+        } else {
+            this.getSelectedValueList().should("deep.equal", values);
+        }
+        return this;
     }
 
     apply() {
