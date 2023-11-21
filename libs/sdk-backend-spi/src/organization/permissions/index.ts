@@ -1,6 +1,10 @@
 // (C) 2023 GoodData Corporation
 
-import { IWorkspacePermissionAssignment, IOrganizationPermissionAssignment } from "@gooddata/sdk-model";
+import {
+    IWorkspacePermissionAssignment,
+    IOrganizationPermissionAssignment,
+    OrganizationPermissionAssignment,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization permissions.
@@ -34,6 +38,24 @@ export interface IOrganizationPermissionService {
      * @returns promise
      */
     updateWorkspacePermissions(permissions: IWorkspacePermissionAssignment[]): Promise<void>;
+
+    /**
+     * Get list of organization permissions assigned to the user.
+     *
+     * @param userId - ID of the user.
+     *
+     * @returns promise
+     */
+    getOrganizationPermissionForUser(userId: string): Promise<OrganizationPermissionAssignment[]>;
+
+    /**
+     * Get list of organization permissions assigned to the user group.
+     *
+     * @param userGroupId - ID of the user.
+     *
+     * @returns promise
+     */
+    getOrganizationPermissionForUserGroup(userGroupId: string): Promise<OrganizationPermissionAssignment[]>;
 
     /**
      * Update organization permission for the user or user group.

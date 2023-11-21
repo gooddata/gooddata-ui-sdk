@@ -16,7 +16,7 @@ import {
     useDeleteUserGroup,
     useUserGroupDialogTabs,
     useUserGroupDialogMode,
-    useIsOrganizationBootstrapUserGroup,
+    useOrganizationDetails,
 } from "./dialogHooks.js";
 import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
@@ -76,7 +76,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         dialogWrapperClassNames,
     } = useDeleteDialog();
     const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
-    const isBootstrapUserGroup = useIsOrganizationBootstrapUserGroup(organizationId, userGroup);
+    const { isBootstrapUserGroup } = useOrganizationDetails(organizationId);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessages.workspaces.id) {
@@ -125,9 +125,11 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                         <ViewDialog
                             dialogTitle={extractUserGroupName(userGroup)}
                             isAdmin={isAdmin}
-                            isDeleteLinkEnabled={!isBootstrapUserGroup && grantedUsers?.length === 0}
+                            isDeleteLinkEnabled={
+                                !isBootstrapUserGroup(userGroup) && grantedUsers?.length === 0
+                            }
                             deleteLinkDisabledTooltipTextId={
-                                isBootstrapUserGroup
+                                isBootstrapUserGroup(userGroup)
                                     ? messages.deleteAdminUserGroupTooltip.id
                                     : messages.deleteNonEmptyUserGroupTooltip.id
                             }

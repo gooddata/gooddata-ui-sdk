@@ -362,6 +362,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 getWorkspacePermissionsForUser: () => Promise.resolve([]),
                 getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
+                getOrganizationPermissionForUser: () => Promise.resolve([]),
+                getOrganizationPermissionForUserGroup: () => Promise.resolve([]),
                 updateOrganizationPermissions: () => Promise.resolve(),
                 updateWorkspacePermissions: () => Promise.resolve(),
             };
