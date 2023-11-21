@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-10-30T06:12:00.483Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-11-20T13:57:41.446Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -51,13 +51,13 @@ export const Opportunity = {
      */
     SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
-     * Display Form Title: Opportunity Name
-     * Display Form ID: label.f_opportunity.opportunity.name
-     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
-    /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
      */ Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: Opportunity Name
+     * Display Form ID: label.f_opportunity.opportunity.name
+     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -70,14 +70,14 @@ export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep.ownername
-     */
-    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
-    /**
      * Display Form Title: Sales Rep
      * Display Form ID: attr.f_owner.salesrep
-     */ Default: newAttribute("attr.f_owner.salesrep"),
+     */
+    Default: newAttribute("attr.f_owner.salesrep"),
+    /**
+     * Display Form Title: Owner Name
+     * Display Form ID: label.f_owner.salesrep.ownername
+     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
 };
 /**
  * Attribute Title: Product
@@ -85,14 +85,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */
-    Default: newAttribute("attr.f_product.product"),
-    /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */ Name: newAttribute("label.f_product.product.name"),
+     */
+    Name: newAttribute("label.f_product.product.name"),
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
 };
 /**
  * Attribute Title: Stage History
@@ -105,14 +105,14 @@ export const StageHistory: IAttribute = newAttribute("attr.f_stagehistory.stageh
  */
 export const StageName = {
     /**
-     * Display Form Title: Order
-     * Display Form ID: label.f_stage.stagename.order
-     */
-    Order: newAttribute("label.f_stage.stagename.order"),
-    /**
      * Display Form Title: Stage Name
      * Display Form ID: attr.f_stage.stagename
-     */ Default: newAttribute("attr.f_stage.stagename"),
+     */
+    Default: newAttribute("attr.f_stage.stagename"),
+    /**
+     * Display Form Title: Order
+     * Display Form ID: label.f_stage.stagename.order
+     */ Order: newAttribute("label.f_stage.stagename.order"),
     /**
      * Display Form Title: Stage Name
      * Display Form ID: label.f_stage.stagename.stagename
@@ -164,30 +164,30 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */
+    Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
+    /**
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
-     */
-    Longitude: newAttribute("f_city.id.longitude"),
-    /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
+     */ Longitude: newAttribute("f_city.id.longitude"),
     /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
      */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
-    /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
     /**
      * Display Form Title: City
      * Display Form ID: f_city.id
@@ -214,14 +214,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const Department = {
     /**
-     * Display Form Title: Department
-     * Display Form ID: f_owner.department_id
-     */
-    Default: newAttribute("f_owner.department_id"),
-    /**
      * Display Form Title: Department hyperlink
      * Display Form ID: f_owner.department_id.departmenthyperlink
-     */ Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+     */
+    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+    /**
+     * Display Form Title: Department
+     * Display Form ID: f_owner.department_id
+     */ Default: newAttribute("f_owner.department_id"),
 };
 /**
  * Attribute Title: Owner Id
@@ -234,14 +234,14 @@ export const OwnerId: IAttribute = newAttribute("f_owner.id");
  */
 export const Region = {
     /**
-     * Display Form Title: Region hyperlink
-     * Display Form ID: f_owner.region_id.regionhyperlink
-     */
-    Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
-    /**
      * Display Form Title: Region
      * Display Form ID: f_owner.region_id
-     */ Default: newAttribute("f_owner.region_id"),
+     */
+    Default: newAttribute("f_owner.region_id"),
+    /**
+     * Display Form Title: Region hyperlink
+     * Display Form ID: f_owner.region_id.regionhyperlink
+     */ Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
 };
 /**
  * Attribute Title: Product Id
@@ -258,6 +258,21 @@ export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
  * Attribute ID: f_stage.id
  */
 export const StageId: IAttribute = newAttribute("f_stage.id");
+/**
+ * Attribute Title: State
+ * Attribute ID: state_id
+ */
+export const State = {
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */
+    Default: newAttribute("state_id"),
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */ Name: newAttribute("state_id.statename"),
+};
 /**
  * Attribute Title: Is Active?
  * Attribute ID: f_stage.isactive_id
@@ -289,31 +304,16 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const ProductThatIsRenamedToTestTheLongAttributeName = {
     /**
-     * Display Form Title: Product that is renamed to test the long attribute name
-     * Display Form ID: productthatisrenamedtotestthelongattributename
-     */
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
-    /**
      * Display Form Title: Product that is renamed to test the long attribute name hyperlink
      * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */ Hyperlink: newAttribute(
+     */
+    Hyperlink: newAttribute(
         "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
     ),
-};
-/**
- * Attribute Title: State
- * Attribute ID: state_id
- */
-export const State = {
     /**
-     * Display Form Title: State
-     * Display Form ID: state_id
-     */
-    Default: newAttribute("state_id"),
-    /**
-     * Display Form Title: State name
-     * Display Form ID: state_id.statename
-     */ Name: newAttribute("state_id.statename"),
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */ Default: newAttribute("productthatisrenamedtotestthelongattributename"),
 };
 /**
  * Metric Title: 2 literals in datetime_diff
@@ -2522,6 +2522,10 @@ export const Insights = {
      * Insight ID: 75e08348-d27f-42b8-a360-41bee971fb6d
      */ DependencyWheelChart: "75e08348-d27f-42b8-a360-41bee971fb6d",
     /**
+     * Insight Title: USA geography attribute table
+     * Insight ID: 780f3759-65cc-4489-858d-9c318ecece75
+     */ USAGeographyAttributeTable: "780f3759-65cc-4489-858d-9c318ecece75",
+    /**
      * Insight Title: invalid insight
      * Insight ID: 81452cc9-558b-4b4e-a70b-0a80f3bd2924
      */ InvalidInsight: "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
@@ -2542,9 +2546,9 @@ export const Insights = {
      * Insight ID: 87e5c951-0ae6-4a71-a38d-843457bdfc0b
      */ Amount_2: "87e5c951-0ae6-4a71-a38d-843457bdfc0b",
     /**
-     * Insight Title: Table Transpose
+     * Insight Title: Table With MC
      * Insight ID: 8f88b387-351b-479f-a7fb-e2b072c810f3
-     */ TableTranspose: "8f88b387-351b-479f-a7fb-e2b072c810f3",
+     */ TableWithMC: "8f88b387-351b-479f-a7fb-e2b072c810f3",
     /**
      * Insight Title: Column chart has many hyperlinks
      * Insight ID: 9a2ab62b-587a-4b16-9682-1b7962340354
@@ -2569,6 +2573,10 @@ export const Insights = {
      * Insight Title: Parent Insight
      * Insight ID: b3b665b7-bca2-4462-82f1-b0e01dff8afe
      */ ParentInsight: "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+    /**
+     * Insight Title: Table Transpose
+     * Insight ID: b69512f0-6285-4d4d-b31c-47b7b081276c
+     */ TableTranspose: "b69512f0-6285-4d4d-b31c-47b7b081276c",
     /**
      * Insight Title: Combine with all filter types
      * Insight ID: ba13041b-87bc-458c-a514-fcc0074c9973
@@ -2701,6 +2709,14 @@ export const Dashboards = {
      * Dashboard ID: 61cbcfcd-efee-407f-ba3a-6c3170f50e03
      */ KDWithNoData: "61cbcfcd-efee-407f-ba3a-6c3170f50e03",
     /**
+     * Dashboard Title: Dashboard Readonly Date Filter
+     * Dashboard ID: 62554df1-31a8-49c7-bfed-524771a83b1a
+     */ DashboardReadonlyDateFilter: "62554df1-31a8-49c7-bfed-524771a83b1a",
+    /**
+     * Dashboard Title: Dashboard with dependent filters
+     * Dashboard ID: 6aac31b1-ba6c-40b6-b727-1c412d9e4d25
+     */ DashboardWithDependentFilters: "6aac31b1-ba6c-40b6-b727-1c412d9e4d25",
+    /**
      * Dashboard Title: Dashboard column chart only measures
      * Dashboard ID: 6dcf6335-92cf-4b77-981f-a1f4d0763053
      */ DashboardColumnChartOnlyMeasures: "6dcf6335-92cf-4b77-981f-a1f4d0763053",
@@ -2721,6 +2737,10 @@ export const Dashboards = {
      * Dashboard ID: 97aca5e1-ab29-4ad9-a173-72085daf4dbf
      */ DrillToDashboard: "97aca5e1-ab29-4ad9-a173-72085daf4dbf",
     /**
+     * Dashboard Title: KD with Table Transpose
+     * Dashboard ID: a402fcdc-fa1c-49ca-be7f-dade9e75d33e
+     */ KDWithTableTranspose: "a402fcdc-fa1c-49ca-be7f-dade9e75d33e",
+    /**
      * Dashboard Title: Target KD has null value
      * Dashboard ID: a87209e0-c53f-4a6f-abf3-17c7d8d4079e
      */ TargetKDHasNullValue: "a87209e0-c53f-4a6f-abf3-17c7d8d4079e",
@@ -2740,6 +2760,10 @@ export const Dashboards = {
      * Dashboard Title: Pivot Table Dashboard
      * Dashboard ID: c03bd065-4377-4b63-80c1-a00b00d20ddd
      */ PivotTableDashboard: "c03bd065-4377-4b63-80c1-a00b00d20ddd",
+    /**
+     * Dashboard Title: Dashboard Hide Filters
+     * Dashboard ID: c4e4916e-ccc2-46d1-8202-8321249ec2a3
+     */ DashboardHideFilters: "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
     /**
      * Dashboard Title: Dashboard stage name
      * Dashboard ID: c900b178-b150-4dac-b4e5-20ad5ddfe23b
@@ -2772,12 +2796,4 @@ export const Dashboards = {
      * Dashboard Title: KD with invalid insight
      * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12
      */ KDWithInvalidInsight: "f50c7076-1d45-4031-a4fd-564459254b12",
-    /**
-     * Dashboard Title: Dashboard Readonly Date Filter
-     * Dashboard ID: 62554df1-31a8-49c7-bfed-524771a83b1a
-     */ DashboardReadonlyDateFilter: "62554df1-31a8-49c7-bfed-524771a83b1a",
-    /**
-     * Dashboard Title: Dashboard Hide Filters
-     * Dashboard ID: c4e4916e-ccc2-46d1-8202-8321249ec2a3
-     */ DashboardHideFilters: "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
 };

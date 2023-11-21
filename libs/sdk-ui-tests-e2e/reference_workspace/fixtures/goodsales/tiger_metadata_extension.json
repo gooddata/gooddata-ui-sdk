@@ -2068,6 +2068,77 @@
                     }
                 ],
                 "title": "Dashboard Testing"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "b622164f-f036-422f-9f49-fb81bfeeb55e",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 21,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "configuration": {
+                                                "hideTitle": false
+                                            },
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_activity_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "780f3759-65cc-4489-858d-9c318ecece75",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "USA geography attribute table",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-11-14 15:32",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "6aac31b1-ba6c-40b6-b727-1c412d9e4d25",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard with dependent filters"
             }
         ],
         "dashboardPlugins": [],
@@ -4036,6 +4107,69 @@
                 "description": "",
                 "id": "fe0c65ba-a85d-4def-9aa1-e8f19469324e",
                 "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["East Coast"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_owner.region_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "2cd300f5f71244a4ba9297c91f6a358c",
+                                "negativeSelection": false
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "state_id.statename",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "644095cfbd2346f6b767278b3b0a0396",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_city.id.cityname",
+                                        "type": "label"
+                                    }
+                                },
+                                "filterElementsBy": [
+                                    {
+                                        "filterLocalIdentifier": "644095cfbd2346f6b767278b3b0a0396",
+                                        "over": {
+                                            "attributes": []
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "ffaf479f4cf84a7f99fe3339205aba28",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b622164f-f036-422f-9f49-fb81bfeeb55e",
+                "title": "filterContext"
             }
         ],
         "metrics": [],
@@ -5816,6 +5950,70 @@
                 "description": "",
                 "id": "6d46ac4d-9d6c-434d-a9ae-ff61c98ce066",
                 "title": "Insight has invalid interaction"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "ca076ec85db5497a8846b9809760fb93"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "state_id.statename",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "4656fee56a744d16a1cf6898dd34d5d5"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_city.id.cityname",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "37594b463016459f873d106dd29d111d"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "ca076ec85db5497a8846b9809760fb93",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2023-11-14 15:29",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "780f3759-65cc-4489-858d-9c318ecece75",
+                "title": "USA geography attribute table"
             }
         ]
     }

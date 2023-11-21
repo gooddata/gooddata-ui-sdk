@@ -110,6 +110,21 @@ export class TopBar {
         return this.getElement(".s-delete_dashboard");
     }
 
+    enterEditMode() {
+        cy.get(".s-top-bar .s-edit").click();
+        return this;
+    }
+
+    cancelEditMode() {
+        cy.get(".s-top-bar .s-cancel").click();
+        return this;
+    }
+
+    discardChanges() {
+        cy.get(".s-discard_changes").click();
+        return this;
+    }
+
     getFilterBarElement(): Cypress.Chainable {
         return this.getElement("");
     }
