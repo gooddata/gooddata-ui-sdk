@@ -14,6 +14,7 @@ export const useUserDetails = (
     isAdmin: boolean,
     onSubmit: (user: IUser, isAdmin: boolean) => void,
     onCancel: () => void,
+    removeAdminGroup: () => void,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const [updatedUser, setUpdatedUser] = useState(user);
@@ -40,7 +41,9 @@ export const useUserDetails = (
         };
 
         Promise.all([
+            // update user details
             backend.organization(organizationId).users().updateUser(sanitizedUser),
+            // grant or remove org manage rights if they are supposed to change
             updateAdmin
                 ? backend
                       .organization(organizationId)
@@ -55,6 +58,8 @@ export const useUserDetails = (
                           },
                       ])
                 : Promise.resolve(),
+            // remove admin group if org manage rights must be removed and user is its member
+            updateAdmin && !isUpdatedAdmin ? removeAdminGroup() : Promise.resolve(),
         ])
             .then(() => {
                 addSuccess(messages.userDetailsUpdatedSuccess);
