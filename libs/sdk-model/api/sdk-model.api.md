@@ -2345,6 +2345,7 @@ export interface ISettings {
     metadataTimeZone?: string;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
+    showHiddenCatalogItems?: boolean;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
 }
