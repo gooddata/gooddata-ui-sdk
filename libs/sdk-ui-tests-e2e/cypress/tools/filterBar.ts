@@ -130,6 +130,50 @@ export class AttributeFilter {
         return this;
     }
 
+    showAllElementValues() {
+        this.getDropdownElement()
+            .find(".s-attribute-filter-status-show-all")
+            .find(".s-action-show-all")
+            .should("be.visible")
+            .click();
+        this.elementsAreLoaded();
+        return this;
+    }
+
+    showAllElementValuesIsVisible(value = true) {
+        this.getDropdownElement()
+            .find(".s-attribute-filter-status-show-all")
+            .should(value ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    clearIrrelevantElementValues() {
+        this.getDropdownElement()
+            .find(".s-attribute-filter-status-irrelevant-message")
+            .find(".s-action-clear")
+            .should("be.visible")
+            .click();
+        this.elementsAreLoaded();
+        return this;
+    }
+
+    clearIrrelevantElementValuesIsVisible(value = true) {
+        this.getDropdownElement()
+            .find(".s-attribute-filter-status-irrelevant-message")
+            .should(value ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    containElementsListStatus(value: string) {
+        this.getDropdownElement().find(".s-list-status-bar").should("contain.text", value);
+        return this;
+    }
+
+    elementsAreLoaded() {
+        this.getDropdownElement().find(".s-isLoading").should("not.exist");
+        return this;
+    }
+
     clearSearch() {
         this.getDropdownElement().find(".gd-list-searchfield .gd-input-field").should("be.visible").clear();
         return this;

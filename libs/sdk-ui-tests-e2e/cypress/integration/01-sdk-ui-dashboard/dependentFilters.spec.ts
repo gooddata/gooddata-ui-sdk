@@ -42,6 +42,10 @@ describe("Dependent filter", () => {
             .hasFilterListSize(6)
             .hasSelectedValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
             .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .hasFilterListSize(287)
             .selectAttribute(["Hartford"])
             .apply()
             .isLoaded()
@@ -58,7 +62,38 @@ describe("Dependent filter", () => {
             .hasSubtitle("Hartford")
             .hasFilterListSize(4)
             .hasSelectedValueList([])
-            .hasValueList(["Eugene", "Medford", "Portland", "Salem"]);
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .containElementsListStatus("Hartford")
+            .clearIrrelevantElementValuesIsVisible(true)
+            .clearIrrelevantElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .hasFilterListSize(287)
+            .selectAttribute(["New York"])
+            .containElementsListStatus("New York")
+            .close()
+            .open()
+            .hasSubtitle("Hartford")
+            .hasFilterListSize(4)
+            .hasSelectedValueList([])
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .close()
+            .open()
+            .searchAndSelectFilterItem("Medford")
+            .containElementsListStatus("Hartford, Medford")
+            .clearIrrelevantElementValues()
+            .clearSearch()
+            .elementsAreLoaded()
+            .hasSelectedValueList(["Medford"]);
 
         stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
 
@@ -142,6 +177,41 @@ describe("Dependent filter", () => {
         table.getColumnValues(0).should("deep.equal", ["West Coast"]);
         table.getColumnValues(1).should("deep.equal", ["California"]);
         table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
+
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["East Coast"])
+            .apply();
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["West Coast"])
+            .apply();
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
 
         topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
 
