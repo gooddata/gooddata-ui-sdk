@@ -53,11 +53,21 @@ export interface DashboardPluginDescriptor {
     readonly debugName?: string;
 
     /**
+     * Specify compatibility of the plugin and Dashboard component version.
+     *
+     * @remarks
+     * Value should be standard semver string e.g. "\>9.4.0"
+     * Note that this takes precedence over minEngineVersion and maxEngineVersion properties, if specified.
+     */
+    readonly compatibility?: string;
+
+    /**
      * Minimum version of dashboard engine that this plugin supports.
      *
      * @remarks
      * Value can be "bundled" - then the minimum required version of the engine equals to the bundled one.
      * Another option is to specify exact minimum version of the SDK - e.g. "8.7.0".
+     * @deprecated - use compatibility property instead
      */
     readonly minEngineVersion: string;
 
@@ -67,6 +77,7 @@ export interface DashboardPluginDescriptor {
      * @remarks
      * Value can be "bundled" - then the maximum possible version of the engine equals to the bundled one.
      * Another option is to specify exact maximum version of the SDK - e.g. "8.8.0".
+     * @deprecated - use compatibility property instead
      */
     readonly maxEngineVersion?: string;
 }
@@ -159,6 +170,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     public readonly _pluginVersion = "1.0";
     public readonly minEngineVersion: string = "bundled";
     public readonly maxEngineVersion?: string = "bundled";
+    public readonly compatibility: string | undefined;
     public abstract readonly author: string;
     public abstract readonly displayName: string;
     public abstract readonly version: string;

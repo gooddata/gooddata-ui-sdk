@@ -2154,10 +2154,13 @@ export interface DashboardPermissionsState {
 // @public
 export interface DashboardPluginDescriptor {
     readonly author: string;
+    readonly compatibility?: string;
     readonly debugName?: string;
     readonly displayName: string;
     readonly longDescription?: string;
+    // @deprecated
     readonly maxEngineVersion?: string;
+    // @deprecated
     readonly minEngineVersion: string;
     readonly shortDescription?: string;
     readonly version: string;
@@ -2167,6 +2170,8 @@ export interface DashboardPluginDescriptor {
 export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     // (undocumented)
     abstract readonly author: string;
+    // (undocumented)
+    readonly compatibility: string | undefined;
     // (undocumented)
     abstract readonly displayName: string;
     // (undocumented)

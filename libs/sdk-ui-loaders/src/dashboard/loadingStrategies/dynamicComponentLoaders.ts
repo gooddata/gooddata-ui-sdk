@@ -73,7 +73,10 @@ export async function dynamicDashboardPluginLoader(
 
             // If the dashboard plugin minEngineVersion or maxEngineVersion equals "bundled",
             // we need to load the bundled engine, to know the desired engine version.
-            if (plugin.maxEngineVersion === "bundled" || plugin.minEngineVersion === "bundled") {
+            if (
+                !plugin.compatibility &&
+                (plugin.maxEngineVersion === "bundled" || plugin.minEngineVersion === "bundled")
+            ) {
                 const loadedEngineModule = await loadEngine(
                     moduleNameFromUrl(pluginMeta.url),
                     moduleFederationIntegration,
