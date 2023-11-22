@@ -24,6 +24,8 @@ export function mapTypeToKey(
             return "timezone";
         case "WEEK_START":
             return "weekStart";
+        case "SHOW_HIDDEN_CATALOG_ITEMS":
+            return "showHiddenCatalogItems";
         case "organizationSetting":
             return "organizationSetting";
         default:
