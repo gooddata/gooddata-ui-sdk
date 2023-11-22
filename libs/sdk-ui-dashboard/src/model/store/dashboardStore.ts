@@ -44,7 +44,6 @@ import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
 import { defaultImport } from "default-import";
-import { predictionSliceReducer } from "./prediction/index.js";
 import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { predictionSliceReducer } from "./prediction/index.js";
 

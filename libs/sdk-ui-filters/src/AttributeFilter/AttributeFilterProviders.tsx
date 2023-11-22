@@ -31,7 +31,6 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         attribute,
         disabled,
         customIcon,
-        attribute,
         onApply,
         onError,
         ErrorComponent,

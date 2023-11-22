@@ -56,24 +56,6 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
 
 // @internal (undocumented)
-export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
-
-// @internal (undocumented)
-export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
-
-// @internal (undocumented)
-export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
-
-// @internal (undocumented)
-export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
-
-// @internal (undocumented)
 export type Alignment = {
     left: number;
     top: number;
@@ -337,9 +319,6 @@ export const ContentDivider: React_2.FC;
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal (undocumented)
-export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
-
-// @internal (undocumented)
 export type CurrentUserPermissions = {
     [permission in "canEditLockedAffectedObject" | "canEditAffectedObject" | "canShareLockedAffectedObject" | "canShareAffectedObject" | "canViewAffectedObject"]: boolean;
 };
@@ -367,24 +346,6 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
-
-// @internal (undocumented)
-export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -803,82 +764,6 @@ export interface IAddGranteeBaseProps {
 }
 
 // @internal (undocumented)
-export interface IAddUserGroupsToUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddUsersToUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddWorkspaceToSubjectsProps {
-    // (undocumented)
-    ids: string[];
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    subjectType: WorkspacePermissionSubject;
-}
-
-// @internal (undocumented)
-export interface IAddUserGroupsToUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddUsersToUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddWorkspaceToSubjectsProps {
-    // (undocumented)
-    ids: string[];
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    subjectType: WorkspacePermissionSubject;
-}
-
-// @internal (undocumented)
 export interface IAffectedSharedObject {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
@@ -1287,16 +1172,6 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export interface ICreateUserGroupDialogProps {
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-}
-
-// @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
     // (undocumented)
     className?: string;
@@ -1374,78 +1249,6 @@ export interface IDateTimeConfigOptions {
     dateTimezone?: string;
     // (undocumented)
     now?: Date;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userId: string;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserGroupDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupId: string;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IDeleteUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
-}
-
-// @internal (undocumented)
-export interface IDeleteUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IDeleteUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
 }
 
 // @internal (undocumented)
@@ -4152,40 +3955,6 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
-export interface IUserEditDialogProps {
-    // (undocumented)
-    changeUserMembership?: boolean;
-    // (undocumented)
-    initialView?: UserEditDialogMode;
-    // (undocumented)
-    isAdmin: boolean;
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userId: string;
-}
-
-// @internal (undocumented)
-export interface IUserGroupEditDialogProps {
-    // (undocumented)
-    initialView?: UserGroupEditDialogMode;
-    // (undocumented)
-    isAdmin: boolean;
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupId: string;
-}
-
-// @internal (undocumented)
 export interface IWebComponentsOptions {
     // (undocumented)
     allowLocale: boolean;
@@ -4809,20 +4578,8 @@ export const useOverlayController: () => OverlayController;
 // @internal
 export const useOverlayZIndex: (uuid: string) => number;
 
-// @internal (undocumented)
-export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
-
-// @internal (undocumented)
-export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
-
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
-
-// @internal (undocumented)
-export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
-
-// @internal (undocumented)
-export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
 // @internal (undocumented)
 export const useScrollContext: () => {
@@ -4850,12 +4607,6 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
-
-// @internal (undocumented)
-export type WorkspacePermissionSubject = "user" | "userGroup";
-
-// @internal (undocumented)
-export type WorkspacePermissionSubject = "user" | "userGroup";
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;

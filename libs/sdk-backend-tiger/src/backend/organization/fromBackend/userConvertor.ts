@@ -15,9 +15,6 @@ const constructFullName = (firstName?: string, lastName?: string) =>
         ? `${firstName || ""}${firstName && lastName ? " " : ""}${lastName || ""}`
         : undefined;
 
-const constructFullName = (firstName?: string, lastName?: string) =>
-    firstName && lastName ? `${firstName} ${lastName}` : undefined;
-
 export const convertUser = (user: JsonApiUserOutDocument): IUser => {
     const firstName = user.data.attributes?.firstname;
     const lastName = user.data.attributes?.lastname;

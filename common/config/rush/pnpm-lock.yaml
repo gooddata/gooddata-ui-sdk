@@ -353,6 +353,675 @@ importers:
       webpack-cli: 4.10.0_p36zd373urxldnwcoqg4c3uxta
       webpack-dev-server: 4.13.3_twduw4g6gld2ld7kevqi3javqa
 
+  ../../examples/sdk-interactive-examples:
+    specifiers: {}
+
+  ../../examples/sdk-interactive-examples/examples-template:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-columnchart:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-combochart:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-dashboard:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-datefilter:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-execute:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      default-import: ^1.1.5
+      highcharts: 9.3.0
+      highcharts-react-official: 3.2.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      default-import: 1.1.5
+      highcharts: 9.3.0
+      highcharts-react-official: 3.2.1_pfudujrlmivslf3wcinkje6q6q
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-granularity:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-headline:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-pivottable:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
+  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
+    specifiers:
+      '@gooddata/catalog-export': workspace:*
+      '@gooddata/sdk-backend-base': workspace:*
+      '@gooddata/sdk-backend-bear': workspace:*
+      '@gooddata/sdk-backend-spi': workspace:*
+      '@gooddata/sdk-backend-tiger': workspace:*
+      '@gooddata/sdk-model': workspace:*
+      '@gooddata/sdk-ui': workspace:*
+      '@gooddata/sdk-ui-charts': workspace:*
+      '@gooddata/sdk-ui-dashboard': workspace:*
+      '@gooddata/sdk-ui-ext': workspace:*
+      '@gooddata/sdk-ui-filters': workspace:*
+      '@gooddata/sdk-ui-geo': workspace:*
+      '@gooddata/sdk-ui-kit': workspace:*
+      '@gooddata/sdk-ui-pivot': workspace:*
+      '@types/react': ^18.2.0
+      '@types/react-dom': ^18.2.1
+      '@vitejs/plugin-react-swc': ~3.4.1
+      prettier: ~2.5.0
+      process: ^0.11.10
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.5.0
+      typescript: 5.0.2
+      vite: ~4.5.0
+      vite-plugin-html: ~3.2.0
+    dependencies:
+      '@gooddata/sdk-backend-base': link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-bear': link:../../../../libs/sdk-backend-bear
+      '@gooddata/sdk-backend-spi': link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger': link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model': link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui': link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts': link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext': link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters': link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo': link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit': link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot': link:../../../../libs/sdk-ui-pivot
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    devDependencies:
+      '@gooddata/catalog-export': link:../../../../tools/catalog-export
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      '@vitejs/plugin-react-swc': 3.4.1_vite@4.5.0
+      prettier: 2.5.1
+      process: 0.11.10
+      typescript: 5.0.2
+      vite: 4.5.0
+      vite-plugin-html: 3.2.0_vite@4.5.0
+
   ../../libs/api-client-bear:
     specifiers:
       '@gooddata/api-model-bear': workspace:*
@@ -1571,6 +2240,8 @@ importers:
       '@testing-library/dom': ~9.2.0
       '@testing-library/react': ^14.0.0
       '@testing-library/user-event': ^14.4.2
+      '@types/debounce-promise': ^3.1.4
+      '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
       '@types/node': ^18.17.6
       '@types/raf': ^3.4.0
@@ -1585,6 +2256,7 @@ importers:
       classnames: ^2.3.1
       concurrently: ^6.0.2
       date-fns: ^2.22.1
+      debounce-promise: ^3.1.2
       default-import: ^1.1.5
       dependency-cruiser: ^13.0.3
       eslint: ^8.25.0
@@ -1602,6 +2274,7 @@ importers:
       fixed-data-table-2: ^1.2.0
       full-icu: ^1.3.0
       jsdom: ^22.1.0
+      json-stable-stringify: ^1.0.1
       lodash: ^4.17.19
       lru-cache: ^10.0.1
       prettier: ~2.5.0
@@ -1640,8 +2313,10 @@ importers:
       '@gooddata/util': link:../util
       classnames: 2.3.2
       date-fns: 2.29.3
+      debounce-promise: 3.1.2
       default-import: 1.1.5
       fixed-data-table-2: 1.2.17_biqbaboplfbrettd7655fr4n2y
+      json-stable-stringify: 1.0.2
       lodash: 4.17.21
       lru-cache: 10.0.1
       react-intl: 6.4.1_odn5rdmyrxuyfnlhepsb7fjnvi
@@ -1664,6 +2339,8 @@ importers:
       '@testing-library/dom': 9.2.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.2.0
+      '@types/debounce-promise': 3.1.6
+      '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
       '@types/node': 18.17.6
       '@types/raf': 3.4.0
@@ -2583,6 +3260,7 @@ importers:
       compression-webpack-plugin: ^7.1.0
       css-loader: ^6.7.1
       cypress: ^12.10.0
+      cypress-multi-reporters: ~1.6.3
       cypress-real-events: ^1.7.6
       dependency-cruiser: ^13.0.3
       dotenv: 16.0.3
@@ -2602,6 +3280,8 @@ importers:
       fork-ts-checker-webpack-plugin: ^7.2.13
       html-webpack-plugin: ^5.3.1
       lodash: ^4.17.19
+      mocha: ~10.2.0
+      mocha-junit-reporter: ~2.2.1
       node-xlsx: ^0.21.0
       npm-run-all: ^4.1.5
       pdf-parse: ^1.1.1
@@ -2643,8 +3323,11 @@ importers:
       '@gooddata/sdk-ui-pivot': link:../sdk-ui-pivot
       '@gooddata/util': link:../util
       axios: 1.4.0
+      cypress-multi-reporters: 1.6.4_mocha@10.2.0
       dotenv: 16.0.3
       lodash: 4.17.21
+      mocha: 10.2.0
+      mocha-junit-reporter: 2.2.1_mocha@10.2.0
       node-xlsx: 0.21.2
       pdf-parse: 1.1.1
       react: 18.2.0
@@ -5689,6 +6372,16 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/android-arm/0.18.20:
+    resolution: {integrity: sha512-fyi7TDI/ijKKNZTUJAQqiG5T7YjJXgnzkURqmGj13C6dCqckZBLdl4h7bkhHt/t0WP+zO9/zwroDvANaOqO5Sw==}
+    engines: {node: '>=12'}
+    cpu: [arm]
+    os: [android]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm64/0.17.18:
@@ -5697,6 +6390,16 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/android-arm64/0.18.20:
+    resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-x64/0.17.18:
@@ -5705,6 +6408,16 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/android-x64/0.18.20:
+    resolution: {integrity: sha512-8GDdlePJA8D6zlZYJV/jnrRAi6rOiNaCC/JclcXpB+KIuvfBN4owLtgzY2bsxnx666XjJx2kDPUmnTtR8qKQUg==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [android]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-arm64/0.17.18:
@@ -5713,6 +6426,16 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/darwin-arm64/0.18.20:
+    resolution: {integrity: sha512-bxRHW5kHU38zS2lPTPOyuyTm+S+eobPUnTNkdJEfAddYgEcll4xkT8DB9d2008DtTbl7uJag2HuE5NZAZgnNEA==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-x64/0.17.18:
@@ -5721,6 +6444,16 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/darwin-x64/0.18.20:
+    resolution: {integrity: sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64/0.17.18:
@@ -5729,6 +6462,16 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/freebsd-arm64/0.18.20:
+    resolution: {integrity: sha512-yqDQHy4QHevpMAaxhhIwYPMv1NECwOvIpGCZkECn8w2WFHXjEwrBn3CeNIYsibZ/iZEUemj++M26W3cNR5h+Tw==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-x64/0.17.18:
@@ -5737,6 +6480,16 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/freebsd-x64/0.18.20:
+    resolution: {integrity: sha512-tgWRPPuQsd3RmBZwarGVHZQvtzfEBOreNuxEMKFcd5DaDn2PbBxfwLcj4+aenoh7ctXcbXmOQIn8HI6mCSw5MQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm/0.17.18:
@@ -5745,6 +6498,16 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-arm/0.18.20:
+    resolution: {integrity: sha512-/5bHkMWnq1EgKr1V+Ybz3s1hWXok7mDFUMQ4cG10AfW3wL02PSZi5kFpYKrptDsgb2WAJIvRcDm+qIvXf/apvg==}
+    engines: {node: '>=12'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm64/0.17.18:
@@ -5753,6 +6516,16 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-arm64/0.18.20:
+    resolution: {integrity: sha512-2YbscF+UL7SQAVIpnWvYwM+3LskyDmPhe31pE7/aoTMFKKzIc9lLbyGUpmmb8a8AixOL61sQ/mFh3jEjHYFvdA==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ia32/0.17.18:
@@ -5761,6 +6534,16 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-ia32/0.18.20:
+    resolution: {integrity: sha512-P4etWwq6IsReT0E1KHU40bOnzMHoH73aXp96Fs8TIT6z9Hu8G6+0SHSw9i2isWrD2nbx2qo5yUqACgdfVGx7TA==}
+    engines: {node: '>=12'}
+    cpu: [ia32]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64/0.17.18:
@@ -5769,6 +6552,16 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-loong64/0.18.20:
+    resolution: {integrity: sha512-nXW8nqBTrOpDLPgPY9uV+/1DjxoQ7DoB2N8eocyq8I9XuqJ7BiAMDMf9n1xZM9TgW0J8zrquIb/A7s3BJv7rjg==}
+    engines: {node: '>=12'}
+    cpu: [loong64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-mips64el/0.17.18:
@@ -5777,6 +6570,16 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-mips64el/0.18.20:
+    resolution: {integrity: sha512-d5NeaXZcHp8PzYy5VnXV3VSd2D328Zb+9dEq5HE6bw6+N86JVPExrA6O68OPwobntbNJ0pzCpUFZTo3w0GyetQ==}
+    engines: {node: '>=12'}
+    cpu: [mips64el]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ppc64/0.17.18:
@@ -5785,6 +6588,16 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-ppc64/0.18.20:
+    resolution: {integrity: sha512-WHPyeScRNcmANnLQkq6AfyXRFr5D6N2sKgkFo2FqguP44Nw2eyDlbTdZwd9GYk98DZG9QItIiTlFLHJHjxP3FA==}
+    engines: {node: '>=12'}
+    cpu: [ppc64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-riscv64/0.17.18:
@@ -5793,6 +6606,16 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-riscv64/0.18.20:
+    resolution: {integrity: sha512-WSxo6h5ecI5XH34KC7w5veNnKkju3zBRLEQNY7mv5mtBmrP/MjNBCAlsM2u5hDBlS3NGcTQpoBvRzqBcRtpq1A==}
+    engines: {node: '>=12'}
+    cpu: [riscv64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-s390x/0.17.18:
@@ -5801,6 +6624,16 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-s390x/0.18.20:
+    resolution: {integrity: sha512-+8231GMs3mAEth6Ja1iK0a1sQ3ohfcpzpRLH8uuc5/KVDFneH6jtAJLFGafpzpMRO6DzJ6AvXKze9LfFMrIHVQ==}
+    engines: {node: '>=12'}
+    cpu: [s390x]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-x64/0.17.18:
@@ -5809,6 +6642,16 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/linux-x64/0.18.20:
+    resolution: {integrity: sha512-UYqiqemphJcNsFEskc73jQ7B9jgwjWrSayxawS6UVFZGWrAAtkzjxSqnoclCXxWtfwLdzU+vTpcNYhpn43uP1w==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-x64/0.17.18:
@@ -5817,6 +6660,16 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/netbsd-x64/0.18.20:
+    resolution: {integrity: sha512-iO1c++VP6xUBUmltHZoMtCUdPlnPGdBom6IrO4gyKPFFVBKioIImVooR5I83nTew5UOYrk3gIJhbZh8X44y06A==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [netbsd]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-x64/0.17.18:
@@ -5825,6 +6678,16 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/openbsd-x64/0.18.20:
+    resolution: {integrity: sha512-e5e4YSsuQfX4cxcygw/UCPIEP6wbIL+se3sxPdCiMbFLBWu0eiZOJ7WoD+ptCLrmjZBK1Wk7I6D/I3NglUGOxg==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [openbsd]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/sunos-x64/0.17.18:
@@ -5833,6 +6696,16 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/sunos-x64/0.18.20:
+    resolution: {integrity: sha512-kDbFRFp0YpTQVVrqUd5FTYmWo45zGaXe0X8E1G/LKFC0v8x0vWrhOWSLITcCn63lmZIxfOMXtCfti/RxN/0wnQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [sunos]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-arm64/0.17.18:
@@ -5841,6 +6714,16 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/win32-arm64/0.18.20:
+    resolution: {integrity: sha512-ddYFR6ItYgoaq4v4JmQQaAI5s7npztfV4Ag6NrhiaW0RrnOXqBkgwZLofVTlq1daVTQNhtI5oieTvkRPfZrePg==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-ia32/0.17.18:
@@ -5849,6 +6732,16 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/win32-ia32/0.18.20:
+    resolution: {integrity: sha512-Wv7QBi3ID/rROT08SABTS7eV4hX26sVduqDOTe1MvGMjNd3EjOz4b7zeexIR62GTIEKrfJXKL9LFxTYgkyeu7g==}
+    engines: {node: '>=12'}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-x64/0.17.18:
@@ -5857,6 +6750,16 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: false
+    optional: true
+
+  /@esbuild/win32-x64/0.18.20:
+    resolution: {integrity: sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@eslint-community/eslint-utils/4.4.0_eslint@8.38.0:
@@ -7536,6 +8439,14 @@ packages:
       reselect: 4.1.8
     dev: false
 
+  /@rollup/pluginutils/4.2.1:
+    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+    dev: true
+
   /@rushstack/node-core-library/3.55.2:
     resolution: {integrity: sha512-SaLe/x/Q/uBVdNFK5V1xXvsVps0y7h1sN7aSJllQyFbugyOaxhNRF25bwEDnicARNEjJw0pk0lYnJQ9Kr6ev0A==}
     peerDependencies:
@@ -8838,6 +9749,119 @@ packages:
       - supports-color
     dev: true
 
+  /@swc/core-darwin-arm64/1.3.99:
+    resolution: {integrity: sha512-Qj7Jct68q3ZKeuJrjPx7k8SxzWN6PqLh+VFxzA+KwLDpQDPzOlKRZwkIMzuFjLhITO4RHgSnXoDk/Syz0ZeN+Q==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-darwin-x64/1.3.99:
+    resolution: {integrity: sha512-wR7m9QVJjgiBu1PSOHy7s66uJPa45Kf9bZExXUL+JAa9OQxt5y+XVzr+n+F045VXQOwdGWplgPnWjgbUUHEVyw==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-gnu/1.3.99:
+    resolution: {integrity: sha512-gcGv1l5t0DScEONmw5OhdVmEI/o49HCe9Ik38zzH0NtDkc+PDYaCcXU5rvfZP2qJFaAAr8cua8iJcOunOSLmnA==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-musl/1.3.99:
+    resolution: {integrity: sha512-XL1/eUsTO8BiKsWq9i3iWh7H99iPO61+9HYiWVKhSavknfj4Plbn+XyajDpxsauln5o8t+BRGitymtnAWJM4UQ==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-gnu/1.3.99:
+    resolution: {integrity: sha512-fGrXYE6DbTfGNIGQmBefYxSk3rp/1lgbD0nVg4rl4mfFRQPi7CgGhrrqSuqZ/ezXInUIgoCyvYGWFSwjLXt/Qg==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-musl/1.3.99:
+    resolution: {integrity: sha512-kvgZp/mqf3IJ806gUOL6gN6VU15+DfzM1Zv4Udn8GqgXiUAvbQehrtruid4Snn5pZTLj4PEpSCBbxgxK1jbssA==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-arm64-msvc/1.3.99:
+    resolution: {integrity: sha512-yt8RtZ4W/QgFF+JUemOUQAkVW58cCST7mbfKFZ1v16w3pl3NcWd9OrtppFIXpbjU1rrUX2zp2R7HZZzZ2Zk/aQ==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-ia32-msvc/1.3.99:
+    resolution: {integrity: sha512-62p5fWnOJR/rlbmbUIpQEVRconICy5KDScWVuJg1v3GPLBrmacjphyHiJC1mp6dYvvoEWCk/77c/jcQwlXrDXw==}
+    engines: {node: '>=10'}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-x64-msvc/1.3.99:
+    resolution: {integrity: sha512-PdppWhkoS45VGdMBxvClVgF1hVjqamtvYd82Gab1i4IV45OSym2KinoDCKE1b6j3LwBLOn2J9fvChGSgGfDCHQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core/1.3.99:
+    resolution: {integrity: sha512-8O996RfuPC4ieb4zbYMfbyCU9k4gSOpyCNnr7qBQ+o7IEmh8JCV6B8wwu+fT/Om/6Lp34KJe1IpJ/24axKS6TQ==}
+    engines: {node: '>=10'}
+    requiresBuild: true
+    peerDependencies:
+      '@swc/helpers': ^0.5.0
+    peerDependenciesMeta:
+      '@swc/helpers':
+        optional: true
+    dependencies:
+      '@swc/counter': 0.1.2
+      '@swc/types': 0.1.5
+    optionalDependencies:
+      '@swc/core-darwin-arm64': 1.3.99
+      '@swc/core-darwin-x64': 1.3.99
+      '@swc/core-linux-arm64-gnu': 1.3.99
+      '@swc/core-linux-arm64-musl': 1.3.99
+      '@swc/core-linux-x64-gnu': 1.3.99
+      '@swc/core-linux-x64-musl': 1.3.99
+      '@swc/core-win32-arm64-msvc': 1.3.99
+      '@swc/core-win32-ia32-msvc': 1.3.99
+      '@swc/core-win32-x64-msvc': 1.3.99
+    dev: true
+
+  /@swc/counter/0.1.2:
+    resolution: {integrity: sha512-9F4ys4C74eSTEUNndnER3VJ15oru2NumfQxS8geE+f3eB5xvfxpWyqE5XlVnxb/R14uoXi6SLbBwwiDSkv+XEw==}
+    dev: true
+
+  /@swc/types/0.1.5:
+    resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
+    dev: true
+
   /@szmarczak/http-timer/1.1.2:
     resolution: {integrity: sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==}
     engines: {node: '>=6'}
@@ -9622,6 +10646,17 @@ packages:
       '@typescript-eslint/types': 5.59.0
       eslint-visitor-keys: 3.4.0
 
+  /@vitejs/plugin-react-swc/3.4.1_vite@4.5.0:
+    resolution: {integrity: sha512-7YQOQcVV5x1luD8nkbCDdyYygFvn1hjqJk68UvNAzY2QG4o4N5EwAhLLFNOcd1HrdMwDl0VElP8VutoWf9IvJg==}
+    peerDependencies:
+      vite: ^4
+    dependencies:
+      '@swc/core': 1.3.99
+      vite: 4.5.0
+    transitivePeerDependencies:
+      - '@swc/helpers'
+    dev: true
+
   /@vitest/expect/0.31.4:
     resolution: {integrity: sha512-tibyx8o7GUyGHZGyPgzwiaPaLDQ9MMuCOrc03BYT0nryUuhLbL7NV2r/q98iv5STlwMgaKuFJkgBW/8iPKwlSg==}
     dependencies:
@@ -10142,6 +11177,11 @@ packages:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
     dependencies:
       string-width: 4.2.3
+    dev: false
+
+  /ansi-colors/4.1.1:
+    resolution: {integrity: sha512-JoX0apGbHaUJBNl6yF+p6JAFYZ666/hhCGKN5t9QFjbJQKUU/g8MNbFDbvfrgKXvI1QpZplPOnwIo99lX/AAmA==}
+    engines: {node: '>=6'}
     dev: false
 
   /ansi-colors/4.1.3:
@@ -10961,6 +12001,10 @@ packages:
     resolution: {integrity: sha512-nfulgvOR6S4gt9UKCeGJOuSGBPGiFT6oQ/2UBnvTY/5aQ1PnksW72fhZkM30DzoRRv2WpwZf1vHHEr3mtuXIWQ==}
     dev: false
 
+  /browser-stdout/1.3.1:
+    resolution: {integrity: sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw==}
+    dev: false
+
   /browserify-aes/1.2.0:
     resolution: {integrity: sha512-+7CHXqGuspUn/Sl5aO7Ea0xWGAtETPXNSAjHo48JfLdPWcMng33Xe4znFvQweqc/uzk5zSOI3H52CYnjCfb5hA==}
     dependencies:
@@ -11317,6 +12361,10 @@ packages:
 
   /chardet/0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
+
+  /charenc/0.0.2:
+    resolution: {integrity: sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==}
+    dev: false
 
   /check-error/1.0.2:
     resolution: {integrity: sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==}
@@ -11825,6 +12873,11 @@ packages:
       yargs: 16.2.0
     dev: true
 
+  /connect-history-api-fallback/1.6.0:
+    resolution: {integrity: sha512-e54B99q/OUoH64zYYRf3HBP5z24G38h5D3qXu23JGRoigpX5Ss4r9ZnDk3g0Z8uQC2x2lPaJ+UlWBc1ZWBWdLg==}
+    engines: {node: '>=0.8'}
+    dev: true
+
   /connect-history-api-fallback/2.0.0:
     resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
     engines: {node: '>=0.8'}
@@ -12050,6 +13103,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  /crypt/0.0.2:
+    resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
+    dev: false
+
   /crypto-browserify/3.12.0:
     resolution: {integrity: sha512-fz4spIh+znjO2VjL+IdhEpRJ3YN6sMzITSBijk6FK2UvTqruSQW+/cCZTSNsMiZNvUeq0CqurF+dAbyiGOY6Wg==}
     dependencies:
@@ -12080,13 +13137,13 @@ packages:
       webpack:
         optional: true
     dependencies:
-      icss-utils: 5.1.0_postcss@8.4.24
+      icss-utils: 5.1.0_postcss@8.4.31
       loader-utils: 2.0.4
-      postcss: 8.4.24
-      postcss-modules-extract-imports: 3.0.0_postcss@8.4.24
-      postcss-modules-local-by-default: 4.0.0_postcss@8.4.24
-      postcss-modules-scope: 3.0.0_postcss@8.4.24
-      postcss-modules-values: 4.0.0_postcss@8.4.24
+      postcss: 8.4.31
+      postcss-modules-extract-imports: 3.0.0_postcss@8.4.31
+      postcss-modules-local-by-default: 4.0.0_postcss@8.4.31
+      postcss-modules-scope: 3.0.0_postcss@8.4.31
+      postcss-modules-values: 4.0.0_postcss@8.4.31
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.2
       semver: 7.5.4
@@ -12200,6 +13257,19 @@ packages:
 
   /cyclist/1.0.1:
     resolution: {integrity: sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==}
+    dev: false
+
+  /cypress-multi-reporters/1.6.4_mocha@10.2.0:
+    resolution: {integrity: sha512-3xU2t6pZjZy/ORHaCvci5OT1DAboS4UuMMM8NBAizeb2C9qmHt+cgAjXgurazkwkPRdO7ccK39M5ZaPCju0r6A==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      mocha: '>=3.1.2'
+    dependencies:
+      debug: 4.3.4
+      lodash: 4.17.21
+      mocha: 10.2.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /cypress-real-events/1.7.6_cypress@12.10.0:
@@ -12427,7 +13497,6 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 8.1.1
-    dev: true
 
   /decache/3.1.0:
     resolution: {integrity: sha512-p7D6wJ5EJFFq1CcF2lu1XeqKFLBob8jRQGNAvFLTsV3CbSKBl3VtliAVlUIGz2i9H6kEFnI2Amaft5ZopIG2Fw==}
@@ -12449,6 +13518,11 @@ packages:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /decamelize/4.0.0:
+    resolution: {integrity: sha512-9iE1PgSik9HeIIw2JO94IidnE3eBoQrFJ3w7sFuzSX4DpmZ3v5sZpUiV5Swcf6mQEF+Y0ru8Neo+p+nyh2J+hQ==}
+    engines: {node: '>=10'}
+    dev: false
 
   /decimal.js-light/2.5.1:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
@@ -12711,6 +13785,11 @@ packages:
     engines: {node: '>=0.3.1'}
     dev: true
 
+  /diff/5.0.0:
+    resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
+    engines: {node: '>=0.3.1'}
+    dev: false
+
   /diffie-hellman/5.0.3:
     resolution: {integrity: sha512-kqag/Nl+f3GwyK25fhUMYj81BUOrZ9IuJsjIcDE5icNM9FJHAVm3VcUDxdLPoQtTuUylWm6ZIknYJwwaPxsUzg==}
     dependencies:
@@ -12863,6 +13942,11 @@ packages:
   /dotenv-expand/5.1.0:
     resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
     dev: false
+
+  /dotenv-expand/8.0.3:
+    resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
+    engines: {node: '>=12'}
+    dev: true
 
   /dotenv-webpack/7.1.1_webpack@5.79.0:
     resolution: {integrity: sha512-xw/19VqHDkXALtBOJAnnrSU/AZDIQRXczAmJyp0lZv6SH2aBLzUTl96W1MVryJZ7okZ+djZS4Gj4KlZ0xP7deA==}
@@ -13203,6 +14287,37 @@ packages:
       '@esbuild/win32-arm64': 0.17.18
       '@esbuild/win32-ia32': 0.17.18
       '@esbuild/win32-x64': 0.17.18
+    dev: false
+
+  /esbuild/0.18.20:
+    resolution: {integrity: sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@esbuild/android-arm': 0.18.20
+      '@esbuild/android-arm64': 0.18.20
+      '@esbuild/android-x64': 0.18.20
+      '@esbuild/darwin-arm64': 0.18.20
+      '@esbuild/darwin-x64': 0.18.20
+      '@esbuild/freebsd-arm64': 0.18.20
+      '@esbuild/freebsd-x64': 0.18.20
+      '@esbuild/linux-arm': 0.18.20
+      '@esbuild/linux-arm64': 0.18.20
+      '@esbuild/linux-ia32': 0.18.20
+      '@esbuild/linux-loong64': 0.18.20
+      '@esbuild/linux-mips64el': 0.18.20
+      '@esbuild/linux-ppc64': 0.18.20
+      '@esbuild/linux-riscv64': 0.18.20
+      '@esbuild/linux-s390x': 0.18.20
+      '@esbuild/linux-x64': 0.18.20
+      '@esbuild/netbsd-x64': 0.18.20
+      '@esbuild/openbsd-x64': 0.18.20
+      '@esbuild/sunos-x64': 0.18.20
+      '@esbuild/win32-arm64': 0.18.20
+      '@esbuild/win32-ia32': 0.18.20
+      '@esbuild/win32-x64': 0.18.20
+    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -13557,6 +14672,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /estree-walker/2.0.2:
+    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+    dev: true
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -14103,6 +15222,11 @@ packages:
       flatted: 3.2.7
       rimraf: 3.0.2
 
+  /flat/5.0.2:
+    resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
+    hasBin: true
+    dev: false
+
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
 
@@ -14613,6 +15737,17 @@ packages:
       path-is-absolute: 1.0.1
     dev: true
 
+  /glob/7.2.0:
+    resolution: {integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.1.2
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: false
+
   /glob/7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     dependencies:
@@ -15100,6 +16235,16 @@ packages:
       - typescript
     dev: true
 
+  /highcharts-react-official/3.2.1_pfudujrlmivslf3wcinkje6q6q:
+    resolution: {integrity: sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==}
+    peerDependencies:
+      highcharts: '>=6.0.0'
+      react: '>=16.8.0'
+    dependencies:
+      highcharts: 9.3.0
+      react: 18.2.0
+    dev: false
+
   /highcharts/9.3.0:
     resolution: {integrity: sha512-nQ7yW5ni7wFiPgDN2IWrS6o6NjL1gK/OhZjrdpyB3FQuefMkTQngygP+JqZFMx7PDrP3YAvfejx0M5IgkC01ow==}
     dev: false
@@ -15432,13 +16577,13 @@ packages:
     dependencies:
       postcss: 8.4.22
 
-  /icss-utils/5.1.0_postcss@8.4.24:
+  /icss-utils/5.1.0_postcss@8.4.31:
     resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.24
+      postcss: 8.4.31
     dev: false
 
   /ieee754/1.2.1:
@@ -15957,7 +17102,6 @@ packages:
   /is-plain-obj/2.1.0:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
     engines: {node: '>=8'}
-    dev: true
 
   /is-plain-obj/3.0.0:
     resolution: {integrity: sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==}
@@ -16931,6 +18075,14 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /md5/2.3.0:
+    resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}
+    dependencies:
+      charenc: 0.0.2
+      crypt: 0.0.2
+      is-buffer: 1.1.6
+    dev: false
+
   /mdast-util-from-markdown/0.8.5:
     resolution: {integrity: sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==}
     dependencies:
@@ -17168,6 +18320,13 @@ packages:
     dependencies:
       brace-expansion: 1.1.11
 
+  /minimatch/5.0.1:
+    resolution: {integrity: sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==}
+    engines: {node: '>=10'}
+    dependencies:
+      brace-expansion: 2.0.1
+    dev: false
+
   /minimatch/5.1.6:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
@@ -17261,6 +18420,12 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  /mkdirp/3.0.1:
+    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dev: false
+
   /mlly/1.3.0:
     resolution: {integrity: sha512-HT5mcgIQKkOrZecOjOX3DJorTikWXwsBfpcr/MGBkhfWcjiqvnaL/9ppxvIUXfjT6xt4DVIAsN9fMUz1ev4bIw==}
     dependencies:
@@ -17269,6 +18434,49 @@ packages:
       pkg-types: 1.0.3
       ufo: 1.1.2
     dev: true
+
+  /mocha-junit-reporter/2.2.1_mocha@10.2.0:
+    resolution: {integrity: sha512-iDn2tlKHn8Vh8o4nCzcUVW4q7iXp7cC4EB78N0cDHIobLymyHNwe0XG8HEHHjc3hJlXm0Vy6zcrxaIhnI2fWmw==}
+    peerDependencies:
+      mocha: '>=2.2.5'
+    dependencies:
+      debug: 4.3.4
+      md5: 2.3.0
+      mkdirp: 3.0.1
+      mocha: 10.2.0
+      strip-ansi: 6.0.1
+      xml: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /mocha/10.2.0:
+    resolution: {integrity: sha512-IDY7fl/BecMwFHzoqF2sg/SHHANeBoMMXFlS9r0OXKDssYE1M5O43wUY/9BVPeIvfH2zmEbBfseqN9gBQZzXkg==}
+    engines: {node: '>= 14.0.0'}
+    hasBin: true
+    dependencies:
+      ansi-colors: 4.1.1
+      browser-stdout: 1.3.1
+      chokidar: 3.5.3
+      debug: 4.3.4_supports-color@8.1.1
+      diff: 5.0.0
+      escape-string-regexp: 4.0.0
+      find-up: 5.0.0
+      glob: 7.2.0
+      he: 1.2.0
+      js-yaml: 4.1.0
+      log-symbols: 4.1.0
+      minimatch: 5.0.1
+      ms: 2.1.3
+      nanoid: 3.3.3
+      serialize-javascript: 6.0.0
+      strip-json-comments: 3.1.1
+      supports-color: 8.1.1
+      workerpool: 6.2.1
+      yargs: 16.2.0
+      yargs-parser: 20.2.4
+      yargs-unparser: 2.0.0
+    dev: false
 
   /module-details-from-path/1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
@@ -17343,6 +18551,12 @@ packages:
   /nan/2.17.0:
     resolution: {integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==}
     optional: true
+
+  /nanoid/3.3.3:
+    resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
 
   /nanoid/3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
@@ -17450,6 +18664,13 @@ packages:
   /node-forge/1.3.1:
     resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
     engines: {node: '>= 6.13.0'}
+
+  /node-html-parser/5.4.2:
+    resolution: {integrity: sha512-RaBPP3+51hPne/OolXxcz89iYvQvKOydaqoePpOgXcrOKZhjVIzmpKZz+Hd/RBO2/zN2q6CNJhQzucVz+u3Jyw==}
+    dependencies:
+      css-select: 4.3.0
+      he: 1.2.0
+    dev: true
 
   /node-libs-browser/2.2.1:
     resolution: {integrity: sha512-h/zcD8H9kaDZ9ALUWwlBUDo6TKF8a7qBSCSEGfjTVIYeqsioSKaAX+BN7NgiMGp6iSIXZ3PxgCu8KS3b71YK5Q==}
@@ -18156,6 +19377,10 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  /pathe/0.2.0:
+    resolution: {integrity: sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==}
+    dev: true
+
   /pathe/1.1.0:
     resolution: {integrity: sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==}
 
@@ -18347,13 +19572,13 @@ packages:
     dependencies:
       postcss: 8.4.22
 
-  /postcss-modules-extract-imports/3.0.0_postcss@8.4.24:
+  /postcss-modules-extract-imports/3.0.0_postcss@8.4.31:
     resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.24
+      postcss: 8.4.31
     dev: false
 
   /postcss-modules-local-by-default/4.0.0_postcss@8.4.22:
@@ -18367,14 +19592,14 @@ packages:
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
 
-  /postcss-modules-local-by-default/4.0.0_postcss@8.4.24:
+  /postcss-modules-local-by-default/4.0.0_postcss@8.4.31:
     resolution: {integrity: sha512-sT7ihtmGSF9yhm6ggikHdV0hlziDTX7oFoXtuVWeDd3hHObNkcHRo9V3yg7vCAY7cONyxJC/XXCmmiHHcvX7bQ==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      icss-utils: 5.1.0_postcss@8.4.24
-      postcss: 8.4.24
+      icss-utils: 5.1.0_postcss@8.4.31
+      postcss: 8.4.31
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
     dev: false
@@ -18388,13 +19613,13 @@ packages:
       postcss: 8.4.22
       postcss-selector-parser: 6.0.11
 
-  /postcss-modules-scope/3.0.0_postcss@8.4.24:
+  /postcss-modules-scope/3.0.0_postcss@8.4.31:
     resolution: {integrity: sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      postcss: 8.4.24
+      postcss: 8.4.31
       postcss-selector-parser: 6.0.11
     dev: false
 
@@ -18407,14 +19632,14 @@ packages:
       icss-utils: 5.1.0_postcss@8.4.22
       postcss: 8.4.22
 
-  /postcss-modules-values/4.0.0_postcss@8.4.24:
+  /postcss-modules-values/4.0.0_postcss@8.4.31:
     resolution: {integrity: sha512-RDxHkAiEGI78gS2ofyvCsu7iycRv7oqw5xMWn9iMoR0N/7mf9D50ecQqUo5BZ9Zh2vH4bCUR/ktCqbB9m8vJjQ==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      icss-utils: 5.1.0_postcss@8.4.24
-      postcss: 8.4.24
+      icss-utils: 5.1.0_postcss@8.4.31
+      postcss: 8.4.31
     dev: false
 
   /postcss-resolve-nested-selector/0.1.1:
@@ -18488,8 +19713,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /postcss/8.4.24:
-    resolution: {integrity: sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==}
+  /postcss/8.4.31:
+    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.6
@@ -19874,8 +21099,8 @@ packages:
       decache: 3.1.0
     dev: true
 
-  /rollup/3.23.0:
-    resolution: {integrity: sha512-h31UlwEi7FHihLe1zbk+3Q7z1k/84rb9BSwmBSr/XjOCEaBJ2YyedQDuM0t/kfOS0IxM+vk1/zI9XxYj9V+NJQ==}
+  /rollup/3.29.4:
+    resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -19915,7 +21140,7 @@ packages:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
     engines: {npm: '>=2.0.0'}
     dependencies:
-      tslib: 1.9.3
+      tslib: 1.14.1
     dev: true
 
   /rxjs/7.8.0:
@@ -20170,6 +21395,12 @@ packages:
     dependencies:
       randombytes: 2.1.0
     dev: true
+
+  /serialize-javascript/6.0.0:
+    resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
+    dependencies:
+      randombytes: 2.1.0
+    dev: false
 
   /serialize-javascript/6.0.1:
     resolution: {integrity: sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==}
@@ -21723,10 +22954,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
-
-  /tslib/1.9.3:
-    resolution: {integrity: sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==}
 
   /tslib/2.0.3:
     resolution: {integrity: sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==}
@@ -21741,7 +22968,7 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     dependencies:
-      tslib: 1.9.3
+      tslib: 1.14.1
       typescript: 5.0.2
 
   /tty-browserify/0.0.0:
@@ -22265,10 +23492,11 @@ packages:
       mlly: 1.3.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.9_@types+node@18.17.6
+      vite: 4.5.0_@types+node@18.17.6
     transitivePeerDependencies:
       - '@types/node'
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22286,10 +23514,11 @@ packages:
       mlly: 1.3.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite: 4.5.0_ico5mydlztnxnlt7wmpx75gt7q
     transitivePeerDependencies:
       - '@types/node'
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22297,13 +23526,34 @@ packages:
       - terser
     dev: true
 
-  /vite/4.3.9_@types+node@18.17.6:
-    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
+  /vite-plugin-html/3.2.0_vite@4.5.0:
+    resolution: {integrity: sha512-2VLCeDiHmV/BqqNn5h2V+4280KRgQzCFN47cst3WiNK848klESPQnzuC3okH5XHtgwHH/6s1Ho/YV6yIO0pgoQ==}
+    peerDependencies:
+      vite: '>=2.0.0'
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      colorette: 2.0.20
+      connect-history-api-fallback: 1.6.0
+      consola: 2.15.3
+      dotenv: 16.0.3
+      dotenv-expand: 8.0.3
+      ejs: 3.1.9
+      fast-glob: 3.2.12
+      fs-extra: 10.1.0
+      html-minifier-terser: 6.1.0
+      node-html-parser: 5.4.2
+      pathe: 0.2.0
+      vite: 4.5.0
+    dev: true
+
+  /vite/4.5.0:
+    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
       '@types/node': '>= 14'
       less: '*'
+      lightningcss: ^1.21.0
       sass: '*'
       stylus: '*'
       sugarss: '*'
@@ -22312,6 +23562,8 @@ packages:
       '@types/node':
         optional: true
       less:
+        optional: true
+      lightningcss:
         optional: true
       sass:
         optional: true
@@ -22322,21 +23574,21 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.17.6
-      esbuild: 0.17.18
-      postcss: 8.4.24
-      rollup: 3.23.0
+      esbuild: 0.18.20
+      postcss: 8.4.31
+      rollup: 3.29.4
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.3.9_ico5mydlztnxnlt7wmpx75gt7q:
-    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
+  /vite/4.5.0_@types+node@18.17.6:
+    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
       '@types/node': '>= 14'
       less: '*'
+      lightningcss: ^1.21.0
       sass: '*'
       stylus: '*'
       sugarss: '*'
@@ -22345,6 +23597,8 @@ packages:
       '@types/node':
         optional: true
       less:
+        optional: true
+      lightningcss:
         optional: true
       sass:
         optional: true
@@ -22356,9 +23610,45 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.17.6
-      esbuild: 0.17.18
-      postcss: 8.4.24
-      rollup: 3.23.0
+      esbuild: 0.18.20
+      postcss: 8.4.31
+      rollup: 3.29.4
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/4.5.0_ico5mydlztnxnlt7wmpx75gt7q:
+    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.17.6
+      esbuild: 0.18.20
+      postcss: 8.4.31
+      rollup: 3.29.4
       sass: 1.62.0
     optionalDependencies:
       fsevents: 2.3.2
@@ -22431,11 +23721,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@18.17.6
+      vite: 4.5.0_@types+node@18.17.6
       vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22497,11 +23788,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite: 4.5.0_ico5mydlztnxnlt7wmpx75gt7q
       vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22563,11 +23855,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@18.17.6
+      vite: 4.5.0_@types+node@18.17.6
       vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22629,11 +23922,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_@types+node@18.17.6
+      vite: 4.5.0_@types+node@18.17.6
       vite-node: 0.31.4_@types+node@18.17.6
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22695,11 +23989,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite: 4.5.0_ico5mydlztnxnlt7wmpx75gt7q
       vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -22760,11 +24055,12 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9_ico5mydlztnxnlt7wmpx75gt7q
+      vite: 4.5.0_ico5mydlztnxnlt7wmpx75gt7q
       vite-node: 0.31.4_ico5mydlztnxnlt7wmpx75gt7q
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
+      - lightningcss
       - sass
       - stylus
       - sugarss
@@ -23381,6 +24677,10 @@ packages:
       errno: 0.1.8
     dev: false
 
+  /workerpool/6.2.1:
+    resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
+    dev: false
+
   /wrap-ansi/6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
     engines: {node: '>=8'}
@@ -23476,6 +24776,10 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /xml/1.0.1:
+    resolution: {integrity: sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==}
+    dev: false
+
   /xml2js/0.5.0:
     resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
     engines: {node: '>=4.0.0'}
@@ -23520,9 +24824,24 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
 
+  /yargs-parser/20.2.4:
+    resolution: {integrity: sha512-WOkpgNhPTlE73h4VFAFsOnomJVaovO8VqLDzy5saChRBFQFBoMYirowyW+Q9HB4HFF4Z7VZTiG3iSzJJA29yRA==}
+    engines: {node: '>=10'}
+    dev: false
+
   /yargs-parser/20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
+
+  /yargs-unparser/2.0.0:
+    resolution: {integrity: sha512-7pRTIA9Qc1caZ0bZ6RYRGbHJthJWuakf+WmHK0rVeLkNrrGhfoabBNdue6kdINI6r4if7ocq9aD/n7xwKOdzOA==}
+    engines: {node: '>=10'}
+    dependencies:
+      camelcase: 6.3.0
+      decamelize: 4.0.0
+      flat: 5.0.2
+      is-plain-obj: 2.1.0
+    dev: false
 
   /yargs/16.2.0:
     resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}

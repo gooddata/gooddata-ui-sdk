@@ -818,18 +818,8 @@ export {
     isGranularUserAccess,
     isGranularUserGroupAccess,
     isGranularRulesAccessGrantee,
-    WorkspaceAccessPermission,
-    IWorkspaceAccess,
-    IUserWorkspaceAccessGrantee,
-    IUserGroupWorkspaceAccessGrantee,
-    isUserWorkspaceAccessGrantee,
-    isUserGroupWorkspaceAccessGrantee,
-    WorkspaceAccessPermission,
-    IWorkspaceAccess,
-    IUserWorkspaceAccessGrantee,
-    IUserGroupWorkspaceAccessGrantee,
-    isUserWorkspaceAccessGrantee,
-    isUserGroupWorkspaceAccessGrantee,
+    IGranularRulesAccess,
+    IGranularRulesAccessGrantee,
 } from "./accessControl/index.js";
 
 export {
@@ -842,12 +832,5 @@ export {
     OrganizationPermissionAssignment,
     OrganizationPermissionAssignmentValue,
     IOrganizationAssignee,
-} from "./organization/index.js";
-export {
-    IOrganizationDescriptor,
-    IWorkspacePermissionAssignment,
-    IAssignedWorkspace,
-    AssignedWorkspacePermission,
-    AssignedWorkspacePermissionValue,
 } from "./organization/index.js";
 export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";

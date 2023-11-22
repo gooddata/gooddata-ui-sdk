@@ -16,8 +16,6 @@ import { ClusteringResult } from '@gooddata/api-client-tiger';
 import { DataSourceParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
-import { DeclarativePdm } from '@gooddata/api-client-tiger';
-import { DeclarativeTables } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
@@ -36,7 +34,6 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
-import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
@@ -48,7 +45,6 @@ import { JsonApiWorkspaceDataFilterSettingInDocument } from '@gooddata/api-clien
 import { JsonApiWorkspaceDataFilterSettingOutDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceInDocument } from '@gooddata/api-client-tiger';
 import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
-import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -58,7 +54,6 @@ import { Recommendation } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { WidgetAlertUserNotification } from '@gooddata/api-client-tiger';
-import { WorkspacePermissionAssignment } from '@gooddata/sdk-backend-spi';
 
 export { AnonymousAuthProvider }
 
@@ -88,8 +83,6 @@ export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
 export type DeclarativeLogicalModel = DeclarativeModel;
 
 export { DeclarativeModel }
-
-export { DeclarativePdm }
 
 // @internal (undocumented)
 export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
@@ -151,14 +144,6 @@ export interface ICustomApplicationSetting {
     };
     // (undocumented)
     id: string;
-}
-
-// @internal
-export interface IDataSource {
-    // (undocumented)
-    entity: JsonApiDataSourceInDocument;
-    // (undocumented)
-    pdm: DeclarativePdm;
 }
 
 // @internal (undocumented)
@@ -335,50 +320,16 @@ export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
 };
 
 // @internal (undocumented)
-export type PhysicalDataModel = DeclarativePdm;
-
-// @internal (undocumented)
-export interface PublishPdmResult {
-    // (undocumented)
-    status: string;
-}
-
-// @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
 
 // @internal (undocumented)
-export interface ScanRequest {
-    // (undocumented)
-    scanTables: boolean;
-    // (undocumented)
-    scanViews: boolean;
-    // (undocumented)
-    schemata: string[];
-    // (undocumented)
-    separator: string;
-    // (undocumented)
-    tablePrefix: string;
-    // (undocumented)
-    viewPrefix: string;
-}
-
-// @internal (undocumented)
-export interface ScanResult {
-    // (undocumented)
-    pdm: DeclarativeTables;
-}
-
-// @internal (undocumented)
 export type ScanSqlResult = ScanSqlResponse;
 
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
-
-// @internal (undocumented)
-export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
 
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
@@ -437,11 +388,8 @@ export type TigerSpecificFunctions = {
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
     someDataSourcesExists?: (filter?: string) => Promise<boolean>;
     generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLogicalModelRequest) => Promise<DeclarativeLogicalModel>;
-    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
-    publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
@@ -460,7 +408,6 @@ export type TigerSpecificFunctions = {
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
-    getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
     getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
     getDependentEntitiesGraphFromEntryPoints?: (workspaceId: string, dependentEntitiesGraphRequest: DependentEntitiesGraphRequest) => Promise<DependentEntitiesGraphResponse>;
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
@@ -513,15 +460,6 @@ export type TigerSpecificFunctions = {
         alert: IWidgetAlert;
         insight: IInsight;
     }[]>;
-    getUserById?: (userId: string) => Promise<IWorkspaceUser>;
-    getUsers?: () => Promise<ManageUsers>;
-    getUserGroups?: () => Promise<ManageUserGroups>;
-    getWorkspacePermissionsForUser?: (userId: string) => Promise<WorkspacePermissionAssignment[]>;
-    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => Promise<WorkspacePermissionAssignment[]>;
-    manageWorkspacePermissionsForUser?: (userId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-    manageWorkspacePermissionsForUserGroup?: (userGroupId: string, permissions: WorkspacePermissionAssignment[]) => Promise<void>;
-    updateUserDetails?: (user: IWorkspaceUser) => Promise<void>;
-    changeUserOrgAdminStatus?: (userId: string, isOrgAdmin: boolean) => Promise<void>;
 };
 
 // @public

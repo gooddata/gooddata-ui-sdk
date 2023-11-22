@@ -88,7 +88,6 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
-    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
     const previousSearch = useRef("");
     const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
 

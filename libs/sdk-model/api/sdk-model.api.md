@@ -1292,7 +1292,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled";
 
 // @public
 export interface IExecutionConfig {
@@ -1914,6 +1914,14 @@ export interface IObjectInteractions {
     };
 }
 
+// @alpha (undocumented)
+export interface IOrganizationAssignee {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "user" | "userGroup";
+}
+
 // @public
 export interface IOrganizationDescriptor {
     // (undocumented)
@@ -1924,6 +1932,14 @@ export interface IOrganizationDescriptor {
     id: string;
     // (undocumented)
     title: string;
+}
+
+// @alpha (undocumented)
+export interface IOrganizationPermissionAssignment {
+    // (undocumented)
+    assigneeIdentifier: IOrganizationAssignee;
+    // (undocumented)
+    permissions: OrganizationPermissionAssignment[];
 }
 
 // @alpha
@@ -2665,12 +2681,6 @@ export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 // @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
 
-// @alpha
-export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGroupWorkspaceAccessGrantee;
-
-// @alpha
-export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspaceAccessGrantee;
-
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
@@ -3046,6 +3056,13 @@ export interface IUserGroup {
 }
 
 // @alpha
+export interface IUserGroup {
+    id: string;
+    name?: string;
+    ref: ObjRef;
+}
+
+// @alpha
 export interface IUserGroupAccess {
     type: "group";
     userGroup: IWorkspaceUserGroup;
@@ -3056,12 +3073,6 @@ export interface IUserGroupAccessGrantee {
     granteeRef: ObjRef;
     type: "group";
 }
-
-// @alpha
-export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
-
-// @alpha
-export type IUserWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserAccessGrantee;
 
 // @public
 export interface IVariableMetadataObject extends IMetadataObject {
@@ -3146,13 +3157,9 @@ export interface IWidgetDescription {
 }
 
 // @alpha
-export interface IWorkspaceAccess {
-    permissions: WorkspaceAccessPermission;
-    workspace: string;
-}
-
-// @alpha
 export interface IWorkspacePermissionAssignment {
+    // (undocumented)
+    assigneeIdentifier: IOrganizationAssignee;
     // (undocumented)
     hierarchyPermissions: AssignedWorkspacePermission[];
     // (undocumented)
@@ -3479,6 +3486,15 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 // @public
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
+// @alpha (undocumented)
+export type OrganizationPermissionAssignment = typeof OrganizationPermissionAssignmentValue[keyof typeof OrganizationPermissionAssignmentValue];
+
+// @alpha (undocumented)
+export const OrganizationPermissionAssignmentValue: {
+    readonly MANAGE: "MANAGE";
+    readonly SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN";
+};
+
 // @public
 export type PlatformEdition = "free" | "growth" | "enterprise";
 
@@ -3640,9 +3656,6 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;
-
-// @public
-export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 // @public
 export type WorkspacePermission =

@@ -121,12 +121,6 @@ export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
 export { PredictionResult, PredictionResultPayload, setPredictionResult } from "./predictions.js";
 
 export {
-    PredictionResult,
-    PredictionResultPayload,
-    setPredictionResult,
-} from "./predictions.js";
-
-export {
     ChangeDateFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
