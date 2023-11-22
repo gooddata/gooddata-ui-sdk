@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import isEqual from "lodash/isEqual.js";
 import { useCallback, useEffect, useState } from "react";
-import { InsightDrillDefinition } from "@gooddata/sdk-model";
+import { InsightDrillDefinition, ObjRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
 import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
@@ -96,7 +96,7 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
     );
 
     const onOriginSelect = useCallback(
-        (selectedItem: IAvailableDrillTargetItem) => {
+        (selectedItem: IAvailableDrillTargetItem, widgetRef: ObjRef) => {
             const localIdentifier = generateLocalIdentifier();
             if (isAvailableDrillTargetMeasure(selectedItem)) {
                 const incompleteMeasureItem: IDrillConfigItem = {
@@ -107,6 +107,7 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
                     attributes: selectedItem.attributes,
                     drillTargetType: undefined,
                     complete: false,
+                    widgetRef: widgetRef,
                 };
 
                 addIncompleteItem(incompleteMeasureItem);
@@ -119,6 +120,7 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
                     attributes: selectedItem.intersectionAttributes,
                     drillTargetType: undefined,
                     complete: false,
+                    widgetRef: widgetRef,
                 };
 
                 addIncompleteItem(incompleteAttributeItem);

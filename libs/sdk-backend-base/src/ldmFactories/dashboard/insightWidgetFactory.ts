@@ -48,6 +48,7 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
             description: "",
             drills: [],
             ignoreDashboardFilters: [],
+            ignoredDrillDownHierarchies: [],
             title: "",
             type: "insight",
             insight,

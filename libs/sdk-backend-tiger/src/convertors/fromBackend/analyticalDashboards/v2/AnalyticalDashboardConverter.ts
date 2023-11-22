@@ -29,10 +29,10 @@ import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
+import { convertLayout } from "../../../shared/layoutConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -83,7 +83,8 @@ function getConvertedAnalyticalDashboardContent(
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
-        layout: convertDrillToCustomUrlInLayoutFromBackend(
+        layout: convertLayout(
+            true,
             prepareDrillLocalIdentifierIfMissing(
                 setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
             ),

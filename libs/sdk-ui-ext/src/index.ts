@@ -90,3 +90,5 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisua
 }
 
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";
+
+export * from "./internal/components/attributeHierarchy/index.js";

@@ -45,9 +45,11 @@ export const useDrillDialogInsightDrills = ({
     );
 
     const implicitDrillDefinitions = useDashboardSelector(
-        selectImplicitDrillsByAvailableDrillTargets(drillTargets),
+        selectImplicitDrillsByAvailableDrillTargets(drillTargets, widget.ignoredDrillDownHierarchies),
     );
-    const drillableItems = useDashboardSelector(selectDrillableItemsByAvailableDrillTargets(drillTargets));
+    const drillableItems = useDashboardSelector(
+        selectDrillableItemsByAvailableDrillTargets(drillTargets, widget.ignoredDrillDownHierarchies),
+    );
     const onDrill = onDrillFn
         ? (event: IDrillEvent) => {
               const facade = DataViewFacade.for(event.dataView);
