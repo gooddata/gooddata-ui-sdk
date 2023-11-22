@@ -3030,6 +3030,7 @@ export const DeclarativeSettingTypeEnum: {
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
     readonly WEEK_START: "WEEK_START";
+    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
 };
 
 // @public (undocumented)
@@ -9454,6 +9455,7 @@ export const JsonApiUserSettingOutAttributesTypeEnum: {
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
     readonly WEEK_START: "WEEK_START";
+    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
 };
 
 // @public (undocumented)
@@ -12591,6 +12593,7 @@ export const ResolvedSettingTypeEnum: {
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
     readonly WEEK_START: "WEEK_START";
+    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
 };
 
 // @public (undocumented)

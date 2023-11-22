@@ -11503,7 +11503,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -13906,7 +13907,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -13980,7 +13982,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -15587,7 +15590,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -15641,7 +15645,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -16448,7 +16453,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -17112,7 +17118,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -17851,7 +17858,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -18556,7 +18564,8 @@
                                     "LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
-                                    "WEEK_START"
+                                    "WEEK_START",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS"
                                 ]
                             }
                         }
@@ -20601,7 +20610,8 @@
                             "LOCALE",
                             "FORMAT_LOCALE",
                             "MAPBOX_TOKEN",
-                            "WEEK_START"
+                            "WEEK_START",
+                            "SHOW_HIDDEN_CATALOG_ITEMS"
                         ]
                     }
                 },
@@ -21460,7 +21470,8 @@
                             "LOCALE",
                             "FORMAT_LOCALE",
                             "MAPBOX_TOKEN",
-                            "WEEK_START"
+                            "WEEK_START",
+                            "SHOW_HIDDEN_CATALOG_ITEMS"
                         ]
                     }
                 },

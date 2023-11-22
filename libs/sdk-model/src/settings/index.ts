@@ -109,6 +109,12 @@ export interface ISettings {
     enableUnavailableItemsVisible?: boolean;
 
     /**
+     * Indicates whether unavailable data items are visible in the settings API
+     * only available on Tiger/Panther
+     */
+    showHiddenCatalogItems?: boolean;
+
+    /**
      * Indicates whether dashboard scheduled mails are enabled.
      */
     enableKPIDashboardSchedule?: boolean;
