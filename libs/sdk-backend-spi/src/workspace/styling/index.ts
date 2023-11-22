@@ -25,4 +25,7 @@ export interface IWorkspaceStylingService {
      * @returns promise of theme
      */
     getTheme(): Promise<ITheme>;
+
+    // TODO
+    getDefaultTheme?(): ITheme;
 }

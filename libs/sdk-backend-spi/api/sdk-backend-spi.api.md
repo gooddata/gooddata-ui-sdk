@@ -922,6 +922,8 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 // @public
 export interface IWorkspaceStylingService {
     getColorPalette(): Promise<IColorPalette>;
+    // (undocumented)
+    getDefaultTheme?(): ITheme;
     getTheme(): Promise<ITheme>;
 }
 

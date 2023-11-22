@@ -4,6 +4,7 @@ import { IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
 import { isTheme, unwrapMetadataObject } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { isApiResponseError } from "../../../utils/errorHandling.js";
+import { defaultTheme } from "./defaultTheme.js";
 
 export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -33,6 +34,12 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
                           throw err;
                       }),
               )
-            : {};
+              // TODO
+            : defaultTheme;
     };
+
+    // Would make sense to split it?
+    public getDefaultTheme(): ITheme {
+        return defaultTheme;
+    }
 }

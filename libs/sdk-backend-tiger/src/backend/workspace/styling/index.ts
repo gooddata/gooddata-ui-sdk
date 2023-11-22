@@ -61,6 +61,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
             : DefaultColorPalette;
     };
 
+    // TODO: extend it same as is done on Bear
     public getTheme = async (): Promise<ITheme> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const activeThemeId = (userSettings.activeTheme as IThemeMetadataObject)?.id ?? "";
