@@ -15,6 +15,7 @@ import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     DEFAULT_PIE_UICONFIG,
+    DEFAULT_PIE_ONLY_MAX_METRICS_COUNT,
     PIE_UICONFIG_WITH_MULTIPLE_METRICS,
     PIE_UICONFIG_WITH_ONE_METRIC,
     UICONFIG,
@@ -113,8 +114,13 @@ export class PluggablePieChart extends PluggableBaseChart {
                 },
             ]);
         } else {
-            const measures = getMeasureItems(buckets);
-            if (measures.length > 1) {
+            const limitedBuckets = limitNumberOfMeasuresInBuckets(
+                buckets,
+                DEFAULT_PIE_ONLY_MAX_METRICS_COUNT,
+                true,
+            );
+            const limitedMeasures = getMeasureItems(limitedBuckets);
+            if (limitedMeasures.length > 1) {
                 set(newReferencePoint, UICONFIG, cloneDeep(PIE_UICONFIG_WITH_MULTIPLE_METRICS));
             } else {
                 set(newReferencePoint, UICONFIG, cloneDeep(PIE_UICONFIG_WITH_ONE_METRIC));
@@ -123,7 +129,7 @@ export class PluggablePieChart extends PluggableBaseChart {
             set(newReferencePoint, BUCKETS, [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: measures,
+                    items: limitedMeasures,
                 },
                 {
                     localIdentifier: BucketNames.VIEW,
@@ -215,6 +221,10 @@ export class PluggablePieChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <PieChartConfigurationPanel
                     locale={this.locale}
@@ -228,6 +238,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     references={this.references}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

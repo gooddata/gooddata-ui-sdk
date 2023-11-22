@@ -33,6 +33,7 @@ import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeCon
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
+import compact from "lodash/compact.js";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.ATTRIBUTES,
@@ -41,8 +42,8 @@ const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypes
     // dateDatasets are not supported by tiger in this context
 };
 
-const mapToTigerType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum => {
-    return typesMatching[type] ?? AfmValidObjectsQueryTypesEnum.UNRECOGNIZED;
+const mapToTigerType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum | undefined => {
+    return typesMatching[type];
 };
 
 /**
@@ -155,7 +156,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, filters);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
-            types: relevantRestrictingTypes.map(mapToTigerType),
+            types: compact(relevantRestrictingTypes.map(mapToTigerType)),
             afm: {
                 attributes: attributes.map(convertAttribute),
                 measures: measures.map(convertMeasure),

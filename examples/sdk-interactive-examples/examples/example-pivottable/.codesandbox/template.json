@@ -1,0 +1,11 @@
+{
+  "title": "PivotTable",
+  "description": "Basic PivotTable manipulation.",
+  "iconUrl": "https://www.gooddata.com/favicon.ico",
+  "tags": [
+    "react",
+    "typescript",
+    "gooddata-ui-sdk"
+  ],
+  "published": true
+}

@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "../objRef/index.js";
-import { DrillDefinition } from "./drill.js";
+import { DrillDefinition, IDrillDownReference } from "./drill.js";
 import { IDashboardFilterReference } from "./filterContext.js";
 
 /**
@@ -10,7 +10,7 @@ import { IDashboardFilterReference } from "./filterContext.js";
  * -  An ignore-list containing references to dashboard attribute filters that should be ignored by
  *    the widget.
  *
- * @alpha
+ * @public
  */
 export interface IFilterableWidget {
     /**
@@ -28,19 +28,25 @@ export interface IFilterableWidget {
  * Defines properties that are used for drillable widgets. Such widgets allow user clicking on
  * different parts of the widget and through this interaction navigate to other insights or dashboards.
  *
- * @alpha
+ * @public
  */
 export interface IDrillableWidget {
     /**
      * Widget drills
      */
     readonly drills: DrillDefinition[];
+
+    /**
+     * Ignore particular drill down hierarchies in the current widget
+     * @alpha
+     */
+    readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
 }
 
 /**
  * Defines properties that are used to store widget's descriptive metadata.
  *
- * @alpha
+ * @public
  */
 export interface IWidgetDescription {
     /**
@@ -57,7 +63,7 @@ export interface IWidgetDescription {
 /**
  * Base type for dashboard widgets.
  *
- * @alpha
+ * @public
  */
 export interface IBaseWidget {
     /**

@@ -24,11 +24,11 @@ import {
 import {
     AttributesDecoratorFactory,
     CatalogDecoratorFactory,
-    decoratedBackend,
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
-} from "../decoratedBackend/index.js";
+} from "../decoratedBackend/types.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
 import { LRUCache } from "lru-cache";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
@@ -409,6 +409,14 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
     public async setLocale(locale: string): Promise<void> {
         return super.setLocale(locale);
+    }
+
+    public async setColorPalette(colorPaletteId: string): Promise<void> {
+        return super.setColorPalette(colorPaletteId);
+    }
+
+    public async setTheme(themeId: string): Promise<void> {
+        return super.setTheme(themeId);
     }
 
     private getOrCreateWorkspaceEntry = (workspace: string): WorkspaceSettingsCacheEntry => {

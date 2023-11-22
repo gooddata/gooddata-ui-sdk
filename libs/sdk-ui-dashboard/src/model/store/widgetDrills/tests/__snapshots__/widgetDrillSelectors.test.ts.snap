@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`widgetDrillSelectors > selectGlobalDrillsDownAttributeHierarchyByWidgetRef > should return expected result if all conditions are met 1`] = `
+[
+  {
+    "origin": {
+      "localIdentifier": "458cb8556b604396be5d736ada2aa833",
+    },
+    "target": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+      "type": "attributeHierarchy",
+    },
+    "type": "drillDown",
+  },
+  {
+    "origin": {
+      "localIdentifier": "f20e093c6af5439dbfce10ee37620fc8",
+    },
+    "target": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_2",
+      "type": "attributeHierarchy",
+    },
+    "type": "drillDown",
+  },
+  {
+    "origin": {
+      "localIdentifier": "458cb8556b604396be5d736ada2aa833",
+    },
+    "target": {
+      "identifier": "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
+      "type": "attributeHierarchy",
+    },
+    "type": "drillDown",
+  },
+]
+`;

@@ -46,6 +46,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     {this.renderColorSection()}
                     {this.getBaseChartAxisSection(axes)}
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
                         className="gd-canvas-section"

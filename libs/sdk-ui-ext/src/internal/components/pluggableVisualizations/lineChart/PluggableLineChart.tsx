@@ -9,7 +9,11 @@ import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-mo
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
+import {
+    DEFAULT_LINE_UICONFIG,
+    LINE_UICONFIG_WITH_MULTIPLE_DATES,
+    MAX_METRICS_COUNT,
+} from "../../../constants/uiConfig.js";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -18,6 +22,7 @@ import {
     IVisConstruct,
     IUiConfig,
     IDrillDownDefinition,
+    IBucketOfFun,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -32,6 +37,7 @@ import {
     isDateBucketItem,
     sanitizeFilters,
     getBucketItems,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -166,6 +172,11 @@ export class PluggableLineChart extends PluggableBaseChart {
         });
     }
 
+    private getBucketMeasures(buckets: IBucketOfFun[] = []) {
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
+        return getFilteredMeasuresForStackedCharts(limitedBuckets);
+    }
+
     protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
         if (this.isMultipleDatesEnabled()) {
             this.configureBucketsWithMultipleDates(newReferencePoint);
@@ -209,7 +220,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: getFilteredMeasuresForStackedCharts(buckets),
+                items: this.getBucketMeasures(newReferencePoint.buckets),
             },
             {
                 localIdentifier: BucketNames.TREND,
@@ -226,6 +237,10 @@ export class PluggableLineChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -240,6 +255,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );
@@ -282,7 +298,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: getFilteredMeasuresForStackedCharts(buckets),
+                items: this.getBucketMeasures(newReferencePoint.buckets),
             },
             {
                 localIdentifier: BucketNames.TREND,

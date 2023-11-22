@@ -3,7 +3,7 @@ import { ObjRef } from "../objRef/index.js";
 
 /**
  * Object unique identity
- * @alpha
+ * @public
  */
 export interface IDashboardObjectIdentity {
     /**

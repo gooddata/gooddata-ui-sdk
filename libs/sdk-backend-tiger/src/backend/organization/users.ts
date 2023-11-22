@@ -89,14 +89,6 @@ export class OrganizationUsersService implements IOrganizationUserService {
         });
     };
 
-    public deleteUser = async (id: string): Promise<void> => {
-        return this.authCall(async (client) => {
-            await client.entities.deleteEntityUsers({
-                id,
-            });
-        });
-    };
-
     public deleteUsers = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
             // this is not ideal, but this can be replaced when bulk API is created
@@ -107,14 +99,6 @@ export class OrganizationUsersService implements IOrganizationUserService {
                     }),
                 ),
             );
-        });
-    };
-
-    public deleteUserGroup = async (id: string): Promise<void> => {
-        return this.authCall(async (client) => {
-            await client.entities.deleteEntityUserGroups({
-                id,
-            });
         });
     };
 
@@ -134,7 +118,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
             return client.actions
-                .getUsers()
+                .listUsers()
                 .then((response) => response.data.users.map(convertOrganizationUser));
         });
     };
@@ -142,7 +126,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
             return client.actions
-                .getUserGroups()
+                .listUserGroups()
                 .then((response) => response.data.userGroups.map(convertOrganizationUserGroup));
         });
     };
@@ -171,42 +155,15 @@ export class OrganizationUsersService implements IOrganizationUserService {
         });
     };
 
-    public addUserGroupToUsers = async (userGroupId: string, userIds: string[]): Promise<void> => {
-        return this.authCall(async (client) => {
-            await client.actions.addGroupMembers({
-                userGroupId,
-                userGroupMembers: {
-                    members: userIds.map((id) => ({ id })),
-                },
-            });
-        });
-    };
-
-    public addUserGroupsToUsers = async (userGroupIds: string[], userIds: string[]): Promise<void> => {
-        return this.authCall(async (client) => {
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all(
-                userGroupIds.map((userGroupId) =>
-                    client.actions.addGroupMembers({
-                        userGroupId,
-                        userGroupMembers: {
-                            members: userIds.map((id) => ({ id })),
-                        },
-                    }),
-                ),
-            );
-        });
-    };
-
-    public addUserToUserGroups = async (userId: string, userGroupIds: string[]): Promise<void> => {
+    public addUsersToUserGroups = async (userIds: string[], userGroupIds: string[]): Promise<void> => {
         return this.authCall(async (client) => {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
                     // this is not ideal, but this can be replaced when new API is created
                     return client.actions.addGroupMembers({
                         userGroupId,
-                        userGroupMembers: {
-                            members: [{ id: userId }],
+                        userManagementUserGroupMembers: {
+                            members: userIds.map((id) => ({ id })),
                         },
                     });
                 }),
@@ -214,14 +171,19 @@ export class OrganizationUsersService implements IOrganizationUserService {
         });
     };
 
-    public removeUserFromUserGroup = async (userId: string, userGroupId: string): Promise<void> => {
+    public removeUsersFromUserGroups = async (userIds: string[], userGroupIds: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.actions.removeGroupMembers({
-                userGroupId: userGroupId,
-                userGroupMembers: {
-                    members: [{ id: userId }],
-                },
-            });
+            await Promise.all(
+                userGroupIds.map((userGroupId) => {
+                    // this is not ideal, but this can be replaced when new API is created
+                    return client.actions.removeGroupMembers({
+                        userGroupId: userGroupId,
+                        userManagementUserGroupMembers: {
+                            members: userIds.map((id) => ({ id })),
+                        },
+                    });
+                }),
+            );
         });
     };
 }

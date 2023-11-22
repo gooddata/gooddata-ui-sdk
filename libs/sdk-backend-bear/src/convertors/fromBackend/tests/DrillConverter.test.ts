@@ -7,9 +7,18 @@ import {
     drillToDashboardWithDrillFromMeasure,
     drillToDashboardWithDrillFromAttribute,
 } from "./DrillConverter.fixtures.js";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import * as uuid from "uuid";
 
 describe("convert drill", () => {
+    beforeEach(() => {
+        vi.spyOn(uuid, "v4").mockReturnValue("mocked-uuid");
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
     describe("origin", () => {
         it("should convert drill from measure", () => {
             const convertedDrill = convertDrillOrigin(drillFromMeasure);

@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
-import { changeAttributeFilterSelection } from "../../../../commands/index.js";
+import { changeAttributeFilterSelection, setAttributeFilterParents } from "../../../../commands/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
@@ -85,5 +85,103 @@ describe("changeAttributeFilterSelectionHandler.test", () => {
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
 
         expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
+    });
+
+    describe("with dependent filters set up", () => {
+        it("should reset child filter selection on parent change when backend DOES NOT support keeping dependent filters selection", async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                { customCapabilities: { supportsKeepingDependentFiltersSelection: false } },
+            );
+
+            const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
+                .localIdentifier!;
+            const secondFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[1].attributeFilter
+                .localIdentifier!;
+
+            Tester.dispatch(
+                changeAttributeFilterSelection(
+                    secondFilterLocalId,
+                    { uris: ["testing/uri1", "testing/uri2"] },
+                    "IN",
+                    TestCorrelation,
+                ),
+            );
+
+            Tester.dispatch(
+                setAttributeFilterParents(secondFilterLocalId, [
+                    { filterLocalIdentifier: firstFilterLocalId, over: { attributes: [] } },
+                ]),
+            );
+
+            Tester.dispatch(
+                changeAttributeFilterSelection(
+                    firstFilterLocalId,
+                    { uris: ["testing/uri"] },
+                    "NOT_IN",
+                    TestCorrelation,
+                ),
+            );
+
+            await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+
+            expect(
+                selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter.attributeElements,
+            ).toEqual({ uris: ["testing/uri"] });
+            expect(
+                selectFilterContextAttributeFilters(Tester.state())[1].attributeFilter.attributeElements,
+            ).toEqual({ uris: [] });
+        });
+
+        it("should NOT reset child filter selection on parent change when backend DOES support keeping dependent filters selection", async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                { customCapabilities: { supportsKeepingDependentFiltersSelection: true } },
+            );
+
+            const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter
+                .localIdentifier!;
+            const secondFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[1].attributeFilter
+                .localIdentifier!;
+
+            Tester.dispatch(
+                changeAttributeFilterSelection(
+                    secondFilterLocalId,
+                    { uris: ["testing/uri1", "testing/uri2"] },
+                    "IN",
+                    TestCorrelation,
+                ),
+            );
+
+            Tester.dispatch(
+                setAttributeFilterParents(secondFilterLocalId, [
+                    { filterLocalIdentifier: firstFilterLocalId, over: { attributes: [] } },
+                ]),
+            );
+
+            Tester.dispatch(
+                changeAttributeFilterSelection(
+                    firstFilterLocalId,
+                    { uris: ["testing/uri"] },
+                    "NOT_IN",
+                    TestCorrelation,
+                ),
+            );
+
+            await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
+
+            expect(
+                selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter.attributeElements,
+            ).toEqual({ uris: ["testing/uri"] });
+            expect(
+                selectFilterContextAttributeFilters(Tester.state())[1].attributeFilter.attributeElements,
+            ).toEqual({ uris: ["testing/uri1", "testing/uri2"] });
+        });
     });
 });

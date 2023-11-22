@@ -73,7 +73,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                 .createEntityThemes(
                     {
                         jsonApiThemeInDocument: {
-                            data: convertThemeToBackend(uuidv4(), theme),
+                            data: convertThemeToBackend(theme.id || uuidv4(), theme),
                         },
                     },
                     {
@@ -155,7 +155,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                     .createEntityColorPalettes(
                         {
                             jsonApiColorPaletteInDocument: {
-                                data: convertColorPaletteToBackend(uuidv4(), colorPalette),
+                                data: convertColorPaletteToBackend(colorPalette.id || uuidv4(), colorPalette),
                             },
                         },
                         {

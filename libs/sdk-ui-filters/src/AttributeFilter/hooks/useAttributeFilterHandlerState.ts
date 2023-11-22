@@ -57,6 +57,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             elements?: IAttributeElement[];
             keys?: string[];
             isInverted?: boolean;
+            irrelevantElements?: IAttributeElement[];
         };
         working: {
             elements?: IAttributeElement[];
@@ -64,6 +65,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             isInverted?: boolean;
             isChanged?: boolean;
             isEmpty?: boolean;
+            irrelevantElements?: IAttributeElement[];
         };
     };
     config?: {
@@ -120,6 +122,10 @@ export const useAttributeFilterHandlerState = (
                 elements: initStatus === "success" ? handler.getElementsByKey(committedSelection.keys) : [],
                 keys: committedSelection.keys,
                 isInverted: committedSelection.isInverted,
+                irrelevantElements:
+                    initStatus === "success"
+                        ? handler.getElementsByKey(committedSelection.irrelevantKeys)
+                        : [],
             },
             working: {
                 elements: initStatus === "success" ? handler.getElementsByKey(workingSelection.keys) : [],
@@ -127,6 +133,8 @@ export const useAttributeFilterHandlerState = (
                 isInverted: workingSelection.isInverted,
                 isChanged: handler.isWorkingSelectionChanged(),
                 isEmpty: handler.isWorkingSelectionEmpty(),
+                irrelevantElements:
+                    initStatus === "success" ? handler.getElementsByKey(workingSelection.irrelevantKeys) : [],
             },
         },
     };

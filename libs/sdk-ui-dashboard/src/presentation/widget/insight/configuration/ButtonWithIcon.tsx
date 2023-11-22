@@ -7,6 +7,7 @@ export interface IButtonWithTypeIcon {
     value: string;
     className?: string;
     isOpen: boolean;
+    disabled: boolean;
     onClick: () => void;
 }
 
@@ -15,6 +16,7 @@ export const ButtonWithIcon = (props: IButtonWithTypeIcon) => {
         <DropdownButton
             value={props.value}
             isSmall={false}
+            disabled={props.disabled}
             className={`gd-button-small ${props.className}`}
             iconLeft={props.icon}
             isOpen={props.isOpen}

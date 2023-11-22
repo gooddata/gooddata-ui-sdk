@@ -10,6 +10,7 @@ const BASE_PROPERTIES = [
     "legend",
     "colorMapping",
     "zoomInsight",
+    "disableDrillDown",
 ];
 
 const BASE_X_AXIS_PROPERTIES = [
@@ -174,6 +175,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "yaxis.name.visible",
     "yaxis.name.position",
     "yaxis.format",
+    "disableDrillDown",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -198,6 +200,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "yaxis.format",
+    "disableDrillDown",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -205,6 +208,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "chart.verticalAlign",
+    "disableDrillDown",
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -213,9 +217,17 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "chart.verticalAlign",
+
+    "disableDrillDown",
 ];
 
-export const TREEMAP_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping", "zoomInsight"];
+export const TREEMAP_SUPPORTED_PROPERTIES = [
+    "dataLabels.visible",
+    "legend",
+    "colorMapping",
+    "zoomInsight",
+    "disableDrillDown",
+];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
@@ -233,6 +245,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "xaxis.name.position",
     "colorMapping",
     "zoomInsight",
+    "disableDrillDown",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -255,6 +268,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "zoomInsight",
+    "disableDrillDown",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
@@ -273,9 +287,15 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "columnWidths",
     "measureGroupDimension",
     "columnHeadersPosition",
+    "disableDrillDown",
 ];
 
-export const SANKEY_CHART_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
+export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
+    "dataLabels.visible",
+    "legend",
+    "colorMapping",
+    "disableDrillDown",
+];
 
 const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
     ...BASE_X_AXIS_PROPERTIES,

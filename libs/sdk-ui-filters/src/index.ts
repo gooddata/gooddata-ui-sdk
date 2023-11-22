@@ -37,6 +37,7 @@ export {
     IDateTranslator,
     IMessageTranslator,
     getLocalizedIcuDateFormatPattern,
+    IFilterConfigurationProps,
 } from "./DateFilter/index.js";
 export {
     MeasureValueFilter,
@@ -76,6 +77,7 @@ export {
     IAttributeFilterLoader,
     ILoadElementsResult,
     ILoadElementsOptions,
+    ILoadIrrelevantElementsResult,
     OnInitCancelCallbackPayload,
     OnInitErrorCallbackPayload,
     OnInitStartCallbackPayload,
@@ -102,6 +104,10 @@ export {
     OnInitTotalCountCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
+    OnLoadIrrelevantElementsStartCallbackPayload,
+    OnLoadIrrelevantElementsSuccessCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
     // Options
     IAttributeFilterHandlerOptions,
     IAttributeFilterHandlerOptionsBase,
@@ -195,3 +201,5 @@ export {
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
 } from "./AttributeFilter/index.js";
+
+export { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";

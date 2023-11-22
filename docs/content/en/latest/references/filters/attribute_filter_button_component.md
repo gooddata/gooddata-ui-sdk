@@ -108,7 +108,7 @@ You can define the parent filter as an [AttributeFilter](../attribute_filter/) o
 
 ## Properties
 
-### | Name | Required? | Type | Description |
+| Name | Required? | Type | Description |
 | :--- | :--- | :--- | :--- |
 | onApply | false | OnApplyCallbackType | A callback that contains the updated filter when the selection change is confirmed by a user |
 | onError | false | (error: GoodDataSdkError) => void; | A callback that is triggered when the component runs into an error |
@@ -116,6 +116,8 @@ You can define the parent filter as an [AttributeFilter](../attribute_filter/) o
 | parentFilters | false | AttributeFiltersOrPlaceholders | An array of parent attribute filter definitions. This feature is not yet supported by GoodData.CN and GoodData Cloud. |
 | connectToPlaceholder | false | IPlaceholder<IAttributeFilter> | The visualization definition placeholder used to get and set the value of the attribute filter |
 | parentFilterOverAttribute | false | ParentFilterOverAttributeType | A reference to the parent filter attribute over which the available options are reduced, or the function called for every parent filter that returns such reference for the given parent filter |
+| attributeFilterMode | false | string | Filter mode; can be `readonly`, `hidden`, or `active` |
+| customIcon | false | IFilterButtonCustomIcon | A custom icon with associated tooltip information. |
 | backend | false | IAnalyticalBackend | The object with the configuration related to the communication with the backend and the access to analytical workspaces |
 | workspace | false | string | The workspace ID |
 | locale | false | ILocale | The localization of the component. Defaults to `en-US`. |

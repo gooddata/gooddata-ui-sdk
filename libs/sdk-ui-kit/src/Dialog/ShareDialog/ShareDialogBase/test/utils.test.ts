@@ -10,7 +10,7 @@ import {
     notInArrayFilter,
     sortGranteesByName,
 } from "../utils.js";
-import { current, groupAll, owner, user } from "./GranteeMock.js";
+import { current, granularRule, groupAll, owner, user } from "./GranteeMock.js";
 import { describe, it, expect } from "vitest";
 
 describe("utils", () => {
@@ -51,6 +51,11 @@ describe("utils", () => {
         it("should return grantee name for group all", () => {
             const intl = createIntlMock();
             expect(getGranteeLabel(groupAll, intl)).toEqual("All users");
+        });
+
+        it("should return granular grantee name for group all", () => {
+            const intl = createIntlMock();
+            expect(getGranteeLabel(granularRule, intl)).toEqual("All users");
         });
     });
 

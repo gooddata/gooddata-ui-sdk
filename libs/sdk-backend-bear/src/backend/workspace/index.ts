@@ -18,6 +18,7 @@ import {
     IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory.js";
 import { BearWorkspaceMeasures } from "./measures/index.js";
@@ -123,5 +124,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         return new BearWorkspaceAccessControlService(this.authCall, this.workspace);
+    }
+
+    public attributeHierarchies(): IAttributeHierarchiesService {
+        throw new Error("Not supported");
     }
 }

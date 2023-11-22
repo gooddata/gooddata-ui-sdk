@@ -172,7 +172,7 @@ export function composedFromUri(uri: string): IHeaderPredicate;
 // @public
 export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
-// @internal (undocumented)
+// @public (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[];
 
 // @public
@@ -1410,6 +1410,9 @@ export type MeasureOrPlaceholder = ValueOrPlaceholder<AnyMeasure>;
 
 // @public
 export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
+
+// @internal (undocumented)
+export const messages: Record<string, MessageDescriptor>;
 
 // @internal (undocumented)
 export const messagesMap: {

@@ -7,6 +7,7 @@ import {
     IAttributeMetadataObject,
     areObjRefsEqual,
     ObjRef,
+    DashboardAttributeFilterConfigModeValues,
 } from "@gooddata/sdk-model";
 import {
     selectAllCatalogDisplayFormsMap,
@@ -19,6 +20,7 @@ import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/h
 import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
+import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
 
 /**
  * @internal
@@ -26,7 +28,8 @@ import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configura
 export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfiguration> &
     ReturnType<typeof useDisplayFormConfiguration> &
     ReturnType<typeof useTitleConfiguration> &
-    ReturnType<typeof useSelectionModeConfiguration> & {
+    ReturnType<typeof useSelectionModeConfiguration> &
+    ReturnType<typeof useModeConfiguration> & {
         onConfigurationSave: () => void;
         showDisplayFormPicker: boolean;
         showResetTitle: boolean;
@@ -131,6 +134,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onConfigurationClose: onSelectionModeClose,
     } = useSelectionModeConfiguration(currentFilter);
 
+    const {
+        mode,
+        modeChanged,
+        onModeChange,
+        onModeUpdate,
+        onConfigurationClose: onModeClose,
+    } = useModeConfiguration(currentFilter, DashboardAttributeFilterConfigModeValues.ACTIVE);
+
     const onConfigurationSave = useCallback(() => {
         // the order is important to keep the app in valid state
         if (selectionMode === "single") {
@@ -142,14 +153,23 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         }
         onDisplayFormChange();
         onTitleChange();
-    }, [selectionMode, onParentFiltersChange, onDisplayFormChange, onTitleChange, onSelectionModeChange]);
+        onModeChange();
+    }, [
+        selectionMode,
+        onParentFiltersChange,
+        onDisplayFormChange,
+        onTitleChange,
+        onSelectionModeChange,
+        onModeChange,
+    ]);
 
     const onConfigurationClose = useCallback(() => {
         onParentFiltersClose();
         onDisplayFormClose();
         onTitleClose();
         onSelectionModeClose();
-    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose, onSelectionModeClose]);
+        onModeClose();
+    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose, onSelectionModeClose, onModeClose]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
     const showResetTitle = title !== defaultAttributeFilterTitle;
@@ -183,6 +203,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 selectionModeChanged,
                 onSelectionModeChange,
                 onSelectionModeUpdate,
+                mode,
+                modeChanged,
+                onModeChange,
+                onModeUpdate,
             }}
         >
             {children}

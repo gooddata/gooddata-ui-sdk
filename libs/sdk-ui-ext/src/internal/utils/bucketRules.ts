@@ -29,6 +29,12 @@ import {
 } from "./bucketHelper.js";
 
 import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
+import {
+    INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
+    INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
+    MAX_METRICS_COUNT,
+    MAX_TABLE_CATEGORIES_COUNT,
+} from "../constants/uiConfig.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
@@ -74,6 +80,17 @@ export function hasNoSecondaryMeasures(buckets: IBucketOfFun[]): boolean {
 
 export function hasNoAttribute(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.ATTRIBUTE) === 0;
+}
+
+export function hasMeasuresOrRowsUnderLowerLimit(buckets: IBucketOfFun[]): boolean {
+    return (
+        getItemsCount(buckets, BucketNames.ATTRIBUTE) <= MAX_TABLE_CATEGORIES_COUNT &&
+        getItemsCount(buckets, BucketNames.MEASURES) <= MAX_METRICS_COUNT
+    );
+}
+
+export function hasNoColumns(buckets: IBucketOfFun[]): boolean {
+    return getItemsCount(buckets, BucketNames.COLUMNS) === 0;
 }
 
 export function hasSomeSegmentByItems(buckets: IBucketOfFun[]): boolean {
@@ -270,4 +287,18 @@ export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): bo
     ];
 
     return allRulesMet(rules, buckets);
+}
+
+export function canIncreasedTableMeasuresAddMoreItems(buckets: IBucketOfFun[]) {
+    const itemsCount = getItemsCount(buckets, BucketNames.MEASURES);
+    const limit = hasNoColumns(buckets) ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
+    return itemsCount < limit;
+}
+
+export function canIncreasedTableAttributesAddMoreItems(buckets: IBucketOfFun[]) {
+    const itemsCount = getItemsCount(buckets, BucketNames.ATTRIBUTE);
+    const limit = hasNoColumns(buckets)
+        ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT
+        : MAX_TABLE_CATEGORIES_COUNT;
+    return itemsCount < limit;
 }

@@ -1,25 +1,27 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
+
+import { messages } from "@gooddata/sdk-ui";
 import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
-import { DrillTargetType } from "./DrillTargetType.js";
+import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import {
     areObjRefsEqual,
+    IdentifierRef,
     InsightDrillDefinition,
     isAttributeDescriptor,
     UriRef,
-    IdentifierRef,
 } from "@gooddata/sdk-model";
 import {
+    selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
     useDashboardSelector,
-    selectCatalogDateDatasets,
 } from "../../../../model/index.js";
 import { invariant } from "ts-invariant";
 
@@ -27,8 +29,28 @@ export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
     enabledDrillTargetTypeItems: IDrillTargetType[];
     onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
+    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
+}
+function disableDrillDownIfMeasure(
+    enabledDrillTargetTypeItems: IDrillTargetType[],
+    isMeasure: boolean,
+    intl: IntlShape,
+) {
+    if (isMeasure) {
+        const drillDownIndex = enabledDrillTargetTypeItems.findIndex(
+            (item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN,
+        );
+        if (drillDownIndex) {
+            const drillDownTarget = enabledDrillTargetTypeItems[drillDownIndex];
+            drillDownTarget.disabled = true;
+            drillDownTarget.disableTooltipMessage = intl.formatMessage(
+                messages.drilldownTooltipDisabledMetric,
+            );
+            enabledDrillTargetTypeItems.splice(drillDownIndex, 1, drillDownTarget);
+        }
+    }
+    return enabledDrillTargetTypeItems;
 }
 
 const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
@@ -38,6 +60,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
     onSetup,
     onDelete,
 }) => {
+    const intl = useIntl();
     const onDeleteClick = () => {
         onDelete(item);
     };
@@ -64,7 +87,11 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
     invariant(widgetRef, "mush have widget selected");
 
     const { isFromDateAttribute, showDateFilterTransferWarning } = useDateAttributeOptions(item, widgetRef);
-
+    const drillTargetTypeItems = disableDrillDownIfMeasure(
+        enabledDrillTargetTypeItems,
+        item.type === "measure",
+        intl,
+    );
     return (
         <div className={classNames}>
             <div className="drill-config-item-intro">
@@ -78,7 +105,6 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
             <DrillOriginItem
                 type={item.type}
                 title={item.title}
-                localIdentifier={item.localIdentifier}
                 onDelete={onDeleteClick}
                 isDateAttribute={isFromDateAttribute}
             />
@@ -91,7 +117,10 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                     <DrillTargetType
                         onSelect={onDrillTargetTypeSelect}
                         selection={item.drillTargetType}
-                        enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
+                        enabledDrillTargetTypeItems={drillTargetTypeItems}
+                        isButtonDisabled={
+                            item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN && item.complete
+                        }
                     />
 
                     <DrillTargets item={item} onSetup={onSetup} />
@@ -122,7 +151,7 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
 
     return useMemo(() => {
         const attributeTarget = drillTargets?.availableDrillTargets?.attributes?.find(
-            (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.localIdentifier,
+            (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.originLocalIdentifier,
         );
 
         const isFromDateAttribute = !!(
@@ -159,8 +188,9 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         dateAttributes,
         item.type,
         item.attributes,
-        item.drillTargetType,
         item.localIdentifier,
+        item.drillTargetType,
+        item.originLocalIdentifier,
     ]);
 }
 

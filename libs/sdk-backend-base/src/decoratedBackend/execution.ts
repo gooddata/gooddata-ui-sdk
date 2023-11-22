@@ -120,6 +120,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.createNew(this.decorated.withSorting(...items));
     }
 
+    public withBuckets(...buckets: IBucket[]): IPreparedExecution {
+        return this.createNew(this.decorated.withBuckets(...buckets));
+    }
+
     public withDateFormat(dateFormat: string): IPreparedExecution {
         return this.createNew(this.decorated.withDateFormat(dateFormat));
     }

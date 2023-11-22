@@ -232,6 +232,7 @@
 .gd-attribute-filter-dropdown-button-title__next {
     overflow: hidden;
     color: variables.$gd-color-link;
+    margin-right: auto;
 
     .gd-bubble-trigger,
     .shortened {
@@ -378,5 +379,27 @@
         font-weight: normal;
         text-transform: uppercase;
         color: variables.$gd-color-state-blank;
+    }
+}
+
+.gd-attribute-filter__next {
+    .gd-attribute-filter-dropdown-button__next.disabled {
+        &:hover,
+        &:focus,
+        &:active,
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            cursor: default;
+            user-select: auto;
+            box-shadow: none;
+            background: transparent;
+            border-color: transparent;
+            text-decoration: none;
+        }
+
+        .gd-attribute-filter-dropdown-button-subtitle__next::after {
+            content: none;
+        }
     }
 }

@@ -99,13 +99,14 @@ function isTransposed(config: IPivotTableConfig) {
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 
 const validateConfig = (props: IPivotTableProps): IPivotTableConfig => {
-    const { rows, config = {} } = props;
+    const { rows, columns, config = {} } = props;
     if (config.columnHeadersPosition === "left") {
-        if (!rows && config.measureGroupDimension === "rows") {
+        const hasColumns = columns && columns.length > 0;
+        if (!rows && hasColumns && config.measureGroupDimension === "rows") {
             return config;
         } else {
             console.warn(
-                "Invalid table configuration. `columnHeadersPosition: left` requires metrics in rows and no row attributes defined",
+                "Invalid table configuration. `columnHeadersPosition: left` requires metrics in rows, no row attributes and at least one column attribute defined.",
             );
             return {
                 ...config,

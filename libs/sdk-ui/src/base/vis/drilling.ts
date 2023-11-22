@@ -35,7 +35,9 @@ export function isSomeHeaderPredicateMatched(
 }
 
 /**
- * @internal
+ *
+ *
+ * @public
  */
 export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[] {
     return drillableItems.map((drillableItem: ExplicitDrill) => {

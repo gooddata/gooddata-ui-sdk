@@ -6,6 +6,7 @@ import {
     IInsight,
     IInsightDefinition,
     ISettings,
+    ITheme,
 } from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor.js";
 import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization.js";
@@ -80,6 +81,12 @@ export interface IEmbeddingCodeContext {
      * If not provided, the default color palette will be used.
      */
     colorPalette?: IColorPalette;
+
+    /**
+     * Theme settings.
+     * If not provided, it is implicitly assumed that the theme is empty.
+     */
+    theme?: ITheme;
 
     /**
      * The execution config to use for the component. If not specified, no explicit execution config will be used.

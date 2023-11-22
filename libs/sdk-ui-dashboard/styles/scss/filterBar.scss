@@ -20,6 +20,13 @@ $attribute-filter-drag-handle-left: 10px;
         display: block;
         transform: translateX(-50%);
     }
+
+    .gd-filter-button-custom-icon-wrapper {
+        .gd-icon-invisible {
+            display: flex;
+            padding-top: 2px;
+        }
+    }
 }
 
 .gd-dash-header-wrapper {
@@ -430,5 +437,12 @@ $attribute-filter-drag-handle-left: 10px;
             vertical-align: middle;
             color: kit-variables.$gd-color-warning-text;
         }
+    }
+}
+
+.gd-bubble {
+    &.gd-filter-button-custom-icon-bubble,
+    &.gd-filter-configuration-mode-item-bubble {
+        max-width: 209px;
     }
 }

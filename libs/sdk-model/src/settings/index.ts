@@ -304,6 +304,21 @@ export interface ISettings {
      */
     enableAttributeHierarchies?: boolean;
 
+    /**
+     * Enable new max bucket size items limit for Pivot Table
+     */
+    enablePivotTableIncreaseBucketSize?: boolean;
+
+    /**
+     * Enable user management page in Home UI.
+     */
+    enableUserManagement?: boolean;
+
+    /**
+     * Enable new dependent filters in KD
+     */
+    enableKDDependentFilters?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

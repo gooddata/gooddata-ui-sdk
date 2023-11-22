@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { getFactory as createSdk, SDK } from "@gooddata/api-client-bear";
+import { getFactory as createSdk, SDK, CachingConfiguration, withCaching } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -90,6 +90,13 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsShowAllAttributeValues: false,
     supportsSeparateLatitudeLongitudeLabels: false,
     supportsEnumeratingDatetimeAttributes: true,
+    supportsHiddenAndLockedFiltersOnUI: false,
+    supportsAttributeHierarchies: false,
+    supportsSettingConnectingAttributes: true,
+    supportsKeepingDependentFiltersSelection: false,
+    supportsCircularDependencyInFilters: false,
+    allowMultipleInteractionsPerAttributeAndMeasure: false,
+    supportsShowingFilteredElements: false,
 };
 
 /**
@@ -137,14 +144,18 @@ type BearLegacyFunctions = {
     getObjectsByUri?(workspace: string, uris: string[]): Promise<WrappedObject[]>;
     getVisualizationObject?(workspace: string, uri: string): Promise<IVisualization>;
     getUISettings?(): Promise<{ settings: IUISettings }>;
-    isDomainAdmin?(domainUri: string): Promise<boolean>;
 };
 
 /**
  * Provides a way for the BearBackend to expose some of its backend specific functions.
  */
 type LegacyFunctionsSubscription = {
+    /**
+     * @deprecated Use onLegacyCallbacksReady instead
+     * @param functions - backend specific functions to propagate
+     */
     onLegacyFunctionsReady?(functions: BearLegacyFunctions): void;
+    onLegacyCallbacksReady?(functions: BearLegacyFunctions): void;
 };
 
 /**
@@ -160,6 +171,16 @@ type LegacySetup = {
 type FactoryFunction = {
     factory?: (config?: any) => SDK;
 };
+
+type ClientCachingConfiguration = {
+    cachingConfiguration?: CachingConfiguration;
+};
+
+type BearImplConfig = BearBackendConfig &
+    LegacyFunctionsSubscription &
+    FactoryFunction &
+    LegacySetup &
+    ClientCachingConfiguration;
 
 /**
  * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
@@ -183,7 +204,7 @@ export class BearBackend implements IAnalyticalBackend {
     public readonly config: IAnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
-    private readonly implConfig: any;
+    private readonly implConfig: BearImplConfig;
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly sdk: SDK;
 
@@ -192,7 +213,7 @@ export class BearBackend implements IAnalyticalBackend {
 
     constructor(
         config?: IAnalyticalBackendConfig,
-        implConfig?: BearBackendConfig & LegacyFunctionsSubscription & FactoryFunction & LegacySetup,
+        implConfig?: BearImplConfig,
         telemetry?: TelemetryData,
         authProvider?: IAuthProviderCallGuard,
     ) {
@@ -277,23 +298,6 @@ export class BearBackend implements IAnalyticalBackend {
                     return this.sdk.xhr
                         .get("/gdc/account/organization/settings")
                         .then((response: any) => response.getData());
-                },
-
-                isDomainAdmin: (domainUri: string): Promise<boolean> => {
-                    return this.authApiCall((sdk) => {
-                        return sdk.xhr
-                            .get(`${domainUri}/config`)
-                            .then((_: any) => true)
-                            .catch((error: any) => {
-                                if (isApiResponseError(error)) {
-                                    // when user _is not_ domain admin, then attempting to retrieve domain config
-                                    // will fail fast with 403
-                                    return error.response.status !== 403;
-                                }
-
-                                return true;
-                            });
-                    });
                 },
             };
 
@@ -488,7 +492,7 @@ function telemetrySanitize(telemetry?: TelemetryData): TelemetryData {
 
 function newSdkInstance(
     config: IAnalyticalBackendConfig,
-    implConfig: BearBackendConfig & FactoryFunction,
+    implConfig: BearImplConfig,
     telemetry: TelemetryData,
 ): SDK {
     const sdk = implConfig.factory ? implConfig.factory() : createSdk();
@@ -509,6 +513,12 @@ function newSdkInstance(
         if (telemetry.props && !isEmpty(telemetry.props)) {
             sdk.config.setRequestHeader("X-GDC-JS-SDK-COMP-PROPS", telemetry.props.join(","));
         }
+    }
+
+    if (implConfig.cachingConfiguration) {
+        return withCaching(sdk, {
+            ...implConfig.cachingConfiguration,
+        });
     }
 
     return sdk;

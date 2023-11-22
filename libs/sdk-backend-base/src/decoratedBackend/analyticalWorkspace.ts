@@ -1,0 +1,136 @@
+// (C) 2023 GoodData Corporation
+import {
+    IAnalyticalWorkspace,
+    IExecutionFactory,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
+    IWorkspaceInsightsService,
+    IWorkspaceAttributesService,
+    IWorkspaceFactsService,
+    IWorkspaceMeasuresService,
+    IWorkspacePermissionsService,
+    IWorkspaceSettingsService,
+    IWorkspaceStylingService,
+    IWorkspaceDashboardsService,
+    IWorkspaceUsersQuery,
+    IDateFilterConfigsQuery,
+    IWorkspaceDescriptor,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceAccessControlService,
+    IAttributeHierarchiesService,
+} from "@gooddata/sdk-backend-spi";
+import { DecoratorFactories } from "./types.js";
+
+export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
+    public workspace: string;
+    private decorated: IAnalyticalWorkspace;
+    private readonly factories: DecoratorFactories;
+
+    constructor(decorated: IAnalyticalWorkspace, factories: DecoratorFactories) {
+        this.decorated = decorated;
+        this.factories = factories;
+        this.workspace = decorated.workspace;
+    }
+
+    public getDescriptor(): Promise<IWorkspaceDescriptor> {
+        return this.decorated.getDescriptor();
+    }
+
+    public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+        return this.decorated.getParentWorkspace();
+    }
+
+    public attributes(): IWorkspaceAttributesService {
+        const { attributes } = this.factories;
+
+        if (attributes) {
+            return attributes(this.decorated.attributes(), this.workspace);
+        }
+
+        return this.decorated.attributes();
+    }
+
+    public execution(): IExecutionFactory {
+        const { execution } = this.factories;
+
+        if (execution) {
+            return execution(this.decorated.execution());
+        }
+
+        return this.decorated.execution();
+    }
+
+    public catalog(): IWorkspaceCatalogFactory {
+        const { catalog } = this.factories;
+
+        if (catalog) {
+            return catalog(this.decorated.catalog());
+        }
+
+        return this.decorated.catalog();
+    }
+
+    public measures(): IWorkspaceMeasuresService {
+        return this.decorated.measures();
+    }
+
+    public facts(): IWorkspaceFactsService {
+        return this.decorated.facts();
+    }
+
+    public insights(): IWorkspaceInsightsService {
+        return this.decorated.insights();
+    }
+
+    public dashboards(): IWorkspaceDashboardsService {
+        const { dashboards } = this.factories;
+
+        if (dashboards) {
+            return dashboards(this.decorated.dashboards(), this.workspace);
+        }
+
+        return this.decorated.dashboards();
+    }
+
+    public settings(): IWorkspaceSettingsService {
+        const { workspaceSettings } = this.factories;
+
+        if (workspaceSettings) {
+            return workspaceSettings(this.decorated.settings(), this.workspace);
+        }
+
+        return this.decorated.settings();
+    }
+
+    public styling(): IWorkspaceStylingService {
+        return this.decorated.styling();
+    }
+
+    public datasets(): IWorkspaceDatasetsService {
+        return this.decorated.datasets();
+    }
+
+    public permissions(): IWorkspacePermissionsService {
+        return this.decorated.permissions();
+    }
+
+    public users(): IWorkspaceUsersQuery {
+        return this.decorated.users();
+    }
+
+    public dateFilterConfigs(): IDateFilterConfigsQuery {
+        return this.decorated.dateFilterConfigs();
+    }
+
+    public userGroups(): IWorkspaceUserGroupsQuery {
+        return this.decorated.userGroups();
+    }
+
+    public accessControl(): IWorkspaceAccessControlService {
+        return this.decorated.accessControl();
+    }
+
+    public attributeHierarchies(): IAttributeHierarchiesService {
+        return this.decorated.attributeHierarchies();
+    }
+}

@@ -32,7 +32,7 @@ GoodData.UI excells at creating Visualizations and Embedding, but can also help 
 
 ![Embedding Methods Overview](intro-embedding-methods.png)
 
-{{% alert color="info" title="Embedding Without GoodData.UI?" %}}It is possible to add GoodData dashboards to your website using iframes, without the need to utilize the GoodData.UI library. See [Embed Visualizations Using Iframes](https://www.gooddata.com/developers/cloud-native/doc/cloud/embed-visualizations/iframes/) in the GoodData Cloud documentation for more information. Keep in mind that only GoodData.UI allows for the embedding of individual visualizations.
+{{% alert color="info" title="Embedding Without GoodData.UI?" %}}It is possible to add GoodData dashboards to your website using iframes, without the need to utilize the GoodData.UI library. See [Embed Visualizations Using Iframes](https://www.gooddata.com/docs/cloud/embed-visualizations/iframes/) in the GoodData Cloud documentation for more information. Keep in mind that only GoodData.UI allows for the embedding of individual visualizations.
 {{% /alert %}}
 
 ## Web Components
@@ -130,7 +130,7 @@ See [Start with Visual Components](../references/visual_components) to get start
 
 You can also create entirely new components and visualizations from scratch. We recommend you check out [our example gallery](https://gdui-examples.herokuapp.com/advanced/global-filters) for live examples of what is possible to do with the GoodData.UI.
 
-{{% alert color="info" title="Tip on Getting Started with React Components" %}} GoodData lets you copy and paste automatically generated React code snippets directly from the web interface. It's a great way to get started with the GoodData.UI framework. See [Embed Visualizations Using React SDK](https://www.gooddata.com/developers/cloud-native/doc/cloud/embed-visualizations/react-sdk/) in the GoodData Cloud documentation to get started.
+{{% alert color="info" title="Tip on Getting Started with React Components" %}} GoodData lets you copy and paste automatically generated React code snippets directly from the web interface. It's a great way to get started with the GoodData.UI framework. See [Embed Visualizations Using React SDK](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/) in the GoodData Cloud documentation to get started.
 {{% /alert %}}
 
 ## REST API Clients

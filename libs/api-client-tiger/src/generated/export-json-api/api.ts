@@ -42,17 +42,17 @@ export interface CustomLabel {
  */
 export interface CustomMetric {
     /**
-     * Metric title override.
-     * @type {string}
-     * @memberof CustomMetric
-     */
-    title: string;
-    /**
      * Format override.
      * @type {string}
      * @memberof CustomMetric
      */
     format: string;
+    /**
+     * Metric title override.
+     * @type {string}
+     * @memberof CustomMetric
+     */
+    title: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
@@ -93,17 +93,17 @@ export interface ExportResponse {
  */
 export interface PdfExportRequest {
     /**
-     * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof PdfExportRequest
-     */
-    fileName: string;
-    /**
      * Dashboard identifier
      * @type {string}
      * @memberof PdfExportRequest
      */
     dashboardId: string;
+    /**
+     * File name to be used for retrieving the pdf document.
+     * @type {string}
+     * @memberof PdfExportRequest
+     */
+    fileName: string;
     /**
      * Metadata definition in open form JSON format.
      * @type {object}
@@ -137,11 +137,11 @@ export interface Settings {
  */
 export interface TabularExportRequest {
     /**
-     * Expected file format.
-     * @type {string}
+     *
+     * @type {CustomOverride}
      * @memberof TabularExportRequest
      */
-    format: TabularExportRequestFormatEnum;
+    customOverride?: CustomOverride;
     /**
      * Execution result identifier.
      * @type {string}
@@ -155,17 +155,17 @@ export interface TabularExportRequest {
      */
     fileName: string;
     /**
+     * Expected file format.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    format: TabularExportRequestFormatEnum;
+    /**
      *
      * @type {Settings}
      * @memberof TabularExportRequest
      */
     settings?: Settings;
-    /**
-     *
-     * @type {CustomOverride}
-     * @memberof TabularExportRequest
-     */
-    customOverride?: CustomOverride;
 }
 
 export const TabularExportRequestFormatEnum = {

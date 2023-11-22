@@ -114,6 +114,14 @@ describe("measure factories", () => {
         it("should return a simple arithmetic measure from two measure objects", () => {
             expect(newVirtualArithmeticMeasure([Won, Velocity.Min], "sum")).toMatchSnapshot();
         });
+
+        it("should combine local id with operator", () => {
+            expect(
+                newVirtualArithmeticMeasure([Won, Velocity.Min], "sum", (builder) =>
+                    builder.combineLocalIdWithOperator(),
+                ),
+            ).toMatchSnapshot();
+        });
     });
 
     describe("newPopMeasure", () => {

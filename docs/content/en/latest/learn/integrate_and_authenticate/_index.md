@@ -28,7 +28,7 @@ You might be interested in:
 
 ### GoodData.CN and Cloud authentication
 
-The [GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/developers/cloud-native/doc/cloud/deploy-and-install/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication or [JWT authentication](https://jwt.io/introduction) for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns. 
+The [GoodData.CN](https://www.gooddata.com/docs/cloud/deploy-and-install/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/docs/cloud/deploy-and-install/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication or [JWT authentication](https://jwt.io/introduction) for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns. 
 
 Context deferred authentication is designed for use with SSO providers in UI applications and resolves authentication exceptions accordingly. Functions like `createTigerAuthenticationUrl`, `createTigerDeauthenticationUrl`, and `redirectToTigerAuthentication` are provided to assist in the authentication process.
 
@@ -44,7 +44,7 @@ Two recommended methods when dealing with Cross-Origin Resource Sharing (CORS):
 
 To use a proxy, create and configure a `setupProxy.js` file in your project's `/src` directory. This method bypasses CORS restrictions for a trusted application on a local dev machine.
 
-To enable CORS, you will need to get a [white-labeled GoodData domain](https://www.gooddata.com/developers/cloud-native/doc/cloud/customize-appearance/white-label-your-organization/) and configure CORS by listing the domains from which you want to enable API calls as allowed origins. Configure allowed origins using the API for adding domains allowed for CORS access.
+To enable CORS, you will need to get a [white-labeled GoodData domain](https://www.gooddata.com/docs/cloud/customize-appearance/white-label-your-organization/) and configure CORS by listing the domains from which you want to enable API calls as allowed origins. Configure allowed origins using the API for adding domains allowed for CORS access.
 
 To learn more about dealing with cross-origin issues, read the [Deal with Cross-Origin Issues](./cross_origin_issues/) article.
 

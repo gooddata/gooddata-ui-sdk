@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { IColorPalette, IExecutionConfig, IInsight } from "@gooddata/sdk-model";
+import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
 import {
     EmbedInsightDialogBase,
     InsightCodeType,
@@ -36,6 +36,7 @@ export interface IEmbedInsightDialogProps {
     saveInsightDocLink?: string;
     settings?: IUserWorkspaceSettings;
     colorPalette?: IColorPalette;
+    theme?: ITheme;
     executionConfig?: IExecutionConfig;
     workspaceId?: string;
     showWebComponentsTab?: boolean;
@@ -88,6 +89,7 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
         backend,
         settings,
         colorPalette,
+        theme,
         executionConfig,
         reactIntegrationDocLink,
         webComponentIntegrationDocLink,
@@ -111,6 +113,7 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
             settings,
             backend,
             colorPalette,
+            theme,
             executionConfig,
             workspaceId,
         };
@@ -123,7 +126,7 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
                   ...inputBase,
                   codeOption,
               });
-    }, [codeOption, insight, settings, backend, colorPalette, executionConfig, workspaceId]);
+    }, [codeOption, insight, settings, backend, colorPalette, theme, executionConfig, workspaceId]);
 
     const documentationLink = useMemo(() => {
         if (codeOption.type === "react") {
@@ -173,18 +176,20 @@ interface ICodeGenInput<TOptions extends EmbedOptionsType> {
     settings: IUserWorkspaceSettings;
     backend: IAnalyticalBackend;
     colorPalette: IColorPalette;
+    theme: ITheme;
     executionConfig: IExecutionConfig | undefined;
     workspaceId?: string;
 }
 
 const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
-    const { backend, codeOption, colorPalette, executionConfig, insight, settings } = input;
+    const { backend, codeOption, colorPalette, theme, executionConfig, insight, settings } = input;
     const height = getHeightWithUnitsForEmbedCode(codeOption);
     const generateCodeConfig = {
         context: {
             settings,
             backend,
             colorPalette,
+            theme,
             executionConfig,
         },
         language: codeOption.codeType,

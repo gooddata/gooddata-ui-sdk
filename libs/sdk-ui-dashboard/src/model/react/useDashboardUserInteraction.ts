@@ -1,6 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import { useCallback } from "react";
 import {
+    AttributeFilterInteractionType,
     DescriptionTooltipOpenedData,
     ShareDialogInteractionData,
     userInteractionTriggered,
@@ -53,9 +54,12 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
-    const attributeFilterTitleResetClicked = useCallback(() => {
-        eventDispatch(userInteractionTriggered("attributeFilterTitleResetClicked"));
-    }, []);
+    const attributeFilterInteraction = useCallback(
+        (eventType: AttributeFilterInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
 
     return {
         poweredByGDLogoClicked,
@@ -63,6 +67,6 @@ export const useDashboardUserInteraction = () => {
         kpiAlertDialogOpened,
         descriptionTooltipOpened,
         shareDialogInteraction,
-        attributeFilterTitleResetClicked,
+        attributeFilterInteraction,
     };
 };

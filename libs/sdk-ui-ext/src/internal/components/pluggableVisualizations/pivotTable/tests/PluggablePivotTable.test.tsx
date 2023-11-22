@@ -62,6 +62,7 @@ describe("PluggablePivotTable", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
         callbacks: {
             afterRender: noop,
             pushData: noop,
@@ -221,6 +222,66 @@ describe("PluggablePivotTable", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
+            });
+
+            it("should return reference point with new bucket max size", async () => {
+                const pivotTable = createComponent({
+                    ...defaultProps,
+                    featureFlags: {
+                        enablePivotTableIncreaseBucketSize: true,
+                    },
+                });
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    referencePointMocks.tableWithMultipleMeasuresRowsAndColumns,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when derived measures present", async () => {
+                const pivotTable = createComponent({
+                    ...defaultProps,
+                    featureFlags: {
+                        enablePivotTableIncreaseBucketSize: true,
+                    },
+                });
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    referencePointMocks.tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when measures/attributes limit is reached with no columns", async () => {
+                const pivotTable = createComponent({
+                    ...defaultProps,
+                    featureFlags: {
+                        enablePivotTableIncreaseBucketSize: true,
+                    },
+                });
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    referencePointMocks.tableWith20MeasuresAndAttributesAndNoColumn,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
+            });
+
+            it("should return reference point with new bucket max size, when measures/attributes limit is reached with columns", async () => {
+                const pivotTable = createComponent({
+                    ...defaultProps,
+                    featureFlags: {
+                        enablePivotTableIncreaseBucketSize: true,
+                    },
+                });
+
+                const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
+                    referencePointMocks.tableWith20MeasuresAndAttributesAnd1Column,
+                );
+
+                expect(extendedReferencePoint).toMatchSnapshot();
             });
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {

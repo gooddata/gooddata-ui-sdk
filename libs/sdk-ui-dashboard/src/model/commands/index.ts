@@ -9,6 +9,8 @@ import {
     ExportDashboardToPdf,
     DeleteDashboard,
     ChangeSharing,
+    SetDashboardDateFilterConfigMode,
+    SetDashboardAttributeFilterConfigMode,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -35,6 +37,8 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    RemoveDrillDownForInsightWidget,
+    AddDrillDownForInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -104,6 +108,12 @@ export {
     ChangeSharing,
     ChangeSharingPayload,
     changeSharing,
+    SetDashboardDateFilterConfigMode,
+    SetDashboardDateFilterConfigModePayload,
+    setDashboardDateFilterConfigMode,
+    SetDashboardAttributeFilterConfigMode,
+    setDashboardAttributeFilterConfigMode,
+    SetDashboardAttributeFilterConfigModePayload,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -320,6 +330,12 @@ export {
     RemoveDrillsForInsightWidget,
     RemoveDrillsForInsightWidgetPayload,
     removeDrillsForInsightWidget,
+    RemoveDrillDownForInsightWidget,
+    RemoveDrillDownForInsightWidgetPayload,
+    removeDrillDownForInsightWidget,
+    AddDrillDownForInsightWidget,
+    AddDrillDownForInsightWidgetPayload,
+    addDrillDownForInsightWidget,
     RemoveDrillsSelector,
     RefreshInsightWidget,
     RefreshInsightWidgetPayload,
@@ -432,5 +448,9 @@ export type DashboardCommands =
     | DrillToLegacyDashboard
     | ChangeDrillableItems
     | AddDrillTargets
+    | SetDashboardDateFilterConfigMode
+    | SetDashboardAttributeFilterConfigMode
+    | RemoveDrillDownForInsightWidget
+    | AddDrillDownForInsightWidget
     // fast track
     | PredictionResult;

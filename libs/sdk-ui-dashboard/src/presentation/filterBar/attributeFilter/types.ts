@@ -33,6 +33,13 @@ export interface IDashboardAttributeFilterProps {
      * Specify whether should render filter with open dropdown
      */
     autoOpen?: boolean;
+
+    /**
+     * Specify whether the filter should be readonly.
+     *
+     * @alpha
+     */
+    readonly?: boolean;
 }
 
 /**

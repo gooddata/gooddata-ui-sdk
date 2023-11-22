@@ -14,6 +14,7 @@ import {
     convertUserGroupAssignee,
     convertUserPermission,
     convertUserGroupPermission,
+    convertRulesPermission,
 } from "../../../convertors/fromBackend/AccessControlConverter.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
@@ -29,6 +30,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         });
 
         return [
+            ...permissions.rules.map(convertRulesPermission),
             ...permissions.users.map(convertUserPermission),
             ...permissions.userGroups.map(convertUserGroupPermission),
         ];
@@ -50,15 +52,25 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
     public async changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const permissionsForAssignee = await Promise.all(
-            grantees.map(async (grantee) => ({
-                assigneeIdentifier: {
-                    id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
-                    type: isGranularUserAccessGrantee(grantee)
-                        ? AssigneeIdentifierTypeEnum.USER
-                        : AssigneeIdentifierTypeEnum.USER_GROUP,
-                },
-                permissions: grantee.permissions,
-            })),
+            grantees.map(async (grantee) => {
+                if (grantee.type === "allWorkspaceUsers") {
+                    return {
+                        assigneeRule: {
+                            type: grantee.type,
+                        },
+                        permissions: grantee.permissions,
+                    };
+                }
+                return {
+                    assigneeIdentifier: {
+                        id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
+                        type: isGranularUserAccessGrantee(grantee)
+                            ? AssigneeIdentifierTypeEnum.USER
+                            : AssigneeIdentifierTypeEnum.USER_GROUP,
+                    },
+                    permissions: grantee.permissions,
+                };
+            }),
         );
 
         await this.authCall((client) => {
@@ -66,7 +78,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
                 .manageDashboardPermissions({
                     workspaceId: this.workspace,
                     dashboardId: objectId,
-                    permissionsForAssignee,
+                    permissionsForAssigneePermissionsForAssigneeRule: permissionsForAssignee,
                 })
                 .then((result) => result.data);
         });

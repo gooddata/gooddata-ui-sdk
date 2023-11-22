@@ -231,18 +231,33 @@ export function* getInsightIdentifiersReplacements(
     );
 
     const replacements = [
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.PROJECT_ID, workspace),
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID, workspace),
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID, dashboardId),
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.CLIENT_ID, clientId),
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID, dataProductId),
-        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.INSIGHT_ID, insightId(insight!)),
+        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID, workspace),
+        createIdentifierReplacement(
+            DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID,
+            workspace,
+        ),
+        createIdentifierReplacement(
+            DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID,
+            dashboardId,
+        ),
+        createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID, clientId),
+        createIdentifierReplacement(
+            DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID,
+            dataProductId,
+        ),
+        createIdentifierReplacement(
+            DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID,
+            insightId(insight!),
+        ),
     ];
 
-    if (customUrl.includes(DRILL_TO_URL_PLACEHOLDER.WIDGET_ID)) {
+    if (customUrl.includes(DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID)) {
         return [
             ...replacements,
-            createIdentifierReplacement(DRILL_TO_URL_PLACEHOLDER.WIDGET_ID, widget.identifier),
+            createIdentifierReplacement(
+                DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID,
+                widget.identifier,
+            ),
         ];
     }
 

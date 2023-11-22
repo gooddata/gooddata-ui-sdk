@@ -66,6 +66,7 @@ import {
     getTotalsFromBucket,
     removeDuplicateBucketItems,
     sanitizeFilters,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
 import {
@@ -80,6 +81,7 @@ import {
 import {
     getPivotTableDefaultUiConfig,
     setPivotTableUiConfig,
+    getPivotTableMeasuresLimit,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
@@ -199,7 +201,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         };
 
         const buckets = newReferencePoint.buckets;
-        const measures = getAllItemsByType(buckets, [METRIC]);
+
+        const limit = getPivotTableMeasuresLimit(this.settings, buckets);
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, limit, true);
+        const measures = getAllItemsByType(limitedBuckets, [METRIC]);
         const rowAttributes = getRowAttributes(buckets);
         const previousRowAttributes =
             previousReferencePoint && getRowAttributes(previousReferencePoint.buckets);
@@ -525,6 +530,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 : properties;
 
             if (tableTranspositionEnabled(this.settings)) {
+                const panelConfig = {
+                    supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                };
+
                 this.renderFun(
                     <PivotTableConfigurationPanel
                         locale={this.locale}
@@ -535,6 +544,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         isError={this.getIsError()}
                         isLoading={this.isLoading}
                         featureFlags={this.settings}
+                        panelConfig={panelConfig}
                     />,
                     configPanelElement,
                 );

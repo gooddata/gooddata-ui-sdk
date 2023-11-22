@@ -28,6 +28,7 @@ import {
     IDrillToLegacyDashboard,
     IInsightWidgetConfiguration,
     IKpiWidgetConfiguration,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -421,6 +422,29 @@ const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state,
 //
 //
 
+type ReplaceWidgetBlacklistHierarchies = {
+    ref: ObjRef;
+    blacklistHierarchies: IDrillDownReference[];
+};
+
+const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHierarchies> = (
+    state,
+    action,
+) => {
+    invariant(state.layout);
+
+    const { blacklistHierarchies, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.ignoredDrillDownHierarchies = blacklistHierarchies ?? [];
+};
+
+//
+//
+//
+
 type ReplaceWidgetVisProperties = {
     ref: ObjRef;
     properties: VisualizationProperties | undefined;
@@ -668,6 +692,7 @@ export const layoutReducers = {
     replaceWidgetDescription: withUndo(replaceWidgetDescription),
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
+    replaceWidgetBlacklistHierarchies: withUndo(replaceWidgetBlacklistHierarchies),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
     replaceInsightWidgetInsight: withUndo(replaceInsightWidgetInsight),

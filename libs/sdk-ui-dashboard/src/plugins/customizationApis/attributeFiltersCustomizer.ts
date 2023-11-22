@@ -1,12 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
+import union from "lodash/union.js";
+import { InvariantError } from "ts-invariant";
+
 import { IAttributeFiltersCustomizer } from "../customizer.js";
 import {
     AttributeFilterComponentProvider,
     DefaultDashboardAttributeFilter,
     OptionalAttributeFilterComponentProvider,
 } from "../../presentation/index.js";
-import { InvariantError } from "ts-invariant";
+
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 
 const DefaultAttributeFilterRendererProvider: AttributeFilterComponentProvider = () => {
     return DefaultDashboardAttributeFilter;
@@ -124,20 +128,50 @@ class SealedAttributeFiltersCustomizerState implements IAttributeFiltersCustomiz
  */
 export class DefaultAttributeFiltersCustomizer implements IAttributeFiltersCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
+    private readonly mutationContext: CustomizerMutationsContext;
     private state: IAttributeFiltersCustomizerState;
 
     constructor(
         logger: IDashboardCustomizationLogger,
+        mutationContext: CustomizerMutationsContext,
         defaultProvider: AttributeFilterComponentProvider = DefaultAttributeFilterRendererProvider,
     ) {
         this.logger = logger;
+        this.mutationContext = mutationContext;
         this.state = new DefaultAttributeFiltersCustomizerState(defaultProvider);
     }
 
-    public withCustomProvider = (
-        provider: OptionalAttributeFilterComponentProvider,
-    ): IAttributeFiltersCustomizer => {
+    public withCustomProvider = (provider: OptionalAttributeFilterComponentProvider): this => {
         this.state.addCustomProvider(provider);
+        this.mutationContext.attributeFilter = union(this.mutationContext.attributeFilter, ["provider"]);
+
+        return this;
+    };
+
+    public withCustomDecorator = (
+        providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider,
+    ): this => {
+        // snapshot current root provider
+        const rootSnapshot = this.state.getRootProvider();
+        // call user's factory in order to obtain the actual provider - pass the current root so that user's
+        // code can use it to obtain component to decorate
+        const decoratorProvider = providerFactory(rootSnapshot);
+        // construct new root provider; this will be using user's provider with a fallback to root provider
+        // in case user's code does not return anything
+        const newRootProvider: AttributeFilterComponentProvider = (filter) => {
+            const Component = decoratorProvider(filter);
+
+            if (Component) {
+                return Component;
+            }
+
+            return rootSnapshot(filter);
+        };
+
+        // finally modify the root provider; next time someone registers decorator, it will be on top of
+        // this currently registered one
+        this.state.switchRootProvider(newRootProvider);
+        this.mutationContext.attributeFilter = union(this.mutationContext.attributeFilter, ["decorator"]);
 
         return this;
     };

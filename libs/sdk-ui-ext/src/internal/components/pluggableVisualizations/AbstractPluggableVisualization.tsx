@@ -53,6 +53,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * every call to {@link update} and will remain the same until the next update() call.
      */
     protected currentInsight: IInsightDefinition;
+    protected currentOptions: IVisProps;
     protected visualizationProperties: IVisualizationProperties;
     protected supportedPropertiesList: string[];
     protected propertiesMeta: any;
@@ -169,7 +170,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             this.renderVisualization(options, insight, executionFactory);
         }
 
-        this.renderConfigurationPanel(insight);
+        this.renderConfigurationPanel(insight, options);
     }
 
     /**
@@ -194,7 +195,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @param insight - insight that is about to be rendered
      */
     protected updateInstanceProperties(
-        // @ts-expect-error Ignoring here so that the JSDoc has the proper name (not _options)
         options: IVisProps,
         insight: IInsightDefinition,
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -206,6 +206,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         );
         this.propertiesMeta = insightPropertiesMeta ?? null;
         this.currentInsight = insight;
+        this.currentOptions = options;
     }
 
     /**
@@ -243,8 +244,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * are stored in {@link visualizationProperties}.
      *
      * @param insight - insight that is rendered
+     * @param options - visualization options to use
      */
-    protected abstract renderConfigurationPanel(insight: IInsightDefinition): void;
+    protected abstract renderConfigurationPanel(insight: IInsightDefinition, options?: IVisProps): void;
 
     //
     // Callback delegates
@@ -259,7 +261,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             this.hasError = true;
         }
 
-        this.renderConfigurationPanel(this.currentInsight);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
     };
 
     protected onLoadingChanged = (loadingState: ILoadingState): void => {
@@ -267,7 +269,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
         this.hasError = false;
         this.isLoading = loadingState.isLoading;
-        this.renderConfigurationPanel(this.currentInsight);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
     };
 
     protected onExportReady = (exportResult: IExportFunction): void => {

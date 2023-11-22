@@ -17,6 +17,7 @@ import {
     userAccessGrantee,
     workspaceUser,
     defaultUser,
+    granularRule,
 } from "../ShareDialogBase/test/GranteeMock.js";
 import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types.js";
 import { GranteeGroupAll } from "../ShareDialogBase/utils.js";
@@ -178,6 +179,21 @@ describe("shareDialogMappers", () => {
                 Array<GranteeItem>(groupAll),
                 "public",
             ],
+
+            [
+                "Granular rule is removed",
+                Array<GranteeItem>(user),
+                Array<GranteeItem>(user),
+                Array<GranteeItem>(granularRule),
+                "shared",
+            ],
+            [
+                "Granular all is added",
+                Array<GranteeItem>(granularRule),
+                Array<GranteeItem>(user),
+                Array<GranteeItem>(user),
+                "public",
+            ],
         ])(
             "should return correct final status when %s",
             (
@@ -290,6 +306,33 @@ describe("shareDialogMappers", () => {
                 },
             ];
             expect(mapGranteesToGranularAccessGrantees(granularGrantees)).toEqual(accessGrantees);
+        });
+
+        it("should return correctly mapped granular grantees and rules to granular access grantees", () => {
+            const granteesAndRules = [...granularGrantees, granularRule];
+            const accessGrantees: IGranularAccessGrantee[] = [
+                {
+                    granteeRef: uriRef("userID1"),
+                    type: "granularUser",
+                    permissions: ["VIEW"],
+                    inheritedPermissions: ["SHARE"],
+                },
+                {
+                    granteeRef: uriRef("groupId"),
+                    type: "granularGroup",
+                    permissions: ["EDIT"],
+                    inheritedPermissions: [],
+                },
+                {
+                    granteeRef: {
+                        identifier: "allWorkspaceUsers",
+                    },
+                    type: "allWorkspaceUsers",
+                    permissions: ["EDIT"],
+                    inheritedPermissions: [],
+                } as any,
+            ];
+            expect(mapGranteesToGranularAccessGrantees(granteesAndRules)).toEqual(accessGrantees);
         });
     });
 

@@ -1,31 +1,18 @@
 // (C) 2023 GoodData Corporation
-import React, { CSSProperties, useMemo } from "react";
-import cx from "classnames";
+import React, { CSSProperties } from "react";
 
-import { getDrillableClasses } from "../../utils/HeadlineDataItemUtils.js";
-import { IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionProps {
-    primaryItem: IBaseHeadlineItem;
+    primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
     customStyle?: CSSProperties;
 }
 
 const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryItem, customStyle }) => {
     const BaseHeadlineDataItem = primaryItem.baseHeadlineDataItemComponent;
 
-    const classNames = useMemo(
-        () =>
-            cx([
-                "gd-flex-item",
-                "headline-primary-item",
-                "s-headline-primary-item",
-                ...getDrillableClasses(primaryItem?.data?.isDrillable),
-            ]),
-        [primaryItem],
-    );
-
     return (
-        <div className={classNames} style={customStyle}>
+        <div className="gd-flex-item headline-primary-item s-headline-primary-item" style={customStyle}>
             <BaseHeadlineDataItem
                 dataItem={primaryItem.data}
                 evaluationType={primaryItem.evaluationType}

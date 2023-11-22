@@ -35,6 +35,7 @@ import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
 import { changeRenderMode } from "../../commands/index.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -96,6 +97,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,
     );
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
 
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
@@ -112,6 +116,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         },
         layout,
         dateFilterConfig,
+        ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};

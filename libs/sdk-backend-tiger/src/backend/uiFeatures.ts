@@ -46,15 +46,17 @@ export enum TigerFeaturesNames {
     EnableTableTotalRows = "enableTableTotalRows",
     //boolean + possible values: enabled, disabled
     EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
-    //boolean + possible values: enabled, disabled
-    EnablePivotTableTransposition = "enablePivotTableTransposition",
-    //boolean + possible values: enabled, disabled
-    EnableColumnHeadersPosition = "enableColumnHeadersPosition",
     EnableNewHeadline = "enableNewHeadline",
     //boolean + possible values: enabled, disabled
     EnableAttributeHierarchies = "enableAttributeHierarchies",
     //boolean + possible values: enabled, disabled
     EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
+    //boolean + possible values: enabled, disabled
+    EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
+    // boolean + possible values: enabled, disabled
+    EnableUserManagement = "enableUserManagement",
+    //boolean + possible values: enabled, disabled
+    EnableKDDependentFilters = "enableKDDependentFilters",
 }
 
 export type ITigerFeatureFlags = {
@@ -77,11 +79,12 @@ export type ITigerFeatureFlags = {
     enableCompositeGrain: typeof FeatureFlagsValues["enableCompositeGrain"][number];
     enableTableTotalRows: typeof FeatureFlagsValues["enableTableTotalRows"][number];
     enablePdmRemovalDeprecationPhase: typeof FeatureFlagsValues["enablePdmRemovalDeprecationPhase"][number];
-    enablePivotTableTransposition: typeof FeatureFlagsValues["enablePivotTableTransposition"][number];
-    enableColumnHeadersPosition: typeof FeatureFlagsValues["enableColumnHeadersPosition"][number];
     enableNewHeadline: typeof FeatureFlagsValues["enableNewHeadline"][number];
     enableAttributeHierarchies: typeof FeatureFlagsValues["enableAttributeHierarchies"][number];
     enableUnavailableItemsVisible: typeof FeatureFlagsValues["enableUnavailableItemsVisible"][number];
+    enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
+    enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
+    enableKDDependentFilters: typeof FeatureFlagsValues["enableKDDependentFilters"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -104,11 +107,12 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCompositeGrain: false,
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
-    enablePivotTableTransposition: true,
-    enableColumnHeadersPosition: true,
-    enableNewHeadline: false,
+    enableNewHeadline: true,
     enableAttributeHierarchies: false,
     enableUnavailableItemsVisible: false,
+    enablePivotTableIncreaseBucketSize: true,
+    enableUserManagement: false,
+    enableKDDependentFilters: false,
 };
 
 export const FeatureFlagsValues = {
@@ -135,9 +139,10 @@ export const FeatureFlagsValues = {
     enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
     enablePdmRemovalDeprecationPhase: [true, false] as const,
-    enablePivotTableTransposition: [true, false] as const,
-    enableColumnHeadersPosition: [true, false] as const,
     enableNewHeadline: [true, false] as const,
     enableAttributeHierarchies: [true, false] as const,
     enableUnavailableItemsVisible: [true, false] as const,
+    enablePivotTableIncreaseBucketSize: [true, false] as const,
+    enableUserManagement: [true, false] as const,
+    enableKDDependentFilters: [true, false] as const,
 };

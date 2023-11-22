@@ -1,13 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 import { describe, expect, it } from "vitest";
+import cloneDeep from "lodash/cloneDeep.js";
 
 import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
-import { IBucket, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import { IBucket, ITheme, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
 import { CalculateAs, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import {
     buildHeadlineVisualizationConfig,
+    getComparisonColorPalette,
     getComparisonDefaultCalculationType,
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
@@ -208,6 +210,39 @@ describe("headlineUiConfigHelper", () => {
                 },
             ]);
             expect(getComparisonDefaultCalculationType(insight)).toEqual(CalculateAs.RATIO);
+        });
+    });
+
+    describe("getComparisonColorPalette", () => {
+        const theme: ITheme = {
+            kpi: {
+                value: {
+                    positiveColor: "#00FF00",
+                    negativeColor: "#FF0000",
+                },
+                secondaryInfoColor: "#0000FF",
+            },
+            palette: {
+                complementary: {
+                    c0: "#00FF00",
+                    c6: "#CCCCCC",
+                    c9: "#FF0000",
+                },
+            },
+        };
+
+        it("should return a color palette with positive, negative, and equals colors", () => {
+            expect(getComparisonColorPalette(theme)).toMatchSnapshot();
+        });
+
+        it("should return a color palette with positive, negative, and equals colors when kpi.secondaryInfoColor is empty", () => {
+            const themeWithoutSecondaryInfoColor = cloneDeep(theme);
+            delete themeWithoutSecondaryInfoColor.kpi.secondaryInfoColor;
+            expect(getComparisonColorPalette(themeWithoutSecondaryInfoColor)).toMatchSnapshot();
+        });
+
+        it("should return a color palette with default colors when theme values are missing", () => {
+            expect(getComparisonColorPalette({})).toMatchSnapshot();
         });
     });
 });

@@ -475,6 +475,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@vitejs/plugin-react-swc",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@welldone-software/why-did-you-render",
       "allowedCategories": [ "examples" ]
     },
@@ -508,7 +512,7 @@
     },
     {
       "name": "case-sensitive-paths-webpack-plugin",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "chalk",
@@ -575,6 +579,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "cypress-multi-reporters",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "cypress-real-events",
       "allowedCategories": [ "production" ]
     },
@@ -592,7 +600,7 @@
     },
     {
       "name": "default-import",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "dependency-cruiser",
@@ -600,7 +608,7 @@
     },
     {
       "name": "dotenv",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "dotenv-webpack",
@@ -712,7 +720,11 @@
     },
     {
       "name": "highcharts",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "highcharts-react-official",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "history",
@@ -799,6 +811,14 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "mocha",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mocha-junit-reporter",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "moment",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -844,7 +864,7 @@
     },
     {
       "name": "process",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "prop-types",
@@ -1048,7 +1068,7 @@
     },
     {
       "name": "ts-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "ts-morph",
@@ -1072,7 +1092,7 @@
     },
     {
       "name": "util",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "uuid",
@@ -1081,6 +1101,14 @@
     {
       "name": "validate-npm-package-name",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "vite",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "vite-plugin-html",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "vitest",

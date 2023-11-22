@@ -11,6 +11,8 @@ import {
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
     AttributeDatasetInfo,
+    AttributeFilterStatusBar,
+    IAttributeFilterStatusBarProps,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -20,7 +22,7 @@ import {
 
 import { IDashboardAttributeFilterProps } from "./types.js";
 import { useParentFilters } from "./useParentFilters.js";
-import { filterObjRef } from "@gooddata/sdk-model";
+import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import {
     CustomAttributeFilterDropdownActions,
@@ -32,6 +34,10 @@ import {
     selectLocale,
     useDashboardSelector,
     selectIsInEditMode,
+    selectBackendCapabilities,
+    selectAttributeFilterConfigsModeMap,
+    selectEnableKDDependentFilters,
+    useDashboardUserInteraction,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -40,6 +46,7 @@ import {
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { getVisibilityIcon } from "../utils.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -51,18 +58,23 @@ import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks
 export const DefaultDashboardAttributeFilter = (
     props: IDashboardAttributeFilterProps,
 ): JSX.Element | null => {
-    const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
+    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
+    const enableKDDependentFilters = useDashboardSelector(selectEnableKDDependentFilters);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+    const userInteraction = useDashboardUserInteraction();
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
     }, [attributeFilter]);
 
     const dispatch = useDashboardDispatch();
+
     const handleRemoveAttributeFilter = useCallback(
         () => dispatch(removeAttributeFilter(filter.attributeFilter.localIdentifier!)),
         [filter, dispatch],
@@ -86,6 +98,7 @@ export const DefaultDashboardAttributeFilter = (
     const parentFiltersDisabledTooltip = intl.formatMessage({
         id: "attributesDropdown.parentFilter.disabled.tooltip",
     });
+    const modeCategoryTitleText = intl.formatMessage({ id: "filter.configuration.mode.title" });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -98,6 +111,17 @@ export const DefaultDashboardAttributeFilter = (
     }, [filterRef]);
 
     const { attributes } = useAttributes(attributeFilterRef);
+
+    const visibilityIcon = useMemo(
+        () =>
+            getVisibilityIcon(
+                attributeFilterConfigsModeMap.get(filter.attributeFilter.localIdentifier!),
+                isEditMode,
+                !!capabilities.supportsHiddenAndLockedFiltersOnUI,
+                intl,
+            ),
+        [attributeFilterConfigsModeMap, isEditMode, capabilities, intl],
+    );
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
@@ -134,7 +158,7 @@ export const DefaultDashboardAttributeFilter = (
                 />
             );
         };
-    }, [isDraggable, autoOpen, isEditMode, onCloseFilter]);
+    }, [isDraggable, autoOpen, isEditMode, visibilityIcon, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
@@ -146,11 +170,18 @@ export const DefaultDashboardAttributeFilter = (
                 onConfigurationSave,
                 onConfigurationClose,
                 selectionModeChanged,
+                modeChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.length > 0;
             const isSaveDisabled = isTitleDefined
-                ? !(configurationChanged || displayFormChanged || titleChanged || selectionModeChanged)
+                ? !(
+                      configurationChanged ||
+                      displayFormChanged ||
+                      titleChanged ||
+                      selectionModeChanged ||
+                      modeChanged
+                  )
                 : true;
 
             return (
@@ -178,6 +209,9 @@ export const DefaultDashboardAttributeFilter = (
                             onConfigurationButtonClick={() => {
                                 setIsConfigurationOpen(true);
                                 onConfigurationClose();
+                                userInteraction.attributeFilterInteraction(
+                                    "attributeFilterConfigurationOpened",
+                                );
                             }}
                             onDeleteButtonClick={() => {
                                 handleRemoveAttributeFilter();
@@ -215,6 +249,7 @@ export const DefaultDashboardAttributeFilter = (
                 <>
                     {isConfigurationOpen ? (
                         <AttributeFilterConfiguration
+                            intl={intl}
                             closeHandler={closeHandler}
                             filterRef={filterRef}
                             filterByText={filterByText}
@@ -224,8 +259,10 @@ export const DefaultDashboardAttributeFilter = (
                             selectionTitleText={selectionTitleText}
                             multiSelectionOptionText={multiSelectionOptionText}
                             singleSelectionOptionText={singleSelectionOptionText}
+                            modeCategoryTitleText={modeCategoryTitleText}
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
+                            showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -245,7 +282,33 @@ export const DefaultDashboardAttributeFilter = (
         singleSelectionOptionText,
         singleSelectionDisabledTooltip,
         parentFiltersDisabledTooltip,
+        modeCategoryTitleText,
+        intl,
+        capabilities,
     ]);
+
+    const CustomStatusBarComponent = useMemo(() => {
+        return function StatusBar(props: IAttributeFilterStatusBarProps) {
+            return (
+                <AttributeFilterStatusBar
+                    {...props}
+                    onShowFilteredElements={() => {
+                        props.onShowFilteredElements?.();
+                        userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
+                    }}
+                    onClearIrrelevantSelection={() => {
+                        props.onClearIrrelevantSelection?.();
+                        userInteraction.attributeFilterInteraction(
+                            "attributeFilterClearIrrelevantValuesClicked",
+                        );
+                    }}
+                    enableShowingFilteredElements={
+                        !!capabilities.supportsShowingFilteredElements && enableKDDependentFilters
+                    }
+                />
+            );
+        };
+    }, [enableKDDependentFilters, capabilities, userInteraction]);
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
@@ -271,6 +334,13 @@ export const DefaultDashboardAttributeFilter = (
                 fullscreenOnMobile
                 selectionMode={filter.attributeFilter.selectionMode}
                 selectFirst={true}
+                attributeFilterMode={
+                    readonly
+                        ? DashboardAttributeFilterConfigModeValues.READONLY
+                        : DashboardAttributeFilterConfigModeValues.ACTIVE
+                }
+                customIcon={visibilityIcon}
+                StatusBarComponent={CustomStatusBarComponent}
             />
         </AttributeFilterParentFilteringProvider>
     );

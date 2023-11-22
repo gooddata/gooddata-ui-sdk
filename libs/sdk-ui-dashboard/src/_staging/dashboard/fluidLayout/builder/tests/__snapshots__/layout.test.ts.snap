@@ -644,6 +644,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > afte
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -671,6 +672,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > afte
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -706,6 +708,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > befo
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -788,6 +791,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > befo
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -823,6 +827,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -845,6 +850,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "barInsight",
             },
@@ -867,6 +873,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "columnInsight",
             },
@@ -894,6 +901,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -929,6 +937,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -951,6 +960,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "barInsight",
             },
@@ -973,6 +983,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "columnInsight",
             },
@@ -1000,6 +1011,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "description": "",
             "drills": [],
             "ignoreDashboardFilters": [],
+            "ignoredDrillDownHierarchies": [],
             "insight": {
               "identifier": "tableInsight",
             },

@@ -9,6 +9,7 @@ import { RemoveAttributeFilters } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
@@ -66,6 +67,10 @@ export function* removeAttributeFiltersHandler(
             }),
             // remove filter's display form metadata object
             filterContextActions.removeAttributeFilterDisplayForms(removedFilter.attributeFilter.displayForm),
+            // remove reflect dashboard attribute filter config
+            attributeFilterConfigsActions.removeAttributeFilterConfig(
+                removedFilter.attributeFilter.localIdentifier!,
+            ),
             // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
             layoutActions.removeIgnoredAttributeFilter({
                 displayFormRefs: [removedFilter.attributeFilter.displayForm],

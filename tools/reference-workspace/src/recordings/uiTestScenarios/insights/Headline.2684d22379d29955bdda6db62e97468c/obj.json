@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        ],
+        "filters": [],
+        "identifier": "Headline.2684d22379d29955bdda6db62e97468c",
+        "properties": {
+            "controls": {
+                "comparison": {
+                    "calculationType": "change_difference",
+                    "colorConfig": { "disabled": true },
+                    "enabled": true,
+                    "format": "[color=d2ccde]#,##0.0",
+                    "subFormat": "[color=9c46b5]#,##0.00"
+                }
+            }
+        },
+        "sorts": [],
+        "title": "Headline - comparison with calculate as change (difference) and custom format",
+        "uri": "Headline.2684d22379d29955bdda6db62e97468c",
+        "visualizationUrl": "local:headline"
+    }
+}

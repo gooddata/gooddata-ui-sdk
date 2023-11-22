@@ -7,7 +7,7 @@ import { objRefToString, InsightDrillDefinition } from "@gooddata/sdk-model";
 import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils.js";
 import { isAllDrillSelector } from "../../../commands/insight.js";
 
-export function validateRemoveDrillsByOrigins(
+export function validateRemoveDrillsByLocalIdentifier(
     drillSelector: RemoveDrillsSelector,
     drills: InsightDrillDefinition[],
     ctx: DashboardContext,
@@ -26,7 +26,7 @@ export function validateRemoveDrillsByOrigins(
             throw invalidArgumentsProvided(
                 ctx,
                 cmd,
-                `Invalid measure or attribute origin: ${objRefToString(drillRef)}. Error: ${messageDetail}`,
+                `Invalid drill local identifier: ${objRefToString(drillRef)}. Error: ${messageDetail}`,
             );
         }
     });

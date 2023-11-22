@@ -18,6 +18,7 @@ export interface IUseInvertableSelectProps<T> {
     isInverted: boolean;
     selectedItems: T[];
     onSelect?: (items: T[], isInverted: boolean) => void;
+    numberOfHiddenSelectedItems?: number;
 }
 
 export type SelectionStatusType = "all" | "partial" | "none";
@@ -36,6 +37,8 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         isInverted = true,
         selectedItems,
         onSelect = noop,
+
+        numberOfHiddenSelectedItems = 0,
     } = props;
 
     const isSearch = searchString.length > 0;
@@ -145,14 +148,27 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
                 ? differenceBy(selectedItems, items, getItemKey)
                 : selectedItems.concat(items);
 
-            if (!isSearch && !isInverted && newItems.length === totalItemsCount) {
+            if (
+                !isSearch &&
+                !isInverted &&
+                newItems.length === totalItemsCount + numberOfHiddenSelectedItems
+            ) {
                 // Selecting last item -> select all
                 selectAll();
             } else {
                 onSelect(newItems, isInverted);
             }
         },
-        [isInverted, selectedItems, onSelect, selectAll, getItemKey, totalItemsCount, isSearch],
+        [
+            isInverted,
+            selectedItems,
+            getItemKey,
+            isSearch,
+            totalItemsCount,
+            numberOfHiddenSelectedItems,
+            selectAll,
+            onSelect,
+        ],
     );
 
     const deselectItems = useCallback(
@@ -161,13 +177,26 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
                 ? selectedItems.concat(items)
                 : differenceBy(selectedItems, items, getItemKey);
 
-            if (!isSearch && isInverted && newItems.length === totalItemsCount) {
+            if (
+                !isSearch &&
+                isInverted &&
+                newItems.length === totalItemsCount + numberOfHiddenSelectedItems
+            ) {
                 selectNone();
             } else {
                 onSelect(newItems, isInverted);
             }
         },
-        [isInverted, selectedItems, onSelect, selectNone, getItemKey, totalItemsCount, isSearch],
+        [
+            isInverted,
+            selectedItems,
+            getItemKey,
+            isSearch,
+            totalItemsCount,
+            numberOfHiddenSelectedItems,
+            selectNone,
+            onSelect,
+        ],
     );
 
     const onSelectAllCheckboxToggle = useCallback(() => {

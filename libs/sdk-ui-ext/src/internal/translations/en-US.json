@@ -576,6 +576,21 @@
         "limit": 0,
         "translate": false
     },
+    "dashboard.bucket.category_columns_warning._measure": {
+        "value": "To add columns, total count of items from measures or rows should not be higher than {oldLimit}",
+        "comment": "Do not translate {oldLimit}.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_columns_warning._metric": {
+        "value": "To add columns, total count of items from metrics or rows should not be higher than {oldLimit}",
+        "comment": "Do not translate {oldLimit}.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_measures_rows_warning": {
+        "value": "To add up to {limit} more, remove all items from columns section",
+        "comment": "Do not translate {limit}.",
+        "limit": 0
+    },
     "dashboard.bucket.category_category_by_warning._measure|insight": {
         "value": "To view by, an insight can have only one measure",
         "comment": "",
@@ -1334,7 +1349,7 @@
         "limit": 0
     },
     "properties.column.headers.title": {
-        "value": "Columns Headers",
+        "value": "Column Headers",
         "comment": "",
         "limit": 0
     },
@@ -1363,6 +1378,16 @@
         "comment": "",
         "limit": 0
     },
+    "properties.interactions.title": {
+        "value": "Interactions",
+        "comment": "The title for the interactions configuration section",
+        "limit": 0
+    },
+    "properties.interactions.drillDown": {
+        "value": "Drill down",
+        "comment": "The text for the drill down checkbox",
+        "limit": 0
+    },
     "properties.comparison.title": {
         "value": "Comparison",
         "comment": "The title of comparison section",
@@ -1388,44 +1413,64 @@
         "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
         "limit": 0
     },
-    "properties.comparison.calculationType.tooltip.useIn.section": {
-        "value": "When to use",
-        "comment": "The title of the section that describes the pertinent scenarios for the calculation.",
+    "properties.comparison.calculationType.as.changeDifference": {
+        "value": "Change (difference)",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn._metric": {
-        "value": "To calculate relative change between primary and secondary metric values.",
+        "value": "Calculates the relative change between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn._measure": {
-        "value": "To calculate relative change between primary and secondary measure values.",
+        "value": "Calculates the relative change between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._metric": {
-        "value": "To calculate what part of secondary metric value is primary metric value.",
+        "value": "Quantifies the share of the primary metric value in the secondary metric value.",
         "comment": "The content describes the pertinent scenarios for the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn._measure": {
-        "value": "To calculate what part of secondary metric value is primary measure value.",
+        "value": "Quantifies the share of the primary measure value in the secondary measure value.",
         "comment": "The content describes the pertinent scenarios for the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._metric": {
-        "value": "To calculate absolute difference between primary and secondary metrics values.",
+        "value": "Calculates the absolute difference between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the difference calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn._measure": {
-        "value": "To calculate absolute difference between primary and secondary measures values.",
+        "value": "Calculates the absolute difference between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._metric": {
+        "value": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._measure": {
+        "value": "Calculates both the relative change and absolute difference between primary and secondary measure values.",
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.tooltip.formula.section": {
         "value": "Formula",
         "comment": "The title of the section that describes the formula for the calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.formulaChange.section": {
+        "value": "Formula (relative change)",
+        "comment": "The title of the section that describes the formula for the change calculation",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.tooltip.formulaDifference.section": {
+        "value": "Formula (absolute difference)",
+        "comment": "The title of the section that describes the formula for the difference calculation",
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.formula": {
@@ -1449,18 +1494,23 @@
         "limit": 0
     },
     "properties.comparison.calculationType.as.change.tooltip.example": {
-        "value": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales",
+        "value": "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
         "comment": "The example illustrating the change calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.ratio.tooltip.example": {
-        "value": "Sales this year compared to a quota = This year sales / quota",
+        "value": "Current sales compared to a quota = current sales / quota",
         "comment": "The example illustrating the ratio calculation.",
         "limit": 0
     },
     "properties.comparison.calculationType.as.difference.tooltip.example": {
-        "value": "Sales difference compared to last year = This year sales - Last year sales",
+        "value": "Year-over-year sales difference = the current year's sales - the previous year's sales",
         "comment": "The example illustrating the difference calculation.",
+        "limit": 0
+    },
+    "properties.comparison.calculationType.as.changeDifference.tooltip.example": {
+        "value": "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
+        "comment": "The example illustrating the change (difference) calculation.",
         "limit": 0
     },
     "properties.comparison.measureNumber.format.preset.inherit": {
@@ -1593,6 +1643,11 @@
         "comment": "The label of comparison format control.",
         "limit": 0
     },
+    "properties.comparison.subFormat.title": {
+        "value": "(Format)",
+        "comment": "The label of comparison sub format control.",
+        "limit": 0
+    },
     "properties.comparison.indicator.title": {
         "value": "Indicator",
         "comment": "The label of comparison indicator sub section",
@@ -1633,9 +1688,34 @@
         "comment": "Disable tooltip message when the comparison position is set to top.",
         "limit": 0
     },
+    "properties.comparison.labelSubSection.conditional.disabled": {
+        "value": "Conditional labels are not applicable to ratio calculations.",
+        "comment": "Disable tooltip message when the calculation is ratio.",
+        "limit": 0
+    },
     "properties.comparison.labelName.title": {
         "value": "Name",
         "comment": "The label of name input control.",
+        "limit": 0
+    },
+    "properties.comparison.labelConditional.title": {
+        "value": "Conditional",
+        "comment": "The label of conditional checkbox control.",
+        "limit": 0
+    },
+    "properties.comparison.labelPositive.title": {
+        "value": "Primary > Secondary",
+        "comment": "The label of the input control will be set when the primary value is greater than the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.labelNegative.title": {
+        "value": "Primary < Secondary",
+        "comment": "The label of the input control will be set when the primary value is less than the secondary value.",
+        "limit": 0
+    },
+    "properties.comparison.labelEquals.title": {
+        "value": "Primary = Secondary",
+        "comment": "The label of the input control will be set when the primary value is equal the secondary value.",
         "limit": 0
     },
     "properties.comparison.position.title": {
@@ -1644,17 +1724,17 @@
         "limit": 0
     },
     "properties.comparison.position.top": {
-        "value": "Top",
+        "value": "top",
         "comment": "The title of dropdown option that specifies the position of comparison to be on top.",
         "limit": 0
     },
     "properties.comparison.position.right": {
-        "value": "Right",
+        "value": "right",
         "comment": "The title of dropdown option that specifies the position of comparison to be on right.",
         "limit": 0
     },
     "properties.comparison.position.left": {
-        "value": "Left",
+        "value": "left",
         "comment": "The title of dropdown option that specifies the position of comparison to be on left.",
         "limit": 0
     }

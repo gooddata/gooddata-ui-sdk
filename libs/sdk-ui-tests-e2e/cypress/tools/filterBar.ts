@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
 
@@ -77,6 +77,16 @@ export class AttributeFilter {
         return cy.wrap(result);
     }
 
+    hasValueList(values: string[]) {
+        if (values.length === 0) {
+            cy.get(".s-isLoading").should("not.exist");
+            cy.get(`.s-attribute-filter-list-item .input-label-text`).should("not.exist");
+        } else {
+            this.getValueList().should("deep.equal", values);
+        }
+        return this;
+    }
+
     getSelectedValueList() {
         const result = [] as string[];
         cy.get(`.s-attribute-filter-list-item.s-attribute-filter-list-item-selected .input-label-text`).each(
@@ -85,6 +95,18 @@ export class AttributeFilter {
             },
         );
         return cy.wrap(result);
+    }
+
+    hasSelectedValueList(values: string[]) {
+        if (values.length === 0) {
+            cy.get(".s-isLoading").should("not.exist");
+            cy.get(
+                `.s-attribute-filter-list-item.s-attribute-filter-list-item-selected .input-label-text`,
+            ).should("not.exist");
+        } else {
+            this.getSelectedValueList().should("deep.equal", values);
+        }
+        return this;
     }
 
     apply() {
@@ -198,7 +220,12 @@ export class AttributeFilter {
         return this;
     }
 
-    selectConfiguration() {
+    selectConfiguration(delay?: number) {
+        // delay to make sure the attribute elements are loaded
+        if (delay) {
+            cy.wait(delay);
+        }
+
         this.getDropdownElement().find(".s-configuration-button").click();
         return this;
     }
@@ -285,6 +312,62 @@ export class AttributeFilter {
 
     hasFilterListSize(length: number) {
         this.getDropdownElement().find(".s-list-search-selection-size").should("have.text", `(${length})`);
+        return this;
+    }
+
+    getConfigurationMode(mode: DashboardAttributeFilterConfigMode) {
+        return cy.get(".s-configuration-item-mode").find(`.s-config-state-${mode}`);
+    }
+
+    selectConfigurationMode(mode: DashboardAttributeFilterConfigMode) {
+        this.getConfigurationMode(mode).click();
+        return this;
+    }
+
+    hoverOnConfigurationMode(mode: DashboardDateFilterConfigMode) {
+        this.getConfigurationMode(mode).trigger("mouseover");
+    }
+
+    getHiddenIcon() {
+        return this.getElement().find(".s-gd-icon-invisible");
+    }
+
+    isHiddenIconVisible(expected = true) {
+        this.getHiddenIcon().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hoverOnHiddenIcon() {
+        this.getHiddenIcon().trigger("mouseover", { force: true });
+        return this;
+    }
+
+    getLockedIcon() {
+        return this.getElement().find(".s-gd-icon-lock");
+    }
+
+    isLockedIconVisible(expected = true) {
+        this.getLockedIcon().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hoverOnLockedIcon() {
+        this.getLockedIcon().trigger("mouseover", { force: true });
+        return this;
+    }
+
+    isVisible(expected = true) {
+        this.getElement().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hasDropdownBodyOpen(expected = true) {
+        this.getDropdownElement().should(expected ? "be.visible" : "not.exist");
+        return this;
+    }
+
+    hasConfigurationModeCheckedAt(mode: DashboardAttributeFilterConfigMode) {
+        this.getConfigurationMode(mode).should("have.attr", "checked");
         return this;
     }
 }

@@ -366,6 +366,9 @@
     "gs.date.date-dataset.other": "その他",
     "gs.date.date-dataset.related": "関係する",
     "gs.date.date-dataset.unrelated": "無関係な",
+    "gs.date.date-dataset.unrelated_hidden": "{count} 件の無関係な {count, plural, one {日} other {日}} {isShow, select, true {表示} other {非表示}}",
+    "gs.date.date-dataset.unrelated.show": "表示",
+    "gs.date.date-dataset.unrelated.hide": "非表示",
     "layout.widget.width.min": "現在ウィジェットの幅が最小です",
     "layout.widget.width.max": "ウィジェットの幅が最大です",
     "layout.widget.height.min": "ウィジェットの高さは最小になっています",
@@ -382,5 +385,16 @@
     "newDashboard.title": "インサイトをここにドラッグ",
     "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ",
     "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
-    "attributesDropdown.attributeNameWithData": "データの"
+    "attributesDropdown.attributeNameWithData": "データの",
+    "filter.visibilityMode.tooltip.hidden": "このフィルタは非表示です。編集モードでのみアクセスできます。",
+    "filter.visibilityMode.tooltip.readonly.editMode": "このフィルタはロックされています。編集モードでのみ変更できます。",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "このフィルタはロックされています。",
+    "dateFilterDropdown.save": "保存",
+    "filter.configuration.mode.title": "モード",
+    "filter.configuration.mode.interactive.title": "インタラクティブ",
+    "filter.configuration.mode.interactive.tooltip": "ダッシュボードユーザーはフィルタを確認および変更できます。",
+    "filter.configuration.mode.locked.title": "ロックされています",
+    "filter.configuration.mode.locked.tooltip": "ダッシュボードユーザーはフィルタが表示されますが、変更することはできません。",
+    "filter.configuration.mode.hidden.title": "非表示",
+    "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。"
 }

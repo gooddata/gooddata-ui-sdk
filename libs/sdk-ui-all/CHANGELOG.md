@@ -1,6 +1,23 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 08 Sep 2023 07:19:23 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Nov 2023 11:25:49 GMT and should not be manually modified.
+
+## 9.3.0
+Thu, 02 Nov 2023 11:25:49 GMT
+
+### Updates
+
+- The headline allows two secondary measures to be displayed as the headline values.
+- The headline allows for the customization of comparison values and styles using the comparison config.
+- Introduce possibility to cache client calls
+
+## 9.2.0
+Fri, 06 Oct 2023 13:12:04 GMT
+
+### Updates
+
+- Supporting to share the dashboard with all workspace users.
+- Introduce new attribute hierarchy catalog entity which is used for implicit drill-down in dashboards.
 
 ## 9.1.0
 Fri, 08 Sep 2023 07:19:23 GMT
@@ -40,6 +57,13 @@ Thu, 27 Jul 2023 12:35:32 GMT
 - The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 - Make it possible to hide/show on demand the web components tab on embedding dialogs
 - Add the continuous line configuration for the Line, Area and Combo charts
+
+## 8.12.3
+Thu, 05 Oct 2023 07:58:45 GMT
+
+### Updates
+
+- Use @gooddata/number-formatter instead of @gooddata/numberjs library
 
 ## 8.12.2
 Wed, 19 Jul 2023 14:12:54 GMT

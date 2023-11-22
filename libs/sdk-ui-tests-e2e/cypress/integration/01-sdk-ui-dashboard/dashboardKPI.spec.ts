@@ -7,6 +7,7 @@ import { KpiConfiguration, KPIMeasureDropdown } from "../../tools/kpiConfigurati
 import { DateFilter, RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 import { Dashboard } from "../../tools/dashboards";
+import { InsightsCatalog } from "../../tools/insightsCatalog";
 
 const editMode = new EditMode();
 const widget = new Widget(0);
@@ -101,7 +102,8 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     it("Check no matching message", () => {
         editMode.edit();
-
+        new InsightsCatalog().waitForCatalogLoad();
+        cy.wait(1000);
         widget.getKPI().clickValue();
         kpiConfiguration.toggleMeasureDropdown();
         kpiMeasureDropdown.find("abc").noMatchingData();

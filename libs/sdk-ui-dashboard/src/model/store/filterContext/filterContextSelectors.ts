@@ -19,6 +19,7 @@ import {
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
+import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -267,31 +268,41 @@ export const selectFilterContextAttributeFilterIndexByLocalId: (
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
+ * This selector should only be used when circular filter dependencies are not allowed.
  *
  * @public
  */
 export const selectAttributeFilterDescendants: (localId: string) => DashboardSelector<string[]> =
     createMemoizedSelector((localId: string) =>
-        createSelector(selectFilterContextAttributeFilters, (attributeFilters) => {
-            const toCheck = compact([localId]);
-            const result = new Set<string>();
-
-            while (toCheck.length) {
-                const current = toCheck.pop();
-                const children = attributeFilters.filter((f) =>
-                    f.attributeFilter.filterElementsBy?.some(
-                        (parent) => parent.filterLocalIdentifier === current,
-                    ),
+        createSelector(
+            selectFilterContextAttributeFilters,
+            selectSupportsCircularDependencyInFilters,
+            (attributeFilters, supportsCircularDependencies) => {
+                invariant(
+                    !supportsCircularDependencies,
+                    "Filter descendants cannot be computed as this backend supports circular dependencies in filters. Do not use this selector.",
                 );
 
-                children.forEach((child) => {
-                    result.add(child.attributeFilter.localIdentifier!);
-                    toCheck.push(child.attributeFilter.localIdentifier!);
-                });
-            }
+                const toCheck = compact([localId]);
+                const result = new Set<string>();
 
-            return Array.from(result);
-        }),
+                while (toCheck.length) {
+                    const current = toCheck.pop();
+                    const children = attributeFilters.filter((f) =>
+                        f.attributeFilter.filterElementsBy?.some(
+                            (parent) => parent.filterLocalIdentifier === current,
+                        ),
+                    );
+
+                    children.forEach((child) => {
+                        result.add(child.attributeFilter.localIdentifier!);
+                        toCheck.push(child.attributeFilter.localIdentifier!);
+                    });
+                }
+
+                return Array.from(result);
+            },
+        ),
     );
 
 /**
@@ -328,6 +339,9 @@ export const selectAttributeFilterDisplayFormByLocalId: (localId: string) => Das
 /**
  * Creates a selector which checks for a circular dependency between filters.
  *
+ * @remarks
+ * This selector should only be used when circular filter dependencies are not allowed.
+ *
  * @internal
  */
 export const selectIsCircularDependency: (
@@ -335,9 +349,18 @@ export const selectIsCircularDependency: (
     neighborFilterLocalId: string,
 ) => DashboardSelector<boolean> = createMemoizedSelector(
     (currentFilterLocalId: string, neighborFilterLocalId: string) =>
-        createSelector(selectAttributeFilterDescendants(currentFilterLocalId), (descendants) => {
-            return descendants.some((descendant) => descendant === neighborFilterLocalId);
-        }),
+        createSelector(
+            selectAttributeFilterDescendants(currentFilterLocalId),
+            selectSupportsCircularDependencyInFilters,
+            (descendants, supportsCircularDependencies) => {
+                invariant(
+                    !supportsCircularDependencies,
+                    "No need to compute circular dependencies as this backend supports it in filters. Do not use this selector.",
+                );
+
+                return descendants.some((descendant) => descendant === neighborFilterLocalId);
+            },
+        ),
 );
 
 const MAX_ATTRIBUTE_FILTERS_COUNT = 30;

@@ -72,6 +72,10 @@ import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNe
 import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler.js";
 import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler.js";
 import { changeInsightWidgetInsightHandler } from "./widgets/changeInsightWidgetInsightHandler.js";
+import { setDashboardDateFilterConfigModeHandler } from "./dashboard/dateFilterConfigHandler.js";
+import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFilterModeHandler.js";
+import { removeDrillDownForInsightWidgetHandler } from "./widgets/removeDrillDownForInsightWidgetHandler.js";
+import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { predictionHandler } from "./prediction/predictionHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
@@ -102,6 +106,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE": changeAttributeTitleHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE": changeAttributeSelectionModeHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
+    "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE": setDashboardDateFilterConfigModeHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,
@@ -132,6 +138,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": changeInsightWidgetInsightHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN": removeDrillDownForInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN": addDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,

@@ -4,6 +4,7 @@ exports[`MultiSelectAttributeFilterHandler > changeSelection() should trigger on
 [
   {
     "selection": {
+      "irrelevantKeys": [],
       "isInverted": true,
       "keys": [
         "/selectedElement",
@@ -17,6 +18,7 @@ exports[`MultiSelectAttributeFilterHandler > clearSelection() should trigger onS
 [
   {
     "selection": {
+      "irrelevantKeys": [],
       "isInverted": false,
       "keys": [],
     },
@@ -28,6 +30,7 @@ exports[`MultiSelectAttributeFilterHandler > commitSelection() should trigger on
 [
   {
     "selection": {
+      "irrelevantKeys": [],
       "isInverted": true,
       "keys": [
         "/selectedElement",
@@ -41,6 +44,7 @@ exports[`MultiSelectAttributeFilterHandler > invertSelection() should trigger on
 [
   {
     "selection": {
+      "irrelevantKeys": [],
       "isInverted": true,
       "keys": [
         "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
@@ -55,6 +59,7 @@ exports[`MultiSelectAttributeFilterHandler > revertSelection() should trigger on
 [
   {
     "selection": {
+      "irrelevantKeys": [],
       "isInverted": false,
       "keys": [
         "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
@@ -67,6 +72,7 @@ exports[`MultiSelectAttributeFilterHandler > revertSelection() should trigger on
 
 exports[`MultiSelectAttributeFilterHandler > should initialize selection for negative attribute filter > committed selection 1`] = `
 {
+  "irrelevantKeys": [],
   "isInverted": true,
   "keys": [
     "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
@@ -77,6 +83,7 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for neg
 
 exports[`MultiSelectAttributeFilterHandler > should initialize selection for negative attribute filter > working selection 1`] = `
 {
+  "irrelevantKeys": [],
   "isInverted": true,
   "keys": [
     "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
@@ -87,6 +94,7 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for neg
 
 exports[`MultiSelectAttributeFilterHandler > should initialize selection for positive attribute filter > committed selection 1`] = `
 {
+  "irrelevantKeys": [],
   "isInverted": false,
   "keys": [
     "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
@@ -97,6 +105,7 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for pos
 
 exports[`MultiSelectAttributeFilterHandler > should initialize selection for positive attribute filter > working selection 1`] = `
 {
+  "irrelevantKeys": [],
   "isInverted": false,
   "keys": [
     "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",

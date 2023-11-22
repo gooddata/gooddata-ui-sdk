@@ -366,6 +366,9 @@
     "gs.date.date-dataset.other": "Outros",
     "gs.date.date-dataset.related": "Relacionado",
     "gs.date.date-dataset.unrelated": "Não relacionado",
+    "gs.date.date-dataset.unrelated_hidden": "{count} não relacionados {count, plural, one {data} other {datas}} {isShow, select, true {visível} other {oculto}}.",
+    "gs.date.date-dataset.unrelated.show": "Mostrar",
+    "gs.date.date-dataset.unrelated.hide": "Ocultar",
     "layout.widget.width.min": "O widget tem a largura mínima",
     "layout.widget.width.max": "O widget já tem a largura máxima",
     "layout.widget.height.min": "O widget já tem a altura mínima",
@@ -382,5 +385,16 @@
     "newDashboard.title": "Arraste o insight para aqui",
     "newDashboard.dropInsight": "Largar insight",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já se encontra filtrado pelo filtro <strong>{childTitle}</strong>, de forma direta ou através de outros filtros.",
-    "attributesDropdown.attributeNameWithData": "com dados de"
+    "attributesDropdown.attributeNameWithData": "com dados de",
+    "filter.visibilityMode.tooltip.hidden": "Este filtro está oculto. Só pode ser acedido através do Modo de edição.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Este filtro está bloqueado. Só pode ser alterado através do Modo de edição.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Este filtro está bloqueado.",
+    "dateFilterDropdown.save": "Guardar",
+    "filter.configuration.mode.title": "Modo",
+    "filter.configuration.mode.interactive.title": "Interativo",
+    "filter.configuration.mode.interactive.tooltip": "Os utilizadores do dashboard podem ver e alterar o filtro.",
+    "filter.configuration.mode.locked.title": "Bloqueado",
+    "filter.configuration.mode.locked.tooltip": "Os utilizadores do dashboard podem ver o filtro mas não o podem alterar.",
+    "filter.configuration.mode.hidden.title": "Oculto",
+    "filter.configuration.mode.hidden.tooltip": "Os utilizadores do dashboard não podem ver o filtro, mas este é aplicado."
 }

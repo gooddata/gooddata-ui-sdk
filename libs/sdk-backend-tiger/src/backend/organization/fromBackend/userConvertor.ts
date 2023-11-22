@@ -4,14 +4,16 @@ import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup, idRef } f
 import {
     JsonApiUserOutDocument,
     JsonApiUserGroupOutDocument,
-    ManageUsersItem,
-    ManageUserGroupsItem,
     JsonApiUserGroupOutWithLinks,
     JsonApiUserOutWithLinks,
+    UserManagementUsersItem,
+    UserManagementUserGroupsItem,
 } from "@gooddata/api-client-tiger";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
-    firstName && lastName ? `${firstName} ${lastName}` : undefined;
+    firstName || lastName
+        ? `${firstName || ""}${firstName && lastName ? " " : ""}${lastName || ""}`
+        : undefined;
 
 export const convertUser = (user: JsonApiUserOutDocument): IUser => {
     const firstName = user.data.attributes?.firstname;
@@ -52,7 +54,7 @@ export const convertIncludedUser = (user: JsonApiUserOutWithLinks): IUser => {
     };
 };
 
-export const convertOrganizationUser = (user: ManageUsersItem): IOrganizationUser => ({
+export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganizationUser => ({
     ref: idRef(user.userId),
     id: user.userId,
     email: user.email,
@@ -62,7 +64,9 @@ export const convertOrganizationUser = (user: ManageUsersItem): IOrganizationUse
     assignedWorkspaceIds: user.workspaces,
 });
 
-export const convertOrganizationUserGroup = (userGroup: ManageUserGroupsItem): IOrganizationUserGroup => ({
+export const convertOrganizationUserGroup = (
+    userGroup: UserManagementUserGroupsItem,
+): IOrganizationUserGroup => ({
     ref: idRef(userGroup.groupId),
     id: userGroup.groupId,
     name: userGroup.name,

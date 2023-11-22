@@ -1,7 +1,12 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
-import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
+import {
+    DashboardAttributeFilterConfigMode,
+    DashboardDateFilterConfigMode,
+    IDashboard,
+    IWorkspacePermissions,
+} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
@@ -418,5 +423,93 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF",
         correlationId,
+    };
+}
+
+/**
+ * Payload of the {@link SetDashboardDateFilterConfigMode} command.
+ * @alpha
+ */
+export interface SetDashboardDateFilterConfigModePayload {
+    mode: DashboardDateFilterConfigMode;
+}
+
+/**
+ * A command that set the mode of a date filter configuration in a dashboard.
+ *
+ * @alpha
+ */
+export interface SetDashboardDateFilterConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE";
+    readonly payload: SetDashboardDateFilterConfigModePayload;
+}
+
+/**
+ * Creates the {@link SetDashboardDateFilterConfigMode} command.
+ *
+ * @remarks
+ * Dispatching this command will set the visibility mode of the dashboard date filter to the provided value.
+ *
+ * @alpha
+ * @param mode - The visibility mode to set.
+ * @returns set dashboard date filter config mode command
+ */
+export function setDashboardDateFilterConfigMode(
+    mode: DashboardDateFilterConfigMode,
+): SetDashboardDateFilterConfigMode {
+    return {
+        type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE",
+        payload: {
+            mode,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link SetDashboardAttributeFilterConfigMode} command.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigModePayload {
+    /**
+     * Local identifier of the filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Mode of the attribute filter.
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
+ * Command for changing attribute filter mode.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE";
+    readonly payload: SetDashboardAttributeFilterConfigModePayload;
+}
+
+/**
+ * Creates the {@link SetDashboardAttributeFilterConfigMode} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided the mode as a mode for the attribute filter.
+ *
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter the display form is changed for
+ * @param mode - newly added mode
+ * @returns change filter mode command
+ */
+export function setDashboardAttributeFilterConfigMode(
+    localIdentifier: string,
+    mode?: DashboardAttributeFilterConfigMode,
+): SetDashboardAttributeFilterConfigMode {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE",
+        payload: {
+            localIdentifier,
+            mode,
+        },
     };
 }

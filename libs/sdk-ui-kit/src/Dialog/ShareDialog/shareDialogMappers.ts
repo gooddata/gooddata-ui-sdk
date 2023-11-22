@@ -17,6 +17,8 @@ import {
     IGranularUserGroupAccess,
     isGranularUserAccess,
     isGranularUserGroupAccess,
+    isGranularRulesAccessGrantee,
+    IGranularRulesAccess,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -34,6 +36,7 @@ import {
     isGranularGrantee,
     IGranularGranteeUser,
     IGranularGranteeGroup,
+    IGranteeRules,
 } from "./ShareDialogBase/types.js";
 import {
     GranteeGroupAll,
@@ -41,6 +44,7 @@ import {
     getAppliedGrantees,
     hasGroupAll,
     getIsGranteeCurrentUser,
+    hasGranteeRules,
 } from "./ShareDialogBase/utils.js";
 import { ISharedObject } from "./types.js";
 
@@ -225,6 +229,22 @@ export const mapGranularUserGroupAccessToGrantee = (
     };
 };
 
+/**
+ * @internal
+ */
+export const mapGranularRulesAccessToGrantee = (userGroupAccess: IGranularRulesAccess): IGranteeRules => {
+    const { type, permissions, inheritedPermissions } = userGroupAccess;
+
+    return {
+        id: {
+            identifier: type,
+        },
+        type,
+        permissions,
+        inheritedPermissions,
+    };
+};
+
 export const mapAccessGranteeDetailToGrantee = (
     accessGranteeDetail: AccessGranteeDetail,
     currentUser: IUser,
@@ -237,6 +257,8 @@ export const mapAccessGranteeDetailToGrantee = (
         return mapGranularUserAccessToGrantee(accessGranteeDetail, currentUser);
     } else if (isGranularUserGroupAccess(accessGranteeDetail)) {
         return mapGranularUserGroupAccessToGrantee(accessGranteeDetail);
+    } else if (isGranularRulesAccessGrantee(accessGranteeDetail)) {
+        return mapGranularRulesAccessToGrantee(accessGranteeDetail);
     }
 };
 
@@ -250,7 +272,7 @@ export const mapGranteesToShareStatus = (
 ): ShareStatus => {
     const appliedGrantees = getAppliedGrantees(grantees, granteesToAdd, granteesToDelete);
 
-    if (hasGroupAll(appliedGrantees)) {
+    if (hasGroupAll(appliedGrantees) || hasGranteeRules(appliedGrantees)) {
         return "public";
     }
 

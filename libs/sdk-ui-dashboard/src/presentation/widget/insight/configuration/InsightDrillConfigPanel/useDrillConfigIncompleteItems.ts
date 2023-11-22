@@ -1,10 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
+import { v4 as uuidv4 } from "uuid";
+import isEqual from "lodash/isEqual.js";
 import { useCallback, useEffect, useState } from "react";
+import { InsightDrillDefinition, ObjRef } from "@gooddata/sdk-model";
+import { usePrevious } from "@gooddata/sdk-ui";
+
 import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
-import { InsightDrillDefinition } from "@gooddata/sdk-model";
-import { usePrevious } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual.js";
+
+export const generateLocalIdentifier = () => uuidv4().replace(/-/g, "");
 
 const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newItem: IDrillConfigItem) => {
     const found = drillConfigItems.findIndex(
@@ -92,26 +96,31 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
     );
 
     const onOriginSelect = useCallback(
-        (selectedItem: IAvailableDrillTargetItem) => {
+        (selectedItem: IAvailableDrillTargetItem, widgetRef: ObjRef) => {
+            const localIdentifier = generateLocalIdentifier();
             if (isAvailableDrillTargetMeasure(selectedItem)) {
                 const incompleteMeasureItem: IDrillConfigItem = {
                     type: "measure",
-                    localIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
+                    localIdentifier,
+                    originLocalIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
                     title: selectedItem.measure.measureHeaderItem.name,
                     attributes: selectedItem.attributes,
                     drillTargetType: undefined,
                     complete: false,
+                    widgetRef: widgetRef,
                 };
 
                 addIncompleteItem(incompleteMeasureItem);
             } else {
                 const incompleteAttributeItem: IDrillConfigItem = {
                     type: "attribute",
-                    localIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
+                    localIdentifier,
+                    originLocalIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
                     title: selectedItem.attribute.attributeHeader.formOf.name,
                     attributes: selectedItem.intersectionAttributes,
                     drillTargetType: undefined,
                     complete: false,
+                    widgetRef: widgetRef,
                 };
 
                 addIncompleteItem(incompleteAttributeItem);

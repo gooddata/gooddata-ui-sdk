@@ -366,6 +366,9 @@
     "gs.date.date-dataset.other": "Andere",
     "gs.date.date-dataset.related": "Zugehörig",
     "gs.date.date-dataset.unrelated": "Nicht zugehörig",
+    "gs.date.date-dataset.unrelated_hidden": "{count} irrelevante {count, plural, one {Datumsangabe} other {Datumsangaben}} {isShow, select, true {sichtbar} other {ausgeblendet}}.",
+    "gs.date.date-dataset.unrelated.show": "Anzeigen",
+    "gs.date.date-dataset.unrelated.hide": "Verbergen",
     "layout.widget.width.min": "Widget hat minimale Breite",
     "layout.widget.width.max": "Das Widget kann nicht breiter sein",
     "layout.widget.height.min": "Das Widget befindet sich auf der minimalen Höhe",
@@ -382,5 +385,16 @@
     "newDashboard.title": "Betrachtungen hierher ziehen",
     "newDashboard.dropInsight": "Betrachtung ablegen",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ist bereits durch <strong>{childTitle}</strong> gefiltert, filtern Sie direkt oder durch andere Filter.",
-    "attributesDropdown.attributeNameWithData": "mit Daten von"
+    "attributesDropdown.attributeNameWithData": "mit Daten von",
+    "filter.visibilityMode.tooltip.hidden": "Dieser Filter ist ausgeblendet. Der Zugriff ist nur über den Bearbeitungsmodus möglich.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Dieser Filter ist gesperrt. Es kann nur über den Bearbeitungsmodus geändert werden.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Dieser Filter ist gesperrt.",
+    "dateFilterDropdown.save": "Speichern",
+    "filter.configuration.mode.title": "Modus",
+    "filter.configuration.mode.interactive.title": "Interaktiv",
+    "filter.configuration.mode.interactive.tooltip": "Dashboard-Benutzer können den Filter sehen und ändern.",
+    "filter.configuration.mode.locked.title": "Gesperrt",
+    "filter.configuration.mode.locked.tooltip": "Dashboard-Benutzer können den Filter sehen, ihn aber nicht ändern.",
+    "filter.configuration.mode.hidden.title": "Ausgeblendet",
+    "filter.configuration.mode.hidden.tooltip": "Dashboard-Benutzer können den Filter nicht sehen, er ist jedoch angewendet."
 }

@@ -3,11 +3,14 @@ import React from "react";
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
 import { IAttributeFilterBaseProps } from "./types.js";
+import { VisibilityMode } from "../shared/index.js";
 
 /**
  * @public
  */
-export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
+export type IAttributeFilterButtonProps = Omit<IAttributeFilterBaseProps, "disabled"> & {
+    attributeFilterMode?: VisibilityMode;
+};
 
 /**
  * AttributeFilterButton is a component that renders a rich button and a dropdown populated with attribute values
@@ -15,10 +18,12 @@ export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
  * @public
  */
 export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
-    return (
+    const { attributeFilterMode, ...filterBaseProps } = props;
+    return attributeFilterMode !== "hidden" ? (
         <AttributeFilterBase
-            {...props}
+            {...filterBaseProps}
+            disabled={attributeFilterMode === "readonly"}
             DropdownButtonComponent={props.DropdownButtonComponent ?? AttributeFilterDropdownButton}
         />
-    );
+    ) : null;
 };

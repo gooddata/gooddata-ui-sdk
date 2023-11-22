@@ -50,6 +50,7 @@ import uniqBy from "lodash/uniqBy.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -163,7 +164,7 @@ function* loadExistingDashboard(
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx),
+        call(loadCatalog, ctx, cmd),
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
@@ -217,6 +218,9 @@ function* loadExistingDashboard(
                 effectiveDateFilterConfig: effectiveDateFilterConfig.config,
                 isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
             }),
+            attributeFilterConfigsActions.setAttributeFilterConfigs({
+                attributeFilterConfigs: dashboard.attributeFilterConfigs,
+            }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
             legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
@@ -262,7 +266,7 @@ function* initializeNewDashboard(
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx),
+        call(loadCatalog, ctx, cmd),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),

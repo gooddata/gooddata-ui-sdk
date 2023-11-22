@@ -17,6 +17,8 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 .gd-date-filter-button {
     @include typo-mixins.gd-font-base;
 
+    display: flex;
+    gap: 7px;
     position: relative;
     height: 42px;
     margin: 7px 11px 7px 0;
@@ -29,9 +31,19 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     max-width: none !important;
 
     &.disabled {
-        cursor: pointer;
-        user-select: auto;
-        pointer-events: none;
+        &:hover,
+        &:focus,
+        &:active,
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            cursor: default;
+            user-select: auto;
+            box-shadow: none;
+            background: transparent;
+            border-color: transparent;
+            text-decoration: none;
+        }
 
         .button-subtitle::after {
             content: none;

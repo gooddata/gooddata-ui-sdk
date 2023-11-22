@@ -92,6 +92,10 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <ScatterPlotConfigurationPanel
                     locale={this.locale}
@@ -105,6 +109,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

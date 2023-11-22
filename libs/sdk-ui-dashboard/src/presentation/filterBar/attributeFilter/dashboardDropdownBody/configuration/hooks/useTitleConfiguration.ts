@@ -39,8 +39,8 @@ export function useTitleConfiguration(
 
     const onTitleReset = useCallback(() => {
         setTitle(undefined);
-        userInteraction.attributeFilterTitleResetClicked();
-    }, []);
+        userInteraction.attributeFilterInteraction("attributeFilterTitleResetClicked");
+    }, [userInteraction]);
 
     const onConfigurationClose = useCallback(() => {
         setTitle(originalTitle);

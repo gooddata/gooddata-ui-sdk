@@ -31,6 +31,15 @@ export interface ILoadElementsResult {
 }
 
 /**
+ * Result of checking for irrelevant subset of selection.
+ *
+ * @public
+ */
+export interface ILoadIrrelevantElementsResult {
+    elementTitles: string[];
+}
+
+/**
  * Options that can be applied for the particular load of the attribute elements.
  *
  * @public
@@ -121,6 +130,30 @@ export interface IAttributeElementLoader {
      * Cancels the running custom elements load, if it matches the specified correlation.
      */
     cancelCustomElementsLoad(correlation?: Correlation): void;
+
+    /**
+     * Loads the irrelevant subset of currently selected elements.
+     *
+     * Irrelevant elements are the selected elements that may be filtered out by limiting filters.
+     *
+     * @remarks
+     * This is useful, if you want to load additional irrelevant elements with different options than the currently set.
+     *
+     * Multiple loads will run in parallel.
+     *
+     * Cancels the running irrelevant elements load, if it matches the specified correlation, and starts it again.
+     *
+     * You can provide a correlation that will be included in the payload of all callbacks fired as a result of calling this method.
+     *
+     * @param options - options to apply for the custom elements load
+     * @param correlation - correlation that will be included in all callbacks fired by this method
+     */
+    loadIrrelevantElements(correlation?: Correlation): void;
+
+    /**
+     * Cancels the running irrelevant elements load, if it matches the specified correlation.
+     */
+    cancelIrrelevantElementsLoad(correlation?: Correlation): void;
 
     /**
      * Set the limit for the upcoming attribute element loads.
@@ -453,6 +486,49 @@ export interface IAttributeElementLoader {
      * @param callback - callback to run
      */
     onLoadCustomElementsCancel: CallbackRegistration<OnLoadCustomElementsCancelCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when the irrelevant elements load starts.
+     * Returns unsubscribe function, that will unregister it, once called.
+     *
+     * Multiple callbacks can be registered by this function.
+     *
+     * @param callback - callback to run
+     */
+    onLoadIrrelevantElementsStart: CallbackRegistration<OnLoadIrrelevantElementsStartCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when the irrelevant elements load is successfuly completed.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @remarks
+     * Multiple callbacks can be registered by this function.
+     *
+     * @param callback - callback to run
+     */
+    onLoadIrrelevantElementsSuccess: CallbackRegistration<OnLoadIrrelevantElementsSuccessCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when error is thrown during the irrelevant elements load.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @remarks
+     * Multiple callbacks can be registered by this function.
+     *
+     * @param callback - callback to run
+     */
+    onLoadIrrelevantElementsError: CallbackRegistration<OnLoadIrrelevantElementsErrorCallbackPayload>;
+
+    /**
+     * Registers a callback that will be fired when the irrelevant elements load was canceled.
+     * Returns unsubscribe function, that will unregister it.
+     *
+     * @remarks
+     * Multiple callbacks can be registered by this function.
+     *
+     * @param callback - callback to run
+     */
+    onLoadIrrelevantElementsCancel: CallbackRegistration<OnLoadIrrelevantElementsCancelCallbackPayload>;
 }
 
 /**
@@ -547,6 +623,37 @@ export type OnLoadCustomElementsErrorCallbackPayload = Partial<CallbackPayloadWi
  * @public
  */
 export type OnLoadCustomElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+/**
+ * Payload of the onLoadIrrelevantElementsStart callback.
+ *
+ * @public
+ */
+export type OnLoadIrrelevantElementsStartCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+/**
+ * Payload of the onLoadIrrelevantElementsSuccess callback.
+ *
+ * @public
+ */
+export type OnLoadIrrelevantElementsSuccessCallbackPayload = Partial<CallbackPayloadWithCorrelation> &
+    ILoadIrrelevantElementsResult;
+
+/**
+ * Payload of the onLoadIrrelevantElementsError callback.
+ *
+ * @public
+ */
+export type OnLoadIrrelevantElementsErrorCallbackPayload = Partial<CallbackPayloadWithCorrelation> & {
+    error: GoodDataSdkError;
+};
+
+/**
+ * Payload of the onLoadIrrelevantElementsCancel callback.
+ *
+ * @public
+ */
+export type OnLoadIrrelevantElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
 
 /**
  * Payload of the onInitTotalCountStart callback.

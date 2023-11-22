@@ -40,6 +40,7 @@ import {
     ExplainType,
     IExplainProvider,
     IEntitlements,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -57,6 +58,8 @@ import {
     IDimensionDescriptor,
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
+    IBucket,
+    defWithBuckets,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual.js";
@@ -236,6 +239,10 @@ function recordedWorkspace(
         accessControl(): IWorkspaceAccessControlService {
             throw new NotSupported("not supported");
         },
+
+        attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
+        },
     };
 }
 
@@ -363,6 +370,9 @@ function recordedPreparedExecution(
         },
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
+        },
+        withBuckets(...buckets: IBucket[]) {
+            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));

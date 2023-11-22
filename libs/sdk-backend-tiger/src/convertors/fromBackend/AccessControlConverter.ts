@@ -7,6 +7,7 @@ import {
     IAvailableUserGroupAccessGrantee,
     IGranularUserAccess,
     IGranularUserGroupAccess,
+    IGranularRulesAccess,
 } from "@gooddata/sdk-model";
 import {
     GrantedPermission,
@@ -14,6 +15,7 @@ import {
     UserGroupAssignee,
     UserGroupPermission,
     UserPermission,
+    RulePermission,
 } from "@gooddata/api-client-tiger";
 
 const getPermissionLevels = (permissions: GrantedPermission[] = [], source: "direct" | "indirect") => {
@@ -21,6 +23,12 @@ const getPermissionLevels = (permissions: GrantedPermission[] = [], source: "dir
         .filter((permission) => permission.source === source)
         .map((permission) => permission.level as AccessGranularPermission);
 };
+
+export const convertRulesPermission = (rule: RulePermission): IGranularRulesAccess => ({
+    type: "allWorkspaceUsers",
+    permissions: ((rule.permissions ?? []) as unknown) as AccessGranularPermission[],
+    inheritedPermissions: [],
+});
 
 export const convertUserPermission = (user: UserPermission): IGranularUserAccess => ({
     type: "granularUser",

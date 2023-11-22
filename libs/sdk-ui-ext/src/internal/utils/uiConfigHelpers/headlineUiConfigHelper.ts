@@ -7,20 +7,26 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     bucketMeasure,
     bucketMeasures,
+    IColorPalette,
+    IColorPaletteItem,
     IInsightDefinition,
     IMeasure,
     insightBucket,
     ISettings,
     isPoPMeasure,
     isPreviousPeriodMeasure,
+    ITheme,
+    ThemeColor,
 } from "@gooddata/sdk-model";
 import {
     CalculateAs,
-    DEFAULT_COMPARISON_PALETTE,
+    ComparisonColorType,
+    getComparisonRgbColor,
     IChartConfig,
     IComparison,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
+import { parseRGBString } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     IReferencePoint,
@@ -110,10 +116,11 @@ export function buildHeadlineVisualizationConfig(
     const { config, customVisualizationConfig } = options;
 
     const supportedProperties = getHeadlineSupportedProperties(visualizationProperties);
+    const comparisonColorPalette = getComparisonColorPalette(options?.theme);
     const fullConfig: IChartConfig = {
         ...config,
         ...supportedProperties.controls,
-        colorPalette: DEFAULT_COMPARISON_PALETTE,
+        colorPalette: comparisonColorPalette,
     };
 
     return updateConfigWithSettings({ ...fullConfig, ...customVisualizationConfig }, settings);
@@ -149,6 +156,37 @@ export function getComparisonDefaultCalculationType(insight: IInsightDefinition)
         isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure);
 
     return secondaryIsDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
+}
+
+export function getComparisonColorPalette(theme: ITheme): IColorPalette {
+    const themeKpi = theme?.kpi;
+    const themePalette = theme?.palette;
+
+    return [
+        getComparisonColorPaletteItem(ComparisonColorType.POSITIVE, themeKpi?.value?.positiveColor),
+        getComparisonColorPaletteItem(ComparisonColorType.NEGATIVE, themeKpi?.value?.negativeColor),
+        getComparisonColorPaletteItem(
+            ComparisonColorType.EQUALS,
+            themeKpi?.secondaryInfoColor,
+            themePalette?.complementary?.c6,
+        ),
+    ];
+}
+
+function getComparisonColorPaletteItem(
+    comparisonColorType: ComparisonColorType,
+    firstPriorityThemeColor: ThemeColor,
+    secondPriorityThemeColor?: ThemeColor,
+): IColorPaletteItem {
+    const firstPriorityRgbColor = firstPriorityThemeColor ? parseRGBString(firstPriorityThemeColor) : null;
+    const secondPriorityRgbColor = secondPriorityThemeColor ? parseRGBString(secondPriorityThemeColor) : null;
+    return {
+        guid: comparisonColorType,
+        fill:
+            firstPriorityRgbColor ||
+            secondPriorityRgbColor ||
+            getComparisonRgbColor(null, comparisonColorType),
+    };
 }
 
 function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure {

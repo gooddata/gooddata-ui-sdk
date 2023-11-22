@@ -510,6 +510,54 @@ export const isDashboardAttributeFilterSelectionModeChanged =
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
     );
 
+/**
+ * Payload of the {@link isDashboardAttributeFilterConfigModeChanged} event.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigModeChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of mode represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+/**
+ * This event is emitted when the attribute filter mode is change.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED";
+    readonly payload: DashboardAttributeFilterConfigModeChangedPayload;
+}
+
+export function dashboardAttributeConfigModeChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+): DashboardAttributeFilterConfigModeChanged {
+    return {
+        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
+        ctx,
+        payload: {
+            filter,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigModeChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterConfigModeChanged =
+    eventGuard<DashboardAttributeFilterConfigModeChanged>(
+        "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
+    );
+
 //
 //
 //

@@ -160,6 +160,10 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <BubbleChartConfigurationPanel
                     locale={this.locale}
@@ -173,6 +177,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

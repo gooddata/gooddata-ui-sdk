@@ -42,6 +42,11 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         isFilteredByParentFilters,
         fullscreenOnMobile,
         selectionMode,
+        title,
+        enableShowingFilteredElements,
+        onShowFilteredElements,
+        irrelevantSelection,
+        onClearIrrelevantSelection,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
@@ -79,6 +84,11 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 parentFilterTitles={parentFilterTitles}
                 isFilteredByParentFilters={isFilteredByParentFilters}
                 error={initialElementsPageError ?? nextElementsPageError}
+                attributeTitle={title}
+                enableShowingFilteredElements={enableShowingFilteredElements}
+                onShowFilteredElements={onShowFilteredElements}
+                irrelevantSelection={irrelevantSelection}
+                onClearIrrelevantSelection={onClearIrrelevantSelection}
             />
             <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}

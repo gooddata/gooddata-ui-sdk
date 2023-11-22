@@ -28,7 +28,11 @@ import {
 } from "@gooddata/sdk-ui";
 import first from "lodash/first.js";
 import last from "lodash/last.js";
-import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types.js";
+import {
+    DashboardDrillDefinition,
+    IDrillDownDefinition,
+    IGlobalDrillDownAttributeHierarchyDefinition,
+} from "../../types.js";
 import isEqual from "lodash/isEqual.js";
 
 export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/internal";
@@ -166,7 +170,10 @@ export function filterDrillsByDrillEvent(
 }
 
 export function getDrillOriginLocalIdentifier(
-    drillDefinition: InsightDrillDefinition | IDrillDownDefinition,
+    drillDefinition:
+        | InsightDrillDefinition
+        | IDrillDownDefinition
+        | IGlobalDrillDownAttributeHierarchyDefinition,
 ): string {
     const { origin } = drillDefinition;
 

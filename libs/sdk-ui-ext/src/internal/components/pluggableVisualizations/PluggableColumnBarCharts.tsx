@@ -22,6 +22,7 @@ import {
     COLUMN_BAR_CHART_UICONFIG,
     COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES,
     MAX_CATEGORIES_COUNT,
+    MAX_METRICS_COUNT,
     MAX_STACKS_COUNT,
 } from "../../constants/uiConfig.js";
 import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
@@ -33,6 +34,7 @@ import {
     IUiConfig,
     IVisConstruct,
     IDrillDownDefinition,
+    IBucketOfFun,
 } from "../../interfaces/Visualization.js";
 import {
     getAllCategoriesAttributeItems,
@@ -44,6 +46,7 @@ import {
     isDateBucketItem,
     isNotDateBucketItem,
     hasSameDateDimension,
+    limitNumberOfMeasuresInBuckets,
 } from "../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -142,6 +145,11 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
+    private getBucketMeasures(buckets: IBucketOfFun[] = []) {
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
+        return getFilteredMeasuresForStackedCharts(limitedBuckets);
+    }
+
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         if (this.isMultipleDatesEnabled()) {
             this.configureBucketsWithMultipleDates(extendedReferencePoint);
@@ -149,7 +157,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         }
 
         const buckets = extendedReferencePoint?.buckets ?? [];
-        const measures = getFilteredMeasuresForStackedCharts(buckets);
+        const measures = this.getBucketMeasures(buckets);
         const dateItems = getDateItems(buckets);
         const mainDateItem = getMainDateItem(dateItems);
         const categoriesCount =
@@ -236,7 +244,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         stacks: IBucketItem[];
     } {
         const buckets = extendedReferencePoint?.buckets ?? [];
-        const measures = getFilteredMeasuresForStackedCharts(buckets);
+        const measures = this.getBucketMeasures(buckets);
         const viewByMaxItemCount = this.getViewByMaxItemCount(extendedReferencePoint);
         const stackByMaxItemCount = this.getStackByMaxItemCount(extendedReferencePoint);
         const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);

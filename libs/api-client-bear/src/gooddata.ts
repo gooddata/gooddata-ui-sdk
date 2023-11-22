@@ -15,6 +15,28 @@ import { AttributesMapLoaderModule } from "./utils/attributesMapLoader.js";
 import { LdmModule } from "./ldm.js";
 import { OrganizationModule } from "./organization.js";
 
+export interface ISDK {
+    config: ConfigModule;
+    xhr: XhrModule;
+    user: UserModule;
+    md: MetadataModule;
+    mdExt: MetadataModuleExt;
+    execution: ExecutionModule;
+    project: ProjectModule;
+    report: ReportModule;
+    dashboard: DashboardModule;
+    catalogue: CatalogueModule;
+    ldm: LdmModule;
+    configStorage: IConfigStorage;
+    organization: OrganizationModule;
+    utils: {
+        loadAttributesMap: any;
+        getAttributesDisplayForms: any;
+    };
+
+    clone(): ISDK;
+}
+
 /**
  * This package provides low-level functions for communication with the GoodData platform.
  *
@@ -41,7 +63,7 @@ import { OrganizationModule } from "./organization.js";
  * on [GoodData Developer Portal](http://developer.gooddata.com/)
  *
  */
-export class SDK {
+export class SDK implements ISDK {
     public config: ConfigModule;
     public xhr: XhrModule;
     public user: UserModule;

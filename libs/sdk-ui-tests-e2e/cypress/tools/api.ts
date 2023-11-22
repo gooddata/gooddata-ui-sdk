@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { getHost } from "../support/constants";
+import { getHost, getProjectId, getBackend } from "../support/constants";
 
 export const getTigerAuthToken = (): string => Cypress.env("TIGER_API_TOKEN");
 
@@ -53,4 +53,38 @@ export class Api {
             req.headers["Authorization"] = `Bearer ${userToken}`;
         });
     }
+
+    postDrillDownAttribute = (drillFromAttribute: string, payload: string) => {
+        cy.request({
+            method: "POST",
+            url: `${getHost()}/gdc/md/${getProjectId()}/obj/${drillFromAttribute}`,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: payload,
+        }).then((response) => {
+            expect(response.status).eq(200);
+        });
+    };
+
+    setUpDrillDownAttribute = (drillFromAttribute: string, drillToAttribute?: string) => {
+        if (getBackend() !== "BEAR") {
+            return;
+        }
+
+        cy.request({
+            method: "GET",
+            url: `${getHost()}/gdc/md/${getProjectId()}/obj/${drillFromAttribute}`,
+            headers: {
+                Accept: "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).eq(200);
+            const payload = response.body;
+            drillToAttribute
+                ? (payload.attribute.content.drillDownStepAttributeDF = `/gdc/md/${getProjectId()}/obj/${drillToAttribute}`)
+                : delete payload.attribute.content.drillDownStepAttributeDF;
+            this.postDrillDownAttribute(drillFromAttribute, payload);
+        });
+    };
 }

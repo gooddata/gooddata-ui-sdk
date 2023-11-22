@@ -962,7 +962,8 @@
                             "GREENPLUM",
                             "AZURESQL",
                             "SYNAPSESQL",
-                            "DATABRICKS"
+                            "DATABRICKS",
+                            "GD_STORAGE"
                         ]
                     },
                     "url": {

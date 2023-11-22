@@ -17,9 +17,21 @@ import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 describe("comparisonHelper", () => {
     describe("getComparisonDefaultValues", () => {
         const PERCENT_ROUNDED_FORMAT = "#,##0%";
-        const CHANGE_LABEL_KEY = "visualizations.headline.comparison.title.change";
-        const RATIO_LABEL_KEY = "visualizations.headline.comparison.title.ratio";
-        const DIFFERENCE_LABEL_KEY = "visualizations.headline.comparison.title.difference";
+        const CHANGE_LABEL_KEYS = {
+            nonConditionalKey: "visualizations.headline.comparison.title.change",
+            positiveKey: "visualizations.headline.comparison.title.change.positive",
+            negativeKey: "visualizations.headline.comparison.title.change.negative",
+            equalsKey: "visualizations.headline.comparison.title.change.equals",
+        };
+        const RATIO_LABEL_KEYS = {
+            nonConditionalKey: "visualizations.headline.comparison.title.ratio",
+        };
+        const DIFFERENCE_LABEL_KEYS = {
+            nonConditionalKey: "visualizations.headline.comparison.title.difference",
+            positiveKey: "visualizations.headline.comparison.title.difference.positive",
+            negativeKey: "visualizations.headline.comparison.title.difference.negative",
+            equalsKey: "visualizations.headline.comparison.title.difference.equals",
+        };
         const differenceProperties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -42,32 +54,32 @@ describe("comparisonHelper", () => {
             [
                 "Should use default calculation type [DIFFERENCE]",
                 { calculationType: CalculateAs.DIFFERENCE, props: {} },
-                { format: null, label: DIFFERENCE_LABEL_KEY },
+                { format: null, labels: DIFFERENCE_LABEL_KEYS },
             ],
             [
                 "Should use default calculation type [CHANGE]",
                 { calculationType: CalculateAs.CHANGE, props: {} },
-                { format: PERCENT_ROUNDED_FORMAT, label: CHANGE_LABEL_KEY },
+                { format: PERCENT_ROUNDED_FORMAT, labels: CHANGE_LABEL_KEYS },
             ],
             [
                 "Should use default calculation type [RATIO]",
                 { calculationType: CalculateAs.RATIO, props: {} },
-                { format: PERCENT_ROUNDED_FORMAT, label: RATIO_LABEL_KEY },
+                { format: PERCENT_ROUNDED_FORMAT, labels: RATIO_LABEL_KEYS },
             ],
             [
                 "Should use provided calculation type [DIFFERENCE]",
                 { calculationType: null, props: differenceProperties },
-                { format: null, label: DIFFERENCE_LABEL_KEY },
+                { format: null, labels: DIFFERENCE_LABEL_KEYS },
             ],
             [
                 "Should use provided calculation type [CHANGE]",
                 { calculationType: null, props: changeProperties },
-                { format: PERCENT_ROUNDED_FORMAT, label: CHANGE_LABEL_KEY },
+                { format: PERCENT_ROUNDED_FORMAT, labels: CHANGE_LABEL_KEYS },
             ],
             [
                 "Should use provided calculation type [RATIO]",
                 { calculationType: null, props: ratioProperties },
-                { format: PERCENT_ROUNDED_FORMAT, label: RATIO_LABEL_KEY },
+                { format: PERCENT_ROUNDED_FORMAT, labels: RATIO_LABEL_KEYS },
             ],
         ];
 
@@ -79,15 +91,15 @@ describe("comparisonHelper", () => {
                     calculationType: CalculationType;
                     props: IVisualizationProperties<IComparisonControlProperties>;
                 },
-                expected: { format: string; label: string },
+                expected: { format: string; labels: string },
             ) => {
-                const { defaultFormat, defaultLabelKey } = getComparisonDefaultValues(
+                const { defaultFormat, defaultLabelKeys } = getComparisonDefaultValues(
                     data.calculationType,
                     data.props,
                 );
 
                 expect(defaultFormat).toEqual(expected.format);
-                expect(defaultLabelKey).toEqual(expected.label);
+                expect(defaultLabelKeys).toEqual(expected.labels);
             },
         );
     });

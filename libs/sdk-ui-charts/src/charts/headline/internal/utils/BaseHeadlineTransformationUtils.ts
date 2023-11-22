@@ -16,6 +16,7 @@ import {
     IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
+import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
@@ -70,7 +71,7 @@ export function createBaseHeadlineItem(
     executionData: IHeadlineExecutionData,
     isDrillable: boolean,
     elementType: HeadlineElementType,
-): IBaseHeadlineItem {
+): IBaseHeadlineItem<IHeadlineDataItem> {
     const data = createHeadlineDataItem(executionData, isDrillable);
 
     return data

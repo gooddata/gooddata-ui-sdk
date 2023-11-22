@@ -4,11 +4,7 @@
 import fs from "fs";
 import "../../scripts/env.js";
 
-import {
-    createTigerWorkspaceWithPrefix,
-    setTigerWorkspaceLayoutFromFixtures,
-    defaultScanPublishPDMForDatasource,
-} from "@gooddata/fixtures";
+import { createTigerWorkspaceWithPrefix, setTigerWorkspaceLayoutFromFixtures } from "@gooddata/fixtures";
 import { log, logLn } from "@gooddata/fixtures/logger.js";
 
 import {
@@ -23,7 +19,6 @@ const childWSOutputFile = TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG["goodsales"];
 
 async function createFixture(workspacePrefix, fixtureType, dataSource, token, host, backend) {
     const workspaceId = await createTigerWorkspaceWithPrefix(workspacePrefix, token, host, backend);
-    await defaultScanPublishPDMForDatasource(dataSource, token, host, backend);
 
     const tigerMetadataExtension = TIGER_FIXTURE_METADATA_EXTENSIONS[fixtureType];
     logLn(

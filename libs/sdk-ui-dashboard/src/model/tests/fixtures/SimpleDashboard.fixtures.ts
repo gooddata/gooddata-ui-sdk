@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures";
+import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 
 export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
@@ -242,7 +242,10 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
     ],
 };
 
+export const DrillToDashboardWithThreeSectionsLocalIdentifier = "b4c6999557164163a9e0e75ec74cb8db";
+
 export const DrillToDashboardFromWonMeasureDefinition: IDrillToDashboard = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb854",
     type: "drillToDashboard",
     origin: {
         type: "drillFromMeasure",
@@ -258,6 +261,7 @@ export const DrillToDashboardFromWonMeasureDefinition: IDrillToDashboard = {
 };
 
 export const DrillToDashboardFromProductAttributeDefinition: IDrillToDashboard = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb8d4",
     type: "drillToDashboard",
     origin: {
         type: "drillFromAttribute",
@@ -273,6 +277,7 @@ export const DrillToDashboardFromProductAttributeDefinition: IDrillToDashboard =
 };
 
 export const DrillToToInsightFromWonMeasureDefinition: IDrillToInsight = {
+    localIdentifier: DrillToDashboardWithThreeSectionsLocalIdentifier,
     type: "drillToInsight",
     origin: {
         type: "drillFromMeasure",
@@ -285,6 +290,7 @@ export const DrillToToInsightFromWonMeasureDefinition: IDrillToInsight = {
 };
 
 export const DrillToCustomUrlFromMeasureDefinition: IDrillToCustomUrl = {
+    localIdentifier: DrillToDashboardWithThreeSectionsLocalIdentifier,
     type: "drillToCustomUrl",
     transition: "new-window",
     origin: {
@@ -299,6 +305,7 @@ export const DrillToCustomUrlFromMeasureDefinition: IDrillToCustomUrl = {
 };
 
 export const DrillToAttributeUrlFromMeasureDefinition: IDrillToAttributeUrl = {
+    localIdentifier: "b4c6999557164163a9e0e75ec74cb8d3",
     type: "drillToAttributeUrl",
     transition: "new-window",
     origin: {

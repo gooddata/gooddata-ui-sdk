@@ -8,7 +8,7 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/app-toolkit"
     },
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "type": "module",
     "exports": "./esm/index.js",
     "types": "./esm/index.d.ts",
@@ -21,7 +21,8 @@
         "esm/**/*.json",
         "esm/**/*.d.ts",
         "esm/**/*.map",
-        "esm/**/*.tgz"
+        "esm/**/*.tgz",
+        "NOTICE"
     ],
     "scripts": {
         "clean": "rm -rf ci dist esm build coverage *.log",
@@ -29,6 +30,7 @@
         "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "build-esm": "tsc -p tsconfig.build.json",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "vitest watch --passWithNoTests",
         "test-once": "vitest run --passWithNoTests",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",

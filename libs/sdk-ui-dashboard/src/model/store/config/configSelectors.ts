@@ -563,3 +563,42 @@ export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelect
         return isKPIDashboardImplicitDrillDownEnabled || isAttribueHierarchiesEnabled;
     },
 );
+
+/**
+ * Returns whether the unrelated data datasets are shown.
+ *
+ * @internal
+ */
+export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableUnavailableItemsVisible ?? false;
+    },
+);
+
+/**
+ * Returns whether new KD dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDDependentFilters: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDDependentFilters ?? false;
+    },
+);
+
+/**
+ * Returns whether KD dependent filters are enabled.
+ * On Bear, this is driven by enableKPIDashboardDependentFilters.
+ * On Tiger, it is driven by enableKDDependentFilters.
+ *
+ * @internal
+ */
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
+    selectEnableKDDependentFilters,
+    selectIsKPIDashboardDependentFiltersEnabled,
+    (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
+        return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
+    },
+);

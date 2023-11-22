@@ -182,6 +182,21 @@
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the change between two values.",
         "limit": 0
     },
+    "visualizations.headline.comparison.title.change.positive": {
+        "value": "Increase",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is greater then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.change.negative": {
+        "value": "Decrease",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is less then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.change.equals": {
+        "value": "No change",
+        "comment": "The label will be used when the arithmetic operation is `change` and primary value is equals secondary value.",
+        "limit": 0
+    },
     "visualizations.headline.comparison.title.ratio": {
         "value": "of",
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the the ratio between two values.",
@@ -190,6 +205,21 @@
     "visualizations.headline.comparison.title.difference": {
         "value": "Difference",
         "comment": "The label of the dropdown option that specifies the arithmetic operation to calculate the difference between two values.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.positive": {
+        "value": "Increase",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is greater then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.negative": {
+        "value": "Decrease",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is less then secondary value.",
+        "limit": 0
+    },
+    "visualizations.headline.comparison.title.difference.equals": {
+        "value": "No difference",
+        "comment": "The label will be used when the arithmetic operation is `difference` and primary value is equals secondary value.",
         "limit": 0
     },
     "visualization.numericValues.k": {
@@ -579,6 +609,11 @@
     "dateFilterDropdown.setDefault": {
         "value": "Set default date filter for{nbsp}viewers:",
         "comment": "Do not translate non-breakable space '{nbsp}'",
+        "limit": 0
+    },
+    "dateFilterDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in date filter dropdown",
         "limit": 0
     },
     "filters.thisSecond.title": {
@@ -1584,6 +1619,46 @@
         "comment": "",
         "limit": 0
     },
+    "attributesDropdown.relevantValues": {
+        "value": "Relevant values only.{nbsp}",
+        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "limit": 0
+    },
+    "attributesDropdown.relevantValues.tooltip": {
+        "value": "Available values for <strong>{child}</strong> are filtered by selected <strong>{parents}</strong>.",
+        "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.noRelevantValues": {
+        "value": "No relevant values",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.noRelevantValues.tooltip": {
+        "value": "Your selection in the dependent filter has resulted in no matching values for this filter.{break}Click 'Show all' to see all available options.",
+        "comment": "Do not translate '{break}' variable.",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues": {
+        "value": "Irrelevant value selected.{nbsp}",
+        "comment": "Do not translate non-breakable space '{nbsp}'",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues.tooltip": {
+        "value": "Selected value is no longer relevant due to changes in <strong>{parents}</strong>.",
+        "comment": "Do not translate HTML markup enclosed in <> and {parents} placeholder as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.irrelevantValues.clear": {
+        "value": "Clear",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.showAll": {
+        "value": "Show all",
+        "comment": "",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
@@ -2088,6 +2163,398 @@
         "translate": false,
         "limit": 0
     },
+    "userGroupDialog.workspace.noMatchingItems": {
+        "value": "No matching workspaces.",
+        "comment": "Information shown to the user when query in search input does no match any workspace.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchPlaceholder": {
+        "value": "Search workspaces",
+        "comment": "Placeholder of empty workspace dialog search input.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchError": {
+        "value": "Failed to load workspaces. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.view": {
+        "value": "This user does not have any members.{br}Add one now.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.edit": {
+        "value": "No workspace selected.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.title": {
+        "value": "Add workspace permission",
+        "comment": "Title of dialog used for granting workspace permission to users or user groups.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addButton": {
+        "value": "Add",
+        "comment": "Title of confirm button of grant workspace permission dialog",
+        "limit": 0
+    },
+    "userGroupDialog.tab.workspaces": {
+        "value": "Permission to workspaces",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.groups": {
+        "value": "Groups",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.details": {
+        "value": "Details",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addWorkspace": {
+        "value": "Add permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addToGroup": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.deleteUser": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeSuccess": {
+        "value": "Great! We deleted the permission!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeError": {
+        "value": "Deletion of the permission failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addSuccess": {
+        "value": "Great! We added the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addError": {
+        "value": "Added of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeSuccess": {
+        "value": "Great! We changed the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeError": {
+        "value": "Change of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes": {
+        "value": "Hierarchy bellow",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes.tooltip": {
+        "value": "Apply permission also to all child workspaces of this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no": {
+        "value": "This workspace",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no.tooltip": {
+        "value": "Apply permission only on this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view": {
+        "value": "View",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view.tooltip": {
+        "value": "Allow to view the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport": {
+        "value": "View & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport.tooltip": {
+        "value": "Allow to view and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze": {
+        "value": "Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze.tooltip": {
+        "value": "Allow to analyze the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport": {
+        "value": "Analyze & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport.tooltip": {
+        "value": "Allow to analyze and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage": {
+        "value": "Manage",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage.tooltip": {
+        "value": "Allow to manage the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.learn.more.link": {
+        "value": "Learn more",
+        "comment": "Link with additional info",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToDashboard.tooltip": {
+        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context.",
+        "comment": "Tooltip that explain what happens when drilling to dashboard",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToInsight.tooltip": {
+        "value": "Open a related insight, maintaining the applied filters from the original view.",
+        "comment": "Tooltip that explain what happens when drilling to insight",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillToUrl.tooltip": {
+        "value": "Open a custom URL with dynamic parameters based on the selected data point.",
+        "comment": "Tooltip that explain what happens when drilling to custom URL",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown": {
+        "value": "Drill down",
+        "comment": "The title of the drill down action.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip": {
+        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level.",
+        "comment": "Tooltip that explain what happens when drilling down",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
+        "value": "Drill down is turned off in this insight's configuration.",
+        "comment": "Tooltip that explain drill down is disabled by insight's configuration",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric": {
+        "value": "Drill down can only be set for attributes, not metrics.",
+        "comment": "Tooltip that explain drill down is disabled for metrics",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.emtpy.hierarchy.info": {
+        "value": "Attribute must be in a hierarchy to enable drill down.",
+        "comment": "Label show on drill down configuration that there is no hierarchy defined for the attribute",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectHierarchy": {
+        "value": "Choose hierarchy…",
+        "comment": "Hint guiding users that attribute hierarchy in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drilldown.create.hierarchy": {
+        "value": "Create attribute hierarchy",
+        "comment": "Link to create attribute hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.untitled": {
+        "value": "Untitled attribute hierarchy",
+        "comment": "Default title in attribute hierarchy editor",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.hierarchy.levels": {
+        "value": "Hierarchy levels",
+        "comment": "Label show hierarchy levels",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.cancel": {
+        "value": "Cancel",
+        "comment": "Text of cancel button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.create": {
+        "value": "Create hierarchy",
+        "comment": "Text of create button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.save": {
+        "value": "Save changes",
+        "comment": "Text of save button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.button.delete": {
+        "value": "Delete",
+        "comment": "Text of delete button",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.delete.confirm.title": {
+        "value": "Delete attribute hierarchy?",
+        "comment": "Title in confirm dialog when deleting hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.delete.confirm.message": {
+        "value": "All existing drill down interactions using this hierarchy will be removed.",
+        "comment": "Text in confirm dialog when deleting hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.remove.attribute": {
+        "value": "Remove",
+        "comment": "Tooltip for button remove attribute in hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute": {
+        "value": "Add attribute",
+        "comment": "Text for button add attribute in hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute.above": {
+        "value": "Add attribute above",
+        "comment": "Text for button add attribute above the current item",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.add.attribute.bellow": {
+        "value": "Add attribute bellow",
+        "comment": "Text for button add attribute bellow the current item",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howToWork.link": {
+        "value": "How to work with hierarchies",
+        "comment": "Link to document describe how attribute hierarchy works",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.attribute.dropdown.title": {
+        "value": "Choose attribute…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.attribute.dropdown.search": {
+        "value": "Search…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.note.title": {
+        "value": "Note:",
+        "comment": "Label for a note title",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.note.message": {
+        "value": "Hierarchy is applied to all visualizations containing one of its attribute.",
+        "comment": "Information shown in create hierarchy editor",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.title": {
+        "value": "How it works",
+        "comment": "Title of description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.message.heading": {
+        "value": "Hierarchy is applied to all visualizations.",
+        "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.howItWorks.message.content": {
+        "value": "Drill down interaction will be enabled to not only this visualization, but all visualization containing one of the attributes in hierarchy.",
+        "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.generic.date.title": {
+        "value": "Generic date",
+        "comment": "Title of hierarchy for date",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.generic.date.info": {
+        "value": "This hierarchy is generated automatically and applies to any date dimension.",
+        "comment": "Text show in date hierarchy",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.hierarchy.levels": {
+        "value": "Hierarchy levels",
+        "comment": "Label show hierarchy levels",
+        "limit": 0
+    },
+    "attributeHierarchyList.tooltip.button.edit": {
+        "value": "Edit",
+        "comment": "Text for edit button",
+        "limit": 0
+    },
+    "catalog.attribute.tooltip.hierarchy.title": {
+        "value": "Hierarchy",
+        "comment": "Title of hierarchy section",
+        "limit": 0
+    },
+    "visualizationConfig.interactions.section.title": {
+        "value": "Interactions",
+        "comment": "Title of interactions section",
+        "limit": 0
+    },
+    "visualizationConfig.interactions.section.drilldown": {
+        "value": "Drill down",
+        "comment": "Text of drill down option",
+        "limit": 0
+    },
+    "workspaceHierarchy.lockedInsight|insight": {
+        "value": "Only Admins can save changes to this insight.",
+        "comment": "Shown when hovering over lock indicator.",
+        "limit": 0
+    },
+    "workspaceHierarchy.lockedInsight|report": {
+        "value": "Only Admins can save changes to this report.",
+        "comment": "Shown when hovering over lock indicator.",
+        "translate": false,
+        "limit": 0
+    },
+    "workspaceHierarchy.inheritedInsight|insight": {
+        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "limit": 0
+    },
+    "workspaceHierarchy.inheritedInsight|report": {
+        "value": "You cannot edit or delete this report.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "translate": false,
+        "limit": 0
+    },
     "userManagement.workspace.noMatchingItems": {
         "value": "No matching workspaces.",
         "comment": "Information shown to the user when query in search input does no match any workspace.",
@@ -2104,13 +2571,13 @@
         "limit": 0
     },
     "userManagement.workspace.emptySelection.view": {
-        "value": "This user does not have permissions for any workspaces or data sources.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "value": "This user does not have permissions for any workspaces.",
+        "comment": "Information shown when no workspaces were selected yet.",
         "limit": 0
     },
     "userManagement.workspace.emptySelection.edit": {
         "value": "No workspace selected.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "comment": "Shown when user did not typed anything to the search dialog.",
         "limit": 0
     },
     "userManagement.workspace.title": {
@@ -2120,626 +2587,641 @@
     },
     "userManagement.workspace.addButton": {
         "value": "Add",
-        "comment": "Title of confirm button of grant workspace permission dialog",
+        "comment": "Title of confirm button that adds new items to the list.",
         "limit": 0
     },
     "userManagement.userGroups.addButton": {
         "value": "Add",
-        "comment": "",
+        "comment": "Title of confirm button that adds new items to the list.",
         "limit": 0
     },
     "userManagement.userGroups.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Button that closes the current dialog.",
         "limit": 0
     },
     "userManagement.tab.workspaces": {
         "value": "Permission ({count})",
-        "comment": "",
+        "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
         "limit": 0
     },
     "userManagement.tab.groups": {
         "value": "Groups ({count})",
-        "comment": "",
+        "comment": "Label of tab that lists user groups user is member of. Do not translate placeholder {count}. It will be replaced by number of assigned groups in runtime.",
         "limit": 0
     },
     "userManagement.tab.users": {
         "value": "Members ({count})",
-        "comment": "",
+        "comment": "Label of tab that lists user members of a user group. Do not translate placeholder {count}. It will be replaced by number of group members in runtime.",
         "limit": 0
     },
     "userManagement.tab.details": {
         "value": "Details",
-        "comment": "",
+        "comment": "Label of tab that lists user details (name, surname, etc.)",
         "limit": 0
     },
     "userManagement.buttons.addWorkspace": {
         "value": "Add permission",
-        "comment": "",
+        "comment": "Label of button that opens selection of workspaces user can get permissions to.",
         "limit": 0
     },
     "userManagement.buttons.addToGroup": {
         "value": "Add to group",
-        "comment": "",
+        "comment": "Label of button that opens selection of groups user can be assigned into to.",
         "limit": 0
     },
     "userManagement.buttons.addUser": {
         "value": "Add members",
-        "comment": "",
+        "comment": "Label of button that opens selection of users that can be assigned into the group.",
         "limit": 0
     },
     "userManagement.buttons.edit": {
         "value": "Edit",
-        "comment": "",
+        "comment": "Label of button that edit user's details (name, surname, etc.)",
         "limit": 0
     },
     "userManagement.users.deleteLink": {
         "value": "Delete user",
-        "comment": "",
+        "comment": "Label of link that deletes the user.",
         "limit": 0
     },
     "userManagement.userGroups.deleteLink": {
         "value": "Delete group",
-        "comment": "",
+        "comment": "Label of link that deletes the user grouo.",
         "limit": 0
     },
     "userManagement.closeButton": {
         "value": "Close",
-        "comment": "",
+        "comment": "Label of button that closes the dialog",
         "limit": 0
     },
     "userManagement.workspace.removeSuccess": {
         "value": "Great! You have successfully deleted the permission.",
-        "comment": "",
+        "comment": "Confirm message shown to user when workspace permission was successfully deleted.",
         "limit": 0
     },
     "userManagement.workspace.removeError": {
         "value": "Deletion of the permission failed.",
-        "comment": "",
+        "comment": "Error message shown to user when workspace permission deletion failed.",
         "limit": 0
     },
     "userManagement.workspace.addSuccess": {
         "value": "Great! You have successfully added the permission(s).",
-        "comment": "",
+        "comment": "Confirm message shown to user when one or more workspace permissions were successfully added to a single user.",
         "limit": 0
     },
     "userManagement.workspace.addError": {
         "value": "Addition of the permission(s) failed.",
-        "comment": "",
+        "comment": "Error message shown to user when workspace permission addition failed.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addSuccess": {
         "value": "Great! You have successfully added permissions to the users.",
-        "comment": "",
+        "comment": "Confirmation message shown to the user when workspace permission was added successfully to multiple users.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addError": {
         "value": "Addition of the permission to the users failed.",
-        "comment": "",
+        "comment": "Error message shown to user when addition of workspace permission to multiple users failed.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addSuccess": {
         "value": "Great! You have successfully added permissions to the groups.",
-        "comment": "",
+        "comment": "Confirmation message shown to the user when workspace permissions were added to multiple user groups successfully.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addError": {
         "value": "Addition of the permission to the groups failed.",
-        "comment": "",
+        "comment": "Error message shown to user when addition of workspace permission to multiple user groups failed.",
         "limit": 0
     },
     "userManagement.workspace.changeSuccess": {
         "value": "Great! You have successfully changed the permission(s).",
-        "comment": "",
+        "comment": "Confirmation message shown to the user when change of one or more workspace permission succeeded.",
         "limit": 0
     },
     "userManagement.workspace.changeError": {
         "value": "Change of the permission(s) failed.",
-        "comment": "",
+        "comment": "Error message shown to the user when change of one or more workspace permissions failed.",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.yes": {
         "value": "Include sub-hierarchy",
-        "comment": "",
+        "comment": "Label of option that states that selected permission will be added to the selected workspace and to all workspaces in tree hierarchy of workspaces under it.",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.yes.tooltip": {
         "value": "Apply the permission to this workspace and all its child workspaces.",
-        "comment": "",
+        "comment": "Tooltip that explains option that adds permission to workspace and all the child workpaces in the tree hierarchy.",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.no": {
         "value": "This workspace",
-        "comment": "",
+        "comment": "Label of option that states that selected permission will be added just to the selected workspace and not to workspace in tree hierarchy of workspaces under it.",
         "limit": 0
     },
     "userManagement.workspace.hierarchicalPermission.no.tooltip": {
         "value": "Apply the permission only to this workspace.",
-        "comment": "",
+        "comment": "Tooltip that explains option that adds permission to only the selected workspace and not to any of the child workpaces in the tree hierarchy.",
         "limit": 0
     },
     "userManagement.workspace.permission.view": {
         "value": "View",
-        "comment": "",
+        "comment": "Name of the workspace permission that allows user view workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permissionUser.view.tooltip": {
         "value": "The user can view dashboards that have been shared with them.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user view workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permissionGroup.view.tooltip": {
         "value": "The group members can view dashboards that have been shared with the group.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user group view workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permission.viewExport": {
         "value": "View & Export",
-        "comment": "",
+        "comment": "Name of the workspace permission that allows user view and export workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permissionUser.viewExport.tooltip": {
         "value": "Covers the View permission. Additionally, the user can export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user view and export workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permissionGroup.viewExport.tooltip": {
         "value": "Covers the View permission. Additionally, the  group members can export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user group view and export workspace objects.",
         "limit": 0
     },
     "userManagement.workspace.permission.analyze": {
         "value": "Analyze",
-        "comment": "",
+        "comment": "Name of the workspace permission that allows user analyze data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionUser.analyze.tooltip": {
         "value": "Covers the View permission. Additionally, the user can create, edit or delete dashboards and visualizations, and view the LDM and metrics.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user analyze data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionGroup.analyze.tooltip": {
         "value": "Covers the View permission. Additionally, the  group members can create, edit or delete dashboards and visualizations, and view the LDM and metrics.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user group analyze data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permission.analyzeExport": {
         "value": "Analyze & Export",
-        "comment": "",
+        "comment": "Name of the workspace permission that allows user analyze and export data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionUser.analyzeExport.tooltip": {
         "value": "Covers the Analyze permission. Additionally, the user can create, edit or delete dashboards and visualizations, and view the LDM and metrics. They can also export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user analyze and export data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionGroup.analyzeExport.tooltip": {
         "value": "Covers the Analyze permission. Additionally, the  group members can create, edit or delete dashboards and visualizations, and view the LDM and metrics. They can also export dashboards to PDF files and tabular data from visualizations to XLSX and CSV files.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user analyze and export and analyze data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permission.manage": {
         "value": "Manage",
-        "comment": "",
+        "comment": "Name of the workspace permission that allows user to fully manage data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionUser.manage.tooltip": {
         "value": "Covers the View, Analyze, and Export permissions. Additionally, the user can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user to fully manage data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permissionGroup.manage.tooltip": {
         "value": "Covers the View, Analyze, and Export permissions. Additionally, the group members can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
-        "comment": "",
+        "comment": "Tooltip of the workspace permission that allows user group to fully manage data in workspace.",
         "limit": 0
     },
     "userManagement.workspace.permission.remove": {
         "value": "Remove",
-        "comment": "",
+        "comment": "Label of option that removes workspace permission from user and user group.",
         "limit": 0
     },
     "userManagement.groupDetail.id.label": {
         "value": "ID",
-        "comment": "",
+        "comment": "Label of input that contains ID of the user group.",
         "limit": 0
     },
     "userManagement.groupDetail.name.label": {
         "value": "Name",
-        "comment": "",
+        "comment": "Label of input that contains name of the user group.",
         "limit": 0
     },
     "userManagement.userDetail.firstName.label": {
         "value": "First name",
-        "comment": "",
+        "comment": "Label of input that contains first name of the user.",
         "limit": 0
     },
     "userManagement.userDetail.lastName.label": {
         "value": "Last name",
-        "comment": "",
+        "comment": "Label of input that contains last name of the user.",
         "limit": 0
     },
     "userManagement.userDetail.email.label": {
         "value": "E-mail",
-        "comment": "",
+        "comment": "Label of input that contains e-mail of the user.",
         "limit": 0
     },
     "userManagement.userDetail.orgPermission.label": {
         "value": "Org. permission",
-        "comment": "",
+        "comment": "Label of input that contains state of the user organization permissions. The possible values are 'admin' or 'member'.",
         "limit": 0
     },
     "userManagement.detail.orgPermission.admin": {
         "value": "Admin",
-        "comment": "",
+        "comment": "One of the possible types of user's organization permissions. It states user is organization administrator.",
         "limit": 0
     },
     "userManagement.detail.orgPermission.admin.tooltip": {
         "value": "Organization administrator. This user has access to any protected action or resource.",
-        "comment": "",
+        "comment": "Tooltip that explains what does it mean if user is organization administrator. Displayed over option called 'Admin'",
         "limit": 0
     },
     "userManagement.detail.orgPermission.member": {
         "value": "Member",
-        "comment": "",
+        "comment": "One of the possible types of user's organization permissions. It states user is standard member without any elevated permissions.",
         "limit": 0
     },
     "userManagement.detail.orgPermission.member.tooltip": {
         "value": "Organization member. This user has access to action or resource to which he has permission to.",
-        "comment": "",
+        "comment": "Tooltip that explains what does it mean if user is organization member. Displayed over option called 'Member'",
         "limit": 0
     },
     "userManagement.userDetail.id.label": {
         "value": "ID",
-        "comment": "",
+        "comment": "Label of input that contains ID of the user.",
         "limit": 0
     },
     "userManagement.userDetail.emptyValue": {
         "value": "not set",
-        "comment": "",
+        "comment": "Value displayed in user form when user detail does not have value (for example he does not have first name, last name, etc.)",
         "limit": 0
     },
     "userManagement.userGroups.emptySelection.view": {
         "value": "This user is not a member of any groups.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "comment": "Information message shown when lst of user's user groups is empty.",
         "limit": 0
     },
     "userManagement.userGroups.emptySelection.edit": {
         "value": "No groups selected.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "comment": "Information is displayed in user groups selectbox when user did not type anything yet.",
         "limit": 0
     },
     "userManagement.userDetail.saveButton": {
         "value": "Save",
-        "comment": "",
+        "comment": "Label of button that saves the changed user details.",
         "limit": 0
     },
     "userManagement.userDetail.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label of button that cancels the changes to user details.",
         "limit": 0
     },
     "userManagement.groupDetail.saveButton": {
         "value": "Save",
-        "comment": "",
+        "comment": "Label of button that saves the changed user group details.",
         "limit": 0
     },
     "userManagement.groupDetail.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label of button that cancels the changes to user group details.",
         "limit": 0
     },
     "userManagement.userDetails.updatedSuccess": {
         "value": "Great! You have successfully changed the user details.",
-        "comment": "",
+        "comment": "Confirmation message shown when user saved changes to user details (name, login, etc.) successfully.",
         "limit": 0
     },
     "userManagement.userDetails.updatedFailure": {
         "value": "Change of the user details failed.",
-        "comment": "",
+        "comment": "Error message shown when user tried to save changes to user details (name, login, etc.) but the action failed.",
         "limit": 0
     },
     "userManagement.groupDetails.updatedSuccess": {
         "value": "Great! You have successfully changed the group details.",
-        "comment": "",
+        "comment": "Confirmation message shown when user saved changes to user group details (name, login, etc.) successfully.",
         "limit": 0
     },
     "userManagement.groupDetails.updatedFailure": {
         "value": "Change of the user details group failed.",
-        "comment": "",
+        "comment": "Error message shown when user tried to save changes to user group details (name, login, etc.) but the operation failed.",
         "limit": 0
     },
     "userManagement.userGroup.addSuccess": {
         "value": "Great! You have successfully added the group(s).",
-        "comment": "",
+        "comment": "Confirmation message shown when user added one or more user groups to another user successfully.",
         "limit": 0
     },
     "userManagement.userGroup.addError": {
         "value": "Addition of the group(s) failed.",
-        "comment": "",
+        "comment": "Error message shown when user tried add one or more user groups to another user but the action failed.",
         "limit": 0
     },
     "userManagement.multipleUserGroup.addSuccess": {
         "value": "Great! You have successfully added users to the group.",
-        "comment": "",
+        "comment": "Confirmation message shown when user added one or more user groups to multiple users successfully.",
         "limit": 0
     },
     "userManagement.multipleUserGroup.addError": {
         "value": "Addition of the users to groups failed.",
-        "comment": "",
+        "comment": "Error message shown when user tried to add one or more user groups to multiple users successfully but action failed.",
         "limit": 0
     },
     "userManagement.userGroups.title": {
         "value": "Add to group",
-        "comment": "",
+        "comment": "Title of dialog that allows to add user groups to the user.",
         "limit": 0
     },
     "userManagement.userGroups.noMatchingItems": {
         "value": "No matching group.",
-        "comment": "",
+        "comment": "Message shown when no user group matches search criteria.",
         "limit": 0
     },
     "userManagement.userGroups.searchPlaceholder": {
         "value": "Search groups",
-        "comment": "",
+        "comment": "Placeholder in the input box that is used to search user groups.",
         "limit": 0
     },
     "userManagement.userGroups.searchError": {
         "value": "Failed to load groups. Try again later.",
-        "comment": "",
+        "comment": "Message shown when fetching of user groups from server failed.",
         "limit": 0
     },
     "userManagement.userGroups.removeSuccess": {
         "value": "Great! You have successfully deleted the group.",
-        "comment": "",
+        "comment": "Confirmation message shown when user group was successfully deleted.",
         "limit": 0
     },
     "userManagement.userGroups.removeFailure": {
         "value": "Deletion of the group failed.",
-        "comment": "",
+        "comment": "Error message shown when deletion of user group failed.",
         "limit": 0
     },
     "userManagement.userGroups.removeTooltip": {
         "value": "Remove group from the user.",
-        "comment": "",
+        "comment": "Tooltip shown over button that remove user group from the user.",
         "limit": 0
     },
     "userManagement.deleteDialog.user.title": {
         "value": "Delete user?",
-        "comment": "",
+        "comment": "Title of dialog that deletes a user.",
         "limit": 0
     },
     "userManagement.deleteDialog.user.body": {
         "value": "The user will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
-        "comment": "",
+        "comment": "Body of dialog that deletes a users",
         "limit": 0
     },
     "userManagement.deleteDialog.user.disabledTooltip": {
         "value": "User cannot be deleted.",
-        "comment": "",
+        "comment": "Tooltip shown over disabled delete button.",
         "limit": 0
     },
     "userManagement.deleteDialog.userGroup.adminDisabledTooltip": {
         "value": "This group cannot be deleted.",
-        "comment": "",
+        "comment": "Tooltip shown over disabled delete button.",
         "limit": 0
     },
     "userManagement.deleteDialog.userGroup.nonEmptyDisabledTooltip": {
         "value": "This group cannot be deleted, because it contains members. ",
-        "comment": "",
+        "comment": "Tooltip shown over disabled delete button.",
         "limit": 0
     },
     "userManagement.deleteDialog.multipleUsers.title": {
         "value": "Delete users?",
-        "comment": "",
+        "comment": "Title of dialog that deletes multiple users.",
         "limit": 0
     },
     "userManagement.deleteDialog.multipleUsers.body": {
         "value": "<b>{count} users</b> will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
-        "comment": "",
+        "comment": "Body of dialog that deletes multiple users. Do not translate placeholder {count}. It will be replaced with number of selected users in runtime.",
         "limit": 0
     },
     "userManagement.deleteDialog.group.title": {
         "value": "Delete group?",
-        "comment": "",
+        "comment": "Title of dialog that deletes a user group.",
         "limit": 0
     },
     "userManagement.deleteDialog.group.body": {
         "value": "The group will be irreversibly deleted. All its members will lose the rights defined by the group's permissions.",
-        "comment": "",
+        "comment": "Body of dialog that deletes a user group.",
         "limit": 0
     },
     "userManagement.deleteDialog.multipleGroups.title": {
         "value": "Delete groups?",
-        "comment": "",
+        "comment": "Title of dialog that deletes multiple user groups.",
         "limit": 0
     },
     "userManagement.deleteDialog.multipleGroups.body": {
         "value": "<b>{count} groups</b> will be irreversibly deleted. All their members will lose the rights defined by the group-specific permissions.",
-        "comment": "",
+        "comment": "Body of dialog that deletes multiple user group. Do not translate placeholder {count}. It will be replaced with number of selected user groups in runtime.",
         "limit": 0
     },
     "userManagement.deleteDialog.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label of button that cancels delete action.",
         "limit": 0
     },
     "userManagement.deleteDialog.confirmButton": {
         "value": "Delete",
-        "comment": "",
+        "comment": "Label of button that confirms delete action.",
         "limit": 0
     },
     "userManagement.userGroups.deleteSuccess": {
         "value": "Great! You have successfully deleted the group.",
-        "comment": "",
+        "comment": "Confirmation message shown when user group was successfully deleted.",
         "limit": 0
     },
     "userManagement.userGroups.deleteFailure": {
         "value": "Deletion of the group failed.",
-        "comment": "",
+        "comment": "Error message shown when deletion of user group failed.",
         "limit": 0
     },
     "userManagement.multipleUserGroups.deleteSuccess": {
         "value": "Great! You have successfully deleted the groups.",
-        "comment": "",
+        "comment": "Confirmation message shown when multiple user groups were successfully deleted.",
         "limit": 0
     },
     "userManagement.multipleUserGroups.deleteFailure": {
         "value": "Deletion of the groups failed.",
-        "comment": "",
+        "comment": "Error message shown when deletion of multiple user group failed.",
         "limit": 0
     },
     "userManagement.createUserGroup.createSuccess": {
         "value": "Great! You have successfully created the group.",
-        "comment": "",
+        "comment": "Confirmation message shown when user group was successfully created.",
         "limit": 0
     },
     "userManagement.createUserGroup.createFailure": {
         "value": "Creation of the group failed.",
-        "comment": "",
+        "comment": "Error message shown when creation of user group failed.",
         "limit": 0
     },
     "userManagement.users.deleteSuccess": {
         "value": "Great! You have successfully deleted the user.",
-        "comment": "",
+        "comment": "Confirmation message shown when user was successfully deleted.",
         "limit": 0
     },
     "userManagement.users.deleteFailure": {
         "value": "Deletion of the user failed.",
-        "comment": "",
+        "comment": "Error message shown when deletion of user failed.",
         "limit": 0
     },
     "userManagement.multipleUsers.deleteSuccess": {
         "value": "Great! You have successfully deleted the users.",
-        "comment": "",
+        "comment": "Confirmation message shown when multiple users were successfully deleted.",
         "limit": 0
     },
     "userManagement.multipleUsers.deleteFailure": {
         "value": "Deletion of the users failed.",
-        "comment": "",
+        "comment": "Error message shown when deletion of multiple users failed.",
         "limit": 0
     },
     "userManagement.users.searchError": {
         "value": "Failed to load users. Try again later.",
-        "comment": "",
+        "comment": "Error shown when user list was not fetched from server.",
         "limit": 0
     },
     "userManagement.users.emptySelection.view": {
         "value": "This group does not have any members.",
-        "comment": "",
+        "comment": "Message shown when there are no users in the user group.",
         "limit": 0
     },
     "userManagement.users.emptySelection.edit": {
         "value": "No users selected.",
-        "comment": "",
+        "comment": "Shown when no user has been added to selection yet.",
         "limit": 0
     },
     "userManagement.users.removeUserFromGroup": {
         "value": "Remove user from the group.",
-        "comment": "",
+        "comment": "Tooltip on button that removes particular user from the user group.",
         "limit": 0
     },
     "userManagement.users.removeUserFromSelection": {
         "value": "Remove.",
-        "comment": "",
+        "comment": "Label of action that removes selected user.",
         "limit": 0
     },
     "userManagement.userGroups.removeUserGroupFromSelection": {
         "value": "Remove.",
-        "comment": "",
+        "comment": "Label of action that removes selected user group.",
         "limit": 0
     },
     "userManagement.users.noMatchingItems": {
         "value": "No matching user.",
-        "comment": "",
+        "comment": "Message shown when no user matches the entered search criteria.",
         "limit": 0
     },
     "userManagement.users.searchPlaceholder": {
         "value": "Search users",
-        "comment": "",
+        "comment": "Placeholder of input box that is used to search for users.",
         "limit": 0
     },
     "userManagement.users.title": {
         "value": "Add group members",
-        "comment": "",
+        "comment": "Title of dialog that adds users to user group.",
         "limit": 0
     },
     "userManagement.users.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label of button that cancels the unsaved changes in the dialog.",
         "limit": 0
     },
     "userManagement.users.addButton": {
         "value": "Add",
-        "comment": "",
+        "comment": "Label of button that adds users to user group.",
         "limit": 0
     },
     "userManagement.users.addSuccess": {
         "value": "Great! You have successfully added the user(s).",
-        "comment": "",
+        "comment": "Confirmation message shown when users were successfully added to the user group.",
         "limit": 0
     },
     "userManagement.users.addFailure": {
         "value": "Addition of the user(s) failed.",
-        "comment": "",
+        "comment": "Error message shown when addition of users to the user group failed.",
         "limit": 0
     },
     "userManagement.users.addToUserGroupsSuccess": {
         "value": "Great! You have successfully added users to the groups.",
-        "comment": "",
+        "comment": "Confirmation message shown when multiple users were successfully added to the multiple user group.",
         "limit": 0
     },
     "userManagement.users.addToUserGroupsFailure": {
         "value": "Addition of the users to groups failed.",
-        "comment": "",
+        "comment": "Error message shown when trying to add multiple users to the multiple user group failed.",
         "limit": 0
     },
     "userManagement.users.removeSuccess": {
         "value": "Great! You have successfully removed the user(s).",
-        "comment": "",
+        "comment": "Confirmation message shown when one or more users were sucessfuly removed from the user group.",
         "limit": 0
     },
     "userManagement.users.removeFailure": {
         "value": "Removal of the user(s) failed.",
-        "comment": "",
+        "comment": "Error message shown when removal of one or more users were from the user group failed.",
         "limit": 0
     },
     "userManagement.buttons.close": {
         "value": "Close",
-        "comment": "",
+        "comment": "Label of button that closes the dialog.",
         "limit": 0
     },
     "userManagement.admin.alert": {
         "value": "Admins have full access to all workspaces, resources, and actions.",
-        "comment": "",
+        "comment": "Text shown in user dialog that explains that user is organization administrator and has full access to everything.",
         "limit": 0
     },
     "userManagement.adminGroup.alert": {
         "value": "Members have full access to all workspaces, resources, and actions.",
-        "comment": "",
+        "comment": "Text shown in user group dialog that explains that user group has organization administrator rights and its members has full access to everything.",
         "limit": 0
     },
     "userManagement.admin.pill": {
         "value": "Admin",
-        "comment": "",
+        "comment": "Text shown in pill component next to the user name. The information states that user is organization administrator.",
         "limit": 0
     },
     "userManagement.createUserGroup.createButton": {
         "value": "Create",
-        "comment": "",
+        "comment": "Label of button that creates a new user group.",
         "limit": 0
     },
     "userManagement.createUserGroup.cancelButton": {
         "value": "Cancel",
-        "comment": "",
+        "comment": "Label of button that closes dialog.",
         "limit": 0
     },
     "userManagement.createUserGroup.dialogTitle": {
         "value": "Create group",
-        "comment": "",
+        "comment": "Title of dialog that creates new user group.",
         "limit": 0
     },
     "userManagement.createUserGroup.inputPlaceholder": {
         "value": "Name",
+        "comment": "Placeholder shown in input box where user types name of a new user group.",
+        "limit": 0
+    },
+    "userGroupDialog.detail.saveButton": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedSuccess": {
+        "value": "Great! We changed the user details!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.detailsUpdatedError": {
+        "value": "Change of the user details failed!",
         "comment": "",
         "limit": 0
     }

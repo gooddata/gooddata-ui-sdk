@@ -365,7 +365,7 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilterReference {
     /**
@@ -392,7 +392,7 @@ export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardD
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @alpha
+ * @public
  */
 export interface IDashboardAttributeFilterReference {
     /**
@@ -408,7 +408,7 @@ export interface IDashboardAttributeFilterReference {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilterReference}.
- * @alpha
+ * @public
  */
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference {
     return !isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
@@ -419,7 +419,7 @@ export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashb
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @alpha
+ * @public
  */
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 

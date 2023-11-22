@@ -44,6 +44,7 @@ import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
 import { defaultImport } from "default-import";
+import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { predictionSliceReducer } from "./prediction/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -298,6 +299,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         filterContext: filterContextSliceReducer,
         layout: layoutSliceReducer,
         dateFilterConfig: dateFilterConfigSliceReducer,
+        attributeFilterConfigs: attributeFilterConfigsSliceReducer,
         insights: insightsSliceReducer,
         alerts: alertsSliceReducer,
         drillTargets: drillTargetsReducer,

@@ -13,11 +13,19 @@ import { IColor } from "@gooddata/sdk-model";
  *     <tr><td>change</td><td>(Primary - Secondary) / Secondary</td></tr>
  *     <tr><td>difference</td><td>Primary - Secondary</td></tr>
  *     <tr><td>ratio</td><td>Primary / Secondary</td></tr>
+ *     <tr>
+ *         <td>change_difference</td>
+ *         <td>
+ *              Change: (Primary - Secondary) / Secondary
+ *              <br/>
+ *              Difference: Primary - Secondary
+ *         </td>
+ *     </tr>
  * </table>
  *
  * @public
  */
-export type CalculationType = "change" | "ratio" | "difference";
+export type CalculationType = "change" | "ratio" | "difference" | "change_difference";
 
 /**
  * Defines how the comparison value will be placed.
@@ -33,6 +41,7 @@ export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType> = 
     RATIO: "ratio" as const,
     CHANGE: "change" as const,
     DIFFERENCE: "difference" as const,
+    CHANGE_DIFFERENCE: "change_difference" as const,
 };
 
 /**
@@ -100,6 +109,14 @@ export interface IColorConfig {
  */
 export interface ILabelConfig {
     /**
+     * This property specifies whether to use the unconditional value for all conditions
+     * or separate values for each condition.
+     *
+     * @defaultValue false
+     */
+    isConditional?: boolean;
+
+    /**
      * Specifies the label to be used for the comparison value.
      *
      * @remarks
@@ -109,9 +126,56 @@ export interface ILabelConfig {
      *     <tr><td>change</td><td>Change</td></tr>
      *     <tr><td>ratio</td><td>of</td></tr>
      *     <tr><td>difference</td><td>Difference</td></tr>
+     *     <tr><td>change_difference</td><td>Change</td></tr>
      * </table>
      */
     unconditionalValue?: string;
+
+    /**
+     * This property specify the label of the positive comparison value
+     * <br/>
+     * Primary is larger than Secondary
+     *
+     * @defaultValue based on the calculation type
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>Increase</td></tr>
+     *     <tr><td>difference</td><td>Increase</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    positive?: string;
+
+    /**
+     * This property specify the label of the negative comparison
+     * <br/>
+     * Primary is less than Secondary
+     *
+     * @defaultValue based on the calculation type
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>Decrease</td></tr>
+     *     <tr><td>difference</td><td>Decrease</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    negative?: string;
+
+    /**
+     * This property specify the label of the equals comparison value
+     * <br/>
+     * Primary is equals Secondary
+     *
+     * <table border="1">
+     *     <tr><td>Calculation type</td><td>Default label</td></tr>
+     *     <tr><td>change</td><td>No change</td></tr>
+     *     <tr><td>difference</td><td>No difference</td></tr>
+     *     <tr><td>ratio</td><td>(Not applicable)</td></tr>
+     * </table>
+     */
+    equals?: string;
 }
 
 /**
@@ -170,6 +234,24 @@ export interface IComparison {
      * @defaultValue Based on the calculation type.
      */
     format?: ComparisonFormat;
+
+    /**
+     * Defines the number format of the comparison sub value.
+     *
+     * @remarks
+     * The default value is based on the calculation subtype:
+     * <table>
+     *     <tr><th width="150">Calculation Type</th><th width="350">Default format</th></tr>
+     *     <tr><td>change</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>ratio</td><td>Percent (rounded)</td></tr>
+     *     <tr><td>difference</td><td>Inherit</td></tr>
+     * </table>
+     *
+     * @see {@link ComparisonFormat} for supported formats.
+     *
+     * @defaultValue Based on the calculation subtype.
+     */
+    subFormat?: ComparisonFormat;
 
     /**
      * Controls the visibility of the arrow trend indicator and its direction based on conditions.

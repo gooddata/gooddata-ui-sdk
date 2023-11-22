@@ -14,13 +14,16 @@
   <div class="gd-docs-header-nav__left">
     {{ partial "navbar-breadcrumb.html" . }}
   </div>
+  <div class="gd-docs-header-nav__center">
+    <div id="adds-container" class="gd-docs-header-nav__search"></div>
+  </div>
   <div class="gd-docs-header-nav__right">
     {{ if  .Site.Params.versions }}
       {{ partial "navbar-version-selector.html" . }}
     {{ end }}
     
     <a href="/latest/references/visual_components/interactive_examples/" class="gd-docs-header-nav__cta gd-docs-header-nav__github">
-      Code Samples  
+      Examples
   </a>
 
     <a href="https://gdui-examples.herokuapp.com/" class="gd-docs-header-nav__cta gd-docs-header-nav__github">

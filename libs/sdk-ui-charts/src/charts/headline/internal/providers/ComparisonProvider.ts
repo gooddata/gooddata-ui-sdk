@@ -19,6 +19,7 @@ import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import AbstractProvider from "./AbstractProvider.js";
 import ComparisonTransformation from "../transformations/ComparisonTransformation.js";
 import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
+import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 
@@ -28,7 +29,7 @@ class ComparisonProvider extends AbstractProvider {
     constructor(comparison: IComparison) {
         super();
 
-        this.comparison = comparison;
+        this.comparison = comparison || COMPARISON_DEFAULT_OBJECT;
     }
 
     public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
@@ -59,8 +60,15 @@ class ComparisonProvider extends AbstractProvider {
     ): IMeasure<IArithmeticMeasureDefinition>[] {
         const createVirtualArithmeticMeasure = (
             operator: ArithmeticMeasureOperator,
+            shouldCombineLocalIdAndOperator?: boolean,
         ): IMeasure<IArithmeticMeasureDefinition> => {
-            return newVirtualArithmeticMeasure([primaryMeasure, secondaryMeasure], operator);
+            return newVirtualArithmeticMeasure([primaryMeasure, secondaryMeasure], operator, (builder) => {
+                if (shouldCombineLocalIdAndOperator) {
+                    builder.combineLocalIdWithOperator();
+                }
+
+                return builder;
+            });
         };
 
         switch (this.comparison.calculationType) {
@@ -72,6 +80,12 @@ class ComparisonProvider extends AbstractProvider {
 
             case CalculateAs.CHANGE:
                 return [createVirtualArithmeticMeasure("change")];
+
+            case CalculateAs.CHANGE_DIFFERENCE:
+                return [
+                    createVirtualArithmeticMeasure("change", true),
+                    createVirtualArithmeticMeasure("difference", true),
+                ];
 
             default:
                 if (isPoPMeasure(secondaryMeasure) || isPreviousPeriodMeasure(secondaryMeasure)) {

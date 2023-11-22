@@ -59,13 +59,13 @@ const comparisonColorConfig: IColorConfig = {
 };
 
 export const HeadlinePositiveComparisonMeasures = {
-    primaryMeasure: ReferenceMd.Won,
-    secondaryMeasures: [ReferenceMd.Amount],
+    primaryMeasure: ReferenceMd.Amount,
+    secondaryMeasures: [ReferenceMd.Won],
 };
 
 export const HeadlineNegativeComparisonMeasures = {
-    primaryMeasure: ReferenceMd.Amount,
-    secondaryMeasures: [ReferenceMd.Won],
+    primaryMeasure: ReferenceMd.Won,
+    secondaryMeasures: [ReferenceMd.Amount],
 };
 
 export const HeadlineEqualsComparisonMeasures = {
@@ -106,6 +106,29 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
             comparison: {
                 ...comparisonEnabled,
                 calculationType: CalculateAs.DIFFERENCE,
+            },
+        },
+    })
+    .addScenario("comparison with calculate as change (difference) and default sub format", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                calculationType: CalculateAs.CHANGE_DIFFERENCE,
+            },
+        },
+    })
+    .addScenario("comparison with calculate as change (difference) and custom format", {
+        ...HeadlinePositiveComparisonMeasures,
+        config: {
+            comparison: {
+                ...comparisonEnabled,
+                colorConfig: {
+                    disabled: true,
+                },
+                calculationType: CalculateAs.CHANGE_DIFFERENCE,
+                format: "[color=d2ccde]#,##0.0",
+                subFormat: "[color=9c46b5]#,##0.00",
             },
         },
     })

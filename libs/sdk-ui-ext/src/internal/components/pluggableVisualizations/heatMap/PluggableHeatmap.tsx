@@ -84,6 +84,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         this.type = VisualizationTypes.HEATMAP;
 
         this.supportedPropertiesList = HEATMAP_SUPPORTED_PROPERTIES;
+        this.backendCapabilities = props.backend.capabilities;
         this.initializeProperties(props.visualizationProperties);
     }
 
@@ -270,6 +271,10 @@ export class PluggableHeatmap extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <HeatMapConfigurationPanel
                     locale={this.locale}
@@ -283,6 +288,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

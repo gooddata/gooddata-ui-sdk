@@ -56,6 +56,7 @@ import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
@@ -83,6 +84,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 
 // @public
@@ -176,6 +178,8 @@ export interface IAnalyticalBackendConfig {
 // @public
 export interface IAnalyticalWorkspace {
     accessControl(): IWorkspaceAccessControlService;
+    // @alpha
+    attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
     catalog(): IWorkspaceCatalogFactory;
     dashboards(): IWorkspaceDashboardsService;
@@ -203,6 +207,13 @@ export interface IAttributeElementExpressionToken {
     value: string | undefined;
 }
 
+// @alpha
+export interface IAttributeHierarchiesService {
+    createAttributeHierarchy(title: string, attributes: ObjRef[]): Promise<ICatalogAttributeHierarchy>;
+    getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
+    updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
+}
+
 // @public
 export interface IAuthenticatedPrincipal {
     userId: string;
@@ -227,6 +238,7 @@ export interface IAuthenticationProvider {
 // @public
 export interface IBackendCapabilities {
     [key: string]: undefined | boolean | number | string;
+    allowMultipleInteractionsPerAttributeAndMeasure?: boolean;
     allowsInconsistentRelations?: boolean;
     canCalculateGrandTotals?: boolean;
     canCalculateNativeTotals?: boolean;
@@ -241,7 +253,9 @@ export interface IBackendCapabilities {
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsAccessControl?: boolean;
+    supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
+    supportsCircularDependencyInFilters?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
@@ -251,9 +265,11 @@ export interface IBackendCapabilities {
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
     supportsGranularAccessControl?: boolean;
+    supportsHiddenAndLockedFiltersOnUI?: boolean;
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsInlineMeasures?: boolean;
+    supportsKeepingDependentFiltersSelection?: boolean;
     supportsKpiWidget?: boolean;
     supportsMetadataObjectLocking?: boolean;
     supportsNonProductionDatasets?: boolean;
@@ -263,7 +279,9 @@ export interface IBackendCapabilities {
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
     supportsSeparateLatitudeLongitudeLabels?: boolean;
+    supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;
+    supportsShowingFilteredElements?: boolean;
     supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;
@@ -540,13 +558,12 @@ export interface IOrganization {
 
 // @alpha
 export interface IOrganizationPermissionService {
+    getOrganizationPermissionForUser(userId: string): Promise<OrganizationPermissionAssignment[]>;
+    getOrganizationPermissionForUserGroup(userGroupId: string): Promise<OrganizationPermissionAssignment[]>;
     getWorkspacePermissionsForUser(userId: string): Promise<IWorkspacePermissionAssignment[]>;
     getWorkspacePermissionsForUserGroup(userGroupId: string): Promise<IWorkspacePermissionAssignment[]>;
-    updateUserOrganizationAdminStatus(userId: string, isOrganizationAdmin: boolean): Promise<void>;
-    updateWorkspacePermissionsForUser(userId: string, permissions: IWorkspacePermissionAssignment[]): Promise<void>;
-    updateWorkspacePermissionsForUserGroup(userGroupId: string, permissions: IWorkspacePermissionAssignment[]): Promise<void>;
-    updateWorkspacePermissionsForUserGroups(userGroupIds: string[], permissions: IWorkspacePermissionAssignment[]): Promise<void>;
-    updateWorkspacePermissionsForUsers(userIds: string[], permissions: IWorkspacePermissionAssignment[]): Promise<void>;
+    updateOrganizationPermissions(permissionAssignments: IOrganizationPermissionAssignment[]): Promise<void>;
+    updateWorkspacePermissions(permissions: IWorkspacePermissionAssignment[]): Promise<void>;
 }
 
 // @public
@@ -588,12 +605,8 @@ export interface IOrganizationStylingService {
 
 // @alpha
 export interface IOrganizationUserService {
-    addUserGroupsToUsers(userGroupIds: string[], userIds: string[]): Promise<void>;
-    addUserGroupToUsers(userGroupId: string, userIds: string[]): Promise<void>;
-    addUserToUserGroups(userId: string, userGroupIds: string[]): Promise<void>;
+    addUsersToUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
     createUserGroup(group: IUserGroup): Promise<void>;
-    deleteUser(id: string): Promise<void>;
-    deleteUserGroup(id: string): Promise<void>;
     deleteUserGroups(ids: string[]): Promise<void>;
     deleteUsers(ids: string[]): Promise<void>;
     getUser(id: string): Promise<IUser | undefined>;
@@ -602,7 +615,7 @@ export interface IOrganizationUserService {
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
     getUsers(): Promise<IOrganizationUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
-    removeUserFromUserGroup(userId: string, userGroupId: string): Promise<void>;
+    removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
     updateUser(user: IUser): Promise<void>;
     updateUserGroup(group: IUserGroup): Promise<void>;
 }
@@ -631,6 +644,8 @@ export interface IPreparedExecution {
     // @internal
     explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
+    // @internal
+    withBuckets(...buckets: IBucket[]): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
@@ -760,6 +775,7 @@ export interface IWorkspaceAttributesService {
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
+    getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
 }
 
 // @public
@@ -927,7 +943,9 @@ export interface IWorkspaceSettings extends ISettings {
 export interface IWorkspaceSettingsService {
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setColorPalette(colorPaletteId: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setTheme(themeId: string): Promise<void>;
 }
 
 // @public

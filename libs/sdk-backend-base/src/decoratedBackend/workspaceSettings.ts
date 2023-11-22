@@ -22,4 +22,12 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     async setLocale(locale: string): Promise<void> {
         return this.decorated.setLocale(locale);
     }
+
+    async setTheme(themeId: string): Promise<void> {
+        return this.decorated.setTheme(themeId);
+    }
+
+    async setColorPalette(colorPaletteId: string): Promise<void> {
+        return this.decorated.setColorPalette(colorPaletteId);
+    }
 }

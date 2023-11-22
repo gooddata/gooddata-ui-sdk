@@ -56,15 +56,6 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
 
 // @internal (undocumented)
-export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
-
-// @internal (undocumented)
-export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
-
-// @internal (undocumented)
 export type Alignment = {
     left: number;
     top: number;
@@ -101,6 +92,9 @@ export class AutoSize extends Component<IAutoSizeProps> {
         height: number;
     };
 }
+
+// @internal (undocumented)
+export const BackButton: React_2.FC<IBackButtonProps>;
 
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
@@ -319,13 +313,10 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.VFC;
+export const ContentDivider: React_2.FC;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
-
-// @internal (undocumented)
-export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
 
 // @internal (undocumented)
 export type CurrentUserPermissions = {
@@ -355,18 +346,6 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 
 // @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
-
-// @internal (undocumented)
-export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
-
-// @internal (undocumented)
-export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -681,7 +660,7 @@ export type GetPositionedSelfRegion = {
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal (undocumented)
-export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup;
+export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
@@ -690,7 +669,7 @@ export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
 export type GranteeStatus = "Inactive" | "Active";
 
 // @internal (undocumented)
-export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup";
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup" | "allWorkspaceUsers";
 
 // @internal
 export function guidFor(obj: any): string;
@@ -782,44 +761,6 @@ export interface IAddGranteeBaseProps {
     onSubmit: () => void;
     // (undocumented)
     sharedObject: IAffectedSharedObject;
-}
-
-// @internal (undocumented)
-export interface IAddUserGroupsToUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddUsersToUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IAddWorkspaceToSubjectsProps {
-    // (undocumented)
-    ids: string[];
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    subjectType: WorkspacePermissionSubject;
 }
 
 // @internal (undocumented)
@@ -971,6 +912,14 @@ export interface IAvailableSortsGroup {
     itemId: LocalIdRef;
     // (undocumented)
     metricSorts?: MeasureSortSuggestion[];
+}
+
+// @internal (undocumented)
+export interface IBackButtonProps {
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    onClick: () => void;
 }
 
 // @internal
@@ -1223,16 +1172,6 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export interface ICreateUserGroupDialogProps {
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-}
-
-// @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
     // (undocumented)
     className?: string;
@@ -1310,54 +1249,6 @@ export interface IDateTimeConfigOptions {
     dateTimezone?: string;
     // (undocumented)
     now?: Date;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userId: string;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserGroupDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupId: string;
-}
-
-// @internal (undocumented)
-export interface IDeleteUserGroupsDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupIds: string[];
-}
-
-// @internal (undocumented)
-export interface IDeleteUsersDialogProps {
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userIds: string[];
 }
 
 // @internal (undocumented)
@@ -1599,6 +1490,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     showTabs?: boolean;
     // (undocumented)
     tabs?: ITab[];
+    // (undocumented)
+    title?: string;
     // (undocumented)
     width?: number;
 }
@@ -1903,6 +1796,20 @@ export interface IGranteeItemProps {
     onChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
+}
+
+// @internal (undocumented)
+export interface IGranteeRules extends IGranteeBase {
+    // (undocumented)
+    id: {
+        identifier: "allWorkspaceUsers";
+    };
+    // (undocumented)
+    inheritedPermissions: AccessGranularPermission[];
+    // (undocumented)
+    permissions: AccessGranularPermission[];
+    // (undocumented)
+    type: "allWorkspaceUsers";
 }
 
 // @internal (undocumented)
@@ -2284,6 +2191,8 @@ export interface IInvertableSelectProps<T> {
     items: T[];
     // (undocumented)
     nextPageItemPlaceholdersCount?: number;
+    // (undocumented)
+    numberOfHiddenSelectedItems?: number;
     // (undocumented)
     onLoadNextPage?: () => void;
     // (undocumented)
@@ -3505,6 +3414,8 @@ export interface ISettingItem {
     // (undocumented)
     onAction?: () => void;
     // (undocumented)
+    renderSubtitle?: () => React.ReactNode;
+    // (undocumented)
     title: string;
     // (undocumented)
     titleTooltipText?: string;
@@ -3517,6 +3428,9 @@ export function isFreemiumEdition(platformEdition: string | undefined): boolean;
 
 // @internal (undocumented)
 export const isGranteeGroup: (obj: unknown) => obj is IGranteeGroup;
+
+// @internal (undocumented)
+export const isGranteeRules: (obj: unknown) => obj is IGranteeRules;
 
 // @internal (undocumented)
 export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;
@@ -4038,40 +3952,6 @@ export interface ITypographyProps {
 export interface IUiSettings {
     // (undocumented)
     displayAccountPage: boolean;
-}
-
-// @internal (undocumented)
-export interface IUserEditDialogProps {
-    // (undocumented)
-    changeUserMembership?: boolean;
-    // (undocumented)
-    initialView?: UserEditDialogMode;
-    // (undocumented)
-    isAdmin: boolean;
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userId: string;
-}
-
-// @internal (undocumented)
-export interface IUserGroupEditDialogProps {
-    // (undocumented)
-    initialView?: UserGroupEditDialogMode;
-    // (undocumented)
-    isAdmin: boolean;
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSuccess: () => void;
-    // (undocumented)
-    organizationId: string;
-    // (undocumented)
-    userGroupId: string;
 }
 
 // @internal (undocumented)
@@ -4698,20 +4578,8 @@ export const useOverlayController: () => OverlayController;
 // @internal
 export const useOverlayZIndex: (uuid: string) => number;
 
-// @internal (undocumented)
-export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
-
-// @internal (undocumented)
-export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
-
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
-
-// @internal (undocumented)
-export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
-
-// @internal (undocumented)
-export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
 
 // @internal (undocumented)
 export const useScrollContext: () => {
@@ -4739,9 +4607,6 @@ export interface UseToastMessageType {
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
-
-// @internal (undocumented)
-export type WorkspacePermissionSubject = "user" | "userGroup";
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;

@@ -14,6 +14,10 @@ export {
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
     selectSupportsObjectUris,
+    selectSupportsSettingConnectingAttributes,
+    selectSupportsKeepingDependentFiltersSelection,
+    selectAllowMultipleInteractionsPerAttributeAndMeasure,
+    selectSupportsAttributeHierarchies,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -63,6 +67,9 @@ export {
     selectWeekStart,
     selectEnableAttributeHierarchies,
     selectIsDrillDownEnabled,
+    selectEnableUnavailableItemsVisibility,
+    selectEnableKDDependentFilters,
+    selectIsKDDependentFiltersEnabled,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
@@ -130,6 +137,7 @@ export {
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsToUrlByWidgetRef,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
     IImplicitDrillWithPredicates,
 } from "./widgetDrills/widgetDrillSelectors.js";
 export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors.js";
@@ -157,6 +165,7 @@ export {
     selectInsightWidgetPlaceholderCoordinates,
     selectKpiWidgetPlaceholder,
     selectKpiWidgetPlaceholderCoordinates,
+    selectIgnoredDrillDownHierarchiesByWidgetRef,
 } from "./layout/layoutSelectors.js";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
 export {
@@ -168,11 +177,18 @@ export {
     selectEffectiveDateFilterAvailableGranularities,
     selectDateFilterConfigValidationWarnings,
 } from "./dateFilterConfig/dateFilterConfigSelectors.js";
+export { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
+export {
+    selectAttributeFilterConfigsOverrides,
+    selectAttributeFilterConfigsModeMap,
+    selectEffectiveAttributeFiltersModeMap,
+} from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export {
     selectInsights,
     selectInsightRefs,
     selectInsightsMap,
     selectInsightByRef,
+    selectInsightByWidgetRef,
 } from "./insights/insightsSelectors.js";
 export { CatalogState } from "./catalog/catalogState.js";
 export {
@@ -190,6 +206,8 @@ export {
     selectHasCatalogMeasures,
     selectHasCatalogDateDatasets,
     selectHasCatalogFacts,
+    selectCatalogAttributeHierarchies,
+    selectCatalogDateAttributes,
 } from "./catalog/catalogSelectors.js";
 export { selectDrillableItems } from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";

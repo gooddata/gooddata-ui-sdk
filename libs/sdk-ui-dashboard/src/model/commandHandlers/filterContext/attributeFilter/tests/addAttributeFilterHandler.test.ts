@@ -9,8 +9,9 @@ import {
 } from "../../../../store/filterContext/filterContextSelectors.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
-import { uriRef } from "@gooddata/sdk-model";
+import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed } from "../../../../events/index.js";
+import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
 
 describe("addAttributeFilterHandler", () => {
     let Tester: DashboardTester;
@@ -71,5 +72,85 @@ describe("addAttributeFilterHandler", () => {
         );
 
         expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
+    });
+
+    it("should set the attribute filter mode", async () => {
+        await preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            SimpleDashboardIdentifier,
+            {
+                customCapabilities: {
+                    supportsHiddenAndLockedFiltersOnUI: true,
+                },
+            },
+        );
+
+        await Tester.dispatchAndWaitFor(
+            addAttributeFilter(
+                ReferenceMd.Product.Name.attribute.displayForm,
+                0,
+                TestCorrelation,
+                "single",
+                DashboardAttributeFilterConfigModeValues.READONLY,
+            ),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
+
+        const attributeFilterConfigsModeMap = selectAttributeFilterConfigsModeMap(Tester.state());
+        expect(Array.from(attributeFilterConfigsModeMap.values())).toEqual([
+            DashboardAttributeFilterConfigModeValues.READONLY,
+        ]);
+    });
+
+    it("should not set attribute filter mode when supportsHiddenAndLockedFiltersOnUI is false", async () => {
+        await preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            SimpleDashboardIdentifier,
+            {
+                customCapabilities: {
+                    supportsHiddenAndLockedFiltersOnUI: false,
+                },
+            },
+        );
+
+        await Tester.dispatchAndWaitFor(
+            addAttributeFilter(
+                ReferenceMd.Product.Name.attribute.displayForm,
+                0,
+                TestCorrelation,
+                "single",
+                DashboardAttributeFilterConfigModeValues.READONLY,
+            ),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
+
+        const attributeFilterConfigsModeMap = selectAttributeFilterConfigsModeMap(Tester.state());
+        expect(Object.values(attributeFilterConfigsModeMap)).toEqual([]);
+    });
+
+    it("should not set attribute filter mode when mode is empty", async () => {
+        await preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            SimpleDashboardIdentifier,
+            {
+                customCapabilities: {
+                    supportsHiddenAndLockedFiltersOnUI: true,
+                },
+            },
+        );
+
+        await Tester.dispatchAndWaitFor(
+            addAttributeFilter(ReferenceMd.Product.Name.attribute.displayForm, 0, TestCorrelation, "single"),
+            "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        );
+
+        const attributeFilterConfigsModeMap = selectAttributeFilterConfigsModeMap(Tester.state());
+        expect(Object.values(attributeFilterConfigsModeMap)).toEqual([]);
     });
 });

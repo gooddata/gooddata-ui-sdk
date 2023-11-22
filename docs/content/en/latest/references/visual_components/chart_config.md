@@ -73,6 +73,9 @@ This article describes the options for configuring a chart.
 ```
 **NOTE:** `primaryChartType`, `secondaryChartType`, and `dualAxis` are available only for [combo charts](../combo_chart/).
 
+## Custom sorting
+To be able to utilize the `sortBy` prop in your visualizations (e.g. `PieChart`), simply set the `IChartConfig.enableChartSorting` to `true`.
+
 ## Align a chart vertically
 
 You can configure a vertical alignment for [pie charts](../pie_chart/) and [donut charts](../donut_chart/).

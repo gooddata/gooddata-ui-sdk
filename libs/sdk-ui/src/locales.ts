@@ -2,6 +2,9 @@
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
+/**
+ * @internal
+ */
 export const messages: Record<string, MessageDescriptor> = defineMessages({
     sum: { id: "visualizations.measure.arithmetic.sum.title" },
     difference: { id: "visualizations.measure.arithmetic.difference.title" },
@@ -16,4 +19,48 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     t: { id: "visualization.numericValues.t" },
     p: { id: "visualization.numericValues.p" },
     e: { id: "visualization.numericValues.e" },
+    drillConfigLearnMore: { id: "configurationPanel.drillConfig.learn.more.link" },
+    drillToDashboardTooltip: { id: "configurationPanel.drillConfig.drillToDashboard.tooltip" },
+    drillToInsightTooltip: { id: "configurationPanel.drillConfig.drillToInsight.tooltip" },
+    drillToUrlTooltip: { id: "configurationPanel.drillConfig.drillToUrl.tooltip" },
+    drilldown: { id: "configurationPanel.drillConfig.drilldown" },
+    drilldownTooltip: { id: "configurationPanel.drillConfig.drilldown.tooltip" },
+    drilldownTooltipDisabledInsight: {
+        id: "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight",
+    },
+    drilldownTooltipDisabledMetric: {
+        id: "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric",
+    },
+    drilldownSelectHierarchy: {
+        id: "configurationPanel.drillConfig.selectHierarchy",
+    },
+    emtpyHierarchyInfo: { id: "configurationPanel.drillConfig.drilldown.emtpy.hierarchy.info" },
+    createHierarchy: { id: "configurationPanel.drillConfig.drilldown.create.hierarchy" },
+    hierarchyUntitled: { id: "attributeHierarchyEditor.untitled" },
+    hierarchyLevels: { id: "attributeHierarchyEditor.hierarchy.levels" },
+    hierarchyCancelButton: { id: "attributeHierarchyEditor.button.cancel" },
+    hierarchyCreateButton: { id: "attributeHierarchyEditor.button.create" },
+    hierarchySaveButton: { id: "attributeHierarchyEditor.button.save" },
+    hierarchyDeleteButton: { id: "attributeHierarchyEditor.button.delete" },
+    hierarchyDeleteConfirmTitle: { id: "attributeHierarchyEditor.delete.confirm.title" },
+    hierarchyDeleteConfirmMessage: { id: "attributeHierarchyEditor.delete.confirm.message" },
+    hierarchyRemoveAttribute: { id: "attributeHierarchyEditor.remove.attribute" },
+    hierarchyAddAttribute: { id: "attributeHierarchyEditor.add.attribute" },
+    hierarchyAddAttributeAbove: { id: "attributeHierarchyEditor.add.attribute.above" },
+    hierarchyAddAttributeBellow: { id: "attributeHierarchyEditor.add.attribute.bellow" },
+    hierarchyAttributeHowToWork: { id: "attributeHierarchyEditor.howToWork.link" },
+    hierarchyAttributeDropdown: { id: "attributeHierarchyEditor.attribute.dropdown.title" },
+    hierarchyAttributeSearch: { id: "attributeHierarchyEditor.attribute.dropdown.search" },
+    hierarchyAttributeNote: { id: "attributeHierarchyEditor.note.title" },
+    hierarchyAttributeNoteMessage: { id: "attributeHierarchyEditor.note.message" },
+    hierarchyAttributeHowItWorks: { id: "attributeHierarchyEditor.howItWorks.title" },
+    hierarchyAttributeHowItWorksHeading: { id: "attributeHierarchyEditor.howItWorks.message.heading" },
+    hierarchyAttributeHowItWorksContent: { id: "attributeHierarchyEditor.howItWorks.message.content" },
+    hierarchyListGenericDate: { id: "attributeHierarchyList.tooltip.generic.date.title" },
+    hierarchyListGenericDateInfo: { id: "attributeHierarchyList.tooltip.generic.date.info" },
+    hierarchyListLevels: { id: "attributeHierarchyList.tooltip.hierarchy.levels" },
+    hierarchyListEdit: { id: "attributeHierarchyList.tooltip.button.edit" },
+    catalogAttributeHierarchyTooltip: { id: "catalog.attribute.tooltip.hierarchy.title" },
+    visualizationConfigInteractions: { id: "visualizationConfig.interactions.section.title" },
+    visualizationConfigInteractionsDrilldown: { id: "visualizationConfig.interactions.section.drilldown" },
 });

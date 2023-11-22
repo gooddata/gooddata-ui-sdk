@@ -4,7 +4,11 @@ import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
-import { IBaseHeadlineItem, EvaluationType } from "../interfaces/BaseHeadlines.js";
+import {
+    IBaseHeadlineItem,
+    EvaluationType,
+    IComparisonDataWithSubItem,
+} from "../interfaces/BaseHeadlines.js";
 import BaseHeadlineDataItem from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {
     CalculateAs,
@@ -25,11 +29,13 @@ export const TEST_DEFAULT_COMPARISON: IComparison = {
     enabled: true,
 };
 export const HEADLINE_VALUE_WRAPPER_SELECTOR = ".s-headline-value-wrapper";
-export const HEADLINE_VALUE_SELECTOR = ".s-headline-value";
+export const COMPARISON_HEADLINE_VALUE_SELECTOR = ".s-comparison-headline-value";
 export const HEADLINE_ITEM_LINK_SELECTOR = ".s-headline-item-link";
 export const HEADLINE_TITLE_WRAPPER_SELECTOR = ".s-headline-title-wrapper";
 export const HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR = ".s-headline-paginated-compare-section";
 export const HEADLINE_LINK_STYLE_UNDERLINE = ".s-headline-link-style-underline";
+export const INDICATOR_UP_CLASSNAME_SELECTOR = ".s-indicator-up";
+export const INDICATOR_DOWN_CLASSNAME_SELECTOR = ".s-indicator-down";
 
 export const TEST_DATA_ITEM: IHeadlineDataItem = {
     localIdentifier: "mock_local_identifier",
@@ -39,7 +45,19 @@ export const TEST_DATA_ITEM: IHeadlineDataItem = {
     isDrillable: false,
 };
 
-export const TEST_BASE_HEADLINE_ITEM: IBaseHeadlineItem = {
+export const TEST_DATA_WITH_SUB_ITEM: IComparisonDataWithSubItem = {
+    item: {
+        value: "130000",
+        format: "$#,##0.00",
+    },
+    subItem: {
+        value: "80000",
+        format: null,
+    },
+    title: "data_item_title",
+};
+
+export const TEST_BASE_HEADLINE_ITEM: IBaseHeadlineItem<IHeadlineDataItem> = {
     data: TEST_DATA_ITEM,
     elementType: "primaryValue",
     baseHeadlineDataItemComponent: BaseHeadlineDataItem,
@@ -117,7 +135,7 @@ export const TEST_RENDER_COLOR_SPECS: any = [
         "Should have color applied on headline value when custom format is provided and comparison color is disabled",
         { disabled: true },
         EvaluationType.POSITIVE_VALUE,
-        "#9c46b5",
+        null,
     ],
     [
         "Should have default positive color applied on headline value when comparison color is enabled",
@@ -159,7 +177,7 @@ export const TEST_RENDER_COLOR_SPECS: any = [
         "Should have color applied on headline value when custom format is provided and comparison color is disabled with custom palette",
         { disabled: true },
         EvaluationType.POSITIVE_VALUE,
-        "#9c46b5",
+        null,
         TEST_COMPARISON_PALETTE,
     ],
     [
@@ -216,6 +234,23 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
         "comparison with calculate as different and default format",
         ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
         createComparison({ calculationType: CalculateAs.DIFFERENCE }),
+    ],
+    [
+        "comparison with calculate as change (different) and default format",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
+        createComparison({ calculationType: CalculateAs.CHANGE_DIFFERENCE }),
+    ],
+    [
+        "comparison with calculate as change (different) and custom format",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithCalculateAsDifferentAndDefaultFormat,
+        createComparison({
+            calculationType: CalculateAs.CHANGE_DIFFERENCE,
+            colorConfig: {
+                disabled: true,
+            },
+            format: "[color=d2ccde]#,##0.0",
+            subFormat: "[color=9c46b5]#,##0.00",
+        }),
     ],
     [
         "comparison with decimal-1 format",
@@ -299,6 +334,34 @@ export const TEST_COMPARISON_TRANSFORMATIONS: any = [
             colorConfig: TEST_COLOR_CONFIGS,
             labelConfig: {
                 unconditionalValue: "Custom label",
+            },
+        }),
+    ],
+    [
+        "comparison with default config and conditional labels",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnRight,
+        createComparison({
+            labelConfig: {
+                isConditional: true,
+            },
+        }),
+    ],
+    [
+        "comparison with change calculation and conditional labels ",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithPositionOnRight,
+        createComparison({
+            calculationType: CalculateAs.CHANGE,
+            labelConfig: {
+                isConditional: true,
+            },
+        }),
+    ],
+    [
+        "comparison with secondary measure is PoP and conditional labels",
+        ReferenceRecordings.Scenarios.Headline.ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP,
+        createComparison({
+            labelConfig: {
+                isConditional: true,
             },
         }),
     ],

@@ -106,6 +106,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     metricSegment: { id: "dashboard.bucket.metric_segment_by_warning" },
     categorySegment: { id: "dashboard.bucket.category_segment_by_warning" },
     category: { id: "dashboard.bucket.category_category_by_warning" },
+    columns: { id: "dashboard.bucket.category_columns_warning" },
+    measuresAttributes: { id: "dashboard.bucket.category_measures_rows_warning" },
     autoDefault: { id: "properties.auto_default" },
     extraSmall: { id: "properties.points.size.extra_small" },
     small: { id: "properties.points.size.small" },
@@ -206,6 +208,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     columnHeaderPositionLabel: { id: "properties.column.headers.position" },
     columnHeaderPositionTop: { id: "properties.column.headers.position.top" },
     columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
+    interactions: { id: "properties.interactions.title" },
+    interactionsDrillDown: { id: "properties.interactions.drillDown" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({
@@ -214,9 +218,15 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },
     calculatedAsRatio: { id: "properties.comparison.calculationType.as.ratio" },
     calculatedAsDifference: { id: "properties.comparison.calculationType.as.difference" },
+    calculatedAsChangeDifference: { id: "properties.comparison.calculationType.as.changeDifference" },
     calculationTooltipExampleSection: { id: "properties.comparison.calculationType.tooltip.example.section" },
     calculationTooltipFormulaSection: { id: "properties.comparison.calculationType.tooltip.formula.section" },
-    calculationTooltipUseInSection: { id: "properties.comparison.calculationType.tooltip.useIn.section" },
+    calculationTooltipFormulaChangeSection: {
+        id: "properties.comparison.calculationType.tooltip.formulaChange.section",
+    },
+    calculationTooltipFormulaDifferenceSection: {
+        id: "properties.comparison.calculationType.tooltip.formulaDifference.section",
+    },
     calculatedAsChangeTooltipExample: {
         id: "properties.comparison.calculationType.as.change.tooltip.example",
     },
@@ -236,9 +246,15 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     calculatedAsDifferenceTooltipFormula: {
         id: "properties.comparison.calculationType.as.difference.tooltip.formula",
     },
-
+    calculatedAsChangeDifferenceTooltipExample: {
+        id: "properties.comparison.calculationType.as.changeDifference.tooltip.example",
+    },
+    calculatedAsChangeDifferenceTooltipUseIn: {
+        id: "properties.comparison.calculationType.as.changeDifference.tooltip.useIn",
+    },
     valueSubSectionTitle: { id: "properties.comparison.valueSubSection.title" },
     formatTitle: { id: "properties.comparison.format.title" },
+    subFormatTitle: { id: "properties.comparison.subFormat.title" },
     formatPresetRounded: { id: "properties.comparison.measureNumber.format.preset.rounded" },
     formatPresetDecimal1: { id: "properties.comparison.measureNumber.format.preset.decimal1" },
     formatPresetDecimal2: { id: "properties.comparison.measureNumber.format.preset.decimal2" },
@@ -301,7 +317,12 @@ export const comparisonMessages: Record<string, MessageDescriptor> = defineMessa
     },
     labelSubSectionTitle: { id: "properties.comparison.labelSubSection.title" },
     labelPositionOnTopDisabled: { id: "properties.comparison.labelSubSection.positionOnTop.disabled" },
+    labelConditionalDisabledByRatio: { id: "properties.comparison.labelSubSection.conditional.disabled" },
     labelNameTitle: { id: "properties.comparison.labelName.title" },
+    labelConditionalTitle: { id: "properties.comparison.labelConditional.title" },
+    labelPositiveTitle: { id: "properties.comparison.labelPositive.title" },
+    labelNegativeTitle: { id: "properties.comparison.labelNegative.title" },
+    labelEqualsTitle: { id: "properties.comparison.labelEquals.title" },
     positionTitle: { id: "properties.comparison.position.title" },
     positionTop: { id: "properties.comparison.position.top" },
     positionRight: { id: "properties.comparison.position.right" },

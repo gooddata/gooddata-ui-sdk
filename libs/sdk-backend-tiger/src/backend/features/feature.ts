@@ -151,20 +151,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnablePivotTableTransposition,
-            "enablePivotTableTransposition",
-            "BOOLEAN",
-            FeatureFlagsValues.enablePivotTableTransposition,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableColumnHeadersPosition,
-            "enableColumnHeadersPosition",
-            "BOOLEAN",
-            FeatureFlagsValues.enableColumnHeadersPosition,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableNewHeadline,
             "enableNewHeadline",
             "BOOLEAN",
@@ -183,6 +169,27 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableUnavailableItemsVisible",
             "BOOLEAN",
             FeatureFlagsValues.enableUnavailableItemsVisible,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePivotTableIncreaseBucketSize,
+            "enablePivotTableIncreaseBucketSize",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePivotTableIncreaseBucketSize,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableUserManagement,
+            "enableUserManagement",
+            "BOOLEAN",
+            FeatureFlagsValues.enableUserManagement,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableKDDependentFilters,
+            "enableKDDependentFilters",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKDDependentFilters,
         ),
     };
 }

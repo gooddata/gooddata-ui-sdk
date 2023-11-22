@@ -1,21 +1,24 @@
 // (C) 2007-2023 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { MessageDescriptor, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
 import {
     Dropdown,
     DropdownButton,
     DropdownList,
-    sortDateDatasets,
     isDateDatasetHeader,
-    IDateDataset,
     IAlignPoint,
     ShortenedText,
     ScrollableItem,
+    Button,
 } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
-import { removeDateFromTitle } from "./utils.js";
+import {
+    getDateConfigurationDropdownHeight,
+    removeDateFromTitle,
+    getSortedDateDatasetsItems,
+} from "./utils.js";
 
 const DEFAULT_HYPHEN_CHAR = "-";
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
@@ -23,6 +26,8 @@ const tooltipAlignPoints: IAlignPoint[] = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
     { align: "cr cl", offset: { x: 10, y: 0 } },
 ];
+const DROPDOWN_MIN_HEIGHT = 170;
+const DEFAULT_DROPDOWN_ITEM_HEIGHT = 28;
 
 interface IDateDatasetsListItemProps {
     id?: string;
@@ -83,14 +88,13 @@ export interface IDateDatasetDropdownProps {
     className?: string;
     width: number;
     isLoading?: boolean;
+    enableUnrelatedItemsVisibility?: boolean;
+    unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
-function catalogDateDatasetToDateDataset(ds: ICatalogDateDataset): IDateDataset {
-    return {
-        id: ds.dataSet.id,
-        title: ds.dataSet.title,
-        relevance: ds.relevance,
-    };
+interface IDateDatasetsDropdownState {
+    width: number;
+    height: number;
 }
 
 export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) => {
@@ -101,20 +105,22 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
         onDateDatasetChange,
         activeDateDataset,
         unrelatedDateDataset,
-        width,
         dateFromVisualization,
         relatedDateDatasets,
         widgetRef,
+        enableUnrelatedItemsVisibility,
+        unrelatedDateDatasets,
     } = props;
 
     const intl = useIntl();
     const { onItemScroll, closeOnParentScroll } = useAutoScroll(autoOpen);
+    const [showUnavailableItems, setShowUnavailableItems] = useState(false);
 
     const unrelatedDateDataSetId = unrelatedDateDataset ? unrelatedDateDataset.dataSet.id : null;
     let activeDateDataSetId: string;
     let activeDateDataSetTitle = DEFAULT_HYPHEN_CHAR;
     let activeDateDataSetUri: string;
-    let recommendedDateDataSet = null;
+    let recommendedDateDataSet: ICatalogDateDataset | undefined;
 
     if (!isLoading && activeDateDataset) {
         activeDateDataSetId = activeDateDataset.dataSet.id;
@@ -128,11 +134,101 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
         );
     }
 
-    const sortedItems = sortDateDatasets(
-        relatedDateDatasets.map(catalogDateDatasetToDateDataset),
-        recommendedDateDataSet ? catalogDateDatasetToDateDataset(recommendedDateDataSet) : undefined,
-        unrelatedDateDataset ? catalogDateDatasetToDateDataset(unrelatedDateDataset) : undefined,
+    const sortedItems = getSortedDateDatasetsItems(
+        relatedDateDatasets,
+        recommendedDateDataSet,
+        unrelatedDateDataset,
+        unrelatedDateDatasets,
+        enableUnrelatedItemsVisibility && showUnavailableItems,
     );
+    const unrelatedDateDatasetCount = (unrelatedDateDatasets?.length ?? 0) - (unrelatedDateDataset ? 1 : 0);
+
+    const buttonRef = useRef<HTMLDivElement>();
+    const [{ height, width }, setDropdownDimensions] = useState<IDateDatasetsDropdownState>({
+        width: props.width,
+        height: DROPDOWN_MIN_HEIGHT,
+    });
+    const dropdownBodyHeight = (sortedItems?.length || 0) * DEFAULT_DROPDOWN_ITEM_HEIGHT;
+
+    useEffect(() => {
+        const buttonRect = buttonRef?.current?.getBoundingClientRect();
+        const calculatedWidth = buttonRect?.width ?? 0;
+        const calculatedHeight = getDateConfigurationDropdownHeight(
+            buttonRect?.top ?? 0,
+            buttonRect?.height ?? 0,
+            dropdownBodyHeight,
+            !unrelatedDateDatasets?.length,
+        );
+        setDropdownDimensions({ width: calculatedWidth, height: calculatedHeight });
+    }, [dropdownBodyHeight, unrelatedDateDatasets, buttonRef]);
+
+    const onShowHideUnrelatedItemsClick = () => {
+        setShowUnavailableItems(!showUnavailableItems);
+    };
+
+    const renderDropdownBody = ({ closeDropdown }: { closeDropdown: () => void }) => {
+        if (isLoading) {
+            return null;
+        }
+
+        return (
+            <div style={{ width }}>
+                <DropdownList
+                    className="configuration-dropdown dataSets-list"
+                    height={height}
+                    width={width}
+                    items={sortedItems}
+                    itemsCount={sortedItems.length}
+                    renderItem={({ item }) => {
+                        const isHeader = isDateDatasetHeader(item);
+                        const isSelected = !isDateDatasetHeader(item) && activeDateDataSetId === item.id;
+                        const isUnrelated = !isDateDatasetHeader(item) && unrelatedDateDataSetId === item.id;
+                        return (
+                            <DateDatasetsListItem
+                                title={
+                                    isHeader
+                                        ? intl.formatMessage(dateDatasetHeaderMessages[item.title])
+                                        : removeDateFromTitle(item.title)
+                                }
+                                isHeader={isHeader}
+                                isSelected={isSelected}
+                                isUnrelated={isUnrelated}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (isDateDatasetHeader(item)) {
+                                        return;
+                                    }
+                                    closeDropdown();
+                                    onDateDatasetChange(item.id);
+                                }}
+                            />
+                        );
+                    }}
+                />
+
+                {enableUnrelatedItemsVisibility && unrelatedDateDatasetCount > 0 ? (
+                    <div className="gd-list-footer">
+                        <FormattedMessage
+                            id={"gs.date.date-dataset.unrelated_hidden"}
+                            values={{
+                                count: unrelatedDateDatasetCount,
+                                isShow: showUnavailableItems,
+                            }}
+                        />
+                        <Button
+                            onClick={onShowHideUnrelatedItemsClick}
+                            className="gd-button-link-dimmed unrelated-date-button"
+                            value={intl.formatMessage({
+                                id: showUnavailableItems
+                                    ? "gs.date.date-dataset.unrelated.hide"
+                                    : "gs.date.date-dataset.unrelated.show",
+                            })}
+                        />
+                    </div>
+                ) : null}
+            </div>
+        );
+    };
 
     return (
         <Dropdown
@@ -156,13 +252,21 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
 
                 return (
                     <ScrollableItem scrollIntoView={autoOpen} onItemScrolled={onItemScroll}>
-                        <DropdownButton
-                            className={buttonClassName}
-                            value={buttonValue}
-                            isOpen={isOpen}
-                            onClick={toggleDropdown}
-                            disabled={isLoading}
-                        />
+                        <div
+                            ref={(ref) => {
+                                if (ref && ref !== buttonRef.current) {
+                                    buttonRef.current = ref;
+                                }
+                            }}
+                        >
+                            <DropdownButton
+                                className={buttonClassName}
+                                value={buttonValue}
+                                isOpen={isOpen}
+                                onClick={toggleDropdown}
+                                disabled={isLoading}
+                            />
+                        </div>
                     </ScrollableItem>
                 );
             }}
@@ -170,46 +274,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
             closeOnParentScroll={closeOnParentScroll}
             closeOnMouseDrag
             alignPoints={alignPoints}
-            renderBody={({ closeDropdown }) => {
-                if (isLoading) {
-                    return null;
-                }
-
-                return (
-                    <DropdownList
-                        className="configuration-dropdown dataSets-list"
-                        width={width}
-                        items={sortedItems}
-                        itemsCount={sortedItems.length}
-                        renderItem={({ item }) => {
-                            const isHeader = isDateDatasetHeader(item);
-                            const isSelected = !isDateDatasetHeader(item) && activeDateDataSetId === item.id;
-                            const isUnrelated =
-                                !isDateDatasetHeader(item) && unrelatedDateDataSetId === item.id;
-                            return (
-                                <DateDatasetsListItem
-                                    title={
-                                        isHeader
-                                            ? intl.formatMessage(dateDatasetHeaderMessages[item.title])
-                                            : removeDateFromTitle(item.title)
-                                    }
-                                    isHeader={isHeader}
-                                    isSelected={isSelected}
-                                    isUnrelated={isUnrelated}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        if (isDateDatasetHeader(item)) {
-                                            return;
-                                        }
-                                        closeDropdown();
-                                        onDateDatasetChange(item.id);
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                );
-            }}
+            renderBody={renderDropdownBody}
         />
     );
 };

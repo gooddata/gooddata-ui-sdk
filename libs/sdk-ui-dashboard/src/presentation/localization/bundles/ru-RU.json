@@ -366,6 +366,9 @@
     "gs.date.date-dataset.other": "Прочие",
     "gs.date.date-dataset.related": "Связанные",
     "gs.date.date-dataset.unrelated": "Несвязанные",
+    "gs.date.date-dataset.unrelated_hidden": "{count} {count, plural, one {несвязная дата} few {несвязные даты} many {несвязных дат} other {несвязных дат}} {isShow, select, true {видны} other {скрыты}}.",
+    "gs.date.date-dataset.unrelated.show": "Показать",
+    "gs.date.date-dataset.unrelated.hide": "Скрыть",
     "layout.widget.width.min": "Виджет имеет минимальную ширину",
     "layout.widget.width.max": "Виджет имеет максимальную ширину",
     "layout.widget.height.min": "Виджет имеет минимальную высоту",
@@ -382,5 +385,16 @@
     "newDashboard.title": "Перетащите анализ сюда",
     "newDashboard.dropInsight": "Сбросьте анализ",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
-    "attributesDropdown.attributeNameWithData": "с данными"
+    "attributesDropdown.attributeNameWithData": "с данными",
+    "filter.visibilityMode.tooltip.hidden": "Этот фильтр скрыт. Доступ к нему возможен только через режим редактирования.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Этот фильтр заблокирован. Его можно изменить только в режиме редактирования.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Этот фильтр заблокирован.",
+    "dateFilterDropdown.save": "Сохранять",
+    "filter.configuration.mode.title": "Режим",
+    "filter.configuration.mode.interactive.title": "Интерактивный",
+    "filter.configuration.mode.interactive.tooltip": "Пользователи панели могут очень легко настроить фильтр.",
+    "filter.configuration.mode.locked.title": "Заблокировано",
+    "filter.configuration.mode.locked.tooltip": "Пользователи информационной панели могут видеть фильтр, но не могут его изменить.",
+    "filter.configuration.mode.hidden.title": "Скрытый",
+    "filter.configuration.mode.hidden.tooltip": "Пользователи информационной панели не видят фильтр, но он применяется."
 }

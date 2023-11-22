@@ -53,7 +53,7 @@ import {
     uriRef,
     attributeLocalId,
 } from "@gooddata/sdk-model";
-import { IExecutionFactory, IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
 import set from "lodash/set.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -108,14 +108,11 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
  */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
-    private backendCapabilities: IBackendCapabilities;
-
     constructor(props: IVisConstruct) {
         super(props);
 
         this.type = VisualizationTypes.PUSHPIN;
         this.initializeProperties(props.visualizationProperties);
-        this.backendCapabilities = props.backend.capabilities;
     }
 
     protected checkBeforeRender(insight: IInsightDefinition): boolean {

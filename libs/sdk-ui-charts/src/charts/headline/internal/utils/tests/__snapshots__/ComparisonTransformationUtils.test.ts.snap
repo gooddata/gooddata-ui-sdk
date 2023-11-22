@@ -1,6 +1,114 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as change (different) and custom format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "[color=d2ccde]#,##0.0",
+      "title": "Change",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as change (different) and default format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "Change",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
 exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with calculate as different and default format' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "title": "Difference",
+      "value": "78314703.09",
+    },
+    "evaluationType": "positive",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with change calculation and conditional labels ' correctly 1`] = `
 {
   "primaryItem": {
     "baseHeadlineDataItemComponent": [Function],
@@ -27,12 +135,11 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
   "tertiaryItem": {
     "baseHeadlineDataItemComponent": [Function],
     "data": {
-      "format": "$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
-      "title": "Difference",
-      "value": "-78314703.09",
+      "format": "#,##0%",
+      "title": "Decrease",
+      "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -65,11 +172,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -102,11 +208,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "Custom label",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -139,11 +244,46 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "#,##0.0",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with default config and conditional labels' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "of",
+      "value": "0.328493920509201",
+    },
+    "evaluationType": "negative",
   },
 }
 `;
@@ -176,7 +316,6 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "#,##0%",
-      "localIdentifier": "m_57cc3b016ec6bb98b08ffeea6b0e4174",
       "title": "Change",
       "value": "0",
     },
@@ -213,11 +352,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "#,##0%",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -250,11 +388,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "#,##0%",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -287,7 +424,6 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_a9d9033bf0641d5430bcc7f339c8fb65",
       "title": "of",
       "value": "1",
     },
@@ -324,7 +460,6 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_a9d9033bf0641d5430bcc7f339c8fb65",
       "title": "of",
       "value": "1",
     },
@@ -340,9 +475,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "primaryValue",
   },
@@ -351,9 +486,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "secondaryValue",
   },
@@ -361,9 +496,8 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       "title": "of",
-      "value": "3.04419636883962",
+      "value": "0.328493920509201",
     },
     "evaluationType": "negative",
   },
@@ -377,9 +511,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
-      "title": "Amount",
-      "value": "116625456.54",
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
     },
     "elementType": "primaryValue",
   },
@@ -388,9 +522,9 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
-      "title": "Won",
-      "value": "38310753.45",
+      "localIdentifier": "m_aangOxLSeztu",
+      "title": "Amount",
+      "value": "116625456.54",
     },
     "elementType": "secondaryValue",
   },
@@ -398,9 +532,8 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       "title": "of",
-      "value": "3.04419636883962",
+      "value": "0.328493920509201",
     },
     "evaluationType": "negative",
   },
@@ -424,11 +557,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
   "tertiaryItem": {
     "baseHeadlineDataItemComponent": [Function],
@@ -450,11 +582,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
   "secondaryItem": {
     "baseHeadlineDataItemComponent": [Function],
@@ -509,11 +640,10 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
   },
 }
 `;
@@ -546,11 +676,46 @@ exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should 
     "baseHeadlineDataItemComponent": [Function],
     "data": {
       "format": "[color=9c46b5][backgroundColor=d2ccde]$#,##0.00",
-      "localIdentifier": "m_916f5387caf8737c37c4a2206c3471d2",
       "title": "of",
       "value": "0.328493920509201",
     },
-    "evaluationType": "positive",
+    "evaluationType": "negative",
+  },
+}
+`;
+
+exports[`ComparisonTransformationUtils > getComparisonBaseHeadlineData > should transform 'comparison with secondary measure is PoP and conditional labels' correctly 1`] = `
+{
+  "primaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_acugFHNJgsBy",
+      "title": "Won",
+      "value": "38310753.45",
+    },
+    "elementType": "primaryValue",
+  },
+  "secondaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "$#,##0.00",
+      "isDrillable": false,
+      "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+      "title": "Won Last Year",
+      "value": "38310753.45",
+    },
+    "elementType": "secondaryValue",
+  },
+  "tertiaryItem": {
+    "baseHeadlineDataItemComponent": [Function],
+    "data": {
+      "format": "#,##0%",
+      "title": "No change",
+      "value": "0",
+    },
+    "evaluationType": "equals",
   },
 }
 `;

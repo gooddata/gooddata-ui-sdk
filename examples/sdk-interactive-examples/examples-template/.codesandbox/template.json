@@ -1,0 +1,7 @@
+{
+    "title": "GoodData interactive example",
+    "description": "GoodData interactive example",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
+}

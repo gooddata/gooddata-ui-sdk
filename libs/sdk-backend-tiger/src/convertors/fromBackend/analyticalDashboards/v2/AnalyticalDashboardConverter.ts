@@ -1,4 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
+import { v4 as uuidv4 } from "uuid";
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
@@ -22,15 +23,16 @@ import {
     IDashboardDateFilterConfig,
     IDashboardPlugin,
     IDashboardPluginLink,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
+import { convertLayout } from "../../../shared/layoutConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -62,6 +64,7 @@ interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
     plugins?: IDashboardPluginLink[];
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
 function convertDashboardPluginLink(
@@ -79,8 +82,12 @@ function getConvertedAnalyticalDashboardContent(
 ): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
-        layout: convertDrillToCustomUrlInLayoutFromBackend(
-            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+        attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
+        layout: convertLayout(
+            true,
+            prepareDrillLocalIdentifierIfMissing(
+                setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+            ),
         ),
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
     };
@@ -91,14 +98,13 @@ export function convertDashboard(
     filterContext?: IFilterContext,
 ): IDashboard {
     const { data, links, included } = analyticalDashboard;
-    const { id, attributes = {}, meta = {}, relationships = {} } = data;
+    const { id, attributes, meta = {}, relationships = {} } = data;
     const { createdBy, modifiedBy } = relationships;
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
-    const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
-        content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
-    );
+    const { dateFilterConfig, layout, plugins, attributeFilterConfigs } =
+        getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
         type: "IDashboard",
@@ -118,6 +124,7 @@ export function convertDashboard(
         tags: attributes.tags ?? [],
         filterContext,
         dateFilterConfig,
+        attributeFilterConfigs,
         layout,
         plugins,
     };
@@ -191,4 +198,29 @@ export function convertDashboardPluginWithLinks(
         updated: modifiedAt,
         updatedBy: convertUserIdentifier(modifiedBy, included),
     };
+}
+
+export function prepareDrillLocalIdentifierIfMissing(layout?: IDashboardLayout) {
+    if (!layout) {
+        return;
+    }
+
+    const widgetsPaths: LayoutPath[] = [];
+    walkLayout(layout, {
+        widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
+    });
+
+    return widgetsPaths.reduce((layout, widgetPath) => {
+        return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
+            const drills = widget?.drills.map((it) => ({
+                ...it,
+                localIdentifier: it.localIdentifier ?? uuidv4().replace(/-/g, ""),
+            }));
+
+            return {
+                ...widget,
+                drills,
+            };
+        });
+    }, layout);
 }

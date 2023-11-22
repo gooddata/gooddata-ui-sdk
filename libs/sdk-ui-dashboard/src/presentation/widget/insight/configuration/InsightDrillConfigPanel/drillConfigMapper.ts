@@ -8,6 +8,8 @@ import {
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
+    ObjRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { defineMessage } from "react-intl";
@@ -20,6 +22,7 @@ import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     IDrillConfigItemBase,
+    IDrillDownAttributeHierarchyConfig,
     IDrillToDashboardConfig,
     IDrillToInsightConfig,
     IDrillToUrl,
@@ -27,6 +30,7 @@ import {
     isDrillToUrl,
     UrlDrillTarget,
 } from "../../../../drill/types.js";
+import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../types.js";
 
 function getTitleFromDrillableItemPushData(items: IAvailableDrillTargets, itemId: string): string {
     const measureItems = items.measures || [];
@@ -70,38 +74,44 @@ const buildUrlDrillTarget = (drillData: IDrillToUrl): UrlDrillTarget => {
 const createInsightConfig = (
     drillData: IDrillToInsight,
     supportedItemsForWidget: IAvailableDrillTargets,
+    widgetRef: ObjRef,
 ): IDrillToInsightConfig => {
-    const localIdentifier = isDrillFromAttribute(drillData.origin)
+    const originLocalIdentifier = isDrillFromAttribute(drillData.origin)
         ? getLocalIdentifierOrDie(drillData.origin?.attribute)
         : getLocalIdentifierOrDie(drillData.origin?.measure);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
         insightRef: drillData.target,
         complete: true,
+        widgetRef: widgetRef,
     };
 };
 
 const createDashboardConfig = (
     drillData: IDrillToDashboard,
     supportedItemsForWidget: IAvailableDrillTargets,
+    widgetRef: ObjRef,
 ): IDrillToDashboardConfig => {
-    const localIdentifier = isDrillFromAttribute(drillData.origin)
+    const originLocalIdentifier = isDrillFromAttribute(drillData.origin)
         ? getLocalIdentifierOrDie(drillData.origin?.attribute)
         : getLocalIdentifierOrDie(drillData.origin?.measure);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
         dashboard: drillData.target,
         complete: true,
+        widgetRef: widgetRef,
     };
 };
 
@@ -113,20 +123,23 @@ const createUrlConfig = (
     drillData: IDrillToUrl,
     supportedItemsForWidget: IAvailableDrillTargets,
     invalidCustomUrlDrillLocalIds: string[],
+    widgetRef: ObjRef,
 ): IDrillToUrlConfig => {
-    const localIdentifier = getDrillOriginLocalIdentifier(drillData);
+    const originLocalIdentifier = getDrillOriginLocalIdentifier(drillData);
 
-    const hasWarning = invalidCustomUrlDrillLocalIds.includes(localIdentifier);
+    const hasWarning = invalidCustomUrlDrillLocalIds.includes(originLocalIdentifier);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
-        localIdentifier,
-        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
-        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, localIdentifier),
+        originLocalIdentifier,
+        title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+        attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+        localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
         urlDrillTarget: buildUrlDrillTarget(drillData),
         complete: true,
         warning: hasWarning ? invalidUrlMessage.id : undefined,
+        widgetRef: widgetRef,
     };
 };
 
@@ -138,17 +151,18 @@ const createConfig = (
     drillData: InsightDrillDefinition,
     supportedItemsForWidget: IAvailableDrillTargets,
     invalidCustomUrlDrillLocalIds: string[],
+    widgetRef: ObjRef,
 ) => {
     if (isDrillToInsight(drillData)) {
-        return createInsightConfig(drillData, supportedItemsForWidget);
+        return createInsightConfig(drillData, supportedItemsForWidget, widgetRef);
     }
 
     if (isDrillToDashboard(drillData)) {
-        return createDashboardConfig(drillData, supportedItemsForWidget);
+        return createDashboardConfig(drillData, supportedItemsForWidget, widgetRef);
     }
 
     if (isDrillToUrl(drillData)) {
-        return createUrlConfig(drillData, supportedItemsForWidget, invalidCustomUrlDrillLocalIds);
+        return createUrlConfig(drillData, supportedItemsForWidget, invalidCustomUrlDrillLocalIds, widgetRef);
     }
 
     return createImplicitConfig();
@@ -161,8 +175,35 @@ export const getMappedConfigForWidget = (
     configForWidget: InsightDrillDefinition[],
     supportedItemsForWidget: IAvailableDrillTargets,
     invalidCustomUrlDrillLocalIds: string[],
+    widgetRef: ObjRef,
 ): IDrillConfigItem[] => {
     return configForWidget.map((item) =>
-        createConfig(item, supportedItemsForWidget, invalidCustomUrlDrillLocalIds),
+        createConfig(item, supportedItemsForWidget, invalidCustomUrlDrillLocalIds, widgetRef),
     );
+};
+
+/**
+ * @internal
+ */
+export const getGlobalDrillDownMappedConfigForWidget = (
+    widgetGlobalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[],
+    supportedItemsForWidget: IAvailableDrillTargets,
+    widgetRef: ObjRef,
+): IDrillDownAttributeHierarchyConfig[] => {
+    return widgetGlobalDrillDowns.map((globalDrillDown) => {
+        const originLocalIdentifier = getDrillOriginLocalIdentifier(globalDrillDown);
+        const localIdentifier = `${originLocalIdentifier}_${objRefToString(globalDrillDown.target)}`;
+
+        return {
+            type: "attribute",
+            drillTargetType: DRILL_TARGET_TYPE.DRILL_DOWN,
+            attributeHierarchyRef: globalDrillDown.target,
+            originLocalIdentifier: originLocalIdentifier,
+            title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+            attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+            localIdentifier,
+            complete: true,
+            widgetRef: widgetRef,
+        };
+    });
 };

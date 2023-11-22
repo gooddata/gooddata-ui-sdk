@@ -18,7 +18,9 @@ export type IEntitlementsName =
     | "UnlimitedUsers"
     | "UnlimitedWorkspaces"
     | "WhiteLabeling"
-    | "WorkspaceCount";
+    | "WorkspaceCount"
+    | "Hipaa"
+    | "UserTelemetryDisabled";
 
 /**
  * Entitlement descriptor

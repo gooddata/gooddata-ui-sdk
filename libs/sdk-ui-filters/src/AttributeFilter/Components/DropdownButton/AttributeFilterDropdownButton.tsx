@@ -5,6 +5,7 @@ import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterButtonToolip } from "./AttributeFilterButtonTooltip.js";
+import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
@@ -52,6 +53,20 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     showSelectionCount?: boolean;
+
+    /**
+     * Specifies the visibility mode of the filter.
+     *
+     * @alpha
+     */
+    disabled?: boolean;
+
+    /**
+     * Represents a custom icon along with a tooltip.
+     *
+     * @alpha
+     */
+    customIcon?: IFilterButtonCustomIcon;
 
     /**
      * If true, the AttributeFilter dropdown is open.
@@ -131,6 +146,8 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         selectedItemsCount,
         showSelectionCount = true,
         subtitle,
+        disabled,
+        customIcon,
         isFiltering,
         isLoading,
         isLoaded,
@@ -179,6 +196,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     "gd-is-active": isOpen,
                     "gd-is-loaded": isLoaded,
                     "gd-is-draggable": isDraggable,
+                    disabled: disabled,
                 },
             )}
             onClick={onClick}
@@ -196,6 +214,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                             {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                         </ShortenedText>
                     </div>
+                    <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
                     {TooltipContentComponent && isLoaded ? (
                         <AttributeFilterButtonToolip>
                             <TooltipContentComponent />

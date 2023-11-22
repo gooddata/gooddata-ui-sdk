@@ -2,7 +2,7 @@
 
 set -e
 
-CYPRESS_IMAGE='cypress/included:12.10.0'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311211156.11759a0'
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
@@ -78,6 +78,8 @@ mkdir -p ./recordings/mappings/$SDK_BACKEND
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ 6/8 Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
+export USER_UID=$(id -u $USER)
+export USER_GID=$(id -g $USER)
 PROJECT_NAME=${sdk_backend}-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
 MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
     --abort-on-container-exit --exit-code-from isolated-tests \

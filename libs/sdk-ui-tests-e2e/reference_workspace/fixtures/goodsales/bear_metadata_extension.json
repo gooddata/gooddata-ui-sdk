@@ -1,5 +1,7 @@
 {
     "import_identifiers": [
+        "snapshot.year",
+        "fact.opportunitysnapshot.amount",
         "gdc.visualization.table",
         "activity.aag81lMifn6q",
         "label.owner.department",
@@ -11,7 +13,6 @@
         "label.stage.name.stagename",
         "fact.opportunitysnapshot.probability",
         "gdc.visualization.bubble",
-        "fact.opportunitysnapshot.amount",
         "gdc.visualization.donut",
         "gdc.visualization.treemap",
         "label.owner.id.name",
@@ -62,9 +63,7 @@
         "attr.account.id",
         "attr.product.id",
         "attr.owner.region",
-        "snapshot.dataset.dt",
-        "snapshot.year",
-        "fact.opportunitysnapshot.amount"
+        "snapshot.dataset.dt"
     ],
     "objects": [
         {
@@ -3506,6 +3505,680 @@
                 }
             },
             "name": "visualizationObject_Table_with_one_measure_two_attributes_with_headers_on_left_and_metrics_in_rows_aahgvak6wCmW"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "4c70f98060234d719beb1da0c0a1bff4"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"4c70f98060234d719beb1da0c0a1bff4\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aan84gSWC7Yg",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only rows"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_only_rows_aan84gSWC7Yg"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "c5a718936a254221bacb473761ff8708",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "d32341da67764e908260c2a09a8a45cb"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"d32341da67764e908260c2a09a8a45cb\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aad9jj3DGZAs",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only rows and measures"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_only_rows_and_measures_aad9jj3DGZAs"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "dbdad07cdb1944d79c465018df85bb7d"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_isactive}}}"
+                                            },
+                                            "localIdentifier": "34d35f10eafa4b4f94eff2f4aafcabc0"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"dbdad07cdb1944d79c465018df85bb7d\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aad9lblWGZ2y",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only row and column"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_only_row_and_column_aad9lblWGZ2y"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "e08c02c59a5848479a088abd31669b85",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "b9e252ebbc204839a981172d09dc0dbd"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_region}}}"
+                                            },
+                                            "localIdentifier": "83fa2bb7c5584191873c4559ab064f36"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"b9e252ebbc204839a981172d09dc0dbd\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aab9lHNMCnfe",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has row column measure"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_has_row_column_measure_aab9lHNMCnfe"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "d7e6e85d7f1f4f62bc817549b4194c17",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "a644476fdfcf45629e1f9e46666ee5da"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "7e87cad035ae446eaa9e0d9196bba7ef"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aad4CkIv6mxL",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has only measure and columns"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_has_only_measure_and_columns_aad4CkIv6mxL"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "f66632ceaea44f5187047c770e1d62a0",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "b2432f7a2c3c4a739b2f78fd21d10b2e"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aabVP3wpB5r2",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only row measure"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_row_measure_aabVP3wpB5r2"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "5d1c76a80a614a79a2beca6eab36c0e1",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "cfe5ffb8a76e4573a6a96636839153a3"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aakVNxRuB2o9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only column measure"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_column_measure_aakVNxRuB2o9"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "ddd52783b308403691a6fe548898c8ef",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "64357859038f4152afcd38f63055e8a0"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_product_id_name}}}"
+                                            },
+                                            "localIdentifier": "0cc8288dee874d2191083e1c73a2b499"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aadVO9GtCbI9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map has measure column row"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_has_measure_column_row_aadVO9GtCbI9"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "809d46fcc0b3463196965e1b810944f4",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_heatmap}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacVQjGsHKYh",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only measures"
+                    }
+                }
+            },
+            "name": "visualizationObject_heat_map_only_measures_aacVQjGsHKYh"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "8f4c32208f554d42af2a9a2c77f79fc2",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "efc0ac8c0b3c4a7d98b0b3b0bc12bc82"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "60e31acbdf104ebd953f6a975d6e75db"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "stack"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_column}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aaba0eSt4UX8",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Column with two drillable attributes"
+                    }
+                }
+            },
+            "name": "visualizationObject_Column_with_two_drillable_attributes_aaba0eSt4UX8"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "6beb0a04f58c4bb3af795a69b314992e",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{win_rate}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "cd8ec833af014fd49fc806a529705320",
+                                            "title": "Win Rate"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "secondary_measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{won}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "78b05553370a437f8c31e568ca7ff35e",
+                                            "title": "Won"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "tertiary_measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "2960b612bbf8485db470dd68ac6ee756"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_product_id_name}}}"
+                                            },
+                                            "localIdentifier": "8e9dcf6297e4436286d23f05497f2a96"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_bullet}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aagaVhl74Rj5",
+                        "summary": "",
+                        "tags": "",
+                        "title": "bullet with two attributes same bucket"
+                    }
+                }
+            },
+            "name": "visualizationObject_bullet_with_two_attributes_same_bucket_aagaVhl74Rj5"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "{{{fact_opportunitysnapshot_amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "dc8b59d2e9d942db93f39b555385ab50",
+                                            "title": "Sum of Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "3a1008bc2a43411c923d4db6fc7aa7b5"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"controls\":{\"columnHeadersPosition\":\"left\",\"measureGroupDimension\":\"rows\"}}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacXBmMBL1DV",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table transpose row left"
+                    }
+                }
+            },
+            "name": "visualizationObject_table_transpose_row_left_aacXBmMBL1DV"
         },
         {
             "content": {
@@ -11072,6 +11745,19 @@
                                         "uri": "{{{visualizationObject_With_own_description_aa84cd0bv9i0}}}"
                                     }
                                 }
+                            },
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "5ec3da5465e640d49b59bdb97f44a2f5"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Sales_Rep_chart_aaifwhL4qpvy}}}"
+                                    }
+                                }
                             }
                         ],
                         "ignoreDashboardFilters": [],
@@ -11253,6 +11939,590 @@
                 }
             },
             "name": "analyticalDashboard_KPI_for_date_filter_aab8BY5ksnoC"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aan9jkdFGZF7",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aan9jkdFGZF7"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{activity_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_only_rows_aan84gSWC7Yg}}}"
+                    },
+                    "meta": {
+                        "identifier": "aao84gSWC7Yg",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only rows"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_only_rows_aao84gSWC7Yg"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_has_row_column_measure_aab9lHNMCnfe}}}"
+                    },
+                    "meta": {
+                        "identifier": "aac9lAvgCnao",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has row column measure"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_has_row_column_measure_aac9lAvgCnao"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_only_row_and_column_aad9lblWGZ2y}}}"
+                    },
+                    "meta": {
+                        "identifier": "aag9jjB6CmLp",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only row and column"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_only_row_and_column_aag9jjB6CmLp"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_only_rows_and_measures_aad9jj3DGZAs}}}"
+                    },
+                    "meta": {
+                        "identifier": "aag9jjB2CmHD",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table only rows and measures"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_only_rows_and_measures_aag9jjB2CmHD"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_has_only_measure_and_columns_aad4CkIv6mxL}}}"
+                    },
+                    "meta": {
+                        "identifier": "aab4D6SCCTed",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table has only measure and columns"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_table_transpose_row_left_aacXBmMBL1DV}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacXBsRE2xxO",
+                        "summary": "",
+                        "tags": "",
+                        "title": "table transpose row left"
+                    }
+                }
+            },
+            "name": "visualizationWidget_table_transpose_row_left_aacXBsRE2xxO"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aan9jkdFGZF7}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_has_row_column_measure_aac9lAvgCnao}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_only_row_and_column_aag9jjB6CmLp}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_only_rows_and_measures_aag9jjB2CmHD}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_only_rows_aao84gSWC7Yg}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_table_transpose_row_left_aacXBsRE2xxO}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_table_has_row_column_measure_aac9lAvgCnao}}}",
+                            "{{{visualizationWidget_table_only_row_and_column_aag9jjB6CmLp}}}",
+                            "{{{visualizationWidget_table_only_rows_and_measures_aag9jjB2CmHD}}}",
+                            "{{{visualizationWidget_table_only_rows_aao84gSWC7Yg}}}",
+                            "{{{visualizationWidget_table_has_only_measure_and_columns_aab4D6SCCTed}}}",
+                            "{{{visualizationWidget_table_transpose_row_left_aacXBsRE2xxO}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aab9lVBAGZ64",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Dashboard table drill down"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Dashboard_table_drill_down_aab9lVBAGZ64"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_row_measure_aabVP3wpB5r2}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacVP4T3HKXs",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only row measure"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_has_measure_column_row_aadVO9GtCbI9}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabVR9reHK0x",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map has measure column row"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_measures_aacVQjGsHKYh}}}"
+                    },
+                    "meta": {
+                        "identifier": "aalVNxRuB2o9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only measures"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_measures_aalVNxRuB2o9"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_heat_map_only_column_measure_aakVNxRuB2o9}}}"
+                    },
+                    "meta": {
+                        "identifier": "aafVO9GtCbI9",
+                        "summary": "",
+                        "tags": "",
+                        "title": "heat map only column measure"
+                    }
+                }
+            },
+            "name": "visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aadVP3wpB5r2",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aadVP3wpB5r2"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aadVP3wpB5r2}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_heat_map_only_measures_aalVNxRuB2o9}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_heat_map_only_row_measure_aacVP4T3HKXs}}}",
+                            "{{{visualizationWidget_heat_map_only_column_measure_aafVO9GtCbI9}}}",
+                            "{{{visualizationWidget_heat_map_has_measure_column_row_aabVR9reHK0x}}}",
+                            "{{{visualizationWidget_heat_map_only_measures_aalVNxRuB2o9}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacVR9reHK0x",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Heat map chart with stack data"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Heat_map_chart_with_stack_data_aacVR9reHK0x"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Column_with_two_drillable_attributes_aaba0eSt4UX8}}}"
+                    },
+                    "meta": {
+                        "identifier": "aaca0C7azd0i",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Column with two drillable attributes"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Column_with_two_drillable_attributes_aaca0C7azd0i"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aada0f5x4UMo",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aada0f5x4UMo"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": false
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_bullet_with_two_attributes_same_bucket_aagaVhl74Rj5}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacaZ0kU4ULh",
+                        "summary": "",
+                        "tags": "",
+                        "title": "bullet with two attributes same bucket"
+                    }
+                }
+            },
+            "name": "visualizationWidget_bullet_with_two_attributes_same_bucket_aacaZ0kU4ULh"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aada0f5x4UMo}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Column_with_two_drillable_attributes_aaca0C7azd0i}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_bullet_with_two_attributes_same_bucket_aacaZ0kU4ULh}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Column_with_two_drillable_attributes_aaca0C7azd0i}}}",
+                            "{{{visualizationWidget_bullet_with_two_attributes_same_bucket_aacaZ0kU4ULh}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aada0C7azd0i",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Dashboard drilldown on chart"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Dashboard_drilldown_on_chart_aada0C7azd0i"
         },
         {
             "content": {

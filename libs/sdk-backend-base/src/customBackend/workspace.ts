@@ -19,6 +19,7 @@ import {
     IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution.js";
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
@@ -109,5 +110,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         throw new NotSupported("access control is not supported");
+    }
+
+    public attributeHierarchies(): IAttributeHierarchiesService {
+        throw new NotSupported("attribute hierarchy is not supported");
     }
 }

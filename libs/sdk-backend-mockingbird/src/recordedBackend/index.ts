@@ -38,6 +38,7 @@ import {
     IEntitlements,
     IOrganizationPermissionService,
     IOrganizationUserService,
+    IAttributeHierarchiesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -215,6 +216,12 @@ function recordedWorkspace(
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setColorPalette(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setTheme(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {
@@ -247,6 +254,9 @@ function recordedWorkspace(
         },
         accessControl(): IWorkspaceAccessControlService {
             return recordedAccessControlFactory(implConfig);
+        },
+        attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
         },
     };
 }
@@ -356,22 +366,17 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 getWorkspacePermissionsForUser: () => Promise.resolve([]),
                 getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
-                updateUserOrganizationAdminStatus: () => Promise.resolve(),
-                updateWorkspacePermissionsForUser: () => Promise.resolve(),
-                updateWorkspacePermissionsForUsers: () => Promise.resolve(),
-                updateWorkspacePermissionsForUserGroup: () => Promise.resolve(),
-                updateWorkspacePermissionsForUserGroups: () => Promise.resolve(),
+                getOrganizationPermissionForUser: () => Promise.resolve([]),
+                getOrganizationPermissionForUserGroup: () => Promise.resolve([]),
+                updateOrganizationPermissions: () => Promise.resolve(),
+                updateWorkspacePermissions: () => Promise.resolve(),
             };
         },
         users(): IOrganizationUserService {
             return {
-                addUserGroupToUsers: () => Promise.resolve(),
-                addUserToUserGroups: () => Promise.resolve(),
-                addUserGroupsToUsers: () => Promise.resolve(),
+                addUsersToUserGroups: () => Promise.resolve(),
                 createUserGroup: () => Promise.resolve(),
-                deleteUser: () => Promise.resolve(),
                 deleteUsers: () => Promise.resolve(),
-                deleteUserGroup: () => Promise.resolve(),
                 deleteUserGroups: () => Promise.resolve(),
                 getUser: () => Promise.resolve(undefined),
                 getUserGroup: () => Promise.resolve(undefined),
@@ -379,7 +384,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getUserGroupsOfUser: () => Promise.resolve([]),
                 getUsersOfUserGroup: () => Promise.resolve([]),
                 getUsers: () => Promise.resolve([]),
-                removeUserFromUserGroup: () => Promise.resolve(),
+                removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),
                 updateUserGroup: () => Promise.resolve(),
             };

@@ -143,6 +143,14 @@
             width: 100%;
         }
     }
+
+    .configuration-item-mode {
+        margin: 0 10px 10px;
+
+        .input-radio-label {
+            font-size: 12px;
+        }
+    }
 }
 
 .connecting-attributes-dropdown-body {
@@ -162,6 +170,18 @@
 
     @media #{kit-variables.$medium-up} {
         border-top: 1px solid kit-variables.$gd-border-color;
+    }
+}
+
+.dropdown-body {
+    .gd-list-footer {
+        .unrelated-date-button {
+            font-size: 12px;
+            line-height: 16px;
+            padding-left: 2px;
+            padding-right: 0;
+            margin-top: -3px;
+        }
     }
 }
 

@@ -4,6 +4,158 @@
         "analyticalDashboards": [
             {
                 "content": {
+                    "dateFilterConfig": {
+                        "filterName": "Date range",
+                        "mode": "readonly"
+                    },
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "84b43119-13a0-468b-a089-6b4680e25b00",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 11,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-10-30 05:37",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "62554df1-31a8-49c7-bfed-524771a83b1a",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard Readonly Date Filter"
+            },
+            {
+                "content": {
+                    "attributeFilterConfigs": [
+                        {
+                            "localIdentifier": "d37c609e20da4de9ad298e53218c2c80",
+                            "mode": "readonly"
+                        },
+                        {
+                            "localIdentifier": "8cbf790c39cb48929b76996eff7532f9",
+                            "mode": "hidden"
+                        }
+                    ],
+                    "dateFilterConfig": {
+                        "filterName": "Date range",
+                        "mode": "hidden"
+                    },
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "35fb83f8-34eb-4b88-abf7-2900420d42af",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 11,
+                                                "gridWidth": 5
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-10-30 05:35",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "c4e4916e-ccc2-46d1-8202-8321249ec2a3",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard Hide Filters"
+            },
+            {
+                "content": {
                     "filterContextRef": {
                         "identifier": {
                             "id": "19551c0c-62a1-40ee-898b-b46b95e59074",
@@ -925,6 +1077,59 @@
                 "description": "",
                 "id": "97aca5e1-ab29-4ad9-a173-72085daf4dbf",
                 "title": "Drill to dashboard"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "234e9a15-4e45-4e85-9606-0726226b1914",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "type": "IDashboardLayout",
+                        "sections": [
+                            {
+                                "type": "IDashboardLayoutSection",
+                                "header": {},
+                                "items": [
+                                    {
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "type": "insight",
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "b69512f0-6285-4d4d-b31c-47b7b081276c",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "ignoreDashboardFilters": [],
+                                            "drills": [],
+                                            "title": "Table Transpose",
+                                            "description": "",
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            }
+                                        },
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "a402fcdc-fa1c-49ca-be7f-dade9e75d33e",
+                "title": "KD with Table Transpose"
             },
             {
                 "content": {
@@ -1863,10 +2068,162 @@
                     }
                 ],
                 "title": "Dashboard Testing"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "b622164f-f036-422f-9f49-fb81bfeeb55e",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 21,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "configuration": {
+                                                "hideTitle": false
+                                            },
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_activity_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "780f3759-65cc-4489-858d-9c318ecece75",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "USA geography attribute table",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-11-14 15:32",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "6aac31b1-ba6c-40b6-b727-1c412d9e4d25",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard with dependent filters"
             }
         ],
         "dashboardPlugins": [],
         "filterContexts": [
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "84b43119-13a0-468b-a089-6b4680e25b00",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_account.account.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "d37c609e20da4de9ad298e53218c2c80",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_city.id.cityname",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "8cbf790c39cb48929b76996eff7532f9",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_activity.subject",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "5993a14217d4470c99a761e24fd2d74d",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "35fb83f8-34eb-4b88-abf7-2900420d42af",
+                "title": "filterContext"
+            },
             {
                 "content": {
                     "filters": [
@@ -2040,6 +2397,15 @@
                 },
                 "description": "",
                 "id": "215f465d-3e3e-4940-922b-326bdb75b82b",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "234e9a15-4e45-4e85-9606-0726226b1914",
                 "title": "filterContext"
             },
             {
@@ -3741,6 +4107,69 @@
                 "description": "",
                 "id": "fe0c65ba-a85d-4def-9aa1-e8f19469324e",
                 "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["East Coast"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_owner.region_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "2cd300f5f71244a4ba9297c91f6a358c",
+                                "negativeSelection": false
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "state_id.statename",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "644095cfbd2346f6b767278b3b0a0396",
+                                "negativeSelection": true
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_city.id.cityname",
+                                        "type": "label"
+                                    }
+                                },
+                                "filterElementsBy": [
+                                    {
+                                        "filterLocalIdentifier": "644095cfbd2346f6b767278b3b0a0396",
+                                        "over": {
+                                            "attributes": []
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "ffaf479f4cf84a7f99fe3339205aba28",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b622164f-f036-422f-9f49-fb81bfeeb55e",
+                "title": "filterContext"
             }
         ],
         "metrics": [],
@@ -4178,6 +4607,119 @@
                 "description": "Amount",
                 "id": "87e5c951-0ae6-4a71-a38d-843457bdfc0b",
                 "title": "Amount"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "656c15e862a249e890baeb4ea9930c77",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "aeaea589c912406ab08e67d1a4246103",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {
+                        "controls": {
+                            "measureGroupDimension": "columns"
+                        }
+                    },
+                    "visualizationUrl": "local:table",
+                    "version": "2"
+                },
+                "description": "",
+                "id": "8f88b387-351b-479f-a7fb-e2b072c810f3",
+                "title": "Table With MC"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "e96c2c0d49ac4b9286079f1e1169ccd6",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "d0793f9cdd934ce290e697327f2f35fc",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {
+                        "controls": {
+                            "columnHeadersPosition": "left",
+                            "measureGroupDimension": "rows"
+                        }
+                    },
+                    "visualizationUrl": "local:table",
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b69512f0-6285-4d4d-b31c-47b7b081276c",
+                "title": "Table Transpose"
             },
             {
                 "content": {
@@ -5408,6 +5950,70 @@
                 "description": "",
                 "id": "6d46ac4d-9d6c-434d-a9ae-ff61c98ce066",
                 "title": "Insight has invalid interaction"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "ca076ec85db5497a8846b9809760fb93"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "state_id.statename",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "4656fee56a744d16a1cf6898dd34d5d5"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_city.id.cityname",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "37594b463016459f873d106dd29d111d"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "ca076ec85db5497a8846b9809760fb93",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "createdAt": "2023-11-14 15:29",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "780f3759-65cc-4489-858d-9c318ecece75",
+                "title": "USA geography attribute table"
             }
         ]
     }

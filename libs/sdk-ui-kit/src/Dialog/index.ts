@@ -1,7 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 export * from "./typings.js";
+export { BackButton, IBackButtonProps } from "./BackButton.js";
 export { ConfirmDialog } from "./ConfirmDialog.js";
 export { ConfirmDialogBase } from "./ConfirmDialogBase.js";
+export { ContentDivider } from "./ContentDivider.js";
 export { Dialog } from "./Dialog.js";
 export { DialogBase } from "./DialogBase.js";
 export { ExportDialog } from "./ExportDialog.js";
@@ -20,5 +22,3 @@ export * from "./EmbedInsightDialog/index.js";
 export * from "./DialogList/index.js";
 
 export * from "./StylingEditorDialog/index.js";
-
-export * from "./UserManagementDialogs/index.js";

@@ -366,6 +366,9 @@
     "gs.date.date-dataset.other": "Overige",
     "gs.date.date-dataset.related": "Verwant",
     "gs.date.date-dataset.unrelated": "Niet verwant",
+    "gs.date.date-dataset.unrelated_hidden": "{count} ongerelateerde {count, plural, one {datum} other {datums}} {isShow, select, true {zichtbaar} other {verborgen}}.",
+    "gs.date.date-dataset.unrelated.show": "Tonen",
+    "gs.date.date-dataset.unrelated.hide": "Verbergen",
     "layout.widget.width.min": "Widget heeft de minimale breedte",
     "layout.widget.width.max": "Widget heeft de maximale breedte",
     "layout.widget.height.min": "Widget heeft de minimale hoogte",
@@ -382,5 +385,16 @@
     "newDashboard.title": "Inzicht hierheen slepen",
     "newDashboard.dropInsight": "Inzicht laten vallen",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
-    "attributesDropdown.attributeNameWithData": "met gegevens van"
+    "attributesDropdown.attributeNameWithData": "met gegevens van",
+    "filter.visibilityMode.tooltip.hidden": "Dit filter is verborgen. Het is alleen toegankelijk via de bewerkingsmodus.",
+    "filter.visibilityMode.tooltip.readonly.editMode": "Dit filter is vergrendeld. U kunt het alleen wijzigen via de bewerkingsmodus.",
+    "filter.visibilityMode.tooltip.readonly.viewMode": "Dit filter is vergrendeld.",
+    "dateFilterDropdown.save": "Opslaan",
+    "filter.configuration.mode.title": "Modus",
+    "filter.configuration.mode.interactive.title": "Interactief",
+    "filter.configuration.mode.interactive.tooltip": "Dashboard-gebruikers kunnen he filter zien en wijzigen.",
+    "filter.configuration.mode.locked.title": "Vergrendeld",
+    "filter.configuration.mode.locked.tooltip": "Dashboard-gebruikers kunnen het filter zien maar niet wijzigen.",
+    "filter.configuration.mode.hidden.title": "Verborgen",
+    "filter.configuration.mode.hidden.tooltip": "Dashboard-gebruikers kunnen het filter niet zien maar het wordt wel toegepast."
 }

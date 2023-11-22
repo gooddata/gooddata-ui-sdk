@@ -7,7 +7,6 @@ require("dotenv").config();
 
 const {
     createTigerWorkspaceWithPrefix,
-    defaultScanPublishPDMForDatasource,
     setTigerWorkspaceLayoutFromFixtures,
 } = require("@gooddata/fixtures");
 const { log } = require("@gooddata/fixtures/logger.js");
@@ -35,9 +34,6 @@ async function main() {
             HOST,
             SDK_BACKEND,
         );
-
-        // scan
-        await defaultScanPublishPDMForDatasource(TIGER_DATASOURCES_NAME, TIGER_API_TOKEN, HOST, SDK_BACKEND);
 
         // set layout from latest declarative layout on gdc-test-fixture
         await setTigerWorkspaceLayoutFromFixtures(

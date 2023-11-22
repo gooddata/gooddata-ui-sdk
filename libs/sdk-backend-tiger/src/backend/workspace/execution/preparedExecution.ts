@@ -14,6 +14,7 @@ import {
     defWithDimensions,
     defWithSorting,
     defWithExecConfig,
+    defWithBuckets,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
@@ -22,6 +23,7 @@ import {
     IExecutionConfig,
     isPositiveAttributeFilter,
     filterIsEmpty,
+    IBucket,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { AxiosRequestConfig } from "axios";
@@ -86,6 +88,9 @@ export class TigerPreparedExecution implements IPreparedExecution {
                     (response) =>
                         new Promise((resolve, reject) => {
                             if (response) {
+                                // generated open api is not correct for some reason
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 resolve(response.data);
                                 return;
                             }
@@ -98,6 +103,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
+    }
+
+    public withBuckets(...buckets: IBucket[]): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets));
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {

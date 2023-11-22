@@ -38,6 +38,21 @@ import { WrappedComponentProps } from 'react-intl';
 // @internal (undocumented)
 export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
 
+// @internal (undocumented)
+export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
+
+// @internal (undocumented)
+export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
+
+// @internal (undocumented)
+export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
+
+// @internal (undocumented)
+export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetailBubbleProps>;
+
+// @internal (undocumented)
+export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetailPanelProps>;
+
 // @public
 export function clearInsightViewCaches(): void;
 
@@ -45,7 +60,22 @@ export function clearInsightViewCaches(): void;
 export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
 
 // @internal (undocumented)
+export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
+
+// @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
+
+// @internal (undocumented)
+export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
+
+// @internal (undocumented)
+export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
+
+// @internal (undocumented)
+export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
+
+// @internal (undocumented)
+export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
 
 // @internal (undocumented)
 export const EmbedInsightDialog: React_2.VFC<IEmbedInsightDialogProps>;
@@ -85,6 +115,128 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisua
 // @internal (undocumented)
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
 
+// @internal (undocumented)
+export interface IAddUserGroupsToUsersDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userIds: string[];
+}
+
+// @internal (undocumented)
+export interface IAddUsersToUserGroupsDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupIds: string[];
+}
+
+// @internal (undocumented)
+export interface IAddWorkspaceToSubjectsProps {
+    // (undocumented)
+    ids: string[];
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    subjectType: WorkspacePermissionSubject;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailBubbleProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailItem {
+    // (undocumented)
+    isDate: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDetailPanelProps {
+    // (undocumented)
+    attributes: IAttributeHierarchyDetailItem[];
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface ICreateUserGroupDialogProps {
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+}
+
+// @internal (undocumented)
+export interface IDeleteUserDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userId: string;
+}
+
+// @internal (undocumented)
+export interface IDeleteUserGroupDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupId: string;
+}
+
+// @internal (undocumented)
+export interface IDeleteUserGroupsDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupIds: string[];
+}
+
+// @internal (undocumented)
+export interface IDeleteUsersDialogProps {
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userIds: string[];
+}
+
 // @beta
 export interface IDrillDownDefinition {
     origin: LocalIdRef;
@@ -119,6 +271,8 @@ export interface IEmbedInsightDialogProps {
     settings?: IUserWorkspaceSettings;
     // (undocumented)
     showWebComponentsTab?: boolean;
+    // (undocumented)
+    theme?: ITheme;
     // (undocumented)
     webComponentIntegrationDocLink?: string;
     // (undocumented)
@@ -235,6 +389,40 @@ export type ISizeInfoDefault = ISizeInfo & {
     default: number;
 };
 
+// @internal (undocumented)
+export interface IUserEditDialogProps {
+    // (undocumented)
+    changeUserMembership?: boolean;
+    // (undocumented)
+    initialView?: UserEditDialogMode;
+    // (undocumented)
+    isAdmin: boolean;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userId: string;
+}
+
+// @internal (undocumented)
+export interface IUserGroupEditDialogProps {
+    // (undocumented)
+    initialView?: UserGroupEditDialogMode;
+    // (undocumented)
+    isAdmin: boolean;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userGroupId: string;
+}
+
 // @alpha
 export interface IVisualizationDefaultSizeInfo {
     // (undocumented)
@@ -288,6 +476,21 @@ export interface Root {
 }
 
 // @internal (undocumented)
+export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
+
+// @internal (undocumented)
+export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
+
+// @internal (undocumented)
+export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
+
+// @internal (undocumented)
+export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
+
+// @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
+export type WorkspacePermissionSubject = "user" | "userGroup";
 
 ```

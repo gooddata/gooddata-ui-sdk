@@ -3,6 +3,7 @@
 export type CustomizerMutationsContext = {
     insight: CustomizerMutationsType[];
     kpi: CustomizerMutationsType[];
+    attributeFilter: CustomizerMutationsType[];
     layouts: Record<string, CustomizerMutationsType>;
 };
 
@@ -12,6 +13,7 @@ export function createCustomizerMutationsContext(): CustomizerMutationsContext {
     return {
         insight: [],
         kpi: [],
+        attributeFilter: [],
         layouts: {},
     };
 }

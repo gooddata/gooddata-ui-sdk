@@ -11,6 +11,7 @@ import {
     IKpiWidget,
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
@@ -66,7 +67,7 @@ export const selectUndoableLayoutCommands: DashboardSelector<UndoableCommand<Das
  * This selector returns dashboard's layout. It is expected that the selector is called only after the layout state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
- * @alpha
+ * @public
  */
 export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>> = createSelector(
     selectSelf,
@@ -195,6 +196,15 @@ export const selectAnalyticalWidgetByRef: (
 
         return widget;
     }),
+);
+
+/**
+ * @alpha
+ */
+export const selectIgnoredDrillDownHierarchiesByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IDrillDownReference[]> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.ignoredDrillDownHierarchies ?? []),
 );
 
 /**

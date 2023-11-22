@@ -107,6 +107,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         />
                         {this.renderMinMax("yaxis")}
                     </ConfigSection>
+                    {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
                         title={messages.canvasTitle.id}

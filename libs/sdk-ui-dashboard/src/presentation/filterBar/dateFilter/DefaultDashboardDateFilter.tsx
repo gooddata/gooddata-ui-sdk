@@ -1,6 +1,14 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
+import { useIntl } from "react-intl";
+
+import {
+    DateFilter,
+    getLocalizedIcuDateFormatPattern,
+    IDateFilterProps,
+    IFilterConfigurationProps,
+} from "@gooddata/sdk-ui-filters";
+import { DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
@@ -12,8 +20,11 @@ import {
     selectLocale,
     selectSettings,
     selectWeekStart,
+    selectDateFilterConfigOverrides,
     useDashboardSelector,
 } from "../../../model/index.js";
+import { getVisibilityIcon } from "../utils.js";
+import { DateFilterConfigurationBody } from "./DateFilterConfigurationBody.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -23,11 +34,13 @@ import {
  * @alpha
  */
 export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
+    const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const { filter, onFilterChanged, config, readonly } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
@@ -50,11 +63,30 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings.responsiveUiDateFormat;
 
+    const visibilityIcon = getVisibilityIcon(
+        filterConfig?.mode,
+        isInEditMode,
+        !!capabilities.supportsHiddenAndLockedFiltersOnUI,
+        intl,
+    );
+
+    const isConfigurationEnabled = isInEditMode && !!capabilities.supportsHiddenAndLockedFiltersOnUI;
+
+    const FilterConfigurationComponent = useMemo(() => {
+        return function ElementsSelect(props: IFilterConfigurationProps) {
+            return <DateFilterConfigurationBody {...props} intl={intl} />;
+        };
+    }, []);
+
     return (
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
-            dateFilterMode={readonly ? "readonly" : "active"}
+            dateFilterMode={
+                readonly
+                    ? DashboardDateFilterConfigModeValues.READONLY
+                    : DashboardDateFilterConfigModeValues.ACTIVE
+            }
             filterOptions={config.dateFilterOptions}
             availableGranularities={config.availableGranularities}
             customFilterName={config.customFilterName}
@@ -64,6 +96,8 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
             isEditMode={isInEditMode}
             weekStart={weekStart}
+            customIcon={visibilityIcon}
+            FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
         />
     );
 };

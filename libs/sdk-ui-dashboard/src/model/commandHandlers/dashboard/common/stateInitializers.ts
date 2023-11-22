@@ -1,13 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { SagaIterator } from "redux-saga";
+import { call } from "redux-saga/effects";
+import update from "lodash/fp/update.js";
+import isEmpty from "lodash/isEmpty.js";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { alertsActions } from "../../../store/alerts/index.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
-import { layoutActions } from "../../../store/layout/index.js";
-import { insightsActions } from "../../../store/insights/index.js";
-import { metaActions } from "../../../store/meta/index.js";
-import { uiActions } from "../../../store/ui/index.js";
 import {
     areObjRefsEqual,
     IInsight,
@@ -19,23 +15,31 @@ import {
     IDashboardLayout,
     IDashboard,
     ISettings,
+    IFilterContext,
+    ITempFilterContext,
 } from "@gooddata/sdk-model";
+
+import { alertsActions } from "../../../store/alerts/index.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { layoutActions } from "../../../store/layout/index.js";
+import { insightsActions } from "../../../store/insights/index.js";
+import { metaActions } from "../../../store/meta/index.js";
+import { uiActions } from "../../../store/ui/index.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
-import { SagaIterator } from "redux-saga";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
-import { call } from "redux-saga/effects";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
-import update from "lodash/fp/update.js";
-import isEmpty from "lodash/isEmpty.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -63,20 +67,61 @@ export function actionsToInitializeNewDashboard(
     ];
 }
 
+/**
+ * When dependent filters are not enabled, we need to sanitize the filter context
+ * so that it does not contain any filterElementsBy stored on backend.
+ *
+ * Remove this completely when dependent filters on Tiger are fully turned on.
+ */
+function removeFilterElementsByFromFilterContext(
+    filterContext: IFilterContext | ITempFilterContext,
+    settings: ISettings,
+) {
+    const isDependentFiltersEnabled = !!(
+        settings?.enableKDDependentFilters || settings?.enableKPIDashboardDependentFilters
+    );
+
+    const sanitizedFilterContext: IFilterContext | ITempFilterContext = isDependentFiltersEnabled
+        ? filterContext
+        : update(
+              "filters",
+              (filters: FilterContextItem[]) =>
+                  filters.map((filter) => {
+                      if (!isDashboardAttributeFilter(filter)) {
+                          return filter;
+                      }
+
+                      return {
+                          ...filter,
+                          attributeFilter: { ...filter.attributeFilter, filterElementsBy: [] },
+                      };
+                  }),
+              filterContext,
+          );
+
+    return sanitizedFilterContext;
+}
+
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
+    settings: ISettings,
 ): SagaIterator<IDashboard["filterContext"]> {
-    // we don't need sanitize filter references, if backend guarantees consistent references
-    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
-        return filterContext;
-    }
-
     if (!filterContext || isEmpty(filterContext.filters)) {
         return filterContext;
     }
 
-    const usedFilterDisplayForms = filterContext.filters
+    const filterContextWithSanitizedFilterElementsBy = removeFilterElementsByFromFilterContext(
+        filterContext,
+        settings,
+    );
+
+    // we don't need sanitize filter references, if backend guarantees consistent references
+    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
+        return filterContextWithSanitizedFilterElementsBy;
+    }
+
+    const usedFilterDisplayForms = filterContextWithSanitizedFilterElementsBy.filters
         .filter(isDashboardAttributeFilter)
         .map((f) => f.attributeFilter.displayForm);
 
@@ -96,8 +141,25 @@ function* sanitizeFilterContext(
 
                 return availableRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
             }),
-        filterContext,
+        filterContextWithSanitizedFilterElementsBy,
     );
+}
+
+function sanitizePersistedDashboard(
+    persistedDashboard: IDashboard | undefined,
+    dashboard: IDashboard,
+    settings: ISettings,
+) {
+    const effectiveDashboard = persistedDashboard ?? dashboard;
+
+    if (!effectiveDashboard.filterContext) {
+        return effectiveDashboard;
+    }
+
+    return {
+        ...effectiveDashboard,
+        filterContext: removeFilterElementsByFromFilterContext(effectiveDashboard.filterContext, settings),
+    };
 }
 
 /**
@@ -132,7 +194,8 @@ export function* actionsToInitializeExistingDashboard(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
-    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext);
+    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext, settings);
+    const sanitizedPersistedDashboard = sanitizePersistedDashboard(persistedDashboard, dashboard, settings);
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
         ...dashboard,
@@ -176,8 +239,12 @@ export function* actionsToInitializeExistingDashboard(
         }),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({
-            dashboard: persistedDashboard ?? dashboard,
+            dashboard: sanitizedPersistedDashboard,
         }),
+        attributeFilterConfigsActions.setAttributeFilterConfigs({
+            attributeFilterConfigs: dashboard.attributeFilterConfigs,
+        }),
+        dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
         insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),

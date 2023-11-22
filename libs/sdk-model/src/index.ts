@@ -319,6 +319,7 @@ export {
     defFingerprint,
     defSetDimensions,
     defSetSorts,
+    defSetBuckets,
     defTotals,
     defSetExecConfig,
     IPostProcessing,
@@ -332,6 +333,7 @@ export {
     defWithDimensions,
     defWithSorting,
     defWithPostProcessing,
+    defWithBuckets,
     defWithDateFormat,
     defWithExecConfig,
     defaultDimensionsGenerator,
@@ -495,6 +497,9 @@ export {
     DrillTransition,
     DrillType,
     IDrill,
+    IDrillDownReference,
+    IDateHierarchyReference,
+    IAttributeHierarchyReference,
     IDrillFromAttribute,
     IDrillFromMeasure,
     IDrillOrigin,
@@ -515,6 +520,7 @@ export {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
+    isAttributeHierarchyReference,
 } from "./dashboard/drill.js";
 
 export {
@@ -686,6 +692,10 @@ export {
     IDashboardBase,
     IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,
+    IDashboardAttributeFilterConfig,
+    DashboardAttributeFilterConfigMode,
+    DashboardDateFilterConfigModeValues,
+    DashboardAttributeFilterConfigModeValues,
     IDashboardDateFilterAddedPresets,
     IDashboardPluginBase,
     IDashboardPlugin,
@@ -807,12 +817,9 @@ export {
     isGranularUserGroupAccessGrantee,
     isGranularUserAccess,
     isGranularUserGroupAccess,
-    WorkspaceAccessPermission,
-    IWorkspaceAccess,
-    IUserWorkspaceAccessGrantee,
-    IUserGroupWorkspaceAccessGrantee,
-    isUserWorkspaceAccessGrantee,
-    isUserGroupWorkspaceAccessGrantee,
+    isGranularRulesAccessGrantee,
+    IGranularRulesAccess,
+    IGranularRulesAccessGrantee,
 } from "./accessControl/index.js";
 
 export {
@@ -821,5 +828,9 @@ export {
     IAssignedWorkspace,
     AssignedWorkspacePermission,
     AssignedWorkspacePermissionValue,
+    IOrganizationPermissionAssignment,
+    OrganizationPermissionAssignment,
+    OrganizationPermissionAssignmentValue,
+    IOrganizationAssignee,
 } from "./organization/index.js";
 export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";

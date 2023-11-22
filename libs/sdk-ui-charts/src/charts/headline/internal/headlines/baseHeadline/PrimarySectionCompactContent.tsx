@@ -4,10 +4,10 @@ import React, { CSSProperties, useMemo } from "react";
 import PrimarySectionContent from "./PrimarySectionContent.js";
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
-import { IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionCompactContentProps {
-    primaryItem: IBaseHeadlineItem;
+    primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
     isOnlyPrimaryItem: boolean;
 }
 

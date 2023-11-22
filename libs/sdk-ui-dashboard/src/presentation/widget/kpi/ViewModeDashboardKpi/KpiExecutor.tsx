@@ -127,19 +127,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     });
     const isLoading = status === "loading" || status === "pending";
 
-    const {
-        error: alertExecutionError,
-        result: alertExecutionResult,
-        status: alertExecutionStatus,
-    } = useKpiExecutionDataView({
-        backend,
-        workspace,
-        primaryMeasure,
-        effectiveFilters,
-        shouldLoad: true,
-    });
-    const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
-
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const settings = useDashboardSelector(selectSettings);
@@ -166,7 +153,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const executionsHandler = useWidgetExecutionsHandler(widgetRef(kpiWidget));
 
     useEffect(() => {
-        const err = error ?? alertExecutionError;
+        const err = error;
         if (err) {
             onError?.(err);
         }
@@ -174,7 +161,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
         if (error) {
             executionsHandler.onError(error);
         }
-    }, [error, alertExecutionError]);
+    }, [error]);
 
     useEffect(() => {
         if (result) {
@@ -222,7 +209,13 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
 
     const kpiResult = getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
-    const kpiAlertResult = getKpiAlertResult(alertExecutionResult, primaryMeasure, separators);
+    // Alert does not require its own execution.
+    // isTriggered status is computed on BE for existing alerts.
+    // For new/updated alerts in this moment it is the same as KPI's execution -> reuse it
+    const kpiAlertResult = getKpiAlertResult(result, primaryMeasure, separators);
+    const isAlertExecutionLoading = isLoading;
+    const alertExecutionError = error;
+
     const { isThresholdRepresentingPercent, thresholdPlaceholder } = useMemo(
         () => getAlertThresholdInfo(kpiResult, intl),
         [kpiResult, intl],

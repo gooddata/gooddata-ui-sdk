@@ -9,8 +9,12 @@ import {
     DataSourceParameter,
     DeclarativeAnalytics,
     DeclarativeModel,
-    DeclarativePdm,
-    DeclarativeTables,
+    JsonApiDataSourceInDocument,
+    LayoutApiPutWorkspaceLayoutRequest,
+    jsonApiHeaders,
+    JsonApiOrganizationPatchTypeEnum,
+    JsonApiApiTokenOutList,
+    MetadataUtilities,
     DeclarativeWorkspaceDataFilters,
     DependentEntitiesRequest,
     DependentEntitiesResponse,
@@ -22,7 +26,6 @@ import {
     ITigerClient,
     JsonApiApiTokenInDocument,
     JsonApiApiTokenInTypeEnum,
-    JsonApiApiTokenOutList,
     JsonApiCspDirectiveInDocument,
     JsonApiCspDirectiveInTypeEnum,
     JsonApiCustomApplicationSettingOut,
@@ -31,20 +34,14 @@ import {
     JsonApiDataSourceIdentifierOutDocument,
     JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesTypeEnum,
-    JsonApiDataSourceInDocument,
     JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceOutDocument,
     JsonApiFilterContextOutWithLinks,
-    jsonApiHeaders,
     JsonApiOrganizationOutMetaPermissionsEnum,
-    JsonApiOrganizationPatchTypeEnum,
     JsonApiVisualizationObjectOutWithLinks,
     JsonApiWorkspaceInDocument,
     JsonApiWorkspaceInTypeEnum,
     KeyDriversDimension,
-    LayoutApiPutWorkspaceLayoutRequest,
-    LayoutApiSetPdmLayoutRequest,
-    MetadataUtilities,
     OrganizationUtilities,
     PlatformUsage,
     RecentAnalyticalObject,
@@ -53,6 +50,10 @@ import {
     TestDefinitionRequestTypeEnum,
     VisualizationObjectModelV1,
     WidgetAlertUserNotification,
+    JsonApiWorkspaceDataFilterInDocument,
+    JsonApiWorkspaceDataFilterOutDocument,
+    JsonApiWorkspaceDataFilterSettingOutDocument,
+    JsonApiWorkspaceDataFilterSettingInDocument,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -80,43 +81,6 @@ export interface IApiToken {
  */
 export interface IApiTokenExtended extends IApiToken {
     bearerToken: string | undefined;
-}
-
-/**
- * Copy of interface from gooddata/data-source-management
- * This should be refactored to have the source of truth here in SDK and not expose JSON API entities
- *
- * @internal
- */
-export interface IDataSource {
-    entity: JsonApiDataSourceInDocument;
-    pdm: DeclarativePdm;
-}
-
-/**
- * @internal
- */
-export interface ScanRequest {
-    scanTables: boolean;
-    scanViews: boolean;
-    separator: string;
-    tablePrefix: string;
-    viewPrefix: string;
-    schemata: string[];
-}
-
-/**
- * @internal
- */
-export interface ScanResult {
-    pdm: DeclarativeTables;
-}
-
-/**
- * @internal
- */
-export interface PublishPdmResult {
-    status: string;
 }
 
 /**
@@ -282,16 +246,6 @@ export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
 /**
  * @internal
  */
-export type PhysicalDataModel = DeclarativePdm;
-
-/**
- * @internal
- */
-export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
-
-/**
- * @internal
- */
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 /**
@@ -318,6 +272,26 @@ export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
  * @internal
  */
 export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilterResult = JsonApiWorkspaceDataFilterOutDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilterSettingResult = JsonApiWorkspaceDataFilterSettingOutDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDataFilterSetting = JsonApiWorkspaceDataFilterSettingInDocument;
 
 /**
  * @internal
@@ -392,11 +366,8 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         generateLogicalModelRequest: GenerateLogicalModelRequest,
     ) => Promise<DeclarativeLogicalModel>;
-    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
-    publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
@@ -418,7 +389,6 @@ export type TigerSpecificFunctions = {
     ) => Promise<IDataSourceTestConnectionResponse>;
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
-    getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
     getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
     getDependentEntitiesGraphFromEntryPoints?: (
         workspaceId: string,
@@ -432,6 +402,16 @@ export type TigerSpecificFunctions = {
     ) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getWorkspaceDataFilter?: (workspaceId: string, objectId: string) => Promise<WorkspaceDataFilterResult>;
+    setWorkspaceDataFilter?: (workspaceId: string, workspaceDataFilter: WorkspaceDataFilter) => Promise<void>;
+    getWorkspaceDataFilterSetting?: (
+        workspaceId: string,
+        objectId: string,
+    ) => Promise<WorkspaceDataFilterSettingResult>;
+    setWorkspaceDataFilterSetting?: (
+        workspaceId: string,
+        workspaceDataFilterSetting: WorkspaceDataFilterSetting,
+    ) => Promise<void>;
     getAllCSPDirectives?: () => Promise<Array<ICSPDirective>>;
     getCSPDirective?: (directiveId: string) => Promise<ICSPDirective>;
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
@@ -628,7 +608,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         type,
         name,
         schema,
-        username,
+        username: username ?? undefined,
         url,
         permissions: meta?.permissions ?? [],
         parameters,
@@ -909,41 +889,6 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
-        try {
-            return await authApiCall(async (sdk) => {
-                return await sdk.scanModel
-                    .scanDataSource({
-                        dataSourceId,
-                        scanRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-    publishPdm: async (dataSourceId: string, declarativePdm: DeclarativePdm) => {
-        return await authApiCall(async (sdk) => {
-            return await sdk.declarativeLayout
-                .setPdmLayout({
-                    dataSourceId,
-                    declarativePdm,
-                })
-                .then(
-                    () => {
-                        return {
-                            status: "success",
-                        };
-                    },
-                    (error) => {
-                        return Promise.reject(error);
-                    },
-                );
-        });
-    },
     createDemoWorkspace: async (sampleWorkspace: WorkspaceDefinition) => {
         try {
             return await authApiCall(async (sdk) => {
@@ -963,15 +908,6 @@ export const buildTigerSpecificFunctions = (
                     jsonApiDataSourceInDocument: sampleDataSource,
                 });
                 return result.data.data.id;
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-    setPdmLayout: async (requestParameters: LayoutApiSetPdmLayoutRequest) => {
-        try {
-            return await authApiCall(async (sdk) => {
-                await sdk.declarativeLayout.setPdmLayout(requestParameters);
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1268,17 +1204,6 @@ export const buildTigerSpecificFunctions = (
             });
         });
     },
-    getPdm: async (dataSourceId: string) => {
-        return await authApiCall(async (sdk) => {
-            return await sdk.declarativeLayout
-                .getPdmLayout({
-                    dataSourceId,
-                })
-                .then((res) => {
-                    return res?.data;
-                });
-        });
-    },
     getAllDataSources: async () => {
         return await authApiCall(async (sdk) => {
             return OrganizationUtilities.getAllPagesOf(
@@ -1381,6 +1306,65 @@ export const buildTigerSpecificFunctions = (
             });
         });
     },
+
+    getWorkspaceDataFilter: async (
+        workspaceId: string,
+        objectId: string,
+    ): Promise<WorkspaceDataFilterResult> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityWorkspaceDataFilters({
+                    workspaceId,
+                    objectId,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFilter: async (
+        workspaceId: string,
+        workspaceDataFilter: WorkspaceDataFilter,
+    ): Promise<void> => {
+        return authApiCall(async (sdk) => {
+            await sdk.entities.createEntityWorkspaceDataFilters({
+                workspaceId,
+                jsonApiWorkspaceDataFilterInDocument: workspaceDataFilter,
+            });
+        });
+    },
+
+    getWorkspaceDataFilterSetting: async (
+        workspaceId: string,
+        objectId: string,
+    ): Promise<WorkspaceDataFilterSettingResult> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityWorkspaceDataFilterSettings({
+                    workspaceId,
+                    objectId,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFilterSetting: async (
+        workspaceId: string,
+        workspaceDataFilterSetting: WorkspaceDataFilterSetting,
+    ): Promise<void> => {
+        return await authApiCall(async (sdk) => {
+            await sdk.entities.createEntityWorkspaceDataFilterSettings({
+                workspaceId,
+                jsonApiWorkspaceDataFilterSettingInDocument: workspaceDataFilterSetting,
+            });
+        });
+    },
+
     getAllCSPDirectives: async (): Promise<Array<ICSPDirective>> => {
         try {
             return await authApiCall(async (sdk) => {

@@ -262,4 +262,14 @@ describe("PluggableColumnChart", () => {
             expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
+
+    it("should return reference point with new bucket max size when switching from table with many measures", async () => {
+        const chart = createComponent();
+
+        const extendedReferencePoint = await chart.getExtendedReferencePoint(
+            referencePointMocks.tableWith50MeasuresAndDerivedMeasuresNoRowsNoColumns,
+        );
+
+        expect(extendedReferencePoint.buckets[0].items.length).toEqual(40);
+    });
 });

@@ -10,7 +10,7 @@ services:
             - ./nginx/templates:/etc/nginx/templates/
 
     integrated-tests:
-        image: cypress/included:12.17.3
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311211156.11759a0
         entrypoint: node ./scripts/run_integrated.js
         volumes:
             - ../../:/gooddata-ui-sdk-e2e:rw

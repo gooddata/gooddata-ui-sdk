@@ -85,6 +85,8 @@ export const DefaultUiSettings: ISettings = {
 
     enablePushpinGeoChart: true,
     tableSortingCheckDisabled: true,
+    enablePivotTableTransposition: true,
+    enableColumnHeadersPosition: true,
     metadataTimeZone: "UTC", // Panther/Tiger metadata are always stored in UTC time zone
     ...DefaultFeatureFlags,
 };

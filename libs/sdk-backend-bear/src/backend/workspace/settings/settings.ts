@@ -92,4 +92,12 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     public setLocale(_locale: string): Promise<void> {
         throw new NotSupported("Backend does not support workspace locale setup");
     }
+
+    public setTheme(_themeId: string): Promise<void> {
+        throw new NotSupported("Backend does not support workspace theme setup");
+    }
+
+    public setColorPalette(_colorPaletteId: string): Promise<void> {
+        throw new NotSupported("Backend does not support workspace color palette setup");
+    }
 }

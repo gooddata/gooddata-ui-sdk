@@ -4,12 +4,15 @@ import { IUiConfig } from "../interfaces/Visualization.js";
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket.js";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
-export const MAX_METRICS_COUNT = 20;
+export const MAX_METRICS_COUNT = 40;
 export const DEFAULT_PIE_METRICS_COUNT = 1;
+export const DEFAULT_PIE_ONLY_MAX_METRICS_COUNT = 20;
 export const DEFAULT_TREEMAP_MEASURES_COUNT = 1;
 export const MAX_FILTERS_COUNT = 20;
 export const MAX_CATEGORIES_COUNT = 1;
 export const MAX_TABLE_CATEGORIES_COUNT = 20;
+export const INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT = 100;
+export const INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT = 50;
 export const MAX_STACKS_COUNT = 1;
 export const MAX_VIEW_COUNT = 2;
 export const DEFAULT_HEADLINE_METRICS_COUNT = 1;
@@ -355,6 +358,7 @@ export const PIE_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
     buckets: {
         measures: {
             ...measuresBase,
+            itemsLimit: DEFAULT_PIE_ONLY_MAX_METRICS_COUNT,
         },
         view: {
             ...viewBase,
@@ -370,6 +374,7 @@ export const PIE_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
     buckets: {
         measures: {
             ...measuresBase,
+            itemsLimit: DEFAULT_PIE_ONLY_MAX_METRICS_COUNT,
         },
         view: {
             ...viewBase,

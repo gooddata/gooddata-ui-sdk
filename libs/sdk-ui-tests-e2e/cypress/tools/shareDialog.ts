@@ -46,6 +46,13 @@ export class ShareDialog {
         return this;
     }
 
+    isGranularPermissionButtonEnabled(userOrGroup: string, isEnable = true) {
+        this.getItemForGivenUserOrGroup(userOrGroup)
+            .find(".s-granular-permission-button")
+            .should(isEnable ? "not.have.class" : "have.class", "disabled");
+        return this;
+    }
+
     setPermission(user: string, permission: string) {
         this.openDropdownForUserOrGroup(user);
         this.getPermissionsDropdownElement()
@@ -75,6 +82,11 @@ export class ShareDialog {
         return this;
     }
 
+    share() {
+        this.getElement().get(".s-dialog-submit-button.s-share").click();
+        return this;
+    }
+
     cancel() {
         this.getElement().get(".s-cancel").click();
         return this;
@@ -84,6 +96,16 @@ export class ShareDialog {
         this.getElement()
             .find(".s-gd-share-dialog-grantee-list-empty-selection")
             .should(empty ? "exist" : "not.exist");
+        return this;
+    }
+
+    clickOnAddButton() {
+        this.getElement().get(".s-add-users-or-groups:not(.disabled)").click();
+        return this;
+    }
+
+    clickOnUserOrGroupDropdownOption(userOrGroup: string) {
+        this.getElement().find(".gd-share-dialog__option > .option-content").contains(userOrGroup).click();
         return this;
     }
 }

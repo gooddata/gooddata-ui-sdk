@@ -145,6 +145,76 @@
     }
 }
 
+.drill-config-empty-hierarchy-target {
+    margin: 10px 0;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    color: kit-variables.$gd-color-link;
+}
+
+.attribute-hierarchy-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    font-weight: 400;
+    cursor: pointer;
+    color: kit-variables.$gd-color-text;
+
+    &.is-disabled {
+        opacity: 0.5;
+        &:hover {
+            opacity: 0.5;
+            color: kit-variables.$gd-color-text;
+            font-weight: 400;
+        }
+    }
+
+    &:hover {
+        color: kit-variables.$gd-palette-primary-base;
+        font-weight: 700;
+    }
+}
+
+.attribute-hierarchy-list-item-content {
+    padding-left: 25px;
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+    max-width: 130px;
+    white-space: nowrap;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 12px;
+        display: block;
+        width: 18px;
+        height: 24px;
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: contain;
+    }
+
+    .attribute-hierarchy-title {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+    }
+}
+
+.attribute-hierarchy-list-item-description {
+    opacity: 0;
+
+    .attribute-hierarchy-list-item:hover & {
+        opacity: 1;
+    }
+}
+
 .gd-drill-config-measure-item {
     display: inline-flex;
     flex-wrap: nowrap;
@@ -185,6 +255,10 @@
         text-overflow: ellipsis;
         padding-left: 5px;
         padding-right: 5px;
+    }
+
+    &.is-readonly .dm-button-title {
+        padding-right: 10px;
     }
 
     .dm-button-delete-wrapper {
@@ -291,7 +365,11 @@
 
 .gd-drill-config-panel-target,
 .drill-config-target {
-    .gd-icon-drill-to-dashboard::before {
+    .gd-icon-drill-to-dashboard::before,
+    .gd-icon-drill-to-insight::before,
+    .gd-icon-drill-down::before,
+    .gd-icon-hyperlink-disabled::before,
+    .gd-icon-attribute-hierarchy::before {
         content: "";
         position: relative;
         top: -1px;
@@ -300,19 +378,26 @@
         height: 16px;
         margin-right: 4px;
         vertical-align: bottom;
+    }
+
+    .gd-icon-drill-to-dashboard::before {
         background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-dashboard.svg");
     }
 
     .gd-icon-drill-to-insight::before {
-        content: "";
-        position: relative;
-        top: -1px;
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-right: 4px;
-        vertical-align: bottom;
         background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-insight.svg");
+    }
+
+    .gd-icon-drill-down::before {
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-down.svg");
+        background-repeat: no-repeat;
+        top: 1px;
+    }
+
+    .gd-icon-attribute-hierarchy::before {
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/attribute-hierarchy.svg");
+        background-repeat: no-repeat;
+        top: 1px;
     }
 
     .gd-icon-hyperlink-disabled::before {

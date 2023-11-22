@@ -1,6 +1,10 @@
 // (C) 2023 GoodData Corporation
 
-import { IWorkspacePermissionAssignment } from "@gooddata/sdk-model";
+import {
+    IWorkspacePermissionAssignment,
+    IOrganizationPermissionAssignment,
+    OrganizationPermissionAssignment,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization permissions.
@@ -27,64 +31,38 @@ export interface IOrganizationPermissionService {
     getWorkspacePermissionsForUserGroup(userGroupId: string): Promise<IWorkspacePermissionAssignment[]>;
 
     /**
-     * Update assigned workspaces of the user and their permissions.
+     * Update assigned workspaces of the users or user groups and their permissions.
+     *
+     * @param permissions - list of updated permissions.
+     *
+     * @returns promise
+     */
+    updateWorkspacePermissions(permissions: IWorkspacePermissionAssignment[]): Promise<void>;
+
+    /**
+     * Get list of organization permissions assigned to the user.
      *
      * @param userId - ID of the user.
-     * @param permissions - list of updated permissions.
      *
      * @returns promise
      */
-    updateWorkspacePermissionsForUser(
-        userId: string,
-        permissions: IWorkspacePermissionAssignment[],
-    ): Promise<void>;
+    getOrganizationPermissionForUser(userId: string): Promise<OrganizationPermissionAssignment[]>;
 
     /**
-     * Update assigned workspaces of the users and their permissions.
+     * Get list of organization permissions assigned to the user group.
      *
-     * @param userIds - IDs of the users.
-     * @param permissions - list of updated permissions.
+     * @param userGroupId - ID of the user.
      *
      * @returns promise
      */
-    updateWorkspacePermissionsForUsers(
-        userIds: string[],
-        permissions: IWorkspacePermissionAssignment[],
-    ): Promise<void>;
+    getOrganizationPermissionForUserGroup(userGroupId: string): Promise<OrganizationPermissionAssignment[]>;
 
     /**
-     * Update assigned workspaces of the user group and their permissions.
+     * Update organization permission for the user or user group.
      *
-     * @param userGroupId - ID of the user group.
-     * @param permissions - list of updated permissions.
-     *
-     * @returns promise
-     */
-    updateWorkspacePermissionsForUserGroup(
-        userGroupId: string,
-        permissions: IWorkspacePermissionAssignment[],
-    ): Promise<void>;
-
-    /**
-     * Update assigned workspaces of the user groups and their permissions.
-     *
-     * @param userGroupIds - IDs of the user groups.
-     * @param permissions - list of updated permissions.
+     * @param permissionAssignments - new sets of permission assignments to the organization. Set permissions property for assignee to an empty array to remove the user's permissions.
      *
      * @returns promise
      */
-    updateWorkspacePermissionsForUserGroups(
-        userGroupIds: string[],
-        permissions: IWorkspacePermissionAssignment[],
-    ): Promise<void>;
-
-    /**
-     * Update organization admin of the user.
-     *
-     * @param userId - ID of the user.
-     * @param isOrganizationAdmin - true if user must be made an organization admin, false if user must no longer be organization admin.
-     *
-     * @returns promise
-     */
-    updateUserOrganizationAdminStatus(userId: string, isOrganizationAdmin: boolean): Promise<void>;
+    updateOrganizationPermissions(permissionAssignments: IOrganizationPermissionAssignment[]): Promise<void>;
 }

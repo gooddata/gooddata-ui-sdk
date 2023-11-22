@@ -101,7 +101,7 @@ version = "<<TBD>>"
 activeVersions = 1
 
 # AddSearch config
-addSearchTab = "gd-cn-doc"
+addSearchTab = "gd-ui-doc"
 
 platformSwitch = "cloud"
 
@@ -177,3 +177,6 @@ mediatype = "text/netlify"
 baseName = "_redirects"
 isPlainText = true
 notAlternative = true
+
+[security.funcs]
+getenv = ['^HUGO_', '^CI$', '^hugo_env$']

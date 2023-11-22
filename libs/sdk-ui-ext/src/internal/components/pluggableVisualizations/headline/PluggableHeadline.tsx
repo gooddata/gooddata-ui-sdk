@@ -19,7 +19,7 @@ import {
     newDimension,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, createHeadlineProvider, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
+import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
 
 import { METRIC } from "../../../constants/bucket.js";
 import {
@@ -50,6 +50,7 @@ import { getReferencePointWithSupportedProperties } from "../../../utils/propert
 import { removeSort } from "../../../utils/sort.js";
 import {
     buildHeadlineVisualizationConfig,
+    getComparisonColorPalette,
     getDefaultHeadlineUiConfig,
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
@@ -249,9 +250,10 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         );
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
         if (configPanelElement) {
+            const comparisonColorPalette = getComparisonColorPalette(options?.theme);
             const ConfigurationPanel = this.settings?.enableNewHeadline
                 ? HeadlineConfigurationPanel
                 : UnsupportedConfigurationPanel;
@@ -262,7 +264,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     insight={insight}
                     panelConfig={{
                         separators: this.settings?.separators,
-                        comparisonColorPalette: DEFAULT_COMPARISON_PALETTE,
+                        comparisonColorPalette,
                     }}
                     pushData={this.pushData}
                     properties={getHeadlineSupportedProperties(this.visualizationProperties)}
@@ -332,8 +334,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
     ): HeadlineControlProperties {
         const isInsightOpened = isInsight(insight) && insightId(insight);
+        const hasSourceInsightId = !!options.custom?.sourceInsightId;
         const hasVisClassChanged = options.custom?.lastSavedVisClassUrl !== "local:headline";
-        const useDefaultMigrationProperties = isInsightOpened && !hasVisClassChanged;
+        const useDefaultMigrationProperties = (isInsightOpened && !hasVisClassChanged) || hasSourceInsightId;
         return useDefaultMigrationProperties
             ? this.buildDefaultMigrationProperties()
             : HEADLINE_DEFAULT_CONTROL_PROPERTIES;

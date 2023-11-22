@@ -4,10 +4,11 @@ import { IDashboardCommand } from "./base.js";
 import {
     isObjRef,
     ObjRef,
-    ObjRefInScope,
+    LocalIdRef,
     VisualizationProperties,
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
+    IDrillDownReference,
 } from "@gooddata/sdk-model";
 import {
     FilterOpReplaceAll,
@@ -233,7 +234,7 @@ export function replaceInsightWidgetIgnoredFilters(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @beta
+ * @public
  */
 export function ignoreFilterOnInsightWidget(
     ref: ObjRef,
@@ -358,7 +359,7 @@ export function changeInsightWidgetVisProperties(
 
 /**
  * Payload of the {@link ChangeInsightWidgetVisConfiguration} command.
- * @beta
+ * @public
  */
 export interface ChangeInsightWidgetVisConfigurationPayload {
     /**
@@ -376,7 +377,7 @@ export interface ChangeInsightWidgetVisConfigurationPayload {
 }
 
 /**
- * @beta
+ * @public
  */
 export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
@@ -397,7 +398,7 @@ export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @beta
+ * @public
  */
 export function changeInsightWidgetVisConfiguration(
     ref: ObjRef,
@@ -563,7 +564,7 @@ export function modifyDrillsForInsightWidget(
 /**
  * @beta
  */
-export type RemoveDrillsSelector = ObjRefInScope[] | "*";
+export type RemoveDrillsSelector = LocalIdRef[] | "*";
 
 /**
  * Type guard resolved all drill selector
@@ -585,9 +586,9 @@ export interface RemoveDrillsForInsightWidgetPayload {
     readonly ref: ObjRef;
 
     /**
-     * Specify measure or attribute localIdentifiers whose drills to remove or '*' to remove all defined drills.
+     * Specify drill localIdentifiers whose drills to remove or '*' to remove all defined drills.
      */
-    readonly origins: RemoveDrillsSelector;
+    readonly localIdentifiers: RemoveDrillsSelector;
 }
 
 /**
@@ -603,7 +604,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  * drill definition for the provided measure.
  *
  * @param ref - reference of insight widget whose drill should be removed
- * @param origins - measure or attribute localIdentifiers whose drill definitions should be removed
+ * @param localIdentifiers - drill localIdentifiers whose drill definitions should be removed
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -611,7 +612,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  */
 export function removeDrillsForInsightWidget(
     ref: ObjRef,
-    origins: RemoveDrillsSelector,
+    localIdentifiers: RemoveDrillsSelector,
     correlationId?: string,
 ): RemoveDrillsForInsightWidget {
     return {
@@ -619,7 +620,119 @@ export function removeDrillsForInsightWidget(
         correlationId,
         payload: {
             ref,
-            origins,
+            localIdentifiers,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface RemoveDrillDownForInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN";
+    readonly payload: RemoveDrillDownForInsightWidgetPayload;
+}
+
+/**
+ * Payload of the {@link RemoveDrillDownForInsightWidget} command.
+ * @alpha
+ */
+export interface RemoveDrillDownForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be removed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Specify drill localIdentifier and its hierarchy should be removed.
+     */
+    readonly blacklistHierarchies: IDrillDownReference[];
+}
+
+/**
+ * Creates the RemoveDrillDownForInsightWidget command. Dispatching the created command will remove insight widget's
+ * drill definition for the provided measure.
+ *
+ * @param ref - reference of insight widget whose drill should be removed
+ * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function removeDrillDownForInsightWidget(
+    ref: ObjRef,
+    blacklistHierarchies: IDrillDownReference[],
+    correlationId?: string,
+): RemoveDrillDownForInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN",
+        correlationId,
+        payload: {
+            ref,
+            blacklistHierarchies,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface AddDrillDownForInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN";
+    readonly payload: AddDrillDownForInsightWidgetPayload;
+}
+
+/**
+ * Payload of the {@link RemoveDrillDownForInsightWidget} command.
+ * @alpha
+ */
+export interface AddDrillDownForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be removed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Specify drill localIdentifier and its hierarchy should be removed.
+     */
+    readonly attributeIdentifier: ObjRef;
+
+    readonly attributeHierarchy: ObjRef;
+}
+
+/**
+ * Creates the RemoveDrillDownForInsightWidget command. Dispatching the created command will remove insight widget's
+ * drill definition for the provided measure.
+ *
+ * @param ref - reference of insight widget whose drill should be removed
+ * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function addDrillDownForInsightWidget(
+    ref: ObjRef,
+    attributeIdentifier: ObjRef,
+    attributeHierarchy: ObjRef,
+    correlationId?: string,
+): AddDrillDownForInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN",
+        correlationId,
+        payload: {
+            ref,
+            attributeIdentifier,
+            attributeHierarchy,
         },
     };
 }

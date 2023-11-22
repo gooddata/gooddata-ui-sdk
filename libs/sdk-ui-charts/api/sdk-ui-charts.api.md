@@ -67,8 +67,13 @@ export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 // @internal (undocumented)
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
 
+// @internal (undocumented)
+export const CALCULATION_VALUES_DEFAULT: {
+    [key in CalculationType]?: ICalculationDefaultValue;
+};
+
 // @public
-export type CalculationType = "change" | "ratio" | "difference";
+export type CalculationType = "change" | "ratio" | "difference" | "change_difference";
 
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
@@ -238,7 +243,9 @@ export interface ICalculationDefaultValue {
     // (undocumented)
     defaultFormat: string;
     // (undocumented)
-    defaultLabelKey: string;
+    defaultLabelKeys: IDefaultLabelKeys;
+    // (undocumented)
+    defaultSubFormat?: string;
 }
 
 // @public
@@ -257,6 +264,8 @@ export interface IChartConfig {
     continuousLine?: IContinuousLineConfig;
     dataLabels?: IDataLabelsConfig;
     dataPoints?: IDataPointsConfig;
+    // @internal
+    disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
     enableChartSorting?: boolean;
@@ -363,6 +372,7 @@ export interface IComparison {
     isArrowEnabled?: boolean;
     labelConfig?: ILabelConfig;
     position?: ComparisonPosition;
+    subFormat?: ComparisonFormat;
 }
 
 // @public
@@ -415,6 +425,18 @@ export interface IDataPointsConfig {
 
 // @public
 export type IDataPointsVisible = boolean | "auto";
+
+// @internal (undocumented)
+export interface IDefaultLabelKeys {
+    // (undocumented)
+    equalsKey?: string;
+    // (undocumented)
+    negativeKey?: string;
+    // (undocumented)
+    nonConditionalKey: string;
+    // (undocumented)
+    positiveKey?: string;
+}
 
 // @public (undocumented)
 export interface IDependencyWheelChartBucketProps {
@@ -512,6 +534,10 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 
 // @public
 export interface ILabelConfig {
+    equals?: string;
+    isConditional?: boolean;
+    negative?: string;
+    positive?: string;
     unconditionalValue?: string;
 }
 

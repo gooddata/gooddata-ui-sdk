@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
     IDimension,
@@ -96,6 +96,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected environment: string;
     protected readonly renderFun: RenderFunction;
     protected readonly unmountFun: UnmountFunction;
+    protected backendCapabilities: IBackendCapabilities;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -106,6 +107,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
+        this.backendCapabilities = props.backend.capabilities;
         this.setCustomControlsProperties({});
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
@@ -299,6 +301,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <BaseChartConfigurationPanel
                     locale={this.locale}
@@ -313,6 +319,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );
