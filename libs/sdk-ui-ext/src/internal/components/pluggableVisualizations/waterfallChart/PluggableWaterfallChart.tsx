@@ -242,6 +242,10 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <WaterfallChartConfigurationPanel
                     locale={this.locale}
@@ -256,6 +260,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     references={this.references}
                     dataLabelDefaultValue="auto"
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

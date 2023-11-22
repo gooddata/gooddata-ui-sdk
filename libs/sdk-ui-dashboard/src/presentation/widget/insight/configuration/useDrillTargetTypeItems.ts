@@ -16,9 +16,10 @@ export interface IDrillTargetType {
     id: DRILL_TARGET_TYPE;
     title: string;
     disabled?: boolean;
+    disableTooltipMessage?: string;
 }
 
-export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
+export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTargetType[] => {
     const dropdownItems = [];
 
     const intl = useIntl();
@@ -47,6 +48,9 @@ export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
             id: DRILL_TARGET_TYPE.DRILL_DOWN,
             title: intl.formatMessage(messages.drillDownConfig),
             disabled: true,
+            disableTooltipMessage: disableDrillDown
+                ? intl.formatMessage(messages.disableDrillDownToolTip)
+                : undefined,
         });
     }
 

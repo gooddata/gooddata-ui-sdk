@@ -21,6 +21,7 @@ export interface IDrillConfigPanelProps {
 export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelProps> = ({ widgetRef }) => {
     const {
         widget,
+        insight,
         enableKDZooming,
         drillConfigItems,
         originSelectorItems,
@@ -42,6 +43,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                     </span>
                 </Typography>
                 <InsightDrillConfigList
+                    disableDrillDown={insight?.insight?.properties?.controls?.disableDrillDown}
                     drillConfigItems={drillConfigItems}
                     onDelete={onDeleteItem}
                     onSetup={onSetupItem}

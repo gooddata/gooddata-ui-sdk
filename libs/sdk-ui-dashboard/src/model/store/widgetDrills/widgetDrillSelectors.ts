@@ -51,7 +51,7 @@ import {
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
-import { selectInsightsMap } from "../insights/insightsSelectors.js";
+import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
@@ -227,13 +227,16 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectAttributesWithHierarchyDescendants,
         selectAllCatalogAttributesMap,
         selectIsDrillDownEnabled,
+        selectInsightByWidgetRef(ref),
         (
             availableDrillTargets,
             attributesWithHierarchyDescendants,
             allCatalogAttributesMap,
             isDrillDownEnabled,
+            widgetInsight,
         ) => {
-            if (isDrillDownEnabled) {
+            const isWidgetEnableDrillDown = !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
+            if (isDrillDownEnabled && isWidgetEnableDrillDown) {
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
                 return getDrillDownDefinitionsWithPredicates(
@@ -260,13 +263,19 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
             selectCatalogAttributeHierarchies,
             selectEnableAttributeHierarchies,
             selectSupportsAttributeHierarchies,
+            selectInsightByWidgetRef(ref),
             (
                 availableDrillTargets,
                 catalogAttributeHierarchies,
                 enableAttributeHierarchies,
                 supportAttributeHierarchies,
+                widgetInsight,
             ) => {
-                if (enableAttributeHierarchies && supportAttributeHierarchies) {
+                const isWidgetEnableDrillDown =
+                    !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
+                const enableDrillDown =
+                    enableAttributeHierarchies && supportAttributeHierarchies && isWidgetEnableDrillDown;
+                if (enableDrillDown) {
                     return getGlobalDrillDownAttributeHierarchyDefinitions(
                         catalogAttributeHierarchies,
                         availableDrillTargets?.availableDrillTargets,

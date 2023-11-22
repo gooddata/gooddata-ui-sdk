@@ -25,6 +25,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
                 <div>
                     {this.renderColorSection()}
                     {this.renderLegendSection()}
+                    {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
                         title={messages.canvasTitle.id}

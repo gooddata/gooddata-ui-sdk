@@ -224,5 +224,32 @@ describe("BaseChartConfigurationPanel", () => {
             await userEvent.click(screen.getByText("X-Axis"));
             expect(screen.queryByTestId("xaxis")).not.toBeInTheDocument();
         });
+
+        it("should not render interactions section in configuration panel", async () => {
+            createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableAttributeHierarchies: false,
+                },
+                insight: insightWithSingleAttribute,
+            });
+
+            expect(screen.queryByText("Interactions")).not.toBeInTheDocument();
+        });
+
+        it("should render interactions section in configuration panel", async () => {
+            createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableAttributeHierarchies: true,
+                },
+                insight: insightWithSingleAttribute,
+                panelConfig: {
+                    supportsAttributeHierarchies: true,
+                },
+            });
+
+            expect(screen.queryByText("Interactions")).toBeInTheDocument();
+        });
     });
 });

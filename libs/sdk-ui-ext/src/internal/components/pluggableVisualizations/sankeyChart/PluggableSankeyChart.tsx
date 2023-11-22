@@ -81,6 +81,10 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <SankeyChartConfigurationPanel
                     locale={this.locale}
@@ -94,6 +98,7 @@ export class PluggableSankeyChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

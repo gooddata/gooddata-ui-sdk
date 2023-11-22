@@ -56,6 +56,10 @@ export class PluggablePyramidChart extends PluggablePieChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
+
             this.renderFun(
                 <PyramidChartConfigurationPanel
                     locale={this.locale}
@@ -69,6 +73,7 @@ export class PluggablePyramidChart extends PluggablePieChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     references={this.references}
+                    panelConfig={panelConfig}
                 />,
                 configPanelElement,
             );

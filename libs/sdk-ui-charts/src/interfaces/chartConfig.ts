@@ -283,6 +283,12 @@ export interface IChartConfig {
      * @internal
      */
     orientation?: IOrientationConfig;
+
+    /**
+     * Disable the drill down attribute hierarchies for the chart
+     * @internal
+     */
+    disableDrillDown?: boolean;
 }
 
 /**

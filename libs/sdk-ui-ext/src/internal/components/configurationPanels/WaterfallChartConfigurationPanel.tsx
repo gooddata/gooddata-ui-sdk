@@ -53,6 +53,8 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                         pushData={pushData}
                     />
 
+                    {this.renderInteractionsSection()}
+
                     <ConfigSection
                         id="canvas_section"
                         className="gd-canvas-section"
