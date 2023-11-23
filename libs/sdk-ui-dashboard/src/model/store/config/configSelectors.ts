@@ -572,7 +572,9 @@ export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelect
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableUnavailableItemsVisible ?? false;
+        return (
+            state.settings?.showHiddenCatalogItems ?? state.settings?.enableUnavailableItemsVisible ?? false
+        );
     },
 );
 
