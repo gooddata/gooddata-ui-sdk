@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     AttributeFilterButton,
@@ -14,6 +14,7 @@ import {
     AttributeFilterStatusBar,
     IAttributeFilterStatusBarProps,
     SingleSelectionAttributeFilterStatusBar,
+    AttributeFilterDependencyTooltip,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -39,6 +40,7 @@ import {
     selectAttributeFilterConfigsModeMap,
     selectEnableKDDependentFilters,
     useDashboardUserInteraction,
+    selectIsAttributeFilterDependentByDisplayForm,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -69,6 +71,9 @@ export const DefaultDashboardAttributeFilter = (
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
+    const isAttributeFilterDependent = useDashboardSelector(
+        selectIsAttributeFilterDependentByDisplayForm(filter.attributeFilter.displayForm),
+    );
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -121,7 +126,13 @@ export const DefaultDashboardAttributeFilter = (
                 !!capabilities.supportsHiddenAndLockedFiltersOnUI,
                 intl,
             ),
-        [attributeFilterConfigsModeMap, isEditMode, capabilities, intl],
+        [
+            attributeFilterConfigsModeMap,
+            filter.attributeFilter.localIdentifier,
+            isEditMode,
+            capabilities.supportsHiddenAndLockedFiltersOnUI,
+            intl,
+        ],
     );
 
     const CustomDropdownButton = useMemo(() => {
@@ -132,10 +143,17 @@ export const DefaultDashboardAttributeFilter = (
             const { isOpen, title } = props;
             const { defaultAttributeFilterTitle, displayFormChangeStatus, attributeFilterDisplayForm } =
                 useAttributeFilterParentFiltering();
-
             const { attributeDataSet } = useAttributeDataSet(attributeFilterDisplayForm);
 
             const displayAttributeTooltip = isEditMode && displayFormChangeStatus !== "running";
+            const filterDependencyIconTooltip = intl.formatMessage(
+                { id: "filter.dependency.icon.tooltip" },
+                {
+                    filterTitle: title,
+                    // eslint-disable-next-line react/display-name
+                    strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                },
+            );
 
             const CustomTooltipComponent = useMemo(() => {
                 if (displayAttributeTooltip && attributeDataSet && isOpen) {
@@ -151,15 +169,33 @@ export const DefaultDashboardAttributeFilter = (
                 }
             }, [displayAttributeTooltip, defaultAttributeFilterTitle, attributeDataSet, isOpen, title]);
 
+            const shouldExtendTitle =
+                enableKDDependentFilters &&
+                !!capabilities.supportsKeepingDependentFiltersSelection &&
+                isAttributeFilterDependent;
+            const titleExtension = shouldExtendTitle ? (
+                <AttributeFilterDependencyTooltip tooltipContent={filterDependencyIconTooltip} />
+            ) : null;
+
             return (
                 <AttributeFilterDropdownButton
                     {...props}
                     isDraggable={isDraggable}
                     TooltipContentComponent={CustomTooltipComponent}
+                    titleExtension={titleExtension}
                 />
             );
         };
-    }, [isDraggable, autoOpen, isEditMode, visibilityIcon, onCloseFilter]);
+    }, [
+        autoOpen,
+        onCloseFilter,
+        isEditMode,
+        intl,
+        enableKDDependentFilters,
+        capabilities.supportsKeepingDependentFiltersSelection,
+        isAttributeFilterDependent,
+        isDraggable,
+    ]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {

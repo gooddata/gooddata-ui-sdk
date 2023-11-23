@@ -93,3 +93,13 @@
 .gd-empty-select-search-bar {
     padding-bottom: 10px;
 }
+
+.gd-attribute-filter-dropdown-button-icon-tooltip {
+    height: 16px;
+    overflow: hidden;
+    margin-left: 5px;
+
+    path {
+        fill: variables.$default-gd-color-state-blank;
+    }
+}

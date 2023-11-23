@@ -200,6 +200,8 @@ export {
     AttributeFilterController,
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
+    AttributeFilterDependencyTooltip,
+    IAttributeFilterDependencyTooltipProps,
 } from "./AttributeFilter/index.js";
 
 export { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";
