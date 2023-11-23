@@ -55,7 +55,8 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
             if (bucket.localIdentifier === BucketNames.COLUMNS) {
                 warningMessageId = messages.columns.id;
                 warningMessageValues = {
-                    oldLimit: MAX_TABLE_CATEGORIES_COUNT,
+                    oldLimit: MAX_METRICS_COUNT,
+                    oldRowsLimit: MAX_TABLE_CATEGORIES_COUNT,
                 };
             } else if (hasColumns) {
                 warningMessageId = messages.measuresAttributes.id;
