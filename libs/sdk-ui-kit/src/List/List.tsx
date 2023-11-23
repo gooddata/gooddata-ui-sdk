@@ -22,6 +22,7 @@ export interface IListProps<T> {
 
     height?: number;
     width?: number;
+    maxHeight?: number;
 
     items?: T[];
     itemsCount?: number;
@@ -62,6 +63,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
 
         width = 200,
         height,
+        maxHeight,
 
         items = [],
         itemsCount = items.length,
@@ -80,6 +82,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
         itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
 
     const listHeight = height || currentItemsCount * itemHeight;
+    const listHeightWithBorder = compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight;
 
     const scrollToItemRowIndex = useMemo(() => {
         if (!scrollToItem) {
@@ -142,7 +145,8 @@ export function List<T>(props: IListProps<T>): JSX.Element {
             <Table
                 width={width}
                 // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
-                height={compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight}
+                height={!maxHeight ? listHeightWithBorder : undefined}
+                maxHeight={maxHeight}
                 headerHeight={0}
                 rowHeight={itemHeight}
                 rowHeightGetter={itemHeightGetter}

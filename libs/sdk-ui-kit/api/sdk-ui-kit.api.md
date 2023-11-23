@@ -1149,6 +1149,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     headline?: string;
     // (undocumented)
+    isCancelDisabled?: boolean;
+    // (undocumented)
     isPositive?: boolean;
     // (undocumented)
     isSubmitDisabled?: boolean;
@@ -1486,6 +1488,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     tabs?: ITab[];
     // (undocumented)
+    tabsClassName?: string;
+    // (undocumented)
     title?: string;
     // (undocumented)
     width?: number;
@@ -1524,6 +1528,8 @@ export interface IDropdownProps {
 
 // @internal (undocumented)
 export interface IDropdownTagsProps {
+    // (undocumented)
+    className?: string;
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
     // (undocumented)
@@ -2603,6 +2609,8 @@ export interface IListProps<T> {
     items?: T[];
     // (undocumented)
     itemsCount?: number;
+    // (undocumented)
+    maxHeight?: number;
     // (undocumented)
     maxVisibleItemsCount?: number;
     // (undocumented)
@@ -3825,6 +3833,10 @@ export interface ISyntaxHighlightingInputProps {
 
 // @internal (undocumented)
 export interface ITab {
+    // (undocumented)
+    icon?: string;
+    // (undocumented)
+    iconOnly?: boolean;
     // (undocumented)
     id: string;
     // (undocumented)
