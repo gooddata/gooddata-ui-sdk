@@ -101,6 +101,8 @@ export {
     ICustomApplicationSetting,
     ScanSqlResult,
     WorkspaceEntitiesDatasets,
+    ScanRequest,
+    ScanResult,
     IKeyDriverAnalysis,
     IForecastCacheResult,
     IClusteringCacheResult,

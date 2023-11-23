@@ -51,6 +51,7 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { RecentAnalyticalObject } from '@gooddata/api-client-tiger';
 import { Recommendation } from '@gooddata/api-client-tiger';
+import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { WidgetAlertUserNotification } from '@gooddata/api-client-tiger';
@@ -326,6 +327,25 @@ export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
 
 // @internal (undocumented)
+export interface ScanRequest {
+    // (undocumented)
+    scanTables: boolean;
+    // (undocumented)
+    scanViews: boolean;
+    // (undocumented)
+    schemata: string[];
+    // (undocumented)
+    separator: string;
+    // (undocumented)
+    tablePrefix: string;
+    // (undocumented)
+    viewPrefix: string;
+}
+
+// @internal (undocumented)
+export type ScanResult = ScanResultPdm;
+
+// @internal (undocumented)
 export type ScanSqlResult = ScanSqlResponse;
 
 // @alpha
@@ -388,6 +408,7 @@ export type TigerSpecificFunctions = {
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
     someDataSourcesExists?: (filter?: string) => Promise<boolean>;
     generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLogicalModelRequest) => Promise<DeclarativeLogicalModel>;
+    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
