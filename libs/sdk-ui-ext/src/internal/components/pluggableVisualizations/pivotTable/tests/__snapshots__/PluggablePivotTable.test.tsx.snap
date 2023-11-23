@@ -1772,7 +1772,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
           "date": 1,
         },
         "title": "Columns",
-        "warningMessage": "To add columns, total count of items from measures or rows should not be higher than 20",
+        "warningMessage": "Cannot add columns: limit is 40 measures and 20 rows. Follow the limits to add more",
       },
       "filters": {
         "accepts": [
