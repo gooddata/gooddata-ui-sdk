@@ -47,6 +47,11 @@ export interface IUser {
      * Organization name - when backend implementations supports it.
      */
     organizationName?: string;
+
+    /**
+     * Permission of the user
+     */
+    permissions?: string[];
 }
 
 /**

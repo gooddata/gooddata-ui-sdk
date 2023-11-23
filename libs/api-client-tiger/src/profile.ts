@@ -32,6 +32,7 @@ export interface IUserProfile {
         organization: string;
     };
     features?: ILiveFeatures | IStaticFeatures;
+    permissions?: string[];
 }
 
 export interface ProfileApiInterface {

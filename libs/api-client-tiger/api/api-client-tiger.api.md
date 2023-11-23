@@ -7326,6 +7326,8 @@ export interface IUserProfile {
     // (undocumented)
     organizationName: string;
     // (undocumented)
+    permissions?: string[];
+    // (undocumented)
     userId: string;
 }
 

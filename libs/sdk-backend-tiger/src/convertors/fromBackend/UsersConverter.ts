@@ -14,13 +14,14 @@ import {
  * as a container for full name and lastname will be an empty string
  */
 export const convertUser = (user: IUserProfile): IUser => {
-    const { name, userId, links, organizationName } = user;
+    const { name, userId, links, organizationName, permissions } = user;
 
     return {
         ref: uriRef(links!.user!),
         login: userId!,
         fullName: name,
         organizationName: organizationName,
+        permissions,
     };
 };
 

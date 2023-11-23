@@ -3027,6 +3027,7 @@ export interface IUser {
     lastName?: string;
     login: string;
     organizationName?: string;
+    permissions?: string[];
     ref: ObjRef;
 }
 
