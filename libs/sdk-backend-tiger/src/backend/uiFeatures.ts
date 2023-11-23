@@ -57,6 +57,8 @@ export enum TigerFeaturesNames {
     EnableUserManagement = "enableUserManagement",
     //boolean + possible values: enabled, disabled
     EnableKDDependentFilters = "enableKDDependentFilters",
+    //boolean + possible values: enabled, disabled
+    EnableAdvancedMachineLearningIntegration = "enableAdvancedMachineLearningIntegration",
 }
 
 export type ITigerFeatureFlags = {
@@ -85,6 +87,7 @@ export type ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
     enableKDDependentFilters: typeof FeatureFlagsValues["enableKDDependentFilters"][number];
+    enableAdvancedMachineLearningIntegration: typeof FeatureFlagsValues["enableAdvancedMachineLearningIntegration"][number]
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -113,6 +116,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: false,
     enableKDDependentFilters: false,
+    enableAdvancedMachineLearningIntegration: false,
 };
 
 export const FeatureFlagsValues = {
@@ -145,4 +149,5 @@ export const FeatureFlagsValues = {
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
     enableKDDependentFilters: [true, false] as const,
+    enableAdvancedMachineLearningIntegration: [true, false] as const,
 };

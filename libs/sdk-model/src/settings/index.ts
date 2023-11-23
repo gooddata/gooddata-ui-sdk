@@ -319,6 +319,11 @@ export interface ISettings {
      */
     enableKDDependentFilters?: boolean;
 
+    /**
+     * Enable advanced machine learning integration in KD.
+     */
+    enableAdvancedMachineLearningIntegration?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

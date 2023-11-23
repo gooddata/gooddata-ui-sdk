@@ -54,6 +54,7 @@ import {
     JsonApiWorkspaceDataFilterOutDocument,
     JsonApiWorkspaceDataFilterSettingOutDocument,
     JsonApiWorkspaceDataFilterSettingInDocument,
+    ScanResultPdm,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -82,6 +83,23 @@ export interface IApiToken {
 export interface IApiTokenExtended extends IApiToken {
     bearerToken: string | undefined;
 }
+
+/**
+ * @internal
+ */
+export interface ScanRequest {
+    scanTables: boolean;
+    scanViews: boolean;
+    separator: string;
+    tablePrefix: string;
+    viewPrefix: string;
+    schemata: string[];
+}
+
+/**
+ * @internal
+ */
+export type ScanResult = ScanResultPdm;
 
 /**
  * @internal
@@ -366,6 +384,7 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         generateLogicalModelRequest: GenerateLogicalModelRequest,
     ) => Promise<DeclarativeLogicalModel>;
+    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
@@ -884,6 +903,22 @@ export const buildTigerSpecificFunctions = (
                         generateLdmRequest,
                     })
                     .then((axiosResponse) => axiosResponse.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.scanModel
+                    .scanDataSource({
+                        dataSourceId,
+                        scanRequest,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);
