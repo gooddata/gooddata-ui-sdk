@@ -12,6 +12,7 @@ import { selectLimitingAttributeFilters } from "../elements/elementsSelectors.js
 import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
 import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectIsWorkingSelectionEmpty } from "../selection/selectionSelectors.js";
 
 /**
  * @internal
@@ -35,6 +36,9 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
         const limitingFilters: ReturnType<typeof selectLimitingAttributeFilters> = yield select(
             selectLimitingAttributeFilters,
         );
+        const isWorkingSelectionEmpty: ReturnType<typeof selectIsWorkingSelectionEmpty> = yield select(
+            selectIsWorkingSelectionEmpty,
+        );
         const supportsShowingFilteredElements = context.backend.capabilities.supportsShowingFilteredElements;
 
         const loadTotal = !isLimitingAttributeFiltersEmpty(limitingFilters);
@@ -53,7 +57,7 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
             sagas.push(initTotalCountSaga);
         }
 
-        if (loadTotal && supportsShowingFilteredElements) {
+        if (loadTotal && !isWorkingSelectionEmpty && supportsShowingFilteredElements) {
             // In this case we also load the irrelevant selection
             sagas.push(initIrrelevantSelectionSaga);
         }
