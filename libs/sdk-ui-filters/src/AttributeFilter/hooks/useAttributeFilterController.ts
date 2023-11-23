@@ -302,15 +302,18 @@ function updateNonResettingFilter(
 
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
+        const shouldReinitilizeAllElements =
+            supportsKeepingDependentFiltersSelection && hasNumberOfLimitingAttributesChanged;
 
-        handler.changeSelection({ keys, isInverted });
+        const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
+        handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
         handler.commitSelection();
 
         const nextFilter = handler.getFilter();
         setConnectedPlaceholderValue(nextFilter);
 
-        if (supportsKeepingDependentFiltersSelection && hasNumberOfLimitingAttributesChanged) {
+        if (shouldReinitilizeAllElements) {
             return "init-self";
         }
 
