@@ -101,6 +101,8 @@ export {
     ICustomApplicationSetting,
     ScanSqlResult,
     WorkspaceEntitiesDatasets,
+    ScanRequest,
+    ScanResult,
 } from "./backend/tigerSpecificFunctions.js";
 
 export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
