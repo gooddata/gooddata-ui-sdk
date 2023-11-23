@@ -41,7 +41,7 @@ function disableDrillDownIfMeasure(
         const drillDownIndex = enabledDrillTargetTypeItems.findIndex(
             (item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN,
         );
-        if (drillDownIndex) {
+        if (drillDownIndex >= 0) {
             const drillDownTarget = enabledDrillTargetTypeItems[drillDownIndex];
             drillDownTarget.disabled = true;
             drillDownTarget.disableTooltipMessage = intl.formatMessage(
