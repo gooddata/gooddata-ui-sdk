@@ -253,3 +253,15 @@ export const selectCanManageScheduledMail: DashboardSelector<boolean> = createSe
         return state?.canManageScheduledMail ?? false;
     },
 );
+
+/**
+ * Returns whether the current user has permissions to create/edit/delete attribute hierarchy.
+ *
+ * @internal
+ */
+export const selectCanManageAttributeHierarchy: DashboardSelector<boolean> = createSelector(
+    selectCanManageWorkspace,
+    (canManageWorkspace) => {
+        return canManageWorkspace;
+    },
+);

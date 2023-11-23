@@ -10,4 +10,8 @@ const catalogSlice = createSlice({
 });
 
 export const catalogSliceReducer = catalogSlice.reducer;
+
+/**
+ * @internal
+ */
 export const catalogActions = catalogSlice.actions;

@@ -95,6 +95,7 @@ export {
     selectCanInviteUserToWorkspace,
     selectCanRefreshData,
     selectCanManageScheduledMail,
+    selectCanManageAttributeHierarchy,
 } from "./permissions/permissionsSelectors.js";
 export { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 export {
@@ -206,6 +207,7 @@ export {
     selectCatalogAttributeHierarchies,
     selectCatalogDateAttributes,
 } from "./catalog/catalogSelectors.js";
+export { catalogActions } from "./catalog/index.js";
 export { selectDrillableItems } from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";
 export { AlertsState } from "./alerts/alertsState.js";
