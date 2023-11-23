@@ -210,6 +210,7 @@ export interface IAttributeElementExpressionToken {
 // @alpha
 export interface IAttributeHierarchiesService {
     createAttributeHierarchy(title: string, attributes: ObjRef[]): Promise<ICatalogAttributeHierarchy>;
+    deleteAttributeHierarchy(attributeHierarchyId: string): Promise<void>;
     getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }

@@ -87,6 +87,15 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
         return catalogAttributeHierarchy;
     };
 
+    public deleteAttributeHierarchy = async (attributeHierarchyId: string): Promise<void> => {
+        await this.authCall((client) => {
+            return client.entities.deleteEntityAttributeHierarchies({
+                objectId: attributeHierarchyId,
+                workspaceId: this.workspace,
+            });
+        });
+    };
+
     public getValidDescendants = async (attributes: ObjRef[]): Promise<ObjRef[]> => {
         const response = await this.authCall((client) =>
             client.validDescendants.computeValidDescendants({

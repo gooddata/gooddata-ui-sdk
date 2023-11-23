@@ -20,6 +20,11 @@ export interface IAttributeHierarchiesService {
     ): Promise<ICatalogAttributeHierarchy>;
 
     /**
+     * Deletes attribute hierarchy
+     */
+    deleteAttributeHierarchy(attributeHierarchyId: string): Promise<void>;
+
+    /**
      * Gets valid descendants for given attributes
      */
     getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
