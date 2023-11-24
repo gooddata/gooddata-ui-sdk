@@ -27,7 +27,7 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
     }, [workspaces]);
 
     if (sortedWorkspaces.length === 0) {
-        return <WorkspaceListEmpty mode={mode} />;
+        return <WorkspaceListEmpty mode={mode} subjectType={subjectType} />;
     }
 
     return (

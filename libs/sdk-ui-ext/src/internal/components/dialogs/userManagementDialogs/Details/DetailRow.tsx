@@ -19,7 +19,7 @@ export interface IDetailRowProps {
 
 export const DetailRow: React.FC<IDetailRowProps> = ({ labelText, value, mode, disabled, onChange }) => {
     const intl = useIntl();
-    const viewClassNames = cx({
+    const viewClassNames = cx("gd-user-management-dialog-detail-value", {
         "gd-user-management-dialog-detail-value-empty": !value,
     });
     const inputClassNames = cx(

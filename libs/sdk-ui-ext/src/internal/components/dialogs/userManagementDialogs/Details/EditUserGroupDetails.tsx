@@ -27,7 +27,7 @@ export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const { updatedUserGroup, onChange, isDirty, onSave } = useUserGroupDetails(
+    const { updatedUserGroup, onChange, isProcessing, isDirty, onSave } = useUserGroupDetails(
         userGroup,
         onSubmit,
         onCancel,
@@ -42,7 +42,8 @@ export const EditUserGroupDetails: React.FC<IEditUserGroupDetailsProps> = ({
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-edit-user-group"
             displayCloseButton={true}
             isPositive={true}
-            isSubmitDisabled={!isDirty}
+            isSubmitDisabled={!isDirty || isProcessing}
+            showProgressIndicator={isProcessing}
             headline={extractUserGroupName(userGroup)}
             cancelButtonText={intl.formatMessage(messages.closeEditMode)}
             submitButtonText={intl.formatMessage(messages.saveEditedDetails)}

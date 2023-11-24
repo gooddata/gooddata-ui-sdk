@@ -31,9 +31,10 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const { addedWorkspaces, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
+    const { addedWorkspaces, isProcessing, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
         ids,
         subjectType,
+        grantedWorkspaces,
         onSubmit,
         onCancel,
     );
@@ -47,7 +48,8 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-add-workspace"
             displayCloseButton={true}
             isPositive={true}
-            isSubmitDisabled={addedWorkspaces.length === 0}
+            isSubmitDisabled={addedWorkspaces.length === 0 || isProcessing}
+            showProgressIndicator={isProcessing}
             headline={intl.formatMessage(messages.addWorkspaceDialogTitle)}
             cancelButtonText={intl.formatMessage(messages.addWorkspaceDialogCloseButton)}
             submitButtonText={intl.formatMessage(messages.addWorkspaceDialogSaveButton)}

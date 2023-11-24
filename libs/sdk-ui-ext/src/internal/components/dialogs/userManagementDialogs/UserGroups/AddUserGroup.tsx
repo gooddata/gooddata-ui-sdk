@@ -28,7 +28,11 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const { addedUserGroups, onAdd, onSelect, onDelete } = useAddUserGroup(userIds, onSubmit, onCancel);
+    const { addedUserGroups, isProcessing, onAdd, onSelect, onDelete } = useAddUserGroup(
+        userIds,
+        onSubmit,
+        onCancel,
+    );
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onCancel} className="s-user-group-dialog-navigate-back" />;
@@ -39,7 +43,8 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-add-user-group"
             displayCloseButton={true}
             isPositive={true}
-            isSubmitDisabled={addedUserGroups.length === 0}
+            isSubmitDisabled={addedUserGroups.length === 0 || isProcessing}
+            showProgressIndicator={isProcessing}
             headline={intl.formatMessage(messages.addUserGroupDialogTitle)}
             cancelButtonText={intl.formatMessage(messages.addUserGroupDialogCloseButton)}
             submitButtonText={intl.formatMessage(messages.addUserGroupDialogSaveButton)}
