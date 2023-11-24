@@ -76,6 +76,12 @@
     color: kit-variables.$default-gd-color-label;
 }
 
+.gd-user-management-dialog-detail-value {
+    flex: 1 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .gd-user-management-dialog-detail-value-empty {
     color: kit-variables.$gd-color-text-dimmed;
     font-style: italic;

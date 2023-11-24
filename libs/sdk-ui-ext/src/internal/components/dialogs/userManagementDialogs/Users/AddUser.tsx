@@ -28,7 +28,11 @@ export const AddUser: React.FC<IAddUserProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const { addedUsers, onSelect, onAdd, onDelete } = useAddUsers(userGroupIds, onSubmit, onCancel);
+    const { addedUsers, isProcessing, onSelect, onAdd, onDelete } = useAddUsers(
+        userGroupIds,
+        onSubmit,
+        onCancel,
+    );
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onCancel} className="s-user-management-navigate-back" />;
@@ -39,7 +43,8 @@ export const AddUser: React.FC<IAddUserProps> = ({
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-add-user"
             displayCloseButton={true}
             isPositive={true}
-            isSubmitDisabled={addedUsers.length === 0}
+            isSubmitDisabled={addedUsers.length === 0 || isProcessing}
+            showProgressIndicator={isProcessing}
             headline={intl.formatMessage(messages.addUserDialogTitle)}
             cancelButtonText={intl.formatMessage(messages.addUserDialogCloseButton)}
             submitButtonText={intl.formatMessage(messages.addUserDialogSaveButton)}

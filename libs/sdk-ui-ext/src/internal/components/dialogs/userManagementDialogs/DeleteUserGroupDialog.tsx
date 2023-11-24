@@ -27,11 +27,17 @@ export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
+    const { deleteUserGroup, isDeleteUserGroupProcessing } = useDeleteUserGroup(
+        userGroupId,
+        organizationId,
+        onSuccess,
+        onClose,
+    );
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(messages.deleteUserGroupConfirmTitle)}
             bodyText={intl.formatMessage(messages.deleteUserGroupConfirmBody)}
+            isProcessing={isDeleteUserGroupProcessing}
             onConfirm={deleteUserGroup}
             onCancel={onClose}
         />

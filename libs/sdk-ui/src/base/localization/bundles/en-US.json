@@ -2238,8 +2238,13 @@
         "comment": "Error message shown to the user when query in search input failed",
         "limit": 0
     },
-    "userManagement.workspace.emptySelection.view": {
+    "userManagement.workspace.emptySelection.user.view": {
         "value": "This user does not have permissions for any workspaces.",
+        "comment": "Information shown when no workspaces were selected yet.",
+        "limit": 0
+    },
+    "userManagement.workspace.emptySelection.userGroup.view": {
+        "value": "This group does not have permissions for any workspaces.",
         "comment": "Information shown when no workspaces were selected yet.",
         "limit": 0
     },
@@ -2623,6 +2628,16 @@
         "comment": "Message shown when fetching of user groups from server failed.",
         "limit": 0
     },
+    "userManagement.userGroup.removeSuccess": {
+        "value": "Great! You have successfully removed the group.",
+        "comment": "Confirmation message shown when user group was successfully deleted.",
+        "limit": 0
+    },
+    "userManagement.userGroup.removeFailure": {
+        "value": "Removal of the group failed.",
+        "comment": "Error message shown when deletion of user group failed.",
+        "limit": 0
+    },
     "userManagement.userGroups.removeSuccess": {
         "value": "Great! You have successfully deleted the group.",
         "comment": "Confirmation message shown when user group was successfully deleted.",
@@ -2636,6 +2651,11 @@
     "userManagement.userGroups.removeTooltip": {
         "value": "Remove group from the user.",
         "comment": "Tooltip shown over button that remove user group from the user.",
+        "limit": 0
+    },
+    "userManagement.userGroups.removeDisabledTooltip": {
+        "value": "The group cannot be removed from the user.",
+        "comment": "Tooltip shown over button that remove user group from the user if the action is disabled.",
         "limit": 0
     },
     "userManagement.deleteDialog.user.title": {
@@ -2809,12 +2829,12 @@
         "limit": 0
     },
     "userManagement.users.addSuccess": {
-        "value": "Great! You have successfully added the user(s).",
+        "value": "Great! You have successfully added users to the group.",
         "comment": "Confirmation message shown when users were successfully added to the user group.",
         "limit": 0
     },
     "userManagement.users.addFailure": {
-        "value": "Addition of the user(s) failed.",
+        "value": "Addition of the users to the group failed.",
         "comment": "Error message shown when addition of users to the user group failed.",
         "limit": 0
     },

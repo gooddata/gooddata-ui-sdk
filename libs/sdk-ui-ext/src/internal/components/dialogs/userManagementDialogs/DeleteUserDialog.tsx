@@ -27,11 +27,12 @@ export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
-    const deleteUser = useDeleteUser(userId, organizationId, onSuccess, onClose);
+    const { deleteUser, isDeleteUserProcessing } = useDeleteUser(userId, organizationId, onSuccess, onClose);
     return (
         <DeleteConfirmDialog
             titleText={intl.formatMessage(messages.deleteUserConfirmTitle)}
             bodyText={intl.formatMessage(messages.deleteUserConfirmBody)}
+            isProcessing={isDeleteUserProcessing}
             onConfirm={deleteUser}
             onCancel={onClose}
         />
