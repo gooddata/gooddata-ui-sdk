@@ -23,6 +23,7 @@ export interface IDropdownListNoDataRenderProps {
 export interface IDropdownListProps<T> extends IListProps<T> {
     title?: string;
     className?: string;
+    tabsClassName?: string;
 
     height?: number;
     width?: number;
@@ -83,6 +84,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     const {
         title,
         className = "",
+        tabsClassName = "",
 
         width,
         height,
@@ -152,7 +154,12 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                 />
             ) : null}
             {showTabs ? (
-                <DropdownTabs tabs={tabs} selectedTabId={selectedTabId} onTabSelect={onTabSelect} />
+                <DropdownTabs
+                    tabs={tabs}
+                    selectedTabId={selectedTabId}
+                    onTabSelect={onTabSelect}
+                    className={tabsClassName}
+                />
             ) : null}
             {hasNoData ? (
                 <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>

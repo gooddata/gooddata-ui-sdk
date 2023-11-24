@@ -34,6 +34,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             submitButtonTooltipAlignPoints,
             submitButtonTooltipArrowOffsets,
             isSubmitDisabled,
+            isCancelDisabled,
             showProgressIndicator,
             onSubmit,
             onCancel,
@@ -85,6 +86,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                             onClick={onCancel}
                             className="gd-button-secondary s-dialog-cancel-button"
                             value={cancelButtonText}
+                            disabled={isCancelDisabled}
                         />
 
                         {submitButtonText ? (

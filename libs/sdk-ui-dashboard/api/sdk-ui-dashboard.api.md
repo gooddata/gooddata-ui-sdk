@@ -12,6 +12,7 @@ import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
+import { CatalogState as CatalogState_2 } from './catalogState.js';
 import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
 import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
@@ -258,6 +259,7 @@ import { RenderModeState as RenderModeState_2 } from './renderModeState.js';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
+import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
@@ -501,6 +503,26 @@ export const CancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 
 // @beta
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
+
+// @internal (undocumented)
+export const catalogActions: CaseReducerActions<    {
+setCatalogItems: (state: WritableDraft<CatalogState_2>, action: {
+payload: SetCatalogItemsPayload;
+type: string;
+}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+addAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+payload: ICatalogAttributeHierarchy;
+type: string;
+}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+updateAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+payload: ICatalogAttributeHierarchy;
+type: string;
+}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+deleteAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+payload: ICatalogAttributeHierarchy;
+type: string;
+}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+}, "catalog">;
 
 // @public (undocumented)
 export interface CatalogState {
@@ -6040,6 +6062,9 @@ export const selectCanManageACL: DashboardSelector<boolean>;
 
 // @public
 export const selectCanManageAnalyticalDashboard: DashboardSelector<boolean>;
+
+// @internal
+export const selectCanManageAttributeHierarchy: DashboardSelector<boolean>;
 
 // @public
 export const selectCanManageDomain: DashboardSelector<boolean>;

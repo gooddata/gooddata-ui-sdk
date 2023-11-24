@@ -30,10 +30,11 @@ import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyIt
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;
     onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
+    onDeleteInteraction: () => void;
 }
 
 export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props) => {
-    const { item } = props;
+    const { item, onDeleteInteraction } = props;
     const onDrillDownTargetSelect = (targetItem: ICatalogAttributeHierarchy) => {
         props.onSetup(undefined, { ...item, attributeHierarchyRef: targetItem.attributeHierarchy.ref });
     };
@@ -110,6 +111,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             return (
                 <DrillTargetAttributeHierarchyItem
                     onSelect={onDrillDownTargetSelect}
+                    onDeleteInteraction={onDeleteInteraction}
                     config={item as IDrillDownAttributeHierarchyConfig}
                 />
             );

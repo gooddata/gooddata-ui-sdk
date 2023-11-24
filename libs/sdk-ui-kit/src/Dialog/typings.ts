@@ -29,6 +29,7 @@ export interface IDialogBaseProps {
  */
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     isSubmitDisabled?: boolean;
+    isCancelDisabled?: boolean;
     isPositive?: boolean;
     headline?: string;
     cancelButtonText?: string;

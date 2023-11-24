@@ -7,6 +7,7 @@ import { ITab, Tabs } from "../Tabs/index.js";
  */
 export interface IDropdownTagsProps {
     tabs?: ITab[];
+    className?: string;
     selectedTabId?: string;
     onTabSelect?: (tab: ITab) => void;
 }
@@ -14,11 +15,16 @@ export interface IDropdownTagsProps {
 /**
  * @internal
  */
-export const DropdownTabs: React.FC<IDropdownTagsProps> = ({ tabs, selectedTabId, onTabSelect }) => {
+export const DropdownTabs: React.FC<IDropdownTagsProps> = ({
+    tabs,
+    selectedTabId,
+    onTabSelect,
+    className,
+}) => {
     return (
         <Tabs
             tabs={tabs}
-            className="gd-dropdown-tabs"
+            className={`gd-dropdown-tabs ${className || ""}`}
             selectedTabId={selectedTabId}
             onTabSelect={onTabSelect}
         />

@@ -2192,8 +2192,8 @@
         "limit": 0
     },
     "attributeHierarchyEditor.note.message": {
-        "value": "Hierarchy is applied to all visualizations containing one of its attribute.",
-        "comment": "Information shown in create hierarchy editor",
+        "value": "<b>Note:</b> The attribute hierarchy you define is applied globally to all visualizations. This enables drill down interactions not just for the {br}current visualization, but for all visualizations that include any of the attributes within the hierarchy.",
+        "comment": "Information shown in create hierarchy editor. Do not translate html tags <b>, </b> and {br}.",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.title": {
@@ -2204,6 +2204,36 @@
     "attributeHierarchyEditor.howItWorks.message.heading": {
         "value": "Hierarchy is applied to all visualizations.",
         "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.create.success": {
+        "value": "Great! We created the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is created successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.update.success": {
+        "value": "Great! We saved the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is updated successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.delete.success": {
+        "value": "Great! We deleted the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is deleted successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.create.failed": {
+        "value": "Failed to create. Try again later.",
+        "comment": "The toast message will be shown when create the attribute hierarchy is failed.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.update.failed": {
+        "value": "Failed to save. Try again later.",
+        "comment": "The toast message will be shown when save the attribute hierarchy is failed.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.delete.failed": {
+        "value": "Failed to delete. Try again later.",
+        "comment": "The toast message will be shown when delete the attribute hierarchy is failed.",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.message.content": {

@@ -123,7 +123,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                         }
                     />
 
-                    <DrillTargets item={item} onSetup={onSetup} />
+                    <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
                     {!!item.warning && (
                         <div className="drill-config-target-warning s-drill-config-target-warning">
                             <span className="gd-icon-warning" />

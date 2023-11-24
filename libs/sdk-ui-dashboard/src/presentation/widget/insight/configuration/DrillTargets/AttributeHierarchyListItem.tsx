@@ -1,8 +1,7 @@
 // (C) 2023 GoodData Corporation
 
-import React from "react";
+import React, { MouseEvent } from "react";
 import cx from "classnames";
-
 import { stringUtils } from "@gooddata/util";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
@@ -17,7 +16,12 @@ import {
     AttributeHierarchyDetailPanel,
     IAttributeHierarchyDetailItem,
 } from "@gooddata/sdk-ui-ext";
-import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model/index.js";
+
+import {
+    selectAllCatalogAttributesMap,
+    useDashboardSelector,
+    selectCanManageAttributeHierarchy,
+} from "../../../../../model/index.js";
 import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 
 /**
@@ -28,7 +32,10 @@ export interface IAttributeHierarchyListItemProps {
     onClick: () => void;
     isSelected?: boolean;
     isDisabled?: boolean;
+    onEdit: (attributeHierarchy: ICatalogAttributeHierarchy) => void;
 }
+
+const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 56, y: 0 } }];
 
 function buildAttributeHierarchyDetailItems(
     hierarchy: ICatalogAttributeHierarchy,
@@ -47,9 +54,20 @@ function buildAttributeHierarchyDetailItems(
     });
     return items;
 }
+
 export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemProps> = (props) => {
     const { onClick, item, isDisabled } = props;
     const allCatalogAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
+    const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
+
+    const handleEdit = (event?: MouseEvent) => {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        props.onEdit(item);
+    };
 
     const hierarchyListItemClassname = cx(
         "attribute-hierarchy-list-item s-attribute-hierarchy-list-item",
@@ -62,19 +80,32 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
     return (
         <div className={hierarchyListItemClassname} onClick={onClick}>
             <div className="attribute-hierarchy-list-item-content s-attribute-hierarchy-list-item-content">
-                <ShortenedText className="attribute-hierarchy-title s-attribute-hierarchy-title">
+                <ShortenedText
+                    className="attribute-hierarchy-title s-attribute-hierarchy-title"
+                    tooltipAlignPoints={TOOLTIP_ALIGN_POINTS}
+                >
                     {item.attributeHierarchy.title}
                 </ShortenedText>
             </div>
-
-            <div className="attribute-hierarchy-list-item-description s-attribute-hierarchy-list-item-description">
-                <AttributeHierarchyDetailBubble>
-                    <AttributeHierarchyDetailPanel
-                        title={item.attributeHierarchy.title}
-                        attributes={attributeDetailItems}
-                    />
-                </AttributeHierarchyDetailBubble>
-            </div>
+            {!isDisabled ? (
+                <div className="attribute-hierarchy-list-item-actions s-attribute-hierarchy-list-item-actions">
+                    {canManageAttributeHierarchy ? (
+                        <div
+                            className="gd-icon-pencil attribute-hierarchy-item-edit-button s-attribute-hierarchy-item-edit-button"
+                            onClick={handleEdit}
+                        />
+                    ) : null}
+                    <div className="attribute-hierarchy-list-item-description s-attribute-hierarchy-list-item-description">
+                        <AttributeHierarchyDetailBubble>
+                            <AttributeHierarchyDetailPanel
+                                title={item.attributeHierarchy.title}
+                                attributes={attributeDetailItems}
+                                onEdit={canManageAttributeHierarchy ? handleEdit : undefined}
+                            />
+                        </AttributeHierarchyDetailBubble>
+                    </div>
+                </div>
+            ) : null}
         </div>
     );
 };

@@ -11,6 +11,7 @@ import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
@@ -52,6 +53,9 @@ export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetai
 
 // @internal (undocumented)
 export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetailPanelProps>;
+
+// @internal (undocumented)
+export const AttributeHierarchyDialog: React_2.FC<IAttributeHierarchyDialogProps>;
 
 // @public
 export function clearInsightViewCaches(): void;
@@ -176,7 +180,23 @@ export interface IAttributeHierarchyDetailPanelProps {
     // (undocumented)
     description?: string;
     // (undocumented)
+    onEdit?: () => void;
+    // (undocumented)
     title: string;
+}
+
+// @internal (undocumented)
+export interface IAttributeHierarchyDialogProps {
+    // (undocumented)
+    editingAttributeHierarchy?: ICatalogAttributeHierarchy;
+    // (undocumented)
+    initialAttributeRef?: ObjRef;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onDeleteSuccess?: () => void;
+    // (undocumented)
+    onSaveOrUpdateSuccess?: (attributeHierarchy: ICatalogAttributeHierarchy) => void;
 }
 
 // @internal (undocumented)
