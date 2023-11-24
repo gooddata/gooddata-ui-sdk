@@ -741,7 +741,7 @@ importers:
       vite: 4.5.0
       vite-plugin-html: 3.2.0_vite@4.5.0
 
-  ../../examples/sdk-interactive-examples/examples/example-dependentFilters:
+  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
     specifiers:
       '@gooddata/catalog-export': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
