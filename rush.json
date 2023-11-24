@@ -272,6 +272,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-interactive-example-dependentFilters",
+            "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentFilters",
+            "reviewCategory": "examples",
+            "versionPolicyName": "sdk",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-interactive-example-relativedatefilter",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-relativedatefilter",
             "reviewCategory": "examples",
