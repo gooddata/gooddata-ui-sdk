@@ -279,6 +279,7 @@ export const objectTypeToTigerIdType: {
     attributeHierarchy: TigerObjectType;
     userGroup: TigerObjectType;
     dateHierarchyTemplate: TigerObjectType;
+    dateAttributeHierarchy: TigerObjectType;
 };
 
 // @internal (undocumented)

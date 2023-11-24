@@ -179,11 +179,11 @@
     &.is-disabled {
         .attribute-hierarchy-list-item-content {
             opacity: 0.5;
-            color: kit-variables.$gd-color-text;
+            color: kit-variables.$gd-color-disabled;
 
             &:hover {
                 opacity: 0.5;
-                color: kit-variables.$gd-color-text;
+                color: kit-variables.$gd-color-disabled;
             }
         }
     }
@@ -193,8 +193,9 @@
         height: 28px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 5px;
 
         .attribute-hierarchy-item-edit-button {
             font-size: 14px;

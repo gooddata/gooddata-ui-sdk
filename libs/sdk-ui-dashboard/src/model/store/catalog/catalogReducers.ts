@@ -6,6 +6,7 @@ import {
     ICatalogMeasure,
     ICatalogDateDataset,
     ICatalogAttributeHierarchy,
+    IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 
 import { CatalogState } from "./catalogState.js";
@@ -18,16 +19,19 @@ export interface SetCatalogItemsPayload {
     facts: ICatalogFact[];
     dateDatasets: ICatalogDateDataset[];
     attributeHierarchies: ICatalogAttributeHierarchy[];
+    dateHierarchyTemplates: IDateHierarchyTemplate[];
 }
 
 const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (state, action) => {
-    const { attributes, measures, dateDatasets, facts, attributeHierarchies } = action.payload;
+    const { attributes, measures, dateDatasets, facts, attributeHierarchies, dateHierarchyTemplates } =
+        action.payload;
 
     state.attributes = attributes;
     state.measures = measures;
     state.facts = facts;
     state.dateDatasets = dateDatasets;
     state.attributeHierarchies = attributeHierarchies;
+    state.dateHierarchyTemplates = dateHierarchyTemplates;
 };
 
 const addAttributeHierarchy: CatalogReducer<PayloadAction<ICatalogAttributeHierarchy>> = (state, action) => {

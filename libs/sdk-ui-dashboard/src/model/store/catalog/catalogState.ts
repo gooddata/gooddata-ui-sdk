@@ -5,6 +5,7 @@ import {
     ICatalogMeasure,
     ICatalogDateDataset,
     ICatalogAttributeHierarchy,
+    IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 
 /**
@@ -21,6 +22,8 @@ export interface CatalogState {
     facts?: ICatalogFact[];
     /** @beta */
     attributeHierarchies?: ICatalogAttributeHierarchy[];
+    /** @beta */
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
 }
 
 export const catalogInitialState: CatalogState = {
@@ -29,4 +32,5 @@ export const catalogInitialState: CatalogState = {
     dateDatasets: undefined,
     facts: undefined,
     attributeHierarchies: undefined,
+    dateHierarchyTemplates: undefined,
 };

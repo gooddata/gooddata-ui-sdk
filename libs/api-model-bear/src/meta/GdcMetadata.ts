@@ -53,7 +53,8 @@ export type ObjectCategory =
     | "attributeHierarchy"
     | "user"
     | "userGroup"
-    | "dateHierarchyTemplate";
+    | "dateHierarchyTemplate"
+    | "dateAttributeHierarchy";
 
 /**
  * @public

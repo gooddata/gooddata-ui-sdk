@@ -13,6 +13,9 @@ import {
     areObjRefsEqual,
     objRefToString,
     IDrillDownReference,
+    IDateHierarchyTemplate,
+    ICatalogDateAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 
 import {
@@ -25,7 +28,10 @@ import {
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
 } from "../../../_staging/metadata/objRefMap.js";
-import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectBackendCapabilities,
+    selectSupportsAttributeHierarchies,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -33,6 +39,7 @@ import negate from "lodash/negate.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../layout/layoutSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
+import { selectIsDrillDownEnabled } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -140,6 +147,46 @@ export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttrib
 /**
  * @alpha
  */
+export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTemplate[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.dateHierarchyTemplates ?? [];
+    },
+);
+
+/**
+ * @alpha
+ */
+export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]> = createSelector(
+    [
+        selectDateHierarchyTemplates,
+        selectCatalogDateDatasets,
+        selectIsDrillDownEnabled,
+        selectSupportsAttributeHierarchies,
+    ],
+    (dateHierarchyTemplates, catalogDateDatasets, isDrillDownEnabled, isSupportAttributeHierarchies) => {
+        if (isDrillDownEnabled && isSupportAttributeHierarchies) {
+            return buildAdhocDateHierarchies(dateHierarchyTemplates, catalogDateDatasets);
+        }
+        return [];
+    },
+);
+
+/**
+ * @alpha
+ */
+export const selectAllCatalogAttributeHierarchies: DashboardSelector<
+    (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[]
+> = createSelector(
+    [selectCatalogAttributeHierarchies, selectAdhocDateHierarchies],
+    (catalogAttributeHierarchies, adhocDateHierarchies) => {
+        return [...catalogAttributeHierarchies, ...adhocDateHierarchies];
+    },
+);
+
+/**
+ * @alpha
+ */
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]> =
     createSelector(
         [selectCatalogAttributes, selectCatalogDateAttributes],
@@ -161,7 +208,7 @@ export const selectAttributesWithHierarchyDescendants: (
 ) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector(
     (ignoredDrillDownHierarchies: IDrillDownReference[] | undefined) =>
         createSelector(
-            [selectCatalogAttributes, selectCatalogDateAttributes, selectCatalogAttributeHierarchies],
+            [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
             (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
                 return getAttributesWithHierarchyDescendants(
                     attributes,
@@ -183,7 +230,7 @@ export const selectAttributesWithHierarchyDescendantsByWidgetRef: (
         [
             selectCatalogAttributes,
             selectCatalogDateAttributes,
-            selectCatalogAttributeHierarchies,
+            selectAllCatalogAttributeHierarchies,
             selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
         ],
         (
@@ -297,7 +344,7 @@ export const selectCatalogDateAttributeToDataset: DashboardSelector<
 function getAttributesWithHierarchyDescendants(
     attributes: ICatalogAttribute[],
     dateAttributes: ICatalogDateAttribute[],
-    attributeHierarchies: ICatalogAttributeHierarchy[],
+    attributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     ignoredDrillDownHierarchies: IDrillDownReference[] = [],
 ): Record<string, ObjRef[]> {
     const allCatalogAttributes = [...attributes, ...dateAttributes];
@@ -306,13 +353,15 @@ function getAttributesWithHierarchyDescendants(
     allCatalogAttributes.forEach((attribute) => {
         const attributeRef = attribute.attribute.ref;
         attributeHierarchies.forEach((hierarchy) => {
-            const hierarchyAttributes = hierarchy.attributeHierarchy.attributes.filter((attrRef) => {
+            const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
+                ? hierarchy.attributeHierarchy.ref
+                : hierarchy.dateDatasetRef;
+            const attributes = isCatalogAttributeHierarchy(hierarchy)
+                ? hierarchy.attributeHierarchy.attributes
+                : hierarchy.attributes;
+            const hierarchyAttributes = attributes.filter((attrRef) => {
                 const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(
-                        reference,
-                        hierarchy.attributeHierarchy.ref,
-                        objRefToString(attrRef),
-                    ),
+                    existBlacklistHierarchyPredicate(reference, hierarchyRef, objRefToString(attrRef)),
                 );
                 return ignoredIndex < 0;
             });
@@ -339,4 +388,42 @@ function getAttributesWithHierarchyDescendants(
         });
     });
     return attributeDescendants;
+}
+
+function buildAdhocDateHierarchies(
+    dateHierarchyTemplates: IDateHierarchyTemplate[],
+    catalogDateDatasets: ICatalogDateDataset[],
+): ICatalogDateAttributeHierarchy[] {
+    const adhocDateHierarchies: ICatalogDateAttributeHierarchy[] = [];
+    catalogDateDatasets.forEach((dateDataset) => {
+        dateHierarchyTemplates.forEach((template) => {
+            const dateHierarchy = buildDateHierarchy(dateDataset, template);
+            if (dateHierarchy) {
+                adhocDateHierarchies.push(dateHierarchy);
+            }
+        });
+    });
+    return adhocDateHierarchies;
+}
+
+function buildDateHierarchy(
+    dateDataset: ICatalogDateDataset,
+    dateTemplate: IDateHierarchyTemplate,
+): ICatalogDateAttributeHierarchy | undefined {
+    const dateAttributes = dateDataset.dateAttributes;
+    const dateAttributesInHierarchy: ObjRef[] = [];
+    dateTemplate.granularities.forEach((templateGranularity) => {
+        const dateAttribute = dateAttributes.find((attr) => attr.granularity === templateGranularity);
+        if (dateAttribute) {
+            dateAttributesInHierarchy.push(dateAttribute.attribute.ref);
+        }
+    });
+    if (!isEmpty(dateAttributesInHierarchy)) {
+        return {
+            type: "dateAttributeHierarchy",
+            dateDatasetRef: dateDataset.dataSet.ref,
+            title: dateDataset.dataSet.title,
+            attributes: dateAttributesInHierarchy,
+        };
+    }
 }

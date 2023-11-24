@@ -574,6 +574,7 @@ export {
     ICatalogDateAttribute,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
+    isCatalogDateAttributeHierarchy,
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
@@ -581,6 +582,7 @@ export {
     IGroupableCatalogItemBase,
     GroupableCatalogItem,
     catalogItemMetadataObject,
+    ICatalogDateAttributeHierarchy,
 } from "./ldm/catalog/index.js";
 
 export {

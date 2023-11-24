@@ -1,18 +1,23 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
-import { ICatalogAttributeHierarchy, objRefToString } from "@gooddata/sdk-model";
+import {
+    ICatalogAttributeHierarchy,
+    ICatalogDateAttributeHierarchy,
+    isCatalogAttributeHierarchy,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
 import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
-import { selectCatalogAttributeHierarchies, useDashboardSelector } from "../../../../../model/index.js";
+import { selectAllCatalogAttributeHierarchies, useDashboardSelector } from "../../../../../model/index.js";
 import EmptyAttributeHierarchyInfo from "./EmptyAttributeHierarchyInfo.js";
 import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 import AttributeHierarchyDropdown from "./AttributeHierarchyDropdown.js";
 
 interface IDrillTargetDashboardItemProps {
     config: IDrillDownAttributeHierarchyConfig;
-    onSelect: (targetItem: ICatalogAttributeHierarchy) => void;
+    onSelect: (targetItem: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => void;
     onDeleteInteraction: () => void;
 }
 
@@ -21,7 +26,7 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
     onSelect,
     onDeleteInteraction,
 }) => {
-    const catalogAttributeHierarchies = useDashboardSelector(selectCatalogAttributeHierarchies);
+    const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
 
     const {
         editingAttributeHierarchyRef,
@@ -37,12 +42,21 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
     );
 
     const existInHierarchies = catalogAttributeHierarchies.filter((hierarchy) => {
-        return hierarchy.attributeHierarchy.attributes.some(
+        const attributesRef = isCatalogAttributeHierarchy(hierarchy)
+            ? hierarchy.attributeHierarchy.attributes
+            : hierarchy.attributes;
+        return attributesRef.some(
             (ref) => objRefToString(ref) === attributeDescriptor?.attributeHeader.identifier,
         );
     });
 
     const shouldShowEmptyMessage = isEmpty(existInHierarchies) && !config.complete;
+
+    const onOpenDialog = (item?: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => {
+        if (!item || isCatalogAttributeHierarchy(item)) {
+            onOpenAttributeHierarchyDialog(item);
+        }
+    };
 
     return (
         <>
@@ -55,7 +69,7 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
                     config={config}
                     onSelect={onSelect}
                     attributeDescriptor={attributeDescriptor}
-                    onOpenAttributeHierarchyDialog={onOpenAttributeHierarchyDialog}
+                    onOpenAttributeHierarchyDialog={onOpenDialog}
                 />
             )}
             {shouldDisplayAttributeHierarchyDialog ? (

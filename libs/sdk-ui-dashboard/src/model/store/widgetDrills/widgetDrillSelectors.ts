@@ -19,6 +19,8 @@ import {
     objRefToString,
     ICatalogAttributeHierarchy,
     IDrillDownReference,
+    ICatalogDateAttributeHierarchy,
+    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -35,12 +37,12 @@ import {
 } from "../layout/layoutSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
+    selectAllCatalogAttributeHierarchies,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
     selectAttributesWithHierarchyDescendantsByWidgetRef,
-    selectCatalogAttributeHierarchies,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
@@ -185,21 +187,29 @@ function getDrillDefinitionsWithPredicates(
 }
 
 function getGlobalDrillDownAttributeHierarchyDefinitions(
-    catalogAttributeHierarchies: ICatalogAttributeHierarchy[],
+    catalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     availableDrillTargets?: IAvailableDrillTargets,
     ignoredDrillDownHierarchies: IDrillDownReference[] = [],
 ) {
     const availableAttributes = availableDrillTargets?.attributes ?? [];
     const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [];
     catalogAttributeHierarchies
-        .map((it) => ({
+        .map((it) => {
+            const hierarchyRef = isCatalogAttributeHierarchy(it)
+                ? it.attributeHierarchy.ref
+                : it.dateDatasetRef;
+            const attributes = isCatalogAttributeHierarchy(it)
+                ? it.attributeHierarchy.attributes
+                : it.attributes;
             // we need to remove the last attribute from the hierarchy
             // because it does not have any descendants so that the widget cannot drill down to it
-            attributeIdentifiers: it.attributeHierarchy.attributes
-                .slice(0, it.attributeHierarchy.attributes.length - 1)
-                .map((it) => objRefToString(it)),
-            ref: it.attributeHierarchy.ref,
-        }))
+            return {
+                attributeIdentifiers: attributes
+                    .slice(0, attributes.length - 1)
+                    .map((it) => objRefToString(it)),
+                ref: hierarchyRef,
+            };
+        })
         .forEach(({ attributeIdentifiers, ref }) => {
             availableAttributes.forEach((availableAttribute) => {
                 const attributeHeader = availableAttribute.attribute.attributeHeader;
@@ -270,7 +280,7 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
     (ref: ObjRef) =>
         createSelector(
             selectDrillTargetsByWidgetRef(ref),
-            selectCatalogAttributeHierarchies,
+            selectAllCatalogAttributeHierarchies,
             selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
             selectEnableAttributeHierarchies,
             selectSupportsAttributeHierarchies,

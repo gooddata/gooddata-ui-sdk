@@ -53,7 +53,8 @@ export type ObjectType =
     | "attributeHierarchy"
     | "user"
     | "userGroup"
-    | "dateHierarchyTemplate";
+    | "dateHierarchyTemplate"
+    | "dateAttributeHierarchy";
 
 /**
  * Model object reference using object's unique identifier.

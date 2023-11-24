@@ -60,4 +60,9 @@ export { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 export { ICatalogFact, isCatalogFact } from "./fact/index.js";
 export { ICatalogDateDataset, ICatalogDateAttribute, isCatalogDateDataset } from "./dateDataset/index.js";
 export { ICatalogGroup, IGroupableCatalogItemBase } from "./group/index.js";
-export { ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
+export {
+    ICatalogAttributeHierarchy,
+    isCatalogAttributeHierarchy,
+    isCatalogDateAttributeHierarchy,
+    ICatalogDateAttributeHierarchy,
+} from "./attributeHierarchy/index.js";

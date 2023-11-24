@@ -10,7 +10,7 @@ import { DateAttributeGranularity } from "../../../base/dateGranularities.js";
  * @public
  */
 export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdentity, IMetadataObjectBase {
-    type: "attributeHierarchy";
+    type: "attributeHierarchy" | "dateAttributeHierarchy";
 
     /**
      * Ordered array of attributes which represent hierarchy.
