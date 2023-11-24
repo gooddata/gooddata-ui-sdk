@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "Cuando haga clic en <addon>(valor de)</addon>",
     "configurationPanel.drillConfig.drillIntoDashboard": "Explorar hasta el panel",
     "configurationPanel.drillConfig.drillIntoInsight": "Explorar hasta la perspectiva",
+    "configurationPanel.drillConfig.drillDown": "Exploración vertical",
     "configurationPanel.drillConfig.drillIntoUrl": "Explorar hasta la URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parámetros de URL no válidos",
     "configurationPanel.drillConfig.select": "Elija una acción…",

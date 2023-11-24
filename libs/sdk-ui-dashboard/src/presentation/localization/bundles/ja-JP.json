@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "次の<addon>（値）</addon>をクリックすると",
     "configurationPanel.drillConfig.drillIntoDashboard": "ダッシュボードにドリル",
     "configurationPanel.drillConfig.drillIntoInsight": "インサイトにドリル",
+    "configurationPanel.drillConfig.drillDown": "ドリルダウン",
     "configurationPanel.drillConfig.drillIntoUrl": "URL にドリル",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "無効な URL パラメーター",
     "configurationPanel.drillConfig.select": "アクションを選択…",
