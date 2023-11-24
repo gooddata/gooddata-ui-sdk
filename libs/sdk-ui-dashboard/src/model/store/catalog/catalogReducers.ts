@@ -40,10 +40,12 @@ const updateAttributeHierarchy: CatalogReducer<PayloadAction<ICatalogAttributeHi
     action,
 ) => {
     const attributeHierarchy = action.payload;
-    const updatingIndex = state.attributeHierarchies?.findIndex(
-        (it) => it.attributeHierarchy.id === attributeHierarchy.attributeHierarchy.id,
-    );
-    if (updatingIndex && updatingIndex >= 0) {
+    const updatingIndex =
+        state.attributeHierarchies?.findIndex(
+            (it) => it.attributeHierarchy.id === attributeHierarchy.attributeHierarchy.id,
+        ) ?? -1;
+
+    if (updatingIndex >= 0) {
         state.attributeHierarchies = [...(state.attributeHierarchies ?? [])];
         state.attributeHierarchies.splice(updatingIndex, 1, attributeHierarchy);
     }

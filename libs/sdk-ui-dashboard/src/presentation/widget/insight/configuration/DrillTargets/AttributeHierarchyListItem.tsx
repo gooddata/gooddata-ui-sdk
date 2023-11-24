@@ -87,25 +87,23 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
                     {item.attributeHierarchy.title}
                 </ShortenedText>
             </div>
-            {!isDisabled ? (
-                <div className="attribute-hierarchy-list-item-actions s-attribute-hierarchy-list-item-actions">
-                    {canManageAttributeHierarchy ? (
-                        <div
-                            className="gd-icon-pencil attribute-hierarchy-item-edit-button s-attribute-hierarchy-item-edit-button"
-                            onClick={handleEdit}
+            <div className="attribute-hierarchy-list-item-actions s-attribute-hierarchy-list-item-actions">
+                {canManageAttributeHierarchy ? (
+                    <div
+                        className="gd-icon-pencil attribute-hierarchy-item-edit-button s-attribute-hierarchy-item-edit-button"
+                        onClick={handleEdit}
+                    />
+                ) : null}
+                <div className="attribute-hierarchy-list-item-description s-attribute-hierarchy-list-item-description">
+                    <AttributeHierarchyDetailBubble>
+                        <AttributeHierarchyDetailPanel
+                            title={item.attributeHierarchy.title}
+                            attributes={attributeDetailItems}
+                            onEdit={canManageAttributeHierarchy ? handleEdit : undefined}
                         />
-                    ) : null}
-                    <div className="attribute-hierarchy-list-item-description s-attribute-hierarchy-list-item-description">
-                        <AttributeHierarchyDetailBubble>
-                            <AttributeHierarchyDetailPanel
-                                title={item.attributeHierarchy.title}
-                                attributes={attributeDetailItems}
-                                onEdit={canManageAttributeHierarchy ? handleEdit : undefined}
-                            />
-                        </AttributeHierarchyDetailBubble>
-                    </div>
+                    </AttributeHierarchyDetailBubble>
                 </div>
-            ) : null}
+            </div>
         </div>
     );
 };

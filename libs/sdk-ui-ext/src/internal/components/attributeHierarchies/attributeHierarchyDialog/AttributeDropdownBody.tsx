@@ -8,7 +8,7 @@ import { CatalogAttributeDataType, EmptyParamCallback, ICatalogAttributeData } f
 import { searchAttributes } from "./utils.js";
 
 const DEFAULT_DROPDOWN_WIDTH = 253;
-const DEFAULT_DROPDOWN_HEIGHT = 84;
+const DEFAULT_DROPDOWN_MAX_HEIGHT = 270;
 
 interface IAttributeDropdownBodyProps {
     items: ICatalogAttributeData[];
@@ -54,7 +54,7 @@ const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
             className="attribute-hierarchy-attribute-dropdown-body s-attribute-hierarchy-attribute-dropdown-body"
             tabsClassName="attribute-hierarchy-attribute-dropdown-tabs s-attribute-hierarchy-attribute-dropdown-tabs"
             width={DEFAULT_DROPDOWN_WIDTH}
-            height={DEFAULT_DROPDOWN_HEIGHT}
+            maxHeight={DEFAULT_DROPDOWN_MAX_HEIGHT}
             showSearch={true}
             searchPlaceholder={searchPlaceholderText}
             searchString={searchString}
