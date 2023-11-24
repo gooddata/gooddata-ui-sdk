@@ -38,7 +38,7 @@ import {
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 import { toBearRef } from "./ObjRefConverter.js";
-import { convertFilter } from "./FilterConverter.js";
+import { convertFilter, IConvertInsightOptions } from "./FilterConverter.js";
 import { convertAggregation } from "./afm/MeasureConverter.js";
 
 const convertPreviousPeriodDataSet = (
@@ -85,6 +85,7 @@ const convertArithmeticMeasureDefinition = (
 
 const convertSimpleMeasureDefinition = (
     measure: IMeasure<IMeasureDefinition>,
+    options?: IConvertInsightOptions,
 ): IVisualizationObjectMeasureDefinition => {
     const identifier = measureIdentifier(measure);
     const uri = measureUri(measure);
@@ -95,7 +96,7 @@ const convertSimpleMeasureDefinition = (
 
     const aggregation = convertAggregation(measureAggregation(measure));
     const computeRatio = measureDoesComputeRatio(measure);
-    const filters = (measureFilters(measure) || []).map((filter) => convertFilter(filter));
+    const filters = (measureFilters(measure) || []).map((filter) => convertFilter(filter, options));
 
     return {
         measureDefinition: {
@@ -109,9 +110,10 @@ const convertSimpleMeasureDefinition = (
 
 const convertMeasureDefinition = (
     measure: IMeasure<IMeasureDefinitionType>,
+    options?: IConvertInsightOptions,
 ): VisualizationObjectMeasureDefinitionType => {
     if (isSimpleMeasure(measure)) {
-        return convertSimpleMeasureDefinition(measure);
+        return convertSimpleMeasureDefinition(measure, options);
     } else if (isArithmeticMeasure(measure)) {
         return convertArithmeticMeasureDefinition(measure);
     } else if (isPoPMeasure(measure)) {
@@ -123,14 +125,17 @@ const convertMeasureDefinition = (
     throw new Error("Unknown measure type");
 };
 
-export const convertMeasure = (measure: IMeasure<IMeasureDefinitionType>): IVisualizationObjectMeasure => {
+export const convertMeasure = (
+    measure: IMeasure<IMeasureDefinitionType>,
+    options?: IConvertInsightOptions,
+): IVisualizationObjectMeasure => {
     const alias = measureAlias(measure);
     const format = measureFormat(measure);
     const title = measureTitle(measure);
 
     return {
         measure: {
-            definition: convertMeasureDefinition(measure),
+            definition: convertMeasureDefinition(measure, options),
             localIdentifier: measureLocalId(measure),
             ...(alias && { alias }),
             ...(format && { format }),
