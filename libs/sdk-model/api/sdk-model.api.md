@@ -1163,6 +1163,14 @@ export interface IDateHierarchyReference {
     type: "dateHierarchyReference";
 }
 
+// @alpha
+export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetadataObjectBase {
+    // (undocumented)
+    granularities: DateAttributeGranularity[];
+    // (undocumented)
+    type: "dateHierarchyTemplate";
+}
+
 // @public
 export type Identifier = string;
 
@@ -3460,7 +3468,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

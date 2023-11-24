@@ -614,6 +614,7 @@ export {
     attributeDisplayFormMetadataObjectTitle,
     IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
 } from "./ldm/metadata/index.js";
 
 export {

@@ -52,7 +52,8 @@ export type ObjectType =
     | "dashboardPlugin"
     | "attributeHierarchy"
     | "user"
-    | "userGroup";
+    | "userGroup"
+    | "dateHierarchyTemplate";
 
 /**
  * Model object reference using object's unique identifier.
