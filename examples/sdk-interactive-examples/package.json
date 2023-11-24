@@ -11,8 +11,8 @@
         "create-example": "node ./scripts/createExample.mjs && node ./scripts/updateRootReadme.mjs",
         "update-examples-template": "node ./scripts/updateTemplate.mjs && node ./scripts/updateRootReadme.mjs",
         "update-root-readme": "node ./scripts/updateRootReadme.mjs",
-        "validate": "node ./scripts/validateExamplesDependencies.mjs",
-        "validate-ci": "node ./scripts/validateExamplesDependencies.mjs"
+        "validate": "node ./scripts/validateExamples.mjs",
+        "validate-ci": "node ./scripts/validateExamples.mjs"
     },
     "dependencies": {
         "validate-npm-package-name": "^5.0.0"
