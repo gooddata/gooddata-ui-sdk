@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { ITab, Tabs } from "../Tabs/index.js";
 
 /**
@@ -24,7 +25,7 @@ export const DropdownTabs: React.FC<IDropdownTagsProps> = ({
     return (
         <Tabs
             tabs={tabs}
-            className={`gd-dropdown-tabs ${className || ""}`}
+            className={cx("gd-dropdown-tabs", className)}
             selectedTabId={selectedTabId}
             onTabSelect={onTabSelect}
         />

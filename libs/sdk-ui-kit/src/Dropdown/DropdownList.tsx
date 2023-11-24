@@ -27,6 +27,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
 
     height?: number;
     width?: number;
+    maxHeight?: number;
 
     isLoading?: boolean;
 
@@ -88,6 +89,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
         width,
         height,
+        maxHeight,
 
         isMobile,
         isLoading,
@@ -176,6 +178,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                                 className={listClassNames}
                                 width={listWidth}
                                 height={listHeight}
+                                maxHeight={maxHeight}
                                 items={items}
                                 itemsCount={itemsCount}
                                 itemHeight={isMobile ? Math.max(mobileItemHeight, itemHeight) : itemHeight}

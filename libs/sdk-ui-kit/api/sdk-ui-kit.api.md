@@ -1464,6 +1464,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     isMobile?: boolean;
     // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
     mobileItemHeight?: number;
     // (undocumented)
     onSearch?: (searchString: string) => void;
