@@ -48,14 +48,14 @@ const convertAttribute = (attribute: IAttribute): IVisualizationObjectAttribute 
     };
 };
 
-const convertBucketItem = (bucketItem: IAttributeOrMeasure): BucketItem => {
-    return isMeasure(bucketItem) ? convertMeasure(bucketItem) : convertAttribute(bucketItem);
+const convertBucketItem = (bucketItem: IAttributeOrMeasure, options?: IConvertInsightOptions): BucketItem => {
+    return isMeasure(bucketItem) ? convertMeasure(bucketItem, options) : convertAttribute(bucketItem);
 };
 
-const convertBucket = (bucket: IBucket): IBearBucket => {
+const convertBucket = (bucket: IBucket, options?: IConvertInsightOptions): IBearBucket => {
     const { totals } = bucket;
     return {
-        items: bucket.items.map(convertBucketItem),
+        items: bucket.items.map((item) => convertBucketItem(item, options)),
         localIdentifier: bucket.localIdentifier,
         ...(!isEmpty(totals) && { totals }),
     };
@@ -78,7 +78,7 @@ export const convertInsightContent = (
     const filters = insightFilters(insight).map((filter) => convertExtendedFilter(filter, options));
 
     return {
-        buckets: insightBuckets(insight).map(convertBucket),
+        buckets: insightBuckets(insight).map((bucket) => convertBucket(bucket, options)),
         visualizationClass: { uri: insightVisualizationUrl(insight) },
         ...(!isEmpty(nonEmptyProperties) && {
             properties: serializeProperties(nonEmptyProperties),
