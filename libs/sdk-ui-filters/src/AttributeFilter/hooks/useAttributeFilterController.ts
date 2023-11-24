@@ -31,6 +31,7 @@ import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController } from "./types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
 import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -135,6 +136,7 @@ export const useAttributeFilterController = (
             setShouldReloadElements,
         },
         supportsKeepingDependentFiltersSelection,
+        supportsCircularDependencyInFilters,
     );
     const callbacks = useCallbacks(
         handler,
@@ -209,6 +211,7 @@ function useInitOrReload(
         setShouldReloadElements: (value: boolean) => void;
     },
     supportsKeepingDependentFiltersSelection: boolean,
+    supportsCircularDependencyInFilters: boolean,
 ) {
     const {
         filter,
@@ -254,7 +257,7 @@ function useInitOrReload(
         };
 
         const change = resetOnParentFilterChange
-            ? updateAutomaticResettingFilter(handler, props)
+            ? updateAutomaticResettingFilter(handler, props, supportsCircularDependencyInFilters)
             : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
     }, [
@@ -266,6 +269,7 @@ function useInitOrReload(
         setConnectedPlaceholderValue,
         selectionMode,
         supportsKeepingDependentFiltersSelection,
+        supportsCircularDependencyInFilters,
         setShouldReloadElements,
     ]);
 }
@@ -338,7 +342,15 @@ function updateAutomaticResettingFilter(
         onApply,
         selectionMode,
     }: UpdateFilterProps,
+    supportsCircularDependencyInFilters: boolean,
 ): UpdateFilterType {
+    const canAutomaticallyReset =
+        limitingAttributeFilters.length === 0 || !supportsCircularDependencyInFilters;
+    invariant(
+        canAutomaticallyReset,
+        "It is not possible to automatically reset dependent filters with current backend. Please set attribute filter to not reset on parent filter change (resetOnParentFilterChange prop).",
+    );
+
     if (limitingAttributesChanged) {
         handler.changeSelection({ keys: [], isInverted: selectionMode !== "single" });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
