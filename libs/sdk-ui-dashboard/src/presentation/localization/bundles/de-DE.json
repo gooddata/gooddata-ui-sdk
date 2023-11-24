@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "Wenn ich auf <addon>(Wert von)</addon> klicke",
     "configurationPanel.drillConfig.drillIntoDashboard": "Dashboard verfeinern",
     "configurationPanel.drillConfig.drillIntoInsight": "Betrachtung verfeinern",
+    "configurationPanel.drillConfig.drillDown": "Drill-Down",
     "configurationPanel.drillConfig.drillIntoUrl": "URL-Ansicht verfeinern",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ungültige URL-Parameter",
     "configurationPanel.drillConfig.select": "Befehl auswählen…",

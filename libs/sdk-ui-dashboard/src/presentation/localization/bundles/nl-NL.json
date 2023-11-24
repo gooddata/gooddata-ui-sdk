@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "Als ik klik op <addon>(waarde van)</addon>",
     "configurationPanel.drillConfig.drillIntoDashboard": "Drill in dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Inzoomen op inzicht",
+    "configurationPanel.drillConfig.drillDown": "Zoomen",
     "configurationPanel.drillConfig.drillIntoUrl": "Inzoomen op URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ongeldige URL-parameters",
     "configurationPanel.drillConfig.select": "Actie kiezen…",

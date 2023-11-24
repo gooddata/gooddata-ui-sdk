@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "当我点击<addon>（其数值）</addon>",
     "configurationPanel.drillConfig.drillIntoDashboard": "深入控制面板",
     "configurationPanel.drillConfig.drillIntoInsight": "深入了解",
+    "configurationPanel.drillConfig.drillDown": "深入查看",
     "configurationPanel.drillConfig.drillIntoUrl": "深入查看 URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "URL 参数无效",
     "configurationPanel.drillConfig.select": "选择操作…",
