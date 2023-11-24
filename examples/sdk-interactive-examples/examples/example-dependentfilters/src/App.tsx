@@ -8,7 +8,6 @@ import Example from "./example/Example.js";
 const workspaceId = WORKSPACE_ID;
 
 export const App: React.FC = () => {
-    // backend.config
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspaceId}>

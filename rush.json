@@ -272,8 +272,8 @@
      */
     "projects": [
         {
-            "packageName": "@gooddata/sdk-interactive-example-dependentFilters",
-            "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentFilters",
+            "packageName": "@gooddata/sdk-interactive-example-dependentfilters",
+            "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentfilters",
             "reviewCategory": "examples",
             "versionPolicyName": "sdk",
             "shouldPublish": false
