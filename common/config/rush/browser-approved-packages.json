@@ -1100,7 +1100,7 @@
     },
     {
       "name": "validate-npm-package-name",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "vite",

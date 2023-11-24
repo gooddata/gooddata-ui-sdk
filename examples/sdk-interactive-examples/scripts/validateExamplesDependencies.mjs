@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import validateNpmPackageName from "validate-npm-package-name";
 
 // Define the directory paths
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -25,8 +26,17 @@ fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
 
         // Read the example package.json to get the dependencies
         const examplePackageJson = JSON.parse(fs.readFileSync(EXAMPLE_PACKAGE_JSON_PATH, "utf-8"));
+        const packageName = examplePackageJson.name;
         const dependencies = examplePackageJson.dependencies;
         const dependenciesNames = Object.keys(dependencies);
+
+        const npmNamingValidationResult = validateNpmPackageName(packageName);
+        if (!npmNamingValidationResult.validForNewPackages) {
+            console.error(
+                `Error: Example "${packageName}" has invalid package name. Please rename it to a valid NPM package name.`,
+            );
+            process.exit(1);
+        }
 
         const exampleSpecificDependenciesNames = examplePackageJson.exampleDependencies ?? [];
 
