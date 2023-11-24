@@ -21,6 +21,7 @@ export const useUserDetails = (
     const [isUpdatedAdmin, setUpdatedAdmin] = useState(isAdmin);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
     useEffect(() => {
@@ -39,6 +40,8 @@ export const useUserDetails = (
             ...updatedUser,
             fullName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
         };
+
+        setIsProcessing(true);
 
         Promise.all([
             // update user details
@@ -69,7 +72,8 @@ export const useUserDetails = (
             .catch((error) => {
                 console.error("Change of user details failed", error);
                 addError(messages.userDetailsUpdatedFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
     };
 
     const isDirty = useMemo(
@@ -83,6 +87,7 @@ export const useUserDetails = (
         onChange,
         onSave,
         isDirty,
+        isProcessing,
     };
 };
 
@@ -95,6 +100,7 @@ export const useUserGroupDetails = (
     const [updatedUserGroup, setUpdatedUserGroup] = useState(userGroup);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
     useEffect(() => {
@@ -102,6 +108,7 @@ export const useUserGroupDetails = (
     }, [userGroup]);
 
     const onSave = () => {
+        setIsProcessing(true);
         backend
             .organization(organizationId)
             .users()
@@ -114,7 +121,8 @@ export const useUserGroupDetails = (
             .catch((error) => {
                 console.error("Change of user userGroup details failed", error);
                 addError(messages.userGroupDetailsUpdatedFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
     };
 
     const isDirty = useMemo(
@@ -127,5 +135,6 @@ export const useUserGroupDetails = (
         onChange: setUpdatedUserGroup,
         onSave,
         isDirty,
+        isProcessing,
     };
 };

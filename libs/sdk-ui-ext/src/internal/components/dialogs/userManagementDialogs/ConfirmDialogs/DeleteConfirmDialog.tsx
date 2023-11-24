@@ -9,6 +9,7 @@ import { messages } from "../locales.js";
 export interface IDeleteConfirmDialogProps {
     titleText: string;
     bodyText: string | React.ReactNode;
+    isProcessing: boolean;
     onConfirm: () => void;
     onCancel: () => void;
 }
@@ -16,6 +17,7 @@ export interface IDeleteConfirmDialogProps {
 export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
     titleText,
     bodyText,
+    isProcessing,
     onConfirm,
     onCancel,
 }) => {
@@ -25,6 +27,8 @@ export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
             onSubmit={onConfirm}
             onCancel={onCancel}
             isPositive={false}
+            isSubmitDisabled={isProcessing}
+            showProgressIndicator={isProcessing}
             className="gd-user-management-delete-dialog s-user-management-delete-confirm-dialog"
             headline={titleText}
             submitButtonText={intl.formatMessage(messages.confirmDeleteButton)}

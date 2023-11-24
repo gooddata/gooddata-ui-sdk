@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     IOrganizationDescriptor,
@@ -92,8 +92,10 @@ export const useDeleteUser = (
 ) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
+    const [isProcessing, setIsProcessing] = useState(false);
 
-    return () =>
+    const deleteUser = useCallback(() => {
+        setIsProcessing(true);
         backend
             .organization(organizationId)
             .users()
@@ -106,7 +108,14 @@ export const useDeleteUser = (
             .catch((error) => {
                 console.error("Delete of user failed", error);
                 addError(messages.userDeletedFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
+    }, [backend, organizationId, userId, onSuccess, onClose, addSuccess, addError]);
+
+    return {
+        isDeleteUserProcessing: isProcessing,
+        deleteUser,
+    };
 };
 
 export const useDeleteUserGroup = (
@@ -117,8 +126,10 @@ export const useDeleteUserGroup = (
 ) => {
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
+    const [isProcessing, setIsProcessing] = useState(false);
 
-    return () =>
+    const deleteUserGroup = useCallback(() => {
+        setIsProcessing(true);
         backend
             .organization(organizationId)
             .users()
@@ -131,7 +142,14 @@ export const useDeleteUserGroup = (
             .catch((error) => {
                 console.error("Delete of user group failed", error);
                 addError(messages.userGroupDeleteFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
+    }, [backend, organizationId, userGroupId, addError, addSuccess, onSuccess, onClose]);
+
+    return {
+        isDeleteUserGroupProcessing: isProcessing,
+        deleteUserGroup,
+    };
 };
 
 export const useDeleteDialog = () => {
@@ -183,7 +201,7 @@ export const useWorkspaces = (
             const workspaces = assignments.map((assignment) => {
                 const { workspace, permissions, hierarchyPermissions } = assignment;
                 const permission = asPermission(
-                    hierarchyPermissions.length ? hierarchyPermissions : permissions,
+                    hierarchyPermissions.length > 0 ? hierarchyPermissions : permissions,
                 );
                 return {
                     id: workspace.id,
@@ -196,14 +214,19 @@ export const useWorkspaces = (
         });
     }, [getWorkspacePermissions, id, organizationId]);
 
-    const removeGrantedWorkspace = (workspace: IGrantedWorkspace) => {
+    const removeGrantedWorkspace = (removedWorkspace: IGrantedWorkspace) => {
+        const payload = grantedWorkspaces.map((workspace) =>
+            workspace.id === removedWorkspace.id
+                ? asEmptyPermissionAssignment(id, subjectType, removedWorkspace)
+                : asPermissionAssignment(id, subjectType, workspace),
+        );
         backend
             .organization(organizationId)
             .permissions()
-            .updateWorkspacePermissions([asEmptyPermissionAssignment(id, subjectType, workspace)])
+            .updateWorkspacePermissions(payload)
             .then(() => {
                 addSuccess(messages.workspaceRemovedSuccess);
-                setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== workspace.id));
+                setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== removedWorkspace.id));
                 onSuccess();
             })
             .catch((error) => {
@@ -213,17 +236,20 @@ export const useWorkspaces = (
     };
 
     const updateGrantedWorkspace = (workspace: IGrantedWorkspace) => {
+        const updatedWorkspaces = [
+            ...grantedWorkspaces.filter((item) => item.id !== workspace.id),
+            workspace,
+        ].sort(sortByName);
+
         backend
             .organization(organizationId)
             .permissions()
-            .updateWorkspacePermissions([asPermissionAssignment(id, subjectType, workspace)])
+            .updateWorkspacePermissions(
+                updatedWorkspaces.map((workspace) => asPermissionAssignment(id, subjectType, workspace)),
+            )
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);
-                setGrantedWorkspaces(
-                    [...grantedWorkspaces.filter((item) => item.id !== workspace.id), workspace].sort(
-                        sortByName,
-                    ),
-                );
+                setGrantedWorkspaces(updatedWorkspaces);
             })
             .catch((error) => {
                 console.error("Change of workspace permission failed", error);

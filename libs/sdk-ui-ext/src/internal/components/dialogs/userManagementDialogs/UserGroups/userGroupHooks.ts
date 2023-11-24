@@ -18,12 +18,14 @@ export const useAddUserGroup = (
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
     const [addedUserGroups, setAddedUserGroups] = useState<IGrantedUserGroup[]>([]);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const onDelete = (userGroup: IGrantedUserGroup) => {
         setAddedUserGroups(addedUserGroups.filter((item) => item.id !== userGroup.id));
     };
 
     const onAdd = () => {
+        setIsProcessing(true);
         if (userIds.length === 1) {
             backend
                 .organization(organizationId)
@@ -40,7 +42,8 @@ export const useAddUserGroup = (
                 .catch((error) => {
                     console.error("Addition of user group membership failed", error);
                     addError(messages.userGroupAddedFailure);
-                });
+                })
+                .finally(() => setIsProcessing(false));
         } else {
             backend
                 .organization(organizationId)
@@ -57,7 +60,8 @@ export const useAddUserGroup = (
                 .catch((error) => {
                     console.error("Addition of user group memberships failed", error);
                     addError(messages.userGroupsAddedFailure);
-                });
+                })
+                .finally(() => setIsProcessing(false));
         }
     };
 
@@ -78,5 +82,6 @@ export const useAddUserGroup = (
         onAdd,
         onDelete,
         onSelect,
+        isProcessing,
     };
 };

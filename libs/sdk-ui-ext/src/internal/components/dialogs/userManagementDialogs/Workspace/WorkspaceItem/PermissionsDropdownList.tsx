@@ -20,7 +20,7 @@ const userGroupTooltipMessages = defineMessages({
 
 const userTooltipMessages = defineMessages({
     VIEW: { id: "userManagement.workspace.permissionUser.view.tooltip" },
-    VIEW_AND_EXPORT: { id: "userManagement.permissionUser.permission.viewExport.tooltip" },
+    VIEW_AND_EXPORT: { id: "userManagement.workspace.permissionUser.viewExport.tooltip" },
     ANALYZE: { id: "userManagement.workspace.permissionUser.analyze.tooltip" },
     ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permissionUser.analyzeExport.tooltip" },
     MANAGE: { id: "userManagement.workspace.permissionUser.manage.tooltip" },

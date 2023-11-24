@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -30,8 +30,10 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
+    const [isProcessing, setIsProcessing] = useState(false);
 
-    const onConfirm = () =>
+    const onConfirm = () => {
+        setIsProcessing(true);
         backend
             .organization(organizationId)
             .users()
@@ -44,7 +46,9 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
             .catch((error) => {
                 console.error("Delete of users failed", error);
                 addError(messages.usersDeletedFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
+    };
 
     return (
         <DeleteConfirmDialog
@@ -53,6 +57,7 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
                 b: (chunks: ReactNode) => <b>{chunks}</b>,
                 count: userIds.length,
             })}
+            isProcessing={isProcessing}
             onConfirm={onConfirm}
             onCancel={onClose}
         />
