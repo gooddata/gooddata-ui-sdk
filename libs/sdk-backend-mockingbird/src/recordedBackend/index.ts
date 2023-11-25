@@ -67,6 +67,7 @@ import {
     recordedUserGroupsQuery,
     RecordedWorkspaceUsersQuery,
 } from "./userManagement.js";
+import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -256,7 +257,7 @@ function recordedWorkspace(
             return recordedAccessControlFactory(implConfig);
         },
         attributeHierarchies(): IAttributeHierarchiesService {
-            throw new NotSupported("not supported");
+            return new RecordedAttributeHierarchiesService(implConfig);
         },
     };
 }
