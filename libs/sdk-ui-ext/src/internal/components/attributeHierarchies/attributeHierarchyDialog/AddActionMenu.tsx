@@ -42,12 +42,12 @@ const AddActionMenu: React.FC<IAddActionMenuProps> = ({ rowIndex, alignTo, onClo
         >
             <ItemsWrapper smallItemsSpacing>
                 <Item onClick={handleAddAbove}>
-                    <i className="gd-icon-arrow-up" />
+                    <i className="gd-icon-arrow-up s-add-above" />
                     {addAboveText}
                 </Item>
                 <Separator />
                 <Item onClick={handleAddBellow}>
-                    <i className="gd-icon-arrow-down" />
+                    <i className="gd-icon-arrow-down s-add-below" />
                     {addBellowText}
                 </Item>
             </ItemsWrapper>

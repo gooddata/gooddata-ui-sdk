@@ -74,7 +74,7 @@ const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
 
                 return (
                     <SingleSelectListItem
-                        className="attribute-heirarchy-attribute-dropdown-item s-attribute-heirarchy-attribute-dropdown-item"
+                        className="attribute-hierarchy-attribute-dropdown-item s-attribute-hierarchy-attribute-dropdown-item"
                         title={item.title}
                         onClick={handleClick}
                         icon={item.icon}
