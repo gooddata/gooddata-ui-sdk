@@ -75,7 +75,12 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         dialogOverlayClassNames,
         dialogWrapperClassNames,
     } = useDeleteDialog();
-    const deleteUserGroup = useDeleteUserGroup(userGroupId, organizationId, onSuccess, onClose);
+    const { deleteUserGroup, isDeleteUserGroupProcessing } = useDeleteUserGroup(
+        userGroupId,
+        organizationId,
+        onSuccess,
+        onClose,
+    );
     const { isBootstrapUserGroup } = useOrganizationDetails(organizationId);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
@@ -109,6 +114,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                 <DeleteConfirmDialog
                     titleText={extractUserGroupName(userGroup)}
                     bodyText={intl.formatMessage(messages.deleteUserGroupConfirmBody)}
+                    isProcessing={isDeleteUserGroupProcessing}
                     onConfirm={deleteUserGroup}
                     onCancel={onCloseDeleteDialog}
                 />

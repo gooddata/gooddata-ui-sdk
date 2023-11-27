@@ -18,12 +18,14 @@ export const useAddUsers = (
     const organizationId = useOrganizationId();
     const [addedUsers, setAddedUsers] = useState<IUserMember[]>([]);
     const { addSuccess, addError } = useToastMessage();
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const onDelete = (user: IUserMember) => {
         setAddedUsers(addedUsers.filter((item) => item.id !== user.id));
     };
 
     const onAdd = () => {
+        setIsProcessing(true);
         if (userGroupIds.length === 1) {
             backend
                 .organization(organizationId)
@@ -40,7 +42,8 @@ export const useAddUsers = (
                 .catch((error) => {
                     console.error("Addition of user group members failed", error);
                     addError(messages.usersAddedFailure);
-                });
+                })
+                .finally(() => setIsProcessing(false));
         } else {
             backend
                 .organization(organizationId)
@@ -57,7 +60,8 @@ export const useAddUsers = (
                 .catch((error) => {
                     console.error("Addition of user groups members failed", error);
                     addError(messages.usersAddedToUserGroupsFailure);
-                });
+                })
+                .finally(() => setIsProcessing(false));
         }
     };
 
@@ -70,5 +74,6 @@ export const useAddUsers = (
         onDelete,
         onAdd,
         onSelect,
+        isProcessing,
     };
 };
