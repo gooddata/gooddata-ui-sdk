@@ -2,7 +2,7 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
 <nav class="gd-docs-header-nav gd-docs-header-nav__first">
   <div class="gd-docs-header-nav__left">
-    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ .Site.Home.RelPermalink }}">
+    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ (printf "%s%s/" .Site.Home.Permalink "latest" ) | safeURL }}" >
       {{ with resources.Get "icons/GoodDataLearn.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
     </a>
     <span class="gd-header-nav__logo-text">Learn</span>
