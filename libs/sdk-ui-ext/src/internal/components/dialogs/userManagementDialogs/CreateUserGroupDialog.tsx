@@ -30,9 +30,11 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
-    const [userGroupName, setUserGroupName] = useState<string>();
+    const [userGroupName, setUserGroupName] = useState<string>("");
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const onSubmit = () => {
+        setIsProcessing(true);
         backend
             .organization(organizationId)
             .users()
@@ -48,7 +50,8 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
             })
             .catch(() => {
                 addError(messages.userGroupCreatedFailure);
-            });
+            })
+            .finally(() => setIsProcessing(false));
     };
 
     const onChange = (value: string) => setUserGroupName(value);
@@ -62,11 +65,13 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
         >
             <ConfirmDialogBase
                 onSubmit={onSubmit}
+                isSubmitDisabled={userGroupName === "" || isProcessing}
                 onCancel={onCancel}
                 isPositive={true}
                 className="s-user-management-delete-confirm-dialog gd-user-management-create-dialog"
                 headline={intl.formatMessage(messages.createUserGroupDialogTitle)}
                 submitButtonText={intl.formatMessage(messages.createUserGroupButton)}
+                showProgressIndicator={isProcessing}
                 cancelButtonText={intl.formatMessage(messages.cancelUserGroupButton)}
             >
                 <Input

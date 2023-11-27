@@ -80,7 +80,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         dialogOverlayClassNames,
         dialogWrapperClassNames,
     } = useDeleteDialog();
-    const deleteUser = useDeleteUser(userId, organizationId, onSuccess, onClose);
+    const { deleteUser, isDeleteUserProcessing } = useDeleteUser(userId, organizationId, onSuccess, onClose);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userDialogTabsMessages.workspaces.id) {
@@ -114,6 +114,7 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                     titleText={intl.formatMessage(messages.deleteUserConfirmTitle)}
                     bodyText={intl.formatMessage(messages.deleteUserConfirmBody)}
                     onConfirm={deleteUser}
+                    isProcessing={isDeleteUserProcessing}
                     onCancel={onCloseDeleteDialog}
                 />
             ) : null}
@@ -165,6 +166,8 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
                                     userGroups={grantedUserGroups}
                                     mode="VIEW"
                                     onDelete={removeGrantedUserGroup}
+                                    isBootstrapUser={isBootstrapUser(user)}
+                                    bootstrapUserGroupId={bootstrapUserGroupId}
                                 />
                             )}
                             {selectedTabId.id === userDialogTabsMessages.details.id && (

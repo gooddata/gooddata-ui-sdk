@@ -13,6 +13,7 @@ import { useOrganizationId } from "../OrganizationIdContext.js";
 export const useAddWorkspace = (
     ids: string[],
     subjectType: WorkspacePermissionSubject,
+    grantedWorkspaces: IGrantedWorkspace[],
     onSubmit: (workspaces: IGrantedWorkspace[]) => void,
     onCancel: () => void,
 ) => {
@@ -21,6 +22,7 @@ export const useAddWorkspace = (
     const organizationId = useOrganizationId();
 
     const [addedWorkspaces, setAddedWorkspaces] = useState<IGrantedWorkspace[]>([]);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const onDelete = (workspace: IGrantedWorkspace) => {
         setAddedWorkspaces(addedWorkspaces.filter((item) => item.id !== workspace.id));
@@ -32,15 +34,19 @@ export const useAddWorkspace = (
     };
 
     const onAdd = () => {
+        setIsProcessing(true);
         if (ids.length === 1) {
             backend
                 .organization(organizationId)
                 .permissions()
-                .updateWorkspacePermissions(
-                    addedWorkspaces.map((workspace) =>
+                .updateWorkspacePermissions([
+                    ...grantedWorkspaces.map((workspace) =>
                         asPermissionAssignment(ids[0], subjectType, workspace),
                     ),
-                )
+                    ...addedWorkspaces.map((workspace) =>
+                        asPermissionAssignment(ids[0], subjectType, workspace),
+                    ),
+                ])
                 .then(() => {
                     addSuccess(messages.workspaceAddedSuccess);
                     onSubmit(addedWorkspaces);
@@ -49,35 +55,52 @@ export const useAddWorkspace = (
                 .catch((error) => {
                     console.error("Addition of workspace permission failed", error);
                     addError(messages.workspaceAddedError);
-                });
-        } else {
-            backend
-                .organization(organizationId)
-                .permissions()
-                .updateWorkspacePermissions(
-                    ids.flatMap((id) =>
-                        addedWorkspaces.map((workspace) =>
-                            asPermissionAssignment(id, subjectType, workspace),
-                        ),
-                    ),
-                )
-                .then(() => {
-                    addSuccess(
-                        subjectType === "user"
-                            ? messages.workspacesAddedToUsersSuccess
-                            : messages.workspacesAddedToUserGroupsSuccess,
-                    );
-                    onSubmit(addedWorkspaces);
-                    onCancel();
                 })
-                .catch((error) => {
-                    console.error("Addition of workspace permissions failed", error);
-                    addError(
-                        subjectType === "user"
-                            ? messages.workspacesAddedToUsersError
-                            : messages.workspacesAddedToUserGroupsError,
-                    );
-                });
+                .finally(() => setIsProcessing(false));
+        } else {
+            const permissionLoader =
+                subjectType === "user"
+                    ? backend.organization(organizationId).permissions().getWorkspacePermissionsForUser
+                    : backend.organization(organizationId).permissions().getWorkspacePermissionsForUserGroup;
+
+            Promise
+                // fetch permissions for every edited subject and merge them with new permissions
+                .all(
+                    ids.map(async (id) => {
+                        const newPermissions = addedWorkspaces.map((workspace) =>
+                            asPermissionAssignment(id, subjectType, workspace),
+                        );
+                        return permissionLoader(id).then((existingPermissions) => [
+                            ...existingPermissions,
+                            ...newPermissions,
+                        ]);
+                    }),
+                )
+                // set new permissions
+                .then((permissions) =>
+                    backend
+                        .organization(organizationId)
+                        .permissions()
+                        .updateWorkspacePermissions([].concat(...permissions))
+                        .then(() => {
+                            addSuccess(
+                                subjectType === "user"
+                                    ? messages.workspacesAddedToUsersSuccess
+                                    : messages.workspacesAddedToUserGroupsSuccess,
+                            );
+                            onSubmit(addedWorkspaces);
+                            onCancel();
+                        })
+                        .catch((error) => {
+                            console.error("Addition of workspace permissions failed", error);
+                            addError(
+                                subjectType === "user"
+                                    ? messages.workspacesAddedToUsersError
+                                    : messages.workspacesAddedToUserGroupsError,
+                            );
+                        })
+                        .finally(() => setIsProcessing(false)),
+                );
         }
     };
 
@@ -101,5 +124,6 @@ export const useAddWorkspace = (
         onChange,
         onSelect,
         onAdd,
+        isProcessing,
     };
 };
