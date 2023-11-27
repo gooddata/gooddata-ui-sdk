@@ -275,98 +275,98 @@
             "packageName": "@gooddata/sdk-interactive-example-dependentfilters",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentfilters",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-relativedatefilter",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-relativedatefilter",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-granularity",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-granularity",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-pivottable",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-pivottable",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-headline",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-headline",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-dashboard",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-dashboard",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-datefilter",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-datefilter",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-combochart",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-combochart",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-columnchart",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-columnchart",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-execute",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-execute",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-chartconfig",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-chartconfig",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-example-attributefilter",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-attributefilter",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-examples-template",
             "projectFolder": "examples/sdk-interactive-examples/examples-template",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-interactive-examples",
             "projectFolder": "examples/sdk-interactive-examples",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
+            "versionPolicyName": "sdk-examples",
             "shouldPublish": false
         },
         {
