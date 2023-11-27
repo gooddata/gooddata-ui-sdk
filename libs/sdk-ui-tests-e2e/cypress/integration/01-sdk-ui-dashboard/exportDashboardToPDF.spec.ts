@@ -13,7 +13,7 @@ const exportControl = new Export();
 const widget = new Widget(0);
 const topBar = new TopBar();
 
-describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"] }, () => {
     it("is able to export dashboard with temporary filter to pdf", () => {
         cy.fixture("dashboardInfosForExport").then((data) => {
             data["insightsAfterChangingFilterForPDFExport"].forEach(
