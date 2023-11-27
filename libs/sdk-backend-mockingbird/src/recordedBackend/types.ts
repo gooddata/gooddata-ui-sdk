@@ -132,6 +132,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify how attribute elements should be filtered when using limiting measures or filters.
      */
     attributeElementsFiltering?: AttributeElementsFiltering;
+
+    /**
+     * Specify how to get valid descendants for attribute elements
+     */
+    getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
 };
 
 /**

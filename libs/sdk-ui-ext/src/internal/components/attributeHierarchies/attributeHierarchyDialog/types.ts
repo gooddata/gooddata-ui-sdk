@@ -5,16 +5,6 @@ export type EmptyParamCallback = () => void;
 export type SaveOrUpdateCallback = (attributeHierarchy: ICatalogAttributeHierarchy) => void;
 export type SetLoadingCallback = (isLoading: boolean) => void;
 
-/**
- * @internal
- */
-export interface IAttributeHierarchyDialogProps {
-    initialAttributeRef?: ObjRef;
-    editingAttributeHierarchy?: ICatalogAttributeHierarchy;
-    onClose?: EmptyParamCallback;
-    onSaveOrUpdate?: SaveOrUpdateCallback;
-}
-
 export enum CatalogAttributeDataType {
     ATTRIBUTE = "attribute",
     DATE_ATTRIBUTE = "dateAttribute",

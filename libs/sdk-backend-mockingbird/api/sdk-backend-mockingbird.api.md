@@ -210,6 +210,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     };
     userManagement?: IUserManagement;
     attributeElementsFiltering?: AttributeElementsFiltering;
+    getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
 };
 
 // @internal
