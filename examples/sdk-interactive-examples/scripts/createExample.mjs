@@ -117,7 +117,7 @@ rl.question('Enter example directory name (should have prefix "example-"): ', (n
                 "packageName":  "${EXAMPLE_PACKAGE_NAME_PREFIX}${exampleName}",
                 "projectFolder": "examples/sdk-interactive-examples/examples/${exampleName}",
                 "reviewCategory": "examples",
-                "versionPolicyName": "sdk",
+                "versionPolicyName": "sdk-examples",
                 "shouldPublish": false
             },`;
 
