@@ -460,7 +460,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | AttributeFilterInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | AttributeFilterInteractionType;
 }
 
 // @beta (undocumented)
@@ -7620,6 +7620,7 @@ export const useDashboardUserInteraction: () => {
     descriptionTooltipOpened: (eventData: DescriptionTooltipOpenedData) => void;
     shareDialogInteraction: (eventData: ShareDialogInteractionData) => void;
     attributeFilterInteraction: (eventType: AttributeFilterInteractionType) => void;
+    filterContextStateReset: () => void;
 };
 
 // @internal (undocumented)

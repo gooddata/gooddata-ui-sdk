@@ -2195,6 +2195,11 @@
         "comment": "The tooltip helps users understand why they cannot change its value.",
         "limit": 0
     },
+    "filter.resetButton.tooltip": {
+        "value": "Reset all filters",
+        "comment": "The tooltip of the reset button in the filter bar",
+        "limit": 0
+    },
     "dateFilterDropdown.save": {
         "value": "Save",
         "comment": "Save button label in date filter dropdown configuration",
