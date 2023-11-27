@@ -19,6 +19,7 @@ import {
     selectFilterContextAttributeFilters,
     selectSupportsElementsQueryParentFiltering,
     selectIsKDDependentFiltersEnabled,
+    selectSupportsSingleSelectDependentFilters,
 } from "../../../../../model/index.js";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
@@ -77,6 +78,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     );
     const supportsParentFiltering = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
     const isDependentFiltersEnabled = useDashboardSelector(selectIsKDDependentFiltersEnabled);
+    const supportsSingleSelectDependentFilters = useDashboardSelector(
+        selectSupportsSingleSelectDependentFilters,
+    );
     const showDependentFiltersConfiguration = supportsParentFiltering && isDependentFiltersEnabled;
 
     const neighborFilterDisplayForms = useMemo(() => {
@@ -110,6 +114,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onModeUpdate,
     } = useAttributeFilterParentFiltering();
 
+    const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
+
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
         currentFilter.attributeFilter.displayForm,
         neighborFilterDisplayForms,
@@ -122,9 +128,13 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
 
     const { attributes, attributesLoading } = useAttributes(neighborFilterDisplayForms);
 
-    const parentsSelected = useCallback(() => {
+    const getIsSelectionDisabled = useCallback(() => {
+        if (supportsSingleSelectDependentFilters) {
+            return false;
+        }
+
         return parents.filter((parent) => parent.isSelected).length > 0;
-    }, [parents]);
+    }, [parents, supportsSingleSelectDependentFilters]);
 
     if (connectingAttributesLoading || attributesLoading || validNeighbourAttributesLoading) {
         return (
@@ -163,7 +173,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                 selectionMode={selectionMode}
                 onSelectionModeChange={onSelectionModeUpdate}
-                disabled={parentsSelected()}
+                disabled={getIsSelectionDisabled()}
             />
             {showDependentFiltersConfiguration && parents.length > 0 ? (
                 <ConfigurationCategory categoryTitle={filterByText} />
@@ -175,7 +185,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 onConnectingAttributeChanged={onConnectingAttributeChanged}
                 connectingAttributes={connectingAttributes}
                 attributes={attributes}
-                disabled={selectionMode === "single"}
+                disabled={disableParentFiltersList}
                 disabledTooltip={parentFiltersDisabledTooltip}
                 validParents={validNeighbourAttributes}
             />

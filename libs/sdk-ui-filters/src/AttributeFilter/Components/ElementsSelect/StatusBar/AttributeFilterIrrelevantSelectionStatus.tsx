@@ -11,12 +11,13 @@ const ARROW_OFFSETS = { "bl tl": [-10, 12] };
 interface IAttributeFilterIrrelevantSelectionStatusProps {
     parentFilterTitles: string[];
     irrelevantSelection: IAttributeElement[];
-    onClear: () => void;
+    showClearButton?: boolean;
+    onClear?: () => void;
 }
 
 export const AttributeFilterIrrelevantSelectionStatus: React.FC<
     IAttributeFilterIrrelevantSelectionStatusProps
-> = ({ parentFilterTitles, irrelevantSelection, onClear }) => {
+> = ({ parentFilterTitles, irrelevantSelection, onClear, showClearButton = true }) => {
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -46,9 +47,11 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
                     />
                 </Bubble>
             </BubbleHoverTrigger>
-            <span className="gd-action-clear s-action-clear" onClick={onClear}>
-                <FormattedMessage id="attributesDropdown.irrelevantValues.clear" />
-            </span>
+            {showClearButton ? (
+                <span className="gd-action-clear s-action-clear" onClick={onClear}>
+                    <FormattedMessage id="attributesDropdown.irrelevantValues.clear" />
+                </span>
+            ) : null}
         </Message>
     );
 };

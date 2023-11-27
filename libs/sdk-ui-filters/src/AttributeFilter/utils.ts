@@ -97,6 +97,7 @@ export function isValidSingleSelectionFilter(
     selectionMode: DashboardAttributeFilterSelectionMode,
     filter: IAttributeFilter,
     limitingAttributeFilters: IElementsQueryAttributeFilter[],
+    supportsSingleSelectDependentFilters: boolean,
 ) {
     const isSingleSelect = selectionMode === "single";
     const hasEmptyParentFilters = isEmpty(limitingAttributeFilters);
@@ -110,7 +111,7 @@ export function isValidSingleSelectionFilter(
             );
             return false;
         }
-        if (!hasEmptyParentFilters) {
+        if (!hasEmptyParentFilters && !supportsSingleSelectDependentFilters) {
             console.error(
                 "Parent filtering can not be used together with single selection mode. Use only one of these properties at the same time.",
             );

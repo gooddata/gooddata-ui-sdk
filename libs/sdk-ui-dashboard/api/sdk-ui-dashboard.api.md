@@ -6630,6 +6630,9 @@ export const selectSupportsObjectUris: DashboardSelector<boolean>;
 // @internal
 export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolean>;
 
+// @internal
+export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
 

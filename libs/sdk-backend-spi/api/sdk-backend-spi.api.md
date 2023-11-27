@@ -283,6 +283,7 @@ export interface IBackendCapabilities {
     supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;
     supportsShowingFilteredElements?: boolean;
+    supportsSingleSelectDependentFilters?: boolean;
     supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;

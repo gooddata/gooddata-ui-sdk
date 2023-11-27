@@ -13,6 +13,7 @@ import {
     AttributeDatasetInfo,
     AttributeFilterStatusBar,
     IAttributeFilterStatusBarProps,
+    SingleSelectionAttributeFilterStatusBar,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -289,26 +290,43 @@ export const DefaultDashboardAttributeFilter = (
 
     const CustomStatusBarComponent = useMemo(() => {
         return function StatusBar(props: IAttributeFilterStatusBarProps) {
+            const enableShowingFilteredElements =
+                !!capabilities.supportsShowingFilteredElements && enableKDDependentFilters;
+            const handleShowFilteredElements = () => {
+                props.onShowFilteredElements?.();
+                userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
+            };
+
+            if (filter.attributeFilter.selectionMode === "single") {
+                return (
+                    <SingleSelectionAttributeFilterStatusBar
+                        {...props}
+                        onShowFilteredElements={handleShowFilteredElements}
+                        enableShowingFilteredElements={enableShowingFilteredElements}
+                    />
+                );
+            }
+
             return (
                 <AttributeFilterStatusBar
                     {...props}
-                    onShowFilteredElements={() => {
-                        props.onShowFilteredElements?.();
-                        userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
-                    }}
+                    onShowFilteredElements={handleShowFilteredElements}
                     onClearIrrelevantSelection={() => {
                         props.onClearIrrelevantSelection?.();
                         userInteraction.attributeFilterInteraction(
                             "attributeFilterClearIrrelevantValuesClicked",
                         );
                     }}
-                    enableShowingFilteredElements={
-                        !!capabilities.supportsShowingFilteredElements && enableKDDependentFilters
-                    }
+                    enableShowingFilteredElements={enableShowingFilteredElements}
                 />
             );
         };
-    }, [enableKDDependentFilters, capabilities, userInteraction]);
+    }, [
+        filter.attributeFilter.selectionMode,
+        capabilities.supportsShowingFilteredElements,
+        enableKDDependentFilters,
+        userInteraction,
+    ]);
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>

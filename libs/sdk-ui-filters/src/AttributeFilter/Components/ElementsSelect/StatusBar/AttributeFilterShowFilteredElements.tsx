@@ -3,6 +3,7 @@
 import React, { ReactNode, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 
 const ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [0, 8] };
@@ -11,19 +12,26 @@ interface IAttributeFilterShowFilteredElementsProps {
     attributeTitle: string;
     onClick: () => void;
     parentFilterTitles: string[];
+    className?: string;
 }
 
 export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowFilteredElementsProps> = ({
     attributeTitle,
     onClick,
     parentFilterTitles,
+    className,
 }) => {
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
     return (
-        <div className="gd-attribute-filter-status-show-all s-attribute-filter-status-show-all">
+        <div
+            className={cx(
+                "gd-attribute-filter-status-show-all s-attribute-filter-status-show-all",
+                className,
+            )}
+        >
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <div className="gd-relevant-values-text">
                     <FormattedMessage id="attributesDropdown.relevantValues" values={{ nbsp: <>&nbsp;</> }} />
