@@ -137,6 +137,7 @@ import { IBaseWidget } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateAttributeHierarchy } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
@@ -167,6 +168,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
+import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
@@ -532,6 +534,8 @@ export interface CatalogState {
     attributes?: ICatalogAttribute[];
     // @beta (undocumented)
     dateDatasets?: ICatalogDateDataset[];
+    // @beta (undocumented)
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
     // @beta (undocumented)
     facts?: ICatalogFact[];
     // @beta (undocumented)
@@ -5946,6 +5950,9 @@ export const selectAccessibleDashboardsMap: DashboardSelector<ObjRefMap<IListedD
 // @internal (undocumented)
 export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
+// @alpha (undocumented)
+export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]>;
+
 // @alpha
 export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
 
@@ -5960,6 +5967,9 @@ export const selectAlertsMap: DashboardSelector<ObjRefMap<IWidgetAlert>>;
 
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;
+
+// @alpha (undocumented)
+export const selectAllCatalogAttributeHierarchies: DashboardSelector<(ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[]>;
 
 // @alpha
 export const selectAllCatalogAttributesMap: DashboardSelector<ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
@@ -6197,6 +6207,9 @@ export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFil
 
 // @public
 export const selectDateFormat: DashboardSelector<string | undefined>;
+
+// @alpha (undocumented)
+export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTemplate[]>;
 
 // @public
 export const selectDisableDefaultDrills: DashboardSelector<boolean>;

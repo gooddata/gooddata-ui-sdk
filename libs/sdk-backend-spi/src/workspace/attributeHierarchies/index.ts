@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { ICatalogAttributeHierarchy, IDateHierarchyTemplate, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Service for handle workspace attribute hierarchies
@@ -28,4 +28,9 @@ export interface IAttributeHierarchiesService {
      * Gets valid descendants for given attributes
      */
     getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
+
+    /**
+     * Gets hierarchy template for date dataset
+     */
+    getDateHierarchyTemplates(): Promise<IDateHierarchyTemplate[]>;
 }

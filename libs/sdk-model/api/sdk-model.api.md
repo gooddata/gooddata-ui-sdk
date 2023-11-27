@@ -622,7 +622,7 @@ export interface IAttributeHeaderFormOf {
 export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdentity, IMetadataObjectBase {
     attributes: ObjRef[];
     // (undocumented)
-    type: "attributeHierarchy";
+    type: "attributeHierarchy" | "dateAttributeHierarchy";
 }
 
 // @alpha (undocumented)
@@ -745,6 +745,18 @@ export interface ICatalogDateAttribute {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
     granularity: DateAttributeGranularity;
+}
+
+// @internal (undocumented)
+export interface ICatalogDateAttributeHierarchy {
+    // (undocumented)
+    attributes: ObjRef[];
+    // (undocumented)
+    dateDatasetRef: ObjRef;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "dateAttributeHierarchy";
 }
 
 // @public
@@ -1161,6 +1173,14 @@ export interface IDateHierarchyReference {
     dateHierarchyTemplate: ObjRef;
     // (undocumented)
     type: "dateHierarchyReference";
+}
+
+// @alpha
+export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetadataObjectBase {
+    // (undocumented)
+    granularities: DateAttributeGranularity[];
+    // (undocumented)
+    type: "dateHierarchyTemplate";
 }
 
 // @public
@@ -2254,6 +2274,9 @@ export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 
 // @public
 export function isCatalogAttributeHierarchy(obj: unknown): obj is ICatalogAttributeHierarchy;
+
+// @internal (undocumented)
+export function isCatalogDateAttributeHierarchy(obj: unknown): obj is ICatalogDateAttributeHierarchy;
 
 // @public
 export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
@@ -3460,7 +3483,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

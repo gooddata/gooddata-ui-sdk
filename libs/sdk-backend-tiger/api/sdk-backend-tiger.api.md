@@ -278,6 +278,8 @@ export const objectTypeToTigerIdType: {
     dashboardPlugin: TigerObjectType;
     attributeHierarchy: TigerObjectType;
     userGroup: TigerObjectType;
+    dateHierarchyTemplate: TigerObjectType;
+    dateAttributeHierarchy: TigerObjectType;
 };
 
 // @internal (undocumented)

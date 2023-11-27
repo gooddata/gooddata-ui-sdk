@@ -6,7 +6,9 @@ import {
     areObjRefsEqual,
     IAttributeDescriptor,
     ICatalogAttributeHierarchy,
+    ICatalogDateAttributeHierarchy,
     IDrillDownReference,
+    isCatalogAttributeHierarchy,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
@@ -15,7 +17,7 @@ import { AttributeHierarchyList, IAttributeHierarchyItem } from "./AttributeHier
 import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 import {
     existBlacklistHierarchyPredicate,
-    selectCatalogAttributeHierarchies,
+    selectAllCatalogAttributeHierarchies,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     useDashboardSelector,
 } from "../../../../../model/index.js";
@@ -23,8 +25,10 @@ import {
 interface IAttributeHierarchyDropdownProps {
     config: IDrillDownAttributeHierarchyConfig;
     attributeDescriptor?: IAttributeDescriptor;
-    onSelect: (targetItem: ICatalogAttributeHierarchy) => void;
-    onOpenAttributeHierarchyDialog: (attributeHierarchy?: ICatalogAttributeHierarchy) => void;
+    onSelect: (targetItem: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => void;
+    onOpenAttributeHierarchyDialog: (
+        attributeHierarchy?: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+    ) => void;
 }
 
 const DROPDOWN_ALIGN_POINTS = [
@@ -46,16 +50,21 @@ const DROPDOWN_ALIGN_POINTS = [
 
 function buildHierarchyItemList(
     attributeDescriptor: IAttributeDescriptor | undefined,
-    catalogAttributeHierarchies: ICatalogAttributeHierarchy[],
+    catalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     ignoredDrillDownHierarchies: IDrillDownReference[],
 ) {
     const items: IAttributeHierarchyItem[] = [];
     catalogAttributeHierarchies.forEach((hierarchy) => {
-        const attributesRef = hierarchy.attributeHierarchy.attributes;
+        const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
+            ? hierarchy.attributeHierarchy.ref
+            : hierarchy.dateDatasetRef;
+        const attributesRef = isCatalogAttributeHierarchy(hierarchy)
+            ? hierarchy.attributeHierarchy.attributes
+            : hierarchy.attributes;
         const isInBlacklist = ignoredDrillDownHierarchies.some((ref) =>
             existBlacklistHierarchyPredicate(
                 ref,
-                hierarchy.attributeHierarchy.ref,
+                hierarchyRef,
                 attributeDescriptor?.attributeHeader.identifier,
             ),
         );
@@ -80,15 +89,18 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
 }) => {
     const { formatMessage } = useIntl();
 
-    const catalogAttributeHierarchies = useDashboardSelector(selectCatalogAttributeHierarchies);
+    const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
     const ignoredDrillDownHierarchies = useDashboardSelector(
         selectIgnoredDrillDownHierarchiesByWidgetRef(config.widgetRef),
     );
 
     const selectedCatalogAttributeHierarchy = config.complete
-        ? catalogAttributeHierarchies.find((hierarchy) =>
-              areObjRefsEqual(hierarchy.attributeHierarchy.ref, config.attributeHierarchyRef),
-          )
+        ? catalogAttributeHierarchies.find((hierarchy) => {
+              const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
+                  ? hierarchy.attributeHierarchy.ref
+                  : hierarchy.dateDatasetRef;
+              return areObjRefsEqual(hierarchyRef, config.attributeHierarchyRef);
+          })
         : null;
 
     const items: IAttributeHierarchyItem[] = buildHierarchyItemList(
@@ -97,9 +109,10 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
         ignoredDrillDownHierarchies,
     );
 
-    const buttonText =
-        selectedCatalogAttributeHierarchy?.attributeHierarchy.title ??
-        formatMessage(messages.drilldownSelectHierarchy);
+    const selectHierarchyTitle = isCatalogAttributeHierarchy(selectedCatalogAttributeHierarchy)
+        ? selectedCatalogAttributeHierarchy?.attributeHierarchy.title
+        : selectedCatalogAttributeHierarchy?.title;
+    const buttonText = selectHierarchyTitle ?? formatMessage(messages.drilldownSelectHierarchy);
 
     return (
         <Dropdown

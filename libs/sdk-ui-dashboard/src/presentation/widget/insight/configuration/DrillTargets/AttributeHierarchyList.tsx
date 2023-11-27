@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
 
 import React from "react";
-import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
+import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
@@ -12,7 +12,7 @@ import AttributeHierarchyListFooter from "./AttributeHierarchyListFooter.js";
  */
 export interface IAttributeHierarchyItem {
     isDisabled: boolean;
-    hierarchy: ICatalogAttributeHierarchy;
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy;
 }
 
 /**
@@ -20,8 +20,10 @@ export interface IAttributeHierarchyItem {
  */
 export interface IAttributeHierarchyListProps {
     hierarchies: IAttributeHierarchyItem[];
-    onSelect: (selectedDashboard: ICatalogAttributeHierarchy) => void;
-    onOpenAttributeHierarchyDialog: (attributeHierarchy?: ICatalogAttributeHierarchy) => void;
+    onSelect: (selectedDashboard: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => void;
+    onOpenAttributeHierarchyDialog: (
+        attributeHierarchy?: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+    ) => void;
     closeDropdown: () => void;
 }
 

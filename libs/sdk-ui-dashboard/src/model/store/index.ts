@@ -207,6 +207,9 @@ export {
     selectHasCatalogFacts,
     selectCatalogAttributeHierarchies,
     selectCatalogDateAttributes,
+    selectDateHierarchyTemplates,
+    selectAdhocDateHierarchies,
+    selectAllCatalogAttributeHierarchies,
 } from "./catalog/catalogSelectors.js";
 export { catalogActions } from "./catalog/index.js";
 export { selectDrillableItems } from "./drill/drillSelectors.js";
