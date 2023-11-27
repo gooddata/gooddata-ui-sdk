@@ -2349,7 +2349,7 @@
         "limit": 0
     },
     "userManagement.tab.workspaces": {
-        "value": "Permission ({count})",
+        "value": "Permissions ({count})",
         "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
         "limit": 0
     },
