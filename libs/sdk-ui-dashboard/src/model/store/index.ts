@@ -18,6 +18,7 @@ export {
     selectSupportsKeepingDependentFiltersSelection,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectSupportsAttributeHierarchies,
+    selectSupportsSingleSelectDependentFilters,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {

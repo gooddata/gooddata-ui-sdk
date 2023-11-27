@@ -88,6 +88,7 @@ export const useAttributeFilterController = (
         backend.capabilities.supportsKeepingDependentFiltersSelection;
     const supportsCircularDependencyInFilters = backend.capabilities.supportsCircularDependencyInFilters;
     const supportsShowingFilteredElements = backend.capabilities.supportsShowingFilteredElements;
+    const supportsSingleSelectDependentFilters = backend.capabilities.supportsSingleSelectDependentFilters;
 
     const { shouldReloadElements, setShouldReloadElements } = useShouldReloadElements(
         supportsKeepingDependentFiltersSelection,
@@ -118,7 +119,12 @@ export const useAttributeFilterController = (
         shouldIncludeLimitingFilters,
     );
 
-    const forcedInitErrorProp = isValidSingleSelectionFilter(selectionMode, filter, limitingAttributeFilters)
+    const forcedInitErrorProp = isValidSingleSelectionFilter(
+        selectionMode,
+        filter,
+        limitingAttributeFilters,
+        supportsSingleSelectDependentFilters,
+    )
         ? {}
         : { initError: new UnexpectedSdkError() };
 
@@ -303,11 +309,17 @@ function updateNonResettingFilter(
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
+        const irrelevantKeys = handler.getCommittedSelection().irrelevantKeys;
+
+        // Sometimes leftover irrelevant keys may be shown as the app does not know about irrelevant keys.
+        // In this case, we want to reset the irrelevant keys.
+        const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
 
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
         const shouldReinitilizeAllElements =
-            supportsKeepingDependentFiltersSelection && hasNumberOfLimitingAttributesChanged;
+            supportsKeepingDependentFiltersSelection &&
+            (hasNumberOfLimitingAttributesChanged || !isEmpty(leftoverIrrelevantKeys));
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
         handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
@@ -437,9 +449,10 @@ function useCallbacks(
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(attributeFilter));
 
             const keys = selectedItems.map((item) => (isElementsByRef ? item.uri : item.title));
-            handler.changeSelection({ keys, isInverted });
+            const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
+            handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         },
-        [handler],
+        [handler, selectionMode],
     );
 
     // Rule is not working with debounce
@@ -564,7 +577,7 @@ const useSingleSelectModeHandler = (
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
             const keys = [isElementsByRef ? elements[0].uri : elements[0].title];
 
-            handler.changeSelection({ keys, isInverted: false });
+            handler.changeSelection({ keys, isInverted: false, irrelevantKeys: [] });
             handler.commitSelection();
             onApply();
         }
