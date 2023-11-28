@@ -4268,7 +4268,6 @@ importers:
       webpack-cli: ^4.9.2
       webpack-dev-server: ^4.9.1
     dependencies:
-      '@gooddata/sdk-ui-dashboard': link:../../libs/sdk-ui-dashboard
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
       tslib: 2.5.0
@@ -4285,6 +4284,7 @@ importers:
       '@gooddata/sdk-model': link:../../libs/sdk-model
       '@gooddata/sdk-ui': link:../../libs/sdk-ui
       '@gooddata/sdk-ui-charts': link:../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard': link:../../libs/sdk-ui-dashboard
       '@gooddata/sdk-ui-ext': link:../../libs/sdk-ui-ext
       '@gooddata/sdk-ui-filters': link:../../libs/sdk-ui-filters
       '@gooddata/sdk-ui-geo': link:../../libs/sdk-ui-geo
