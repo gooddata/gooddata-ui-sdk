@@ -54,7 +54,6 @@ With the dashboard plugins, you can run your own code within the KPI Dashboards.
 - Support for TypeScript
 
 **Disadvantages:**
-- Support for view mode only (the plugins are not loaded in edit mode)
 - Limited customization options comparing to the [Dashboard component](../../references/dashboard_component/)
 
 ## Dashboard component
@@ -70,7 +69,6 @@ The Dashboard component provides many built-in features. For more information, s
 - Support for TypeScript
 
 **Disadvantages:**
-- Support for view mode only (the Dashboard component is not loaded in edit mode)
 - Some customization options at alpha or beta stage
 - Limited styling or layout customization options comparing to the [custom dashboards](#custom-dashboards)
 
