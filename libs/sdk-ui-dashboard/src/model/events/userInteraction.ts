@@ -98,7 +98,11 @@ export type AttributeFilterInteractionType =
  * @beta
  */
 export interface BareUserInteractionPayload {
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | AttributeFilterInteractionType;
+    interaction:
+        | "kpiAlertDialogClosed"
+        | "poweredByGDLogoClicked"
+        | "filterContextStateReset"
+        | AttributeFilterInteractionType;
 }
 
 /**

@@ -61,6 +61,10 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const filterContextStateReset = useCallback(() => {
+        eventDispatch(userInteractionTriggered("filterContextStateReset"));
+    }, [eventDispatch]);
+
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
@@ -68,5 +72,6 @@ export const useDashboardUserInteraction = () => {
         descriptionTooltipOpened,
         shareDialogInteraction,
         attributeFilterInteraction,
+        filterContextStateReset,
     };
 };

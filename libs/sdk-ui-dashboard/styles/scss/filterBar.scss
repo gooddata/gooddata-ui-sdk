@@ -446,3 +446,21 @@ $attribute-filter-drag-handle-left: 10px;
         max-width: 209px;
     }
 }
+
+.dash-filters-reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+}
+
+.button-filter-bar-reset {
+    padding: 0;
+    margin-left: 1px;
+
+    &:hover .gd-icon-reset {
+        path {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+    }
+}

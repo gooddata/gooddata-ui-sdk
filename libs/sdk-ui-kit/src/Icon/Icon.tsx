@@ -73,6 +73,7 @@ import { Run } from "./icons/Run.js";
 import { Invite } from "./icons/Invite.js";
 import { Funnel } from "./icons/InsightIcons/Funnel.js";
 import { Pyramid } from "./icons/InsightIcons/Pyramid.js";
+import { Reset } from "./icons/Reset.js";
 
 /**
  * @internal
@@ -80,6 +81,7 @@ import { Pyramid } from "./icons/InsightIcons/Pyramid.js";
 export const Icon: Record<string, React.FC<IIconProps>> = {
     Book,
     Refresh,
+    Reset,
     DrillDown,
     DrillToDashboard,
     DrillToInsight,
