@@ -2062,18 +2062,18 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToDashboard.tooltip": {
-        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context.",
-        "comment": "Tooltip that explain what happens when drilling to dashboard",
+        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to dashboard. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToInsight.tooltip": {
-        "value": "Open a related insight, maintaining the applied filters from the original view.",
-        "comment": "Tooltip that explain what happens when drilling to insight",
+        "value": "Open a related insight, maintaining the applied filters from the original view. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to insight. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToUrl.tooltip": {
-        "value": "Open a custom URL with dynamic parameters based on the selected data point.",
-        "comment": "Tooltip that explain what happens when drilling to custom URL",
+        "value": "Open a custom URL with dynamic parameters based on the selected data point. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to custom URL. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown": {
@@ -2082,8 +2082,8 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip": {
-        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level.",
-        "comment": "Tooltip that explain what happens when drilling down",
+        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling down. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
