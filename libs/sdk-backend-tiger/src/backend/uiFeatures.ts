@@ -59,6 +59,8 @@ export enum TigerFeaturesNames {
     EnableKDDependentFilters = "enableKDDependentFilters",
     //boolean + possible values: enabled, disabled
     EnableKDSavedFilters = "enableKDSavedFilters",
+    //boolean + possible values: enabled, disabled
+    EnableClickHouseDataSource = "enableClickHouseDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -88,6 +90,7 @@ export type ITigerFeatureFlags = {
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
     enableKDDependentFilters: typeof FeatureFlagsValues["enableKDDependentFilters"][number];
     enableKDSavedFilters: typeof FeatureFlagsValues["enableKDSavedFilters"][number];
+    enableClickHouseDataSource: typeof FeatureFlagsValues["enableClickHouseDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -117,6 +120,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserManagement: false,
     enableKDDependentFilters: false,
     enableKDSavedFilters: false,
+    enableClickHouseDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -150,4 +154,5 @@ export const FeatureFlagsValues = {
     enableUserManagement: [true, false] as const,
     enableKDDependentFilters: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,
+    enableClickHouseDataSource: [true, false] as const,
 };

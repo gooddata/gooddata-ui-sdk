@@ -391,6 +391,7 @@ export const TestDefinitionRequestTypeEnum = {
     SYNAPSESQL: "SYNAPSESQL",
     DATABRICKS: "DATABRICKS",
     GD_STORAGE: "GD_STORAGE",
+    CLICKHOUSE: "CLICKHOUSE",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

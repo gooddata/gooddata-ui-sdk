@@ -198,6 +198,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableKDSavedFilters,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableClickHouseDataSource,
+            "enableClickHouseDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableTableTotalRows,
+        ),
     };
 }
 
