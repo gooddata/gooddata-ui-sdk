@@ -24,8 +24,9 @@ const backstopConfig = {
         html_report: "output/html-report",
         ci_report: "output/ci-report",
     },
-    engine: "puppeteer",
+    engine: "playwright",
     engineOptions: {
+        browser: "chromium",
         args: [
             "--disable-infobars",
             "--disable-background-networking",
