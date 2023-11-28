@@ -65,6 +65,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {
                 "1": "inserted",
                 "2": "inserted",
@@ -86,6 +87,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {},
         });
     });
@@ -114,6 +116,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {},
         });
     });
@@ -129,6 +132,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {
                 "1": "inserted",
             },
@@ -151,6 +155,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {},
         });
     });
@@ -174,6 +179,7 @@ describe("fluid layout customizer", () => {
             kpi: [],
             insight: [],
             attributeFilter: [],
+            dashboardContent: [],
             layouts: {
                 "1": "inserted",
                 "2": "inserted",

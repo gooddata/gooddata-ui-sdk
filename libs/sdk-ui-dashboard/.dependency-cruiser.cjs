@@ -63,6 +63,7 @@ options = {
             "src/presentation/topBar/types.ts",
             "src/presentation/toolbar/types.ts",
             "src/presentation/widget/types.ts",
+            "src/presentation/dashboard/types.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [

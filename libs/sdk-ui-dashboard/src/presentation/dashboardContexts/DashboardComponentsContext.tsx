@@ -25,6 +25,7 @@ import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
 import { CustomShareDialogComponent } from "../shareDialog/types.js";
 import {
     AttributeFilterComponentProvider,
+    DashboardContentComponentProvider,
     DateFilterComponentProvider,
     InsightBodyComponentProvider,
     InsightComponentProvider,
@@ -74,6 +75,7 @@ interface IDashboardComponentsContext {
     AttributeFilterComponentSet: AttributeFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
     SaveButtonComponent: CustomSaveButtonComponent;
+    DashboardContentComponentProvider: DashboardContentComponentProvider;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -118,6 +120,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     AttributeFilterComponentSet: null as any, // TODO how to throw here
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
     SaveButtonComponent: ThrowMissingComponentError("SaveButtonComponent"),
+    DashboardContentComponentProvider: ThrowMissingComponentError("DashboardContentComponentProvider"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

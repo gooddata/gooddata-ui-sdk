@@ -142,6 +142,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -158,6 +159,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -185,6 +187,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -200,6 +203,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -219,6 +223,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator", "provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -237,6 +242,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator", "provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -253,6 +259,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -269,6 +276,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -291,6 +299,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -318,6 +327,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator", "provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -343,6 +353,7 @@ describe("Attribute Filter customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: ["decorator", "provider"],
+                dashboardContent: [],
                 layouts: {},
             });
         });

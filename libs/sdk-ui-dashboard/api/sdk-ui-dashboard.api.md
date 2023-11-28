@@ -942,6 +942,9 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 // @internal (undocumented)
 export type CustomDashboardAttributeFilterPlaceholderComponent = ComponentType<IDashboardAttributeFilterPlaceholderProps>;
 
+// @alpha (undocumented)
+export type CustomDashboardContentComponent = ComponentType<IDashboardContentBaseProps>;
+
 // @public (undocumented)
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
 
@@ -1313,6 +1316,9 @@ export interface DashboardConfig {
     // @internal
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
 }
+
+// @alpha (undocumented)
+export type DashboardContentComponentProvider = (dashboard?: string | ObjRef | IDashboard) => CustomDashboardContentComponent;
 
 // @public (undocumented)
 export interface DashboardContext {
@@ -2586,6 +2592,9 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
+// @internal (undocumented)
+export const DefaultDashboardMainContent: (_: IDashboardProps) => JSX.Element;
+
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
@@ -3368,12 +3377,29 @@ export interface IDashboardCommand {
     readonly type: DashboardCommandType;
 }
 
+// @internal (undocumented)
+export interface IDashboardContentBaseProps {
+    backend?: IAnalyticalBackend;
+    config?: DashboardConfig;
+    dashboard?: string | ObjRef | IDashboard;
+    filterContextRef?: ObjRef;
+    permissions?: IWorkspacePermissions;
+    workspace?: string;
+}
+
+// @alpha (undocumented)
+export interface IDashboardContentCustomizer {
+    withCustomDecorator(providerFactory: (next: DashboardContentComponentProvider) => OptionalDashboardContentComponentProvider): IDashboardContentCustomizer;
+}
+
 // @public
 export interface IDashboardCustomComponentProps {
     // @alpha
     ButtonBarComponent?: CustomButtonBarComponent;
     // @alpha
     DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
+    // @alpha
+    DashboardContentComponentProvider?: OptionalDashboardContentComponentProvider;
     // @alpha
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
     // @internal
@@ -3433,6 +3459,7 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 // @public (undocumented)
 export interface IDashboardCustomizer {
     customWidgets(): IDashboardWidgetCustomizer;
+    dashboard(): IDashboardContentCustomizer;
     filterBar(): IFilterBarCustomizer;
     filters(): IFiltersCustomizer;
     insightWidgets(): IDashboardInsightCustomizer;
@@ -5202,6 +5229,9 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 
 // @public (undocumented)
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalDashboardContentComponentProvider = OptionalProvider<DashboardContentComponentProvider>;
 
 // @public (undocumented)
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;

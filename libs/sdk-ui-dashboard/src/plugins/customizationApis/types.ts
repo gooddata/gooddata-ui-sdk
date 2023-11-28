@@ -4,6 +4,7 @@ export type CustomizerMutationsContext = {
     insight: CustomizerMutationsType[];
     kpi: CustomizerMutationsType[];
     attributeFilter: CustomizerMutationsType[];
+    dashboardContent: CustomizerMutationsType[];
     layouts: Record<string, CustomizerMutationsType>;
 };
 
@@ -14,6 +15,7 @@ export function createCustomizerMutationsContext(): CustomizerMutationsContext {
         insight: [],
         kpi: [],
         attributeFilter: [],
+        dashboardContent: [],
         layouts: {},
     };
 }
