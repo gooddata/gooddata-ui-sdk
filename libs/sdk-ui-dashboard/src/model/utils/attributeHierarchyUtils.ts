@@ -5,7 +5,6 @@ import {
     IDrillDownReference,
     isAttributeHierarchyReference,
     ObjRef,
-    objRefToString,
 } from "@gooddata/sdk-model";
 
 /**
@@ -14,16 +13,16 @@ import {
 export function existBlacklistHierarchyPredicate(
     reference: IDrillDownReference,
     attributeHierarchyRef: ObjRef,
-    attributeIdentifier?: string,
+    attributeIdentifier?: ObjRef,
 ): boolean {
     if (isAttributeHierarchyReference(reference)) {
         return (
             areObjRefsEqual(reference.attributeHierarchy, attributeHierarchyRef) &&
-            objRefToString(reference.label) === attributeIdentifier
+            areObjRefsEqual(reference.attribute, attributeIdentifier)
         );
     }
     return (
         areObjRefsEqual(reference.dateHierarchyTemplate, attributeHierarchyRef) &&
-        objRefToString(reference.dateDatasetAttribute) === attributeIdentifier
+        areObjRefsEqual(reference.dateDatasetAttribute, attributeIdentifier)
     );
 }

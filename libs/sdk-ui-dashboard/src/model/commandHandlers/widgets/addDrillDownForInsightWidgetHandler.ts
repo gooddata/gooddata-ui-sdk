@@ -3,8 +3,6 @@
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { objRefToString } from "@gooddata/sdk-model";
-
 import { DashboardContext } from "../../types/commonTypes.js";
 import { AddDrillDownForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
@@ -27,12 +25,7 @@ export function* addDrillDownForInsightWidgetHandler(
 
     const newBlacklistHierarchies = currentBlacklistHierarchies
         ? currentBlacklistHierarchies.filter(
-              (ref) =>
-                  !existBlacklistHierarchyPredicate(
-                      ref,
-                      attributeHierarchy,
-                      objRefToString(attributeIdentifier),
-                  ),
+              (ref) => !existBlacklistHierarchyPredicate(ref, attributeHierarchy, attributeIdentifier),
           )
         : [];
 

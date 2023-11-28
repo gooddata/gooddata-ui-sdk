@@ -410,7 +410,7 @@ exports[`layout slice reducer > replaceWidgetBlacklistHierarchies action > shoul
           },
           "attributeIdentifier": {
             "identifier": "f_owner.department_id",
-            "type": "displayForm",
+            "type": "attribute",
           },
           "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1310",
@@ -432,13 +432,13 @@ exports[`layout slice reducer > replaceWidgetBlacklistHierarchies action > shoul
           ],
           "value": [
             {
+              "attribute": {
+                "identifier": "f_owner.department_id",
+                "type": "attribute",
+              },
               "attributeHierarchy": {
                 "identifier": "test_attribute_hierarchies_1",
                 "type": "attributeHierarchy",
-              },
-              "label": {
-                "identifier": "f_owner.department_id",
-                "type": "displayForm",
               },
               "type": "attributeHierarchyReference",
             },

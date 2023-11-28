@@ -361,7 +361,7 @@ function getAttributesWithHierarchyDescendants(
                 : hierarchy.attributes;
             const hierarchyAttributes = attributes.filter((attrRef) => {
                 const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(reference, hierarchyRef, objRefToString(attrRef)),
+                    existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
                 );
                 return ignoredIndex < 0;
             });

@@ -628,9 +628,9 @@ export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdenti
 // @alpha (undocumented)
 export interface IAttributeHierarchyReference {
     // (undocumented)
-    attributeHierarchy: ObjRef;
+    attribute: ObjRef;
     // (undocumented)
-    label: ObjRef;
+    attributeHierarchy: ObjRef;
     // (undocumented)
     type: "attributeHierarchyReference";
 }

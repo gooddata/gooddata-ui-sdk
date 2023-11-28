@@ -65,13 +65,13 @@ function buildHierarchyItemList(
             existBlacklistHierarchyPredicate(
                 ref,
                 hierarchyRef,
-                attributeDescriptor?.attributeHeader.identifier,
+                attributeDescriptor?.attributeHeader.formOf.ref,
             ),
         );
-        const isInHierarchy = attributesRef.find(
-            (ref) => objRefToString(ref) === attributeDescriptor?.attributeHeader.identifier,
+        const indexInHierarchy = attributesRef.findIndex(
+            (ref) => objRefToString(ref) === attributeDescriptor?.attributeHeader.formOf.identifier,
         );
-        if (isInHierarchy) {
+        if (indexInHierarchy >= 0 && indexInHierarchy < attributesRef.length - 1) {
             items.push({
                 isDisabled: !isInBlacklist,
                 hierarchy: hierarchy,

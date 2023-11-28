@@ -2,10 +2,10 @@
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import {
+    areObjRefsEqual,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     isCatalogAttributeHierarchy,
-    objRefToString,
 } from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
@@ -45,8 +45,8 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
         const attributesRef = isCatalogAttributeHierarchy(hierarchy)
             ? hierarchy.attributeHierarchy.attributes
             : hierarchy.attributes;
-        return attributesRef.some(
-            (ref) => objRefToString(ref) === attributeDescriptor?.attributeHeader.identifier,
+        return attributesRef.some((ref) =>
+            areObjRefsEqual(ref, attributeDescriptor?.attributeHeader.formOf.ref),
         );
     });
 

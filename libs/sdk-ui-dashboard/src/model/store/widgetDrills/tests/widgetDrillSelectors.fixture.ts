@@ -347,6 +347,6 @@ export const ignoredHierarchies: IDrillDownReference[] = [
             "477f101d580549049144fdb8aa39f7b4_attribute_hierarchies_1",
             "attributeHierarchy",
         ),
-        label: idRef("f_owner.department_id", "displayForm"),
+        attribute: idRef("f_owner.department_id", "attribute"),
     },
 ];

@@ -217,7 +217,7 @@ function getGlobalDrillDownAttributeHierarchyDefinitions(
                     objRefToString(attributeHeader.formOf.ref),
                 );
                 const inBlacklistIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(reference, ref, attributeHeader.identifier),
+                    existBlacklistHierarchyPredicate(reference, ref, attributeHeader.formOf.ref),
                 );
                 if (isAttributeInHierarchy && inBlacklistIndex < 0) {
                     globalDrillDowns.push({
