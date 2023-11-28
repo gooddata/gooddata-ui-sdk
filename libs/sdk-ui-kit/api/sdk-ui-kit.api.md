@@ -3647,9 +3647,13 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    eventsOnBubble?: boolean;
+    // (undocumented)
+    hideDelayBubble?: number;
+    // (undocumented)
     icon?: string;
     // (undocumented)
-    info?: string;
+    info?: string | ReactNode;
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
