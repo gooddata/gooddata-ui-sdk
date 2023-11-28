@@ -353,6 +353,9 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                     sagaMiddleware,
                 );
         },
+        devTools: {
+            name: "Dashboard component state",
+        },
     });
 
     const { eventing = {} } = config;
