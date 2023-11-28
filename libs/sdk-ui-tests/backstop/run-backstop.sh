@@ -76,7 +76,7 @@ trap "docker network rm -f ${BACKSTOP_NET}" EXIT
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z,consistent \
-            backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
+            backstopjs/backstopjs:6.2.2 --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
     }
