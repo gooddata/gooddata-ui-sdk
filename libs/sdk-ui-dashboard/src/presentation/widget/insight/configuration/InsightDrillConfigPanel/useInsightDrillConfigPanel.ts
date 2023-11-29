@@ -5,7 +5,6 @@ import { invariant } from "ts-invariant";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import {
-    idRef,
     IDrillDownReference,
     InsightDrillDefinition,
     isInsightWidget,
@@ -200,7 +199,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                 dispatch(
                     addDrillDownForInsightWidget(
                         widgetRef,
-                        idRef(attributeDescriptor!.attributeHeader.identifier, "displayForm"),
+                        attributeDescriptor!.attributeHeader.formOf.ref,
                         (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
                     ),
                 );
@@ -256,7 +255,7 @@ function buildBlacklistHierarchies(item: IDrillDownAttributeHierarchyConfig): ID
             {
                 type: "dateHierarchyReference",
                 dateHierarchyTemplate: item.attributeHierarchyRef,
-                dateDatasetAttribute: idRef(attributeDescriptor.attributeHeader.identifier, "displayForm"),
+                dateDatasetAttribute: attributeDescriptor.attributeHeader.formOf.ref,
             },
         ];
     }
@@ -264,7 +263,7 @@ function buildBlacklistHierarchies(item: IDrillDownAttributeHierarchyConfig): ID
         {
             type: "attributeHierarchyReference",
             attributeHierarchy: item.attributeHierarchyRef,
-            label: idRef(attributeDescriptor.attributeHeader.identifier, "displayForm"),
+            attribute: attributeDescriptor.attributeHeader.formOf.ref,
         },
     ];
 }

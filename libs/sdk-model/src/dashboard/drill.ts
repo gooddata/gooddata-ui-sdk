@@ -336,7 +336,7 @@ export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl
 export interface IAttributeHierarchyReference {
     type: "attributeHierarchyReference";
     attributeHierarchy: ObjRef;
-    label: ObjRef;
+    attribute: ObjRef;
 }
 
 /**

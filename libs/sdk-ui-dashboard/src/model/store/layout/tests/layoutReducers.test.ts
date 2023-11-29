@@ -112,7 +112,7 @@ describe("layout slice reducer", () => {
         };
 
         it("should correctly handle replace widget blacklist hierarchies and create undo entry", () => {
-            const attribute = (ignoredHierarchies[0] as IAttributeHierarchyReference).label;
+            const attribute = (ignoredHierarchies[0] as IAttributeHierarchyReference).attribute;
             const hierarchy = (ignoredHierarchies[0] as IAttributeHierarchyReference).attributeHierarchy;
             const initialState = createLayoutSliceInitialState(SimpleDashboardLayout);
             const newState = produce(initialState, (draft) => {

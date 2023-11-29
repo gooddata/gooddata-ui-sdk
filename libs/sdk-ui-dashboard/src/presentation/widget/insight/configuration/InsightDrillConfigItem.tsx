@@ -2,8 +2,10 @@
 import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-import { stringUtils } from "@gooddata/util";
+import cloneDeep from "lodash/cloneDeep.js";
+import { invariant } from "ts-invariant";
 
+import { stringUtils } from "@gooddata/util";
 import { messages } from "@gooddata/sdk-ui";
 import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
@@ -23,7 +25,6 @@ import {
     selectSelectedWidgetRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { invariant } from "ts-invariant";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
@@ -37,20 +38,19 @@ function disableDrillDownIfMeasure(
     isMeasure: boolean,
     intl: IntlShape,
 ) {
+    const drillTargetTypes = cloneDeep(enabledDrillTargetTypeItems);
     if (isMeasure) {
-        const drillDownIndex = enabledDrillTargetTypeItems.findIndex(
-            (item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN,
-        );
+        const drillDownIndex = drillTargetTypes.findIndex((item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN);
         if (drillDownIndex >= 0) {
-            const drillDownTarget = enabledDrillTargetTypeItems[drillDownIndex];
+            const drillDownTarget = drillTargetTypes[drillDownIndex];
             drillDownTarget.disabled = true;
             drillDownTarget.disableTooltipMessage = intl.formatMessage(
                 messages.drilldownTooltipDisabledMetric,
             );
-            enabledDrillTargetTypeItems.splice(drillDownIndex, 1, drillDownTarget);
+            drillTargetTypes.splice(drillDownIndex, 1, drillDownTarget);
         }
     }
-    return enabledDrillTargetTypeItems;
+    return drillTargetTypes;
 }
 
 const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
