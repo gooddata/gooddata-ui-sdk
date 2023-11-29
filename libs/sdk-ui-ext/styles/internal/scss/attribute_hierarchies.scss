@@ -109,8 +109,8 @@
         height: 468px;
         margin: 0 -20px;
         padding: 0 20px;
-        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-        border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        border-top: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
         background-color: var(--gd-palette-complementary-0, #fcfcfd);
 
         .attribute-hierarchy-table-title {
@@ -203,9 +203,9 @@
         justify-content: space-between;
         align-items: start;
 
-        .attribute-hierarchy-note-message.s-attribute-hierarchy-note-message {
+        .attribute-hierarchy-note-message {
             margin: -5px 0 20px;
-            border-bottom: 1px solid var(--gd-palette-complementary-5, #ccd8e2);
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
 
             .gd-message {
                 margin-bottom: 15px;
