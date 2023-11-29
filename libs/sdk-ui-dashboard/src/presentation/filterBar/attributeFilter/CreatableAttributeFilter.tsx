@@ -21,6 +21,7 @@ export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) 
     const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
+    // TODO INE: add check for dates
     const disabled = !hasAttributes || !canAddMoreAttributeFilters;
 
     const tooltip =

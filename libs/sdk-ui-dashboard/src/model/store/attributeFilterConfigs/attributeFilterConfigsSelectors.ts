@@ -64,3 +64,29 @@ export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<
         }, new Map());
     },
 );
+
+
+//TODO INE: implement full + introduce new state slice for it
+/**
+ * Get a map of attribute filter modes based on the current screen mode (edit or view).
+ *
+ * @remarks
+ * The mode will always be active in edit mode; otherwise, the mode is taken from the dashboard attribute filter.
+ *
+ * @alpha
+ */
+export const selectEffectiveDateFiltersModeMap: DashboardSelector<
+    Map<string, DashboardAttributeFilterConfigMode>
+> = createSelector(
+    selectIsInEditMode,
+    selectAttributeFilterConfigsOverrides,
+    (_isInEditMode, _attributeFilterConfigs) => {
+        // return attributeFilterConfigs.reduce((map, config) => {
+        //     const mode =
+        //         isInEditMode || !config.mode ? DashboardAttributeFilterConfigModeValues.ACTIVE : config.mode;
+        //     map.set(config.localIdentifier, mode);
+        //     return map;
+        // }, new Map());
+        return new Map();
+    },
+);

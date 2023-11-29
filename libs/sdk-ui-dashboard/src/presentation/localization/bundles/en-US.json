@@ -1117,7 +1117,7 @@
         "limit": 0
     },
     "attributesDropdown.placeholder": {
-        "value": "Search attributes…",
+        "value": "Search…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
@@ -1358,6 +1358,11 @@
     },
     "addPanel.attributeFilter": {
         "value": "Attribute Filter",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.filter": {
+        "value": "Filter",
         "comment": "",
         "limit": 0
     },

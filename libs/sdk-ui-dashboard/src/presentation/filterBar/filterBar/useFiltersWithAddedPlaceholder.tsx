@@ -7,7 +7,9 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isIdentifierRef,
     ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -15,6 +17,7 @@ import {
     addAttributeFilter as addAttributeFilterAction,
     dispatchAndWaitFor,
     selectCatalogAttributes,
+    selectCatalogDateDatasets,
     selectSelectedFilterIndex,
     uiActions,
     useDashboardDispatch,
@@ -24,8 +27,8 @@ import {
 /**
  * @internal
  */
-export type FilterBarAttributeFilterPlaceholder = {
-    type: "attributeFilterPlaceholder";
+export type FilterBarFilterPlaceholder = {
+    type: "filterPlaceholder";
     filterIndex: number;
     displayForm?: ObjRef;
 };
@@ -33,10 +36,10 @@ export type FilterBarAttributeFilterPlaceholder = {
 /**
  * @internal
  */
-export function isFilterBarAttributeFilterPlaceholder(
+export function isFilterBarFilterPlaceholder(
     object: any,
-): object is FilterBarAttributeFilterPlaceholder {
-    return object.type === "attributeFilterPlaceholder";
+): object is FilterBarFilterPlaceholder {
+    return object.type === "filterPlaceholder";
 }
 
 /**
@@ -50,12 +53,61 @@ export type FilterBarAttributeFilterIndexed = {
 /**
  * @internal
  */
-export type FilterBarAttributeItem = FilterBarAttributeFilterPlaceholder | FilterBarAttributeFilterIndexed;
+export function isFilterBarAttributeFilter(
+    object: any,
+): object is FilterBarAttributeFilterIndexed {
+    return isDashboardAttributeFilter(object.filter);
+}
 
 /**
  * @internal
  */
-export type FilterBarAttributeItems = FilterBarAttributeItem[];
+export type FilterBarDateFilterIndexed = {
+    filter: IDashboardDateFilter;
+    filterIndex: number;
+};
+
+/**
+ * @internal
+ */
+export function isFilterBarDateFilterWithDimension(
+    object: FilterBarItem,
+): object is FilterBarDateFilterIndexed {
+    if(!isFilterBarFilterPlaceholder(object) && isDashboardDateFilter(object.filter)) {
+        return !!object.filter.dateFilter.dataSet;
+    }
+    return false;
+}
+
+/**
+ * @internal
+ */
+export type FilterBarItem = FilterBarFilterPlaceholder | FilterBarAttributeFilterIndexed | FilterBarDateFilterIndexed;
+
+/**
+ * @internal
+ */
+export type FilterBarDraggableItems = FilterBarItem[];
+
+
+
+// function isDashboardCommonDateFilter(
+//     object: FilterContextItem,
+// ): object is IDashboardDateFilter {
+//     if(!isFilterBarFilterPlaceholder(object) && isDashboardDateFilter(object)) {
+//         return !object.dateFilter.dataSet;
+//     }
+//     return false;
+// }
+
+function isDashboardDateFilterWithDimension(
+    object: FilterContextItem,
+): object is IDashboardDateFilter {
+    if(isDashboardDateFilter(object)) {
+        return !!object.dateFilter.dataSet;
+    }
+    return false;
+}
 
 /**
  * @internal
@@ -63,7 +115,7 @@ export type FilterBarAttributeItems = FilterBarAttributeItem[];
 export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     {
         dateFilter: IDashboardDateFilter;
-        attributeFiltersWithPlaceholder: FilterBarAttributeItems;
+        draggableFiltersWithPlaceholder: FilterBarDraggableItems;
         attributeFiltersCount: number;
         autoOpenFilter: ObjRef | undefined;
     },
@@ -77,23 +129,30 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const dispatch = useDashboardDispatch();
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
+    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
-    const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
+
+    // TODO INE: clean up types conversion from FilterContextItem to
+    // IDashboardDateFilter without dimension + FilterBarDraggableItems
+    const [draggableFilters, [commonDateFilter]] = partition(filters, (f)=> isDashboardAttributeFilter(f) || isDashboardDateFilterWithDimension(f));
+
+    const [dateFiltersWithDimensions, attributeFilters] = partition(draggableFilters, isDashboardDateFilter);
+
     const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef | undefined>();
     const [autoOpenFilter, setAutoOpenFilter] = useState<ObjRef | undefined>();
 
-    const addedAttributeFilter: FilterBarAttributeFilterPlaceholder | undefined = useMemo(() => {
+    const addedAttributeFilter: FilterBarFilterPlaceholder | undefined = useMemo(() => {
         if (selectedFilterIndex !== undefined) {
             if (selectedDisplayForm) {
                 return {
                     ...({
-                        type: "attributeFilterPlaceholder",
+                        type: "filterPlaceholder",
                         filterIndex: selectedFilterIndex,
-                    } as FilterBarAttributeFilterPlaceholder),
+                    } as FilterBarFilterPlaceholder),
                     selectedDisplayForm,
                 };
             }
-            return { type: "attributeFilterPlaceholder", filterIndex: selectedFilterIndex };
+            return { type: "filterPlaceholder", filterIndex: selectedFilterIndex };
         }
         return undefined;
     }, [selectedFilterIndex, selectedDisplayForm]);
@@ -122,17 +181,29 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         [selectedDisplayForm, clearAddedFilter],
     );
 
-    const attributeFiltersWithPlaceholder = useMemo(() => {
-        const filterObjects: FilterBarAttributeItems = attributeFilters.map((filter, filterIndex) => ({
-            filter,
-            filterIndex,
-        }));
+    const draggableFiltersWithPlaceholder = useMemo(() => {
+        const filterObjects: FilterBarDraggableItems = draggableFilters.map((filter, filterIndex) => {
+            if(isDashboardAttributeFilter(filter)) {
+                return {
+                    filter,
+                    filterIndex,
+                }
+            }
+
+            return {
+                filter,
+                filterIndex,
+            }
+        });
 
         const containsAddedAttributeDisplayForm =
             selectedDisplayForm &&
-            attributeFilters.some((attributeFilter) =>
-                areObjRefsEqual(attributeFilter.attributeFilter.displayForm, selectedDisplayForm),
-            );
+            draggableFilters.some((draggableFilter) => {
+                if(isDashboardAttributeFilter(draggableFilter)) {
+                    return areObjRefsEqual(draggableFilter.attributeFilter.displayForm, selectedDisplayForm);
+                }
+                return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
+            });
 
         if (addedAttributeFilter === undefined || containsAddedAttributeDisplayForm) {
             return filterObjects;
@@ -141,36 +212,64 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         filterObjects.splice(addedAttributeFilter.filterIndex, 0, addedAttributeFilter);
 
         return filterObjects;
-    }, [addedAttributeFilter, attributeFilters, selectedDisplayForm]);
+    }, [addedAttributeFilter, draggableFilters, selectedDisplayForm]);
 
+    // TODO INE: selects also DF with dimension => rename
     const selectAttributeFilter = useCallback(
         function (displayForm: ObjRef) {
             if (!addedAttributeFilter) {
                 return;
             }
 
-            const relatedAttribute = allAttributes.find((att) =>
-                att.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
-            );
+            // date filter added
+            // TODO INE: better distinguishing based on some new additional filter type param instead of ref type?
+            if(isIdentifierRef(displayForm) && displayForm.type === "dataSet") {
+                const relatedDateDataset = dateDatasets.find((dds) =>
+                    areObjRefsEqual(dds.dataSet.ref, displayForm),
+                );
 
-            const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
-                return attributeFilters.find((x) => areObjRefsEqual(x.attributeFilter.displayForm, df));
-            });
+                const usedDateDataset = dateFiltersWithDimensions.find((df) => areObjRefsEqual(df.dateFilter.dataSet, relatedDateDataset?.dataSet.ref));
 
-            // We allowed just one attributeFilter for one attribute,
-            if (!usedDisplayForm) {
-                setSelectedDisplayForm(displayForm);
-                setAutoOpenFilter(displayForm);
-                dispatchAndWaitFor(
-                    dispatch,
-                    addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
-                ).finally(clearAddedFilter);
+
+                // We allowed just one dateFilter for one date dimension,
+                if (!usedDateDataset) {
+                    setSelectedDisplayForm(displayForm);
+                    setAutoOpenFilter(displayForm);
+                    dispatchAndWaitFor(
+                        dispatch,
+                        // TODO INE: dispatch new action for adding date filter instead of this one
+                        addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
+                    ).finally(clearAddedFilter);
+                } else {
+                    setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
+                    clearAddedFilter();
+                }
+            // attribute filter added
             } else {
-                setAutoOpenFilter(usedDisplayForm);
-                clearAddedFilter();
+                const relatedAttribute = allAttributes.find((att) =>
+                    att.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
+                );
+
+                const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
+                    return attributeFilters.find((x) => areObjRefsEqual(x.attributeFilter.displayForm, df));
+                });
+
+                // We allowed just one attributeFilter for one attribute,
+                if (!usedDisplayForm) {
+                    setSelectedDisplayForm(displayForm);
+                    setAutoOpenFilter(displayForm);
+                    dispatchAndWaitFor(
+                        dispatch,
+                        addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
+                    ).finally(clearAddedFilter);
+                } else {
+                    setAutoOpenFilter(usedDisplayForm);
+                    clearAddedFilter();
+                }
             }
+
         },
-        [addedAttributeFilter, attributeFilters, allAttributes, clearAddedFilter, dispatch],
+        [addedAttributeFilter, dateFiltersWithDimensions, attributeFilters, dateDatasets, allAttributes, clearAddedFilter, dispatch],
     );
 
     const onCloseAttributeFilter = useCallback(() => {
@@ -178,9 +277,9 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     }, []);
     return [
         {
-            dateFilter,
-            attributeFiltersWithPlaceholder,
-            attributeFiltersCount: attributeFilters.length,
+            dateFilter: commonDateFilter as IDashboardDateFilter, // TODO INE: rename even output variable + remove cast once types fixed
+            draggableFiltersWithPlaceholder,
+            attributeFiltersCount: draggableFilters.length,
             autoOpenFilter,
         },
         {

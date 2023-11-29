@@ -591,6 +591,18 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean> = create
 );
 
 /**
+ * Returns whether multiple date filters are enabled.
+ *
+ * @internal
+ */
+export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (_state) => {
+        return true; // TODO INE attach to FH and change default value
+    },
+);
+
+/**
  * Returns whether KD dependent filters are enabled.
  * On Bear, this is driven by enableKPIDashboardDependentFilters.
  * On Tiger, it is driven by enableKDDependentFilters.

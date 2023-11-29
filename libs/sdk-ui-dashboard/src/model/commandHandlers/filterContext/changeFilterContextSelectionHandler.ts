@@ -58,6 +58,7 @@ function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterCon
                 selectionMode: "multi",
             },
         };
+    // TODO INE: add propagation of dateFilter.dataSet is specified on input
     } else if (isAbsoluteDateFilter(filter)) {
         return newAbsoluteDashboardDateFilter(filter.absoluteDateFilter.from, filter.absoluteDateFilter.to);
     } else if (isAllTimeDateFilter(filter)) {

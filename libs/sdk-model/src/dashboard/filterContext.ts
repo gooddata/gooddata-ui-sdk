@@ -167,6 +167,11 @@ export interface IDashboardDateFilter {
          * Date attribute object ref
          */
         attribute?: ObjRef;
+
+        /**
+         * Identifier of the filter which is valid in the scope of the filter context
+         */
+        localIdentifier?: string;
     };
 }
 

@@ -52,7 +52,7 @@ const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     return (
         <DropdownList
             className="attribute-hierarchy-attribute-dropdown-body s-attribute-hierarchy-attribute-dropdown-body"
-            tabsClassName="attribute-hierarchy-attribute-dropdown-tabs s-attribute-hierarchy-attribute-dropdown-tabs"
+            tabsClassName="date-attribute-dropdown-tabs s-attribute-hierarchy-attribute-dropdown-tabs"
             width={DEFAULT_DROPDOWN_WIDTH}
             maxHeight={DEFAULT_DROPDOWN_MAX_HEIGHT}
             showSearch={true}
