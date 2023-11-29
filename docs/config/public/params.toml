@@ -8,9 +8,13 @@
 #                 on every patch release of respective branch
 
 [[versions]]
-version = "9.3"
-dirpath = "latest"
-url = "/latest/"
+    version = "9.4"
+    dirpath = "latest"
+    url = "/latest/"
+[[versions]]
+    version = "9.3"
+    dirpath = "9.3"
+    url = "/9.3/"
 [[versions]]
     version = "9.2"
     dirpath = "9.2"
