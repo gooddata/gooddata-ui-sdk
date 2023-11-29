@@ -44,6 +44,7 @@ export interface ITransformedDateFilterItem {
     to: string | number;
     datasetUri?: string;
     datasetIdentifier?: string;
+    localIdentifier?: string; // to support multiple date filters
 }
 
 export interface ITransformedAttributeFilterItem {
