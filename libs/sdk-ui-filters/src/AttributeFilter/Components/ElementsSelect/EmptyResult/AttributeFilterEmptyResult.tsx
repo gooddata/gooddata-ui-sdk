@@ -53,7 +53,7 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
     parentFilterTitles = [],
     enableShowingFilteredElements = false,
 }) => {
-    let renderEmptyResult = null;
+    let renderEmptyResult = <AttributeFilterEmptyAttributeResult />;
 
     const style = useMemo<CSSProperties>(() => {
         return {
