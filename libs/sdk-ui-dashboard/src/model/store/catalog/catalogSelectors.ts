@@ -363,9 +363,9 @@ function getAttributesWithHierarchyDescendants(
                 const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
                     existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
                 );
-                const catalogIndex = allCatalogAttributes.findIndex((catalogAttributeRef) => {
-                    areObjRefsEqual(catalogAttributeRef.attribute.ref, attrRef);
-                });
+                const catalogIndex = allCatalogAttributes.findIndex((catalogAttributeRef) =>
+                    areObjRefsEqual(catalogAttributeRef.attribute.ref, attrRef),
+                );
                 return ignoredIndex < 0 && catalogIndex >= 0;
             });
             const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>

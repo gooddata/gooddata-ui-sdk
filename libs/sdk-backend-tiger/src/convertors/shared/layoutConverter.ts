@@ -111,7 +111,7 @@ export function getPathConverterForIgnoredAttributeHierarchiesFromBackend(
         } else {
             pathConverterPairs.push({
                 path: [...widgetPath, "ignoredDrillDownHierarchies", index, "dateHierarchyTemplate"],
-                converter: (id: string) => idRef(id, "attributeHierarchy"),
+                converter: (id: string) => idRef(id, "dataSet"),
             });
         }
     });
