@@ -10,7 +10,7 @@ describe("AttributeFilterButton with initial selection", { tags: ["pre-merge_iso
 
     it("attribute filter loaded", () => {
         const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
-        attributeFilter.titleHasText("Opportunity:").subtitleHasText("Zoup! Fresh Soup > CompuSci");
+        attributeFilter.titleHasText("Opportunity").subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 
     it("attribute filter basic operations", () => {

@@ -15,7 +15,7 @@ describe("Single selection AttributeFilterButton", { tags: ["pre-merge_isolated_
 
     it("is loaded with preselected item", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_BUTTON_SELECTOR);
-        attributeFilter.titleHasText("Opportunity:").subtitleHasText("(mt) Media Temple > CompuSci");
+        attributeFilter.titleHasText("Opportunity").subtitleHasText("(mt) Media Temple > CompuSci");
     });
 
     it("selects only one item immediately after clicking on it", () => {
@@ -24,7 +24,7 @@ describe("Single selection AttributeFilterButton", { tags: ["pre-merge_isolated_
         attributeFilter
             .open()
             .selectElement(`.s-attribute-filter-list-item-${camelCase(".decimal > Explorer")}`)
-            .titleHasText("Opportunity:")
+            .titleHasText("Opportunity")
             .subtitleHasText(".decimal > Explorer");
     });
 

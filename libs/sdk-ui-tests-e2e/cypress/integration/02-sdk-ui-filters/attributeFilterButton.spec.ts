@@ -15,7 +15,7 @@ describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     it("attribute filter loaded", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_BUTTON_SELECTOR);
-        attributeFilter.titleHasText("Opportunity:").subtitleHasText("All");
+        attributeFilter.titleHasText("Opportunity").subtitleHasText("All");
     });
 
     it("attribute filter basic operations", () => {

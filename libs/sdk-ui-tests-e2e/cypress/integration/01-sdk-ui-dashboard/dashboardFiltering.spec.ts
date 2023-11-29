@@ -267,21 +267,21 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
         filterBar
             .moveAttributeFilter(0, 1, DropZone.NEXT)
             .getAttributeList()
-            .should("deep.equal", ["Region:", "Stage Name:", "Product:"]);
+            .should("deep.equal", ["Region", "Stage Name", "Product"]);
 
         filterBar
             .moveAttributeFilter(0, 2, DropZone.NEXT)
             .getAttributeList()
-            .should("deep.equal", ["Stage Name:", "Product:", "Region:"]);
+            .should("deep.equal", ["Stage Name", "Product", "Region"]);
 
         filterBar
             .moveAttributeFilter(2, 0, DropZone.PREV)
             .getAttributeList()
-            .should("deep.equal", ["Region:", "Stage Name:", "Product:"]);
+            .should("deep.equal", ["Region", "Stage Name", "Product"]);
 
         filterBar
             .moveAttributeFilter(2, 1, DropZone.PREV)
             .getAttributeList()
-            .should("deep.equal", ["Region:", "Product:", "Stage Name:"]);
+            .should("deep.equal", ["Region", "Product", "Stage Name"]);
     });
 });
