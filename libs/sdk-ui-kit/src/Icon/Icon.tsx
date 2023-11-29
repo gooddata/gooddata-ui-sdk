@@ -14,6 +14,7 @@ import { Logout } from "./icons/Logout.js";
 import { Pdf } from "./icons/Pdf.js";
 import { ExternalLink } from "./icons/ExternalLink.js";
 import { Hyperlink } from "./icons/Hyperlink.js";
+import { BoldHyperlink } from "./icons/BoldHyperlink.js";
 import { Undo } from "./icons/Undo.js";
 import { Home } from "./icons/Home.js";
 import { BurgerMenu } from "./icons/BurgerMenu.js";
@@ -92,6 +93,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Pdf,
     ExternalLink,
     Hyperlink,
+    BoldHyperlink,
     Undo,
     Home,
     BurgerMenu,

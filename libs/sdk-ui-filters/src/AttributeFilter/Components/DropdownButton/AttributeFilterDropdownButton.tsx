@@ -118,6 +118,13 @@ export interface IAttributeFilterDropdownButtonProps {
     TooltipContentComponent?: React.ComponentType;
 
     /**
+     * Allows adding content to the button after the title.
+     *
+     * @alpha
+     */
+    titleExtension?: ReactNode;
+
+    /**
      * Callback to open or close AttributeFilter dropdown.
      *
      * @beta
@@ -155,6 +162,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isDraggable,
         icon,
         TooltipContentComponent,
+        titleExtension,
         onClick,
     } = props;
 
@@ -211,9 +219,10 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                             tooltipAlignPoints={ALIGN_POINT}
                             className={"s-attribute-filter-button-title"}
                         >
-                            {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
+                            {`${buttonTitle}`}
                         </ShortenedText>
                     </div>
+                    {titleExtension}
                     <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
                     {TooltipContentComponent && isLoaded ? (
                         <AttributeFilterButtonToolip>

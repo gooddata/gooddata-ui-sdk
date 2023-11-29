@@ -57,6 +57,8 @@ export {
     IAttributeFilterSelectionStatusProps,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
+    AttributeFilterDependencyTooltip,
+    IAttributeFilterDependencyTooltipProps,
 } from "./Components/index.js";
 export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter.js";
 export { AttributeFilterButton, IAttributeFilterButtonProps } from "./AttributeFilterButton.js";

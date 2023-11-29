@@ -19,6 +19,7 @@ import {
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 const selectSelf = createSelector(
@@ -379,4 +380,20 @@ export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = crea
     (attributeFilters) => {
         return attributeFilters.length < MAX_ATTRIBUTE_FILTERS_COUNT;
     },
+);
+
+/**
+ * This selector returns information whether attribute filter from filter context has some dependencies.
+ *
+ * @internal
+ */
+export const selectIsAttributeFilterDependentByDisplayForm: (
+    attributeFilterDisplayFormRef: ObjRef,
+) => DashboardSelector<boolean> = createMemoizedSelector((attributeFilterDisplayFormRef: ObjRef) =>
+    createSelector(
+        selectFilterContextAttributeFilterByDisplayForm(attributeFilterDisplayFormRef),
+        (filterContextAttributeFilter) => {
+            return !isEmpty(filterContextAttributeFilter?.attributeFilter.filterElementsBy);
+        },
+    ),
 );

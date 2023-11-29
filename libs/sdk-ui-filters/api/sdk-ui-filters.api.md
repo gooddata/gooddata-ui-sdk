@@ -128,6 +128,9 @@ export type AttributeFilterControllerData = {
 // @internal (undocumented)
 export const AttributeFilterDeleteButton: React_2.VFC<IAttributeFilterDeleteButtonProps>;
 
+// @internal (undocumented)
+export const AttributeFilterDependencyTooltip: React_2.FC<IAttributeFilterDependencyTooltipProps>;
+
 // @beta
 export const AttributeFilterDropdownActions: React_2.VFC<IAttributeFilterDropdownActionsProps>;
 
@@ -433,6 +436,12 @@ export interface IAttributeFilterDeleteButtonProps {
     onDelete: () => void;
 }
 
+// @internal (undocumented)
+export interface IAttributeFilterDependencyTooltipProps {
+    // (undocumented)
+    tooltipContent: React_2.ReactNode;
+}
+
 // @beta
 export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
@@ -467,6 +476,8 @@ export interface IAttributeFilterDropdownButtonProps {
     showSelectionCount?: boolean;
     subtitle?: string;
     title?: string;
+    // @alpha
+    titleExtension?: ReactNode;
     TooltipContentComponent?: React_2.ComponentType;
 }
 

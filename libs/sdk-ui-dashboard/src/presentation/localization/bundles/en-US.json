@@ -2239,5 +2239,10 @@
         "value": "Dashboard users cannot see the filter but it is applied.",
         "comment": "The tooltip of the hidden mode",
         "limit": 0
+    },
+    "filter.dependency.icon.tooltip": {
+        "value": "Available values for <strong>{filterTitle}</strong> are limited by selection in another filter.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
     }
 }
