@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Nov 2023 11:25:49 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Nov 2023 11:57:11 GMT and should not be manually modified.
+
+## 9.4.0
+Thu, 30 Nov 2023 11:57:11 GMT
+
+### Updates
+
+- Users can configure the dashboard filter to be interactive, locked, or hidden.
+- Remove `isDomainAdmin` method from Bear Legacy Functions. 
 
 ## 9.3.0
 Thu, 02 Nov 2023 11:25:49 GMT
