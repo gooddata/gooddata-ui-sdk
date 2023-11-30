@@ -2,6 +2,21 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.4.0",
+      "tag": "@gooddata/sdk-ui-all_v9.4.0",
+      "date": "Thu, 30 Nov 2023 11:57:11 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Users can configure the dashboard filter to be interactive, locked, or hidden."
+          },
+          {
+            "comment": "Remove `isDomainAdmin` method from Bear Legacy Functions. "
+          }
+        ]
+      }
+    },
+    {
       "version": "9.3.0",
       "tag": "@gooddata/sdk-ui-all_v9.3.0",
       "date": "Thu, 02 Nov 2023 11:25:49 GMT",
