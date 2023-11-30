@@ -147,6 +147,14 @@ export interface IWorkspaceDescriptor {
      * Prefixes of parent workspaces
      */
     parentPrefixes?: string[];
+    /**
+     * Number of children workspaces
+     */
+    childrenCount?: number;
+    /**
+     * Number of datasets was created in workspace
+     */
+    datasetCount?: number;
 }
 
 /**
@@ -193,6 +201,7 @@ export interface IWorkspacesQuery {
 
     /**
      * Sets a identifier of the parent workspace to get its children, otherwise the root workspace.
+     * Should not be called when we want to fetch all workspaces (root and non-root ones)
      * @param workspaceId - identifier of the parent workspace
      */
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
@@ -203,6 +212,10 @@ export interface IWorkspacesQuery {
      */
     withSearch(search: string): IWorkspacesQuery;
 
+    /**
+     * Sets metaIncludes to get childrenCount, datasetCount of workspace
+     */
+    withMetaInclude(metaInclude: Array<"hierarchy" | "dataModelDatasets">): IWorkspacesQuery;
     /**
      * Executes the query and returns the result asynchronously.
      */

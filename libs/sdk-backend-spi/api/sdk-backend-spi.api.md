@@ -889,6 +889,8 @@ export interface IWorkspaceDatasetsService {
 
 // @public
 export interface IWorkspaceDescriptor {
+    childrenCount?: number;
+    datasetCount?: number;
     // (undocumented)
     description: string;
     // (undocumented)
@@ -954,6 +956,7 @@ export interface IWorkspaceSettingsService {
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
     withLimit(limit: number): IWorkspacesQuery;
+    withMetaInclude(metaInclude: Array<"hierarchy" | "dataModelDatasets">): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
     withSearch(search: string): IWorkspacesQuery;

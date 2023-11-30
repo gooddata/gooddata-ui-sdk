@@ -43,6 +43,7 @@ import {
     JsonApiWorkspaceDataFilterSettingOutDocument,
     JsonApiWorkspaceDataFilterSettingInDocument,
     ScanResultPdm,
+    EntitiesApiCreateEntityWorkspacesRequest,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -334,7 +335,7 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentWorkspaceId?: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -777,20 +778,34 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    createWorkspace: async (id: string, name: string) => {
+    createWorkspace: async (id: string, name: string, parentWorkspaceId?: string) => {
         try {
-            return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.createEntityWorkspaces({
-                    jsonApiWorkspaceInDocument: {
+            const requestData: EntitiesApiCreateEntityWorkspacesRequest = {
+                jsonApiWorkspaceInDocument: {
+                    data: {
+                        attributes: {
+                            name,
+                        },
+                        id,
+                        type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                    },
+                },
+            };
+
+            if (parentWorkspaceId) {
+                const parentWorkspaceData = {
+                    parent: {
                         data: {
-                            attributes: {
-                                name,
-                            },
-                            id,
+                            id: parentWorkspaceId,
                             type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
                         },
                     },
-                });
+                };
+                requestData.jsonApiWorkspaceInDocument.data.relationships = parentWorkspaceData;
+            }
+
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.createEntityWorkspaces(requestData);
                 return result.data.data.id;
             });
         } catch (error: any) {

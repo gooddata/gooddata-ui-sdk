@@ -33,6 +33,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private offset: number = 0;
     private search: string | undefined = undefined;
     private parentWorkspaceId: string | undefined = undefined;
+    private metaInclude: Array<"hierarchy" | "dataModelDatasets"> | undefined = undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -52,13 +53,19 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this;
     }
 
-    public withParent(workspaceId: string): IWorkspacesQuery {
-        this.parentWorkspaceId = workspaceId;
+    public withParent(workspaceId: string | undefined): IWorkspacesQuery {
+        // isnull=true - get only root workspaces
+        this.parentWorkspaceId = workspaceId ? workspaceId : "isnull=true";
         return this;
     }
 
     public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
+        return this;
+    }
+
+    public withMetaInclude(metaInclude: Array<"hierarchy" | "dataModelDatasets">): IWorkspacesQuery {
+        this.metaInclude = metaInclude;
         return this;
     }
 
@@ -98,11 +105,16 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         search?: string,
     ): Promise<IWorkspacesQueryResult> {
         const allWorkspaces = await this.authCall((client) => {
-            const filterParam = this.parentWorkspaceId ? `parent.id==${this.parentWorkspaceId}` : undefined;
+            const filterParam = this.parentWorkspaceId
+                ? this.parentWorkspaceId === "isnull=true"
+                    ? `parent.id=${this.parentWorkspaceId}`
+                    : `parent.id==${this.parentWorkspaceId}`
+                : undefined;
             return OrganizationUtilities.getAllPagesOf(client, client.entities.getAllEntitiesWorkspaces, {
                 sort: ["name"],
                 include: ["workspaces"],
                 filter: filterParam,
+                metaInclude: this.metaInclude,
             })
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then(this.resultToWorkspaceDescriptors)
