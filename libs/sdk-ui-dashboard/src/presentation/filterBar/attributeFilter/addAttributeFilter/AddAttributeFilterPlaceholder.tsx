@@ -17,7 +17,7 @@ export interface AddAttributeFilterPlaceholderProps {
  * @internal
  */
 export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps) {
-    const enableKDMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
+    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
 
     const className = cx(
         "add-item-placeholder",
@@ -31,7 +31,7 @@ export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPl
     return (
         <div className={className}>
             <FormattedMessage
-                id={enableKDMultipleDateFilters ? "addPanel.filter" : "addPanel.attributeFilter"}
+                id={enableMultipleDateFilters ? "addPanel.filter" : "addPanel.attributeFilter"}
             />
         </div>
     );

@@ -597,8 +597,8 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean> = create
  */
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = createSelector(
     selectConfig,
-    (_state) => {
-        return true; // TODO INE attach to FH and change default value
+    (state) => {
+        return state.settings?.enableMultipleDateFilters ?? false;
     },
 );
 

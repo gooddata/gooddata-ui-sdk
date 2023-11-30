@@ -946,6 +946,7 @@ export interface IDashboardDateFilter {
         to?: DateString | number;
         dataSet?: ObjRef;
         attribute?: ObjRef;
+        localIdentifier?: string;
     };
 }
 
@@ -2462,6 +2463,7 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
