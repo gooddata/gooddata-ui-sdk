@@ -114,7 +114,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
     enableNewHeadline: true,
-    enableAttributeHierarchies: false,
+    enableAttributeHierarchies: true,
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: false,
