@@ -44,6 +44,10 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
         throw new NotSupported("not supported");
     }
 
+    public withMetaInclude(): IWorkspacesQuery {
+        throw new NotSupported("not supported");
+    }
+
     public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
         return this;
