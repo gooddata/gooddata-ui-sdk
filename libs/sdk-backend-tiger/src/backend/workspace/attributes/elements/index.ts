@@ -32,6 +32,7 @@ import {
     isNegativeAttributeFilter,
     filterObjRef,
     objRefToString,
+    filterIsEmpty,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
@@ -42,6 +43,7 @@ import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -142,21 +144,24 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private getDependsOnSpec(): Partial<ElementsRequest> {
         const { attributeFilters } = this;
         if (attributeFilters) {
-            const dependsOn: DependsOn[] = attributeFilters.map((filter) => {
-                const { attributeFilter } = filter;
-                const complementFilter = isNegativeAttributeFilter(attributeFilter);
-                const label = objRefToString(filterObjRef(attributeFilter));
-                const elements = filterAttributeElements(attributeFilter);
-                const values = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
+            const dependsOn: DependsOn[] = attributeFilters
+                // Do not include empty parent filters
+                .filter((filter) => !filterIsEmpty(filter.attributeFilter))
+                .map((filter) => {
+                    const { attributeFilter } = filter;
+                    const complementFilter = isNegativeAttributeFilter(attributeFilter);
+                    const label = objRefToString(filterObjRef(attributeFilter));
+                    const elements = filterAttributeElements(attributeFilter);
+                    const values = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
 
-                return {
-                    label,
-                    values: compact(values),
-                    complementFilter,
-                };
-            });
+                    return {
+                        label,
+                        values: compact(values),
+                        complementFilter,
+                    };
+                });
 
-            return { dependsOn };
+            return !isEmpty(dependsOn) ? { dependsOn } : {};
         }
 
         return {};
