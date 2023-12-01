@@ -418,7 +418,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -444,6 +444,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     axis={this.axis}
                     panelConfig={panelConfig}
                     dataLabelDefaultValue="auto"
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

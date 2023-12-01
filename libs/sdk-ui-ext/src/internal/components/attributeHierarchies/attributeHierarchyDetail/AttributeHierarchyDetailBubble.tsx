@@ -14,8 +14,12 @@ export interface IAttributeHierarchyDetailBubbleProps {
     children?: React.ReactNode;
 }
 
-const ALIGN_POINTS = [{ align: "cr cl" }];
-const ARROW_OFFSETS = { "cr cl": [15, 0] };
+const BUBBLE_ALIGN_POINTS = [
+    { align: "cr cl", offset: { x: 15, y: 0 } }, // right
+    { align: "cl cr", offset: { x: -15, y: 0 } }, // left
+    { align: "tc bc", offset: { x: 0, y: -15 } }, // top
+    { align: "bc tc", offset: { x: 0, y: 15 } }, // bottom
+];
 
 /**
  *
@@ -38,8 +42,7 @@ export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailB
             </div>
             <Bubble
                 className="bubble-light gd-attribute-hierarchy-detail-panel-bubble"
-                alignPoints={ALIGN_POINTS}
-                arrowOffsets={ARROW_OFFSETS}
+                alignPoints={BUBBLE_ALIGN_POINTS}
                 closeOnOutsideClick={true}
             >
                 {children}

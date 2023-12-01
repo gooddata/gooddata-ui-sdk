@@ -76,4 +76,5 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     drillDownConfig: { id: "configurationPanel.drillConfig.drillDown" },
     drillToUrlConfig: { id: "configurationPanel.drillConfig.drillIntoUrl" },
     disableDrillDownToolTip: { id: "configurationPanel.drillConfig.disableDrillDownTooltip" },
+    disableUsedDrillDownTooltip: { id: "configurationPanel.drillConfig.alreadyUsedTooltip" },
 });

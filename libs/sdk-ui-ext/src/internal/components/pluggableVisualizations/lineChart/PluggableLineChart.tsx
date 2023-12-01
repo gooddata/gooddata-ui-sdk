@@ -23,6 +23,7 @@ import {
     IUiConfig,
     IDrillDownDefinition,
     IBucketOfFun,
+    IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -233,7 +234,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         ]);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -256,6 +257,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                     panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

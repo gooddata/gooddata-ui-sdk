@@ -12,12 +12,11 @@ export interface IInteractionsSectionProps {
     properties: IVisualizationProperties;
     propertiesMeta: any;
     pushData: (data: any) => any;
+    InteractionsDetailRenderer?: () => React.ReactNode;
 }
 
-const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (
-    props: IInteractionsSectionProps & WrappedComponentProps,
-) => {
-    const { controlsDisabled, properties, propertiesMeta, pushData } = props;
+const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (props) => {
+    const { controlsDisabled, properties, propertiesMeta, pushData, InteractionsDetailRenderer } = props;
     const isDrillDownDisabled = properties?.controls?.disableDrillDown ?? false;
 
     return (
@@ -36,6 +35,7 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
                 pushData={pushData}
                 isValueInverted={true}
             />
+            {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
         </ConfigSection>
     );
 };

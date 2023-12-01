@@ -118,9 +118,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                         onSelect={onDrillTargetTypeSelect}
                         selection={item.drillTargetType}
                         enabledDrillTargetTypeItems={drillTargetTypeItems}
-                        isButtonDisabled={
-                            item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN && item.complete
-                        }
+                        isButtonDisabled={false}
                     />
 
                     <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
@@ -132,13 +130,13 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                             </span>
                         </div>
                     )}
-                    {!!showDateFilterTransferWarning && (
+                    {showDateFilterTransferWarning ? (
                         <div className="drill-config-date-filter-warning s-drill-config-date-filter-warning">
                             <span>
                                 <FormattedMessage id="configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning" />
                             </span>
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </div>
@@ -188,7 +186,6 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         dateAttributes,
         item.type,
         item.attributes,
-        item.localIdentifier,
         item.drillTargetType,
         item.originLocalIdentifier,
     ]);
