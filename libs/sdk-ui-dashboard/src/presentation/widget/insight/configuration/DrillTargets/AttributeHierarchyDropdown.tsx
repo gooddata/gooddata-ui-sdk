@@ -127,7 +127,6 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
                     onClick={toggleDropdown}
                     isOpen={isOpen}
                     isSmall={false}
-                    disabled={config.complete}
                     iconLeft={config.complete ? "gd-icon-attribute-hierarchy" : ""}
                     className="gd-button-small s-visualization-button-target-hierarchy"
                 />

@@ -271,6 +271,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     propertiesMeta={this.propertiesMeta}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

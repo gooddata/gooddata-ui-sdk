@@ -4,7 +4,11 @@ import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
 
-import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization.js";
+import {
+    IReferences,
+    IVisualizationProperties,
+    IConfigurationPanelRenderers,
+} from "../../interfaces/Visualization.js";
 import { IColorConfiguration } from "../../interfaces/Colors.js";
 import ColorsSection from "../configurationControls/colors/ColorsSection.js";
 import LegendSection from "../configurationControls/legend/LegendSection.js";
@@ -26,6 +30,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     axis?: string;
     pushData?(data: any): void;
     panelConfig?: PanelConfig;
+    configurationPanelRenderers?: IConfigurationPanelRenderers;
 }
 
 export default abstract class ConfigurationPanelContent<
@@ -102,7 +107,14 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderInteractionsSection(): React.ReactNode {
-        const { featureFlags, pushData, properties, propertiesMeta, panelConfig } = this.props;
+        const {
+            featureFlags,
+            pushData,
+            properties,
+            propertiesMeta,
+            panelConfig,
+            configurationPanelRenderers,
+        } = this.props;
 
         return featureFlags.enableAttributeHierarchies && panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
@@ -110,6 +122,7 @@ export default abstract class ConfigurationPanelContent<
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
+                InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
             />
         ) : null;
     }

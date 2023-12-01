@@ -297,14 +297,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
             };
-
             this.renderFun(
                 <BaseChartConfigurationPanel
                     locale={this.locale}
@@ -320,6 +319,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                     panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );
@@ -350,7 +350,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.visualizationProperties = resultingData.properties;
         }
 
-        this.renderConfigurationPanel(this.currentInsight);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
 
         const openAsReportConfig = this.getOpenAsReportConfig(resultingData.properties);
 
