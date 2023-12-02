@@ -421,6 +421,7 @@ function buildDateHierarchy(
     if (!isEmpty(dateAttributesInHierarchy)) {
         return {
             type: "dateAttributeHierarchy",
+            templateId: dateTemplate.id,
             dateDatasetRef: dateDataset.dataSet.ref,
             title: dateDataset.dataSet.title,
             attributes: dateAttributesInHierarchy,
