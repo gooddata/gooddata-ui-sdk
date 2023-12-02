@@ -41,5 +41,6 @@ export interface ICatalogDateAttributeHierarchy {
     type: "dateAttributeHierarchy";
     dateDatasetRef: ObjRef;
     title: string;
+    templateId: string;
     attributes: ObjRef[];
 }
