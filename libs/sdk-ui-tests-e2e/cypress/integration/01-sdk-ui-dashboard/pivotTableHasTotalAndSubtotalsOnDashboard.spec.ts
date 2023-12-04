@@ -8,7 +8,7 @@ const widget = new Widget(0);
 const topBar = new TopBar();
 const exportControl = new Export();
 
-describe("Export dashboard", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Export dashboard", { tags: ["checklist_integrated_tiger_export"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-pivot-table-scenario");
         widget.waitTableLoaded();
