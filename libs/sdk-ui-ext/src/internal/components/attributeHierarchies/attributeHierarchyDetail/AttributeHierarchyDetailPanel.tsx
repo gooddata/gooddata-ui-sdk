@@ -43,7 +43,10 @@ export const AttributeHierarchyDetailPanel: React.FC<IAttributeHierarchyDetailPa
     return (
         <div className="gd-attribute-hierarchy-detail-panel">
             <div className="gd-attribute-hierarchy-detail-title">{title}</div>
-            {description && <div className="gd-attribute-hierarchy-detail-description">{description}</div>}
+            {description ? (
+                    <div className="gd-attribute-hierarchy-detail-description">{description}</div>
+                ) : null
+            }
             <div className="gd-attribute-hierarchy-detail-levels">{hierarchyLevelsText}</div>
             {attributes.map((item, index) => {
                 const itemClassNames = cx("gd-attribute-hierarchy-detail-item", {
