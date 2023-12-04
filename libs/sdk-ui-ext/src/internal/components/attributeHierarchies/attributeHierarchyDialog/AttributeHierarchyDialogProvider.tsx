@@ -138,10 +138,12 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
         if (initialAttributeRef && !isEmpty(catalogAttributesMap)) {
             const initialAttribute = findCatalogAttributeByRef(catalogAttributesMap, initialAttributeRef);
             if (initialAttribute) {
-                const initialAttributes = [{
-                    ...initialAttribute,
-                    completed: true,
-                }];
+                const initialAttributes = [
+                    {
+                        ...initialAttribute,
+                        completed: true,
+                    },
+                ];
                 setAttributes(initialAttributes);
                 setInitialAttributes(initialAttributes);
             }
