@@ -2,7 +2,9 @@
 
 import React from "react";
 import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
-import { DropdownList } from "@gooddata/sdk-ui-kit";
+import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
+
+import { messages } from "../../../../../locales.js";
 
 import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
 import AttributeHierarchyListFooter from "./AttributeHierarchyListFooter.js";
@@ -29,6 +31,9 @@ export interface IAttributeHierarchyListProps {
 
 const ITEM_HEIGHT = 28;
 const DROPDOWN_BODY_WIDTH = 187;
+
+const AttributeHierarchyListItemWithBubble = withBubble(AttributeHierarchyListItem);
+
 export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
     hierarchies,
     onSelect,
@@ -56,13 +61,15 @@ export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
             footer={() => <AttributeHierarchyListFooter onClick={handleFooterButtonClick} />}
             renderItem={({ item }) => {
                 return (
-                    <AttributeHierarchyListItem
+                    <AttributeHierarchyListItemWithBubble
                         item={item.hierarchy}
                         isDisabled={item.isDisabled}
                         onEdit={onOpenAttributeHierarchyDialog}
                         onClick={() => {
                             onClick(item);
                         }}
+                        showBubble={item.isDisabled}
+                        bubbleTextId={messages.disableUsedDrillDownTooltip.id}
                     />
                 );
             }}
