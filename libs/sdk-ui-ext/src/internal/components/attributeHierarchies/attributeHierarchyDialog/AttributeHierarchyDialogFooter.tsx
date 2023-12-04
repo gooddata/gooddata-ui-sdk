@@ -13,6 +13,7 @@ const AttributeHierarchyDialogFooter: React.FC = () => {
     const { formatMessage } = useIntl();
     const {
         isEditing,
+        isDirty,
         isLoading,
         attributes,
         onSaveAttributeHierarchy,
@@ -20,7 +21,7 @@ const AttributeHierarchyDialogFooter: React.FC = () => {
         setDisplayDeleteConfirmation,
     } = useAttributeHierarchyDialog();
 
-    const isSaveDisabled = isEmpty(attributes);
+    const isSaveDisabled = isEmpty(attributes) || !isDirty;
 
     const onDelete = () => {
         setDisplayDeleteConfirmation(true);
