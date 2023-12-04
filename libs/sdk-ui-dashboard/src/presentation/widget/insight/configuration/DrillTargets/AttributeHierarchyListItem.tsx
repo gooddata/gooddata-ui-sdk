@@ -98,6 +98,7 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
                 <ShortenedText
                     className="attribute-hierarchy-title s-attribute-hierarchy-title"
                     tooltipAlignPoints={TOOLTIP_ALIGN_POINTS}
+                    displayTooltip={!isDisabled}
                 >
                     {hierarchyTitle}
                 </ShortenedText>
