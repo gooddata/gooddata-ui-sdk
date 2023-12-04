@@ -61,6 +61,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
                 ? intl.formatMessage(messages.disableDrillDownToolTip)
                 : undefined,
             tooltipMessage: uiMessages.drilldownTooltip.id,
+            documentUrl: "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/",
         });
     }
 
