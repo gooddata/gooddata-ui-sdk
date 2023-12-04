@@ -7,7 +7,8 @@ import { messages } from "@gooddata/sdk-ui";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-const HOW_TO_WORK_DOCUMENTATION_LINK = "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/";
+const HOW_TO_WORK_DOCUMENTATION_LINK =
+    "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/";
 
 const AttributeHierarchyDialogFooter: React.FC = () => {
     const { formatMessage } = useIntl();

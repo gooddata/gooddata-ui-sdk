@@ -25,6 +25,7 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
             className="gd-interactions-section"
             title={messages.interactions.id}
             propertiesMeta={propertiesMeta}
+            pushData={pushData}
         >
             <CheckboxControl
                 valuePath="disableDrillDown"
