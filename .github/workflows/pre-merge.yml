@@ -1,0 +1,58 @@
+name: Pre Merge Pipes
+on:
+  pull_request_target:
+    branches:
+      - 'rel/**'
+      - 'master'
+    paths:
+      - 'docs/**'
+
+env:
+  ALIAS: preview-${{ github.event.pull_request.number }}
+  BASE_URL:  https://${{ env.ALIAS }}--${{ github.event.repository.name }}.netlify.app
+
+jobs:
+  create-docs-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          path: 'PR-tmp'
+      - name: Get only changed docs
+        run: |
+          rsync --delete -av PR-tmp/docs/content/en/ docs/content/en/
+          rm -rf PR-tmp
+      - name: Generate Versioned Docs # This is taken from master for security reasons
+        uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-build-versioned-action@master
+        with:
+          base-url: ${{ env.BASE_URL }}
+          keep-master: keep_master
+          fetch-from: upstream
+      - name: Publish
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy -d docs/public --alias=${{ env.ALIAS }}
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      - name: htmltest # `htmltest` is after publishing, so we can see the artifact.
+        run: |
+          rm -f htmltest.sh
+          wget https://raw.githubusercontent.com/gooddata/gooddata-ui-sdk/master/scripts/htmltest.sh
+          chmod +x ./htmltest.sh
+          ./htmltest.sh -c docs/.htmltest.yml docs/public
+
+  pr-comment:
+    runs-on: infra1-small
+    needs: [build-test-and-deploy]
+    permissions:
+      id-token: write
+    steps:
+      - uses: gooddata/github-actions/pr-comment@master
+        with:
+          vault-auth-role: "common-action"
+          job-reference: "build-test-and-deploy"
+          comment: "Preview successful, see the results at:\n\n${{ env.BASE_URL }}"
