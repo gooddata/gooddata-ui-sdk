@@ -60,6 +60,8 @@ export {
     IDrillDownContext,
     IDrillDownDefinition,
     isDrillDownDefinition,
+    ICustomProps,
+    IConfigurationPanelRenderers,
 } from "./interfaces/Visualization.js";
 
 export {

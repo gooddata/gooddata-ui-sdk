@@ -29,6 +29,7 @@ import {
     IVisConstruct,
     IDrillDownDefinition,
     IBucketItem,
+    IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
@@ -267,7 +268,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -289,6 +290,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

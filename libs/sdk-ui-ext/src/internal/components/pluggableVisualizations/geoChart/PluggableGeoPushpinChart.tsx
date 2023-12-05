@@ -212,7 +212,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return newExtendedReferencePoint;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
@@ -230,6 +230,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

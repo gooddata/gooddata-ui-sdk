@@ -7,14 +7,14 @@ import { messages } from "@gooddata/sdk-ui";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-// TODO: the link will be hidden until the documentation is ready
-//  the if condition should be removed then after the documentation is ready
-const HOW_TO_WORK_DOCUMENTATION_LINK = "";
+const HOW_TO_WORK_DOCUMENTATION_LINK =
+    "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/";
 
 const AttributeHierarchyDialogFooter: React.FC = () => {
     const { formatMessage } = useIntl();
     const {
         isEditing,
+        isDirty,
         isLoading,
         attributes,
         onSaveAttributeHierarchy,
@@ -22,7 +22,7 @@ const AttributeHierarchyDialogFooter: React.FC = () => {
         setDisplayDeleteConfirmation,
     } = useAttributeHierarchyDialog();
 
-    const isSaveDisabled = isEmpty(attributes);
+    const isSaveDisabled = isEmpty(attributes) || !isDirty;
 
     const onDelete = () => {
         setDisplayDeleteConfirmation(true);
@@ -47,19 +47,17 @@ const AttributeHierarchyDialogFooter: React.FC = () => {
                 </div>
             </div>
             <div className="attribute-hierarchy-footer-actions-wrapper s-attribute-hierarchy-footer-actions-wrapper">
-                {HOW_TO_WORK_DOCUMENTATION_LINK ? (
-                    <div className="gd-dialog-footer-tip">
-                        <span className="gd-icon-circle-question s-gd-icon-circle-question" />
-                        <a
-                            href={HOW_TO_WORK_DOCUMENTATION_LINK}
-                            className="gd-button-link-dimmed"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <FormattedMessage id={messages.hierarchyAttributeHowToWork.id} />
-                        </a>
-                    </div>
-                ) : null}
+                <div className="gd-dialog-footer-tip">
+                    <span className="gd-icon-circle-question s-gd-icon-circle-question" />
+                    <a
+                        href={HOW_TO_WORK_DOCUMENTATION_LINK}
+                        className="gd-button-link-dimmed"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <FormattedMessage id={messages.hierarchyAttributeHowToWork.id} />
+                    </a>
+                </div>
                 <div className="gd-dialog-footer-actions s-gd-dialog-footer-actions">
                     {isEditing ? (
                         <Button

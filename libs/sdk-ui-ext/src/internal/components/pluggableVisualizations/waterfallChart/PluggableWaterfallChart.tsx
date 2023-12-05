@@ -24,6 +24,7 @@ import {
     IUiConfig,
     IBucketItem,
     IVisualizationProperties,
+    IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -238,7 +239,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -261,6 +262,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
                     references={this.references}
                     dataLabelDefaultValue="auto"
                     panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );
