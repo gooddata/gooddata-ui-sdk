@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/live-examples-workspace",
-    "version": "9.5.0-alpha.31",
+    "version": "9.5.0-alpha.32",
     "author": "GoodData",
     "description": "GoodData SDK - Live examples workspace for tests",
     "repository": {
