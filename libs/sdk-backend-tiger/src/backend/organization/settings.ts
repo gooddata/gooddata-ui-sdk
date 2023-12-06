@@ -50,6 +50,10 @@ export class OrganizationSettingsService
         return this.setSetting("OPENAI_CONFIG", { openAiConfig });
     }
 
+    public async deleteOpenAiConfig() {
+        return this.deleteSettingByType("OPENAI_CONFIG");
+    }
+
     public async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
             client.entities.getAllEntitiesOrganizationSettings({}),

@@ -575,6 +575,7 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
+    deleteOpenAiConfig(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setColorPalette(colorPaletteId: string): Promise<void>;
