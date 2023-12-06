@@ -2244,5 +2244,10 @@
         "value": "Available values for <strong>{filterTitle}</strong> are limited by selection in another filter.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
         "limit": 0
+    },
+    "configurationPanel.drillConfig.alreadyUsedTooltip": {
+        "value": "This hierarchy is already used for drill down.",
+        "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
+        "limit": 0
     }
 }

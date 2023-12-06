@@ -32,6 +32,7 @@ import {
     IDrillDownContext,
     IVisProps,
     IExtendedReferencePoint,
+    IConfigurationPanelRenderers,
 } from "../interfaces/Visualization.js";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
 import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
@@ -77,6 +78,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
 
     renderer?(component: any, target: Element): void;
     unmount?(): void;
+    configurationPanelRenderers?: IConfigurationPanelRenderers;
 }
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
@@ -394,6 +396,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 totalsEditAllowed: this.props.totalsEditAllowed,
                 lastSavedVisClassUrl: this.props.lastSavedVisClassUrl,
                 sourceInsightId: this.props.sourceInsightId,
+                configurationPanelRenderers: this.props.configurationPanelRenderers,
             },
             config: this.props.config,
             theme: this.props.theme,

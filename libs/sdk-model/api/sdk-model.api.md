@@ -622,7 +622,7 @@ export interface IAttributeHeaderFormOf {
 export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdentity, IMetadataObjectBase {
     attributes: ObjRef[];
     // (undocumented)
-    type: "attributeHierarchy" | "dateAttributeHierarchy";
+    type: "attributeHierarchy";
 }
 
 // @alpha (undocumented)
@@ -753,6 +753,8 @@ export interface ICatalogDateAttributeHierarchy {
     attributes: ObjRef[];
     // (undocumented)
     dateDatasetRef: ObjRef;
+    // (undocumented)
+    templateId: string;
     // (undocumented)
     title: string;
     // (undocumented)

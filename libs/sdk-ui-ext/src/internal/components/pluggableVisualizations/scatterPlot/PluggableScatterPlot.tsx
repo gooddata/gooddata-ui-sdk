@@ -8,6 +8,7 @@ import {
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
+    IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
@@ -88,7 +89,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -110,6 +111,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,
             );

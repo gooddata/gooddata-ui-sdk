@@ -99,6 +99,7 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
                 className="gd-table-canvas-section"
                 title={messages.canvasTitle.id}
                 propertiesMeta={propertiesMeta}
+                pushData={pushData}
             >
                 {canvasSection}
             </ConfigSection>
