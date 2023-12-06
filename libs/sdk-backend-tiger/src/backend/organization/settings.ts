@@ -47,7 +47,7 @@ export class OrganizationSettingsService
     }
 
     public async setOpenAiConfig(openAiConfig: IOpenAiConfig) {
-        return this.setSetting("OPENAI_CONFIG", { openAiConfig });
+        return this.setSetting("OPENAI_CONFIG", openAiConfig);
     }
 
     public async deleteOpenAiConfig() {
