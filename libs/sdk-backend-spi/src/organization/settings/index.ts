@@ -96,6 +96,13 @@ export interface IOrganizationSettingsService {
     setOpenAiConfig(openAiConfig: IOpenAiConfig): Promise<void>;
 
     /**
+     * Deletes OpenAI integration configuration for organization.
+     *
+     * @returns promise
+     */
+    deleteOpenAiConfig(): Promise<void>;
+
+    /**
      * Get all current organization settings.
      *
      * @remarks
