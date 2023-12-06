@@ -259,6 +259,7 @@ export interface IBackendCapabilities {
     supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;
+    supportsCrossFiltering?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;

@@ -19,6 +19,7 @@ export {
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectSupportsAttributeHierarchies,
     selectSupportsSingleSelectDependentFilters,
+    selectSupportsCrossFiltering,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -71,6 +72,7 @@ export {
     selectEnableUnavailableItemsVisibility,
     selectEnableKDDependentFilters,
     selectIsKDDependentFiltersEnabled,
+    selectEnableKDCrossFiltering,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
@@ -213,8 +215,15 @@ export {
     selectAllCatalogAttributeHierarchies,
 } from "./catalog/catalogSelectors.js";
 export { catalogActions } from "./catalog/index.js";
-export { selectDrillableItems } from "./drill/drillSelectors.js";
+export { drillActions } from "./drill/index.js";
+export {
+    selectDrillableItems,
+    selectCrossFilteringItems,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+} from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";
+export { ICrossFilteringItem } from "./drill/types.js";
 export { AlertsState } from "./alerts/alertsState.js";
 export {
     selectAlerts,

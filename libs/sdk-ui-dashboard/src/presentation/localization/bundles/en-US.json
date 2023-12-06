@@ -288,6 +288,11 @@
         "comment": "Title of widget interactions",
         "limit": 0
     },
+    "drill_modal_picker.cross-filter": {
+        "value": "Cross-filter",
+        "comment": "Title of widget interactions",
+        "limit": 0
+    },
     "drill_modal_picker.more.details": {
         "value": "More details",
         "comment": "",

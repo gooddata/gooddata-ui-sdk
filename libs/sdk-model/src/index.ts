@@ -513,6 +513,7 @@ export {
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
     KpiDrillDefinition,
+    ICrossFiltering,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToAttributeUrl,
@@ -521,6 +522,7 @@ export {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isAttributeHierarchyReference,
+    isCrossFiltering,
 } from "./dashboard/drill.js";
 
 export {

@@ -604,3 +604,15 @@ export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = cre
         return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
     },
 );
+
+/**
+ * Returns whether KD cross filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDCrossFiltering ?? false;
+    },
+);
