@@ -24,6 +24,8 @@ export function mapTypeToKey(
             return "timezone";
         case "WEEK_START":
             return "weekStart";
+        case "OPENAI_CONFIG":
+            return "openAiConfig";
         case "organizationSetting":
             return "organizationSetting";
         default:

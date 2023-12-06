@@ -3020,6 +3020,8 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     hasWarning: boolean;
     // (undocumented)
+    isPassword?: boolean;
+    // (undocumented)
     isSearch: boolean;
     // (undocumented)
     isSmall: boolean;

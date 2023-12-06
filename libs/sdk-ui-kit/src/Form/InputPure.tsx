@@ -36,6 +36,7 @@ export interface InputPureProps extends IDomNativeProps {
     label: string;
     labelPositionTop: boolean;
     value: string | number;
+    isPassword?: boolean;
 }
 /**
  * @internal
@@ -188,6 +189,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             value,
             onBlur,
             onFocus,
+            isPassword,
         } = this.props;
 
         return (
@@ -208,6 +210,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                         placeholder={placeholder}
                         readOnly={readonly}
                         value={value}
+                        type={isPassword ? "password" : "text"}
                     />
                     {this.renderSearch(isSearch)}
                     {this.renderClearIcon(clearOnEsc)}
