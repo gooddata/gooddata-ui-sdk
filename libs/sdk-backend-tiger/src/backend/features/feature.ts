@@ -203,7 +203,14 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             TigerFeaturesNames.EnableClickHouseDataSource,
             "enableClickHouseDataSource",
             "BOOLEAN",
-            FeatureFlagsValues.enableTableTotalRows,
+            FeatureFlagsValues.enableClickHouseDataSource,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableCsvAnalytics,
+            "enableCsvAnalytics",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCsvAnalytics,
         ),
     };
 }
