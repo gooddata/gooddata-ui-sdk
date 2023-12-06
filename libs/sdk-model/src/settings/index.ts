@@ -324,6 +324,11 @@ export interface ISettings {
      */
     enableAdvancedMachineLearningIntegration?: boolean;
 
+    /**
+     * Configuration of OpenAI integration
+     */
+    openAiConfig?: IOpenAiConfig;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
@@ -384,3 +389,11 @@ export interface IWhiteLabeling {
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * @public
+ */
+export interface IOpenAiConfig {
+    org: string;
+    token: string;
+}

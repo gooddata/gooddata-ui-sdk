@@ -360,6 +360,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+                setOpenAiConfig: () => Promise.resolve(),
             };
         },
         permissions(): IOrganizationPermissionService {

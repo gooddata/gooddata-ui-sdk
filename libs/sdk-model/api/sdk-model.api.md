@@ -1914,6 +1914,14 @@ export interface IObjectInteractions {
     };
 }
 
+// @public (undocumented)
+export interface IOpenAiConfig {
+    // (undocumented)
+    org: string;
+    // (undocumented)
+    token: string;
+}
+
 // @alpha (undocumented)
 export interface IOrganizationAssignee {
     // (undocumented)
@@ -2467,6 +2475,7 @@ export interface ISettings {
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     metadataTimeZone?: string;
+    openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     weekStart?: WeekStart;

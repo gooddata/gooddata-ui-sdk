@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
-import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -44,6 +44,10 @@ export class OrganizationSettingsService
 
     public async deleteColorPalette() {
         return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
+    }
+
+    public async setOpenAiConfig(openAiConfig: IOpenAiConfig) {
+        return this.setSetting("OPENAI_CONFIG", { openAiConfig });
     }
 
     public async getSettings(): Promise<ISettings> {
