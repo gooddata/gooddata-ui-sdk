@@ -710,7 +710,7 @@
                             "AZURESQL",
                             "SYNAPSESQL",
                             "DATABRICKS",
-                            "GD_STORAGE",
+                            "GDSTORAGE",
                             "CLICKHOUSE"
                         ]
                     },

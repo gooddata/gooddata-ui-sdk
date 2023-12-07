@@ -218,6 +218,35 @@ export {
     ScanSqlRequest,
 } from "./generated/scan-json-api/api.js";
 
+export {
+    ActionsApiAnalyzeCsvRequest,
+    ActionsApiGetStagingUploadLocationRequest,
+    ActionsApiImportCsvRequest,
+    AnalyzeCsvRequest,
+    AnalyzeCsvRequestItem,
+    AnalyzeCsvRequestItemConfig,
+    AnalyzeCsvResponse,
+    AnalyzeCsvResponseColumn,
+    AnalyzeCsvResponseConfig,
+    CacheRemovalInterval,
+    CacheUsageData,
+    CsvConvertOptions,
+    CsvConvertOptionsColumnType,
+    CsvParseOptions,
+    CsvReadOptions,
+    ImportCsvRequest,
+    ImportCsvRequestTable,
+    ImportCsvRequestTableSource,
+    ImportCsvRequestTableSourceConfig,
+    OrganizationCacheSettings,
+    OrganizationCacheUsage,
+    OrganizationCurrentCacheUsage,
+    StagingUploadLocation,
+    WorkspaceCacheSettings,
+    WorkspaceCacheUsage,
+    WorkspaceCurrentCacheUsage,
+} from "./generated/result-json-api/api.js";
+
 export * from "./client.js";
 
 export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants.js";
