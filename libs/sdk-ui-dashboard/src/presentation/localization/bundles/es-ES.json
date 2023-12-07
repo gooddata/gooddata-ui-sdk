@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Explorar hasta el panel",
     "configurationPanel.drillConfig.drillIntoInsight": "Explorar hasta la perspectiva",
     "configurationPanel.drillConfig.drillDown": "Exploración vertical",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "La exploración vertical se ha desactivado en la configuración de esta perspectiva.",
     "configurationPanel.drillConfig.drillIntoUrl": "Explorar hasta la URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parámetros de URL no válidos",
     "configurationPanel.drillConfig.select": "Elija una acción…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "Este filtro está oculto. Solo se puede acceder a él desde el modo Edición.",
     "filter.visibilityMode.tooltip.readonly.editMode": "Este filtro está bloqueado. Solo se puede cambiar en el modo Edición.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Este filtro está bloqueado.",
+    "filter.resetButton.tooltip": "Restablecer todos los filtros",
     "dateFilterDropdown.save": "Guardar",
     "filter.configuration.mode.title": "Modo",
     "filter.configuration.mode.interactive.title": "Interactivo",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Bloqueado",
     "filter.configuration.mode.locked.tooltip": "Los usuarios del panel pueden ver el filtro, pero no cambiarlo.",
     "filter.configuration.mode.hidden.title": "Oculto",
-    "filter.configuration.mode.hidden.tooltip": "Los usuarios del panel no pueden ver el filtro, pero se aplica."
+    "filter.configuration.mode.hidden.tooltip": "Los usuarios del panel no pueden ver el filtro, pero se aplica.",
+    "filter.dependency.icon.tooltip": "Los valores disponibles para <strong>{filterTitle}</strong> están limitados por la selección en otro filtro."
 }

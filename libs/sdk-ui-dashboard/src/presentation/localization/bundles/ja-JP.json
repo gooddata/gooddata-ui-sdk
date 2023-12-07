@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "ダッシュボードにドリル",
     "configurationPanel.drillConfig.drillIntoInsight": "インサイトにドリル",
     "configurationPanel.drillConfig.drillDown": "ドリルダウン",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "このインサイトの設定では、ドリルダウンはオフになっています。",
     "configurationPanel.drillConfig.drillIntoUrl": "URL にドリル",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "無効な URL パラメーター",
     "configurationPanel.drillConfig.select": "アクションを選択…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "このフィルタは非表示です。編集モードでのみアクセスできます。",
     "filter.visibilityMode.tooltip.readonly.editMode": "このフィルタはロックされています。編集モードでのみ変更できます。",
     "filter.visibilityMode.tooltip.readonly.viewMode": "このフィルタはロックされています。",
+    "filter.resetButton.tooltip": "すべてのフィルターをリセット",
     "dateFilterDropdown.save": "保存",
     "filter.configuration.mode.title": "モード",
     "filter.configuration.mode.interactive.title": "インタラクティブ",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "ロックされています",
     "filter.configuration.mode.locked.tooltip": "ダッシュボードユーザーはフィルタが表示されますが、変更することはできません。",
     "filter.configuration.mode.hidden.title": "非表示",
-    "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。"
+    "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。",
+    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> で使用できる値は、別のフィルタでの選択によって制限されます。"
 }

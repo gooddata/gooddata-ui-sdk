@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Explorer le tableau de bord",
     "configurationPanel.drillConfig.drillIntoInsight": "Explorer la perception",
     "configurationPanel.drillConfig.drillDown": "Exploration descendante",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "L'exploration descendante est désactivée dans la configuration de cette perception.",
     "configurationPanel.drillConfig.drillIntoUrl": "Explorer l'URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Paramètres URL non valides",
     "configurationPanel.drillConfig.select": "Choisir une action…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "Ce filtre est masqué. Il n'est accessible qu'en mode Édition.",
     "filter.visibilityMode.tooltip.readonly.editMode": "Ce filtre est verrouillé. Il peut uniquement être modifié en mode Édition.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Ce filtre est verrouillé.",
+    "filter.resetButton.tooltip": "Réinitialiser tous les filtres",
     "dateFilterDropdown.save": "Enregistrer",
     "filter.configuration.mode.title": "Mode",
     "filter.configuration.mode.interactive.title": "Interactif",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Verrouillé",
     "filter.configuration.mode.locked.tooltip": "Les utilisateurs du tableau de bord peuvent voir le filtre mais ne peuvent pas le modifier.",
     "filter.configuration.mode.hidden.title": "Masqué",
-    "filter.configuration.mode.hidden.tooltip": "Les utilisateurs du tableau de bord ne peuvent pas voir le filtre, mais il est appliqué."
+    "filter.configuration.mode.hidden.tooltip": "Les utilisateurs du tableau de bord ne peuvent pas voir le filtre, mais il est appliqué.",
+    "filter.dependency.icon.tooltip": "Les valeurs disponibles pour <strong>{filterTitle}</strong> sont limitées par la sélection dans un autre filtre."
 }
