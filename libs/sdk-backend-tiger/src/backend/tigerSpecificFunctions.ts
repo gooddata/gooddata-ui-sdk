@@ -43,6 +43,10 @@ import {
     JsonApiWorkspaceDataFilterSettingOutDocument,
     JsonApiWorkspaceDataFilterSettingInDocument,
     ScanResultPdm,
+    StagingUploadLocation,
+    AnalyzeCsvRequest,
+    AnalyzeCsvResponse,
+    ImportCsvRequest,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -465,6 +469,28 @@ export type TigerSpecificFunctions = {
         workspaceId: string,
         entities: Array<HierarchyObjectIdentification>,
     ) => Promise<Array<IdentifierDuplications>>;
+
+    /**
+     * Get pre-signed S3 URL to upload a CSV file to the GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     */
+    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+
+    /**
+     * Analyze CSV files in GDSTORAGE data source staging location
+     * @param analyzeRequest - the request to analyze CSV files
+     */
+    analyzeCsv?: (
+        dataSourceId: string,
+        analyzeCsvRequest: AnalyzeCsvRequest,
+    ) => Promise<Array<AnalyzeCsvResponse>>;
+
+    /**
+     * Import CSV files from GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     * @param importRequest - the request to import CSV files
+     */
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1427,6 +1453,52 @@ export const buildTigerSpecificFunctions = (
                     .then((response) => {
                         return response.data as Array<IdentifierDuplications>;
                     });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    getStagingUploadLocation: async (dataSourceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .getStagingUploadLocation({
+                        dataSourceId: dataSourceId,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    analyzeCsv: async (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .analyzeCsv({
+                        dataSourceId: dataSourceId,
+                        analyzeCsvRequest: analyzeCsvRequest,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    importCsv: async (dataSourceId: string, importCsvRequest: ImportCsvRequest) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await sdk.result.importCsv({
+                    dataSourceId: dataSourceId,
+                    importCsvRequest: importCsvRequest,
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
