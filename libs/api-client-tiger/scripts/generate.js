@@ -44,6 +44,7 @@ const specs = [
     { path: "/api/v1/schemas/scan", name: "scan-json-api" },
     { path: "/api/v1/schemas/auth", name: "auth-json-api" },
     { path: "/api/v1/schemas/export", name: "export-json-api" },
+    { path: "/api/v1/schemas/result", name: "result-json-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {

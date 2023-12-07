@@ -390,7 +390,7 @@ export const TestDefinitionRequestTypeEnum = {
     AZURESQL: "AZURESQL",
     SYNAPSESQL: "SYNAPSESQL",
     DATABRICKS: "DATABRICKS",
-    GD_STORAGE: "GD_STORAGE",
+    GDSTORAGE: "GDSTORAGE",
     CLICKHOUSE: "CLICKHOUSE",
 } as const;
 
