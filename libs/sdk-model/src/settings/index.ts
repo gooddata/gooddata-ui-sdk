@@ -329,6 +329,11 @@ export interface ISettings {
      */
     openAiConfig?: IOpenAiConfig;
 
+    /**
+     * Token for Zapier integration
+     */
+    zapierToken?: string;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

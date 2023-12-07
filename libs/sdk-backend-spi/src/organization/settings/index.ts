@@ -103,6 +103,22 @@ export interface IOrganizationSettingsService {
     deleteOpenAiConfig(): Promise<void>;
 
     /**
+     * Sets Zapier integration token for organization.
+     *
+     * @param value - Zapier API token value.
+     *
+     * @returns promise
+     */
+    setZapierToken(value: string): Promise<void>;
+
+    /**
+     * Deletes Zapier integration token for organization.
+     *
+     * @returns promise
+     */
+    deleteZapierToken(): Promise<void>;
+
+    /**
      * Get all current organization settings.
      *
      * @remarks

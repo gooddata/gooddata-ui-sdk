@@ -54,6 +54,14 @@ export class OrganizationSettingsService
         return this.deleteSettingByType("OPENAI_CONFIG");
     }
 
+    public async setZapierToken(value: string) {
+        return this.setSetting("ZAPIER_TOKEN", { value });
+    }
+
+    public async deleteZapierToken() {
+        return this.deleteSettingByType("ZAPIER_TOKEN");
+    }
+
     public async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
             client.entities.getAllEntitiesOrganizationSettings({}),

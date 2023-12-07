@@ -2480,6 +2480,7 @@ export interface ISettings {
     responsiveUiDateFormat?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
+    zapierToken?: string;
 }
 
 // @public
