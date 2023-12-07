@@ -26,6 +26,8 @@ export function mapTypeToKey(
             return "weekStart";
         case "OPENAI_CONFIG":
             return "openAiConfig";
+        case "ZAPIER_TOKEN":
+            return "zapierToken";
         case "organizationSetting":
             return "organizationSetting";
         default:

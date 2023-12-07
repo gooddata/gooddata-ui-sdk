@@ -739,6 +739,8 @@ class DummyOrganization implements IOrganization {
             getSettings: () => Promise.resolve({}),
             setOpenAiConfig: () => Promise.resolve(),
             deleteOpenAiConfig: () => Promise.resolve(),
+            setZapierToken: () => Promise.resolve(),
+            deleteZapierToken: () => Promise.resolve(),
         };
     }
 

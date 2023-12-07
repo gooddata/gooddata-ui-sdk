@@ -362,6 +362,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
                 deleteOpenAiConfig: () => Promise.resolve(),
+                setZapierToken: () => Promise.resolve(),
+                deleteZapierToken: () => Promise.resolve(),
             };
         },
         permissions(): IOrganizationPermissionService {

@@ -577,6 +577,7 @@ export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
     deleteOpenAiConfig(): Promise<void>;
     deleteTheme(): Promise<void>;
+    deleteZapierToken(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
@@ -586,6 +587,7 @@ export interface IOrganizationSettingsService {
     setTimezone(timezone: string): Promise<void>;
     setWeekStart(weekStart: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
+    setZapierToken(value: string): Promise<void>;
 }
 
 // @public
