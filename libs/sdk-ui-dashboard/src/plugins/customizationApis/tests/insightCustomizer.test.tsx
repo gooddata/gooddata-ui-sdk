@@ -137,6 +137,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["tag"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -149,6 +150,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["tag"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -163,6 +165,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["tag"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -177,6 +180,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["tag"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -198,6 +202,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
 
@@ -219,6 +224,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["provider"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -235,6 +241,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["provider"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -262,6 +269,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["provider"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -277,6 +285,7 @@ describe("insight customizer", () => {
                 kpi: [],
                 insight: ["decorator"],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });

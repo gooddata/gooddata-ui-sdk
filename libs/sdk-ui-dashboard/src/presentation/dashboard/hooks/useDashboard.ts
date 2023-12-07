@@ -33,12 +33,14 @@ import {
     KpiComponentProvider,
     DateFilterComponentProvider,
     InsightMenuTitleComponentProvider,
+    DashboardContentComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
 } from "../../componentDefinition/index.js";
+import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;
@@ -54,6 +56,7 @@ interface IUseDashboardResult {
     insightMenuProvider: InsightMenuComponentProvider;
     insightMenuTitleProvider: InsightMenuTitleComponentProvider;
     kpiProvider: KpiComponentProvider;
+    dashboardContentProvider: DashboardContentComponentProvider;
     insightWidgetComponentSet: InsightWidgetComponentSet;
     kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
@@ -73,6 +76,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightMenuTitleComponentProvider,
         InsightComponentSetProvider,
         KpiComponentProvider,
+        DashboardContentComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -84,6 +88,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
             return userSpecified ?? DefaultDashboardAttributeFilter;
         },
         [DashboardAttributeFilterComponentProvider],
+    );
+
+    const dashboardContentProvider = useCallback<DashboardContentComponentProvider>(
+        (dashboard) => {
+            const userSpecified = DashboardContentComponentProvider?.(dashboard);
+            return userSpecified ?? DefaultDashboardMainContent;
+        },
+        [DashboardContentComponentProvider],
     );
 
     const dateFilterProvider = useCallback<DateFilterComponentProvider>(
@@ -194,6 +206,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightMenuProvider,
         insightMenuTitleProvider,
         kpiProvider,
+        dashboardContentProvider,
         insightWidgetComponentSet,
         kpiWidgetComponentSet,
         attributeFilterComponentSet,

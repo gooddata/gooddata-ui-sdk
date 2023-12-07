@@ -7,6 +7,7 @@ export {
     IDashboardInsightCustomizer,
     IDashboardKpiCustomizer,
     IDashboardLayoutCustomizer,
+    IDashboardContentCustomizer,
     IDashboardWidgetCustomizer,
     FluidLayoutCustomizationFn,
     IFluidLayoutCustomizer,

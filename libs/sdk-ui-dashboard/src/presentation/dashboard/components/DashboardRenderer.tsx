@@ -61,6 +61,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         insightProvider,
         insightBodyProvider,
         insightMenuButtonProvider,
+        dashboardContentProvider,
         insightMenuProvider,
         insightMenuTitleProvider,
         kpiProvider,
@@ -136,6 +137,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             DefaultEmptyLayoutDropZoneBody
                                         }
                                         SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
+                                        DashboardContentComponentProvider={dashboardContentProvider}
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>

@@ -12,6 +12,7 @@ import {
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 
 import {
+    IDashboardContentCustomizer,
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
     IDashboardKpiCustomizer,
@@ -29,6 +30,7 @@ import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
 import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
+import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
 import { createCustomizerMutationsContext } from "./types.js";
 import { WidgetsOverlayFn, IDashboardWidgetOverlay } from "../../model/index.js";
 
@@ -58,6 +60,8 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.logger,
         this.mutations,
     );
+    private readonly dashboardContentCustomizer: DefaultDashboardContentCustomizer =
+        new DefaultDashboardContentCustomizer(this.logger, this.mutations);
     private widgetOverlays: Record<string, IDashboardWidgetOverlay> = {};
 
     private sealCustomizers = (): void => {
@@ -66,6 +70,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.widgetCustomizer.sealCustomizer();
         this.filtersCustomizer.sealCustomizer();
         this.layoutCustomizer.sealCustomizer();
+        this.dashboardContentCustomizer.sealCustomizer();
     };
 
     public setWidgetOverlays = (widgetOverlays?: Record<string, IDashboardWidgetOverlay>) => {
@@ -82,6 +87,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public customWidgets = (): IDashboardWidgetCustomizer => {
         return this.widgetCustomizer;
+    };
+
+    public dashboard = (): IDashboardContentCustomizer => {
+        return this.dashboardContentCustomizer;
     };
 
     public layout = (): IDashboardLayoutCustomizer => {
@@ -122,6 +131,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             InsightBodyComponentProvider: this.insightCustomizer.getInsightBodyComponentProvider(),
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
+            DashboardContentComponentProvider: this.dashboardContentCustomizer.getDashboardContentProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             DashboardAttributeFilterComponentProvider: this.filtersCustomizer
                 .attribute()
