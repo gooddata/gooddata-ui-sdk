@@ -5,6 +5,8 @@
 ```ts
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
+import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
+import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
@@ -24,6 +26,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
@@ -43,6 +46,7 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
+import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
@@ -423,6 +427,9 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
+    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+    analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
 };
 
 // @public
