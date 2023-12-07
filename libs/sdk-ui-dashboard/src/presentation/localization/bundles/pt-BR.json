@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Detalhar painel",
     "configurationPanel.drillConfig.drillIntoInsight": "Detalhar insight",
     "configurationPanel.drillConfig.drillDown": "Detalhamento aprofundado",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "Desativa o detalhamento aprofundado nas configurações deste insight.",
     "configurationPanel.drillConfig.drillIntoUrl": "Detalhar URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parâmetros inválidos da URL",
     "configurationPanel.drillConfig.select": "Escolher ação…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "O filtro está oculto e pode ser acessado apenas através do modo Editar.",
     "filter.visibilityMode.tooltip.readonly.editMode": "O filtro está bloqueado e pode ser alterado apenas através do modo Editar.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "O filtro está bloqueado.",
+    "filter.resetButton.tooltip": "Redefinir todos os filtros",
     "dateFilterDropdown.save": "Salvar",
     "filter.configuration.mode.title": "Modo",
     "filter.configuration.mode.interactive.title": "Interativo",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Bloqueado",
     "filter.configuration.mode.locked.tooltip": "Usuários do painel pode visualizar o filtro, mas não podem alterá-lo.",
     "filter.configuration.mode.hidden.title": "Oculto",
-    "filter.configuration.mode.hidden.tooltip": "Usuários do painel não podem visualizar o filtro, mas ele está aplicado."
+    "filter.configuration.mode.hidden.tooltip": "Usuários do painel não podem visualizar o filtro, mas ele está aplicado.",
+    "filter.dependency.icon.tooltip": "Os valores disponíveis para <strong>{filterTitle}</strong> são limitados pela seleção em outro filtro."
 }

@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Dashboard verfeinern",
     "configurationPanel.drillConfig.drillIntoInsight": "Betrachtung verfeinern",
     "configurationPanel.drillConfig.drillDown": "Drill-Down",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "Der Drill-Down ist für diese Betrachtung deaktiviert.",
     "configurationPanel.drillConfig.drillIntoUrl": "URL-Ansicht verfeinern",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ungültige URL-Parameter",
     "configurationPanel.drillConfig.select": "Befehl auswählen…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "Dieser Filter ist ausgeblendet. Der Zugriff ist nur über den Bearbeitungsmodus möglich.",
     "filter.visibilityMode.tooltip.readonly.editMode": "Dieser Filter ist gesperrt. Es kann nur über den Bearbeitungsmodus geändert werden.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Dieser Filter ist gesperrt.",
+    "filter.resetButton.tooltip": "Alle Filter zurücksetzen",
     "dateFilterDropdown.save": "Speichern",
     "filter.configuration.mode.title": "Modus",
     "filter.configuration.mode.interactive.title": "Interaktiv",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Gesperrt",
     "filter.configuration.mode.locked.tooltip": "Dashboard-Benutzer können den Filter sehen, ihn aber nicht ändern.",
     "filter.configuration.mode.hidden.title": "Ausgeblendet",
-    "filter.configuration.mode.hidden.tooltip": "Dashboard-Benutzer können den Filter nicht sehen, er ist jedoch angewendet."
+    "filter.configuration.mode.hidden.tooltip": "Dashboard-Benutzer können den Filter nicht sehen, er ist jedoch angewendet.",
+    "filter.dependency.icon.tooltip": "Die verfügbaren Werte für <strong>{filterTitle}</strong> werden durch die Auswahl in einem anderen Filter eingeschränkt."
 }
