@@ -1,6 +1,13 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
+import partition from "lodash/partition.js";
+import {
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    isDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import {
     changeFilterContextSelection,
@@ -35,8 +42,19 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
             return;
         }
 
+        // Normalize filters to include "All time" date filter
+        const [[dateFilter], attributeFilters] = partition(originalFilters, isDashboardDateFilter) as [
+            IDashboardDateFilter[],
+            IDashboardAttributeFilter[],
+        ];
+
         // Dispatch a command, so it goes through the proper piping and trigger all the events
-        dispatch(changeFilterContextSelection(originalFilters));
+        dispatch(
+            changeFilterContextSelection([
+                dateFilter ?? newAllTimeDashboardDateFilter(),
+                ...attributeFilters,
+            ]),
+        );
         // Report the reset as user interaction
         filterContextStateReset();
     }, [dispatch, filterContextStateReset, originalFilters, canReset]);
