@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "深入控制面板",
     "configurationPanel.drillConfig.drillIntoInsight": "深入了解",
     "configurationPanel.drillConfig.drillDown": "深入查看",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "在此洞察的配置中，向下钻取处于关闭状态。",
     "configurationPanel.drillConfig.drillIntoUrl": "深入查看 URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "URL 参数无效",
     "configurationPanel.drillConfig.select": "选择操作…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "此筛选条件已隐藏。只能通过编辑模式访问。",
     "filter.visibilityMode.tooltip.readonly.editMode": "此筛选条件已锁定。只能通过编辑模式进行更改。",
     "filter.visibilityMode.tooltip.readonly.viewMode": "此筛选条件已锁定",
+    "filter.resetButton.tooltip": "重置所有筛选器",
     "dateFilterDropdown.save": "保存",
     "filter.configuration.mode.title": "模式",
     "filter.configuration.mode.interactive.title": "互动",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "已锁定",
     "filter.configuration.mode.locked.tooltip": "仪表板用户可以看到筛选条件，但不能更改它。",
     "filter.configuration.mode.hidden.title": "隐藏",
-    "filter.configuration.mode.hidden.tooltip": "仪表板用户无法看到筛选条件，但其已获应用。"
+    "filter.configuration.mode.hidden.tooltip": "仪表板用户无法看到筛选条件，但其已获应用。",
+    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong>的可用值受另一个筛选器中的选择限制。"
 }
