@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Exploração aprofundada do dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Aprofundar insight",
     "configurationPanel.drillConfig.drillDown": "Exploração descendente",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "A exploração descendente encontra-se desativada na configuração deste insight.",
     "configurationPanel.drillConfig.drillIntoUrl": "Aprofundar URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parâmetros de URL inválidos",
     "configurationPanel.drillConfig.select": "Escolher ação…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "Este filtro está oculto. Só pode ser acedido através do Modo de edição.",
     "filter.visibilityMode.tooltip.readonly.editMode": "Este filtro está bloqueado. Só pode ser alterado através do Modo de edição.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Este filtro está bloqueado.",
+    "filter.resetButton.tooltip": "Repor todos os filtros",
     "dateFilterDropdown.save": "Guardar",
     "filter.configuration.mode.title": "Modo",
     "filter.configuration.mode.interactive.title": "Interativo",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Bloqueado",
     "filter.configuration.mode.locked.tooltip": "Os utilizadores do dashboard podem ver o filtro mas não o podem alterar.",
     "filter.configuration.mode.hidden.title": "Oculto",
-    "filter.configuration.mode.hidden.tooltip": "Os utilizadores do dashboard não podem ver o filtro, mas este é aplicado."
+    "filter.configuration.mode.hidden.tooltip": "Os utilizadores do dashboard não podem ver o filtro, mas este é aplicado.",
+    "filter.dependency.icon.tooltip": "Os valores disponíveis para <strong>{filterTitle}</strong> encontram-se limitados pela seleção noutro filtro."
 }
