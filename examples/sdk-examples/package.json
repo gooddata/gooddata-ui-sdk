@@ -64,7 +64,7 @@
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "fork-ts-checker-webpack-plugin": "^7.2.13",
-        "heroku": "8.5.0",
+        "heroku": "8.7.1",
         "html-webpack-plugin": "^5.3.1",
         "npm-run-all": "^4.1.5",
         "prettier": "~2.5.0",
