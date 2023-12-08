@@ -337,7 +337,7 @@ const isTooltipShownInFullScreen = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
-function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
+function formatTooltip(tooltipCallback: any, chartConfig: IChartConfig, intl?: IntlShape) {
     const { chart } = this.series;
     const { color: pointColor } = this.point;
     const chartWidth = chart.spacingBox.width;
@@ -355,7 +355,7 @@ function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
 
     // null disables whole tooltip
     const tooltipContent: string = tooltipCallback(this.point, maxTooltipContentWidth, this.percentage);
-    const interactionMessage = getInteractionMessage(isDrillable, intl);
+    const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
 
     return tooltipContent !== null
         ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
@@ -368,8 +368,12 @@ function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
         : null;
 }
 
-function getInteractionMessage(isDrillable: boolean, intl: IntlShape) {
-    const message = intl ? intl.formatMessage({ id: "visualization.tooltip.interaction" }) : null;
+function getInteractionMessage(isDrillable: boolean, chartConfig: IChartConfig, intl: IntlShape) {
+    const message = intl
+        ? chartConfig.useGenericInteractionTooltip
+            ? intl.formatMessage({ id: "visualization.tooltip.generic.interaction" })
+            : intl.formatMessage({ id: "visualization.tooltip.interaction" })
+        : null;
     return isDrillable && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
@@ -487,7 +491,7 @@ function stackLabelFormatter(config?: IChartConfig) {
 function getTooltipConfiguration(
     chartOptions: IChartOptions,
     _config?: any,
-    _chartConfig?: IChartConfig,
+    chartConfig?: IChartConfig,
     _drillConfig?: IDrillConfig,
     intl?: IntlShape,
 ): HighchartsOptions {
@@ -508,8 +512,8 @@ function getTooltipConfiguration(
                   useHTML: true,
                   outside: true,
                   positioner: partial(getTooltipPositionInViewPort, chartType, stacking),
-                  formatter: partial(formatTooltip, tooltipAction, intl),
-                  enabled: _chartConfig?.tooltip?.enabled ?? true,
+                  formatter: partial(formatTooltip, tooltipAction, chartConfig, intl),
+                  enabled: chartConfig?.tooltip?.enabled ?? true,
                   ...followPointer,
               },
           }
