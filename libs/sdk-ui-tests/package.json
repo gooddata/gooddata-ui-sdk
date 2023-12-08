@@ -67,7 +67,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@storybook/addon-actions": "^7.0.7",
         "@storybook/builder-webpack5": "^7.0.7",
-        "@storybook/cli": "^7.0.7",
+        "@storybook/cli": "^7.6.4",
         "@storybook/manager-webpack5": "^6.5.6",
         "@storybook/preset-scss": "^1.0.3",
         "@storybook/react": "^7.0.7",
