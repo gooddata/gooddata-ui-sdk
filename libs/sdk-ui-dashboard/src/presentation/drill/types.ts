@@ -207,12 +207,21 @@ export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
+/**
+ * @internal
+ */
 export interface IDrillDownAttributeHierarchyTarget {
     type: "attribute";
     attributeHierarchyRef: ObjRef;
 }
 
 export type IDrillDownAttributeHierarchyConfig = IDrillConfigItemBase & IDrillDownAttributeHierarchyTarget;
+
+export function isDrillDownToAttributeHierarchyConfig(
+    item: unknown,
+): item is IDrillDownAttributeHierarchyConfig {
+    return !isEmpty(item) && (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef !== undefined;
+}
 
 // check type AttributeDisplayFormType from @gooddata/sdk-model to keep it in sync
 export enum AttributeDisplayFormType {
@@ -240,4 +249,19 @@ export interface IDefinitionValidationData {
 
 export function isAvailableDrillTargetMeasure(obj: unknown): obj is IAvailableDrillTargetMeasure {
     return !isEmpty(obj) && (obj as IAvailableDrillTargetMeasure).measure !== undefined;
+}
+
+export interface IDrillDownAttributeHierarchyDefinition {
+    type: "drillDownAttributeHierarchy";
+    attributeHierarchyRef: ObjRef;
+    originLocalIdentifier?: string;
+    attributes: IAvailableDrillTargetMeasure["attributes"];
+}
+
+export function isDrillDownToAttributeHierarchyDefinition(
+    item: unknown,
+): item is IDrillDownAttributeHierarchyDefinition {
+    return (
+        !isEmpty(item) && (item as IDrillDownAttributeHierarchyDefinition).attributeHierarchyRef !== undefined
+    );
 }

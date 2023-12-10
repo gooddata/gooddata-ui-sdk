@@ -2246,7 +2246,7 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.alreadyUsedTooltip": {
-        "value": "This hierarchy is already used for drill down.",
+        "value": "This <strong>hierarchy</strong> is already used for <strong>the same</strong> drill down.",
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
     }

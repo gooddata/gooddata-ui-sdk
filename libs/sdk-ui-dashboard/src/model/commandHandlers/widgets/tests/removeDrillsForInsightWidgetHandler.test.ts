@@ -41,7 +41,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
             );
             await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], BeforeTestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
         }, SimpleDashboardIdentifier);

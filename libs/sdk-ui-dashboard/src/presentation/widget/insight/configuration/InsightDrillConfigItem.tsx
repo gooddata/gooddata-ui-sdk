@@ -7,7 +7,11 @@ import { invariant } from "ts-invariant";
 
 import { stringUtils } from "@gooddata/util";
 import { messages } from "@gooddata/sdk-ui";
-import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
+import {
+    DRILL_TARGET_TYPE,
+    IDrillConfigItem,
+    IDrillDownAttributeHierarchyDefinition,
+} from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
@@ -30,7 +34,10 @@ export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
     enabledDrillTargetTypeItems: IDrillTargetType[];
     onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
+    onSetup: (
+        drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+        changedItem: IDrillConfigItem,
+    ) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
 }
 function disableDrillDownIfMeasure(

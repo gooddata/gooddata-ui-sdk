@@ -17,6 +17,7 @@ import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     IDrillDownAttributeHierarchyConfig,
+    IDrillDownAttributeHierarchyDefinition,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     isDrillToDashboardConfig,
@@ -31,7 +32,10 @@ import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyIt
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;
-    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
+    onSetup: (
+        drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+        changedItem: IDrillConfigItem,
+    ) => void;
     onDeleteInteraction: () => void;
 }
 
@@ -43,7 +47,15 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         const hierarchyRef = isCatalogAttributeHierarchy(targetItem)
             ? targetItem.attributeHierarchy.ref
             : targetItem.dateDatasetRef;
-        props.onSetup(undefined, { ...item, attributeHierarchyRef: hierarchyRef });
+
+        const drillDownItem: IDrillDownAttributeHierarchyDefinition = {
+            attributeHierarchyRef: (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+            type: "drillDownAttributeHierarchy",
+            attributes: item.attributes,
+            originLocalIdentifier: item.originLocalIdentifier,
+        };
+
+        props.onSetup(drillDownItem, { ...item, attributeHierarchyRef: hierarchyRef });
     };
     const onInsightTargetSelect = (targetItem: IInsight) => {
         const drillConfigItem: IDrillToInsight = {

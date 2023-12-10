@@ -76,6 +76,7 @@ import { setDashboardDateFilterConfigModeHandler } from "./dashboard/dateFilterC
 import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFilterModeHandler.js";
 import { removeDrillDownForInsightWidgetHandler } from "./widgets/removeDrillDownForInsightWidgetHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
+import { modifyDrillDownForInsightWidgetHandler } from "./widgets/modifyDrillDownForInsightWidgetHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -139,6 +140,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN": removeDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN": addDrillDownForInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN": modifyDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,

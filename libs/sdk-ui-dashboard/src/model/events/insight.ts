@@ -626,6 +626,53 @@ export function insightWidgetDrillDownAdded(
 //
 
 /**
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownModifiedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Drill down references that were updated.
+     */
+    readonly updated: IDrillDownReference[];
+}
+
+/**
+ * This event is emitted when the insight widget's drill definitions change. The change may include
+ * addition or change of drill definition for one or more drillable measures.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillDownModified extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED";
+    readonly payload: DashboardInsightWidgetDrillDownModifiedPayload;
+}
+
+export function insightWidgetDrillDownModified(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    updated: IDrillDownReference[],
+    correlationId?: string,
+): DashboardInsightWidgetDrillDownModified {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            updated,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
  * Payload of the {@link DashboardInsightWidgetChanged} event.
  * @beta
  */
