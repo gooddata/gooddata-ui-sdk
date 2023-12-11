@@ -62,9 +62,9 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.2",
-        "@babel/preset-env": "^7.7.2",
-        "@babel/preset-react": "^7.7.2",
+        "@babel/core": "^7.23.5",
+        "@babel/preset-env": "^7.23.5",
+        "@babel/preset-react": "^7.23.3",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/sdk-ui-kit": "workspace:*",

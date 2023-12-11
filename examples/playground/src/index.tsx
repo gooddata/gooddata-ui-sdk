@@ -9,7 +9,8 @@ if (process.env.WDYR === "true") {
         include: [/WithLoading/],
     });
 }
-import "@babel/polyfill";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "core-js/stable";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { provideCreateRoot } from "@gooddata/sdk-ui-ext";

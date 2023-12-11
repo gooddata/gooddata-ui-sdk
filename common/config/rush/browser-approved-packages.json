@@ -27,28 +27,24 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@babel/plugin-proposal-class-properties",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "@babel/plugin-proposal-export-default-from",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@babel/plugin-proposal-object-rest-spread",
-      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-transform-async-to-generator",
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "@babel/plugin-transform-typescript",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "name": "@babel/plugin-transform-class-properties",
+      "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "@babel/polyfill",
+      "name": "@babel/plugin-transform-object-rest-spread",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@babel/plugin-transform-typescript",
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/preset-env",
@@ -564,7 +560,7 @@
     },
     {
       "name": "core-js",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "cross-spawn",
