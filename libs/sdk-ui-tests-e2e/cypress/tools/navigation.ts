@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-const VISIT_TIMEOUT = 40000;
+const VISIT_TIMEOUT = 60000;
 const CONFIRM_BUTTON = ".s-create_dashboard";
 
 function visitUrl(url: string, options: Partial<VisitOptions>) {

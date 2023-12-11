@@ -6,6 +6,7 @@ import { defineConfig } from "cypress";
 import axios from "axios";
 import readPdf from "./cypress/plugins/readPdf";
 import parseXlsx from "./cypress/plugins/parseXlsx";
+import removePassingTestVideosPlugin from "./cypress/plugins/removePassingTestVideos";
 
 export default defineConfig({
     e2e: {
@@ -33,6 +34,7 @@ export default defineConfig({
             });
             readPdf(on, _config);
             parseXlsx(on, _config);
+            removePassingTestVideosPlugin(on, _config);
             return _config;
         },
         viewportWidth: 1400,
@@ -42,7 +44,7 @@ export default defineConfig({
             grepFilterSpecs: true,
         },
         retries: {
-            runMode: 2,
+            runMode: 1,
             openMode: 0,
         },
         trashAssetsBeforeRuns: false,
