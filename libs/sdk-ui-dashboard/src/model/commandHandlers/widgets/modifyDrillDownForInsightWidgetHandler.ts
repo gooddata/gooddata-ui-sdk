@@ -4,61 +4,45 @@ import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { DashboardContext } from "../../types/commonTypes.js";
-import { AddDrillDownForInsightWidget } from "../../commands/index.js";
-import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
+import { ModifyDrillDownForInsightWidget } from "../../commands/index.js";
+import {
+    DashboardInsightWidgetDrillDownModified,
+    insightWidgetDrillDownModified,
+} from "../../events/insight.js";
 import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 
-export function* addDrillDownForInsightWidgetHandler(
+export function* modifyDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: AddDrillDownForInsightWidget,
-): SagaIterator<DashboardInsightWidgetDrillDownAdded> {
+    cmd: ModifyDrillDownForInsightWidget,
+): SagaIterator<DashboardInsightWidgetDrillDownModified> {
     const {
-        payload: { attributeIdentifier, drillDownIdentifier, drillDownAttributeHierarchyRef },
+        payload: { attributeIdentifier, attributeHierarchyRef, blacklistHierarchies },
         correlationId,
     } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
     const { ref: widgetRef, ignoredDrillDownHierarchies: currentBlacklistHierarchies } = insightWidget;
 
-    const updatedInsightDrills = insightWidget.drills.filter(
-        (drill) => drill.localIdentifier !== drillDownIdentifier,
-    );
-
-    yield put(
-        layoutActions.replaceWidgetDrills({
-            ref: insightWidget.ref,
-            drillDefinitions: updatedInsightDrills,
-            undo: {
-                cmd,
-            },
-        }),
-    );
-
     const newBlacklistHierarchies = currentBlacklistHierarchies
         ? currentBlacklistHierarchies.filter(
-              (ref) =>
-                  !existBlacklistHierarchyPredicate(ref, drillDownAttributeHierarchyRef, attributeIdentifier),
+              (ref) => !existBlacklistHierarchyPredicate(ref, attributeHierarchyRef, attributeIdentifier),
           )
         : [];
+
+    const mergedBlacklistHierarchies = [...newBlacklistHierarchies, ...blacklistHierarchies];
 
     yield put(
         layoutActions.replaceWidgetBlacklistHierarchies({
             ref: widgetRef,
-            blacklistHierarchies: newBlacklistHierarchies,
+            blacklistHierarchies: mergedBlacklistHierarchies,
             undo: {
                 cmd,
             },
         }),
     );
 
-    return insightWidgetDrillDownAdded(
-        ctx,
-        widgetRef,
-        drillDownAttributeHierarchyRef,
-        attributeIdentifier,
-        correlationId,
-    );
+    return insightWidgetDrillDownModified(ctx, widgetRef, blacklistHierarchies, correlationId);
 }

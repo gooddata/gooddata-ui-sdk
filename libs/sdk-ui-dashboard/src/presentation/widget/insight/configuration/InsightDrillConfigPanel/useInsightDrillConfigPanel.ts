@@ -27,12 +27,16 @@ import {
     useDashboardSelector,
     selectInsightByRef,
     addDrillDownForInsightWidget,
+    modifyDrillDownForInsightWidget,
 } from "../../../../../model/index.js";
 import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     IDrillDownAttributeHierarchyConfig,
+    IDrillDownAttributeHierarchyDefinition,
+    isDrillDownToAttributeHierarchyConfig,
+    isDrillDownToAttributeHierarchyDefinition,
 } from "../../../../drill/types.js";
 import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
@@ -181,10 +185,17 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     );
 
     const onSetupItem = useCallback(
-        (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => {
+        (
+            drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+            changedItem: IDrillConfigItem,
+        ) => {
             const isNew = isItemNew(changedItem);
-            if (drill) {
-                dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+            if (!isDrillDownToAttributeHierarchyDefinition(drill)) {
+                const blacklistHierarchiesToUpdate = isDrillDownToAttributeHierarchyConfig(changedItem)
+                    ? buildBlacklistHierarchies(changedItem)
+                    : [];
+
+                dispatch(modifyDrillsForInsightWidget(widgetRef, [drill], blacklistHierarchiesToUpdate));
             }
 
             // we are not able remove incomplete items directly,it will change items in panel while command is processing
@@ -196,13 +207,27 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                 const attributeDescriptor = changedItem.attributes.find(
                     (attr) => attr.attributeHeader.localIdentifier === changedItem.originLocalIdentifier,
                 );
-                dispatch(
-                    addDrillDownForInsightWidget(
-                        widgetRef,
-                        attributeDescriptor!.attributeHeader.formOf.ref,
-                        (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
-                    ),
-                );
+
+                if (changedItem.complete) {
+                    dispatch(
+                        modifyDrillDownForInsightWidget(
+                            widgetRef,
+                            attributeDescriptor!.attributeHeader.formOf.ref,
+                            (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+                            buildBlacklistHierarchies(drill as IDrillDownAttributeHierarchyDefinition),
+                        ),
+                    );
+                } else {
+                    dispatch(
+                        addDrillDownForInsightWidget(
+                            widgetRef,
+                            attributeDescriptor!.attributeHeader.formOf.ref,
+                            changedItem.localIdentifier,
+                            (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+                        ),
+                    );
+                }
+
                 deleteIncompleteItem(changedItem);
             }
             addSuccess(isNew ? messages.added : messages.modified, { duration: 3000 });
@@ -242,7 +267,9 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     };
 };
 
-function buildBlacklistHierarchies(item: IDrillDownAttributeHierarchyConfig): IDrillDownReference[] {
+export function buildBlacklistHierarchies(
+    item: IDrillDownAttributeHierarchyDefinition | IDrillDownAttributeHierarchyConfig,
+): IDrillDownReference[] {
     const attributeDescriptor = item.attributes.find(
         (attr) => attr.attributeHeader.localIdentifier === item.originLocalIdentifier,
     );

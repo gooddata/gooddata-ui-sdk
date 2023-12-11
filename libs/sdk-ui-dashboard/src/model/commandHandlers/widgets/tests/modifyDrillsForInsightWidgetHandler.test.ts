@@ -59,6 +59,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
                 modifyDrillsForInsightWidget(
                     SimpleSortedTableWidgetRef,
                     [DrillToDashboardFromWonMeasureDefinition],
+                    [],
                     TestCorrelation,
                 ),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
@@ -74,7 +75,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const origStateDrill = origWidgetState?.drills[0];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -95,7 +96,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             ];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -118,7 +119,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const origStateDrill = origWidgetState?.drills[0];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -138,7 +139,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [drillToInsightIdentifierTarget];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -153,7 +154,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [DrillToCustomUrlFromMeasureDefinition];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -168,7 +169,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [DrillToAttributeUrlFromMeasureDefinition];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
-                modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, [], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
 
@@ -186,7 +187,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(uriRef("missing"), drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(uriRef("missing"), drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -199,7 +200,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(KpiWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(KpiWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -217,7 +218,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -239,7 +240,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidAttributeOriginDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -261,7 +262,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidMeasureOriginDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -276,7 +277,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -291,7 +292,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -306,7 +307,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -321,7 +322,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -337,7 +338,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             const drills = [invalidTargetDrill];
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -353,7 +354,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -369,7 +370,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 
@@ -388,7 +389,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
             const event: DashboardCommandFailed<ModifyDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, TestCorrelation),
+                    modifyDrillsForInsightWidget(drillToAttributeUrlWidgetRef, drills, [], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 

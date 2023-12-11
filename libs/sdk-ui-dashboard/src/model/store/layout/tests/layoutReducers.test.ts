@@ -89,7 +89,12 @@ describe("layout slice reducer", () => {
                     ref: SimpleSortedTableWidgetRef,
                     drillDefinitions: drills,
                     undo: {
-                        cmd: modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, "correlation"),
+                        cmd: modifyDrillsForInsightWidget(
+                            SimpleSortedTableWidgetRef,
+                            drills,
+                            [],
+                            "correlation",
+                        ),
                     },
                 });
 
@@ -123,6 +128,7 @@ describe("layout slice reducer", () => {
                         cmd: addDrillDownForInsightWidget(
                             SimpleSortedTableWidgetRef,
                             attribute,
+                            "identifier",
                             hierarchy,
                             "correlation",
                         ),
