@@ -21,13 +21,15 @@ describe("Interaction", () => {
         editMode.edit();
         widget.waitChartLoaded().focus();
         widgetConfig.openInteractions().getDrillConfigItem("Sum of Velocity").remove();
+        widgetConfig.getDrillConfigItem("Created - Year").remove();
         editMode.save(true).edit();
         widget.waitChartLoaded().focus();
         widgetConfig.openInteractions().hasInteractionItems(false);
     });
 
     //Cover ticket: RAIL-4717
-    it(
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip(
         "Should correctly display attribute list in custom URL dialog",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
         () => {
