@@ -964,7 +964,7 @@ export const isDashboardDrillableItemsChanged = eventGuard<DashboardDrillableIte
 
 /**
  * Payload of the {@link DashboardCrossFilteringRequested} event.
- * @alpha
+ * @beta
  */
 export interface DashboardCrossFilteringRequestedPayload {
     /**
@@ -980,7 +980,7 @@ export interface DashboardCrossFilteringRequestedPayload {
 /**
  * This event is emitted on start of the resolution of the {@link CrossFiltering} command.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardCrossFilteringRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
@@ -988,7 +988,7 @@ export interface DashboardCrossFilteringRequested extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function crossFilteringRequested(
     ctx: DashboardContext,
@@ -1011,7 +1011,7 @@ export function crossFilteringRequested(
  * Tests whether the provided object is an instance of {@link DashboardCrossFilteringRequested}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardCrossFilteringRequested = eventGuard<DashboardCrossFilteringRequested>(
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
@@ -1019,7 +1019,7 @@ export const isDashboardCrossFilteringRequested = eventGuard<DashboardCrossFilte
 
 /**
  * Payload of the {@link DashboardCrossFilteringResolved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardCrossFilteringResolvedPayload {
     /**
@@ -1039,7 +1039,7 @@ export interface DashboardCrossFilteringResolvedPayload {
 /**
  * This event is emitted as a result of the {@link CrossFiltering} command.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardCrossFilteringResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
@@ -1047,7 +1047,7 @@ export interface DashboardCrossFilteringResolved extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function crossFilteringResolved(
     ctx: DashboardContext,
@@ -1072,7 +1072,7 @@ export function crossFilteringResolved(
  * Tests whether the provided object is an instance of {@link DashboardCrossFilteringResolved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardCrossFilteringResolved = eventGuard<DashboardCrossFilteringResolved>(
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",

@@ -467,7 +467,7 @@ export function changeDrillableItems(
 
 /**
  * Payload of the {@link CrossFiltering} command.
- * @alpha
+ * @beta
  */
 export interface CrossFilteringPayload {
     /**
@@ -485,7 +485,7 @@ export interface CrossFilteringPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface CrossFiltering extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING";
@@ -497,7 +497,7 @@ export interface CrossFiltering extends IDashboardCommand {
  * Dispatching this command will result into applying intersection attribute filters to the dashboard and insight will ignore these filters further
  * Eventually a {@link DashboardCrossFilteringResolved} event will be dispatched at the end.
  *
- * @alpha
+ * @beta
  * @param insight - insight from which the cross filtering is coming.
  * @param drillDefinition - drill definition to apply.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.

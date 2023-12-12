@@ -4,6 +4,8 @@ import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
 import difference from "lodash/difference.js";
 import partition from "lodash/partition.js";
+import compact from "lodash/compact.js";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { RemoveAttributeFilters } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -50,32 +52,50 @@ export function* removeAttributeFiltersHandler(
             ),
         );
 
-        const batch = batchActions([
-            // remove filter from parents and keep track of the affected filters
-            ...affectedChildren.map(({ attributeFilter }) =>
-                filterContextActions.setAttributeFilterParents({
-                    filterLocalId: attributeFilter.localIdentifier!,
-                    parentFilters: attributeFilter.filterElementsBy!.filter(
-                        (parent) =>
-                            parent.filterLocalIdentifier !== removedFilter?.attributeFilter.localIdentifier,
-                    ),
+        // When cross filtering, duplicate filter may exist in surviving filters. In such cases, we
+        // don't want to remove the filter from ignored filters of widget. We match by display form
+        // here instead of local identifier as the local identifier is not available in ignored
+        // filters state.
+        const isFilterDuplicatedInSurvivingFilters = survivingFilters.some((item) =>
+            areObjRefsEqual(item.attributeFilter.displayForm, removedFilter.attributeFilter.displayForm),
+        );
+        const removeIgnoredAttributeFilterActionArray = isFilterDuplicatedInSurvivingFilters
+            ? []
+            : [
+                  layoutActions.removeIgnoredAttributeFilter({
+                      displayFormRefs: [removedFilter.attributeFilter.displayForm],
+                  }),
+              ];
+
+        const batch = batchActions(
+            compact([
+                // remove filter from parents and keep track of the affected filters
+                ...affectedChildren.map(({ attributeFilter }) =>
+                    filterContextActions.setAttributeFilterParents({
+                        filterLocalId: attributeFilter.localIdentifier!,
+                        parentFilters: attributeFilter.filterElementsBy!.filter(
+                            (parent) =>
+                                parent.filterLocalIdentifier !==
+                                removedFilter?.attributeFilter.localIdentifier,
+                        ),
+                    }),
+                ),
+                // remove filter itself
+                filterContextActions.removeAttributeFilter({
+                    filterLocalId: removedFilter.attributeFilter.localIdentifier!,
                 }),
-            ),
-            // remove filter itself
-            filterContextActions.removeAttributeFilter({
-                filterLocalId: removedFilter.attributeFilter.localIdentifier!,
-            }),
-            // remove filter's display form metadata object
-            filterContextActions.removeAttributeFilterDisplayForms(removedFilter.attributeFilter.displayForm),
-            // remove reflect dashboard attribute filter config
-            attributeFilterConfigsActions.removeAttributeFilterConfig(
-                removedFilter.attributeFilter.localIdentifier!,
-            ),
-            // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
-            layoutActions.removeIgnoredAttributeFilter({
-                displayFormRefs: [removedFilter.attributeFilter.displayForm],
-            }),
-        ]);
+                // remove filter's display form metadata object
+                filterContextActions.removeAttributeFilterDisplayForms(
+                    removedFilter.attributeFilter.displayForm,
+                ),
+                // remove reflect dashboard attribute filter config
+                attributeFilterConfigsActions.removeAttributeFilterConfig(
+                    removedFilter.attributeFilter.localIdentifier!,
+                ),
+                // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
+                ...removeIgnoredAttributeFilterActionArray,
+            ]),
+        );
 
         yield put(batch);
         yield dispatchDashboardEvent(
