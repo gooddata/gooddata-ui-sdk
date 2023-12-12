@@ -952,7 +952,7 @@ export interface CreateScheduledEmailPayload {
     readonly scheduledEmail: IScheduledMailDefinition;
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export interface CrossFiltering extends IDashboardCommand {
     // (undocumented)
     readonly payload: CrossFilteringPayload;
@@ -960,10 +960,10 @@ export interface CrossFiltering extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING";
 }
 
-// @alpha
+// @beta
 export function crossFiltering(insight: IInsight, drillDefinition: ICrossFiltering, drillEvent: IDashboardDrillEvent, correlationId?: string): CrossFiltering;
 
-// @alpha
+// @beta
 export interface CrossFilteringPayload {
     readonly drillDefinition: ICrossFiltering;
     readonly drillEvent: IDashboardDrillEvent;
@@ -1394,7 +1394,7 @@ export interface DashboardCopySavedPayload {
     readonly isOriginalDashboardLocked: boolean;
 }
 
-// @alpha
+// @beta
 export interface DashboardCrossFilteringRequested extends IDashboardEvent {
     // (undocumented)
     readonly payload: DashboardCrossFilteringRequestedPayload;
@@ -1402,13 +1402,13 @@ export interface DashboardCrossFilteringRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
 }
 
-// @alpha
+// @beta
 export interface DashboardCrossFilteringRequestedPayload {
     readonly drillDefinition: ICrossFiltering;
     readonly drillEvent: IDashboardDrillEvent;
 }
 
-// @alpha
+// @beta
 export interface DashboardCrossFilteringResolved extends IDashboardEvent {
     // (undocumented)
     readonly payload: DashboardCrossFilteringResolvedPayload;
@@ -1416,7 +1416,7 @@ export interface DashboardCrossFilteringResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
 }
 
-// @alpha
+// @beta
 export interface DashboardCrossFilteringResolvedPayload {
     readonly drillDefinition: ICrossFiltering;
     readonly drillEvent: IDashboardDrillEvent;
@@ -4562,10 +4562,10 @@ export const isDashboardCommandStarted: (obj: unknown) => obj is DashboardComman
 // @public
 export const isDashboardCopySaved: (obj: unknown) => obj is DashboardCopySaved;
 
-// @alpha
+// @beta
 export const isDashboardCrossFilteringRequested: (obj: unknown) => obj is DashboardCrossFilteringRequested;
 
-// @alpha
+// @beta
 export const isDashboardCrossFilteringResolved: (obj: unknown) => obj is DashboardCrossFilteringResolved;
 
 // @public
