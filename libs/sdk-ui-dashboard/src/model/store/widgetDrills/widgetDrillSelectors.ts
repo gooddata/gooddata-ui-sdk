@@ -21,6 +21,7 @@ import {
     IDrillDownReference,
     ICatalogDateAttributeHierarchy,
     isCatalogAttributeHierarchy,
+    DrillOrigin,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -296,29 +297,26 @@ const selectCrossFilteringByWidgetRef: (
                 return undefined;
             }
 
-            // pick the first available attribute for identification and mandatory predicate
-            const drillAttribute = availableDrillAttributesWithoutDates[0];
-
             // collect all possible attribute names for the title
             const title = availableDrillAttributesWithoutDates
                 .map((attribute) => attribute.attribute.attributeHeader.name)
                 .join(", ");
 
+            // construct predicates for all available attributes
+            const predicates = availableDrillAttributesWithoutDates.map((drillAttribute) =>
+                HeaderPredicates.localIdentifierMatch(
+                    drillAttribute.attribute.attributeHeader.localIdentifier,
+                ),
+            );
+
             return {
                 drillDefinition: {
                     type: "crossFiltering",
                     transition: "in-place",
-                    origin: {
-                        type: "drillFromAttribute",
-                        attribute: localIdRef(drillAttribute.attribute.attributeHeader.localIdentifier),
-                    },
+                    origin: {} as DrillOrigin, // not needed for cross filtering
                     title,
                 },
-                predicates: [
-                    HeaderPredicates.localIdentifierMatch(
-                        drillAttribute.attribute.attributeHeader.localIdentifier,
-                    ),
-                ],
+                predicates,
             };
         },
     ),
@@ -398,6 +396,7 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectEnableKPIDashboardDrillToURL,
         selectEnableKPIDashboardDrillToInsight,
         selectEnableKPIDashboardDrillToDashboard,
+        selectEnableKDCrossFiltering,
         selectHideKpiDrillInEmbedded,
         selectIsEmbedded,
         (
@@ -407,6 +406,7 @@ export const selectConfiguredDrillsByWidgetRef: (
             enableKPIDashboardDrillToURL,
             enableKPIDashboardDrillToInsight,
             enableKPIDashboardDrillToDashboard,
+            enableKDCrossFiltering,
             hideKpiDrillInEmbedded,
             isEmbedded,
         ) => {
@@ -433,7 +433,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return !(isEmbedded && hideKpiDrillInEmbedded);
                     }
                     case "crossFiltering": {
-                        return true;
+                        return enableKDCrossFiltering;
                     }
                     default: {
                         const unhandledType: never = drillType;
