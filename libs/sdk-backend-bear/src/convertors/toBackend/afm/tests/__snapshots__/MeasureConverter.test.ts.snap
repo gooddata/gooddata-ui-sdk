@@ -213,4 +213,4 @@ exports[`measure converter > should return local identifier of measure 1`] = `
 }
 `;
 
-exports[`measure converter > should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
+exports[`measure converter > should throw an error when measure definition is not supported 1`] = `[Error: The measure definition is not supported: {}]`;

@@ -50,4 +50,4 @@ exports[`attribute converter > should return simple attribute 1`] = `
 }
 `;
 
-exports[`attribute converter > should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;
+exports[`attribute converter > should throw an error when toObjQualifier gets an URI ref 1`] = `[Error: Tiger backend does not allow referencing objects by URI.]`;

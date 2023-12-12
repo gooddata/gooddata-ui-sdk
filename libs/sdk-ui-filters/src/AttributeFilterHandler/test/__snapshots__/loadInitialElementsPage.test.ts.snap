@@ -112,7 +112,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 ]
 `;
 
-exports[`AttributeFilterHandler > loadInitialElementsPage() should throw error if it's called before the initialization 1`] = `"Cannot call loadInitialElementsPage() before successful initialization."`;
+exports[`AttributeFilterHandler > loadInitialElementsPage() should throw error if it's called before the initialization 1`] = `[Invariant Violation: Cannot call loadInitialElementsPage() before successful initialization.]`;
 
 exports[`AttributeFilterHandler > loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback > with parameters 1`] = `
 [

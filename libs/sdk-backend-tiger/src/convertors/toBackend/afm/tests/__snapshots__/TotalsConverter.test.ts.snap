@@ -608,4 +608,4 @@ exports[`convertTotals > should correctly convert two totals with different func
 ]
 `;
 
-exports[`convertTotals > should fail on converting native total 1`] = `"Tiger backend does not support native totals."`;
+exports[`convertTotals > should fail on converting native total 1`] = `[Error: Tiger backend does not support native totals.]`;

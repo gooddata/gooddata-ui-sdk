@@ -238,7 +238,7 @@ exports[`utils > appendEmptyAttribute > should append new item in the first of a
 
 exports[`utils > convertToCatalogAttributeData > should return correct catalog attributes map 1`] = `
 Map {
-  "{\\"identifier\\":\\"attr.f_account.account\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_account.account","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_account.account",
@@ -247,7 +247,7 @@ Map {
     "title": "Account",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_account.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_account.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_account.id",
@@ -256,7 +256,7 @@ Map {
     "title": "Account Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_activity.activity\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_activity.activity","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_activity.activity",
@@ -265,7 +265,7 @@ Map {
     "title": "Activity",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.id",
@@ -274,7 +274,7 @@ Map {
     "title": "Activity Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.activitytype_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.activitytype_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.activitytype_id",
@@ -283,7 +283,7 @@ Map {
     "title": "Activity Type",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_city.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_city.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_city.id",
@@ -292,7 +292,7 @@ Map {
     "title": "City",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"county_name\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"county_name","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "county_name",
@@ -301,7 +301,7 @@ Map {
     "title": "County name",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_owner.department_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_owner.department_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_owner.department_id",
@@ -310,7 +310,7 @@ Map {
     "title": "Department",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_opportunitysnapshot.forecastcategory_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_opportunitysnapshot.forecastcategory_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_opportunitysnapshot.forecastcategory_id",
@@ -319,7 +319,7 @@ Map {
     "title": "Forecast Category",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stage.isactive_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stage.isactive_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stage.isactive_id",
@@ -328,7 +328,7 @@ Map {
     "title": "Is Active?",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.isclosed_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.isclosed_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.isclosed_id",
@@ -337,7 +337,7 @@ Map {
     "title": "Is Closed?",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stage.isclosed_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stage.isclosed_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stage.isclosed_id",
@@ -346,7 +346,7 @@ Map {
     "title": "Is Closed?",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.istask_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.istask_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.istask_id",
@@ -355,7 +355,7 @@ Map {
     "title": "Is Task?",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stage.iswon_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stage.iswon_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stage.iswon_id",
@@ -364,7 +364,7 @@ Map {
     "title": "Is Won?",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_opportunitysnapshot.oppsnapshot\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_opportunitysnapshot.oppsnapshot","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
@@ -373,7 +373,7 @@ Map {
     "title": "Opp. Snapshot",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_opportunitysnapshot.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_opportunitysnapshot.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_opportunitysnapshot.id",
@@ -382,7 +382,7 @@ Map {
     "title": "Opp. Snapshot Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_opportunity.opportunity\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_opportunity.opportunity","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_opportunity.opportunity",
@@ -391,7 +391,7 @@ Map {
     "title": "Opportunity",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_opportunity.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_opportunity.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_opportunity.id",
@@ -400,7 +400,7 @@ Map {
     "title": "Opportunity Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_owner.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_owner.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_owner.id",
@@ -409,7 +409,7 @@ Map {
     "title": "Owner Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.priority_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.priority_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.priority_id",
@@ -418,7 +418,7 @@ Map {
     "title": "Priority",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_product.product\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_product.product","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_product.product",
@@ -427,7 +427,7 @@ Map {
     "title": "Product",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_product.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_product.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_product.id",
@@ -436,7 +436,7 @@ Map {
     "title": "Product Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"productthatisrenamedtotestthelongattributename\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"productthatisrenamedtotestthelongattributename","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "productthatisrenamedtotestthelongattributename",
@@ -445,7 +445,7 @@ Map {
     "title": "Product that is renamed to test the long attribute name",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_owner.region_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_owner.region_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_owner.region_id",
@@ -454,7 +454,7 @@ Map {
     "title": "Region",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_owner.salesrep\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_owner.salesrep","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_owner.salesrep",
@@ -463,7 +463,7 @@ Map {
     "title": "Sales Rep",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_stagehistory.stagehistory\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_stagehistory.stagehistory","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_stagehistory.stagehistory",
@@ -472,7 +472,7 @@ Map {
     "title": "Stage History",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stagehistory.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stagehistory.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stagehistory.id",
@@ -481,7 +481,7 @@ Map {
     "title": "Stage History Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stage.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stage.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stage.id",
@@ -490,7 +490,7 @@ Map {
     "title": "Stage Id",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"attr.f_stage.stagename\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"attr.f_stage.stagename","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "attr.f_stage.stagename",
@@ -499,7 +499,7 @@ Map {
     "title": "Stage Name",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"state_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"state_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "state_id",
@@ -508,7 +508,7 @@ Map {
     "title": "State",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_activity.status_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_activity.status_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_activity.status_id",
@@ -517,7 +517,7 @@ Map {
     "title": "Status",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_stage.status_id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_stage.status_id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_stage.status_id",
@@ -526,7 +526,7 @@ Map {
     "title": "Status",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"f_timeline.id\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"f_timeline.id","type":"attribute"}" => {
     "icon": "gd-icon-attribute",
     "ref": {
       "identifier": "f_timeline.id",
@@ -535,7 +535,7 @@ Map {
     "title": "Timeline",
     "type": "attribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.day\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.day","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.day",
@@ -544,7 +544,7 @@ Map {
     "title": "Activity - Date",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.dayOfMonth\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.dayOfMonth","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.dayOfMonth",
@@ -553,7 +553,7 @@ Map {
     "title": "Activity - Day of Month",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.dayOfWeek\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.dayOfWeek","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.dayOfWeek",
@@ -562,7 +562,7 @@ Map {
     "title": "Activity - Day of Week",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.dayOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.dayOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.dayOfYear",
@@ -571,7 +571,7 @@ Map {
     "title": "Activity - Day of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.hour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.hour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.hour",
@@ -580,7 +580,7 @@ Map {
     "title": "Activity - Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.hourOfDay\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.hourOfDay","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.hourOfDay",
@@ -589,7 +589,7 @@ Map {
     "title": "Activity - Hour of Day",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.minute\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.minute","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.minute",
@@ -598,7 +598,7 @@ Map {
     "title": "Activity - Minute",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.minuteOfHour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.minuteOfHour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.minuteOfHour",
@@ -607,7 +607,7 @@ Map {
     "title": "Activity - Minute of Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.month\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.month","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.month",
@@ -616,7 +616,7 @@ Map {
     "title": "Activity - Month/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.monthOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.monthOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.monthOfYear",
@@ -625,7 +625,7 @@ Map {
     "title": "Activity - Month of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.quarter\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.quarter","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.quarter",
@@ -634,7 +634,7 @@ Map {
     "title": "Activity - Quarter/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.quarterOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.quarterOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.quarterOfYear",
@@ -643,7 +643,7 @@ Map {
     "title": "Activity - Quarter of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.week\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.week","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.week",
@@ -652,7 +652,7 @@ Map {
     "title": "Activity - Week/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.weekOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.weekOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.weekOfYear",
@@ -661,7 +661,7 @@ Map {
     "title": "Activity - Week of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_activity_timestamp.year\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_activity_timestamp.year","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_activity_timestamp.year",
@@ -670,7 +670,7 @@ Map {
     "title": "Activity - Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.day\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.day","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.day",
@@ -679,7 +679,7 @@ Map {
     "title": "Closed - Date",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.dayOfMonth\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.dayOfMonth","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.dayOfMonth",
@@ -688,7 +688,7 @@ Map {
     "title": "Closed - Day of Month",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.dayOfWeek\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.dayOfWeek","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.dayOfWeek",
@@ -697,7 +697,7 @@ Map {
     "title": "Closed - Day of Week",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.dayOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.dayOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.dayOfYear",
@@ -706,7 +706,7 @@ Map {
     "title": "Closed - Day of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.hour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.hour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.hour",
@@ -715,7 +715,7 @@ Map {
     "title": "Closed - Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.hourOfDay\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.hourOfDay","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.hourOfDay",
@@ -724,7 +724,7 @@ Map {
     "title": "Closed - Hour of Day",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.minute\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.minute","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.minute",
@@ -733,7 +733,7 @@ Map {
     "title": "Closed - Minute",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.minuteOfHour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.minuteOfHour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.minuteOfHour",
@@ -742,7 +742,7 @@ Map {
     "title": "Closed - Minute of Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.month\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.month","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.month",
@@ -751,7 +751,7 @@ Map {
     "title": "Closed - Month/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.monthOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.monthOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.monthOfYear",
@@ -760,7 +760,7 @@ Map {
     "title": "Closed - Month of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.quarter\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.quarter","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.quarter",
@@ -769,7 +769,7 @@ Map {
     "title": "Closed - Quarter/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.quarterOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.quarterOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.quarterOfYear",
@@ -778,7 +778,7 @@ Map {
     "title": "Closed - Quarter of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.week\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.week","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.week",
@@ -787,7 +787,7 @@ Map {
     "title": "Closed - Week/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.weekOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.weekOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.weekOfYear",
@@ -796,7 +796,7 @@ Map {
     "title": "Closed - Week of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_closedate_timestamp.year\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_closedate_timestamp.year","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_closedate_timestamp.year",
@@ -805,7 +805,7 @@ Map {
     "title": "Closed - Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.day\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.day","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.day",
@@ -814,7 +814,7 @@ Map {
     "title": "Created - Date",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.dayOfMonth\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.dayOfMonth","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.dayOfMonth",
@@ -823,7 +823,7 @@ Map {
     "title": "Created - Day of Month",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.dayOfWeek\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.dayOfWeek","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.dayOfWeek",
@@ -832,7 +832,7 @@ Map {
     "title": "Created - Day of Week",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.dayOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.dayOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.dayOfYear",
@@ -841,7 +841,7 @@ Map {
     "title": "Created - Day of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.hour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.hour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.hour",
@@ -850,7 +850,7 @@ Map {
     "title": "Created - Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.hourOfDay\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.hourOfDay","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.hourOfDay",
@@ -859,7 +859,7 @@ Map {
     "title": "Created - Hour of Day",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.minute\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.minute","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.minute",
@@ -868,7 +868,7 @@ Map {
     "title": "Created - Minute",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.minuteOfHour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.minuteOfHour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.minuteOfHour",
@@ -877,7 +877,7 @@ Map {
     "title": "Created - Minute of Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.month\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.month","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.month",
@@ -886,7 +886,7 @@ Map {
     "title": "Created - Month/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.monthOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.monthOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.monthOfYear",
@@ -895,7 +895,7 @@ Map {
     "title": "Created - Month of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.quarter\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.quarter","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.quarter",
@@ -904,7 +904,7 @@ Map {
     "title": "Created - Quarter/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.quarterOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.quarterOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.quarterOfYear",
@@ -913,7 +913,7 @@ Map {
     "title": "Created - Quarter of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.week\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.week","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.week",
@@ -922,7 +922,7 @@ Map {
     "title": "Created - Week/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.weekOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.weekOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.weekOfYear",
@@ -931,7 +931,7 @@ Map {
     "title": "Created - Week of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_oppcreated_timestamp.year\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_oppcreated_timestamp.year","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_oppcreated_timestamp.year",
@@ -940,7 +940,7 @@ Map {
     "title": "Created - Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.day\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.day","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.day",
@@ -949,7 +949,7 @@ Map {
     "title": "Snapshot - Date",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.dayOfMonth\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfMonth","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.dayOfMonth",
@@ -958,7 +958,7 @@ Map {
     "title": "Snapshot - Day of Month",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.dayOfWeek\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfWeek","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.dayOfWeek",
@@ -967,7 +967,7 @@ Map {
     "title": "Snapshot - Day of Week",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.dayOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.dayOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.dayOfYear",
@@ -976,7 +976,7 @@ Map {
     "title": "Snapshot - Day of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.hour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.hour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.hour",
@@ -985,7 +985,7 @@ Map {
     "title": "Snapshot - Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.hourOfDay\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.hourOfDay","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.hourOfDay",
@@ -994,7 +994,7 @@ Map {
     "title": "Snapshot - Hour of Day",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.minute\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.minute","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.minute",
@@ -1003,7 +1003,7 @@ Map {
     "title": "Snapshot - Minute",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.minuteOfHour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.minuteOfHour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.minuteOfHour",
@@ -1012,7 +1012,7 @@ Map {
     "title": "Snapshot - Minute of Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.month\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.month","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.month",
@@ -1021,7 +1021,7 @@ Map {
     "title": "Snapshot - Month/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.monthOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.monthOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.monthOfYear",
@@ -1030,7 +1030,7 @@ Map {
     "title": "Snapshot - Month of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.quarter\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.quarter","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.quarter",
@@ -1039,7 +1039,7 @@ Map {
     "title": "Snapshot - Quarter/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.quarterOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.quarterOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.quarterOfYear",
@@ -1048,7 +1048,7 @@ Map {
     "title": "Snapshot - Quarter of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.week\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.week","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.week",
@@ -1057,7 +1057,7 @@ Map {
     "title": "Snapshot - Week/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.weekOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.weekOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.weekOfYear",
@@ -1066,7 +1066,7 @@ Map {
     "title": "Snapshot - Week of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_snapshotdate_timestamp.year\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_snapshotdate_timestamp.year","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_snapshotdate_timestamp.year",
@@ -1075,7 +1075,7 @@ Map {
     "title": "Snapshot - Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.day\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.day","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.day",
@@ -1084,7 +1084,7 @@ Map {
     "title": "Timeline - Date",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.dayOfMonth\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.dayOfMonth","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.dayOfMonth",
@@ -1093,7 +1093,7 @@ Map {
     "title": "Timeline - Day of Month",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.dayOfWeek\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.dayOfWeek","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.dayOfWeek",
@@ -1102,7 +1102,7 @@ Map {
     "title": "Timeline - Day of Week",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.dayOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.dayOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.dayOfYear",
@@ -1111,7 +1111,7 @@ Map {
     "title": "Timeline - Day of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.hour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.hour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.hour",
@@ -1120,7 +1120,7 @@ Map {
     "title": "Timeline - Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.hourOfDay\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.hourOfDay","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.hourOfDay",
@@ -1129,7 +1129,7 @@ Map {
     "title": "Timeline - Hour of Day",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.minute\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.minute","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.minute",
@@ -1138,7 +1138,7 @@ Map {
     "title": "Timeline - Minute",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.minuteOfHour\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.minuteOfHour","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.minuteOfHour",
@@ -1147,7 +1147,7 @@ Map {
     "title": "Timeline - Minute of Hour",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.month\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.month","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.month",
@@ -1156,7 +1156,7 @@ Map {
     "title": "Timeline - Month/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.monthOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.monthOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.monthOfYear",
@@ -1165,7 +1165,7 @@ Map {
     "title": "Timeline - Month of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.quarter\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.quarter","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.quarter",
@@ -1174,7 +1174,7 @@ Map {
     "title": "Timeline - Quarter/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.quarterOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.quarterOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.quarterOfYear",
@@ -1183,7 +1183,7 @@ Map {
     "title": "Timeline - Quarter of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.week\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.week","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.week",
@@ -1192,7 +1192,7 @@ Map {
     "title": "Timeline - Week/Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.weekOfYear\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.weekOfYear","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.weekOfYear",
@@ -1201,7 +1201,7 @@ Map {
     "title": "Timeline - Week of Year",
     "type": "dateAttribute",
   },
-  "{\\"identifier\\":\\"dt_timeline_timestamp.year\\",\\"type\\":\\"attribute\\"}" => {
+  "{"identifier":"dt_timeline_timestamp.year","type":"attribute"}" => {
     "icon": "gd-icon-date",
     "ref": {
       "identifier": "dt_timeline_timestamp.year",

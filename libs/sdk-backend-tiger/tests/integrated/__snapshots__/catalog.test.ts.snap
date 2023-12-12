@@ -28,7 +28,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
-  WHERE {label/f_stage.status_id} = \\"Lost\\"",
+  WHERE {label/f_stage.status_id} = "Lost"",
         "format": "#,##0",
         "id": "of_lost_opps.",
         "isLocked": false,
@@ -66,7 +66,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = "Won"",
         "format": "#,##0.00",
         "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
         "isLocked": false,
@@ -85,7 +85,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = "Won"",
         "format": "#,##0",
         "id": "of_won_opps.",
         "isLocked": false,
@@ -204,7 +204,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-      WHERE {label/f_stage.status_id} = \\"Open\\")",
+      WHERE {label/f_stage.status_id} = "Open")",
         "format": "#,##0",
         "id": "best_case",
         "isLocked": false,
@@ -224,7 +224,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
-  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < "2010-26"",
         "format": "#,##0.00",
         "id": "count_of_sales_rep_and_datetime_condition",
         "isLocked": false,
@@ -550,7 +550,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_diffrence_params",
         "isLocked": false,
@@ -569,8 +569,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_params_string",
         "isLocked": false,
@@ -590,7 +590,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_same_params",
         "isLocked": false,
@@ -610,7 +610,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_diffenrence_params",
         "isLocked": false,
@@ -630,7 +630,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_parameters",
         "isLocked": false,
@@ -649,8 +649,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010-12", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_params_string",
         "isLocked": false,
@@ -689,7 +689,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
-  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_closedate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_week_3_parameters",
         "isLocked": false,
@@ -727,8 +727,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "diff_of_week_string",
         "isLocked": false,
@@ -767,7 +767,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_2_parameters",
         "isLocked": false,
@@ -787,7 +787,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_3_parameters",
         "isLocked": false,
@@ -807,7 +807,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_next",
         "isLocked": false,
@@ -846,7 +846,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_previous",
         "isLocked": false,
@@ -865,8 +865,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string_and_this",
         "isLocked": false,
@@ -885,8 +885,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, "2015"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string",
         "isLocked": false,
@@ -926,7 +926,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "filter_time_transformation_datetime_add",
         "isLocked": false,
@@ -1348,7 +1348,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "Metric has null value",
-        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN ("", NULL, "East Coast", "West Coast" )",
         "format": "#,##0",
         "id": "metric_has_null_value",
         "isLocked": false,
@@ -1387,7 +1387,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "no_time_transformation",
         "isLocked": false,
@@ -1547,7 +1547,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "expression": "SELECT RUNSUM(FIRST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        WHERE {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})",
         "format": "#,##0.00",
         "id": "runsum_first_value_of_amount_with_condition",
@@ -1570,7 +1570,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "expression": "SELECT RUNSUM(LAST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        HAVING {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})
 ",
         "format": "#,##0.00",
@@ -1679,10 +1679,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
   WHERE {label/dt_closedate_timestamp.year} = CASE
-    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+    WHEN {label/county_name} = "Clark" THEN MAX(
       SELECT {label/dt_oppcreated_timestamp.year}
         BY {dataset/f_opportunitysnapshot})
-    ELSE \\"2010\\"
+    ELSE "2010"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_case_and_max",
@@ -1703,10 +1703,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = "Clark" THEN (
     SELECT MIN(
         {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
-    ELSE \\"2009\\"
+    ELSE "2009"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_if_having_and_min",
@@ -1728,7 +1728,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation",
         "isLocked": false,
@@ -1749,7 +1749,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation_combined",
         "isLocked": false,
@@ -1828,7 +1828,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-  WHERE {label/f_stage.status_id} = \\"Won\\"",
+  WHERE {label/f_stage.status_id} = "Won"",
         "format": "$#,##0.00",
         "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
         "isLocked": false,
@@ -2078,7 +2078,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
-  WHERE {label/f_stage.status_id} = \\"Lost\\"",
+  WHERE {label/f_stage.status_id} = "Lost"",
         "format": "#,##0",
         "id": "of_lost_opps.",
         "isLocked": false,
@@ -2116,7 +2116,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = "Won"",
         "format": "#,##0.00",
         "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
         "isLocked": false,
@@ -2135,7 +2135,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = "Won"",
         "format": "#,##0",
         "id": "of_won_opps.",
         "isLocked": false,
@@ -2155,7 +2155,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE
- DATETIME_DIFF(\\"2018\\",\\"2020\\", YEAR)> 2",
+ DATETIME_DIFF("2018","2020", YEAR)> 2",
         "format": "#,##0.00",
         "id": "2_literals_in_datetime_diff",
         "isLocked": false,
@@ -2703,7 +2703,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-      WHERE {label/f_stage.status_id} = \\"Open\\")",
+      WHERE {label/f_stage.status_id} = "Open")",
         "format": "#,##0",
         "id": "best_case",
         "isLocked": false,
@@ -3010,7 +3010,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
-  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < "2010-26"",
         "format": "#,##0.00",
         "id": "count_of_sales_rep_and_datetime_condition",
         "isLocked": false,
@@ -3569,7 +3569,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_diffrence_params",
         "isLocked": false,
@@ -3588,8 +3588,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_params_string",
         "isLocked": false,
@@ -3609,7 +3609,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_same_params",
         "isLocked": false,
@@ -3629,7 +3629,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_diffenrence_params",
         "isLocked": false,
@@ -3649,7 +3649,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_parameters",
         "isLocked": false,
@@ -3668,8 +3668,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010-12", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_params_string",
         "isLocked": false,
@@ -3708,7 +3708,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
-  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_closedate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_week_3_parameters",
         "isLocked": false,
@@ -3746,8 +3746,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "diff_of_week_string",
         "isLocked": false,
@@ -3786,7 +3786,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_2_parameters",
         "isLocked": false,
@@ -3806,7 +3806,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_3_parameters",
         "isLocked": false,
@@ -3826,7 +3826,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_next",
         "isLocked": false,
@@ -3865,7 +3865,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_previous",
         "isLocked": false,
@@ -3884,8 +3884,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string_and_this",
         "isLocked": false,
@@ -3904,8 +3904,8 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, "2015"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string",
         "isLocked": false,
@@ -3945,7 +3945,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "filter_time_transformation_datetime_add",
         "isLocked": false,
@@ -4269,7 +4269,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\\"2022\\", DAY, 1)",
+  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD("2022", DAY, 1)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_add_with_day",
         "isLocked": false,
@@ -4289,7 +4289,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\\"2022-09-30\\", MONTH, -1)",
+  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD("2022-09-30", MONTH, -1)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_add_with_month",
         "isLocked": false,
@@ -4308,7 +4308,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT DATETIME_DIFF(\\"2020\\", NEXT(MONTH), MONTH)",
+        "expression": "SELECT DATETIME_DIFF("2020", NEXT(MONTH), MONTH)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_diff",
         "isLocked": false,
@@ -4885,7 +4885,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "measure": {
         "created": "sanitize_created",
         "description": "Metric has null value",
-        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN ("", NULL, "East Coast", "West Coast" )",
         "format": "#,##0",
         "id": "metric_has_null_value",
         "isLocked": false,
@@ -4905,7 +4905,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\\"2010-07\\", 1)",
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD("2010-07", 1)",
         "format": "#,##0.00",
         "id": "missing_required_datetime_add_granularity",
         "isLocked": false,
@@ -4944,7 +4944,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "no_time_transformation",
         "isLocked": false,
@@ -6025,7 +6025,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "expression": "SELECT RUNSUM(FIRST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        WHERE {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})",
         "format": "#,##0.00",
         "id": "runsum_first_value_of_amount_with_condition",
@@ -6048,7 +6048,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "expression": "SELECT RUNSUM(LAST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        HAVING {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})
 ",
         "format": "#,##0.00",
@@ -6837,10 +6837,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
   WHERE {label/dt_closedate_timestamp.year} = CASE
-    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+    WHEN {label/county_name} = "Clark" THEN MAX(
       SELECT {label/dt_oppcreated_timestamp.year}
         BY {dataset/f_opportunitysnapshot})
-    ELSE \\"2010\\"
+    ELSE "2010"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_case_and_max",
@@ -6861,10 +6861,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = "Clark" THEN (
     SELECT MIN(
         {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
-    ELSE \\"2009\\"
+    ELSE "2009"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_if_having_and_min",
@@ -6932,7 +6932,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation",
         "isLocked": false,
@@ -6953,7 +6953,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation_combined",
         "isLocked": false,
@@ -7159,7 +7159,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-  WHERE {label/f_stage.status_id} = \\"Won\\"",
+  WHERE {label/f_stage.status_id} = "Won"",
         "format": "$#,##0.00",
         "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
         "isLocked": false,
@@ -11030,7 +11030,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}
-  WHERE {label/f_stage.status_id} = \\"Lost\\"",
+  WHERE {label/f_stage.status_id} = "Lost"",
         "format": "#,##0",
         "id": "of_lost_opps.",
         "isLocked": false,
@@ -11068,7 +11068,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = "Won"",
         "format": "#,##0.00",
         "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
         "isLocked": false,
@@ -11087,7 +11087,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \\"Won\\"",
+        "expression": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = "Won"",
         "format": "#,##0",
         "id": "of_won_opps.",
         "isLocked": false,
@@ -11107,7 +11107,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE
- DATETIME_DIFF(\\"2018\\",\\"2020\\", YEAR)> 2",
+ DATETIME_DIFF("2018","2020", YEAR)> 2",
         "format": "#,##0.00",
         "id": "2_literals_in_datetime_diff",
         "isLocked": false,
@@ -11655,7 +11655,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "description": "",
         "expression": "SELECT SUM(
     SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-      WHERE {label/f_stage.status_id} = \\"Open\\")",
+      WHERE {label/f_stage.status_id} = "Open")",
         "format": "#,##0",
         "id": "best_case",
         "isLocked": false,
@@ -11962,7 +11962,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT COUNT({label/attr.f_owner.salesrep})
-  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \\"2010-26\\"",
+  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < "2010-26"",
         "format": "#,##0.00",
         "id": "count_of_sales_rep_and_datetime_condition",
         "isLocked": false,
@@ -12521,7 +12521,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_diffrence_params",
         "isLocked": false,
@@ -12540,8 +12540,8 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_params_string",
         "isLocked": false,
@@ -12561,7 +12561,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_2_same_params",
         "isLocked": false,
@@ -12581,7 +12581,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_diffenrence_params",
         "isLocked": false,
@@ -12601,7 +12601,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_parameters",
         "isLocked": false,
@@ -12620,8 +12620,8 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010-12\\", {label/dt_snapshotdate_timestamp.month}, MONTH))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010-12", {label/dt_snapshotdate_timestamp.month}, MONTH))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_month_3_params_string",
         "isLocked": false,
@@ -12660,7 +12660,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))
-  WHERE {label/dt_closedate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_closedate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_week_3_parameters",
         "isLocked": false,
@@ -12698,8 +12698,8 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \\"2010-12\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, "2010-12"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "diff_of_week_string",
         "isLocked": false,
@@ -12738,7 +12738,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_2_parameters",
         "isLocked": false,
@@ -12758,7 +12758,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_3_parameters",
         "isLocked": false,
@@ -12778,7 +12778,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_next",
         "isLocked": false,
@@ -12817,7 +12817,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_previous",
         "isLocked": false,
@@ -12836,8 +12836,8 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF(\\"2010\\", THIS(YEAR), YEAR))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF("2010", THIS(YEAR), YEAR))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string_and_this",
         "isLocked": false,
@@ -12856,8 +12856,8 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \\"2015\\"))
-  WHERE {label/dt_snapshotdate_timestamp.year} = \\"2010\\" ",
+        "expression": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, "2015"))
+  WHERE {label/dt_snapshotdate_timestamp.year} = "2010" ",
         "format": "#,##0.00",
         "id": "datetime_diff_of_year_string",
         "isLocked": false,
@@ -12897,7 +12897,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "filter_time_transformation_datetime_add",
         "isLocked": false,
@@ -13221,7 +13221,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\\"2022\\", DAY, 1)",
+  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD("2022", DAY, 1)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_add_with_day",
         "isLocked": false,
@@ -13241,7 +13241,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\\"2022-09-30\\", MONTH, -1)",
+  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD("2022-09-30", MONTH, -1)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_add_with_month",
         "isLocked": false,
@@ -13260,7 +13260,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "",
-        "expression": "SELECT DATETIME_DIFF(\\"2020\\", NEXT(MONTH), MONTH)",
+        "expression": "SELECT DATETIME_DIFF("2020", NEXT(MONTH), MONTH)",
         "format": "#,##0.00",
         "id": "incorrect_literal_string_with_datetime_diff",
         "isLocked": false,
@@ -13837,7 +13837,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "measure": {
         "created": "sanitize_created",
         "description": "Metric has null value",
-        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN ("", NULL, "East Coast", "West Coast" )",
         "format": "#,##0",
         "id": "metric_has_null_value",
         "isLocked": false,
@@ -13857,7 +13857,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\\"2010-07\\", 1)",
+  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD("2010-07", 1)",
         "format": "#,##0.00",
         "id": "missing_required_datetime_add_granularity",
         "isLocked": false,
@@ -13896,7 +13896,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "no_time_transformation",
         "isLocked": false,
@@ -14977,7 +14977,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "expression": "SELECT RUNSUM(FIRST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        WHERE {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        WHERE {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})",
         "format": "#,##0.00",
         "id": "runsum_first_value_of_amount_with_condition",
@@ -15000,7 +15000,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "expression": "SELECT RUNSUM(LAST_VALUE(
       SELECT SUM({fact/f_opportunitysnapshot.f_amount})
         BY {label/attr.f_owner.salesrep}
-        HAVING {label/attr.f_owner.salesrep} = \\"Adam Bradley\\")
+        HAVING {label/attr.f_owner.salesrep} = "Adam Bradley")
     ORDER BY {label/dt_oppcreated_timestamp.year})
 ",
         "format": "#,##0.00",
@@ -15789,10 +15789,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "description": "",
         "expression": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})
   WHERE {label/dt_closedate_timestamp.year} = CASE
-    WHEN {label/county_name} = \\"Clark\\" THEN MAX(
+    WHEN {label/county_name} = "Clark" THEN MAX(
       SELECT {label/dt_oppcreated_timestamp.year}
         BY {dataset/f_opportunitysnapshot})
-    ELSE \\"2010\\"
+    ELSE "2010"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_case_and_max",
@@ -15813,10 +15813,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
-  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \\"Clark\\" THEN (
+  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = "Clark" THEN (
     SELECT MIN(
         {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))
-    ELSE \\"2009\\"
+    ELSE "2009"
   END",
         "format": "#,##0.00",
         "id": "sum_of_amount_with_if_having_and_min",
@@ -15884,7 +15884,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE {label/dt_oppcreated_timestamp.month} = \\"2010-01\\"",
+  WHERE {label/dt_oppcreated_timestamp.month} = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation",
         "isLocked": false,
@@ -15905,7 +15905,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "description": "",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})
   FOR Next({label/dt_oppcreated_timestamp.month})
-  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \\"2010-01\\"",
+  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = "2010-01"",
         "format": "#,##0.00",
         "id": "time_transformation_combined",
         "isLocked": false,
@@ -16111,7 +16111,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "created": "sanitize_created",
         "description": "",
         "expression": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}
-  WHERE {label/f_stage.status_id} = \\"Won\\"",
+  WHERE {label/f_stage.status_id} = "Won"",
         "format": "$#,##0.00",
         "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
         "isLocked": false,

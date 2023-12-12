@@ -284,7 +284,7 @@ exports[`DashboardLayoutSectionBuilder > .modifyItem() > should modify the item 
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder > .modifyItem() > should throw error, when the item at provided index does not exist 1`] = `"Cannot modify the item - item at index 0 does not exist."`;
+exports[`DashboardLayoutSectionBuilder > .modifyItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot modify the item - item at index 0 does not exist.]`;
 
 exports[`DashboardLayoutSectionBuilder > .modifyItems() > should modify all items by default > after 1`] = `
 {
@@ -618,7 +618,7 @@ exports[`DashboardLayoutSectionBuilder > .moveItem() > should move the item > be
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder > .moveItem() > should throw error, when the item at provided index does not exist 1`] = `"Cannot move the item - item at index 0 does not exist."`;
+exports[`DashboardLayoutSectionBuilder > .moveItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot move the item - item at index 0 does not exist.]`;
 
 exports[`DashboardLayoutSectionBuilder > .removeItem() > should remove the item from the section > after 1`] = `
 {
@@ -645,7 +645,7 @@ exports[`DashboardLayoutSectionBuilder > .removeItem() > should remove the item 
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder > .removeItem() > should throw error, when the item at provided index does not exist 1`] = `"Cannot remove the item - item at index 0 does not exist."`;
+exports[`DashboardLayoutSectionBuilder > .removeItem() > should throw error, when the item at provided index does not exist 1`] = `[Invariant Violation: Cannot remove the item - item at index 0 does not exist.]`;
 
 exports[`DashboardLayoutSectionBuilder > .removeItems() > should not remove any item, when selection result is undefined > after 1`] = `
 {
@@ -850,4 +850,4 @@ exports[`DashboardLayoutSectionBuilder > .removeItems() > should remove selected
 }
 `;
 
-exports[`DashboardLayoutSectionBuilder > constructors > .for() > should throw error, when the section is damaged 1`] = `"Provided data must be IDashboardLayoutSection."`;
+exports[`DashboardLayoutSectionBuilder > constructors > .for() > should throw error, when the section is damaged 1`] = `[Invariant Violation: Provided data must be IDashboardLayoutSection.]`;
