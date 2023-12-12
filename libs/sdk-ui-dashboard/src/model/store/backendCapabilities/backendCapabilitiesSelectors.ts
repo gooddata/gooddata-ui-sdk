@@ -173,3 +173,13 @@ export const selectSupportsCrossFiltering: DashboardSelector<boolean> = createSe
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsCrossFiltering ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsMultipleDateFilters}
+ *
+ * @internal
+ */
+export const selectSupportsMultipleDateFilters: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsMultipleDateFilters ?? false,
+);
