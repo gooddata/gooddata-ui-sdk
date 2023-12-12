@@ -309,7 +309,7 @@ exports[`renderingWorker > async rendering resolution > should emit render resol
 ]
 `;
 
-exports[`renderingWorker > async rendering resolution > should not emit render resolved, when async rendering is not resolved 1`] = `"Wait for action 'GDC.DASH/EVT.RENDER.RESOLVED' timed out after 200ms"`;
+exports[`renderingWorker > async rendering resolution > should not emit render resolved, when async rendering is not resolved 1`] = `[Error: Wait for action 'GDC.DASH/EVT.RENDER.RESOLVED' timed out after 200ms]`;
 
 exports[`renderingWorker > async rendering resolution > should not emit render resolved, when async rendering is not resolved 2`] = `
 [

@@ -70,17 +70,17 @@ exports[`AttributeFilterHandler > staticElements option should work properly wit
 ]
 `;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on init() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on init() call 1`] = `[Invariant Violation: Using limitingAttributeFilters is not supported when using static attribute elements]`;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on loadInitialElementsPage() call 1`] = `[Invariant Violation: Using limitingAttributeFilters is not supported when using static attribute elements]`;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on init() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on init() call 1`] = `[Invariant Violation: Using limitingDateFilters is not supported when using static attribute elements]`;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on loadInitialElementsPage() call 1`] = `[Invariant Violation: Using limitingDateFilters is not supported when using static attribute elements]`;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on init() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on init() call 1`] = `[Invariant Violation: Using limitingMeasures is not supported when using static attribute elements]`;
 
-exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on loadInitialElementsPage() call 1`] = `[Invariant Violation: Using limitingMeasures is not supported when using static attribute elements]`;
 
 exports[`AttributeFilterHandler > staticElements should be filtered by limit() 1`] = `
 [

@@ -72,7 +72,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -281,7 +281,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -847,7 +847,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [

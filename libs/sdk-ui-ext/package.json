@@ -143,8 +143,8 @@
         "stylelint-config-prettier": "^8.0.2",
         "svgo": "^2.8.0",
         "typescript": "5.0.2",
-        "vitest": "0.31.4",
-        "vitest-dom": "0.1.0",
+        "vitest": "1.0.4",
+        "vitest-dom": "0.1.1",
         "@types/debounce-promise": "^3.1.4",
         "@types/json-stable-stringify": "^1.0.32"
     }

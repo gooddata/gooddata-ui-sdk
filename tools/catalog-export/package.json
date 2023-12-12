@@ -81,6 +81,6 @@
         "happy-dom": "^9.20.3",
         "ts-node": "^10.4.0",
         "typescript": "5.0.2",
-        "vitest": "0.31.4"
+        "vitest": "1.0.4"
     }
 }
