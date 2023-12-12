@@ -49,6 +49,10 @@ import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
+export { AnalyzeCsvRequest }
+
+export { AnalyzeCsvResponse }
+
 export { AnonymousAuthProvider }
 
 export { ApiEntitlement }
@@ -256,6 +260,8 @@ export interface IInvitationUserResponse {
     successful?: boolean;
 }
 
+export { ImportCsvRequest }
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
@@ -324,6 +330,8 @@ export type ScanSqlResult = ScanSqlResponse;
 
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+
+export { StagingUploadLocation }
 
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
