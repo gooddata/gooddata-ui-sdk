@@ -12,6 +12,7 @@ import {
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
     IDrillDownReference,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
@@ -33,6 +34,7 @@ import {
 import { LayoutStash, LayoutState } from "./layoutState.js";
 import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils.js";
 import { DashboardLayoutCommands } from "../../commands/index.js";
+import { selectCrossFilteringFiltersLocalIdentifiersByWidgetRef } from "../drill/drillSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -232,9 +234,22 @@ export const selectAllFiltersForWidgetByRef: (ref: ObjRef) => DashboardSelector<
         return createSelector(
             selectWidgetByRef(ref),
             selectFilterContextFilters,
-            (widget, dashboardFilters) => {
+            selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
+            (widget, dashboardFilters, crossFilteringFiltersLocalIdentifiers) => {
                 invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-                return filterContextItemsToDashboardFiltersByWidget(dashboardFilters, widget);
+                const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
+                    if (isDashboardAttributeFilter(f)) {
+                        return !crossFilteringFiltersLocalIdentifiers?.includes(
+                            f.attributeFilter.localIdentifier!,
+                        );
+                    }
+
+                    return true;
+                });
+                return filterContextItemsToDashboardFiltersByWidget(
+                    filtersWithoutCrossFilteringFilters,
+                    widget,
+                );
             },
         );
     });

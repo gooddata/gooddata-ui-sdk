@@ -22,15 +22,8 @@ import {
     dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters/index.js";
 import {
-    DrillEventIntersectionElementHeader,
-    IDrillEventIntersectionElement,
-    IDrillIntersectionAttributeItem,
-    isDrillIntersectionAttributeItem,
-} from "@gooddata/sdk-ui";
-import {
     areObjRefsEqual,
     IDashboardAttributeFilter,
-    ObjRef,
     IInsight,
     insightMeasures,
     isSimpleMeasure,
@@ -39,13 +32,13 @@ import {
     IInsightWidget,
     IFilter,
     IAttributeFilter,
-    newPositiveAttributeFilter,
     newAllTimeFilter,
     IDateFilter,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardState } from "../../store/types.js";
+import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -149,41 +142,4 @@ function getResolvedFiltersForWidget(
     filters: IDashboardFilter[],
 ): Promise<IFilter[]> {
     return ctx.backend.workspace(ctx.workspace).dashboards().getResolvedFiltersForWidget(widget, filters);
-}
-
-/**
- *  For correct drill intersection that should be converted into AttributeFilters must be drill intersection:
- *  1. AttributeItem
- *  2. Not a date attribute
- */
-function filterIntersection(
-    intersection: DrillEventIntersectionElementHeader,
-    dateDataSetsAttributesRefs: ObjRef[],
-): boolean {
-    const attributeItem = isDrillIntersectionAttributeItem(intersection) ? intersection : undefined;
-    const ref = attributeItem?.attributeHeader?.formOf?.ref;
-
-    return ref ? !dateDataSetsAttributesRefs.some((ddsRef) => areObjRefsEqual(ddsRef, ref)) : false;
-}
-
-function convertIntersectionToAttributeFilters(
-    intersection: IDrillEventIntersectionElement[],
-    dateDataSetsAttributesRefs: ObjRef[],
-    backendSupportsElementUris: boolean,
-): IAttributeFilter[] {
-    return intersection
-        .map((i) => i.header)
-        .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))
-        .filter(isDrillIntersectionAttributeItem)
-        .map((h: IDrillIntersectionAttributeItem): IAttributeFilter => {
-            if (backendSupportsElementUris) {
-                return newPositiveAttributeFilter(h.attributeHeader.ref, {
-                    uris: [h.attributeHeaderItem.uri],
-                });
-            } else {
-                return newPositiveAttributeFilter(h.attributeHeader.ref, {
-                    uris: [h.attributeHeaderItem.name],
-                });
-            }
-        });
 }

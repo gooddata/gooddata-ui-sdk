@@ -15,6 +15,7 @@ import { DrillSelectContext } from "./types.js";
 import {
     IInsight,
     ObjRef,
+    isCrossFiltering,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
@@ -136,6 +137,13 @@ export function WithDrillSelect({
                     );
                 } else if (isDrillToCustomUrl(drillDefinition)) {
                     drills.drillToCustomUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                } else if (isCrossFiltering(drillDefinition)) {
+                    drills.crossFiltering.run(
+                        insight,
+                        drillDefinition,
+                        effectiveDrillEvent,
+                        effectiveCorrelationId,
+                    );
                 }
                 setDropdownProps(null);
                 setIsOpen(false);

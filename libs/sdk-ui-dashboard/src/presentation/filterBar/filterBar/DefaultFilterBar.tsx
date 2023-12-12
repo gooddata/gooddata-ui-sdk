@@ -203,7 +203,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
                     return (
                         <DraggableAttributeFilter
-                            key={objRefToString(displayForm.attribute)}
+                            key={`${objRefToString(displayForm.attribute)}-${
+                                filter.attributeFilter.localIdentifier
+                            }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
                             filterIndex={filterIndex}

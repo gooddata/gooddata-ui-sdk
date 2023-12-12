@@ -29,6 +29,8 @@ import {
     DrillToCustomUrl,
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillCommand,
+    DashboardCrossFilteringResolved,
+    CrossFiltering,
 } from "../../model/index.js";
 
 /**
@@ -119,6 +121,21 @@ export interface DrillStep {
     drillDefinition: IDrillToInsight | IDrillDownDefinition;
     insight: IInsight;
 }
+
+/**
+ * @internal
+ */
+export type OnCrossFiltering = (cmd: CrossFiltering) => void;
+
+/**
+ * @internal
+ */
+export type OnCrossFilteringSuccess = (event: DashboardCrossFilteringResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnCrossFilteringError = OnDashboardDrillError;
 
 /////
 

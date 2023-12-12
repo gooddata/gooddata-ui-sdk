@@ -325,6 +325,11 @@ export interface ISettings {
      */
     enableKDDependentFilters?: boolean;
 
+    /**
+     * Enable cross filtering in KD
+     */
+    enableKDCrossFiltering?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

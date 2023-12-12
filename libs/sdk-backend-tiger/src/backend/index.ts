@@ -95,6 +95,7 @@ const CAPABILITIES: IBackendCapabilities = {
     allowMultipleInteractionsPerAttributeAndMeasure: true,
     supportsShowingFilteredElements: true,
     supportsSingleSelectDependentFilters: true,
+    supportsCrossFiltering: true,
 };
 
 /**

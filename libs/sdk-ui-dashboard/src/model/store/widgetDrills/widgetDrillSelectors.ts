@@ -55,13 +55,17 @@ import {
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
     selectEnableAttributeHierarchies,
+    selectEnableKDCrossFiltering,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectSupportsAttributeHierarchies,
+    selectSupportsCrossFiltering,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 
 /**
@@ -271,6 +275,55 @@ export const selectImplicitDrillsDownByWidgetRef: (
     ),
 );
 
+const selectCrossFilteringByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectEnableKDCrossFiltering,
+        selectSupportsCrossFiltering,
+        selectDrillTargetsByWidgetRef(ref),
+        (isCrossFilteringEnabled, isCrossFilteringSupported, availableDrillTargets) => {
+            if (!isCrossFilteringEnabled || !isCrossFilteringSupported) {
+                return undefined;
+            }
+
+            const availableDrillAttributes = availableDrillTargets?.availableDrillTargets?.attributes ?? [];
+            const availableDrillAttributesWithoutDates = availableDrillAttributes.filter(
+                (drill) => !drill.attribute.attributeHeader.granularity,
+            );
+
+            if (!availableDrillAttributesWithoutDates.length) {
+                return undefined;
+            }
+
+            // pick the first available attribute for identification and mandatory predicate
+            const drillAttribute = availableDrillAttributesWithoutDates[0];
+
+            // collect all possible attribute names for the title
+            const title = availableDrillAttributesWithoutDates
+                .map((attribute) => attribute.attribute.attributeHeader.name)
+                .join(", ");
+
+            return {
+                drillDefinition: {
+                    type: "crossFiltering",
+                    transition: "in-place",
+                    origin: {
+                        type: "drillFromAttribute",
+                        attribute: localIdRef(drillAttribute.attribute.attributeHeader.localIdentifier),
+                    },
+                    title,
+                },
+                predicates: [
+                    HeaderPredicates.localIdentifierMatch(
+                        drillAttribute.attribute.attributeHeader.localIdentifier,
+                    ),
+                ],
+            };
+        },
+    ),
+);
+
 /**
  * @internal
  */
@@ -379,6 +432,9 @@ export const selectConfiguredDrillsByWidgetRef: (
                     case "drillToLegacyDashboard": {
                         return !(isEmbedded && hideKpiDrillInEmbedded);
                     }
+                    case "crossFiltering": {
+                        return true;
+                    }
                     default: {
                         const unhandledType: never = drillType;
                         throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
@@ -427,6 +483,9 @@ export const selectValidConfiguredDrillsByWidgetRef: (
                     case "drillDown": {
                         return true;
                     }
+                    case "crossFiltering": {
+                        return true;
+                    }
                     default: {
                         const unhandledType: never = drill.drillDefinition;
                         throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
@@ -455,6 +514,12 @@ const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
     }),
 );
 
+const selectCrossFilteringPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectCrossFilteringByWidgetRef(ref), (drill) => {
+        return drill?.predicates ?? [];
+    }),
+);
+
 /**
  * @internal
  */
@@ -465,8 +530,14 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
-        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills) => {
-            return [...configuredDrills, ...implicitDrillDownDrills, ...implicitDrillToUrlDrills];
+        selectCrossFilteringByWidgetRef(ref),
+        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills, crossFiltering) => {
+            return compact([
+                ...configuredDrills,
+                ...implicitDrillDownDrills,
+                ...implicitDrillToUrlDrills,
+                crossFiltering,
+            ]);
         },
     ),
 );
@@ -482,12 +553,14 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
             selectConfiguredDrillPredicates(ref),
             selectImplicitDrillDownPredicates(ref),
             selectImplicitDrillToUrlPredicates(ref),
+            selectCrossFilteringPredicates(ref),
             (
                 disableDefaultDrills,
                 drillableItems,
                 configuredDrills,
                 implicitDrillDownDrills,
                 implicitDrillToUrlDrills,
+                crossFilteringDrills,
             ) => {
                 const resolvedDrillableItems = [...drillableItems];
 
@@ -496,6 +569,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
                         ...configuredDrills,
                         ...implicitDrillDownDrills,
                         ...implicitDrillToUrlDrills,
+                        ...crossFilteringDrills,
                     );
                 }
 

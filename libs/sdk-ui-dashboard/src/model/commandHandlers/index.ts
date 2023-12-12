@@ -77,6 +77,7 @@ import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFil
 import { removeDrillDownForInsightWidgetHandler } from "./widgets/removeDrillDownForInsightWidgetHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { modifyDrillDownForInsightWidgetHandler } from "./widgets/modifyDrillDownForInsightWidgetHandler.js";
+import { crossFilteringHandler } from "./drill/crossFilteringHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -155,6 +156,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL": drillToAttributeUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
+    "GDC.DASH/CMD.DRILL.CROSS_FILTERING": crossFilteringHandler,
     "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE": changeDrillableItemsHandler,
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,

@@ -17,6 +17,7 @@ import {
     ICatalogDateAttribute,
     isMeasureDescriptor,
     IAttributeDescriptor,
+    isCrossFiltering,
 } from "@gooddata/sdk-model";
 import {
     HeaderPredicates,
@@ -126,6 +127,7 @@ export function getDrillsBySourceLocalIdentifiers(
     return widgetDrillDefinition.filter(
         (d) =>
             isDrillToLegacyDashboard(d) ||
+            isCrossFiltering(d) ||
             drillSourceLocalIdentifiers.includes(getDrillOriginLocalIdentifier(d)),
     );
 }

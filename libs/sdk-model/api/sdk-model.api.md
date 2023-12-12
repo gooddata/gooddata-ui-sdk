@@ -430,7 +430,7 @@ export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 // @public
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
 
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
@@ -870,6 +870,12 @@ export interface IComparisonConditionBody {
     treatNullValuesAs?: number;
     // (undocumented)
     value: number;
+}
+
+// @public
+export interface ICrossFiltering extends IDrill {
+    title: string;
+    type: "crossFiltering";
 }
 
 // @alpha
@@ -1815,7 +1821,7 @@ export type InsightDisplayFormUsage = {
 export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage;
 
 // @public
-export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | ICrossFiltering;
 
 // @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
@@ -2336,6 +2342,9 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
 
 // @alpha
+export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
+
+// @alpha
 export function isDashboard(obj: unknown): obj is IDashboard;
 
 // @alpha
@@ -2442,6 +2451,7 @@ export interface ISettings {
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableKDCrossFiltering?: boolean;
     enableKDDependentFilters?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;

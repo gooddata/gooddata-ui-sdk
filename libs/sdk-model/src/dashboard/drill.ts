@@ -10,7 +10,8 @@ export type InsightDrillDefinition =
     | IDrillToInsight
     | IDrillToDashboard
     | IDrillToCustomUrl
-    | IDrillToAttributeUrl;
+    | IDrillToAttributeUrl
+    | ICrossFiltering;
 
 /**
  * Kpi widget drill definition
@@ -51,7 +52,8 @@ export type DrillType =
     | "drillToDashboard"
     | "drillToLegacyDashboard"
     | "drillToCustomUrl"
-    | "drillToAttributeUrl";
+    | "drillToAttributeUrl"
+    | "crossFiltering";
 
 /**
  * Drill origin base type
@@ -362,3 +364,27 @@ export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHi
  * @alpha
  */
 export type IDrillDownReference = IAttributeHierarchyReference | IDateHierarchyReference;
+
+/**
+ * Cross-filtering
+ * @public
+ */
+export interface ICrossFiltering extends IDrill {
+    /**
+     * Drill type
+     */
+    type: "crossFiltering";
+
+    /**
+     * Title of the cross filtering attributes
+     */
+    title: string;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link ICrossFiltering}.
+ * @alpha
+ */
+export function isCrossFiltering(obj: unknown): obj is ICrossFiltering {
+    return !isEmpty(obj) && (obj as ICrossFiltering).type === "crossFiltering";
+}
