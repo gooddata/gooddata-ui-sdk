@@ -563,6 +563,42 @@ const removeDateFilter: FilterContextReducer<PayloadAction<IRemoveDateFilterPayl
 //
 //
 //
+export interface IMoveDateFilterPayload {
+    readonly dataSet: ObjRef;
+    readonly index: number;
+}
+
+const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { dataSet, index } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
+
+    const filter = state.filterContextDefinition.filters[currentFilterIndex];
+
+    state.filterContextDefinition.filters.splice(currentFilterIndex, 1);
+
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isCommonDateFilterPresent =
+        state.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+
+    if (index === -1) {
+        state.filterContextDefinition.filters.push(filter);
+    } else {
+        // If DateFilter is present we have to move index by 1 because index of filter is calculated just for DraggableFilters array
+        const dateFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
+        state.filterContextDefinition.filters.splice(dateFilterIndex, 0, filter);
+    }
+};
+
+//
+//
+//
 
 export const filterContextReducers = {
     setFilterContext,
@@ -574,6 +610,7 @@ export const filterContextReducers = {
     moveAttributeFilter,
     addDateFilter,
     removeDateFilter,
+    moveDateFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
     clearAttributeFiltersSelection,

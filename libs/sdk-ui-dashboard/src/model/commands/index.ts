@@ -27,6 +27,7 @@ import {
     SetAttributeFilterSelectionMode,
     AddDateFilter,
     RemoveDateFilters,
+    MoveDateFilter,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -129,12 +130,6 @@ export {
     AddAttributeFilter,
     AddAttributeFilterPayload,
     addAttributeFilter,
-    AddDateFilter,
-    AddDateFilterPayload,
-    addDateFilter,
-    RemoveDateFilters,
-    RemoveDateFiltersPayload,
-    removeDateFilter,
     MoveAttributeFilter,
     MoveAttributeFilterPayload,
     moveAttributeFilter,
@@ -142,6 +137,15 @@ export {
     RemoveAttributeFiltersPayload,
     removeAttributeFilter,
     removeAttributeFilters,
+    AddDateFilter,
+    AddDateFilterPayload,
+    addDateFilter,
+    RemoveDateFilters,
+    RemoveDateFiltersPayload,
+    removeDateFilter,
+    MoveDateFilter,
+    MoveDateFilterPayload,
+    moveDateFilter,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
     resetAttributeFilterSelection,
@@ -472,4 +476,5 @@ export type DashboardCommands =
     | CrossFiltering
     | AttributeHierarchyModified
     | AddDateFilter
-    | RemoveDateFilters;
+    | RemoveDateFilters
+    | MoveDateFilter;

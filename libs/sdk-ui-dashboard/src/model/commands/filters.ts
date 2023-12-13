@@ -930,3 +930,50 @@ export function removeDateFilter(dataSet: ObjRef, correlationId?: string): Remov
         },
     };
 }
+
+/**
+ * Payload of the {@link MoveAttributeFilter} command.
+ * @beta
+ */
+export interface MoveDateFilterPayload {
+    /**
+     * Data set of the filter to move.
+     */
+    readonly dataSet: ObjRef;
+    /**
+     * Index to move the filter to.
+     */
+    readonly index: number;
+}
+
+/**
+ * @beta
+ */
+export interface MoveDateFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
+    readonly payload: MoveDateFilterPayload;
+}
+
+/**
+ * Creates the MoveDateFilter command. Dispatching this command will result in move of the dashboard date
+ * filter with the provided dataSet to a new spot. The new spot is defined by index. For convenience the index
+ * of -1 means move to the end of the filter list.
+ *
+ * @param dataSet - dashboard filter's dataSet - no duplicates allowed
+ * @param index - specify index among the draggable filters (attribute filters and date filters with dataSet) at which the new filter should be placed.
+ *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): MoveDateFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE",
+        correlationId,
+        payload: {
+            dataSet,
+            index,
+        },
+    };
+}

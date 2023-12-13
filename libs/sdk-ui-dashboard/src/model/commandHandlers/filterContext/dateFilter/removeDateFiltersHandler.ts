@@ -55,6 +55,7 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
         ]);
 
         yield put(batch);
+        // TODO INE: propagate as event to KD
         // yield dispatchDashboardEvent(
         //     attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId),
         // );

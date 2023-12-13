@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import cx from "classnames";
 import React from "react";
-import { moveAttributeFilter, useDashboardDispatch } from "../../../model/index.js";
+import { moveAttributeFilter, moveDateFilter, useDashboardDispatch } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import {
     isAttributeFilterDraggableItem,
@@ -72,12 +72,11 @@ export function AttributeFilterDropZoneHint({
                 }
 
                 if (isDateFilterDraggableItem(item)) {
-                    const identifier = item.filter.dateFilter.localIdentifier!;
+                    const ref = item.filter.dateFilter.dataSet!;
                     const originalIndex = item.filterIndex;
                     const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
                     const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
-                    // TODO INE: new action or change current
-                    dispatch(moveAttributeFilter(identifier, index));
+                    dispatch(moveDateFilter(ref, index));
                 }
 
                 if (isAttributeFilterPlaceholderDraggableItem(item) && onAddAttributePlaceholder) {

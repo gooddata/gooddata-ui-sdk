@@ -2635,6 +2635,10 @@ export interface DashboardWidgetExecutionSucceededPayload {
 // @public (undocumented)
 export type DateFilterComponentProvider = (filter: IDashboardDateFilter) => CustomDashboardDateFilterComponent;
 
+// @internal
+export type DateFilterComponentSet = CustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
+CreatableByDragComponent;
+
 // @beta (undocumented)
 export interface DateFilterConfigState {
     dateFilterConfig?: IDashboardDateFilterConfig_2;
@@ -2645,6 +2649,12 @@ export interface DateFilterConfigState {
 
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
+
+// @internal (undocumented)
+export type DateFilterDraggableComponent = {
+    DraggingComponent: DateFilterDraggingComponent;
+    type: "dateFilter";
+};
 
 // @internal (undocumented)
 export type DateFilterDraggableItem = {
@@ -2699,6 +2709,9 @@ export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilt
 
 // @alpha
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
+
+// @internal (undocumented)
+export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
 // @public
 export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps_2>;
@@ -2835,7 +2848,7 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
@@ -5244,6 +5257,23 @@ export function moveAttributeFilter(filterLocalId: string, index: number, correl
 // @beta
 export interface MoveAttributeFilterPayload {
     readonly filterLocalId: string;
+    readonly index: number;
+}
+
+// @beta (undocumented)
+export interface MoveDateFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: MoveDateFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
+}
+
+// @beta
+export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): MoveDateFilter;
+
+// @beta
+export interface MoveDateFilterPayload {
+    readonly dataSet: ObjRef;
     readonly index: number;
 }
 

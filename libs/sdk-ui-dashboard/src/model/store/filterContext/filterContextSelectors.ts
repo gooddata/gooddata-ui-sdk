@@ -16,6 +16,7 @@ import {
     IFilterContextDefinition,
     IDashboardObjectIdentity,
     isDashboardDateFilterWithDimension,
+    isObjRef,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -204,6 +205,23 @@ export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilt
     );
 
 /**
+ * This selector returns dashboard's filter context draggable filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDraggableFilters: DashboardSelector<
+    Array<IDashboardDateFilter | IDashboardAttributeFilter>
+> = createSelector(
+    selectFilterContextFilters,
+    (filters): Array<IDashboardDateFilter | IDashboardAttributeFilter> =>
+        filters.filter((f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilter(f)),
+);
+
+/**
  * This selector returns dashboard's filter context date filter with dimension specified.
  *
  * @remarks
@@ -230,6 +248,47 @@ export const selectFilterContextDateFilterByDataSet: (
 ) => (state: DashboardState) => IDashboardDateFilter | undefined = createMemoizedSelector((dataSet: ObjRef) =>
     createSelector(selectFilterContextDateFiltersForDimension, (dateFilters) => {
         return dateFilters.find((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+    }),
+);
+
+/**
+ * Creates a selector for selecting date filter's index by its dataset {@link @gooddata/sdk-model#ObjRef}.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDateFilterIndexByDataSet: (
+    dataSet: ObjRef,
+) => (state: DashboardState) => number = createMemoizedSelector((dataSet: ObjRef) =>
+    createSelector(selectFilterContextDateFiltersForDimension, (dateFilters) => {
+        return dateFilters.findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+    }),
+);
+
+/**
+ * Creates a selector for selecting draggable filter's index by its ref:
+ * dataSet ref for date filters {@link @gooddata/sdk-model#ObjRef}
+ * localIdentifier for attribute filters
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDraggableFilterIndexByRef: (
+    ref: ObjRef | string,
+) => (state: DashboardState) => number = createMemoizedSelector((ref: ObjRef | string) =>
+    createSelector(selectFilterContextFilters, (filters) => {
+        return filters.findIndex((filter) => {
+            if (isDashboardDateFilterWithDimension(filter) && isObjRef(ref)) {
+                return areObjRefsEqual(filter.dateFilter.dataSet, ref);
+            }
+            if (isDashboardAttributeFilter(filter) && typeof ref === "string") {
+                return filter.attributeFilter.localIdentifier === ref;
+            }
+        });
     }),
 );
 

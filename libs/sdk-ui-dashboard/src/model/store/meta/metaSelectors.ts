@@ -28,8 +28,8 @@ import { selectBasicLayout } from "../layout/layoutSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
-    selectFilterContextDateFiltersForDimension,
     selectFilterContextDefinition,
+    selectFilterContextDraggableFilters,
     selectFilterContextIdentity,
 } from "../filterContext/filterContextSelectors.js";
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
@@ -351,7 +351,7 @@ const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
 );
 
 /**
- * Selects persisted IDashboardDateFilters with dimension - that is the IDashboardDateFilters that were used to initialize
+ * Selects persisted draggable filters (date filters with dimension and attribute filters) - that is the filters that were used to initialize
  * the original filters of the dashboard component during the initial load of the dashboard.
  *
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
@@ -360,7 +360,9 @@ const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
 const selectPersistedDashboardFilterContextDateFilters = createSelector(
     selectPersistedDashboardFilterContextFilters,
     (persistedFilters) => {
-        return (persistedFilters ?? []).filter(isDashboardDateFilterWithDimension);
+        return (persistedFilters ?? []).filter(
+            (f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilter(f),
+        );
     },
 );
 
@@ -448,11 +450,11 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
  *
  * @internal
  */
-export const selectIsDateFiltersChanged: DashboardSelector<boolean> = createSelector(
+export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardFilterContextDateFilters,
-    selectFilterContextDateFiltersForDimension,
-    (persistedDateFilters, currentDateFilters) => {
-        return !isEqual(persistedDateFilters, currentDateFilters);
+    selectFilterContextDraggableFilters,
+    (persistedFilters, currentFilters) => {
+        return !isEqual(persistedFilters, currentFilters);
     },
 );
 
@@ -463,21 +465,10 @@ export const selectIsDateFiltersChanged: DashboardSelector<boolean> = createSele
  */
 export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectIsDateFilterChanged,
-    selectIsDateFiltersChanged,
-    selectIsAttributeFiltersChanged,
+    selectIsOtherFiltersChanged,
     selectIsAttributeFilterConfigsChanged, // TODO INE: add date filter config change
-    (
-        isCommonDateFilterChanged,
-        isDateFiltersChanged,
-        isAttributeFiltersChanged,
-        isAttributeFilterConfigsChanged,
-    ) => {
-        return (
-            isCommonDateFilterChanged ||
-            isDateFiltersChanged ||
-            isAttributeFiltersChanged ||
-            isAttributeFilterConfigsChanged
-        );
+    (isCommonDateFilterChanged, isOtherFiltersChanged, isAttributeFilterConfigsChanged) => {
+        return isCommonDateFilterChanged || isOtherFiltersChanged || isAttributeFilterConfigsChanged;
     },
 );
 
