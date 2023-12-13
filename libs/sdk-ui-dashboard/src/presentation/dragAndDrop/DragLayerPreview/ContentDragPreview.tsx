@@ -6,7 +6,6 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 import { DEBUG_SHOW_DROP_ZONES } from "../debug.js";
 import { DraggableContentItem, DraggableContentItemType } from "../types.js";
 import { DragPreviewProps } from "./types.js";
-import { DefaultDateFilterDraggingComponent } from "../index.js";
 
 function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | null) {
     if (!initialOffset || !clientOffset) {
@@ -27,12 +26,16 @@ function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | nu
 export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (props) => {
     const { itemType, item, initialOffset, clientOffset } = props;
 
-    const { AttributeFilterComponentSet, InsightWidgetComponentSet, KpiWidgetComponentSet } =
-        useDashboardComponentsContext();
+    const {
+        AttributeFilterComponentSet,
+        InsightWidgetComponentSet,
+        KpiWidgetComponentSet,
+        DateFilterComponentSet,
+    } = useDashboardComponentsContext();
     const previewComponentsMap = useMemo<Partial<Record<DraggableContentItemType, any>>>(
         () => ({
             attributeFilter: AttributeFilterComponentSet.dragging.DraggingComponent,
-            dateFilter: DefaultDateFilterDraggingComponent, //TOTO INE: do we need customization?
+            dateFilter: DateFilterComponentSet.dragging.DraggingComponent,
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
             kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
         }),
@@ -40,6 +43,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             AttributeFilterComponentSet.dragging.DraggingComponent,
             InsightWidgetComponentSet.dragging.DraggingComponent,
             KpiWidgetComponentSet.dragging.DraggingComponent,
+            DateFilterComponentSet.dragging.DraggingComponent,
         ],
     );
 

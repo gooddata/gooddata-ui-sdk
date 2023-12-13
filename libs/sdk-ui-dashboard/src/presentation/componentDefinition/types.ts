@@ -3,6 +3,7 @@ import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
     IDashboardAttributeFilterPlaceholderProps,
+    IDashboardDateFilterProps,
 } from "../filterBar/types.js";
 import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types.js";
 import {
@@ -16,6 +17,7 @@ import {
 } from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
+    DateFilterComponentProvider,
     InsightComponentProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
@@ -124,6 +126,14 @@ export type AttributeFilterDraggableComponent = {
 /**
  * @internal
  */
+export type DateFilterDraggableComponent = {
+    DraggingComponent: DateFilterDraggingComponent;
+    type: "dateFilter";
+};
+
+/**
+ * @internal
+ */
 export type InsightDraggableComponent = {
     DraggingComponent?: InsightDraggingComponent;
     type: "insight";
@@ -152,6 +162,7 @@ export type CustomDraggableComponent = {
 export type DraggableComponent = {
     dragging:
         | AttributeFilterDraggableComponent
+        | DateFilterDraggableComponent
         | KpiDraggableComponent
         | InsightDraggableComponent
         | CustomDraggableComponent;
@@ -258,6 +269,18 @@ export type AttributeFilterComponentSet = CustomComponentBase<
 > &
     DraggableComponent &
     CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> &
+    CreatableByDragComponent;
+
+/**
+ * Definition of date filter components
+ * @internal
+ */
+export type DateFilterComponentSet = CustomComponentBase<
+    IDashboardDateFilterProps,
+    Parameters<DateFilterComponentProvider>
+> &
+    DraggableComponent &
+    CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
     CreatableByDragComponent;
 
 /**
