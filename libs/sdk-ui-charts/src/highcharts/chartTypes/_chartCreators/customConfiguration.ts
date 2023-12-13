@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import isString from "lodash/isString.js";
 import merge from "lodash/merge.js";
@@ -71,6 +71,7 @@ import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
+import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
 
 const EMPTY_DATA: IChartOptionsData = { categories: [], series: [] };
 
@@ -1443,6 +1444,7 @@ export function getCustomizedConfiguration(
         getContinuousLineConfiguration,
         getWaterfallXAxisConfiguration,
         getChartOrientationConfiguration,
+        getChartHighlightingConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

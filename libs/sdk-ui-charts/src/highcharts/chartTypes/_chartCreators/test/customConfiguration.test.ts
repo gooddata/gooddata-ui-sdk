@@ -1,6 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import set from "lodash/set.js";
 import noop from "lodash/noop.js";
+import omit from "lodash/omit.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
     escapeCategories,
@@ -24,6 +25,7 @@ import {
 import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe.js";
 import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
 import { describe, it, expect, vi } from "vitest";
+import { getChartHighlightingConfiguration } from "../getChartHighlightingConfiguration.js";
 
 function getData(dataValues: Partial<ISeriesDataItem>[]) {
     return {
@@ -140,6 +142,12 @@ describe("getCustomizedConfiguration", () => {
         });
 
         expect(result.plotOptions.series).toEqual({});
+    });
+
+    it("should set load event in configuration", () => {
+        const result = getCustomizedConfiguration(chartOptions);
+
+        expect(result.chart.events).toEqual({ load: expect.any(Function) });
     });
 
     it("should NOT set stacking for the Area chart only has one metric", () => {
@@ -299,7 +307,7 @@ describe("getCustomizedConfiguration", () => {
             };
 
             expect(result.xAxis[0]).toEqual(xAxisResult);
-            expect(result.chart).toEqual(undefined);
+            expect(omit(result.chart, "events")).toEqual({});
         });
 
         it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
@@ -1304,5 +1312,19 @@ describe("getFormatterProperty", () => {
     it("should return no formatter", () => {
         const formatterProperty = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "#.##");
         expect(formatterProperty.formatter).toEqual(undefined);
+    });
+});
+
+describe("highlighting configuration", () => {
+    it("should return load event", () => {
+        const result = getChartHighlightingConfiguration(chartOptions, {}, {});
+
+        expect(result.chart.events).toEqual({ load: expect.any(Function) });
+    });
+
+    it.each([["pie"], ["donut"]])("should not return load event", (type: string) => {
+        const result = getChartHighlightingConfiguration({ ...chartOptions, type }, {}, {});
+
+        expect(result.chart.events).toEqual({});
     });
 });

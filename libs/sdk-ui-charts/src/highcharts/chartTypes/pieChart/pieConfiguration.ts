@@ -1,8 +1,9 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions, SeriesPieOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
 import { getPieResponsiveConfig } from "../_chartCreators/responsive.js";
+import { highlightChartPoints } from "../_chartHighlighting/highlightPoints.js";
 
 export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
     const pieConfiguration = {
@@ -19,6 +20,8 @@ export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
                     };
                     this.series[0].update(options);
                     alignChart(this, config.chart?.verticalAlign);
+
+                    highlightChartPoints(this.series, config);
                 },
             },
         },

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
@@ -33,6 +33,7 @@ import {
     useDashboardSelector,
     useWidgetExecutionsHandler,
     selectIsInEditMode,
+    selectCrossFilteringSelectedPointsByWidgetRef,
 } from "../../../../../model/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { IDashboardInsightProps } from "../../types.js";
@@ -101,6 +102,9 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
     const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const crossFilteringSelectedPoints = useDashboardSelector(
+        selectCrossFilteringSelectedPointsByWidgetRef(ref),
+    );
 
     const chartConfig = useDashboardSelector(selectChartConfig);
 
@@ -231,7 +235,10 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 workspace={effectiveWorkspace}
                                 drillableItems={drillableItems}
                                 onDrill={onDrill}
-                                config={chartConfig}
+                                config={{
+                                    ...chartConfig,
+                                    selectedPoints: crossFilteringSelectedPoints,
+                                }}
                                 onLoadingChanged={handleLoadingChanged}
                                 locale={locale}
                                 settings={settings as IUserWorkspaceSettings}

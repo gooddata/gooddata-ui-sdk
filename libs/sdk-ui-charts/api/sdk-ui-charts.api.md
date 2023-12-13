@@ -24,6 +24,7 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDrillEventCallback } from '@gooddata/sdk-ui';
+import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
@@ -286,6 +287,8 @@ export interface IChartConfig {
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
     secondaryChartType?: "line" | "column" | "area";
+    // @internal
+    selectedPoints?: IDrillEventIntersectionElement[][];
     separators?: ISeparators;
     // @internal
     stacking?: boolean;

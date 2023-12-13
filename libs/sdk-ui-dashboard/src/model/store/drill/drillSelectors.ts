@@ -1,6 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { ExplicitDrill, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { ICrossFilteringItem } from "./types.js";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -57,4 +57,14 @@ export const selectCrossFilteringFiltersLocalIdentifiersByWidgetRef: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<string[] | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
     createSelector(selectCrossFilteringItemByWidgetRef(ref), (item) => item?.filterLocalIdentifiers),
+);
+
+/**
+ * @beta
+ */
+export const selectCrossFilteringSelectedPointsByWidgetRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IDrillEventIntersectionElement[][] | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(selectCrossFilteringItemByWidgetRef(ref), (item) => item?.selectedPoints),
 );

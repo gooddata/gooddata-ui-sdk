@@ -180,6 +180,7 @@ import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
 import { IDrillDownReference } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
+import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
 import { IDrillToCustomUrl } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
@@ -3478,6 +3479,7 @@ export interface ICreatePanelItemComponentProps {
 // @beta (undocumented)
 export interface ICrossFilteringItem {
     filterLocalIdentifiers: string[];
+    selectedPoints?: IDrillEventIntersectionElement[][];
     widgetRef: ObjRef | undefined;
 }
 
@@ -4168,6 +4170,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
         separators?: ISeparators;
         forceDisableDrillOnAxes?: boolean;
         isExportMode?: boolean;
+        selectedPoints?: IDrillEventIntersectionElement[][];
     };
     drillableItems: ExplicitDrill[] | undefined;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -6445,6 +6448,9 @@ export const selectCrossFilteringItemByWidgetRef: (ref: ObjRef | undefined) => D
 
 // @beta (undocumented)
 export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>;
+
+// @beta (undocumented)
+export const selectCrossFilteringSelectedPointsByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<IDrillEventIntersectionElement[][] | undefined>;
 
 // @public
 export const selectCurrentUser: DashboardSelector<IUser>;
