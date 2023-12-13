@@ -305,6 +305,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Drill in dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Inzoomen op inzicht",
     "configurationPanel.drillConfig.drillDown": "Zoomen",
+    "configurationPanel.drillConfig.disableDrillDownTooltip": "Zoomen is uitgeschakeld in de configuratie van dit inzicht.",
     "configurationPanel.drillConfig.drillIntoUrl": "Inzoomen op URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ongeldige URL-parameters",
     "configurationPanel.drillConfig.select": "Actie kiezen…",
@@ -390,6 +391,7 @@
     "filter.visibilityMode.tooltip.hidden": "Dit filter is verborgen. Het is alleen toegankelijk via de bewerkingsmodus.",
     "filter.visibilityMode.tooltip.readonly.editMode": "Dit filter is vergrendeld. U kunt het alleen wijzigen via de bewerkingsmodus.",
     "filter.visibilityMode.tooltip.readonly.viewMode": "Dit filter is vergrendeld.",
+    "filter.resetButton.tooltip": "Alle filters herstellen",
     "dateFilterDropdown.save": "Opslaan",
     "filter.configuration.mode.title": "Modus",
     "filter.configuration.mode.interactive.title": "Interactief",
@@ -397,5 +399,6 @@
     "filter.configuration.mode.locked.title": "Vergrendeld",
     "filter.configuration.mode.locked.tooltip": "Dashboard-gebruikers kunnen het filter zien maar niet wijzigen.",
     "filter.configuration.mode.hidden.title": "Verborgen",
-    "filter.configuration.mode.hidden.tooltip": "Dashboard-gebruikers kunnen het filter niet zien maar het wordt wel toegepast."
+    "filter.configuration.mode.hidden.tooltip": "Dashboard-gebruikers kunnen het filter niet zien maar het wordt wel toegepast.",
+    "filter.dependency.icon.tooltip": "Beschikbare waarden voor <strong>{filterTitle}</strong> worden beperkt door selectie in een ander filter."
 }
