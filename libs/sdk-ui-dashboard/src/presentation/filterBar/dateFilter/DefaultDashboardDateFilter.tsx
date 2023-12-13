@@ -41,7 +41,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
-    const { filter, onFilterChanged, config, readonly } = props;
+    const { filter, onFilterChanged, config, readonly, autoOpen } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>
@@ -55,9 +55,12 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const onApply = useCallback<IDateFilterProps["onApply"]>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
-            onFilterChanged(dateFilterOptionToDashboardDateFilter(option, exclude), option.localIdentifier);
+            onFilterChanged(
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
+                option.localIdentifier,
+            );
         },
-        [onFilterChanged],
+        [onFilterChanged, filter?.dateFilter.dataSet],
     );
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
@@ -76,7 +79,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         return function ElementsSelect(props: IFilterConfigurationProps) {
             return <DateFilterConfigurationBody {...props} intl={intl} />;
         };
-    }, []);
+    }, [intl]);
 
     return (
         <DateFilter
@@ -95,8 +98,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             locale={locale}
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
             isEditMode={isInEditMode}
+            openOnInit={autoOpen}
             weekStart={weekStart}
             customIcon={visibilityIcon}
+            showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
         />
     );

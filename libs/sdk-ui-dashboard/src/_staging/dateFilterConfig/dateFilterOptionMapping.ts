@@ -51,17 +51,25 @@ export function matchDateFilterToDateFilterOptionWithPreference(
         ? findDateFilterOptionById(preferredOptionId, availableOptions)
         : undefined;
 
+    const isAllTime =
+        dateFilter &&
+        dateFilter.dateFilter.type === "relative" &&
+        dateFilter.dateFilter.granularity === "GDC.time.date" &&
+        dateFilter.dateFilter.from === undefined &&
+        dateFilter.dateFilter.to === undefined;
+
     // we only really need to handle the cases when the selected option is a form
     // other cases are correctly handled by the unbiased matching function
     if (
         dateFilter &&
+        !isAllTime &&
         (preferredOption?.type === "absoluteForm" || preferredOption?.type === "relativeForm") &&
         canReconstructFormForStoredFilter(availableOptions, dateFilter)
     ) {
         return reconstructFormForStoredFilter(availableOptions, dateFilter);
     }
 
-    return matchDateFilterToDateFilterOption(dateFilter, availableOptions);
+    return matchDateFilterToDateFilterOption(dateFilter, availableOptions, isAllTime);
 }
 
 /**
@@ -72,9 +80,10 @@ export function matchDateFilterToDateFilterOptionWithPreference(
 export function matchDateFilterToDateFilterOption(
     dateFilter: IDashboardDateFilter | undefined,
     availableOptions: IDateFilterOptionsByType,
+    isAllTime: boolean = false,
 ): IDateFilterOptionInfo {
-    // no value means All Time, try matching against All time (if it is available) or create virtual preset for it
-    if (!dateFilter) {
+    // no value means common All Time, try matching against All time (if it is available) or create virtual preset for it
+    if (!dateFilter || isAllTime) {
         const { allTime } = availableOptions;
         return allTime
             ? { dateFilterOption: allTime, excludeCurrentPeriod: false }

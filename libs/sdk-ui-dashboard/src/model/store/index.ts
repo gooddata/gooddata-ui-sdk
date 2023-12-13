@@ -126,6 +126,8 @@ export {
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
     selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
+    selectIsAttributeFilterDependentByDisplayForm,
     selectIsAttributeFilterDependentByLocalIdentifier,
 } from "./filterContext/filterContextSelectors.js";
 export {

@@ -54,6 +54,16 @@ export interface IDashboardDateFilterProps {
      * Specify whether the filter should be readonly.
      */
     readonly?: boolean;
+
+    /**
+     * Specify whether dragging handle and grab cursor should be displayed on hover
+     */
+    isDraggable?: boolean;
+
+    /**
+     * Specify whether should render filter with open dropdown
+     */
+    autoOpen?: boolean;
 }
 
 /**

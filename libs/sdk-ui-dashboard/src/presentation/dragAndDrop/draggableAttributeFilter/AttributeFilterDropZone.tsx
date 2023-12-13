@@ -19,14 +19,15 @@ export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilter
     const isEditMode = useDashboardSelector(selectIsInEditMode);
 
     const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
-        ["attributeFilter", "attributeFilter-placeholder"],
+        ["attributeFilter", "dateFilter", "attributeFilter-placeholder"],
         {
             drop: () => onDrop(targetIndex),
         },
         [targetIndex],
     );
 
-    const isDraggingAttribute = itemType !== undefined && itemType === "attributeFilter";
+    const isDraggingAttribute =
+        itemType !== undefined && (itemType === "attributeFilter" || itemType === "dateFilter");
 
     if (!isEditMode || isDraggingAttribute) {
         return null;

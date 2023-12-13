@@ -471,6 +471,8 @@ export {
     getSelectedElementsCount,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
+    isDashboardDateFilterWithDimension,
+    isDashboardCommonDateFilter,
     isRelativeDashboardDateFilter,
     isAbsoluteDashboardDateFilter,
     isDashboardDateFilterReference,

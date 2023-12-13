@@ -2,18 +2,24 @@
 import cx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { removeAttributeFilter, useDashboardDispatch } from "../../model/index.js";
+import { removeAttributeFilter, removeDateFilter, useDashboardDispatch } from "../../model/index.js";
 import { getDropZoneDebugStyle } from "./debug.js";
 import { useDashboardDrop } from "./useDashboardDrop.js";
+import { isDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 export function DeleteDropZone() {
     const dispatch = useDashboardDispatch();
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        "attributeFilter",
+        ["attributeFilter", "dateFilter"],
         {
             drop: ({ filter }) => {
-                const identifier = filter.attributeFilter.localIdentifier!;
-                dispatch(removeAttributeFilter(identifier));
+                if (isDashboardAttributeFilter(filter)) {
+                    const identifier = filter.attributeFilter.localIdentifier!;
+                    dispatch(removeAttributeFilter(identifier));
+                } else {
+                    const dataSet = filter.dateFilter.dataSet!;
+                    dispatch(removeDateFilter(dataSet));
+                }
             },
         },
         [dispatch],

@@ -63,7 +63,7 @@ export const areAllFiltersHidden = (
     const isCommonDateFilterHidden = effectedDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
 
     const areAllDraggableFiltersHidden = draggableFilters.every((it) => {
-        if(isFilterBarDateFilterWithDimension(it)) {
+        if (isFilterBarDateFilterWithDimension(it)) {
             return isDateFilterHidden(it, effectedDateFiltersModeMap);
         } else {
             return isAttributeFilterHidden(it, effectedAttributeFiltersModeMap);
@@ -80,7 +80,7 @@ const isAttributeFilterHidden = (
     if (isFilterBarFilterPlaceholder(filter)) {
         return false;
     }
-    if(isFilterBarAttributeFilter(filter)) {
+    if (isFilterBarAttributeFilter(filter)) {
         const attributeFilterMode = effectedAttributeFiltersModeMap.get(
             filter.filter.attributeFilter.localIdentifier!,
         );
@@ -96,10 +96,8 @@ const isDateFilterHidden = (
     if (isFilterBarFilterPlaceholder(filter)) {
         return false;
     }
-    if(isFilterBarDateFilterWithDimension(filter)) {
-        const dateFilterMode = dateFiltersModeMap.get(
-            filter.filter.dateFilter.localIdentifier!,
-        );
+    if (isFilterBarDateFilterWithDimension(filter)) {
+        const dateFilterMode = dateFiltersModeMap.get(filter.filter.dateFilter.localIdentifier!);
         return dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
     }
     return false;

@@ -65,7 +65,6 @@ export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<
     },
 );
 
-
 //TODO INE: implement full + introduce new state slice for it
 /**
  * Get a map of attribute filter modes based on the current screen mode (edit or view).

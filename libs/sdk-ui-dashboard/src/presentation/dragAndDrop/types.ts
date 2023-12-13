@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IDashboardAttributeFilter, IInsight, IKpi } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
 
 /**
@@ -7,6 +7,7 @@ import { ICustomWidget } from "../../model/types/layoutTypes.js";
  */
 export type DraggableContentItemType =
     | "attributeFilter"
+    | "dateFilter"
     | "attributeFilter-placeholder"
     | "insightListItem"
     | "insight"
@@ -45,6 +46,22 @@ export type AttributeFilterDraggableItem = {
  */
 export function isAttributeFilterDraggableItem(item: any): item is AttributeFilterDraggableItem {
     return item.type === "attributeFilter";
+}
+
+/**
+ * @internal
+ */
+export type DateFilterDraggableItem = {
+    type: "dateFilter";
+    filter: IDashboardDateFilter;
+    filterIndex: number;
+};
+
+/**
+ * @internal
+ */
+export function isDateFilterDraggableItem(item: any): item is DateFilterDraggableItem {
+    return item.type === "dateFilter";
 }
 
 /**
@@ -197,6 +214,7 @@ export type CustomDraggableItem = {
 export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
+    | DateFilterDraggableItem
     | InsightDraggableItem
     | InsightDraggableListItem
     | InsightPlaceholderDraggableItem
@@ -230,6 +248,7 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
  */
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
+    dateFilter: DateFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insight: InsightDraggableItem;
     insightListItem: InsightDraggableListItem;

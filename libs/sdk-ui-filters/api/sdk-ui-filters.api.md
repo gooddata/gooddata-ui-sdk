@@ -706,6 +706,10 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     locale?: string;
     // (undocumented)
+    openOnInit?: boolean;
+    // (undocumented)
+    showDropDownHeaderMessage?: boolean;
+    // (undocumented)
     weekStart?: WeekStart;
 }
 

@@ -8,6 +8,7 @@ import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } fro
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
+    DateFilterDraggableItem,
     DraggableContentItemType,
     IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
@@ -59,6 +60,14 @@ export type IAttributeFilterDraggingComponentProps = {
 /**
  * @internal
  */
+export type IDateFilterDraggingComponentProps = {
+    itemType: "dateFilter";
+    item: DateFilterDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type IInsightDraggingComponentProps = {
     itemType: "insight";
     item: InsightDraggableItem;
@@ -84,6 +93,12 @@ export type ICustomDraggingComponentProps = {
  * @internal
  */
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type DateFilterDraggingComponent = ComponentType<IDateFilterDraggingComponentProps>;
+
 /**
  * @internal
  */

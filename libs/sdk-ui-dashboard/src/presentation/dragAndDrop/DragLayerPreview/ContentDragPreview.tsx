@@ -6,6 +6,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 import { DEBUG_SHOW_DROP_ZONES } from "../debug.js";
 import { DraggableContentItem, DraggableContentItemType } from "../types.js";
 import { DragPreviewProps } from "./types.js";
+import { DefaultDateFilterDraggingComponent } from "../index.js";
 
 function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | null) {
     if (!initialOffset || !clientOffset) {
@@ -31,6 +32,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
     const previewComponentsMap = useMemo<Partial<Record<DraggableContentItemType, any>>>(
         () => ({
             attributeFilter: AttributeFilterComponentSet.dragging.DraggingComponent,
+            dateFilter: DefaultDateFilterDraggingComponent, //TOTO INE: do we need customization?
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
             kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
         }),

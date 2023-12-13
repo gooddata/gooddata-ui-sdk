@@ -15,6 +15,7 @@ import {
 
 import {
     addAttributeFilter as addAttributeFilterAction,
+    addDateFilter as addDateFilterAction,
     dispatchAndWaitFor,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
@@ -36,9 +37,7 @@ export type FilterBarFilterPlaceholder = {
 /**
  * @internal
  */
-export function isFilterBarFilterPlaceholder(
-    object: any,
-): object is FilterBarFilterPlaceholder {
+export function isFilterBarFilterPlaceholder(object: any): object is FilterBarFilterPlaceholder {
     return object.type === "filterPlaceholder";
 }
 
@@ -53,15 +52,15 @@ export type FilterBarAttributeFilterIndexed = {
 /**
  * @internal
  */
-export function isFilterBarAttributeFilter(
-    object: any,
-): object is FilterBarAttributeFilterIndexed {
+export type FilterBarAttributeItem = FilterBarFilterPlaceholder | FilterBarAttributeFilterIndexed;
+export function isFilterBarAttributeFilter(object: any): object is FilterBarAttributeFilterIndexed {
     return isDashboardAttributeFilter(object.filter);
 }
 
 /**
  * @internal
  */
+export type FilterBarAttributeItems = FilterBarAttributeItem[];
 export type FilterBarDateFilterIndexed = {
     filter: IDashboardDateFilter;
     filterIndex: number;
@@ -73,7 +72,7 @@ export type FilterBarDateFilterIndexed = {
 export function isFilterBarDateFilterWithDimension(
     object: FilterBarItem,
 ): object is FilterBarDateFilterIndexed {
-    if(!isFilterBarFilterPlaceholder(object) && isDashboardDateFilter(object.filter)) {
+    if (!isFilterBarFilterPlaceholder(object) && isDashboardDateFilter(object.filter)) {
         return !!object.filter.dateFilter.dataSet;
     }
     return false;
@@ -82,14 +81,15 @@ export function isFilterBarDateFilterWithDimension(
 /**
  * @internal
  */
-export type FilterBarItem = FilterBarFilterPlaceholder | FilterBarAttributeFilterIndexed | FilterBarDateFilterIndexed;
+export type FilterBarItem =
+    | FilterBarFilterPlaceholder
+    | FilterBarAttributeFilterIndexed
+    | FilterBarDateFilterIndexed;
 
 /**
  * @internal
  */
 export type FilterBarDraggableItems = FilterBarItem[];
-
-
 
 // function isDashboardCommonDateFilter(
 //     object: FilterContextItem,
@@ -100,10 +100,8 @@ export type FilterBarDraggableItems = FilterBarItem[];
 //     return false;
 // }
 
-function isDashboardDateFilterWithDimension(
-    object: FilterContextItem,
-): object is IDashboardDateFilter {
-    if(isDashboardDateFilter(object)) {
+function isDashboardDateFilterWithDimension(object: FilterContextItem): object is IDashboardDateFilter {
+    if (isDashboardDateFilter(object)) {
         return !!object.dateFilter.dataSet;
     }
     return false;
@@ -114,7 +112,7 @@ function isDashboardDateFilterWithDimension(
  */
 export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     {
-        dateFilter: IDashboardDateFilter;
+        commonDateFilter: IDashboardDateFilter;
         draggableFiltersWithPlaceholder: FilterBarDraggableItems;
         attributeFiltersCount: number;
         autoOpenFilter: ObjRef | undefined;
@@ -131,10 +129,12 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
-
     // TODO INE: clean up types conversion from FilterContextItem to
     // IDashboardDateFilter without dimension + FilterBarDraggableItems
-    const [draggableFilters, [commonDateFilter]] = partition(filters, (f)=> isDashboardAttributeFilter(f) || isDashboardDateFilterWithDimension(f));
+    const [draggableFilters, [commonDateFilter]] = partition(
+        filters,
+        (f) => isDashboardAttributeFilter(f) || isDashboardDateFilterWithDimension(f),
+    );
 
     const [dateFiltersWithDimensions, attributeFilters] = partition(draggableFilters, isDashboardDateFilter);
 
@@ -183,23 +183,23 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
 
     const draggableFiltersWithPlaceholder = useMemo(() => {
         const filterObjects: FilterBarDraggableItems = draggableFilters.map((filter, filterIndex) => {
-            if(isDashboardAttributeFilter(filter)) {
+            if (isDashboardAttributeFilter(filter)) {
                 return {
                     filter,
                     filterIndex,
-                }
+                };
             }
 
             return {
                 filter,
                 filterIndex,
-            }
+            };
         });
 
         const containsAddedAttributeDisplayForm =
             selectedDisplayForm &&
             draggableFilters.some((draggableFilter) => {
-                if(isDashboardAttributeFilter(draggableFilter)) {
+                if (isDashboardAttributeFilter(draggableFilter)) {
                     return areObjRefsEqual(draggableFilter.attributeFilter.displayForm, selectedDisplayForm);
                 }
                 return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
@@ -223,13 +223,14 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
 
             // date filter added
             // TODO INE: better distinguishing based on some new additional filter type param instead of ref type?
-            if(isIdentifierRef(displayForm) && displayForm.type === "dataSet") {
+            if (isIdentifierRef(displayForm) && displayForm.type === "dataSet") {
                 const relatedDateDataset = dateDatasets.find((dds) =>
                     areObjRefsEqual(dds.dataSet.ref, displayForm),
                 );
 
-                const usedDateDataset = dateFiltersWithDimensions.find((df) => areObjRefsEqual(df.dateFilter.dataSet, relatedDateDataset?.dataSet.ref));
-
+                const usedDateDataset = dateFiltersWithDimensions.find((df) =>
+                    areObjRefsEqual(df.dateFilter.dataSet, relatedDateDataset?.dataSet.ref),
+                );
 
                 // We allowed just one dateFilter for one date dimension,
                 if (!usedDateDataset) {
@@ -237,14 +238,13 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                     setAutoOpenFilter(displayForm);
                     dispatchAndWaitFor(
                         dispatch,
-                        // TODO INE: dispatch new action for adding date filter instead of this one
-                        addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
+                        addDateFilterAction(addedAttributeFilter.filterIndex, displayForm),
                     ).finally(clearAddedFilter);
                 } else {
                     setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
                     clearAddedFilter();
                 }
-            // attribute filter added
+                // attribute filter added
             } else {
                 const relatedAttribute = allAttributes.find((att) =>
                     att.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
@@ -267,9 +267,16 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                     clearAddedFilter();
                 }
             }
-
         },
-        [addedAttributeFilter, dateFiltersWithDimensions, attributeFilters, dateDatasets, allAttributes, clearAddedFilter, dispatch],
+        [
+            addedAttributeFilter,
+            dateFiltersWithDimensions,
+            attributeFilters,
+            dateDatasets,
+            allAttributes,
+            clearAddedFilter,
+            dispatch,
+        ],
     );
 
     const onCloseAttributeFilter = useCallback(() => {
@@ -277,7 +284,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     }, []);
     return [
         {
-            dateFilter: commonDateFilter as IDashboardDateFilter, // TODO INE: rename even output variable + remove cast once types fixed
+            commonDateFilter: commonDateFilter as IDashboardDateFilter, // TODO INE:  remove cast once types fixed
             draggableFiltersWithPlaceholder,
             attributeFiltersCount: draggableFilters.length,
             autoOpenFilter,

@@ -496,6 +496,8 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 // @public
 export interface IAbsoluteDateFilterValues {
     // (undocumented)
+    dataSet?: ObjRef;
+    // (undocumented)
     from: string;
     // (undocumented)
     to: string;
@@ -2119,6 +2121,8 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 // @public
 export interface IRelativeDateFilterValues {
     // (undocumented)
+    dataSet?: ObjRef;
+    // (undocumented)
     from: number;
     // (undocumented)
     granularity: string;
@@ -2357,10 +2361,16 @@ export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttri
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
 
 // @alpha
+export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDateFilter;
+
+// @alpha
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
+// @alpha
+export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
@@ -3400,13 +3410,13 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @alpha
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
 
 // @alpha
-export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
+export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter;
@@ -3481,7 +3491,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
 
 // @alpha
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;

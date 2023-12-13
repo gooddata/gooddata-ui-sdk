@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 export * from "./draggableAttributeFilter/index.js";
+export * from "./draggableDateFilter/index.js";
 export * from "./draggableWidget/index.js";
 export * from "./DragLayer.js";
 export * from "./DeleteDropZone.js";

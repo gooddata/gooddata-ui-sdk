@@ -47,8 +47,10 @@ export interface IDateFilterCoreProps {
     isEditMode: boolean;
     locale?: string;
 
+    showDropDownHeaderMessage?: boolean;
     customFilterName?: string;
     disabled?: boolean;
+    openOnInit?: boolean;
 
     onApplyClick: () => void;
     onCancelClick: () => void;
@@ -85,6 +87,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     customFilterName,
     dateFormat,
     disabled,
+    openOnInit,
     locale,
     filterOptions,
     isTimeForAbsoluteRangeEnabled,
@@ -93,6 +96,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     FilterConfigurationComponent,
     onApplyClick,
     onCancelClick,
+    showDropDownHeaderMessage,
     ...dropdownBodyProps
 }) => {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -146,6 +150,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                     );
                     return (
                         <Dropdown
+                            openOnInit={openOnInit}
                             closeOnParentScroll={true}
                             closeOnMouseDrag={true}
                             closeOnOutsideClick={true}
@@ -178,6 +183,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                     // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                     <DateFilterBody
                                         {...dropdownBodyProps}
+                                        showHeaderMessage={showDropDownHeaderMessage}
                                         onApplyClick={onApplyClick}
                                         onCancelClick={onCancelClick}
                                         filterOptions={filteredFilterOptions}

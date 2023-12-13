@@ -3,7 +3,11 @@ import cx from "classnames";
 import React from "react";
 import { moveAttributeFilter, useDashboardDispatch } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
-import { isAttributeFilterDraggableItem, isAttributeFilterPlaceholderDraggableItem } from "../types.js";
+import {
+    isAttributeFilterDraggableItem,
+    isAttributeFilterPlaceholderDraggableItem,
+    isDateFilterDraggableItem,
+} from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 
 export type AttributeFilterDropZonePlacement = "inside" | "outside";
@@ -44,10 +48,12 @@ export function AttributeFilterDropZoneHint({
     const inactiveIndexes = getIgnoreIndexes(placement, hintPosition, targetIndex);
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        acceptPlaceholder ? ["attributeFilter", "attributeFilter-placeholder"] : "attributeFilter",
+        acceptPlaceholder
+            ? ["attributeFilter", "dateFilter", "attributeFilter-placeholder"]
+            : "attributeFilter",
         {
             canDrop: (item) => {
-                if (isAttributeFilterDraggableItem(item)) {
+                if (isAttributeFilterDraggableItem(item) || isDateFilterDraggableItem(item)) {
                     return !inactiveIndexes.includes(item.filterIndex);
                 }
 
@@ -62,6 +68,15 @@ export function AttributeFilterDropZoneHint({
                     const originalIndex = item.filterIndex;
                     const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
                     const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    dispatch(moveAttributeFilter(identifier, index));
+                }
+
+                if (isDateFilterDraggableItem(item)) {
+                    const identifier = item.filter.dateFilter.localIdentifier!;
+                    const originalIndex = item.filterIndex;
+                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
+                    const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    // TODO INE: new action or change current
                     dispatch(moveAttributeFilter(identifier, index));
                 }
 

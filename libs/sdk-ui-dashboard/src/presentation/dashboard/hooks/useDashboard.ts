@@ -185,6 +185,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardKpiComponentSetFactory(kpiProvider);
     }, [kpiProvider]);
 
+    // TODO INE: add similar set for DateFilter?
     const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
         return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
     }, [attributeFilterProvider]);

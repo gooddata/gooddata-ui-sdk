@@ -184,6 +184,30 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter} without date dataSet (aka dimension) defined.
+ * @alpha
+ */
+export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDateFilter {
+    return (
+        !isEmpty(obj) &&
+        !!(obj as IDashboardDateFilter).dateFilter &&
+        !(obj as IDashboardDateFilter).dateFilter.dataSet
+    );
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter} with date dataSet (aka dimension) defined.
+ * @alpha
+ */
+export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashboardDateFilter {
+    return (
+        !isEmpty(obj) &&
+        !!(obj as IDashboardDateFilter).dateFilter &&
+        !!(obj as IDashboardDateFilter).dateFilter.dataSet
+    );
+}
+
+/**
  * Returns true when given date filter has type set to relative.
  * @alpha
  */
@@ -211,6 +235,7 @@ export function newRelativeDashboardDateFilter(
     granularity: DateFilterGranularity,
     from: number,
     to: number,
+    dataSet?: ObjRef,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -218,6 +243,7 @@ export function newRelativeDashboardDateFilter(
             granularity,
             from,
             to,
+            dataSet,
         },
     };
 }
@@ -229,13 +255,18 @@ export function newRelativeDashboardDateFilter(
  * @param to - end of the interval in ISO-8601 calendar date format
  * @alpha
  */
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter {
+export function newAbsoluteDashboardDateFilter(
+    from: DateString,
+    to: DateString,
+    dataSet?: ObjRef,
+): IDashboardDateFilter {
     return {
         dateFilter: {
             type: "absolute",
             granularity: "GDC.time.date",
             from,
             to,
+            dataSet,
         },
     };
 }
@@ -245,11 +276,12 @@ export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString)
  *
  * @alpha
  */
-export function newAllTimeDashboardDateFilter(): IDashboardDateFilter {
+export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter {
     return {
         dateFilter: {
             type: "relative",
             granularity: "GDC.time.date",
+            dataSet,
         },
     };
 }

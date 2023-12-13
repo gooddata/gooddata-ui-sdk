@@ -668,6 +668,7 @@ export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
 export interface IAbsoluteDateFilterValues {
     from: string;
     to: string;
+    dataSet?: ObjRef;
 }
 
 /**
@@ -683,6 +684,7 @@ export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsolute
     return {
         from: filter.absoluteDateFilter.from,
         to: filter.absoluteDateFilter.to,
+        dataSet: filter.absoluteDateFilter.dataSet,
     };
 }
 
@@ -695,6 +697,7 @@ export interface IRelativeDateFilterValues {
     from: number;
     to: number;
     granularity: string;
+    dataSet?: ObjRef;
 }
 
 /**
@@ -711,6 +714,7 @@ export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelative
         from: filter.relativeDateFilter.from,
         to: filter.relativeDateFilter.to,
         granularity: filter.relativeDateFilter.granularity,
+        dataSet: filter.relativeDateFilter.dataSet,
     };
 }
 

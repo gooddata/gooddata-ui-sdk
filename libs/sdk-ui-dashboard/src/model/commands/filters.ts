@@ -28,6 +28,12 @@ import { IDashboardFilter } from "../../types.js";
  */
 export interface DateFilterSelection {
     /**
+     * The reference to date data set to which date filter belongs.
+     * If not defined it refers to so. called common date filter which data set is defined per widget
+     */
+    readonly dataSet?: ObjRef;
+
+    /**
      * Indicates whether the filter should select absolute or relative values.
      *
      * @remarks
@@ -117,11 +123,13 @@ export function changeDateFilterSelection(
     to?: DateString | number,
     dateFilterOptionLocalId?: string,
     correlationId?: string,
+    dataSet?: ObjRef,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
+            dataSet,
             type,
             granularity,
             from,
@@ -150,7 +158,8 @@ export function changeDateFilterSelection(
  */
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
     if (isAllTimeDateFilter(filter)) {
-        return clearDateFilterSelection(correlationId);
+        const values = relativeDateFilterValues(filter);
+        return clearDateFilterSelection(correlationId, values.dataSet);
     }
 
     if (isRelativeDateFilter(filter)) {
@@ -162,6 +171,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.to,
             undefined,
             correlationId,
+            values.dataSet,
         );
     } else {
         const values = absoluteDateFilterValues(filter);
@@ -172,6 +182,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.to,
             undefined,
             correlationId,
+            values.dataSet,
         );
     }
 }
@@ -184,11 +195,15 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
  *
  * @public
  */
-export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
+export function clearDateFilterSelection(
+    correlationId?: string,
+    dataSet?: ObjRef,
+): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
+            dataSet,
             type: "relative",
             granularity: "GDC.time.date",
         },
@@ -832,6 +847,86 @@ export function setAttributeFilterSelectionMode(
         payload: {
             filterLocalId,
             selectionMode,
+        },
+    };
+}
+
+//////////////////// DATE FILTER //////////////////////////
+
+/**
+ * Payload of the {@link AddDateFilter} command.
+ *
+ * @alpha
+ */
+export interface AddDateFilterPayload {
+    readonly index: number;
+    readonly dateDataset: ObjRef;
+}
+
+/**
+ * TODO INE: doc
+ *
+ * @alpha
+ */
+export interface AddDateFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
+    readonly payload: AddDateFilterPayload;
+}
+
+/**
+ * TODO INE: doc
+ *
+ * @alpha
+ * @param filterLocalId - TODO: doc
+ * @param correlationId - TODO: doc
+ * @returns
+ */
+export function addDateFilter(index: number, dateDataset: ObjRef, correlationId?: string): AddDateFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD",
+        correlationId,
+        payload: {
+            index,
+            dateDataset,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link RemoveDateFilters} command.
+ * @beta
+ */
+export interface RemoveDateFiltersPayload {
+    /**
+     * XXX: we do not necessarily need to remove multiple filters atm, but this should
+     *  be very easy to do and adds some extra flexibility.
+     */
+    readonly dataSets: ObjRef[];
+}
+
+/**
+ * @beta
+ */
+export interface RemoveDateFilters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
+    readonly payload: RemoveDateFiltersPayload;
+}
+
+/**
+ * Creates the RemoveAttributeFilters command. Dispatching this command will result in the removal
+ * of dashboard's attribute filter with the provided local identifier.
+ *
+ * @param filterLocalId - dashboard attribute filter's local identifier
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @beta
+ */
+export function removeDateFilter(dataSet: ObjRef, correlationId?: string): RemoveDateFilters {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE",
+        correlationId,
+        payload: {
+            dataSets: [dataSet],
         },
     };
 }

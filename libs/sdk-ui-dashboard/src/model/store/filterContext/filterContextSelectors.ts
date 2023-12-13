@@ -15,6 +15,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IFilterContextDefinition,
     IDashboardObjectIdentity,
+    isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -203,6 +204,36 @@ export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilt
     );
 
 /**
+ * This selector returns dashboard's filter context date filter with dimension specified.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDateFiltersForDimension: DashboardSelector<IDashboardDateFilter[]> =
+    createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter[] =>
+        filters.filter(isDashboardDateFilterWithDimension),
+    );
+
+/**
+ * Creates a selector for selecting date filter by its dataset {@link @gooddata/sdk-model#ObjRef}.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDateFilterByDataSet: (
+    dataSet: ObjRef,
+) => (state: DashboardState) => IDashboardDateFilter | undefined = createMemoizedSelector((dataSet: ObjRef) =>
+    createSelector(selectFilterContextDateFiltersForDimension, (dateFilters) => {
+        return dateFilters.find((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+    }),
+);
+
+/**
  * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
  *
  * @remarks
@@ -364,7 +395,25 @@ export const selectIsCircularDependency: (
         ),
 );
 
-const MAX_ATTRIBUTE_FILTERS_COUNT = 30;
+const MAX_DRAGGABLE_FILTERS_COUNT = 30;
+
+/**
+ * This selector returns whether any more attribute filters can be added.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ * @deprecated use selectCanAddMoreFilters instead
+ */
+export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFiltersForDimension,
+    (attributeFilters, dateFiltersWithDimension) => {
+        return attributeFilters.length + dateFiltersWithDimension.length < MAX_DRAGGABLE_FILTERS_COUNT;
+    },
+);
 
 /**
  * This selector returns whether any more attribute filters can be added.
@@ -375,13 +424,7 @@ const MAX_ATTRIBUTE_FILTERS_COUNT = 30;
  *
  * @public
  */
-export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
-    selectFilterContextAttributeFilters,
-    (attributeFilters) => {
-        return attributeFilters.length < MAX_ATTRIBUTE_FILTERS_COUNT;
-    },
-);
-
+export const selectCanAddMoreFilters = selectCanAddMoreAttributeFilters;
 /**
  * This selector returns information whether attribute filter from filter context has some dependencies.
  *

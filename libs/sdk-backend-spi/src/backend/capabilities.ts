@@ -276,7 +276,7 @@ export interface IBackendCapabilities {
      */
     supportsCrossFiltering?: boolean;
 
-	/**
+    /**
      * Indicates whether backend supports to have multiple date filters.
      */
     supportsMultipleDateFilters?: boolean;

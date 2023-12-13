@@ -11,7 +11,10 @@ import toNumber from "lodash/toNumber.js";
 import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters.js";
 import { dateFilterChanged } from "../../../events/filters.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
-import { selectFilterContextDateFilter } from "../../../store/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextDateFilter,
+    selectFilterContextDateFilterByDataSet,
+} from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { canApplyDateFilter, dispatchFilterContextChanged } from "../common.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -25,7 +28,7 @@ export function* changeDateFilterSelectionHandler(
         cmd.payload.type === "relative" &&
         cmd.payload.granularity === "GDC.time.date" &&
         cmd.payload.from === undefined &&
-        cmd.payload.to === undefined;
+        cmd.payload.to === undefined; // TODO INE: replace by isAllTimeDashboardDateFilter?
 
     const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
         canApplyDateFilter,
@@ -42,19 +45,20 @@ export function* changeDateFilterSelectionHandler(
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
-                ? { type: "allTime" }
+                ? { type: "allTime", dataSet: cmd.payload.dataSet }
                 : {
                       type: cmd.payload.type,
                       granularity: cmd.payload.granularity,
                       from: cmd.payload.from,
                       to: cmd.payload.to,
+                      dataSet: cmd.payload.dataSet,
                   },
         ),
     );
 
-    const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
-        selectFilterContextDateFilter,
-    );
+    const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
+        ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
+        : yield select(selectFilterContextDateFilter);
 
     yield dispatchDashboardEvent(
         dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),

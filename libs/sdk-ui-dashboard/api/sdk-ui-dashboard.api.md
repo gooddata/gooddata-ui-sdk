@@ -318,6 +318,25 @@ export interface AddAttributeFilterPlaceholderProps {
     disabled?: boolean;
 }
 
+// @alpha
+export interface AddDateFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: AddDateFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
+}
+
+// @alpha
+export function addDateFilter(index: number, dateDataset: ObjRef, correlationId?: string): AddDateFilter;
+
+// @alpha
+export interface AddDateFilterPayload {
+    // (undocumented)
+    readonly dateDataset: ObjRef;
+    // (undocumented)
+    readonly index: number;
+}
+
 // @alpha (undocumented)
 export interface AddDrillDownForInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -587,7 +606,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeDrillableItems extends IDashboardCommand {
@@ -876,7 +895,7 @@ export interface ChangeSharingPayload {
 }
 
 // @public
-export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
+export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef): ChangeDateFilterSelection;
 
 // @alpha
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
@@ -2627,8 +2646,19 @@ export interface DateFilterConfigState {
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
 
+// @internal (undocumented)
+export type DateFilterDraggableItem = {
+    type: "dateFilter";
+    filter: IDashboardDateFilter;
+    filterIndex: number;
+};
+
+// @internal (undocumented)
+export type DateFilterDraggingComponent = ComponentType<IDateFilterDraggingComponentProps>;
+
 // @public
 export interface DateFilterSelection {
+    readonly dataSet?: ObjRef;
     readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
@@ -2809,10 +2839,10 @@ export type DraggableComponent = {
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | CustomWidgetDraggableItem | CustomDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | CustomWidgetDraggableItem | CustomDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "custom";
 
 // @internal (undocumented)
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
@@ -2829,6 +2859,7 @@ export type DraggableItem = DraggableContentItem | DraggableInternalItem;
 // @internal (undocumented)
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
+    dateFilter: DateFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insight: InsightDraggableItem;
     insightListItem: InsightDraggableListItem;
@@ -3613,8 +3644,10 @@ export interface IDashboardDateFilterConfig {
 
 // @public (undocumented)
 export interface IDashboardDateFilterProps {
+    autoOpen?: boolean;
     config: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
+    isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     readonly?: boolean;
 }
@@ -3925,6 +3958,12 @@ export interface IDashboardWidgetsOverlayProps {
     // @alpha
     widgetsOverlayFn?: WidgetsOverlayFn;
 }
+
+// @internal (undocumented)
+export type IDateFilterDraggingComponentProps = {
+    itemType: "dateFilter";
+    item: DateFilterDraggableItem;
+};
 
 // @public
 export interface IDateFiltersCustomizer {
@@ -4820,6 +4859,9 @@ export const isDashboardWidgetExecutionStarted: (obj: unknown) => obj is Dashboa
 
 // @beta
 export const isDashboardWidgetExecutionSucceeded: (obj: unknown) => obj is DashboardWidgetExecutionSucceeded;
+
+// @internal (undocumented)
+export function isDateFilterDraggableItem(item: any): item is DateFilterDraggableItem;
 
 // @beta
 export const isDateFilterValidationFailed: (obj: unknown) => obj is DateFilterValidationFailed;
@@ -5753,6 +5795,22 @@ export interface RemoveAttributeFiltersPayload {
     readonly filterLocalIds: string[];
 }
 
+// @beta
+export function removeDateFilter(dataSet: ObjRef, correlationId?: string): RemoveDateFilters;
+
+// @beta (undocumented)
+export interface RemoveDateFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: RemoveDateFiltersPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
+}
+
+// @beta
+export interface RemoveDateFiltersPayload {
+    readonly dataSets: ObjRef[];
+}
+
 // @alpha (undocumented)
 export interface RemoveDrillDownForInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -6202,8 +6260,11 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
 // @public
 export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities>;
 
-// @public
+// @public @deprecated
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean>;
+
+// @public
+export const selectCanAddMoreFilters: DashboardSelector<boolean>;
 
 // @public
 export const selectCanCreateAnalyticalDashboard: DashboardSelector<boolean>;

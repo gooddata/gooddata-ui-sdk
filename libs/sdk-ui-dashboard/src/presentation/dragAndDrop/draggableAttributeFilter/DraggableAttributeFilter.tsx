@@ -6,7 +6,7 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     selectSupportsElementUris,
-    selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
 } from "../../../model/index.js";
 import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint.js";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
@@ -48,7 +48,7 @@ export function DraggableAttributeFilter({
     );
 
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
-    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
+    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreFilters);
     const filterToUse = useMemo(() => {
         if (supportElementUris) {
             return filter;
