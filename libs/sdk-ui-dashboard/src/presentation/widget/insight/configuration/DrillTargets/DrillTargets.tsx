@@ -121,6 +121,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         case DRILL_TARGET_TYPE.DRILL_TO_URL:
             return (
                 <DrillTargetUrlItem
+                    widgetRef={item.widgetRef}
                     urlDrillTarget={isDrillToUrlConfig(item) ? item.urlDrillTarget : undefined}
                     attributes={item.attributes}
                     onSelect={onCustomUrlTargetSelect}

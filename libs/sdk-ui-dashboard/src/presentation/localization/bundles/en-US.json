@@ -1965,6 +1965,11 @@
         "comment": "Label of the parameters section that contains identifiers in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": {
+        "value": "Dashboard",
+        "comment": "Label of the parameters section that contains dashboard filters in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
         "value": "Apply",
         "comment": "Label of the button that applies changes in Drill to URL 'Custom URL' editor.",

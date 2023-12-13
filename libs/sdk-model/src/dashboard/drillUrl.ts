@@ -27,10 +27,12 @@ function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
     return matches;
 }
 
-const identifierSplitRegexp = /(\{attribute_title\(.*?\)\})/g;
-const identifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
+const attributeIdentifierSplitRegexp = /(\{attribute_title\(.*?\)\})/g;
+const attributeIdentifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
+const dashboardAttributeFilterMatchRegexp = /\{dash_attribute_filter_selection\((.*?)\)\}/g;
+const insightAttributeFilterMatchRegexp = /\{attribute_filter_selection\((.*?)\)\}/g;
 
-const identifierToPlaceholder = (ref: IdentifierRef) => `{attribute_title(${ref.identifier})}`;
+const attributeIdentifierToPlaceholder = (ref: IdentifierRef) => `{attribute_title(${ref.identifier})}`;
 
 const matchToUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
@@ -39,14 +41,14 @@ const matchToUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
     toBeEncoded: match.index !== 0,
 });
 
-const splitUrl = (url: string): string[] => url.split(identifierSplitRegexp);
+const splitAttributeIdentifierUrl = (url: string): string[] => url.split(attributeIdentifierSplitRegexp);
 
 /**
  * @internal
  */
 export const splitDrillUrlParts = (url: string): IDrillUrlPart[] => {
-    return splitUrl(url).map((urlPart: string) => {
-        const match = identifierMatchRegexp.exec(urlPart);
+    return splitAttributeIdentifierUrl(url).map((urlPart: string) => {
+        const match = attributeIdentifierMatchRegexp.exec(urlPart);
         if (match !== null) {
             return matchToUrlPlaceholder(match).ref;
         }
@@ -67,7 +69,7 @@ export const joinDrillUrlParts = (parts: IDrillUrlPart[] | string): string => {
     return parts
         .map((urlPart: IDrillUrlPart) => {
             if (isIdentifierRef(urlPart)) {
-                return identifierToPlaceholder(urlPart);
+                return attributeIdentifierToPlaceholder(urlPart);
             }
 
             return urlPart;
@@ -79,4 +81,16 @@ export const joinDrillUrlParts = (parts: IDrillUrlPart[] | string): string => {
  * @internal
  */
 export const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(identifierMatchRegexp, url).map(matchToUrlPlaceholder);
+    matchAll(attributeIdentifierMatchRegexp, url).map(matchToUrlPlaceholder);
+
+/**
+ * @internal
+ */
+export const getDashboardAttributeFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    matchAll(dashboardAttributeFilterMatchRegexp, url).map(matchToUrlPlaceholder);
+
+/**
+ * @internal
+ */
+export const getInsightAttributeFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    matchAll(insightAttributeFilterMatchRegexp, url).map(matchToUrlPlaceholder);
