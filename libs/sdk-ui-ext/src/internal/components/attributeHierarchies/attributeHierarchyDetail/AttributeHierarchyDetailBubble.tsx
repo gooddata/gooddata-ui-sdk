@@ -41,7 +41,7 @@ export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailB
                 <div className="gd-icon-circle-question" />
             </div>
             <Bubble
-                className="bubble-light gd-attribute-hierarchy-detail-panel-bubble"
+                className="gd-attribute-hierarchy-detail-panel-bubble"
                 alignPoints={BUBBLE_ALIGN_POINTS}
                 closeOnOutsideClick={true}
             >

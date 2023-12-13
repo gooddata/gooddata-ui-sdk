@@ -28,6 +28,7 @@ import {
     selectDisableDefaultDrills,
     DashboardDrillCommand,
     selectWidgetDrills,
+    selectBackendCapabilities,
 } from "../../../model/index.js";
 import {
     DashboardDrillContext,
@@ -73,6 +74,7 @@ export function WithDrillSelect({
     const locale = useDashboardSelector(selectLocale);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
     const configuredDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
+    const { supportsAttributeHierarchies } = useDashboardSelector(selectBackendCapabilities);
 
     const drills = useDrills({
         onDrillSuccess: (s) => {
@@ -83,13 +85,15 @@ export function WithDrillSelect({
             const drillEvent = s.payload.drillEvent;
             const context = s.payload.drillContext;
 
-            const filteredByPriority = filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
+            const validDrillDefinitions = supportsAttributeHierarchies
+                ? drillDefinitions
+                : filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
-            if (filteredByPriority.length === 1) {
-                onSelect(filteredByPriority[0], drillEvent, s.correlationId, context);
-            } else if (filteredByPriority.length > 1) {
+            if (validDrillDefinitions.length === 1) {
+                onSelect(validDrillDefinitions[0], drillEvent, s.correlationId, context);
+            } else if (validDrillDefinitions.length > 1) {
                 setDropdownProps({
-                    drillDefinitions: filteredByPriority,
+                    drillDefinitions: validDrillDefinitions,
                     drillEvent: drillEvent,
                     drillContext: context,
                     correlationId: s.correlationId,
