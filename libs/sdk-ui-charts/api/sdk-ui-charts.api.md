@@ -44,13 +44,13 @@ import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 
 // @public
-export const AreaChart: (props: IAreaChartProps) => JSX.Element;
+export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
 
 // @public
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
-export const BarChart: (props: IBarChartProps) => JSX.Element;
+export const BarChart: (props: IBarChartProps) => React_2.JSX.Element;
 
 // @internal
 export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
@@ -59,10 +59,10 @@ export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
 export const BOTTOM = "bottom";
 
 // @public
-export const BubbleChart: (props: IBubbleChartProps) => JSX.Element;
+export const BubbleChart: (props: IBubbleChartProps) => React_2.JSX.Element;
 
 // @public
-export const BulletChart: (props: IBulletChartProps) => JSX.Element;
+export const BulletChart: (props: IBulletChartProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
@@ -84,10 +84,10 @@ export type ChartOrientationType = "horizontal" | "vertical";
 export { ColorUtils }
 
 // @public
-export const ColumnChart: (props: IColumnChartProps) => JSX.Element;
+export const ColumnChart: (props: IColumnChartProps) => React_2.JSX.Element;
 
 // @public
-export const ComboChart: (props: IComboChartProps) => JSX.Element;
+export const ComboChart: (props: IComboChartProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export enum ComparisonColorType {
@@ -121,13 +121,13 @@ export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, 
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
 // @public
-export const DependencyWheelChart: (props: IDependencyWheelChartProps) => JSX.Element;
+export const DependencyWheelChart: (props: IDependencyWheelChartProps) => React_2.JSX.Element;
 
 // @public
-export const DonutChart: (props: IDonutChartProps) => JSX.Element;
+export const DonutChart: (props: IDonutChartProps) => React_2.JSX.Element;
 
 // @public
-export const FunnelChart: (props: IFunnelChartProps) => JSX.Element;
+export const FunnelChart: (props: IFunnelChartProps) => React_2.JSX.Element;
 
 // @internal
 export const getCalculationValuesDefault: (calculationType?: CalculationType) => ICalculationDefaultValue;
@@ -141,10 +141,10 @@ export const getComparisonFormat: (providedFormat: string, defaultFormat: string
 export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
 
 // @public
-export const Headline: (props: IHeadlineProps) => JSX.Element;
+export const Headline: (props: IHeadlineProps) => React_2.JSX.Element;
 
 // @public
-export const Heatmap: (props: IHeatmapProps) => JSX.Element;
+export const Heatmap: (props: IHeatmapProps) => React_2.JSX.Element;
 
 // @public (undocumented)
 export interface IAreaChartBucketProps {
@@ -748,7 +748,7 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 }
 
 // @public
-export const LineChart: (props: ILineChartProps) => JSX.Element;
+export const LineChart: (props: ILineChartProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const MIDDLE = "middle";
@@ -757,25 +757,25 @@ export const MIDDLE = "middle";
 export type OnLegendReady = (data: ILegendData) => void;
 
 // @public
-export const PieChart: (props: IPieChartProps) => JSX.Element;
+export const PieChart: (props: IPieChartProps) => React_2.JSX.Element;
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
-export const PyramidChart: (props: IPyramidChartProps) => JSX.Element;
+export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
 
 // @public
-export const SankeyChart: (props: ISankeyChartProps) => JSX.Element;
+export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;
 
 // @public
-export const ScatterPlot: (props: IScatterPlotProps) => JSX.Element;
+export const ScatterPlot: (props: IScatterPlotProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const TOP = "top";
 
 // @public
-export const Treemap: (props: ITreemapProps) => JSX.Element;
+export const Treemap: (props: ITreemapProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
@@ -784,7 +784,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 export const ViewByAttributesLimit = 2;
 
 // @public
-export const WaterfallChart: (props: IWaterfallChartProps) => JSX.Element;
+export const WaterfallChart: (props: IWaterfallChartProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;

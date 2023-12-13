@@ -291,7 +291,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): JSX.Element;
+export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
 
 // @beta
 export interface AddAttributeFilterPayload {
@@ -308,7 +308,7 @@ export interface AddAttributeFilterPayload {
 }
 
 // @internal (undocumented)
-export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): JSX.Element;
+export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface AddAttributeFilterPlaceholderProps {
@@ -453,7 +453,7 @@ export type AttributeFilterPlaceholderDraggableItem = {
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface BackendCapabilitiesState {
@@ -892,7 +892,7 @@ export type ConfigurableWidget<TWidget> = {
 };
 
 // @internal (undocumented)
-export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps): JSX.Element;
+export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps): React_2.JSX.Element;
 
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
@@ -2633,7 +2633,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DefaultButtonBar: React_2.FC<IButtonBarProps>;
 
 // @internal (undocumented)
-export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
+export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): React_2.JSX.Element | null;
 
 // @internal (undocumented)
 export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
@@ -2675,7 +2675,7 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
 // @internal (undocumented)
-export const DefaultDashboardMainContent: (_: IDashboardProps) => JSX.Element;
+export const DefaultDashboardMainContent: (_: IDashboardProps) => React_2.JSX.Element;
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
@@ -2693,7 +2693,7 @@ export const DefaultDashboardToolbarGroup: React_2.FC<IDefaultDashboardToolbarGr
 export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
-export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): JSX.Element | null;
+export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element;
@@ -2711,10 +2711,10 @@ export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
 export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
+export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): React_2.JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
+export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;

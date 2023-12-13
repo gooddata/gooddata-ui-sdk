@@ -11,6 +11,7 @@ import {
     IExecutionConfig,
 } from "@gooddata/sdk-model";
 import React from "react";
+// eslint-disable-next-line react/no-deprecated
 import { render } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
