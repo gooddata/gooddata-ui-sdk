@@ -28,15 +28,16 @@ describe("Interaction", () => {
     });
 
     //Cover ticket: RAIL-4717
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip(
+    it(
         "Should correctly display attribute list in custom URL dialog",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
         () => {
             Navigation.visit("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
-            widgetConfig.openInteractions().addInteraction("Sum of Probability", "measure");
+
+            widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
+            widgetConfig.addInteraction("Sum of Probability", "measure");
             widgetConfig
                 .getDrillConfigItem("Sum of Probability")
                 .chooseAction("Drill into URL")
