@@ -18,6 +18,8 @@ import AttributeListItem from "./AttributeListItem.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
 import DateAttributeListItem from "./DateAttributeListItem.js";
+import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
+import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 const dropdownAlignPoints = [
     {
@@ -96,6 +98,9 @@ export function AttributesDropdown({
         };
     }, []);
 
+    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
+    const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
+
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const insightsMap = useDashboardSelector(selectInsightsMap);
@@ -134,7 +139,7 @@ export function AttributesDropdown({
         ? attributes.filter((a) => a.attribute.title.toLowerCase().includes(searchQuery.toLowerCase()))
         : attributes;
 
-    // TODO INE: add FF condition
+    const offerDateFilters = enableMultipleDateFilters && supportsMultipleDateFilters;
 
     const filteredDateDatasets = searchQuery
         ? dateDatasets.filter((ds) => ds.dataSet.title.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -159,7 +164,6 @@ export function AttributesDropdown({
     ] as ITab[];
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
-    // TODO INE: end of condition
 
     const items: Array<ICatalogAttribute | ICatalogDateDataset> =
         selectedTabId === "attributes" ? filteredAttributes : filteredDateDatasets;
@@ -184,7 +188,7 @@ export function AttributesDropdown({
                 <div className={cx(bodyClassName, "attributes-list")}>
                     <DropdownList
                         width={WIDTH}
-                        showTabs={true}
+                        showTabs={offerDateFilters}
                         tabs={tabs}
                         tabsClassName="date-attribute-dropdown-tabs s-filter-attribute-dropdown-tabs"
                         selectedTabId={selectedTabId}

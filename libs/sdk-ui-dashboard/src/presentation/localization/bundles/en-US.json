@@ -1457,6 +1457,11 @@
         "comment": "",
         "limit": 0
     },
+    "filterBar.filter.dropzone.tooltip.generic": {
+        "value": "Drag the filter here.",
+        "comment": "",
+        "limit": 0
+    },
     "configurationPanel.title": {
         "value": "Configuration",
         "comment": "Label of widget configuration section",

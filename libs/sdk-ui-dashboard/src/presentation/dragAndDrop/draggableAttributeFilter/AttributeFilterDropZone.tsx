@@ -8,6 +8,8 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 import { useDashboardSelector, selectIsInEditMode } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
+import { selectEnableMultipleDateFilters } from "../../../model/store/config/configSelectors.js";
+import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 export type AttributeFilterDropZoneProps = {
     targetIndex: number;
@@ -17,19 +19,21 @@ export type AttributeFilterDropZoneProps = {
 export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilterDropZoneProps) {
     const theme = useTheme();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
+    const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
 
     const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
-        ["attributeFilter", "dateFilter", "attributeFilter-placeholder"],
+        ["attributeFilter-placeholder"],
         {
             drop: () => onDrop(targetIndex),
         },
         [targetIndex],
     );
 
-    const isDraggingAttribute =
+    const isDraggingExistingFilter =
         itemType !== undefined && (itemType === "attributeFilter" || itemType === "dateFilter");
 
-    if (!isEditMode || isDraggingAttribute) {
+    if (!isEditMode || isDraggingExistingFilter) {
         return null;
     }
 
@@ -44,6 +48,10 @@ export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilter
     );
 
     const debugStyle = getDropZoneDebugStyle({ isOver });
+    const tooltipId =
+        enableMultipleDateFilters && supportsMultipleDateFilters
+            ? "filterBar.filter.dropzone.tooltip.generic"
+            : "filterBar.filter.dropzone.tooltip";
 
     return (
         <div className="attr-filter-dropzone-box-outer" style={debugStyle} ref={dropRef}>
@@ -73,7 +81,7 @@ export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilter
                         </div>
                     </div>
                     <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 0 } }]}>
-                        <FormattedMessage id="filterBar.filter.dropzone.tooltip" />
+                        <FormattedMessage id={tooltipId} />
                     </Bubble>
                 </BubbleHoverTrigger>
             )}
