@@ -1928,6 +1928,7 @@ export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardE
 export interface DashboardInsightWidgetFilterSettingsChangedPayload {
     readonly dateDatasetForFiltering?: ICatalogDateDataset;
     readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+    readonly ignoredDateFilters?: IDashboardDateFilter[];
     readonly ref: ObjRef;
 }
 
@@ -3222,13 +3223,20 @@ export interface FilterOpEnableDateFilter extends FilterOp {
 }
 
 // @beta (undocumented)
-export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "replace";
+export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "ignoreDateFilter" | "unignoreDateFilter" | "replace";
 
 // @beta
 export interface FilterOpIgnoreAttributeFilter extends FilterOp {
     displayFormRefs: ObjRef[];
     // (undocumented)
     type: "ignoreAttributeFilter";
+}
+
+// @beta
+export interface FilterOpIgnoreDateFilter extends FilterOp {
+    dateDataSetRefs: ObjRef[];
+    // (undocumented)
+    type: "ignoreDateFilter";
 }
 
 // @beta
@@ -3251,6 +3259,13 @@ export interface FilterOpUnignoreAttributeFilter extends FilterOp {
     displayFormRefs: ObjRef[];
     // (undocumented)
     type: "unignoreAttributeFilter";
+}
+
+// @beta
+export interface FilterOpUnignoreDateFilter extends FilterOp {
+    dateDataSetRefs: ObjRef[];
+    // (undocumented)
+    type: "unignoreDateFilter";
 }
 
 // @alpha
@@ -4108,6 +4123,9 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
     // (undocumented)
     type: "drillDown";
 }
+
+// @public
+export function ignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @public
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
@@ -7430,6 +7448,9 @@ export interface UndoLayoutChangesPayload {
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 // @beta
+export function unignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @beta
 export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @beta
@@ -8129,7 +8150,7 @@ export interface WidgetDescription {
 }
 
 // @beta
-export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;
+export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpIgnoreDateFilter | FilterOpUnignoreDateFilter | FilterOpReplaceAll;
 
 // @beta (undocumented)
 export interface WidgetHeader {

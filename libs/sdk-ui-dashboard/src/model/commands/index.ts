@@ -330,6 +330,8 @@ export {
     replaceInsightWidgetIgnoredFilters,
     ignoreFilterOnInsightWidget,
     unignoreFilterOnInsightWidget,
+    ignoreDateFilterOnInsightWidget,
+    unignoreDateFilterOnInsightWidget,
     ChangeInsightWidgetVisProperties,
     ChangeInsightWidgetVisPropertiesPayload,
     changeInsightWidgetVisProperties,

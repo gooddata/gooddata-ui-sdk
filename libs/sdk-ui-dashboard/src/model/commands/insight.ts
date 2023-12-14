@@ -996,3 +996,76 @@ export function changeInsightWidgetDescription(
 //
 //
 //
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpIgnoreDateFilter} operation.
+ *
+ * Dispatching this command will result in addition of one or more filters into Insight widget's date filter ignore-list.
+ * Those date filters that use the provided date data sets for filtering will be ignored by the widget on top of any
+ * other filters that are already ignored.
+ *
+ * Ignored date filters are not passed down to the insight and will not be used to filter that insight.
+ *
+ * The operation is idempotent - trying to ignore an date filter multiple times will have no effect.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param oneOrMoreDataSets - one or more refs of date dataSets used by date filters that should be added to the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @public
+ */
+export function ignoreDateFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreDataSets: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    const dateDataSetRefs = isObjRef(oneOrMoreDataSets) ? [oneOrMoreDataSets] : oneOrMoreDataSets;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreDateFilter",
+                dateDataSetRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpUnignoreDateFilter} operation.
+ *
+ * Dispatching this command will result in removal of one or more filters from Insight widget's date filter ignore-list.
+ * Ignored date filters are not passed down to the insight and will not be used to filter that insight.
+ *
+ * The operation is idempotent - trying to unignore an date filter multiple times will have no effect.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param oneOrMoreDataSets - one or more refs of date data sets used by date filters that should be removed from the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function unignoreDateFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreDataSets: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeInsightWidgetFilterSettings {
+    const dateDataSetRefs = isObjRef(oneOrMoreDataSets) ? [oneOrMoreDataSets] : oneOrMoreDataSets;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreDateFilter",
+                dateDataSetRefs,
+            },
+        },
+    };
+}

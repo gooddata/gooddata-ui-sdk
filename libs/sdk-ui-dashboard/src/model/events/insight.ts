@@ -10,6 +10,7 @@ import {
     ICatalogDateDataset,
     IInsightWidgetConfiguration,
     IDrillDownReference,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base.js";
@@ -150,6 +151,13 @@ export interface DashboardInsightWidgetFilterSettingsChangedPayload {
     readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
 
     /**
+     * Date filters with dimension that are ignored for the widget.
+     *
+     * If empty, then all date filters defined for the dashboard are in effect.
+     */
+    readonly ignoredDateFilters?: IDashboardDateFilter[];
+
+    /**
      * Date dataset used for date filtering.
      *
      * If undefined, then dashboard's date filter is not in effect for the widget.
@@ -177,6 +185,7 @@ export function insightWidgetFilterSettingsChanged(
     ignoredAttributeFilters: IDashboardAttributeFilter[],
     dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
+    ignoredDateFilters?: IDashboardDateFilter[],
 ): DashboardInsightWidgetFilterSettingsChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
@@ -185,6 +194,7 @@ export function insightWidgetFilterSettingsChanged(
         payload: {
             ref,
             ignoredAttributeFilters,
+            ignoredDateFilters,
             dateDatasetForFiltering,
         },
     };
