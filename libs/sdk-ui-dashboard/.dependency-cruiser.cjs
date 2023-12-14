@@ -95,6 +95,8 @@ options = {
             "src/presentation/types.ts",
             "src/presentation/localization",
             "src/types.ts",
+            "src/converters",
+            "src/presentation/widget/common/useWidgetFilters.ts",
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",

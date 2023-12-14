@@ -579,6 +579,12 @@ $gd-gd-drill-to-url-body-width: 230px;
             text-align: center;
         }
 
+        &.gd-icon-filter::before {
+            content: "\E63C";
+            color: #94a1ad;
+            text-align: center;
+        }
+
         &.gd-icon-earth::before {
             content: "\E624";
             color: kit-variables.$gd-color-warning-text;
@@ -714,8 +720,13 @@ $gd-gd-drill-to-url-body-width: 230px;
             color: kit-variables.$gd-color-warning-text;
         }
 
+        .cm-filter {
+            color: kit-variables.$gd-color-warning-text;
+        }
+
         .cm-invalid-identifier,
-        .cm-invalid-attribute {
+        .cm-invalid-attribute,
+        .cm-invalid-filter {
             color: kit-variables.$gd-palette-error-base;
         }
     }

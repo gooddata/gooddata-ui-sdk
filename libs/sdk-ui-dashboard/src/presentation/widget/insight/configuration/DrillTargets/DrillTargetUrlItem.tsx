@@ -49,13 +49,14 @@ function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 
 export interface DrillUrlItemProps {
+    widgetRef: ObjRef;
     urlDrillTarget?: UrlDrillTarget;
     attributes: IAttributeDescriptor[];
     onSelect: (selectedTarget: UrlDrillTarget) => void;
 }
 
 export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
-    const { onSelect, urlDrillTarget, attributes } = props;
+    const { onSelect, urlDrillTarget, attributes, widgetRef } = props;
 
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const settings = useDashboardSelector(selectSettings);
@@ -129,6 +130,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                         />
                         {showModal ? (
                             <CustomUrlEditor
+                                widgetRef={widgetRef}
                                 urlDrillTarget={urlDrillTarget}
                                 attributeDisplayForms={targetAttributesFormsAll}
                                 invalidAttributeDisplayFormIdentifiers={
