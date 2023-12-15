@@ -4,6 +4,7 @@ import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { withBubble } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { IGrantedWorkspace } from "../../types.js";
 
@@ -52,7 +53,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
                     "s-user-management-permission-button",
                     "gd-granular-permission-button",
                     "dropdown-button",
-                    `gd-granular-hierarchical-permission-button-${workspace.id}`,
+                    `gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`,
                     {
                         "is-active": isDropdownOpen,
                         "gd-icon-navigateup": !isDropdownDisabled && isDropdownOpen,
@@ -73,7 +74,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
                 onSelect={handleOnSelect}
                 toggleDropdown={toggleDropdown}
                 isShowDropdown={isDropdownOpen}
-                alignTo={`.gd-granular-hierarchical-permission-button-${workspace.id}`}
+                alignTo={`.gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`}
             />
         </div>
     );
