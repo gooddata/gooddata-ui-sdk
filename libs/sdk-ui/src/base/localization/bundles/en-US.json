@@ -2873,6 +2873,11 @@
         "comment": "Tooltip on button that removes particular user from the user group.",
         "limit": 0
     },
+    "userManagement.users.removeUserFromGroupDisabledTooltip": {
+        "value": "This user cannot be removed the group.",
+        "comment": "Tooltip shown over button that remove user from the user group if the action is disabled.",
+        "limit": 0
+    },
     "userManagement.users.removeUserFromSelection": {
         "value": "Remove.",
         "comment": "Label of action that removes selected user.",

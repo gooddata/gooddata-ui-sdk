@@ -81,7 +81,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         onSuccess,
         onClose,
     );
-    const { isBootstrapUserGroup } = useOrganizationDetails(organizationId);
+    const { isBootstrapUserGroup, bootstrapUserId } = useOrganizationDetails(organizationId);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessages.workspaces.id) {
@@ -169,7 +169,13 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                                 />
                             )}
                             {selectedTabId.id === userGroupDialogTabsMessages.users.id && (
-                                <UsersList users={grantedUsers} mode="VIEW" onDelete={removeGrantedUsers} />
+                                <UsersList
+                                    users={grantedUsers}
+                                    mode="VIEW"
+                                    onDelete={removeGrantedUsers}
+                                    isBootstrapUserGroup={isBootstrapUserGroup(userGroup)}
+                                    bootstrapUserId={bootstrapUserId}
+                                />
                             )}
                             {selectedTabId.id === userGroupDialogTabsMessages.details.id && (
                                 <UserGroupDetailsView userGroup={userGroup} mode="VIEW" />
