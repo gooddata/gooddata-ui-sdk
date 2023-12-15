@@ -72,6 +72,13 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     const correlation = `crossFiltering_${uuid()}`;
 
+    yield put(
+        drillActions.crossFilterByWidget({
+            widgetRef,
+            filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
+        }),
+    );
+
     yield all(
         virtualFilters.map((vf) => {
             const isExistingVirtualFilter = currentVirtualFiltersLocalIdentifiers.includes(
@@ -103,13 +110,6 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           correlation,
                       ),
                   );
-        }),
-    );
-
-    yield put(
-        drillActions.crossFilterByWidget({
-            widgetRef,
-            filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
         }),
     );
 

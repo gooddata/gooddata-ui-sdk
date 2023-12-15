@@ -27,7 +27,7 @@ import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.j
 import isEmpty from "lodash/isEmpty.js";
 import { batchActions } from "redux-batched-actions";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { selectEnableKDCrossFiltering } from "../../../store/config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
@@ -80,9 +80,6 @@ export function* addAttributeFilterHandler(
 
     const attributeRef = displayFormMetadata.attribute;
 
-    const isCrossFilteringEnabled: ReturnType<typeof selectEnableKDCrossFiltering> = yield select(
-        selectEnableKDCrossFiltering,
-    );
     const canBeAdded: PromiseFnReturnType<typeof canFilterBeAdded> = yield call(
         canFilterBeAdded,
         ctx,
@@ -90,7 +87,12 @@ export function* addAttributeFilterHandler(
         allFilters,
     );
 
-    if (!isCrossFilteringEnabled && !canBeAdded) {
+    const crossFilteringFiltersLocalIdentifiers: ReturnType<
+        typeof selectCrossFilteringFiltersLocalIdentifiers
+    > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
+    const isVirtualFilter = crossFilteringFiltersLocalIdentifiers.includes(localIdentifier!);
+
+    if (!isVirtualFilter && !canBeAdded) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
