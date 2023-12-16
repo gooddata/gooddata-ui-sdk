@@ -101,6 +101,10 @@ import {
 } from "./drill.js";
 import { DashboardRenderModeChanged } from "./renderMode.js";
 import { CreateInsightRequested } from "./lab.js";
+import {
+    CreateAttributeHierarchyRequested,
+    DeleteAttributeHierarchyRequested,
+} from "./attributeHierarchies.js";
 
 export {
     IDashboardEvent,
@@ -418,6 +422,15 @@ export {
 
 export { createInsightRequested, CreateInsightRequested, isCreateInsightRequested } from "./lab.js";
 
+export {
+    createAttributeHierarchyRequested,
+    CreateAttributeHierarchyRequested,
+    isCreateAttributeHierarchyRequested,
+    deleteAttributeHierarchyRequested,
+    DeleteAttributeHierarchyRequested,
+    isDeleteAttributeHierarchyRequested,
+} from "./attributeHierarchies.js";
+
 /**
  * Union type that contains all available built-in dashboard events.
  *
@@ -518,7 +531,9 @@ export type DashboardEvents =
     | DashboardDrillRequested
     | DashboardDrillableItemsChanged
     // internal
-    | CreateInsightRequested;
+    | CreateInsightRequested
+    | CreateAttributeHierarchyRequested
+    | DeleteAttributeHierarchyRequested;
 
 /**
  * Creates DashboardEvent predicate that test whether the provided event matches it.

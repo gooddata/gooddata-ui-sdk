@@ -2,7 +2,13 @@
 import { useRef, useState } from "react";
 import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, catalogActions } from "../../../../../model/index.js";
+import {
+    useDashboardDispatch,
+    catalogActions,
+    useDashboardEventDispatch,
+    createAttributeHierarchyRequested,
+    deleteAttributeHierarchyRequested,
+} from "../../../../../model/index.js";
 
 interface IUseAttributeHierarchy {
     onDeleteInteraction: () => void;
@@ -11,6 +17,7 @@ interface IUseAttributeHierarchy {
 export const useAttributeHierarchy = (params: IUseAttributeHierarchy) => {
     const { onDeleteInteraction } = params;
     const dispatch = useDashboardDispatch();
+    const eventDispatch = useDashboardEventDispatch();
 
     const [shouldDisplayAttributeHierarchyDialog, setDisplayAttributeHierarchyDialog] = useState(false);
     const editingAttributeHierarchyRef = useRef<ICatalogAttributeHierarchy>();
@@ -33,12 +40,16 @@ export const useAttributeHierarchy = (params: IUseAttributeHierarchy) => {
         if (attributeHierarchy) {
             onDeleteInteraction();
             dispatch(catalogActions.addAttributeHierarchy(attributeHierarchy));
+
+            eventDispatch(createAttributeHierarchyRequested());
         }
     };
 
     const onDeleteAttributeHierarchy = () => {
         if (editingAttributeHierarchyRef.current) {
             dispatch(catalogActions.deleteAttributeHierarchy(editingAttributeHierarchyRef.current));
+
+            eventDispatch(deleteAttributeHierarchyRequested());
         }
     };
 

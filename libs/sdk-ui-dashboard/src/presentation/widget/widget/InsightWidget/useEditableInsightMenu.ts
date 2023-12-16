@@ -46,7 +46,11 @@ export const useEditableInsightMenu = (
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
-        return getDefaultInsightEditMenuItems(widget, { intl, dispatch, includeInteractions });
+        return getDefaultInsightEditMenuItems(widget, {
+            intl,
+            dispatch,
+            includeInteractions,
+        });
     }, [dispatch, intl, widget, includeInteractions]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
