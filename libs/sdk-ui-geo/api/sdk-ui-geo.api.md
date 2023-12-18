@@ -50,7 +50,7 @@ export function enrichMapboxToken<T>(config?: T & {
 }) | undefined;
 
 // @public (undocumented)
-export const GeoPushpinChart: (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => JSX.Element;
+export const GeoPushpinChart: (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => React_2.JSX.Element;
 
 export { getColorMappingPredicate }
 
