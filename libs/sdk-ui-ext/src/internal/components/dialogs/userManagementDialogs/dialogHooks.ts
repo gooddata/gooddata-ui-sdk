@@ -30,6 +30,7 @@ import {
     WorkspacePermissionSubject,
     UserGroupEditDialogMode,
 } from "./types.js";
+import { useTelemetry } from "./TelemetryContext.js";
 
 export const useUser = (userId: string, organizationId: string, isAdmin: boolean, onSuccess: () => void) => {
     const [user, setUser] = useState<IUser>();
@@ -93,6 +94,7 @@ export const useDeleteUser = (
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const deleteUser = useCallback(() => {
         setIsProcessing(true);
@@ -102,6 +104,7 @@ export const useDeleteUser = (
             .deleteUsers([userId])
             .then(() => {
                 addSuccess(messages.userDeleteSuccess);
+                trackEvent("user-deleted");
                 onSuccess();
                 onClose();
             })
@@ -110,7 +113,7 @@ export const useDeleteUser = (
                 addError(messages.userDeletedFailure);
             })
             .finally(() => setIsProcessing(false));
-    }, [backend, organizationId, userId, onSuccess, onClose, addSuccess, addError]);
+    }, [backend, organizationId, userId, onSuccess, onClose, addSuccess, addError, trackEvent]);
 
     return {
         isDeleteUserProcessing: isProcessing,
@@ -127,6 +130,7 @@ export const useDeleteUserGroup = (
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const deleteUserGroup = useCallback(() => {
         setIsProcessing(true);
@@ -136,6 +140,7 @@ export const useDeleteUserGroup = (
             .deleteUserGroups([userGroupId])
             .then(() => {
                 addSuccess(messages.userGroupDeleteSuccess);
+                trackEvent("group-deleted");
                 onSuccess();
                 onClose();
             })
@@ -144,7 +149,7 @@ export const useDeleteUserGroup = (
                 addError(messages.userGroupDeleteFailure);
             })
             .finally(() => setIsProcessing(false));
-    }, [backend, organizationId, userGroupId, addError, addSuccess, onSuccess, onClose]);
+    }, [backend, organizationId, userGroupId, addError, addSuccess, onSuccess, onClose, trackEvent]);
 
     return {
         isDeleteUserGroupProcessing: isProcessing,

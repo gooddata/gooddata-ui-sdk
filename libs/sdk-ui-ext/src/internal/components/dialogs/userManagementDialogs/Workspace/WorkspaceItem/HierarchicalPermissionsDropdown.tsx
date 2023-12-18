@@ -6,13 +6,35 @@ import cx from "classnames";
 import { withBubble } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { IGrantedWorkspace } from "../../types.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
+import { useTelemetry, TrackEventCallback } from "../../TelemetryContext.js";
 
 import { hierarchicalPermissionMessages } from "./locales.js";
 import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
 
+const trackPermissionChange = (
+    trackEvent: TrackEventCallback,
+    subjectType: WorkspacePermissionSubject,
+    isHierarchical: boolean,
+) => {
+    if (subjectType === "user") {
+        trackEvent(
+            isHierarchical
+                ? "user-permission-changed-to-hierarchy"
+                : "user-permission-changed-to-single-workspace",
+        );
+    } else {
+        trackEvent(
+            isHierarchical
+                ? "group-permission-changed-to-hierarchy"
+                : "group-permission-changed-to-single-workspace",
+        );
+    }
+};
+
 interface IGranularPermissionsDropdownProps {
     workspace: IGrantedWorkspace;
+    subjectType: WorkspacePermissionSubject;
     isDropdownDisabled?: boolean;
     isDropdownOpen: boolean;
     toggleDropdown: () => void;
@@ -22,6 +44,7 @@ interface IGranularPermissionsDropdownProps {
 
 const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     workspace,
+    subjectType,
     isDropdownDisabled,
     isDropdownOpen,
     toggleDropdown,
@@ -29,10 +52,12 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     className,
 }) => {
     const intl = useIntl();
+    const trackEvent = useTelemetry();
 
     const [selectedPermission, setSelectedPermission] = useState<boolean>(workspace.isHierarchical);
     const handleOnSelect = (isHierarchical: boolean) => {
         onChange({ ...workspace, isHierarchical });
+        trackPermissionChange(trackEvent, subjectType, isHierarchical);
         setSelectedPermission(isHierarchical);
     };
 
@@ -74,7 +99,9 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
                 onSelect={handleOnSelect}
                 toggleDropdown={toggleDropdown}
                 isShowDropdown={isDropdownOpen}
-                alignTo={`.gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`}
+                alignTo={`.gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(
+                    workspace.id,
+                )}`}
             />
         </div>
     );

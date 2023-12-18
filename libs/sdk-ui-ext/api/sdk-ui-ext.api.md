@@ -120,7 +120,7 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisua
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
 
 // @internal (undocumented)
-export interface IAddUserGroupsToUsersDialogProps {
+export interface IAddUserGroupsToUsersDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -132,7 +132,7 @@ export interface IAddUserGroupsToUsersDialogProps {
 }
 
 // @internal (undocumented)
-export interface IAddUsersToUserGroupsDialogProps {
+export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -144,7 +144,7 @@ export interface IAddUsersToUserGroupsDialogProps {
 }
 
 // @internal (undocumented)
-export interface IAddWorkspaceToSubjectsProps {
+export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     ids: string[];
     // (undocumented)
@@ -200,7 +200,7 @@ export interface IAttributeHierarchyDialogProps {
 }
 
 // @internal (undocumented)
-export interface ICreateUserGroupDialogProps {
+export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
@@ -210,7 +210,7 @@ export interface ICreateUserGroupDialogProps {
 }
 
 // @internal (undocumented)
-export interface IDeleteUserDialogProps {
+export interface IDeleteUserDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -222,7 +222,7 @@ export interface IDeleteUserDialogProps {
 }
 
 // @internal (undocumented)
-export interface IDeleteUserGroupDialogProps {
+export interface IDeleteUserGroupDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -234,7 +234,7 @@ export interface IDeleteUserGroupDialogProps {
 }
 
 // @internal (undocumented)
-export interface IDeleteUserGroupsDialogProps {
+export interface IDeleteUserGroupsDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -246,7 +246,7 @@ export interface IDeleteUserGroupsDialogProps {
 }
 
 // @internal (undocumented)
-export interface IDeleteUsersDialogProps {
+export interface IDeleteUsersDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -410,7 +410,7 @@ export type ISizeInfoDefault = ISizeInfo & {
 };
 
 // @internal (undocumented)
-export interface IUserEditDialogProps {
+export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
@@ -428,7 +428,7 @@ export interface IUserEditDialogProps {
 }
 
 // @internal (undocumented)
-export interface IUserGroupEditDialogProps {
+export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)
@@ -467,6 +467,12 @@ export interface IVisualizationSizeInfo {
 }
 
 // @internal (undocumented)
+export interface IWithTelemetryProps {
+    // (undocumented)
+    onEvent: TrackEventCallback;
+}
+
+// @internal (undocumented)
 export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
@@ -494,6 +500,12 @@ export interface Root {
     // (undocumented)
     unmount(): void;
 }
+
+// @internal (undocumented)
+export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";
+
+// @internal (undocumented)
+export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;

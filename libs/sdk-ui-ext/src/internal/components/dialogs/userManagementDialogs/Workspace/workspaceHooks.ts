@@ -9,6 +9,7 @@ import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
 import { sortByName, asPermissionAssignment } from "../utils.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
+import { useTelemetry } from "../TelemetryContext.js";
 
 export const useAddWorkspace = (
     ids: string[],
@@ -20,9 +21,9 @@ export const useAddWorkspace = (
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
-
     const [addedWorkspaces, setAddedWorkspaces] = useState<IGrantedWorkspace[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onDelete = (workspace: IGrantedWorkspace) => {
         setAddedWorkspaces(addedWorkspaces.filter((item) => item.id !== workspace.id));
@@ -49,6 +50,11 @@ export const useAddWorkspace = (
                 ])
                 .then(() => {
                     addSuccess(messages.workspaceAddedSuccess);
+                    trackEvent(
+                        subjectType === "user"
+                            ? "permission-added-to-single-user"
+                            : "permission-added-to-single-group",
+                    );
                     onSubmit(addedWorkspaces);
                     onCancel();
                 })
@@ -87,6 +93,11 @@ export const useAddWorkspace = (
                                 subjectType === "user"
                                     ? messages.workspacesAddedToUsersSuccess
                                     : messages.workspacesAddedToUserGroupsSuccess,
+                            );
+                            trackEvent(
+                                subjectType === "user"
+                                    ? "permission-added-to-multiple-users"
+                                    : "permission-added-to-multiple-groups",
                             );
                             onSubmit(addedWorkspaces);
                             onCancel();

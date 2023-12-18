@@ -8,6 +8,7 @@ import { IGrantedUserGroup } from "../types.js";
 import { messages } from "../locales.js";
 import { sortByName } from "../utils.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
+import { useTelemetry } from "../TelemetryContext.js";
 
 export const useAddUserGroup = (
     userIds: string[],
@@ -19,6 +20,7 @@ export const useAddUserGroup = (
     const organizationId = useOrganizationId();
     const [addedUserGroups, setAddedUserGroups] = useState<IGrantedUserGroup[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onDelete = (userGroup: IGrantedUserGroup) => {
         setAddedUserGroups(addedUserGroups.filter((item) => item.id !== userGroup.id));
@@ -36,6 +38,7 @@ export const useAddUserGroup = (
                 )
                 .then(() => {
                     addSuccess(messages.userGroupAddedSuccess);
+                    trackEvent("groups-added-to-single-user");
                     onSubmit(addedUserGroups);
                     onCancel();
                 })
@@ -54,6 +57,7 @@ export const useAddUserGroup = (
                 )
                 .then(() => {
                     addSuccess(messages.userGroupsAddedSuccess);
+                    trackEvent("groups-added-to-multiple-users");
                     onSubmit(addedUserGroups);
                     onCancel();
                 })
