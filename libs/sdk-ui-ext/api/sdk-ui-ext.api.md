@@ -192,7 +192,11 @@ export interface IAttributeHierarchyDialogProps {
     // (undocumented)
     initialAttributeRef?: ObjRef;
     // (undocumented)
+    onAddAttributeClicked?: () => void;
+    // (undocumented)
     onClose?: () => void;
+    // (undocumented)
+    onCreateHierarchyClicked?: () => void;
     // (undocumented)
     onDeleteSuccess?: () => void;
     // (undocumented)

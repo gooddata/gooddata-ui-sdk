@@ -454,6 +454,9 @@ export type AttributeFilterPlaceholderDraggableItem = {
 // @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
+// @beta (undocumented)
+export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSelected" | "attributeHierarchyDrillDownCreateClicked" | "attributeHierarchyAddAttributeClicked" | "attributeHierarchyCreateClicked";
+
 // @internal (undocumented)
 export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
@@ -466,7 +469,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | AttributeFilterInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType;
 }
 
 // @beta (undocumented)
@@ -3207,7 +3210,7 @@ export type FiltersInfo = {
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -4151,6 +4154,8 @@ export interface IInsightMenuSubmenu {
     itemId: string;
     // (undocumented)
     itemName: string;
+    // (undocumented)
+    onClick?: (e: MouseEvent_2) => void;
     // @alpha (undocumented)
     SubmenuComponent: ComponentType<{
         widget: IInsightWidget;
@@ -5121,6 +5126,7 @@ export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 export type MenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
+    eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
 };
 
@@ -7806,6 +7812,9 @@ export const useDashboardUserInteraction: () => {
     shareDialogInteraction: (eventData: ShareDialogInteractionData) => void;
     attributeFilterInteraction: (eventType: AttributeFilterInteractionType) => void;
     filterContextStateReset: () => void;
+    interactionPanelOpened: () => void;
+    addInteractionClicked: () => void;
+    attributeHierarchiesInteraction: (eventType: AttributeHierarchiesInteractionType) => void;
 };
 
 // @internal (undocumented)

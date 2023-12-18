@@ -20,6 +20,7 @@ import {
     selectAllCatalogAttributeHierarchies,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     useDashboardSelector,
+    useDashboardUserInteraction,
 } from "../../../../../model/index.js";
 
 interface IAttributeHierarchyDropdownProps {
@@ -93,6 +94,7 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
     const ignoredDrillDownHierarchies = useDashboardSelector(
         selectIgnoredDrillDownHierarchiesByWidgetRef(config.widgetRef),
     );
+    const userInteraction = useDashboardUserInteraction();
 
     const selectedCatalogAttributeHierarchy = config.complete
         ? catalogAttributeHierarchies.find((hierarchy) => {
@@ -140,6 +142,9 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
                         onSelect={(hierarchy) => {
                             onSelect(hierarchy);
                             closeDropdown();
+                            userInteraction.attributeHierarchiesInteraction(
+                                "attributeHierarchyDrillDownSelected",
+                            );
                         }}
                     />
                 );
