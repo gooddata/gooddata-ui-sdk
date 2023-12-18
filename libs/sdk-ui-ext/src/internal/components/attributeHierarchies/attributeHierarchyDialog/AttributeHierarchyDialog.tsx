@@ -14,6 +14,8 @@ export interface IAttributeHierarchyDialogProps {
     onClose?: () => void;
     onSaveOrUpdateSuccess?: (attributeHierarchy: ICatalogAttributeHierarchy) => void;
     onDeleteSuccess?: () => void;
+    onAddAttributeClicked?: () => void;
+    onCreateHierarchyClicked?: () => void;
 }
 
 /**
@@ -25,6 +27,8 @@ export const AttributeHierarchyDialog: React.FC<IAttributeHierarchyDialogProps> 
     onClose,
     onSaveOrUpdateSuccess,
     onDeleteSuccess,
+    onAddAttributeClicked,
+    onCreateHierarchyClicked,
 }) => {
     return (
         <AttributeHierarchyDialogProvider
@@ -33,6 +37,8 @@ export const AttributeHierarchyDialog: React.FC<IAttributeHierarchyDialogProps> 
             onClose={onClose}
             onSaveOrUpdateSuccess={onSaveOrUpdateSuccess}
             onDeleteSuccess={onDeleteSuccess}
+            onAddAttributeClicked={onAddAttributeClicked}
+            onCreateHierarchyClicked={onCreateHierarchyClicked}
         >
             <AttributeHierarchyDialogCore />
         </AttributeHierarchyDialogProvider>

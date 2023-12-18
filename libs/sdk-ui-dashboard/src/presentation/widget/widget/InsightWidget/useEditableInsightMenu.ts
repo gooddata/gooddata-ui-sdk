@@ -9,6 +9,7 @@ import {
     selectDrillTargetsByWidgetRef,
     selectSettings,
     useDashboardDispatch,
+    useDashboardEventDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
 
@@ -25,6 +26,7 @@ export const useEditableInsightMenu = (
 
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
+    const eventDispatch = useDashboardEventDispatch();
 
     const settings = useDashboardSelector(selectSettings);
     const {
@@ -49,9 +51,10 @@ export const useEditableInsightMenu = (
         return getDefaultInsightEditMenuItems(widget, {
             intl,
             dispatch,
+            eventDispatch,
             includeInteractions,
         });
-    }, [dispatch, intl, widget, includeInteractions]);
+    }, [dispatch, eventDispatch, intl, widget, includeInteractions]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider

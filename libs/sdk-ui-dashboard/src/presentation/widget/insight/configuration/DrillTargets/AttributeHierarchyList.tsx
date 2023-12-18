@@ -5,6 +5,7 @@ import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@goo
 import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../locales.js";
+import { useDashboardUserInteraction } from "../../../../../model/index.js";
 
 import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
 import AttributeHierarchyListFooter from "./AttributeHierarchyListFooter.js";
@@ -40,6 +41,8 @@ export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
     closeDropdown,
     onOpenAttributeHierarchyDialog,
 }) => {
+    const userInteraction = useDashboardUserInteraction();
+
     const onClick = (item: IAttributeHierarchyItem) => {
         if (!item.isDisabled) {
             onSelect(item.hierarchy);
@@ -49,6 +52,7 @@ export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
     const handleFooterButtonClick = () => {
         onOpenAttributeHierarchyDialog();
         closeDropdown();
+        userInteraction.attributeHierarchiesInteraction("attributeHierarchyDrillDownCreateClicked");
     };
 
     return (

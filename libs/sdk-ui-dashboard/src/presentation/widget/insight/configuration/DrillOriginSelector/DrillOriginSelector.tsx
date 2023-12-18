@@ -3,10 +3,11 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
+import { ObjRef } from "@gooddata/sdk-model";
 
 import DrillOriginSelectorBody from "./DrillOriginSelectorBody.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
-import { ObjRef } from "@gooddata/sdk-model";
+import { useDashboardUserInteraction } from "../../../../../model/index.js";
 
 export interface IDrillOriginSelectorProps {
     items: IAvailableDrillTargets;
@@ -39,6 +40,8 @@ export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorPr
     };
     const intl = useIntl();
 
+    const { addInteractionClicked } = useDashboardUserInteraction();
+
     if (!items.measures?.length && !items.attributes?.length) {
         return null;
     }
@@ -56,7 +59,12 @@ export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorPr
                     iconLeft="gd-icon-add"
                     className="s-drill-show-measures customizable"
                     isOpen={isOpen}
-                    onClick={toggleDropdown}
+                    onClick={() => {
+                        toggleDropdown();
+                        if (!isOpen) {
+                            addInteractionClicked();
+                        }
+                    }}
                 />
             )}
             renderBody={({ closeDropdown }) => (

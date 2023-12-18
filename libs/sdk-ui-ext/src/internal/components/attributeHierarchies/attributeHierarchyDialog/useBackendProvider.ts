@@ -22,6 +22,7 @@ interface IUseBackendProvideDataProps {
     setLoading: SetLoadingCallback;
     onSaveOrUpdateSuccess?: SaveOrUpdateCallback;
     onDeleteSuccess?: EmptyParamCallback;
+    onCreateHierarchyClicked?: () => void;
     onClose: EmptyParamCallback;
 }
 
@@ -34,6 +35,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
         onSaveOrUpdateSuccess,
         onClose,
         onDeleteSuccess,
+        onCreateHierarchyClicked,
     } = params;
     const { formatMessage } = useIntl();
     const backend = useBackendStrict();
@@ -124,6 +126,8 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
         } else {
             handleCreateAttributeHierarchy(savingTitle, attributeRefs);
         }
+
+        onCreateHierarchyClicked();
     };
 
     const onDeleteAttributeHierarchy = () => {

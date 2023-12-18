@@ -82,7 +82,13 @@ const DashboardInsightMenuRoot: React.FC<DashboardInsightMenuRootProps> = ({ ite
                         <DashboardInsightMenuItemButton
                             key={item.itemId}
                             {...item}
-                            onClick={() => setSubmenu(item)}
+                            onClick={(event) => {
+                                if (item.onClick) {
+                                    item.onClick(event);
+                                }
+
+                                setSubmenu(item);
+                            }}
                             submenu={true}
                         />
                     );

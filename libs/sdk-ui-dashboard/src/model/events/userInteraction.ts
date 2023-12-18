@@ -97,11 +97,23 @@ export type AttributeFilterInteractionType =
 /**
  * @beta
  */
+export type AttributeHierarchiesInteractionType =
+    | "attributeHierarchyDrillDownSelected"
+    | "attributeHierarchyDrillDownCreateClicked"
+    | "attributeHierarchyAddAttributeClicked"
+    | "attributeHierarchyCreateClicked";
+
+/**
+ * @beta
+ */
 export interface BareUserInteractionPayload {
     interaction:
         | "kpiAlertDialogClosed"
         | "poweredByGDLogoClicked"
         | "filterContextStateReset"
+        | "interactionPanelOpened"
+        | "addInteractionClicked"
+        | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType;
 }
 

@@ -10,7 +10,11 @@ import {
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
 import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
-import { selectAllCatalogAttributeHierarchies, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    selectAllCatalogAttributeHierarchies,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../../model/index.js";
 import EmptyAttributeHierarchyInfo from "./EmptyAttributeHierarchyInfo.js";
 import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 import AttributeHierarchyDropdown from "./AttributeHierarchyDropdown.js";
@@ -27,6 +31,7 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
     onDeleteInteraction,
 }) => {
     const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
+    const userInteraction = useDashboardUserInteraction();
 
     const {
         editingAttributeHierarchyRef,
@@ -79,6 +84,14 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
                     onClose={onCloseAttributeHierarchyDialog}
                     onSaveOrUpdateSuccess={onSaveAttributeHierarchy}
                     onDeleteSuccess={onDeleteAttributeHierarchy}
+                    onAddAttributeClicked={() => {
+                        userInteraction.attributeHierarchiesInteraction(
+                            "attributeHierarchyAddAttributeClicked",
+                        );
+                    }}
+                    onCreateHierarchyClicked={() => {
+                        userInteraction.attributeHierarchiesInteraction("attributeHierarchyCreateClicked");
+                    }}
                 />
             ) : null}
         </>

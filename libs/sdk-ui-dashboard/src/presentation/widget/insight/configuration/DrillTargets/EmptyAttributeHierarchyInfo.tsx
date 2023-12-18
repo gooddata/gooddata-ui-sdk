@@ -4,7 +4,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { messages } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector, selectCanManageAttributeHierarchy } from "../../../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectCanManageAttributeHierarchy,
+    useDashboardUserInteraction,
+} from "../../../../../model/index.js";
 
 interface IEmptyAttributeHierarchyInfoProps {
     onOpenAttributeHierarchyDialog: () => void;
@@ -19,8 +23,10 @@ const EmptyAttributeHierarchyInfo: React.FC<IEmptyAttributeHierarchyInfoProps> =
 }) => {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
+    const userInteraction = useDashboardUserInteraction();
 
     const handleOpenAttributeHierarchyDialog = () => {
+        userInteraction.attributeHierarchiesInteraction("attributeHierarchyDrillDownCreateClicked");
         onOpenAttributeHierarchyDialog();
     };
 

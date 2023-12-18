@@ -25,6 +25,8 @@ interface IAttributeHierarchyDialogProviderProps {
     onClose?: EmptyParamCallback;
     onSaveOrUpdateSuccess?: SaveOrUpdateCallback;
     onDeleteSuccess?: EmptyParamCallback;
+    onAddAttributeClicked?: () => void;
+    onCreateHierarchyClicked?: () => void;
     children: React.ReactNode;
 }
 
@@ -76,6 +78,8 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
     onClose,
     onSaveOrUpdateSuccess,
     onDeleteSuccess,
+    onAddAttributeClicked,
+    onCreateHierarchyClicked,
 }) => {
     const initialTitle = editingAttributeHierarchy?.attributeHierarchy?.title ?? "";
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -97,10 +101,12 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
             onClose,
             onSaveOrUpdateSuccess,
             onDeleteSuccess,
+            onCreateHierarchyClicked,
         });
 
     const handleAddEmptyAttribute = (baseRowIndex: number) => {
         setAttributes(appendEmptyAttribute(attributes, baseRowIndex));
+        onAddAttributeClicked();
     };
 
     const handleCompeteAttribute = (selectedAttribute: ICatalogAttributeData, rowIndex: number) => {
