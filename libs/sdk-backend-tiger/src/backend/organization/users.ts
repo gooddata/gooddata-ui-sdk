@@ -149,6 +149,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .getAllEntitiesUsers({
                     include: ["userGroups"],
                     filter: `userGroups.id==${userGroupId}`,
+                    size: 1000,
                 })
                 .then((response) => response.data)
                 .then((users) => users.data.map(convertIncludedUser) || []);
