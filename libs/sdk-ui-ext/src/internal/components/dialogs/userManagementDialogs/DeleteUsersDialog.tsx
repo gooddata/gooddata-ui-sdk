@@ -7,21 +7,19 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
+import { IWithTelemetryProps, withTelemetry, useTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal
  */
-export interface IDeleteUsersDialogProps {
+export interface IDeleteUsersDialogProps extends IWithTelemetryProps {
     userIds: string[];
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
+const DeleteUsersDialogComponent: React.FC<IDeleteUsersDialogProps> = ({
     userIds,
     organizationId,
     onSuccess,
@@ -31,6 +29,7 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onConfirm = () => {
         setIsProcessing(true);
@@ -40,6 +39,7 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
             .deleteUsers(userIds)
             .then(() => {
                 addSuccess(messages.usersDeleteSuccess);
+                trackEvent("multiple-users-deleted");
                 onSuccess();
                 onClose();
             })
@@ -63,3 +63,8 @@ export const DeleteUsersDialog: React.FC<IDeleteUsersDialogProps> = ({
         />
     );
 };
+
+/**
+ * @internal
+ */
+export const DeleteUsersDialog = withTelemetry(DeleteUsersDialogComponent);

@@ -10,9 +10,17 @@ export interface IUsersListProps {
     users: IUserMember[];
     mode: ListMode;
     onDelete: (user: IUserMember) => void;
+    isBootstrapUserGroup: boolean;
+    bootstrapUserId: string;
 }
 
-export const UsersList: React.FC<IUsersListProps> = ({ users, mode, onDelete }) => {
+export const UsersList: React.FC<IUsersListProps> = ({
+    users,
+    mode,
+    onDelete,
+    isBootstrapUserGroup,
+    bootstrapUserId,
+}) => {
     const sortedUsers = useMemo(() => {
         return users ? [...users].sort(sortByName) : [];
     }, [users]);
@@ -24,7 +32,16 @@ export const UsersList: React.FC<IUsersListProps> = ({ users, mode, onDelete }) 
     return (
         <div className="gd-share-dialog-grantee-list s-user-management-users-list">
             {sortedUsers.map((user) => {
-                return <UserItem key={user.id} user={user} onDelete={onDelete} mode={mode} />;
+                const isDeleteDisabled = isBootstrapUserGroup && user.id === bootstrapUserId;
+                return (
+                    <UserItem
+                        key={user.id}
+                        user={user}
+                        onDelete={onDelete}
+                        isDeleteDisabled={isDeleteDisabled}
+                        mode={mode}
+                    />
+                );
             })}
         </div>
     );

@@ -115,6 +115,7 @@ export const messages = defineMessages({
     viewUserGroupListEmpty: { id: "userManagement.userGroups.emptySelection.view" },
     editUserGroupListEmpty: { id: "userManagement.userGroups.emptySelection.edit" },
     removeSavedUserTooltip: { id: "userManagement.users.removeUserFromGroup" },
+    removeSavedUserDisabledTooltip: { id: "userManagement.users.removeUserFromGroupDisabledTooltip" },
     removeUnsavedUserTooltip: { id: "userManagement.users.removeUserFromSelection" },
     removeSavedUserGroupTooltip: { id: "userManagement.userGroups.removeTooltip" },
     removeSavedUserGroupDisabledTooltip: { id: "userManagement.userGroups.removeDisabledTooltip" },

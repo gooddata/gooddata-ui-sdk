@@ -55,6 +55,7 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
         <div className={itemClassName}>
             <HierarchicalPermissionsDropdown
                 workspace={workspace}
+                subjectType={subjectType}
                 isDropdownOpen={isHierarchicalDropdownOpen}
                 toggleDropdown={toggleHierarchicalDropdown}
                 onChange={onChange}

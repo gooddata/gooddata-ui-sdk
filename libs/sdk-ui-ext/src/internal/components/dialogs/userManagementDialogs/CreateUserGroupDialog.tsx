@@ -7,22 +7,20 @@ import { useBackendStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialogBase, IAlignPoint, Input, Overlay, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
+import { IWithTelemetryProps, withTelemetry, useTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
 /**
  * @internal
  */
-export interface ICreateUserGroupDialogProps {
+export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     organizationId: string;
     onSuccess: () => void;
     onCancel: () => void;
 }
 
-/**
- * @internal
- */
-export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
+const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
     organizationId,
     onSuccess,
     onCancel,
@@ -32,6 +30,7 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
     const { addSuccess, addError } = useToastMessage();
     const [userGroupName, setUserGroupName] = useState<string>("");
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onSubmit = () => {
         setIsProcessing(true);
@@ -45,6 +44,7 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
             })
             .then(() => {
                 addSuccess(messages.userGroupCreatedSuccess);
+                trackEvent("group-created");
                 onSuccess();
                 onCancel();
             })
@@ -85,3 +85,8 @@ export const CreateUserGroupDialog: React.FC<ICreateUserGroupDialogProps> = ({
         </Overlay>
     );
 };
+
+/**
+ * @internal
+ */
+export const CreateUserGroupDialog = withTelemetry(CreateUserGroupDialogComponent);
