@@ -1,7 +1,6 @@
 // (C) 2023 GoodData Corporation
 import { all, put, call, select } from "redux-saga/effects";
 import {
-    IAttributeFilter,
     IDashboardAttributeFilter,
     areObjRefsEqual,
     filterAttributeElements,
@@ -44,29 +43,11 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         return currentFilters.find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
     });
 
-    let drillIntersectionFilters: IAttributeFilter[] = [];
-    if (cmd.payload.drillEvent.drillContext.intersection) {
-        drillIntersectionFilters = convertIntersectionToAttributeFilters(
-            cmd.payload.drillEvent.drillContext.intersection,
-            dateDataSetsAttributesRefs,
-            backendSupportsElementUris,
-        );
-    } else if (cmd.payload.drillEvent?.drillContext?.points) {
-        // label click
-        if (cmd.payload.drillEvent?.drillContext?.points?.length === 1) {
-            drillIntersectionFilters = convertIntersectionToAttributeFilters(
-                cmd.payload.drillEvent?.drillContext?.points[0]?.intersection,
-                dateDataSetsAttributesRefs,
-                backendSupportsElementUris,
-            );
-        } else if (cmd.payload.drillEvent?.drillContext?.points?.length > 1) {
-            drillIntersectionFilters = convertIntersectionToAttributeFilters(
-                cmd.payload.drillEvent?.drillContext?.points[0]?.intersection.slice(-1),
-                dateDataSetsAttributesRefs,
-                backendSupportsElementUris,
-            );
-        }
-    }
+    const drillIntersectionFilters = convertIntersectionToAttributeFilters(
+        cmd.payload.drillEvent.drillContext.intersection ?? [],
+        dateDataSetsAttributesRefs,
+        backendSupportsElementUris,
+    );
 
     const virtualFilters = drillIntersectionFilters.map((filter) => {
         const displayForm = filterObjRef(filter);
@@ -90,6 +71,13 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     });
 
     const correlation = `crossFiltering_${uuid()}`;
+
+    yield put(
+        drillActions.crossFilterByWidget({
+            widgetRef,
+            filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
+        }),
+    );
 
     yield all(
         virtualFilters.map((vf) => {
@@ -122,13 +110,6 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           correlation,
                       ),
                   );
-        }),
-    );
-
-    yield put(
-        drillActions.crossFilterByWidget({
-            widgetRef,
-            filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
         }),
     );
 

@@ -5,6 +5,7 @@ import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { DrillState } from "./drillState.js";
 import { ICrossFilteringItem } from "./types.js";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
+import compact from "lodash/compact.js";
 
 type DrillReducer<A extends Action> = CaseReducer<DrillState, A>;
 
@@ -15,16 +16,25 @@ const setDrillableItems: DrillReducer<PayloadAction<ExplicitDrill[]>> = (state, 
 const crossFilterByWidget: DrillReducer<PayloadAction<ICrossFilteringItem>> = (state, action) => {
     const { payload } = action;
 
-    state.crossFiltering = state.crossFiltering.map((item) => {
-        return {
+    state.crossFiltering = compact(
+        state.crossFiltering.map((item) => {
             // If we changed selection of the existing virtual filters by different widget,
             // it should now belong to the new widget, so filter the changed filters out
-            filterLocalIdentifiers: item.filterLocalIdentifiers.filter(
+            const filteredLocalIdentifiers = item.filterLocalIdentifiers.filter(
                 (id) => !payload.filterLocalIdentifiers.includes(id),
-            ),
-            widgetRef: item.widgetRef,
-        };
-    });
+            );
+
+            // When all filter local identifiers are filtered out, remove the item
+            if (!filteredLocalIdentifiers.length) {
+                return undefined;
+            }
+
+            return {
+                ...item,
+                filterLocalIdentifiers: filteredLocalIdentifiers,
+            };
+        }),
+    );
 
     const widgetCrossFilteringIndex = state.crossFiltering.findIndex((item) =>
         areObjRefsEqual(item.widgetRef, payload.widgetRef),

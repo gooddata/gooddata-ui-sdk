@@ -63,4 +63,17 @@ describe("updateConfigWithSettings", () => {
         const featureFlags: ISettings = undefined;
         expect(updateConfigWithSettings(config, featureFlags)).toEqual(config);
     });
+
+    describe("enableKDCrossFiltering", () => {
+        it("should return correct config from feature flags", async () => {
+            const config: IChartConfig = {};
+            const settings: ISettings = {
+                enableKDCrossFiltering: true,
+            };
+            const expectedConfig = {
+                useGenericInteractionTooltip: true,
+            };
+            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
+        });
+    });
 });
