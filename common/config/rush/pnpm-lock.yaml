@@ -1784,7 +1784,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -1845,7 +1845,7 @@ importers:
       vitest: 1.0.4
       vitest-dom: 0.1.1
     dependencies:
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/util': link:../util
@@ -1973,7 +1973,7 @@ importers:
   ../../libs/sdk-ui-charts:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2037,7 +2037,7 @@ importers:
       vitest: 1.0.4
       vitest-dom: 0.1.1
     dependencies:
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2107,7 +2107,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/i18n-toolkit': workspace:*
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
@@ -2189,7 +2189,7 @@ importers:
       vitest: 1.0.4
       vitest-dom: 0.1.1
     dependencies:
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-base': link:../sdk-backend-base
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
@@ -2584,7 +2584,7 @@ importers:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/live-examples-workspace': workspace:*
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-model': workspace:*
@@ -2640,7 +2640,7 @@ importers:
       vitest: 1.0.4
       vitest-dom: 0.1.1
     dependencies:
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2703,7 +2703,7 @@ importers:
     specifiers:
       '@aaronhayes/react-use-hubspot-form': ^2.0.1
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -2790,7 +2790,7 @@ importers:
       vitest-dom: 0.1.1
     dependencies:
       '@aaronhayes/react-use-hubspot-form': 2.1.1_biqbaboplfbrettd7655fr4n2y
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -2971,7 +2971,7 @@ importers:
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -3030,7 +3030,7 @@ importers:
       '@ag-grid-community/all-modules': 27.3.0
       '@ag-grid-community/core': 27.3.0
       '@ag-grid-community/react': 27.3.0_ynmsds3wz3224xgdrl3ds7i2jm
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -3548,7 +3548,7 @@ importers:
   ../../libs/sdk-ui-vis-commons:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/number-formatter': ^1.0.4
+      '@gooddata/number-formatter': ^1.0.5
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-mockingbird': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -3600,7 +3600,7 @@ importers:
       vitest: 1.0.4
       vitest-dom: 0.1.1
     dependencies:
-      '@gooddata/number-formatter': 1.0.4
+      '@gooddata/number-formatter': 1.0.5
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-model': link:../sdk-model
       '@gooddata/sdk-ui': link:../sdk-ui
@@ -7134,8 +7134,8 @@ packages:
       - debug
       - encoding
 
-  /@gooddata/number-formatter/1.0.4:
-    resolution: {integrity: sha512-DvSawIEly4NvWjxQomi3/Vb3vY1XzTvHvdjSbXePYoqbVdOHSIfOUeI8XGVwGzeVFaxdgEfC03CkQ7e4crDFFg==}
+  /@gooddata/number-formatter/1.0.5:
+    resolution: {integrity: sha512-2FmOOcpmfm79mJiSPvHUx5Z1qI+NEgA6PER1UrxHOlKuWX21Kp18g2N7Fih3808q2LjXsjWTTmIIwshlqtDB5A==}
     dependencies:
       lru-cache: 10.1.0
       ts-invariant: 0.7.5
@@ -11912,6 +11912,7 @@ packages:
 
   /bindings/1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: false
@@ -15012,6 +15013,7 @@ packages:
 
   /file-uri-to-path/1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
+    requiresBuild: true
     dev: false
     optional: true
 
