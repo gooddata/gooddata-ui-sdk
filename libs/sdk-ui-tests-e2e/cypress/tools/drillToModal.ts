@@ -77,6 +77,14 @@ export class DrillToModal {
         return this;
     }
 
+    selectCrossFiltering() {
+        cy.get(".gd-drill-modal-picker-dropdown")
+            .find(".s-cross-filtering")
+            .should("be.visible")
+            .click({ force: true });
+        return this;
+    }
+
     hasTitleHeader(title: string) {
         this.getTitleElement().should("have.text", title);
         return this;
