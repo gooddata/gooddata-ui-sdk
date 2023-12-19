@@ -17,7 +17,7 @@ import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
 import { IExportConfig } from "../types/exportTypes.js";
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult, IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 
 /**
  * Payload of the {@link DashboardInsightWidgetHeaderChanged} event.
@@ -664,6 +664,45 @@ export function insightWidgetDrillDownModified(
         payload: {
             ref,
             updated,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @alpha
+ */
+export interface AttributeHierarchyModifiedEventPayload {
+    /**
+     * Catalog that was updated.
+     */
+    readonly catalog: IWorkspaceCatalog;
+}
+
+/**
+ * This event is emitted when Attribute Hierarchies have been updated/deleted.
+ *
+ * @beta
+ */
+export interface AttributeHierarchyModifiedEvent extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED";
+    readonly payload: AttributeHierarchyModifiedEventPayload;
+}
+
+export function attributeHierarchyModifiedEvent(
+    ctx: DashboardContext,
+    catalog: IWorkspaceCatalog,
+    correlationId?: string,
+): AttributeHierarchyModifiedEvent {
+    return {
+        type: "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED",
+        ctx,
+        correlationId,
+        payload: {
+            catalog,
         },
     };
 }

@@ -117,6 +117,12 @@ export enum GdcAdCommandType {
      * The command to set API token
      */
     SetApiToken = "setApiToken",
+
+    /**
+     * The command to force reset of catalog after attribute hierarchy has been modified.
+     * @beta
+     */
+    AttributeHierarchyModified = "attributeHierarchyModified",
 }
 
 /**
@@ -221,6 +227,12 @@ export enum GdcAdEventType {
      * "setApiToken" was called the last time).
      */
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
+
+    /**
+     * Type to notify that the attribute hierarchy has been modified.
+     * @beta
+     */
+    AttributeHierarchyModified = "attributeHierarchyModified",
 }
 
 /**
@@ -1318,4 +1330,43 @@ export type AdSetApiTokenCommandData = IGdcAdMessageEnvelope<
  */
 export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCommandData {
     return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetApiToken;
+}
+
+//
+// AttributeHierarchyModified command
+//
+
+/**
+ * Triggers the attributeHierarchyModified action to reset catalogs.
+ *
+ * @beta
+ */
+export type AdAttributeHierarchyModifiedCommand = IGdcAdMessageEvent<
+    GdcAdCommandType.AttributeHierarchyModified,
+    undefined
+>;
+
+/**
+ * Data type of attributeHierarchyModified command
+ *
+ * Note: it has empty content and just wrapped to application and product data structure
+ *
+ * @beta
+ */
+export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<
+    GdcAdCommandType.AttributeHierarchyModified,
+    undefined
+>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link AdAttributeHierarchyModifiedCommandData}
+ *
+ * @param obj - object to test
+ *
+ * @beta
+ */
+export function isAttributeHierarchyModifiedCommandData(
+    obj: unknown,
+): obj is AdAttributeHierarchyModifiedCommandData {
+    return isObject(obj) && getEventType(obj) === GdcAdCommandType.AttributeHierarchyModified;
 }
