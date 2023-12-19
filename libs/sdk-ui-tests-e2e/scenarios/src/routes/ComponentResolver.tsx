@@ -66,6 +66,7 @@ import { DashboardWithNoDataScenario } from "../components/Scenarios/Dashboard/D
 import { DashboardWithMergeAndUnmergeScenario } from "../components/Scenarios/Dashboard/DashboardWithMergeAndUnmergeScenario";
 import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
 import { DashboardAttributeSelection } from "../components/Scenarios/Dashboard/DashboardAttributeSelection";
+import { DashboardWithMultipleDateFilters } from "../components/Scenarios/Dashboard/DashboardWithMultipleDateFilters";
 import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenarios/Dashboard/DashboardScenarioTigerUnknownVisualization";
 import { FunnelChartScenario } from "../components/Scenarios/Visualizations/FunnelChart/FunnelChartScenario";
 import { PyramidChartScenario } from "../components/Scenarios/Visualizations/PyramidChart/PyramidChartScenario";
@@ -149,6 +150,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS: "dashboard/dashboard-many-rows-columns",
     DASHBOARD_ATTRIBUTE_SELECTION: "dashboard/attribute-selection",
     DASHBOARD_FOR_DATE_FILTER: "dashboard/for-date-filter",
+    DASHBOARD_WITH_MULTIPLE_DATE_FILTERS: "dashboard/dashboard-with-multiple-date-filters",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -285,6 +287,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_TARGET, DashboardTargetDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS, DashboardWithTableManyRowsColumnsScenario],
     [SCENARIO_KEYS.DASHBOARD_FOR_DATE_FILTER, DashboardForDateFilterScenario],
+    [SCENARIO_KEYS.DASHBOARD_WITH_MULTIPLE_DATE_FILTERS, DashboardWithMultipleDateFilters],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
     [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],
