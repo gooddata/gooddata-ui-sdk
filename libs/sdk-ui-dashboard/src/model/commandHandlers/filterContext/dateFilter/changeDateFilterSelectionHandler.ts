@@ -28,7 +28,7 @@ export function* changeDateFilterSelectionHandler(
         cmd.payload.type === "relative" &&
         cmd.payload.granularity === "GDC.time.date" &&
         cmd.payload.from === undefined &&
-        cmd.payload.to === undefined; // TODO INE: replace by isAllTimeDashboardDateFilter?
+        cmd.payload.to === undefined;
 
     const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
         canApplyDateFilter,

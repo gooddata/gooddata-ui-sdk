@@ -12,6 +12,7 @@ import { selectFilterContextDateFiltersForDimension } from "../../../store/filte
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 import { areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
+import { layoutActions } from "../../../../model/store/layout/index.js";
 
 export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDateFilters): SagaIterator<void> {
     const { dataSets } = cmd.payload;
@@ -48,10 +49,10 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
             // dateFilterConfigsActions.removeDateFilterConfig(
             //     removedFilter.attributeFilter.localIdentifier!,
             // ),
-            // // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
-            // layoutActions.removeIgnoredDateFilter({
-            //     dataSets: [removedFilter.dateFilter.dataSet!],
-            // }),
+            // house-keeping: ensure the removed date filter disappears from widget ignore lists
+            layoutActions.removeIgnoredDateFilter({
+                dateDataSets: [removedFilter.dateFilter.dataSet!],
+            }),
         ]);
 
         yield put(batch);
