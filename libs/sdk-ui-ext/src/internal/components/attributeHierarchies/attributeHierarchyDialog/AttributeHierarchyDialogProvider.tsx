@@ -106,7 +106,9 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
 
     const handleAddEmptyAttribute = (baseRowIndex: number) => {
         setAttributes(appendEmptyAttribute(attributes, baseRowIndex));
-        onAddAttributeClicked();
+        if (onAddAttributeClicked) {
+            onAddAttributeClicked();
+        }
     };
 
     const handleCompeteAttribute = (selectedAttribute: ICatalogAttributeData, rowIndex: number) => {

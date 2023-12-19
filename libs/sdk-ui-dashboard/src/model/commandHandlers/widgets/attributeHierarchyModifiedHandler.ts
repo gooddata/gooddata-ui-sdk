@@ -73,5 +73,5 @@ export function* attributeHierarchyModifiedHandler(
         }),
     );
 
-    return attributeHierarchyModifiedEvent(ctx, catalog, correlationId);
+    return attributeHierarchyModifiedEvent(ctx, correlationId);
 }

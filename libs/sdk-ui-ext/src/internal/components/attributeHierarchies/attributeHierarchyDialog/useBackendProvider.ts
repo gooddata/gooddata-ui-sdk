@@ -126,8 +126,9 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
         } else {
             handleCreateAttributeHierarchy(savingTitle, attributeRefs);
         }
-
-        onCreateHierarchyClicked();
+        if (onCreateHierarchyClicked) {
+            onCreateHierarchyClicked();
+        }
     };
 
     const onDeleteAttributeHierarchy = () => {
