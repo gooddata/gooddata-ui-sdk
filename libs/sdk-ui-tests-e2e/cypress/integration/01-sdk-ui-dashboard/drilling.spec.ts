@@ -7,6 +7,7 @@ import { EditMode } from "../../tools/editMode";
 import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 import { Messages } from "../../tools/messages";
 import { DrillToModal } from "../../tools/drillToModal";
+import { getBackend } from "../../support/constants";
 
 const drillModal = new DrillToModal();
 const editMode = new EditMode();
@@ -36,7 +37,10 @@ describe("Interaction", () => {
             editMode.edit();
             widget.waitChartLoaded().focus();
 
-            widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
+            getBackend() === "TIGER"
+                ? widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove()
+                : widgetConfig.openInteractions();
+
             widgetConfig.addInteraction("Sum of Probability", "measure");
             widgetConfig
                 .getDrillConfigItem("Sum of Probability")
