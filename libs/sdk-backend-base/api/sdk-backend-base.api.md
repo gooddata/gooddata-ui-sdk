@@ -41,6 +41,7 @@ import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -532,6 +533,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    // (undocumented)
+    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
     // (undocumented)
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     // (undocumented)

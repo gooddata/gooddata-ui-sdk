@@ -65,10 +65,10 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
             : filter,
     );
 
-    // make sure that date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
-    // we have to keep order of rest of array (attributeFilters) it represent order of filters in filter bar
-    const [dateFilter, attributeFilters] = partition(filtersWithLocalId, isDashboardDateFilter);
-    const filters = [...dateFilter, ...attributeFilters];
+    // make sure that common date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
+    // we have to keep order of rest of array (attributeFilters and date filters with dimension) it represent order of filters in filter bar
+    const [commonDateFilter, otherFilters] = partition(filtersWithLocalId, isDashboardCommonDateFilter);
+    const filters = [...commonDateFilter, ...otherFilters];
 
     state.filterContextDefinition = {
         ...filterContextDefinition,

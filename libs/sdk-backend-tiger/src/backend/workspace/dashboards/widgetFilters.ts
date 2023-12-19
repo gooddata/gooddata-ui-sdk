@@ -57,6 +57,55 @@ export async function resolveWidgetFilters(
     return filters.filter((filter) => !isIgnorableFilter(filter) || filtersToKeep.includes(filter));
 }
 
+/**
+ * Performs widget filter resolution:
+ * - removes all attribute filters hit by ignoreDashboardFilters
+ * - removes all date filters for date dimension different than dateDataSet
+ * - picks the last date filter for the dateDataSet dimension
+ *   - if it is all time, removes all date filters
+ *   - otherwise returns the last date filter specified
+ *
+ * @param widget - widget to resolve filters for
+ * @param filters - filters to try
+ * @param normalizeIds - function providing normalization of any ObjRef to identifier
+ * @internal
+ */
+export async function resolveWidgetFiltersWithMultipleDateFilters(
+    commonDateFilters: IDateFilter[],
+    otherFilters: IFilter[],
+    ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
+    dateDataSet: IWidget["dateDataSet"],
+    normalizeIds: NormalizeIds,
+): Promise<IFilter[]> {
+    const dateFilters = otherFilters.filter(isDateFilter);
+    const attributeFilters = otherFilters.filter(isAttributeFilter);
+
+    const isIgnorableFilter = (obj: unknown): obj is IDateFilter | IAttributeFilter =>
+        isDateFilter(obj) || isAttributeFilter(obj);
+
+    if (!dateFilters.length && !attributeFilters.length) {
+        return otherFilters;
+    }
+
+    const [commonDateFiltersToKeep, dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
+        getRelevantDateFiltersForWidget(commonDateFilters, dateDataSet, normalizeIds),
+        getRelevantDateFiltersWithDimensionForWidget(dateFilters, ignoreDashboardFilters, normalizeIds),
+        getRelevantAttributeFiltersForWidget(attributeFilters, ignoreDashboardFilters, normalizeIds),
+    ]);
+
+    const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
+    // filter the original filter arrays to maintain order of the items
+    const keptCommonDateFilters = commonDateFilters.filter((filter) =>
+        commonDateFiltersToKeep.includes(filter),
+    );
+
+    const keptOtherFilters = otherFilters.filter(
+        (filter) => !isIgnorableFilter(filter) || filtersToKeep.includes(filter),
+    );
+
+    return [...keptCommonDateFilters, ...keptOtherFilters];
+}
+
 async function getRelevantDateFiltersForWidget(
     filters: IDateFilter[],
     dateDataSet: IWidget["dateDataSet"],
@@ -77,6 +126,36 @@ async function getRelevantDateFiltersForWidget(
 
     const candidate = last(withRelevantDimension);
     return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
+}
+
+async function getRelevantDateFiltersWithDimensionForWidget(
+    filters: IDateFilter[],
+    ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
+    normalizeIds: NormalizeIds,
+): Promise<IDateFilter[]> {
+    if (!ignoreDashboardFilters.length) {
+        return filters;
+    }
+
+    if (!filters.length) {
+        return [];
+    }
+
+    // get all the necessary uris in one call by concatenating both arrays
+    const ids = await normalizeIds([
+        ...ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
+        ...filters.map((filter) => filterObjRef(filter)!),
+    ]);
+
+    // re-split the uris array to the two parts corresponding to the original arrays
+    const divide = ignoreDashboardFilters.length;
+    const ignoredIds = ids.slice(0, divide);
+    const filterIds = ids.slice(divide);
+
+    return zip(filters, filterIds)
+        .filter(([, id]) => !ignoredIds.includes(id!))
+        .map(([filter]) => filter!)
+        .filter((f) => !isAllTimeDateFilter(f));
 }
 
 async function getRelevantAttributeFiltersForWidget(

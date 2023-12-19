@@ -168,36 +168,107 @@ function selectResolvedInsightDateFilters(
     state: DashboardState,
     insight: IInsightDefinition,
     widget: ExtendedDashboardWidget,
-    dashboardDateFilters: IDateFilter[],
+    dashboardCommonDateFilters: IDateFilter[],
+    dashboardDateFiltersWithDimensions: IDateFilter[],
     insightDateFilters: IDateFilter[],
 ): IDateFilter[] {
     if (isDashboardDateFilterIgnoredForInsight(insight)) {
         return insightDateFilters;
     }
 
-    return selectResolvedDateFilters(state, [...insightDateFilters, ...dashboardDateFilters], widget);
+    const nonIgnoredDashboardDateFilterDateDatasetPairs = selectResolveWidgetDateFilterIgnore(
+        state,
+        widget,
+        dashboardCommonDateFilters,
+        dashboardDateFiltersWithDimensions,
+    );
+
+    const insightDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, insightDateFilters);
+
+    return resolveDateFilters(
+        insightDateFilterDateDatasetPairs,
+        nonIgnoredDashboardDateFilterDateDatasetPairs,
+    );
+}
+
+function selectResolveWidgetDateFilterIgnore(
+    state: DashboardState,
+    widget: ExtendedDashboardWidget,
+    dashboardCommonDateFilters: IDateFilter[],
+    dashboardDateFiltersWithDimensions: IDateFilter[],
+): IFilterDateDatasetPair[] {
+    const commonDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(
+        state,
+        dashboardCommonDateFilters,
+    );
+
+    const widgetDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(
+        state,
+        dashboardDateFiltersWithDimensions,
+    );
+    return resolveWidgetDateFilterIgnore(
+        widget,
+        commonDateFilterDateDatasetPairs,
+        widgetDateFilterDateDatasetPairs,
+    );
+}
+
+function resolveWidgetDateFilterIgnore(
+    widget: ExtendedDashboardWidget,
+    commonDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
+    widgetDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
+): IFilterDateDatasetPair[] {
+    const nonIgnoredCommonDateFilterDateDatasetPairs = commonDateFilterDateDatasetPairs.filter(
+        ({ dateDataset }) => {
+            return (
+                !!widget.dateDataSet &&
+                dateDataset &&
+                refMatchesMdObject(widget.dateDataSet, dateDataset.dataSet, "dataSet")
+            );
+        },
+    );
+    const nonIgnoredWidgetDateFilterDateDatasetPairs = widgetDateFilterDateDatasetPairs.filter(
+        ({ dateDataset }) => {
+            const matches =
+                dateDataset &&
+                widget.ignoreDashboardFilters
+                    ?.filter(isDashboardDateFilterReference)
+                    .some((ignored) => refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"));
+
+            return !matches;
+        },
+    );
+    return [...nonIgnoredCommonDateFilterDateDatasetPairs, ...nonIgnoredWidgetDateFilterDateDatasetPairs];
 }
 
 function selectResolvedDateFilters(
     state: DashboardState,
-    dateFilters: IDateFilter[],
     widget: ExtendedDashboardWidget,
+    dashboardCommonDateFilters: IDateFilter[],
+    dashboardDateFiltersWithDimensions: IDateFilter[],
 ): IDateFilter[] {
-    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, dateFilters);
-    return resolveDateFilters(allDateFilterDateDatasetPairs, widget);
+    const allDateFilterDateDatasetPairs = selectResolveWidgetDateFilterIgnore(
+        state,
+        widget,
+        dashboardCommonDateFilters,
+        dashboardDateFiltersWithDimensions,
+    );
+    return resolveDateFilters([], allDateFilterDateDatasetPairs);
 }
 
 function resolveDateFilters(
-    allDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
-    widget: ExtendedDashboardWidget,
+    insightDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
+    dashboardDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
 ): IDateFilter[] {
-    const dateFilterDateDatasetPairsWithIgnoreResolved = resolveWidgetDateFilterIgnore(
-        widget,
-        allDateFilterDateDatasetPairs,
-    );
-    // go through the filters in reverse order using the first filter for a given dimension encountered
+    // prioritize dashboard filters over insight ones
     // and strip useless all time filters at the end
-    return dateFilterDateDatasetPairsWithIgnoreResolved
+    const init = dashboardDateFilterDateDatasetPairs
+        .filter((item) => !!item.dateDataset)
+        .reduce((acc: IDateFilter[], curr) => {
+            acc.push(curr.filter);
+            return acc;
+        }, []);
+    return insightDateFilterDateDatasetPairs
         .filter((item) => !!item.dateDataset)
         .reduceRight((acc: IDateFilter[], curr) => {
             const alreadyPresent = acc.some((item) =>
@@ -209,23 +280,8 @@ function resolveDateFilters(
             }
 
             return acc;
-        }, [])
+        }, init)
         .filter((item) => !isAllTimeDateFilter(item));
-}
-
-function resolveWidgetDateFilterIgnore(
-    widget: ExtendedDashboardWidget,
-    allDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
-): IFilterDateDatasetPair[] {
-    return allDateFilterDateDatasetPairs.filter(({ dateDataset }) => {
-        const matches =
-            dateDataset &&
-            widget.ignoreDashboardFilters
-                ?.filter(isDashboardDateFilterReference)
-                .some((ignored) => refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"));
-
-        return !matches;
-    });
 }
 
 function* queryWithInsight(
@@ -234,15 +290,15 @@ function* queryWithInsight(
     insight: IInsightDefinition,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
-    const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
-        widgetAwareDashboardFiltersSelector,
-    );
+    const [widgetAwareDashboardCommonDateFilters, widgetAwareDashboardOtherFilters]: ReturnType<
+        typeof widgetAwareDashboardFiltersSelector
+    > = yield select(widgetAwareDashboardFiltersSelector);
 
     // add all time filter explicitly in case the date widgetAwareDashboardFilters are empty
     // this will cause the all time filter to be used instead of the insight date filter
     // if the dashboard date filter is not ignored by the widget
-    if (!widgetAwareDashboardFilters.filter(isDateFilter).length && widget.dateDataSet) {
-        widgetAwareDashboardFilters.push(newAllTimeFilter(widget.dateDataSet));
+    if (!widgetAwareDashboardCommonDateFilters.length && widget.dateDataSet) {
+        widgetAwareDashboardCommonDateFilters.push(newAllTimeFilter(widget.dateDataSet));
     }
 
     const effectiveInsightFilters = insightFilters(insight);
@@ -252,14 +308,15 @@ function* queryWithInsight(
             selectResolvedInsightDateFilters,
             insight,
             widget,
-            widgetAwareDashboardFilters.filter(isDateFilter),
+            widgetAwareDashboardCommonDateFilters.filter(isDateFilter),
+            widgetAwareDashboardOtherFilters.filter(isDateFilter),
             effectiveInsightFilters.filter(isDateFilter),
         ),
         call(
             getResolvedInsightAttributeFilters,
             ctx,
             widget,
-            widgetAwareDashboardFilters.filter(isAttributeFilter),
+            widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
             effectiveInsightFilters.filter(isAttributeFilter),
         ),
     ]);
@@ -287,13 +344,23 @@ function* queryWithoutInsight(
     widget: IKpiWidget | ICustomWidget,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
-    const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
-        widgetAwareDashboardFiltersSelector,
-    );
+    const [widgetAwareDashboardCommonDateFilters, widgetAwareDashboardOtherFilters]: ReturnType<
+        typeof widgetAwareDashboardFiltersSelector
+    > = yield select(widgetAwareDashboardFiltersSelector);
 
     const [dateFilters, attributeFilters] = yield all([
-        select(selectResolvedDateFilters, widgetAwareDashboardFilters.filter(isDateFilter), widget),
-        call(getResolvedAttributeFilters, ctx, widget, widgetAwareDashboardFilters.filter(isAttributeFilter)),
+        select(
+            selectResolvedDateFilters,
+            widget,
+            widgetAwareDashboardCommonDateFilters.filter(isDateFilter),
+            widgetAwareDashboardOtherFilters.filter(isDateFilter),
+        ),
+        call(
+            getResolvedAttributeFilters,
+            ctx,
+            widget,
+            widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
+        ),
     ]);
 
     return [...dateFilters, ...attributeFilters];

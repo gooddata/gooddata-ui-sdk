@@ -13,8 +13,10 @@ import {
     InsightDrillDefinition,
     IDrillDownReference,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
+import partition from "lodash/partition.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -229,30 +231,37 @@ export const selectWidgetDrills: (
  *
  * @internal
  */
-export const selectAllFiltersForWidgetByRef: (ref: ObjRef) => DashboardSelector<IDashboardFilter[]> =
-    createMemoizedSelector((ref: ObjRef) => {
-        return createSelector(
-            selectWidgetByRef(ref),
-            selectFilterContextFilters,
-            selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
-            (widget, dashboardFilters, crossFilteringFiltersLocalIdentifiers) => {
-                invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-                const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
-                    if (isDashboardAttributeFilter(f)) {
-                        return !crossFilteringFiltersLocalIdentifiers?.includes(
-                            f.attributeFilter.localIdentifier!,
-                        );
-                    }
+export const selectAllFiltersForWidgetByRef: (
+    ref: ObjRef,
+) => DashboardSelector<[IDashboardFilter[], IDashboardFilter[]]> = createMemoizedSelector((ref: ObjRef) => {
+    return createSelector(
+        selectWidgetByRef(ref),
+        selectFilterContextFilters,
+        selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
+        (widget, dashboardFilters, crossFilteringFiltersLocalIdentifiers) => {
+            invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+            const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
+                if (isDashboardAttributeFilter(f)) {
+                    return !crossFilteringFiltersLocalIdentifiers?.includes(
+                        f.attributeFilter.localIdentifier!,
+                    );
+                }
 
-                    return true;
-                });
-                return filterContextItemsToDashboardFiltersByWidget(
-                    filtersWithoutCrossFilteringFilters,
-                    widget,
-                );
-            },
-        );
-    });
+                return true;
+            });
+
+            const [commonDateFilters, otherFilters] = partition(
+                filtersWithoutCrossFilteringFilters,
+                isDashboardCommonDateFilter,
+            );
+
+            return [
+                filterContextItemsToDashboardFiltersByWidget(commonDateFilters, widget),
+                filterContextItemsToDashboardFiltersByWidget(otherFilters, widget),
+            ];
+        },
+    );
+});
 
 const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
     return Array.from(widgetMap.values());

@@ -37,7 +37,7 @@ export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemP
     );
 
     // TODO INE: add date support
-    //const isFilterNotApplied = useIsFilterNotApplied(widget, dataSetRef);
+    // const isFilterNotApplied = useIsFilterNotApplied(widget, dataSetRef);
     const isFilterNotApplied = false;
 
     const { handleIgnoreChanged, status } = useDateFilterConfigurationHandling(
