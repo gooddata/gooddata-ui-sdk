@@ -40,6 +40,7 @@ import {
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
+    AttributeHierarchyModified,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -348,6 +349,8 @@ export {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     exportInsightWidget,
+    AttributeHierarchyModified,
+    attributeHierarchyModified,
 } from "./insight.js";
 
 export {
@@ -458,4 +461,5 @@ export type DashboardCommands =
     | RemoveDrillDownForInsightWidget
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget
-    | CrossFiltering;
+    | CrossFiltering
+    | AttributeHierarchyModified;

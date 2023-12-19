@@ -32,6 +32,8 @@ export const useAttributeHierarchy = (params: IUseAttributeHierarchy) => {
     };
 
     const onSaveAttributeHierarchy = (attributeHierarchy?: ICatalogAttributeHierarchy) => {
+        eventDispatch(createAttributeHierarchyRequested());
+
         if (editingAttributeHierarchyRef.current && attributeHierarchy) {
             dispatch(catalogActions.updateAttributeHierarchy(attributeHierarchy));
             return;
@@ -40,8 +42,6 @@ export const useAttributeHierarchy = (params: IUseAttributeHierarchy) => {
         if (attributeHierarchy) {
             onDeleteInteraction();
             dispatch(catalogActions.addAttributeHierarchy(attributeHierarchy));
-
-            eventDispatch(createAttributeHierarchyRequested());
         }
     };
 

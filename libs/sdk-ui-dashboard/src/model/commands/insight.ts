@@ -564,6 +564,28 @@ export function modifyDrillsForInsightWidget(
     };
 }
 
+/**
+ * @beta
+ */
+export interface AttributeHierarchyModified extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
+}
+
+/**
+ * Creates the AttributeHierarchyModified command , dispatching this command will result on reset of catalog.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED",
+        correlationId,
+    };
+}
+
 //
 //
 //
