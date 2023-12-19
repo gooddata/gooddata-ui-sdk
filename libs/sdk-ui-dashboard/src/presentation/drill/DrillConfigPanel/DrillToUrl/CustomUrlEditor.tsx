@@ -29,9 +29,11 @@ import {
     isAttributeFilter,
     isNegativeAttributeFilter,
     isUriRef,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import { useWidgetFilters } from "../../../widget/common/useWidgetFilters.js";
 import compact from "lodash/compact.js";
+import uniqBy from "lodash/uniqBy.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";
 
 export interface IUrlInputProps {
@@ -377,7 +379,10 @@ function useSanitizedInsightFilters(widgetRef: ObjRef) {
     return useMemo(() => {
         return widgetFiltersResult.status === "success"
             ? // Date filters are currently not supported, so filter them out
-              widgetFiltersResult.result?.filter(isAttributeFilter).map(sanitizeAttributeFilter)
+              uniqBy(
+                  widgetFiltersResult.result?.filter(isAttributeFilter).map(sanitizeAttributeFilter),
+                  (f) => serializeObjRef(filterObjRef(f)),
+              )
             : undefined;
     }, [widgetFiltersResult.status, widgetFiltersResult.result, sanitizeAttributeFilter]);
 }
@@ -404,7 +409,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         negativeAttributeFilter: {
                             ...filter.negativeAttributeFilter,
-                            displayForm: idRef(displayForm.id),
+                            displayForm: idRef(displayForm.id, "displayForm"),
                         },
                     };
                 } else {
@@ -412,7 +417,7 @@ function useSanitizeAttributeFilter() {
                         ...filter,
                         positiveAttributeFilter: {
                             ...filter.positiveAttributeFilter,
-                            displayForm: idRef(displayForm.id),
+                            displayForm: idRef(displayForm.id, "displayForm"),
                         },
                     };
                 }
