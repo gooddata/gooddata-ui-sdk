@@ -53,6 +53,7 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
                                     onAdd={() => onAdd(`{attribute_filter_selection(${df.id})}`)}
                                     iconClassName="gd-icon-filter"
                                     key={index}
+                                    isFilter
                                 />
                             )
                         );
