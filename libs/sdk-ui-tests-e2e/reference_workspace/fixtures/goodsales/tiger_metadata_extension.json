@@ -2139,6 +2139,153 @@
                     }
                 ],
                 "title": "Dashboard with dependent filters"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "4fe4b5f8-72e7-4a9a-a3d5-e4f0269b10f6",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "type": "IDashboardLayout",
+                        "sections": [
+                            {
+                                "type": "IDashboardLayoutSection",
+                                "header": {},
+                                "items": [
+                                    {
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "type": "insight",
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "4f693ba7-5b2d-4e85-bd78-2e1171e8ba0c",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "ignoreDashboardFilters": [],
+                                            "drills": [
+                                                {
+                                                    "localIdentifier": "941b12df9214489c9d523818d0593f6f",
+                                                    "transition": "pop-up",
+                                                    "origin": {
+                                                        "type": "drillFromMeasure",
+                                                        "measure": {
+                                                            "localIdentifier": "0b12199691b64e05868fe35520b77084"
+                                                        }
+                                                    },
+                                                    "type": "drillToInsight",
+                                                    "target": {
+                                                        "identifier": {
+                                                            "id": "aa8db374-7a8b-4019-85df-25f47772db5d",
+                                                            "type": "visualizationObject"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "localIdentifier": "7865c482b53f4078970b30f3ee036d6f",
+                                                    "transition": "in-place",
+                                                    "origin": {
+                                                        "type": "drillFromAttribute",
+                                                        "attribute": {
+                                                            "localIdentifier": "2a052be9dc354e13a918c11fcfdea22c"
+                                                        }
+                                                    },
+                                                    "type": "drillToDashboard",
+                                                    "target": {
+                                                        "identifier": {
+                                                            "id": "5c8244eb-6c86-488c-9df1-37d46e5450ed",
+                                                            "type": "analyticalDashboard"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Table with multiple date filters",
+                                            "description": "",
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "properties": {}
+                                        },
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2023-12-19 08:09",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "6b0f2391-3fb3-4648-957d-a888a92056ab",
+                "modifiedAt": "2023-12-19 08:16",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "EDIT"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard with multiple date filters"
+            }
+        ],
+        "attributeHierarchies": [
+            {
+                "content": {
+                    "attributes": [
+                        {
+                            "identifier": {
+                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                "type": "attribute"
+                            }
+                        },
+                        {
+                            "identifier": {
+                                "id": "dt_closedate_timestamp.year",
+                                "type": "attribute"
+                            }
+                        },
+                        {
+                            "identifier": {
+                                "id": "attr.f_account.account",
+                                "type": "attribute"
+                            }
+                        }
+                    ]
+                },
+                "createdAt": "2023-12-19 08:14",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "id": "1ffd8232-7441-438e-a34b-30e27159e95b",
+                "title": "hierarchy Forecast-Closed-Account"
             }
         ],
         "dashboardPlugins": [],
@@ -2662,6 +2809,32 @@
                 },
                 "description": "",
                 "id": "4e207881-5730-4877-aa38-b67e506b1a5b",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["CompuSci", "Educationly", "Explorer", "Grammar Plus"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_product.product.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "negativeSelection": false,
+                                "localIdentifier": "424d4239ee224230bd31208aa92a37b2",
+                                "selectionMode": "multi"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "4fe4b5f8-72e7-4a9a-a3d5-e4f0269b10f6",
                 "title": "filterContext"
             },
             {
@@ -4329,6 +4502,141 @@
                 "description": "Combo chart",
                 "id": "3c05e649-7897-4a95-9c75-c043f0c39e14",
                 "title": "Combo chart"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "0b12199691b64e05868fe35520b77084",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "6dacef67c9aa4defa7273f7237644ce0",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "2a052be9dc354e13a918c11fcfdea22c",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "6a1eb2091c8244f4bb77f375db4deb98",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_opportunitysnapshot.forecastcategory_id",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "localIdentifier": "77afc773390d4e549301459d69ddbf7f",
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "attr.f_stage.stagename",
+                                                "type": "label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": {
+                                        "id": "dt_closedate_timestamp",
+                                        "type": "dataset"
+                                    }
+                                },
+                                "from": "2005-11-19 00:00",
+                                "to": "2023-12-19 23:59"
+                            }
+                        },
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_stage.stagename",
+                                        "type": "label"
+                                    }
+                                },
+                                "in": {
+                                    "values": [
+                                        "Interest",
+                                        "Discovery",
+                                        "Short List",
+                                        "Risk Assessment",
+                                        "Conviction",
+                                        "Negotiation"
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "6dacef67c9aa4defa7273f7237644ce0",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "properties": {},
+                    "visualizationUrl": "local:table",
+                    "version": "2"
+                },
+                "createdAt": "2023-12-19 08:08",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "4f693ba7-5b2d-4e85-bd78-2e1171e8ba0c",
+                "title": "Table with multiple date filters"
             },
             {
                 "content": {
