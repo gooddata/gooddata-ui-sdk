@@ -248,7 +248,7 @@ export function* getDashboardAttributeFilterReplacements(
     );
 
     return attributeFilterPlaceholders.map(
-        ({ placeholder: toBeReplaced, ref, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+        ({ placeholder: toBeReplaced, ref }): IDrillToUrlPlaceholderReplacement => {
             const usedFilter = attributeFilters.find((filter) => {
                 const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
                 return df && areObjRefsEqual(idRef(df.id), ref);
@@ -264,7 +264,7 @@ export function* getDashboardAttributeFilterReplacements(
                 ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative!)
                 : undefined;
 
-            const replacement = toBeEncoded ? encodeParameterIfSet(parsedFilter) : parsedFilter;
+            const replacement = encodeParameterIfSet(parsedFilter);
 
             return {
                 toBeReplaced,
@@ -290,7 +290,7 @@ export function* getInsightAttributeFilterReplacements(
     );
 
     return attributeFilterPlaceholders.map(
-        ({ placeholder: toBeReplaced, ref, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+        ({ placeholder: toBeReplaced, ref }): IDrillToUrlPlaceholderReplacement => {
             const usedFilter = widgetFilters.find((filter) => {
                 const filterRef = filterObjRef(filter);
                 const df = filterRef && catalogDisplayForms.get(filterRef);
@@ -307,7 +307,7 @@ export function* getInsightAttributeFilterReplacements(
                 ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative)
                 : undefined;
 
-            const replacement = toBeEncoded ? encodeParameterIfSet(parsedFilter) : parsedFilter;
+            const replacement = encodeParameterIfSet(parsedFilter);
 
             return {
                 toBeReplaced,

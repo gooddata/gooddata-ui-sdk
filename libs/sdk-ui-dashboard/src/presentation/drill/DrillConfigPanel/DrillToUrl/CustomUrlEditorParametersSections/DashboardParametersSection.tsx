@@ -34,6 +34,7 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                         onAdd={() => {
                             onAdd(`{dash_attribute_filter_selection(${filterIdentifier})}`);
                         }}
+                        isFilter
                     />
                 ) : null;
             })}
