@@ -60,7 +60,9 @@ storiesOf(`${ExtensionComponents}/AttributeHierarchyDialog`)
             attributeDropdown: {
                 clickSelectors: [
                     ".s-attribute-item-delete-action",
+                    200,
                     ".s-attribute-hierarchy-add-attribute-action button",
+                    200,
                 ],
                 postInteractionWait: 200,
             },
@@ -79,38 +81,51 @@ storiesOf(`${ExtensionComponents}/AttributeHierarchyDialog`)
             addItemAbove: {
                 clickSelectors: [
                     ".public_fixedDataTableRow_main[aria-rowindex='4'] .s-attribute-item-add-action",
+                    200,
                     ".s-attribute-hierarchy-add-action-menu .s-add-above",
+                    200,
                 ],
                 postInteractionWait: 200,
             },
             addItemAboveAndChose: {
                 clickSelectors: [
                     ".public_fixedDataTableRow_main[aria-rowindex='4'] .s-attribute-item-add-action",
+                    200,
                     ".s-attribute-hierarchy-add-action-menu .s-add-above",
+                    200,
                     ".s-attribute-hierarchy-attribute-dropdown-item",
+                    200,
                 ],
                 postInteractionWait: 200,
             },
             addItemBelow: {
                 clickSelectors: [
                     ".public_fixedDataTableRow_main[aria-rowindex='4'] .s-attribute-item-add-action",
+                    200,
                     ".s-attribute-hierarchy-add-action-menu .s-add-below",
+                    200,
                 ],
                 postInteractionWait: 200,
             },
             addItemBelowAndChose: {
                 clickSelectors: [
                     ".public_fixedDataTableRow_main[aria-rowindex='4'] .s-attribute-item-add-action",
+                    200,
                     ".s-attribute-hierarchy-add-action-menu .s-add-below",
+                    200,
                     ".s-attribute-hierarchy-attribute-dropdown-item",
+                    200,
                 ],
                 postInteractionWait: 200,
             },
             attributeDropdownDateTab: {
                 clickSelectors: [
                     ".public_fixedDataTableRow_main[aria-rowindex='4'] .s-attribute-item-add-action",
+                    200,
                     ".s-attribute-hierarchy-add-action-menu .s-add-below",
+                    200,
                     ".s-attribute-hierarchy-attribute-dropdown-tabs .s-dateattribute",
+                    200,
                 ],
                 postInteractionWait: 200,
             },

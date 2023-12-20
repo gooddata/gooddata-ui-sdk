@@ -7,7 +7,7 @@ import { RecordedBackendConfig } from "./types.js";
 /**
  * @internal
  */
-class RecordedAttributeHierarchiesService implements IAttributeHierarchiesService {
+export class RecordedAttributeHierarchiesService implements IAttributeHierarchiesService {
     private readonly config: RecordedBackendConfig = {};
 
     constructor(config: RecordedBackendConfig) {
@@ -43,5 +43,3 @@ class RecordedAttributeHierarchiesService implements IAttributeHierarchiesServic
         throw new NotSupported("not supported");
     }
 }
-
-export default RecordedAttributeHierarchiesService;

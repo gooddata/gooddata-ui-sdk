@@ -35,9 +35,11 @@ import { IMeasureDefinition } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserGroup as IUserGroup_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
+import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -211,6 +213,10 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     userManagement?: IUserManagement;
     attributeElementsFiltering?: AttributeElementsFiltering;
     getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
+    getUserGroupsOfUser?: (userId: string) => IUserGroup_2[];
+    getUsersOfUserGroup?: (userGroupId: string) => IUser[];
+    getWorkspacePermissionsForUser?: (userId: string) => IWorkspacePermissionAssignment[];
+    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => IWorkspacePermissionAssignment[];
 };
 
 // @internal

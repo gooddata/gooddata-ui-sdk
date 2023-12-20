@@ -103,7 +103,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
         };
     }, [intl, selectedTabId]);
 
-    const isLoaded = userGroup !== undefined && grantedWorkspaces !== undefined && grantedUsers !== null;
+    const isLoaded = userGroup !== undefined && grantedWorkspaces !== undefined && grantedUsers !== undefined;
     const isOpenedInEditMode = initialView !== "VIEW";
 
     return (

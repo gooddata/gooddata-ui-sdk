@@ -79,6 +79,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
                     "gd-granular-permission-button",
                     "dropdown-button",
                     `gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`,
+                    `s-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`,
                     {
                         "is-active": isDropdownOpen,
                         "gd-icon-navigateup": !isDropdownDisabled && isDropdownOpen,

@@ -12,6 +12,7 @@ import {
     IVisualizationClass,
     ObjRef,
     IUser,
+    IUserGroup as IModelUserGroup,
     IWorkspaceUser,
     IDateFilterConfig,
     IWidgetAlert,
@@ -33,6 +34,7 @@ import {
     Identifier,
     IAvailableAccessGrantee,
     ICatalogAttributeHierarchy,
+    IWorkspacePermissionAssignment,
 } from "@gooddata/sdk-model";
 
 /**
@@ -137,6 +139,26 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify how to get valid descendants for attribute elements
      */
     getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
+
+    /**
+     * Specify user groups returned for the user
+     */
+    getUserGroupsOfUser?: (userId: string) => IModelUserGroup[];
+
+    /**
+     * Specify users returned for the user group
+     */
+    getUsersOfUserGroup?: (userGroupId: string) => IUser[];
+
+    /**
+     * Specify workspace permissions returned for the user
+     */
+    getWorkspacePermissionsForUser?: (userId: string) => IWorkspacePermissionAssignment[];
+
+    /**
+     * Specify workspace permissions returned for the user group
+     */
+    getWorkspacePermissionsForUserGroup?: (userGroupId: string) => IWorkspacePermissionAssignment[];
 };
 
 /**

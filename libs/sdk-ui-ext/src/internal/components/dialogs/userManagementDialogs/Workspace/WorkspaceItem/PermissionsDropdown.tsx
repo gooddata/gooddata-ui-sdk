@@ -135,6 +135,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
                     "gd-granular-permission-button",
                     "dropdown-button",
                     `gd-granular-permission-button-${stringUtils.simplifyText(workspace.id)}`,
+                    `s-permission-button-${stringUtils.simplifyText(workspace.id)}`,
                     {
                         "is-active": isDropdownOpen,
                         "gd-icon-navigateup": !isDropdownDisabled && isDropdownOpen,

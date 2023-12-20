@@ -67,7 +67,9 @@ import {
     recordedUserGroupsQuery,
     RecordedWorkspaceUsersQuery,
 } from "./userManagement.js";
-import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
+import { RecordedAttributeHierarchiesService } from "./attributeHierarchies.js";
+import { RecordedOrganizationUserService } from "./organizationUsers.js";
+import { RecordedOrganizationPermissionService } from "./organizationPermissions.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -363,34 +365,10 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             };
         },
         permissions(): IOrganizationPermissionService {
-            return {
-                getWorkspacePermissionsForUser: () => Promise.resolve([]),
-                getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
-                getOrganizationPermissionForUser: () => Promise.resolve([]),
-                getOrganizationPermissionForUserGroup: () => Promise.resolve([]),
-                updateOrganizationPermissions: () => Promise.resolve(),
-                updateWorkspacePermissions: () => Promise.resolve(),
-            };
+            return new RecordedOrganizationPermissionService(implConfig);
         },
         users(): IOrganizationUserService {
-            return {
-                createUser: () => {
-                    throw new NotSupported("not supported");
-                },
-                addUsersToUserGroups: () => Promise.resolve(),
-                createUserGroup: () => Promise.resolve(),
-                deleteUsers: () => Promise.resolve(),
-                deleteUserGroups: () => Promise.resolve(),
-                getUser: () => Promise.resolve(undefined),
-                getUserGroup: () => Promise.resolve(undefined),
-                getUserGroups: () => Promise.resolve([]),
-                getUserGroupsOfUser: () => Promise.resolve([]),
-                getUsersOfUserGroup: () => Promise.resolve([]),
-                getUsers: () => Promise.resolve([]),
-                removeUsersFromUserGroups: () => Promise.resolve(),
-                updateUser: () => Promise.resolve(),
-                updateUserGroup: () => Promise.resolve(),
-            };
+            return new RecordedOrganizationUserService(implConfig);
         },
     };
 }
