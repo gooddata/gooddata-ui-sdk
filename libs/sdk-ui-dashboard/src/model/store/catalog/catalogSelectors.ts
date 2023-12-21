@@ -208,14 +208,21 @@ export const selectAttributesWithHierarchyDescendants: (
 ) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector(
     (ignoredDrillDownHierarchies: IDrillDownReference[] | undefined) =>
         createSelector(
-            [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
-            (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
-                return getAttributesWithHierarchyDescendants(
-                    attributes,
-                    dateAttributes,
-                    attributeHierarchies,
-                    ignoredDrillDownHierarchies,
-                );
+            [
+                selectCatalogAttributes,
+                selectCatalogDateAttributes,
+                selectAllCatalogAttributeHierarchies,
+                selectSupportsAttributeHierarchies,
+            ],
+            (attributes = [], dateAttributes = [], attributeHierarchies = [], supportsHierarchies) => {
+                return supportsHierarchies
+                    ? getAttributesWithHierarchyDescendants(
+                          attributes,
+                          dateAttributes,
+                          attributeHierarchies,
+                          ignoredDrillDownHierarchies,
+                      )
+                    : {};
             },
         ),
 );
@@ -232,19 +239,23 @@ export const selectAttributesWithHierarchyDescendantsByWidgetRef: (
             selectCatalogDateAttributes,
             selectAllCatalogAttributeHierarchies,
             selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
+            selectSupportsAttributeHierarchies,
         ],
         (
             attributes = [],
             dateAttributes = [],
             attributeHierarchies = [],
             ignoredDrillDownHierarchies = [],
+            supportsHierarchies,
         ) => {
-            return getAttributesWithHierarchyDescendants(
-                attributes,
-                dateAttributes,
-                attributeHierarchies,
-                ignoredDrillDownHierarchies,
-            );
+            return supportsHierarchies
+                ? getAttributesWithHierarchyDescendants(
+                      attributes,
+                      dateAttributes,
+                      attributeHierarchies,
+                      ignoredDrillDownHierarchies,
+                  )
+                : {};
         },
     ),
 );
