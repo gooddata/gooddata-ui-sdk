@@ -10,6 +10,7 @@ export const ATTRIBUTE_FILTER_BODY_SELECTOR = ".attributes-list";
 export const ATTRIBUTE_FILTERS_SELECTOR = ".dash-filters-attribute:not(.dash-filters-date)";
 export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
 export const FILTER_BAR_SHOW_ALL_BUTTON = ".button-filter-bar-show-all";
+export const NO_RELEVANT_VALUES_SELECTOR = ".gd-attribute-filter-empty-filtered-result__next";
 
 export class AttributeFilter {
     constructor(private name: string) {}
@@ -53,6 +54,7 @@ export class AttributeFilter {
     selectAttributesWithoutApply(name?: string) {
         this.clearAllValues();
         this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${name}"]`).click();
+        return this;
     }
 
     selectAttributeWithoutSearch(name?: string): AttributeFilter {
@@ -412,6 +414,11 @@ export class AttributeFilter {
 
     hasConfigurationModeCheckedAt(mode: DashboardAttributeFilterConfigMode) {
         this.getConfigurationMode(mode).should("have.attr", "checked");
+        return this;
+    }
+
+    hasNoRelevantMessage() {
+        this.getDropdownElement().find(NO_RELEVANT_VALUES_SELECTOR).should("have.text", "No relevant values");
         return this;
     }
 }
