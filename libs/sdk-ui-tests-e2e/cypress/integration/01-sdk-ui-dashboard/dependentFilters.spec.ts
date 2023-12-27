@@ -7,6 +7,8 @@ import { Table } from "../../tools/table";
 const regionFilter = new AttributeFilter("Region");
 const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
+const product = new AttributeFilter("Product");
+const stageName = new AttributeFilter("Stage Name");
 const table = new Table(".s-dash-item-0");
 const topBar = new TopBar();
 
@@ -219,4 +221,62 @@ describe("Dependent filter", () => {
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
         cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(287);
     });
+
+    it(
+        "child filter can reduce to zero element by parent filter",
+        { tags: "checklist_integrated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
+            product.open().selectAttributesWithoutApply("TouchAll").apply();
+            stageName.open().elementsAreLoaded().hasNoRelevantMessage().showAllElementValuesIsVisible(true);
+            table.isEmpty();
+        },
+    );
+
+    it("can reload elements after unchecking parent filter", { tags: "checklist_integrated_tiger" }, () => {
+        topBar.enterEditMode().editButtonIsVisible(false);
+        stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .hasFilterListSize(5)
+            .configureDependency("State")
+            .elementsAreLoaded()
+            .hasFilterListSize(287);
+    });
+
+    it("can reload elements after removing parent filter", { tags: "checklist_integrated_tiger" }, () => {
+        topBar.enterEditMode().editButtonIsVisible(false);
+        stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+        cityFilter.open().elementsAreLoaded().hasFilterListSize(5);
+        stateFilter.removeFilter();
+        cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
+    });
+
+    it(
+        "should test a circle parent - child filter in edit mode",
+        { tags: "checklist_integrated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
+            cityFilter.open().selectAttribute(["Portland"]).apply();
+
+            stateFilter
+                .open()
+                .elementsAreLoaded()
+                .configureDependency("City")
+                .hasFilterListSize(2)
+                .selectAttribute(["Oregon"])
+                .apply();
+
+            stateFilter
+                .open()
+                .hasFilterListSize(2)
+                .showAllElementValuesIsVisible(true)
+                .showAllElementValues()
+                .close();
+
+            stateFilter.open().showAllElementValuesIsVisible(true);
+            table.waitLoaded().getColumnValues(1).should("deep.equal", ["Oregon"]);
+        },
+    );
 });

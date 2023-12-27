@@ -4163,6 +4163,44 @@
                                 "localIdentifier": "ffaf479f4cf84a7f99fe3339205aba28",
                                 "negativeSelection": true
                             }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_product.product.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "negativeSelection": true,
+                                "localIdentifier": "10af406acc934738b84ba633337ff40d"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_stage.stagename",
+                                        "type": "label"
+                                    }
+                                },
+                                "negativeSelection": true,
+                                "localIdentifier": "7534345a9f6145299f49e5f503385fa8",
+                                "filterElementsBy": [
+                                    {
+                                        "filterLocalIdentifier": "10af406acc934738b84ba633337ff40d",
+                                        "over": {
+                                            "attributes": []
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ],
                     "version": "2"
