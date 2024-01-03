@@ -39,6 +39,14 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "global",
+      "name": "lint-staged-files",
+      "summary": "Used by the pre-commit Git hook. This command invokes linters to reformat staged changes.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "lint-staged",
+      "shellCommand": "lint-staged"
+    },
+    {
       "commandKind": "bulk",
       "name": "test-once",
       "summary": "Tests code in all projects",
