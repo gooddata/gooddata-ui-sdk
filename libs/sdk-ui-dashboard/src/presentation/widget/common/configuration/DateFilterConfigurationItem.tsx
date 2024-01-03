@@ -14,17 +14,18 @@ import {
 } from "@gooddata/sdk-model";
 
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
+import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model/index.js";
+import { useCurrentDateFilterConfig } from "../../../filterBar/dateFilter/useCurrentDateFilterConfig.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
 interface IDateFilterConfigurationItemProps {
     widget: IWidget;
     dataSetRef: ObjRef;
-    title: string;
 }
 
 export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemProps> = (props) => {
-    const { widget, dataSetRef, title } = props;
+    const { widget, dataSetRef } = props;
 
     const [isApplied, setIsApplied] = useState(
         () =>
@@ -35,6 +36,12 @@ export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemP
                 return areObjRefsEqual(reference.dataSet, dataSetRef);
             }),
     );
+
+    const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+
+    const dateDataSetTitle = ddsMap.get(dataSetRef)?.dataSet.title || "Date";
+
+    const { title } = useCurrentDateFilterConfig(dataSetRef, dateDataSetTitle);
 
     // TODO INE: add date support
     // const isFilterNotApplied = useIsFilterNotApplied(widget, dataSetRef);

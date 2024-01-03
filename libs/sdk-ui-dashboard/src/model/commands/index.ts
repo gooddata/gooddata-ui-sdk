@@ -11,6 +11,8 @@ import {
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
     SetDashboardAttributeFilterConfigMode,
+    SetDashboardDateFilterWithDimensionConfigMode,
+    SetDateFilterConfigTitle,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -116,9 +118,15 @@ export {
     SetDashboardDateFilterConfigMode,
     SetDashboardDateFilterConfigModePayload,
     setDashboardDateFilterConfigMode,
+    SetDashboardDateFilterWithDimensionConfigMode,
+    SetDashboardDateFilterWithDimensionConfigModePayload,
+    setDashboardDateFilterWithDimensionConfigMode,
     SetDashboardAttributeFilterConfigMode,
     setDashboardAttributeFilterConfigMode,
     SetDashboardAttributeFilterConfigModePayload,
+    SetDateFilterConfigTitle,
+    SetDateFilterConfigTitlePayload,
+    setDateFilterConfigTitle,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -479,4 +487,6 @@ export type DashboardCommands =
     | AttributeHierarchyModified
     | AddDateFilter
     | RemoveDateFilters
-    | MoveDateFilter;
+    | MoveDateFilter
+    | SetDashboardDateFilterWithDimensionConfigMode
+    | SetDateFilterConfigTitle;

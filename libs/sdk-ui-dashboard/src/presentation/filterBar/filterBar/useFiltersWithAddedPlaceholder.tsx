@@ -244,8 +244,8 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                     setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
                     clearAddedFilter();
                 }
-                // attribute filter added
             } else {
+                // attribute filter added
                 const relatedAttribute = allAttributes.find((att) =>
                     att.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
                 );

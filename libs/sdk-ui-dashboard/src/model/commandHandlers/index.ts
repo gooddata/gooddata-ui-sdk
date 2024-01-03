@@ -83,6 +83,9 @@ import { addDateFilterHandler } from "./filterContext/dateFilter/addDateFilterHa
 import { removeDateFiltersHandler } from "./filterContext/dateFilter/removeDateFiltersHandler.js";
 import { moveDateFilterHandler } from "./filterContext/dateFilter/moveDateFilterHandler.js";
 
+import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
+import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
+
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
 }
@@ -116,6 +119,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
     "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE": setDashboardDateFilterConfigModeHandler,
+    "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE": changeDateFilterWithDimensionModeHandler,
+    "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE": changeDateFilterTitleHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

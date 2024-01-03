@@ -10,6 +10,7 @@ import {
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
     changeAttributeFilterSelection,
@@ -29,6 +30,7 @@ import {
     selectEffectiveAttributeFiltersModeMap,
     selectCanAddMoreFilters,
     selectCatalogDateDatasets,
+    selectEffectiveDateFiltersModeMap,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -129,7 +131,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
-    const dateFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap); // TODO INE use new map
+    const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const isExport = useDashboardSelector(selectIsExport);
@@ -243,16 +245,16 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         const { filter, filterIndex } = filterOrPlaceholder;
 
                         const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
-                        // TODO INE: get visibility setting
+
                         const dateFilterMode =
-                            attributeFiltersModeMap.get(filter.dateFilter.localIdentifier!) ||
+                            dateFiltersModeMap.get(serializeObjRef(filter.dateFilter.dataSet!)) ||
                             DashboardDateFilterConfigModeValues.ACTIVE;
 
                         if (dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN) {
                             return null;
                         }
 
-                        const dateFilterName = allDateDatasets.find((ds) =>
+                        const defaultDateFilterName = allDateDatasets.find((ds) =>
                             areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
                         )!.dataSet.title;
 
@@ -267,7 +269,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,
-                                    customFilterName: dateFilterName,
+                                    customFilterName: defaultDateFilterName,
                                 }}
                                 readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                                 FilterComponent={CustomDateFilterComponent}

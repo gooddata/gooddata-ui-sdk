@@ -510,12 +510,6 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
     (findFilter as IDashboardAttributeFilter).attributeFilter.selectionMode = selectionMode;
 };
 
-// TODO INE: Why we need separate interface here?
-// export interface IAddDateFilterPayload {
-//     readonly index: number;
-//     readonly dateDataset: ObjRef;
-// }
-
 const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> = (state, action) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 

@@ -9,8 +9,7 @@ import {
     DashboardDateFilterConfigMode,
 } from "@gooddata/sdk-model";
 import { DateFilterValidationResult } from "../../../types.js";
-
-const DEFAULT_DASHBOARD_DATE_FILTER_NAME = "Date range";
+import { DEFAULT_DASHBOARD_DATE_FILTER_NAME } from "./const.js";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigState, A>;
 
@@ -63,6 +62,24 @@ const setDateFilterConfigMode: DateFilterConfigReducer<PayloadAction<DashboardDa
     state.dateFilterConfig = newDateFilterConfig;
 };
 
+const setDateFilterConfigTitle: DateFilterConfigReducer<PayloadAction<string | undefined>> = (
+    state,
+    action,
+) => {
+    const title = action.payload;
+    const newDateFilterConfig: IDashboardDateFilterConfig = isEmpty(state.dateFilterConfig)
+        ? {
+              mode: "active",
+              filterName: title ?? DEFAULT_DASHBOARD_DATE_FILTER_NAME,
+          }
+        : {
+              ...state.dateFilterConfig,
+              filterName: title ?? DEFAULT_DASHBOARD_DATE_FILTER_NAME,
+          };
+
+    state.dateFilterConfig = newDateFilterConfig;
+};
+
 const addDateFilterConfigValidationWarning: DateFilterConfigReducer<
     PayloadAction<DateFilterValidationResult>
 > = (state, action) => {
@@ -86,6 +103,7 @@ const updateDateFilterConfig: DateFilterConfigReducer<PayloadAction<IDashboardDa
 export const dateFilterConfigReducers = {
     setDateFilterConfig,
     setDateFilterConfigMode,
+    setDateFilterConfigTitle,
     updateDateFilterConfig,
     addDateFilterConfigValidationWarning,
     clearDateFilterConfigValidationWarning,

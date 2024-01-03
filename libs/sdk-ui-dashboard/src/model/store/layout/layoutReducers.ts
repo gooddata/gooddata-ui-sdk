@@ -619,8 +619,7 @@ const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, 
                     }
 
                     return (
-                        dateDataSets.find((removed) => areObjRefsEqual(removed, filter.dataSet)) ===
-                        undefined
+                        dateDataSets.find((removed) => areObjRefsEqual(removed, filter.dataSet)) === undefined
                     );
                 });
 

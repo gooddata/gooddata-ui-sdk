@@ -700,6 +700,7 @@ export {
     IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,
     IDashboardAttributeFilterConfig,
+    IDashboardDateFilterConfigItem,
     DashboardAttributeFilterConfigMode,
     DashboardDateFilterConfigModeValues,
     DashboardAttributeFilterConfigModeValues,

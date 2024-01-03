@@ -40,6 +40,7 @@ import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js"
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { drillActions } from "../../../store/drill/index.js";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
@@ -247,6 +248,9 @@ export function* actionsToInitializeExistingDashboard(
             attributeFilterConfigs: dashboard.attributeFilterConfigs,
         }),
         dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
+        dateFilterConfigsActions.setDateFilterConfigs({
+            dateFilterConfigs: dashboard.dateFilterConfigs,
+        }),
         insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),

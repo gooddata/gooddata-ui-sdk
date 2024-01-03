@@ -60,9 +60,14 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
     }, layout);
 }
 
+interface IDashboardDateFilterConfigItem {
+    dateDataSet: IdentifierRef;
+    config: IDashboardDateFilterConfig;
+}
 interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
@@ -82,6 +87,7 @@ function getConvertedAnalyticalDashboardContent(
 ): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
+        dateFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs),
         attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
         layout: convertLayout(
             true,
@@ -103,7 +109,7 @@ export function convertDashboard(
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
-    const { dateFilterConfig, layout, plugins, attributeFilterConfigs } =
+    const { dateFilterConfig, layout, plugins, attributeFilterConfigs, dateFilterConfigs } =
         getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
@@ -124,6 +130,7 @@ export function convertDashboard(
         tags: attributes.tags ?? [],
         filterContext,
         dateFilterConfig,
+        dateFilterConfigs,
         attributeFilterConfigs,
         layout,
         plugins,

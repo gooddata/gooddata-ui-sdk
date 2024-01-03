@@ -883,6 +883,7 @@ export interface ICrossFiltering extends IDrill {
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -967,6 +968,14 @@ export interface IDashboardDateFilterConfig {
     mode: DashboardDateFilterConfigMode;
 }
 
+// @alpha
+export interface IDashboardDateFilterConfigItem {
+    // (undocumented)
+    config: IDashboardDateFilterConfig;
+    // (undocumented)
+    dateDataSet: ObjRef;
+}
+
 // @public
 export interface IDashboardDateFilterReference {
     dataSet: ObjRef;
@@ -977,6 +986,7 @@ export interface IDashboardDateFilterReference {
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];

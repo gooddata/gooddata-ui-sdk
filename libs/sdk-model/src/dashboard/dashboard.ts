@@ -114,6 +114,15 @@ export interface IDashboardAttributeFilterConfig {
 }
 
 /**
+ * Extended date filter config item for date filters fully specified including date data set
+ * @alpha
+ */
+export interface IDashboardDateFilterConfigItem {
+    dateDataSet: ObjRef;
+    config: IDashboardDateFilterConfig;
+}
+
+/**
  * Dashboard common properties
  * @alpha
  */
@@ -264,9 +273,14 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly filterContext?: IFilterContext | ITempFilterContext;
 
     /**
-     * Dashboard extended date filter config
+     * Dashboard extended common date filter config
      */
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Dashboard extended date filters with date data set/dimension configs
+     */
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
 
     /**
      * Dashboard extended attribute filter configs
@@ -301,9 +315,14 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 
     /**
-     * Dashboard extended date filter config
+     * Dashboard extended common date filter config
      */
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Dashboard extended date filters with date data set/dimension configs
+     */
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
 
     /**
      * Dashboard extended attribute filter configs

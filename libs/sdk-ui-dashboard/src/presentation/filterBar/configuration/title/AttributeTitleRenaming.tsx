@@ -3,7 +3,7 @@
 import React from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationCategory } from "../ConfigurationCategory.js";
+import { ConfigurationCategory } from "../../attributeFilter/dashboardDropdownBody/configuration/ConfigurationCategory.js";
 
 interface IAttributeTitleRenamingProps {
     categoryTitle: string;

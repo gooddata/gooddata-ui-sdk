@@ -114,8 +114,14 @@ export interface BareUserInteractionPayload {
         | "interactionPanelOpened"
         | "addInteractionClicked"
         | AttributeHierarchiesInteractionType
-        | AttributeFilterInteractionType;
+        | AttributeFilterInteractionType
+        | DateFilterInteractionType;
 }
+
+/**
+ * @beta
+ */
+export type DateFilterInteractionType = "dateFilterTitleResetClicked" | "dateFilterConfigurationOpened";
 
 /**
  * @beta

@@ -11,11 +11,20 @@ import {
 /**
  * @public
  */
+export interface IDashboardDateFilterConfigItem {
+    dateDataSet: ObjRef;
+    config: IDashboardDateFilterConfig;
+}
+
+/**
+ * @public
+ */
 export interface IAnalyticalDashboard {
     version: "2";
     layout?: IDashboardLayout;
     filterContextRef?: ObjRef;
     dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     plugins?: IDashboardPluginLink[];
 }

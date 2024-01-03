@@ -37,6 +37,7 @@ import isEqual from "lodash/isEqual.js";
 import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
 import { DashboardDescriptor } from "./metaState.js";
 import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -412,6 +413,29 @@ export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> =
 );
 
 /**
+ * Selects persisted attribute filter configs - that is the attribute filter configs array object that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.dateFilterConfigs || [];
+});
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the dashboard date filter configs compared to the persisted version (if any)
+ *
+ */
+export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardDateFilterConfigs,
+    selectDateFilterConfigsOverrides,
+    (persistedDateFilterConfigs, currentDateFilterConfigs) => {
+        return !isEqual(persistedDateFilterConfigs, currentDateFilterConfigs);
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  * @internal
@@ -466,9 +490,20 @@ export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSel
 export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectIsDateFilterChanged,
     selectIsOtherFiltersChanged,
-    selectIsAttributeFilterConfigsChanged, // TODO INE: add date filter config change
-    (isCommonDateFilterChanged, isOtherFiltersChanged, isAttributeFilterConfigsChanged) => {
-        return isCommonDateFilterChanged || isOtherFiltersChanged || isAttributeFilterConfigsChanged;
+    selectIsAttributeFilterConfigsChanged,
+    selectIsDateFilterConfigsChanged,
+    (
+        isCommonDateFilterChanged,
+        isOtherFiltersChanged,
+        isAttributeFilterConfigsChanged,
+        isDateFilterConfigsChanged,
+    ) => {
+        return (
+            isCommonDateFilterChanged ||
+            isOtherFiltersChanged ||
+            isAttributeFilterConfigsChanged ||
+            isDateFilterConfigsChanged
+        );
     },
 );
 

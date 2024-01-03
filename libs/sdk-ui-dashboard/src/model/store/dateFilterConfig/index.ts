@@ -11,3 +11,4 @@ const configSlice = createSlice({
 
 export const dateFilterConfigSliceReducer = configSlice.reducer;
 export const dateFilterConfigActions = configSlice.actions;
+export { DEFAULT_DASHBOARD_DATE_FILTER_NAME } from "./const.js";

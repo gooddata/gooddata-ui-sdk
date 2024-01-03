@@ -26,7 +26,7 @@ import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFo
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
-import { AttributeTitleRenaming } from "./title/AttributeTitleRenaming.js";
+import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes.js";

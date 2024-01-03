@@ -86,12 +86,10 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
                         />
                     );
                 } else if (isDashboardDateFilterWithDimension(filter)) {
-                    const dateDataSetTitle = ddsMap.get(filter.dateFilter.dataSet!)?.dataSet.title;
                     return (
                         <DateFilterConfigurationItem
                             key={objRefToString(filter.dateFilter.dataSet!)}
                             dataSetRef={filter.dateFilter.dataSet!}
-                            title={dateDataSetTitle || "Date"}
                             widget={widget}
                         />
                     );
