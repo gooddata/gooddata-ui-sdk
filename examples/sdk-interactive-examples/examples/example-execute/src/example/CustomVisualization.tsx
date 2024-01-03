@@ -46,6 +46,8 @@ export const CustomVisualization: React.FC<ICustomVisualization & WithLoadingRes
                         weight: Number(dataPoint.rawValue),
                     };
                 }
+
+                return undefined;
             });
 
         return (

@@ -15,15 +15,16 @@
      */
     "preferredVersions": {
         "@types/node": "^18.17.6",
-
+        "@types/lodash": "^4.14.202",
         "@microsoft/api-extractor": "^7.36.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@gooddata/frontend-npm-scripts": "1.2.0",
-
+    
         "prettier": "~2.5.0",
         "ts-node": "^10.4.0",
         "tslib": "^2.5.0",
         "typescript": "5.0.2",
+        "browserslist": "^4.22.1",
 
         // we need correct peer dependency for heroku package in sdk-examples
         "@opentelemetry/api":"1.4.1",

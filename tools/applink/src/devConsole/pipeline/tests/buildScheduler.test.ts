@@ -1,7 +1,13 @@
 // (C) 2020 GoodData Corporation
-import { EventBus, packagesChanged, PackagesRebuilt, sourceInitialized, targetSelected } from "../../events";
-import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture";
-import { BuildScheduler } from "../buildScheduler";
+import {
+    EventBus,
+    packagesChanged,
+    PackagesRebuilt,
+    sourceInitialized,
+    targetSelected,
+} from "../../events.js";
+import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
+import { BuildScheduler } from "../buildScheduler.js";
 import { describe, it, beforeEach, expect } from "vitest";
 
 describe("BuildScheduler", () => {

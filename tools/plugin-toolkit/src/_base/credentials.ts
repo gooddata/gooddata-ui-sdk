@@ -77,6 +77,8 @@ export function validateCredentialsComplete(
     } else if (isEmpty(token)) {
         return "TOKEN_MISSING";
     }
+
+    return undefined;
 }
 
 /**

@@ -24,11 +24,8 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
-        "dev": "bash scripts/build.sh --dev-watch",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
-        "build-esm": "tsc -p tsconfig.build.json",
-        "build-dev": "bash scripts/build.sh --dev",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -58,7 +55,7 @@
         "@gooddata/eslint-config": "^4.1.0",
         "@types/fast-levenshtein": "0.0.1",
         "@types/isomorphic-fetch": "^0.0.34",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@types/node-fetch": "^2.6.4",
         "@types/qs": "^6.5.1",

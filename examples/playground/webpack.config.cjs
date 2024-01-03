@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -19,7 +20,11 @@ const playgroundDefinitions = {
     developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],
-    "tiger-stg": ["https://staging.dev-latest.stg11.panther.intgdc.com", "4dc4e033e611421791adea58d34d958c", "tiger"],
+    "tiger-stg": [
+        "https://staging.dev-latest.stg11.panther.intgdc.com",
+        "4dc4e033e611421791adea58d34d958c",
+        "tiger",
+    ],
 };
 
 module.exports = async (env, argv) => {
@@ -145,7 +150,7 @@ module.exports = async (env, argv) => {
                 {
                     test: /\.[jt]sx?$/,
                     include: path.resolve(__dirname, "src"),
-                    use: ["babel-loader"],
+                    use: ["esbuild-loader"],
                 },
                 {
                     test: /\.(jpe?g|gif|png|svg|ico|eot|woff2?|ttf|wav|mp3)$/,
@@ -172,5 +177,8 @@ module.exports = async (env, argv) => {
             proxy,
         },
         stats: "errors-only",
+        optimization: {
+            minimizer: [new EsbuildPlugin()],
+        },
     });
 };

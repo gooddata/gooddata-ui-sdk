@@ -1,17 +1,23 @@
 {
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "target": "es2017",
-        "lib": ["es2017", "dom"],
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "esModuleInterop": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "importHelpers": true,
-        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "./esm",
-        "strict": true,
-        "sourceMap": true,
-    },
-    "exclude": ["**/node_modules", "esm"]
+        "noImplicitReturns": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

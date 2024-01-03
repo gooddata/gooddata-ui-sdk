@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { Validator, ValidationError } from "jsonschema";
-import flatten from "lodash/flatten";
+import flatten from "lodash/flatten.js";
 
-import { LocalizationSchema, LocalesStructure } from "../schema/localization";
-import { done, skipped, message, fail } from "../utils/console";
+import { LocalizationSchema, LocalesStructure } from "../schema/localization.js";
+import { done, skipped, message, fail } from "../utils/console.js";
 
 export async function getStructureCheck(
     localizations: Array<[string, LocalesStructure]>,

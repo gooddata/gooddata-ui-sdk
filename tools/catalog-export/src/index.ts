@@ -5,7 +5,7 @@ import chalk from "chalk";
 import * as path from "path";
 import fs from "fs";
 import * as dotenv from "dotenv";
-import pkg from "../package.json" assert { type: "json" };
+import { LIB_VERSION } from "./__version.js";
 import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
 import { clearTerminal } from "./cli/clear.js";
 import { promptHostname, requestFilePath } from "./cli/prompts.js";
@@ -26,7 +26,7 @@ import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger/index.js";
 dotenv.config();
 
 program
-    .version(pkg.version)
+    .version(LIB_VERSION)
     .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
@@ -59,7 +59,7 @@ async function checkFolderExists(filePath: string) {
 
 async function run() {
     clearTerminal();
-    printHeader(pkg.version);
+    printHeader(LIB_VERSION);
 
     const options = program.opts();
     if (options.acceptUntrustedSsl) {

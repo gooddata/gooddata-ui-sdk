@@ -513,6 +513,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 </Message>
             );
         }
+
+        return null;
     };
 
     private renderRecipients = (): React.ReactNode => {

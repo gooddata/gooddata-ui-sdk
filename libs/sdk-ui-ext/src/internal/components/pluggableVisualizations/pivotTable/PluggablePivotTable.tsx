@@ -770,6 +770,8 @@ function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
     if (rowAttribute) {
         return [newAttributeSort(rowAttribute, "asc")];
     }
+
+    return undefined;
 }
 
 function shouldAdjustColumnHeadersPositionToTop(

@@ -145,6 +145,7 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
                 { granteeCount: grantee.memberCount },
             );
         }
+        return undefined;
     }, [grantee, intl]);
 
     const itemClassName = cx("gd-share-dialog-grantee-item", getGranteeItemTestId(grantee));
@@ -205,4 +206,6 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
     } else {
         invariant(grantee, "Illegal grantee used.");
     }
+
+    return null;
 };

@@ -2,11 +2,11 @@
 import path from "path";
 import findUp from "find-up";
 import process from "process";
-import { readJsonSync } from "./utils";
-import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types";
-import { createDependencyGraph } from "./dependencyGraph";
-import identity from "lodash/identity";
-import keyBy from "lodash/keyBy";
+import { readJsonSync } from "./utils.js";
+import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";
+import { createDependencyGraph } from "./dependencyGraph.js";
+import identity from "lodash/identity.js";
+import keyBy from "lodash/keyBy.js";
 
 /*
  * Singleton sdk package descriptor. Loaded the first time it is needed by `getSdkPackages`.

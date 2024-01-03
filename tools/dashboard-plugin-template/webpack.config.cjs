@@ -8,6 +8,7 @@ const { URL } = require("url");
 const deps = require("./package.json").dependencies;
 const peerDeps = require("./package.json").peerDependencies;
 const Dotenv = require("dotenv-webpack");
+const { EsbuildPlugin } = require("esbuild-loader");
 require("dotenv").config();
 
 const { MODULE_FEDERATION_NAME } = require("./src/metadata.json");
@@ -73,7 +74,7 @@ module.exports = (_env, argv) => {
             // Alias for ESM imports with .js suffix because
             // `import { abc } from "../abc.js"` may be in fact importing from `abc.tsx` file
             extensionAlias: {
-                    ".js": [".ts", ".tsx", ".js", ".jsx"],
+                ".js": [".ts", ".tsx", ".js", ".jsx"],
             },
 
             // Prefer ESM versions of packages to enable tree shaking
@@ -92,13 +93,7 @@ module.exports = (_env, argv) => {
                     test: /\.tsx?$/,
                     use: [
                         {
-                            loader: "babel-loader",
-                        },
-                        {
-                            loader: "ts-loader",
-                            options: {
-                                transpileOnly: true,
-                            },
+                            loader: "esbuild-loader",
                         },
                     ],
                 },
@@ -108,10 +103,7 @@ module.exports = (_env, argv) => {
                     exclude: /node_modules/,
                     use: [
                         {
-                            loader: "babel-loader",
-                            options: {
-                                presets: ["@babel/preset-react"],
-                            },
+                            loader: "esbuild-loader",
                         },
                     ],
                 },
@@ -129,7 +121,7 @@ module.exports = (_env, argv) => {
                     include: path.resolve(__dirname, "src"),
                     use: ["source-map-loader"],
                 },
-            ].filter(Boolean),                      
+            ].filter(Boolean),
         },
         plugins: [
             new CaseSensitivePathsPlugin(),
@@ -142,13 +134,16 @@ module.exports = (_env, argv) => {
                 NODE_DEBUG: "",
             }),
         ],
+        optimization: {
+            minimizer: [new EsbuildPlugin()],
+        },
     };
 
     return [
         {
             ...commonConfig,
             entry: "./src/index.js",
-            experiments: { ...commonConfig.experiments,topLevelAwait: true},
+            experiments: { ...commonConfig.experiments, topLevelAwait: true },
             name: "harness",
             ignoreWarnings: [/Failed to parse source map/], // some of the dependencies have invalid source maps, we do not care that much
             devServer: {
@@ -176,7 +171,7 @@ module.exports = (_env, argv) => {
                 }),
                 new HtmlWebpackPlugin({
                     template: "./src/harness/public/index.html",
-                    scriptLoading: "module"
+                    scriptLoading: "module",
                 }),
             ],
         },

@@ -4,7 +4,6 @@
 import { program } from "commander";
 import ora from "ora";
 import chalk from "chalk";
-import pkg from "../package.json" assert { type: "json" };
 import * as process from "process";
 import * as path from "path";
 import pmap from "p-map";
@@ -24,9 +23,10 @@ import { discoverCatalogRecordings } from "./recordings/catalogRepository.js";
 import { discoverVisClassesRecordings } from "./recordings/visClassesRepository.js";
 import { getOrInitBackend } from "./backend.js";
 import { discoverDashboardRecordings } from "./recordings/dashboardsRepository.js";
+import { LIB_VERSION } from "./__version.js";
 
 program
-    .version(pkg.version)
+    .version(LIB_VERSION)
     .option("--recordingDir <path>", "Directory with recording inputs and outputs")
     .option("--project-id <id>", "Project id from which you want to capture mock data")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
@@ -145,7 +145,7 @@ async function captureRecordings(
 
 async function run() {
     clearTerminal();
-    logInfo(`GoodData Mock Handling Tool v${pkg.version}`);
+    logInfo(`GoodData Mock Handling Tool v${LIB_VERSION}`);
 
     const options = program.opts();
     if (options.acceptUntrustedSsl) {

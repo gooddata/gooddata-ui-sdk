@@ -1,9 +1,0 @@
-{
-    "extends": "./tsconfig.build.json",
-    "compilerOptions": {
-        "noImplicitAny": false,
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "pretty": true
-    }
-}

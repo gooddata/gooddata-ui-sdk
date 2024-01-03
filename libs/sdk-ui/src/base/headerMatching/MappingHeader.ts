@@ -77,6 +77,8 @@ export function getMappingHeaderName(
     } else if (isColorDescriptor(header)) {
         return header.colorHeaderItem.name;
     }
+
+    return undefined;
 }
 
 /**
@@ -141,4 +143,6 @@ export function getMappingHeaderUri(header: IMappingHeader): string | undefined 
     } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.uri;
     }
+
+    return undefined;
 }

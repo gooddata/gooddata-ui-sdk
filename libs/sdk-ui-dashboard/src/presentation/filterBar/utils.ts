@@ -48,6 +48,8 @@ export const getVisibilityIcon = (
             ),
         };
     }
+
+    return undefined;
 };
 
 export const areAllFiltersHidden = (

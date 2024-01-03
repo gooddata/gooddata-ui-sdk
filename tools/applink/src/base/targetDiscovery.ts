@@ -2,9 +2,9 @@
 
 import * as path from "path";
 import * as fs from "fs";
-import { readJsonSync } from "../base/utils";
-import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
-import values from "lodash/values";
+import { readJsonSync } from "../base/utils.js";
+import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types.js";
+import values from "lodash/values.js";
 
 /**
  * Given app's root directory, this function finds all source packages on which the app depends. This is done

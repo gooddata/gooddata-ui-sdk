@@ -26,11 +26,9 @@
         "NOTICE"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm build coverage *.log",
-        "dev": "tsc -p tsconfig.dev.json --watch",
+        "clean": "rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
-        "build-esm": "tsc -p tsconfig.build.json",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "vitest watch",
         "test-once": "vitest run",
@@ -76,7 +74,7 @@
         "@types/cross-spawn": "^6.0.2",
         "@types/fs-extra": "^9.0.13",
         "@types/inquirer": "^8.2.6",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@types/tar": "^6.1.0",
         "@typescript-eslint/eslint-plugin": "^5.57.1",

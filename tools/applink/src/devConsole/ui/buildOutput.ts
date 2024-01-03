@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
-import { AppPanel, AppPanelOptions } from "./appPanel";
+import { AppPanel, AppPanelOptions } from "./appPanel.js";
 import {
     BuildFinished,
     buildOutputExited,
@@ -9,7 +9,7 @@ import {
     EventBus,
     GlobalEventBus,
     IEventListener,
-} from "../events";
+} from "../events.js";
 import { readFileSync } from "fs";
 
 export class BuildOutput extends AppPanel implements IEventListener {

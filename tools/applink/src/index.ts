@@ -3,11 +3,10 @@
 
 import { program } from "commander";
 import * as process from "process";
-import * as pkg from "../package.json";
-import { autoBuild, devConsole } from "./devConsole/action";
+import { autoBuild, devConsole } from "./devConsole/action.js";
 
 program
-    .version(pkg.version)
+    .version("1.0.0")
     .command("devConsole <path>")
     .description("Starts development console for SDK dependencies of the application residing in <path>")
     .action(devConsole);

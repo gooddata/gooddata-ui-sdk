@@ -2,10 +2,10 @@
 
 import * as path from "path";
 import glob from "fast-glob";
-import flatten from "lodash/flatten";
+import flatten from "lodash/flatten.js";
 
-import { readFile } from "./utils";
-import { LocalesItem, LocalesStructure } from "./schema/localization";
+import { readFile } from "./utils/index.js";
+import { LocalesItem, LocalesStructure } from "./schema/localization.js";
 
 export async function getLocalizationFiles(localizationPaths: string[]): Promise<[string, Buffer][]> {
     const results = await Promise.all(

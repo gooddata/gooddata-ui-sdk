@@ -38,6 +38,8 @@ function getOuterStyle(
     if (hasCustomMargin) {
         return CUSTOM_MARGIN_STYLE;
     }
+
+    return undefined;
 }
 
 // inner utility component for better caching: caches according to two booleans, not a clientHeight number

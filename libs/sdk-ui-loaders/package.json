@@ -26,12 +26,9 @@
         "NOTICE"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log styles/css",
+        "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-dev": "bash scripts/build.sh --dev",
-        "build-esm": "tsc -p tsconfig.build.json",
-        "dev": "bash scripts/build.sh --dev-watch",
+        "build": "tsc -p tsconfig.json && npm run api-extractor",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
@@ -64,7 +61,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
         "@types/json-stable-stringify": "^1.0.32",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@types/raf": "^3.4.0",
         "@types/react-dom": "^18.2.1",

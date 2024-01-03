@@ -68,9 +68,11 @@ class SealedCustomizerState implements IWidgetCustomizerState {
 }
 
 export class DefaultWidgetCustomizer implements IDashboardWidgetCustomizer {
-    private state: IWidgetCustomizerState = new WidgetCustomizerState(this.logger);
+    private state: IWidgetCustomizerState;
 
-    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {
+        this.state = new WidgetCustomizerState(this.logger);
+    }
 
     public addCustomWidget = (
         widgetType: string,

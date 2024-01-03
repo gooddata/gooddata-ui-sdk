@@ -71,9 +71,7 @@ export const selectAlertByWidgetRef = memoize(
     (widgetRef: ObjRef): ((state: DashboardState) => IWidgetAlert | undefined) => {
         return createSelector(selectAlertsMapByWidgetRefs, (alerts) => {
             const alert = alerts.get(widgetRef);
-            if (alert) {
-                return alert.alert;
-            }
+            return alert?.alert;
         });
     },
     serializeObjRef,

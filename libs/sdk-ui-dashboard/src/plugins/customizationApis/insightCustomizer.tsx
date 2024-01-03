@@ -259,6 +259,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
             if (includes(insightTags(insight), tag)) {
                 return component;
             }
+            return undefined;
         };
 
         this.state.addTagProvider(tag, newProvider);

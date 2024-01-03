@@ -95,6 +95,7 @@ export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string =
     } else {
         exhaustiveCheck(grantee);
     }
+    return undefined;
 };
 
 /**

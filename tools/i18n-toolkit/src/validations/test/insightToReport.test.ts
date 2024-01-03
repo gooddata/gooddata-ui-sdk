@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { getInsightToReportCheck } from "../insightToReport";
-import { LocalesStructure } from "../../schema/localization";
+import { getInsightToReportCheck } from "../insightToReport.js";
+import { LocalesStructure } from "../../schema/localization.js";
 import { describe, it, expect, vi } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];

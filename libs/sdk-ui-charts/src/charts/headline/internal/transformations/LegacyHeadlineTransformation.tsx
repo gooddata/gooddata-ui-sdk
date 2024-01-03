@@ -58,6 +58,8 @@ class LegacyHeadlineTransformation extends React.Component<
         if (this.props.config) {
             return this.props.config.disableDrillUnderline;
         }
+
+        return undefined;
     }
 
     private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {

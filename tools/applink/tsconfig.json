@@ -1,21 +1,23 @@
 {
-    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "target": "es2017",
-        "jsx": "react",
-        "lib": ["es2017"],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "strict": true,
-        "esModuleInterop": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "importHelpers": true,
-        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "dist",
-        "sourceMap": true,
-        "baseUrl": ".."
-    },
-    "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/*.test.ts", "**/__mocks__/**/*"]
+        "noImplicitReturns": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

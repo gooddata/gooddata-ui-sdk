@@ -151,6 +151,8 @@ function transformToWeakMeasureColumnWidthItem(
             },
         };
     }
+
+    return undefined;
 }
 
 // removes attribute widthItems with invalid identifiers

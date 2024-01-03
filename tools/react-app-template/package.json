@@ -31,7 +31,7 @@
         "catalogOutput": "src/catalog.ts"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log styles/css",
+        "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "build": "webpack --mode production",
         "start": "webpack-cli serve",
         "eslint": "eslint -c .eslintrc.cjs src/",
@@ -62,9 +62,6 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.23.5",
-        "@babel/preset-env": "^7.23.5",
-        "@babel/preset-react": "^7.23.3",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/sdk-ui-kit": "workspace:*",
@@ -72,11 +69,11 @@
         "@types/react-dom": "^18.2.1",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
-        "babel-loader": "^8.0.5",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "css-loader": "^6.7.1",
         "dependency-cruiser": "^13.0.3",
         "dotenv": "16.0.3",
+        "esbuild-loader": "^4.0.2",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",

@@ -43,6 +43,8 @@ export class PromiseCache<TParams, TResult, TError = any> {
         if (cachedPromise && !cachedPromiseError) {
             return cachedPromise.promise;
         }
+
+        return undefined;
     };
 
     public reset = (): void => {

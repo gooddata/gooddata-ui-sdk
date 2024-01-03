@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
-import { GlobalEventBus, somethingHappened } from "../events";
+import { GlobalEventBus, somethingHappened } from "../events.js";
 
 export function getTerminalSize(screen: blessed.Widgets.Screen): [number, number] {
     return [screen.program.rows, screen.program.cols];

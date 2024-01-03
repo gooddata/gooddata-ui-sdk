@@ -49,7 +49,7 @@
          * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
          * DEFAULT VALUE: "<projectFolder>/tsconfig.json"
          */
-        "tsconfigFilePath": "<projectFolder>/tsconfig.build.json"
+        "tsconfigFilePath": "<projectFolder>/tsconfig.json"
 
         /**
          * Provides a compiler configuration that will be used instead of reading the tsconfig.json file from disk.

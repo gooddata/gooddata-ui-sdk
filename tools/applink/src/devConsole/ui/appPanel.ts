@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
-import { ColorCodes } from "./colors";
+import { ColorCodes } from "./colors.js";
 
 export type AppPanelOptions = {
     title: string;

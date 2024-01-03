@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import spawn from "cross-spawn";
-import { PackageDescriptor, SourceDescriptor } from "../../base/types";
+import { PackageDescriptor, SourceDescriptor } from "../../base/types.js";
 import {
     buildFinished,
     BuildRequested,
@@ -12,16 +12,16 @@ import {
     GlobalEventBus,
     IEventListener,
     SourceInitialized,
-} from "../events";
-import intersection from "lodash/intersection";
-import isEmpty from "lodash/isEmpty";
-import values from "lodash/values";
-import { appLogInfo, appLogWarn } from "../ui/utils";
+} from "../events.js";
+import intersection from "lodash/intersection.js";
+import isEmpty from "lodash/isEmpty.js";
+import values from "lodash/values.js";
+import { appLogInfo, appLogWarn } from "../ui/utils.js";
 
 const StdoutFilename = "applink.log";
 const StderrFilename = "applink.error.log";
 
-const BuildScriptPreference = ["build-incremental", "build-esm", "build"];
+const BuildScriptPreference = ["build"];
 
 /**
  * Package builder initialized itself after SourceInitialized event. And then as BuildRequested events appear,

@@ -9,6 +9,7 @@ const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -87,6 +88,12 @@ module.exports = async (env, argv) => {
         new ForkTsCheckerWebpackPlugin({
             issue: {
                 include: [{ file: "src/**/*.{ts,tsx}" }],
+            },
+            typescript: {
+                diagnosticOptions: {
+                    semantic: true,
+                    syntactic: true,
+                },
             },
         }),
     ];
@@ -219,5 +226,8 @@ module.exports = async (env, argv) => {
             proxy,
         },
         stats: "errors-only",
+        optimization: {
+            minimizer: [new EsbuildPlugin()],
+        },
     });
 };

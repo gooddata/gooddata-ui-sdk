@@ -26,12 +26,9 @@
         "styles"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-dev": "bash scripts/build.sh --dev",
-        "build-esm": "tsc -p tsconfig.build.json",
-        "dev": "bash scripts/build.sh --dev-watch",
+        "build": "tsc -p tsconfig.json && npm run api-extractor",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -83,7 +80,7 @@
         "@testing-library/user-event": "^14.4.2",
         "@types/hoist-non-react-statics": "^3.3.1",
         "@types/json-stable-stringify": "^1.0.32",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@types/raf": "^3.4.0",
         "@types/react": "^18.2.0",

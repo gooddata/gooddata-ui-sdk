@@ -9,25 +9,24 @@
         "directory": "tools/i18n-toolkit"
     },
     "license": "MIT",
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "type": "module",
+    "exports": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
     "sideEffects": false,
     "files": [
         "index.js",
-        "dist/**/*.js",
-        "dist/**/*.json",
-        "dist/**/*.d.ts",
-        "dist/**/*.map"
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts src/"
+        "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "scripts": {
-        "run": "node ./dist/index.js",
-        "clean": "rm -rf ci dist coverage *.log",
-        "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "concurrently \"npm run build-cjs\"",
-        "build-cjs": "tsc -p tsconfig.build.json",
+        "run": "node ./esm/index.js",
+        "clean": "rm -rf ci esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "tsc -p tsconfig.json",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -35,8 +34,8 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
@@ -46,7 +45,7 @@
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "fast-glob": "^3.2.7",
-        "html-validate": "^7.15.1",
+        "html-validate": "^8.7.3",
         "jsonschema": "^1.2.6",
         "lodash": "^4.17.19",
         "tslib": "^2.5.0",
@@ -54,7 +53,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
@@ -64,6 +63,7 @@
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-import-esm": "^1.2.1",
         "eslint-plugin-jest": "^27.1.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",

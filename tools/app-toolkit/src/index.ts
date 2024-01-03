@@ -2,10 +2,10 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { program } from "commander";
-import pkg from "../package.json" assert { type: "json" };
 import { initCmdAction } from "./initCmd/index.js";
+import { LIB_NAME, LIB_DESCRIPTION, LIB_VERSION } from "./__version.js";
 
-program.name(pkg.name).description(pkg.description).version(pkg.version);
+program.name(LIB_NAME).description(LIB_DESCRIPTION).version(LIB_VERSION);
 
 export const initCmd = program
     .command("init")

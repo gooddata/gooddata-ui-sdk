@@ -6,13 +6,14 @@ import {
     getConfiguredWorkspaceId,
     WorkspaceMetadata,
 } from "../../base/types.js";
-import pkg from "../../../package.json" assert { type: "json" };
+
 import ora from "ora";
 import { log, logError } from "../../cli/loggers.js";
 import { promptPassword, promptWorkspaceId, promptUsername } from "../../cli/prompts.js";
 import { clearLine } from "../../cli/clear.js";
 import gooddata, { SDK } from "@gooddata/api-client-bear";
 import { bearLoad } from "./bearLoad.js";
+import { LIB_VERSION, LIB_NAME } from "../../__version.js";
 
 async function selectBearWorkspace(client: SDK): Promise<string> {
     const metadataResponse = await client.xhr.get("/gdc/md");
@@ -45,7 +46,7 @@ export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig)
     let { username, password } = config;
 
     gooddata.config.setCustomDomain(hostname!);
-    gooddata.config.setJsPackage(pkg.name, pkg.version);
+    gooddata.config.setJsPackage(LIB_NAME, LIB_VERSION);
 
     const logInSpinner = ora();
     try {

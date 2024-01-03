@@ -53,6 +53,8 @@ export function measureSortMatcher(col: SeriesCol, sortItem: ISortItem): boolean
             } else if (isMeasureLocator(locator)) {
                 return measureLocatorMatch(col, locator);
             }
+
+            return undefined;
         })
     );
 }

@@ -2,9 +2,9 @@
 /* eslint-disable no-console */
 
 import chalk from "chalk";
-import flatten from "lodash/flatten";
+import flatten from "lodash/flatten.js";
 
-import { UsageResult } from "../data";
+import { UsageResult } from "../data.js";
 import * as path from "path";
 
 export function skipped(msg: string, debug = false) {

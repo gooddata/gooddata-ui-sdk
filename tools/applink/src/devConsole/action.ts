@@ -1,14 +1,14 @@
 // (C) 2020-2021 GoodData Corporation
-import { getSourceDescriptor } from "../base/sourceDiscovery";
-import { getTargetDescriptor } from "../base/targetDiscovery";
-import { TerminalUi } from "./ui/ui";
-import { GlobalEventBus, sourceInitialized, targetSelected } from "./events";
-import { ChangeDetector } from "./pipeline/changeDetector";
-import { BuildScheduler } from "./pipeline/buildScheduler";
-import { PackageBuilder } from "./pipeline/packageBuilder";
-import { PackagePublisher } from "./pipeline/publisher";
-import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
-import { NoopPublisher } from "./pipeline/noopPublisher";
+import { getSourceDescriptor } from "../base/sourceDiscovery.js";
+import { getTargetDescriptor } from "../base/targetDiscovery.js";
+import { TerminalUi } from "./ui/ui.js";
+import { GlobalEventBus, sourceInitialized, targetSelected } from "./events.js";
+import { ChangeDetector } from "./pipeline/changeDetector.js";
+import { BuildScheduler } from "./pipeline/buildScheduler.js";
+import { PackageBuilder } from "./pipeline/packageBuilder.js";
+import { PackagePublisher } from "./pipeline/publisher.js";
+import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types.js";
+import { NoopPublisher } from "./pipeline/noopPublisher.js";
 
 export async function devConsole(targetDir: string): Promise<void> {
     const sourceDescriptor = await getSourceDescriptor(

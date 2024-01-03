@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DefaultLocale, CheckInsightPipe, CheckReportPipe } from "../data";
-import { done, skipped, message, fail } from "../utils/console";
-import { LocalesItem, LocalesStructure } from "../schema/localization";
+import { DefaultLocale, CheckInsightPipe, CheckReportPipe } from "../data.js";
+import { done, skipped, message, fail } from "../utils/console.js";
+import { LocalesItem, LocalesStructure } from "../schema/localization.js";
 
 /**
  * This validation is for epic TNT-160.

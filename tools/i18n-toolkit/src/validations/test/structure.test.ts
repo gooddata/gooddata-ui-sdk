@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { LocalesStructure } from "../../schema/localization";
-import { getStructureCheck } from "../structure";
+import { LocalesStructure } from "../../schema/localization.js";
+import { getStructureCheck } from "../structure.js";
 import { describe, it, expect } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];

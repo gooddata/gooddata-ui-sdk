@@ -19,7 +19,7 @@ export function* loadCustomElementsWorker(): SagaIterator<void> {
  */
 export function* loadCustomElementsSaga(
     action: ReturnType<typeof actions.loadCustomElementsRequest>,
-): SagaIterator<ILoadElementsResult> {
+): SagaIterator<ILoadElementsResult | void> {
     const {
         payload: { correlation, options },
     } = action;

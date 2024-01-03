@@ -41,6 +41,9 @@ dist/
 esm/
 dist-storybook
 
+# TypeScript incremental build files
+tsconfig.tsbuildinfo
+
 # Optional npm cache directory
 .npm
 
