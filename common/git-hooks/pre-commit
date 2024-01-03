@@ -3,29 +3,7 @@
 # exit with non-zero status after issuing an appropriate message if
 # it wants to stop the commit.
 
-PRETTIER_COMMAND="common/temp/node_modules/.bin/pretty-quick"
-FIX_COPYRIGHT_COMMAND="common/temp/node_modules/.bin/gdc-fix-copyright"
-
-echo --------------------------------------------
-echo Starting Git hook: pre-commit
-
-if [ -f ${PRETTIER_COMMAND} ]; then
-  echo Invoking ${PRETTIER_COMMAND}
-  ${PRETTIER_COMMAND} --staged
-else
-  echo Command not installed: ${PRETTIER_COMMAND}
-fi
-
-if [ -f ${FIX_COPYRIGHT_COMMAND} ]; then
-  for FILE in $(exec git diff --cached --name-status --diff-filter=ACM  | grep -E '^.*\/src\/.*\.(ts|js|tsx|jsx|scss)$'  | awk '$1 { print $2 }'); do
-    echo "©️  Fixing copyright header of ${FILE}"
-    ${FIX_COPYRIGHT_COMMAND} "$FILE"
-    git add "$FILE"
-  done
-  echo '✅ Every copyright header is up-to-date'
-else
-  echo Command ${FIX_COPYRIGHT_COMMAND} or npx is not installed
-fi
-
-echo Finished Git hook: pre-commit
-echo --------------------------------------------
+# Invoke the "rush lint-staged-files" custom command to lint files whenever they
+# are committed. The command is defined in common/config/rush/command-line.json
+# and uses the "lint-staged" autoinstaller.
+node common/scripts/install-run-rush.js lint-staged-files || exit $?
