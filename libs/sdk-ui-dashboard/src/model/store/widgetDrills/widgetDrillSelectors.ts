@@ -297,15 +297,17 @@ const selectCrossFilteringByWidgetRef: (
                 return undefined;
             }
 
-            // collect all possible attribute names for the title
-            const title = availableDrillAttributesWithoutDates
-                .map((attribute) => attribute.attribute.attributeHeader.name)
-                .join(", ");
-
-            // construct predicates for all available attributes
-            const predicates = availableDrillAttributesWithoutDates.map((drillAttribute) =>
+            // construct predicates for all available attributes and measures
+            const attributePredicates = availableDrillAttributesWithoutDates.map((drillAttribute) =>
                 HeaderPredicates.localIdentifierMatch(
                     drillAttribute.attribute.attributeHeader.localIdentifier,
+                ),
+            );
+            const measurePredicates = compact(
+                availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) =>
+                    HeaderPredicates.localIdentifierMatch(
+                        drillMeasure.measure.measureHeaderItem.localIdentifier,
+                    ),
                 ),
             );
 
@@ -314,9 +316,8 @@ const selectCrossFilteringByWidgetRef: (
                     type: "crossFiltering",
                     transition: "in-place",
                     origin: {} as DrillOrigin, // not needed for cross filtering
-                    title,
                 },
-                predicates,
+                predicates: [...attributePredicates, ...measurePredicates],
             };
         },
     ),

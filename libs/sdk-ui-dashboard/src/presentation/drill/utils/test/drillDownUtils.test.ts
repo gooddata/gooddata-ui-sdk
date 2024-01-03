@@ -39,7 +39,6 @@ describe("filterDrillFromAttributeByPriority", () => {
     const crossFiltering: ICrossFiltering = {
         type: "crossFiltering",
         origin: {} as any,
-        title: "Cross filtering",
         transition: "in-place",
     };
 
