@@ -6320,6 +6320,9 @@ export const selectCrossFilteringFiltersLocalIdentifiers: DashboardSelector<stri
 export const selectCrossFilteringFiltersLocalIdentifiersByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<string[] | undefined>;
 
 // @beta (undocumented)
+export const selectCrossFilteringItemByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<ICrossFilteringItem | undefined>;
+
+// @beta (undocumented)
 export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>;
 
 // @public
