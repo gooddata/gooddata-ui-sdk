@@ -34,6 +34,17 @@ export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>
 /**
  * @beta
  */
+export const selectCrossFilteringItemByWidgetRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<ICrossFilteringItem | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectCrossFilteringItems, (items) =>
+        items.find((item) => areObjRefsEqual(ref, item.widgetRef)),
+    ),
+);
+
+/**
+ * @beta
+ */
 export const selectCrossFilteringFiltersLocalIdentifiers: DashboardSelector<string[]> = createSelector(
     selectCrossFilteringItems,
     (items) => items.flatMap((item) => item.filterLocalIdentifiers),
@@ -45,8 +56,5 @@ export const selectCrossFilteringFiltersLocalIdentifiers: DashboardSelector<stri
 export const selectCrossFilteringFiltersLocalIdentifiersByWidgetRef: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<string[] | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(
-        selectCrossFilteringItems,
-        (items) => items.find((item) => areObjRefsEqual(ref, item.widgetRef))?.filterLocalIdentifiers,
-    ),
+    createSelector(selectCrossFilteringItemByWidgetRef(ref), (item) => item?.filterLocalIdentifiers),
 );

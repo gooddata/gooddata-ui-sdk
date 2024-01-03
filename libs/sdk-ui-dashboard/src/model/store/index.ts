@@ -219,6 +219,7 @@ export { drillActions } from "./drill/index.js";
 export {
     selectDrillableItems,
     selectCrossFilteringItems,
+    selectCrossFilteringItemByWidgetRef,
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "./drill/drillSelectors.js";

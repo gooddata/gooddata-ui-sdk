@@ -10,15 +10,24 @@ import {
 import { DashboardContext } from "../../types/commonTypes.js";
 import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
-import { addAttributeFilter, changeAttributeFilterSelection } from "../../commands/filters.js";
+import {
+    addAttributeFilter,
+    changeAttributeFilterSelection,
+    removeAttributeFilters,
+} from "../../commands/filters.js";
 import { CrossFiltering } from "../../commands/drill.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { v4 as uuid } from "uuid";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import {
+    selectCrossFilteringItemByWidgetRef,
+    selectCrossFilteringFiltersLocalIdentifiers,
+} from "../../store/drill/drillSelectors.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
+import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(
@@ -38,10 +47,13 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const currentVirtualFiltersLocalIdentifiers: ReturnType<
         typeof selectCrossFilteringFiltersLocalIdentifiers
     > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
-
     const currentVirtualFilters = currentVirtualFiltersLocalIdentifiers.map((localIdentifier) => {
         return currentFilters.find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
     });
+    const crossFilteringItemByWidget: ReturnType<typeof selectCrossFilteringItemByWidgetRef> = yield select(
+        selectCrossFilteringItemByWidgetRef(widgetRef),
+    );
+    const shouldUpdateExistingCrossFiltering = !isEmpty(crossFilteringItemByWidget);
 
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
@@ -53,9 +65,11 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         const displayForm = filterObjRef(filter);
         const attributeElements = filterAttributeElements(filter);
         const negativeSelection = isNegativeAttributeFilter(filter);
-        const existingVirtualFilter = currentVirtualFilters.find((vf) => {
-            return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
-        });
+        const existingVirtualFilter = shouldUpdateExistingCrossFiltering
+            ? currentVirtualFilters.find((vf) => {
+                  return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
+              })
+            : undefined;
 
         const dashboardFilter: IDashboardAttributeFilter = {
             attributeFilter: {
@@ -72,15 +86,25 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     const correlation = `crossFiltering_${uuid()}`;
 
+    // Cleanup of previous cross-filtering state
+    if (!shouldUpdateExistingCrossFiltering) {
+        yield call(
+            removeAttributeFiltersHandler,
+            ctx,
+            removeAttributeFilters(currentVirtualFiltersLocalIdentifiers),
+        );
+    }
+
+    // Handle new cross-filtering state
+    const effectiveFiltersLength = currentFilters.length - currentVirtualFiltersLocalIdentifiers.length;
     yield put(
         drillActions.crossFilterByWidget({
             widgetRef,
             filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
         }),
     );
-
     yield all(
-        virtualFilters.map((vf) => {
+        virtualFilters.map((vf, index) => {
             const isExistingVirtualFilter = currentVirtualFiltersLocalIdentifiers.includes(
                 vf.attributeFilter.localIdentifier!,
             );
@@ -91,7 +115,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                       ctx,
                       addAttributeFilter(
                           vf.attributeFilter.displayForm,
-                          currentFilters.length + 1,
+                          effectiveFiltersLength + index,
                           correlation,
                           "multi",
                           "readonly",

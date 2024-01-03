@@ -4,8 +4,6 @@ import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { DrillState } from "./drillState.js";
 import { ICrossFilteringItem } from "./types.js";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
 
 type DrillReducer<A extends Action> = CaseReducer<DrillState, A>;
 
@@ -14,38 +12,7 @@ const setDrillableItems: DrillReducer<PayloadAction<ExplicitDrill[]>> = (state, 
 };
 
 const crossFilterByWidget: DrillReducer<PayloadAction<ICrossFilteringItem>> = (state, action) => {
-    const { payload } = action;
-
-    state.crossFiltering = compact(
-        state.crossFiltering.map((item) => {
-            // If we changed selection of the existing virtual filters by different widget,
-            // it should now belong to the new widget, so filter the changed filters out
-            const filteredLocalIdentifiers = item.filterLocalIdentifiers.filter(
-                (id) => !payload.filterLocalIdentifiers.includes(id),
-            );
-
-            // When all filter local identifiers are filtered out, remove the item
-            if (!filteredLocalIdentifiers.length) {
-                return undefined;
-            }
-
-            return {
-                ...item,
-                filterLocalIdentifiers: filteredLocalIdentifiers,
-            };
-        }),
-    );
-
-    const widgetCrossFilteringIndex = state.crossFiltering.findIndex((item) =>
-        areObjRefsEqual(item.widgetRef, payload.widgetRef),
-    );
-
-    if (widgetCrossFilteringIndex !== -1) {
-        // Widget was already cross filtering - update the existing item
-        state.crossFiltering[widgetCrossFilteringIndex] = payload;
-    } else {
-        state.crossFiltering.push(payload);
-    }
+    state.crossFiltering = [action.payload];
 };
 
 const resetCrossFiltering: DrillReducer<Action> = (state) => {
