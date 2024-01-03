@@ -23,6 +23,7 @@ exports[`changeDateFilterSelectionHandler > should emit the appropriate events f
 exports[`changeDateFilterSelectionHandler > should set the date filter in the state when a date filter is added 1`] = `
 {
   "dateFilter": {
+    "dataSet": undefined,
     "from": -3,
     "granularity": "GDC.time.month",
     "to": 0,

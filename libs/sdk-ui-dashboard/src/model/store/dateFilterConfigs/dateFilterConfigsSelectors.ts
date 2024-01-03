@@ -37,10 +37,7 @@ export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateF
 export const selectDateFilterConfigsModeMap: DashboardSelector<Map<string, DashboardDateFilterConfigMode>> =
     createSelector(selectDateFilterConfigsOverrides, (dateFilterConfigs) => {
         return dateFilterConfigs.reduce((map, config) => {
-            map.set(
-                serializeObjRef(config.dateDataSet),
-                config.config.mode ?? DashboardDateFilterConfigModeValues.ACTIVE,
-            );
+            map.set(serializeObjRef(config.dateDataSet), config.config.mode);
             return map;
         }, new Map());
     });

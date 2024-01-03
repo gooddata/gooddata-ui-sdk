@@ -2,119 +2,150 @@
 import { produce } from "immer";
 import { describe, it, expect } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
-import { DashboardDateFilterConfigModeValues, IDashboardAttributeFilterConfig } from "@gooddata/sdk-model";
+import {
+    DashboardDateFilterConfigModeValues,
+    IDashboardDateFilterConfigItem,
+    idRef,
+} from "@gooddata/sdk-model";
 
-import { attributeFilterConfigsActions } from "../index.js";
-import { attributeFilterConfigsReducers } from "../dateFilterConfigsReducers.js";
-import { AttributeFilterConfigsState } from "../dateFilterConfigsState.js";
+import { dateFilterConfigsActions } from "../index.js";
+import { dateFilterConfigsReducers } from "../dateFilterConfigsReducers.js";
+import { DateFilterConfigsState } from "../dateFilterConfigsState.js";
 
-describe("attributeFilterConfigsReducers", () => {
-    const createAttributeFilterConfigSliceInitialState = (
-        attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
-    ): AttributeFilterConfigsState => {
+describe("dateFilterConfigsReducers", () => {
+    const createDateFilterConfigSliceInitialState = (
+        dateFilterConfigs?: IDashboardDateFilterConfigItem[],
+    ): DateFilterConfigsState => {
         return {
-            attributeFilterConfigs: attributeFilterConfigs ? cloneDeep(attributeFilterConfigs) : [],
+            dateFilterConfigs: dateFilterConfigs ? cloneDeep(dateFilterConfigs) : [],
         };
     };
 
-    describe("setAttributeFilterConfigs", () => {
-        it("should set the attribute filter configs", () => {
-            const initialAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = [
+    describe("setDateFilterConfigs", () => {
+        it("should set the date filter with dimension configs", () => {
+            const initialDateFilterConfigs: IDashboardDateFilterConfigItem[] = [
                 {
-                    mode: "hidden",
-                    localIdentifier: "id1",
+                    dateDataSet: idRef("id1"),
+                    config: {
+                        mode: "hidden",
+                        filterName: "",
+                    },
                 },
             ];
-            const initialState = createAttributeFilterConfigSliceInitialState(initialAttributeFilterConfigs);
+            const initialState = createDateFilterConfigSliceInitialState(initialDateFilterConfigs);
             const newMode = DashboardDateFilterConfigModeValues.READONLY;
 
             const newState: any = produce(initialState, (draft: any) => {
-                const action = attributeFilterConfigsActions.setAttributeFilterConfigs({
-                    attributeFilterConfigs: [
+                const action = dateFilterConfigsActions.setDateFilterConfigs({
+                    dateFilterConfigs: [
                         {
-                            ...initialAttributeFilterConfigs[0],
-                            mode: newMode,
+                            ...initialDateFilterConfigs[0],
+                            config: {
+                                ...initialDateFilterConfigs[0].config,
+                                mode: newMode,
+                            },
                         },
                     ],
                 });
-                return attributeFilterConfigsReducers.setAttributeFilterConfigs(draft, action);
+                return dateFilterConfigsReducers.setDateFilterConfigs(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.dateFilterConfigs).toEqual([
                 {
-                    ...initialAttributeFilterConfigs[0],
-                    mode: newMode,
+                    ...initialDateFilterConfigs[0],
+                    config: {
+                        ...initialDateFilterConfigs[0].config,
+                        mode: newMode,
+                    },
                 },
             ]);
         });
 
-        it("should create a new attribute filter config if it doesn't exist", () => {
-            const initialState = createAttributeFilterConfigSliceInitialState(undefined);
+        it("should create a new date filter config if it doesn't exist", () => {
+            const initialState = createDateFilterConfigSliceInitialState(undefined);
 
             const newState = produce(initialState, (draft) => {
-                const action = attributeFilterConfigsActions.setAttributeFilterConfigs({
-                    attributeFilterConfigs: [
+                const action = dateFilterConfigsActions.setDateFilterConfigs({
+                    dateFilterConfigs: [
                         {
-                            localIdentifier: "id2",
-                            mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                            dateDataSet: idRef("id2"),
+                            config: {
+                                mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                                filterName: "",
+                            },
                         },
                     ],
                 });
-                return attributeFilterConfigsReducers.setAttributeFilterConfigs(draft, action);
+                return dateFilterConfigsReducers.setDateFilterConfigs(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.dateFilterConfigs).toEqual([
                 {
-                    mode: DashboardDateFilterConfigModeValues.HIDDEN,
-                    localIdentifier: "id2",
+                    dateDataSet: idRef("id2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
                 },
             ]);
         });
     });
 
     describe("changeMode", () => {
-        const initialState = createAttributeFilterConfigSliceInitialState([
+        const initialState = createDateFilterConfigSliceInitialState([
             {
-                localIdentifier: "id1",
-                mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                dateDataSet: idRef("id1"),
+                config: {
+                    mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                    filterName: "",
+                },
             },
         ]);
 
-        it("should set the attribute filter configs", () => {
+        it("should set the date filter configs", () => {
             const newMode = DashboardDateFilterConfigModeValues.READONLY;
             const newState: any = produce(initialState, (draft: any) => {
-                const action = attributeFilterConfigsActions.changeMode({
-                    localIdentifier: "id1",
+                const action = dateFilterConfigsActions.changeMode({
+                    dataSet: idRef("id1"),
                     mode: newMode,
                 });
-                return attributeFilterConfigsReducers.changeMode(draft, action);
+                return dateFilterConfigsReducers.changeMode(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.dateFilterConfigs).toEqual([
                 {
-                    localIdentifier: "id1",
-                    mode: newMode,
+                    dateDataSet: idRef("id1"),
+                    config: {
+                        mode: newMode,
+                        filterName: "",
+                    },
                 },
             ]);
         });
 
-        it("should create a new attribute filter config if it doesn't exist", () => {
+        it("should create a new date filter config if it doesn't exist", () => {
             const newState = produce(initialState, (draft) => {
-                const action = attributeFilterConfigsActions.changeMode({
-                    localIdentifier: "id2",
+                const action = dateFilterConfigsActions.changeMode({
+                    dataSet: idRef("id2"),
                     mode: DashboardDateFilterConfigModeValues.ACTIVE,
                 });
-                return attributeFilterConfigsReducers.changeMode(draft, action);
+                return dateFilterConfigsReducers.changeMode(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.dateFilterConfigs).toEqual([
                 {
-                    localIdentifier: "id1",
-                    mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                    dateDataSet: idRef("id1"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
                 },
                 {
-                    mode: DashboardDateFilterConfigModeValues.ACTIVE,
-                    localIdentifier: "id2",
+                    dateDataSet: idRef("id2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.ACTIVE,
+                        filterName: "",
+                    },
                 },
             ]);
         });

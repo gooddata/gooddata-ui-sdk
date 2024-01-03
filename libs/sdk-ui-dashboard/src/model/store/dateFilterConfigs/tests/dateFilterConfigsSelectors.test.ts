@@ -2,128 +2,192 @@
 import { describe, it, expect } from "vitest";
 
 import {
-    DashboardAttributeFilterConfigModeValues,
-    IDashboardAttributeFilterConfig,
+    DashboardDateFilterConfigModeValues,
+    IDashboardDateFilterConfigItem,
+    idRef,
 } from "@gooddata/sdk-model";
 
 import {
-    selectAttributeFilterConfigsModeMap,
-    selectAttributeFilterConfigsOverrides,
-    selectEffectiveAttributeFiltersModeMap,
+    selectDateFilterConfigsModeMap,
+    selectDateFilterConfigsOverrides,
+    selectEffectiveDateFiltersModeMap,
 } from "../dateFilterConfigsSelectors.js";
 import { DateFilterConfigsState } from "../dateFilterConfigsState.js";
 
-describe("attributeFilterConfigsSelectors", () => {
-    const createInitialState = (
-        attributeFilterConfigs?: DateFilterConfigsState,
-        renderMode?: string,
-    ): any => {
+describe("dateFilterConfigsSelectors", () => {
+    const createInitialState = (dateFilterConfigs?: DateFilterConfigsState, renderMode?: string): any => {
         return {
-            attributeFilterConfigs,
+            dateFilterConfigs,
             renderMode: {
                 renderMode,
             },
         };
     };
 
-    describe("selectAttributeFilterConfigsOverrides", () => {
-        it("should return an empty array when attributeFilterConfigs state is undefined", () => {
+    describe("selectDateFilterConfigsOverrides", () => {
+        it("should return an empty array when dateFilterConfigs state is undefined", () => {
             const state = createInitialState(undefined);
-            expect(selectAttributeFilterConfigsOverrides(state)).toEqual([]);
+            expect(selectDateFilterConfigsOverrides(state)).toEqual([]);
         });
 
-        it("should return an empty array when attributeFilterConfigs is undefined", () => {
+        it("should return an empty array when dateFilterConfigs is undefined", () => {
             const state = createInitialState({});
-            expect(selectAttributeFilterConfigsOverrides(state)).toEqual([]);
+            expect(selectDateFilterConfigsOverrides(state)).toEqual([]);
         });
 
-        it("should return attributeFilterConfigs when it not empty", () => {
-            const configs: IDashboardAttributeFilterConfig[] = [
-                { localIdentifier: "id_1", mode: DashboardAttributeFilterConfigModeValues.HIDDEN },
-                { localIdentifier: "id_2", mode: DashboardAttributeFilterConfigModeValues.READONLY },
-                { localIdentifier: "id_3", mode: DashboardAttributeFilterConfigModeValues.ACTIVE },
+        it("should return dateFilterConfigs when it not empty", () => {
+            const configs: IDashboardDateFilterConfigItem[] = [
+                {
+                    dateDataSet: idRef("id_1"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.READONLY,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_3"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.ACTIVE,
+                        filterName: "",
+                    },
+                },
             ];
 
             const state = createInitialState({
-                attributeFilterConfigs: configs,
+                dateFilterConfigs: configs,
             });
-            expect(selectAttributeFilterConfigsOverrides(state)).toEqual(configs);
+            expect(selectDateFilterConfigsOverrides(state)).toEqual(configs);
         });
     });
 
-    describe("selectAttributeFilterConfigsModeMap", () => {
-        it("should return a map of attribute filter config modes", () => {
-            const configs: IDashboardAttributeFilterConfig[] = [
-                { localIdentifier: "id_1", mode: DashboardAttributeFilterConfigModeValues.HIDDEN },
-                { localIdentifier: "id_2", mode: DashboardAttributeFilterConfigModeValues.READONLY },
-                { localIdentifier: "id_3", mode: DashboardAttributeFilterConfigModeValues.ACTIVE },
-                { localIdentifier: "id_4" },
+    describe("selectDateFilterConfigsModeMap", () => {
+        it("should return a map of date filter config modes", () => {
+            const configs: IDashboardDateFilterConfigItem[] = [
+                {
+                    dateDataSet: idRef("id_1"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.READONLY,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_3"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.ACTIVE,
+                        filterName: "",
+                    },
+                },
             ];
 
             const state = createInitialState({
-                attributeFilterConfigs: configs,
+                dateFilterConfigs: configs,
             });
 
             const expectedMap = new Map([
-                ["id_1", DashboardAttributeFilterConfigModeValues.HIDDEN],
-                ["id_2", DashboardAttributeFilterConfigModeValues.READONLY],
-                ["id_3", DashboardAttributeFilterConfigModeValues.ACTIVE],
-                ["id_4", DashboardAttributeFilterConfigModeValues.ACTIVE],
+                ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.HIDDEN],
+                ['{"identifier":"id_2"}', DashboardDateFilterConfigModeValues.READONLY],
+                ['{"identifier":"id_3"}', DashboardDateFilterConfigModeValues.ACTIVE],
             ]);
 
-            expect(selectAttributeFilterConfigsModeMap(state)).toEqual(expectedMap);
+            expect(selectDateFilterConfigsModeMap(state)).toEqual(expectedMap);
         });
     });
 
-    describe("selectEffectiveAttributeFiltersModeMap", () => {
-        it("should return a map of effective attribute filter config modes", () => {
-            const configs: IDashboardAttributeFilterConfig[] = [
-                { localIdentifier: "id_1", mode: DashboardAttributeFilterConfigModeValues.HIDDEN },
-                { localIdentifier: "id_2", mode: DashboardAttributeFilterConfigModeValues.READONLY },
-                { localIdentifier: "id_3", mode: DashboardAttributeFilterConfigModeValues.ACTIVE },
-                { localIdentifier: "id_4" },
+    describe("selectEffectiveDateFiltersModeMap", () => {
+        it("should return a map of effective date filter config modes", () => {
+            const configs: IDashboardDateFilterConfigItem[] = [
+                {
+                    dateDataSet: idRef("id_1"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.READONLY,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_3"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.ACTIVE,
+                        filterName: "",
+                    },
+                },
             ];
 
             const state = createInitialState(
                 {
-                    attributeFilterConfigs: configs,
+                    dateFilterConfigs: configs,
                 },
                 "view",
             );
 
             const expectedMap = new Map([
-                ["id_1", DashboardAttributeFilterConfigModeValues.HIDDEN],
-                ["id_2", DashboardAttributeFilterConfigModeValues.READONLY],
-                ["id_3", DashboardAttributeFilterConfigModeValues.ACTIVE],
-                ["id_4", DashboardAttributeFilterConfigModeValues.ACTIVE],
+                ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.HIDDEN],
+                ['{"identifier":"id_2"}', DashboardDateFilterConfigModeValues.READONLY],
+                ['{"identifier":"id_3"}', DashboardDateFilterConfigModeValues.ACTIVE],
             ]);
 
-            expect(selectEffectiveAttributeFiltersModeMap(state)).toEqual(expectedMap);
+            expect(selectEffectiveDateFiltersModeMap(state)).toEqual(expectedMap);
         });
 
-        it("should return a map of active attribute filter config modes when isInEditMode is true", () => {
-            const configs: IDashboardAttributeFilterConfig[] = [
-                { localIdentifier: "id_1", mode: DashboardAttributeFilterConfigModeValues.HIDDEN },
-                { localIdentifier: "id_2", mode: DashboardAttributeFilterConfigModeValues.READONLY },
-                { localIdentifier: "id_3", mode: DashboardAttributeFilterConfigModeValues.ACTIVE },
-                { localIdentifier: "id_4" },
+        it("should return a map of active date filter config modes when isInEditMode is true", () => {
+            const configs: IDashboardDateFilterConfigItem[] = [
+                {
+                    dateDataSet: idRef("id_1"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.HIDDEN,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_2"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.READONLY,
+                        filterName: "",
+                    },
+                },
+                {
+                    dateDataSet: idRef("id_3"),
+                    config: {
+                        mode: DashboardDateFilterConfigModeValues.ACTIVE,
+                        filterName: "",
+                    },
+                },
             ];
 
             const state = createInitialState(
                 {
-                    attributeFilterConfigs: configs,
+                    dateFilterConfigs: configs,
                 },
                 "edit",
             );
 
             const expectedMap = new Map([
-                ["id_1", DashboardAttributeFilterConfigModeValues.ACTIVE],
-                ["id_2", DashboardAttributeFilterConfigModeValues.ACTIVE],
-                ["id_3", DashboardAttributeFilterConfigModeValues.ACTIVE],
-                ["id_4", DashboardAttributeFilterConfigModeValues.ACTIVE],
+                ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.ACTIVE],
+                ['{"identifier":"id_2"}', DashboardDateFilterConfigModeValues.ACTIVE],
+                ['{"identifier":"id_3"}', DashboardDateFilterConfigModeValues.ACTIVE],
             ]);
 
-            expect(selectEffectiveAttributeFiltersModeMap(state)).toEqual(expectedMap);
+            expect(selectEffectiveDateFiltersModeMap(state)).toEqual(expectedMap);
         });
     });
 });

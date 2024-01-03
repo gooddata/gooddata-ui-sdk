@@ -156,25 +156,24 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         );
     } else {
         existingFilterIndex = state.filterContextDefinition.filters.findIndex((item) =>
-            isDashboardDateFilter(item),
+            isDashboardCommonDateFilter(item),
         );
     }
 
-    /**
-     * TODO: This will cause problems once we support dateDataset-specific date filters (then, we might want
-     * to keep even the all time filters to carry the information about the selected dateDataset).
-     */
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
-            // if allTime remove the date filter altogether
-            //state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
-            const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+            if (dateDataSet) {
+                const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
 
-            if (isDashboardDateFilter(dateFilter)) {
-                dateFilter.dateFilter.type = "relative";
-                dateFilter.dateFilter.granularity = "GDC.time.date";
-                dateFilter.dateFilter.from = undefined;
-                dateFilter.dateFilter.to = undefined;
+                if (isDashboardDateFilter(dateFilter)) {
+                    dateFilter.dateFilter.type = "relative";
+                    dateFilter.dateFilter.granularity = "GDC.time.date";
+                    dateFilter.dateFilter.from = undefined;
+                    dateFilter.dateFilter.to = undefined;
+                }
+            } else {
+                //if allTime common DF remove the date filter altogether
+                state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
             }
         }
     } else if (existingFilterIndex >= 0) {
