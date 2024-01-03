@@ -169,6 +169,7 @@ export {
     AfmValidDescendantsQuery,
     AfmValidDescendantsResponse,
     DependsOn,
+    ValidateByItem,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

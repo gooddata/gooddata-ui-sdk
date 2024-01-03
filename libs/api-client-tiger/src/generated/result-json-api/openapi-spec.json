@@ -289,16 +289,16 @@
                         "description": "The character delimiting individual cells in the CSV data."
                     },
                     "quoteChar": {
-                        "type": "string",
-                        "description": "The character used optionally for quoting CSV values."
+                        "type": "object",
+                        "description": "The character used optionally for quoting CSV values or false to disable quoting."
                     },
                     "doubleQuote": {
                         "type": "boolean",
                         "description": "Whether two quotes in a quoted CSV value denote a single quote in the data."
                     },
                     "escapeChar": {
-                        "type": "string",
-                        "description": "The character used optionally for escaping special characters."
+                        "type": "object",
+                        "description": "The character used optionally for escaping special characters or false to disable escaping."
                     },
                     "newlinesInValues": {
                         "type": "boolean",

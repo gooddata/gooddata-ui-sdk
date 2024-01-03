@@ -333,11 +333,11 @@ export interface CsvParseOptions {
      */
     delimiter?: string;
     /**
-     * The character used optionally for quoting CSV values.
-     * @type {string}
+     * The character used optionally for quoting CSV values or false to disable quoting.
+     * @type {object}
      * @memberof CsvParseOptions
      */
-    quoteChar?: string;
+    quoteChar?: object;
     /**
      * Whether two quotes in a quoted CSV value denote a single quote in the data.
      * @type {boolean}
@@ -345,11 +345,11 @@ export interface CsvParseOptions {
      */
     doubleQuote?: boolean;
     /**
-     * The character used optionally for escaping special characters.
-     * @type {string}
+     * The character used optionally for escaping special characters or false to disable escaping.
+     * @type {object}
      * @memberof CsvParseOptions
      */
-    escapeChar?: string;
+    escapeChar?: object;
     /**
      * Whether newline characters are allowed in CSV values.
      * @type {boolean}
