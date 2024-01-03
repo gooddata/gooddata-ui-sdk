@@ -12,7 +12,6 @@ import {
     ObjRef,
     areObjRefsEqual,
     objRefToString,
-    IDrillDownReference,
     IDateHierarchyTemplate,
     ICatalogDateAttributeHierarchy,
     isCatalogAttributeHierarchy,
@@ -36,9 +35,6 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
 import isEmpty from "lodash/isEmpty.js";
 import negate from "lodash/negate.js";
-import { createMemoizedSelector } from "../_infra/selectors.js";
-import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../layout/layoutSelectors.js";
-import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { selectIsDrillDownEnabled } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
@@ -196,58 +192,15 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
     );
 
 /**
- * Returns map of catalog attribute keys with all their descendants based on attribute hierarchies.
- *
- * This selector does descendant lookup for each existing catalog attribute. If an attribute is in any attribute hierarchy
- * and has at least one descendant, the attribute key is added to the map together with the descendant reference.
- *
- * @beta
- */
-export const selectAttributesWithHierarchyDescendants: (
-    ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
-) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector(
-    (ignoredDrillDownHierarchies: IDrillDownReference[] | undefined) =>
-        createSelector(
-            [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
-            (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
-                return getAttributesWithHierarchyDescendants(
-                    attributes,
-                    dateAttributes,
-                    attributeHierarchies,
-                    ignoredDrillDownHierarchies,
-                );
-            },
-        ),
-);
-
-/**
  * @alpha
  */
-export const selectAttributesWithHierarchyDescendantsByWidgetRef: (
-    ref: ObjRef,
-) => DashboardSelector<Record<string, ObjRef[]>> = createMemoizedSelector((ref: ObjRef) =>
+export const selectAttributesWithHierarchyDescendants: DashboardSelector<Record<string, ObjRef[]>> =
     createSelector(
-        [
-            selectCatalogAttributes,
-            selectCatalogDateAttributes,
-            selectAllCatalogAttributeHierarchies,
-            selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
-        ],
-        (
-            attributes = [],
-            dateAttributes = [],
-            attributeHierarchies = [],
-            ignoredDrillDownHierarchies = [],
-        ) => {
-            return getAttributesWithHierarchyDescendants(
-                attributes,
-                dateAttributes,
-                attributeHierarchies,
-                ignoredDrillDownHierarchies,
-            );
+        [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
+        (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
+            return getAttributesWithHierarchyDescendants(attributes, dateAttributes, attributeHierarchies);
         },
-    ),
-);
+    );
 
 /**
  * @internal
@@ -345,7 +298,6 @@ function getAttributesWithHierarchyDescendants(
     attributes: ICatalogAttribute[],
     dateAttributes: ICatalogDateAttribute[],
     attributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
-    ignoredDrillDownHierarchies: IDrillDownReference[] = [],
 ): Record<string, ObjRef[]> {
     const allCatalogAttributes = [...attributes, ...dateAttributes];
     const attributeDescendants: Record<string, ObjRef[]> = {};
@@ -353,27 +305,16 @@ function getAttributesWithHierarchyDescendants(
     allCatalogAttributes.forEach((attribute) => {
         const attributeRef = attribute.attribute.ref;
         attributeHierarchies.forEach((hierarchy) => {
-            const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
-                ? hierarchy.attributeHierarchy.ref
-                : hierarchy.dateDatasetRef;
             const attributes = isCatalogAttributeHierarchy(hierarchy)
                 ? hierarchy.attributeHierarchy.attributes
                 : hierarchy.attributes;
-            const hierarchyAttributes = attributes.filter((attrRef) => {
-                const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
-                );
-                return ignoredIndex < 0;
-            });
-            const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
-                areObjRefsEqual(ref, attributeRef),
-            );
+            const foundAttributeIndex = attributes.findIndex((ref) => areObjRefsEqual(ref, attributeRef));
 
             if (foundAttributeIndex < 0) {
                 return;
             }
 
-            const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
+            const foundDescendant = attributes[foundAttributeIndex + 1];
 
             if (!foundDescendant) {
                 return;
