@@ -15,7 +15,7 @@ import {
 
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model/index.js";
-import { useCurrentDateFilterConfig } from "../../../filterBar/dateFilter/useCurrentDateFilterConfig.js";
+import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

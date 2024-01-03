@@ -6,10 +6,13 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboardDrop } from "../useDashboardDrop.js";
-import { useDashboardSelector, selectIsInEditMode } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    selectEnableMultipleDateFilters,
+    selectSupportsMultipleDateFilters,
+} from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
-import { selectEnableMultipleDateFilters } from "../../../model/store/config/configSelectors.js";
-import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 export type AttributeFilterDropZoneProps = {
     targetIndex: number;

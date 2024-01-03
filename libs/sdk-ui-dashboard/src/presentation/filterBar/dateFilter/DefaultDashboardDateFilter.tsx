@@ -25,7 +25,7 @@ import {
 } from "../../../model/index.js";
 import { getVisibilityIcon } from "../utils.js";
 import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
-import { useCurrentDateFilterConfig } from "./useCurrentDateFilterConfig.js";
+import { useCurrentDateFilterConfig } from "../../dragAndDrop/index.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

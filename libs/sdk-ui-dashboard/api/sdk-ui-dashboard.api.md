@@ -6623,6 +6623,9 @@ export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean>;
 export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
 
 // @internal
@@ -6960,6 +6963,9 @@ export const selectSupportsKeepingDependentFiltersSelection: DashboardSelector<b
 
 // @internal
 export const selectSupportsKpiWidgetCapability: DashboardSelector<boolean>;
+
+// @internal
+export const selectSupportsMultipleDateFilters: DashboardSelector<boolean>;
 
 // @internal
 export const selectSupportsObjectUris: DashboardSelector<boolean>;

@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
 import { getUnrelatedDateDataset } from "./utils.js";
-import { useCurrentDateFilterConfig } from "../../../filterBar/dateFilter/useCurrentDateFilterConfig.js";
+import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";
 
 interface IDateFilterCheckboxProps {
     widget: IWidget;

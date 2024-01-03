@@ -4,22 +4,19 @@ import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../model/index.js";
 import { DateFilterDraggingComponent } from "../../componentDefinition/index.js";
-import { useCurrentDateFilterConfig } from "../../filterBar/dateFilter/useCurrentDateFilterConfig.js";
+import { useCurrentDateFilterConfig } from "../useCurrentDateFilterConfig.js";
 
 export const DefaultDateFilterDraggingComponent: DateFilterDraggingComponent = ({ item }) => {
     const theme = useTheme();
 
     const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const dateDataSet = dateDataSetsMap.get(item.filter.dateFilter.dataSet!);
+    const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
+    const { title } = useCurrentDateFilterConfig(item.filter.dateFilter.dataSet, dataSetTitle);
+
     if (!dateDataSet) {
         return null;
     }
-    const { title: dataSetTitle } = dateDataSet.dataSet;
-
-    const { title } = useCurrentDateFilterConfig(
-        item.filter.dateFilter.dataSet,
-        dataSetTitle,
-    );
 
     // TODO INE: use date specific classes
     return (

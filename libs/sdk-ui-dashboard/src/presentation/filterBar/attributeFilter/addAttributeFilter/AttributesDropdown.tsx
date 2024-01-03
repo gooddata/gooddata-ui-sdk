@@ -12,14 +12,14 @@ import {
     selectCatalogDateDatasets,
     selectAllInsightWidgets,
     selectInsightsMap,
+    selectSupportsMultipleDateFilters,
+    selectEnableMultipleDateFilters,
 } from "../../../../model/index.js";
 import { IDashboardAttributeFilterPlaceholderProps } from "../types.js";
 import AttributeListItem from "./AttributeListItem.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
 import DateAttributeListItem from "./DateAttributeListItem.js";
-import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
-import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 const dropdownAlignPoints = [
     {

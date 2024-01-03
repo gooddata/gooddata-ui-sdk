@@ -5,7 +5,7 @@ import {
     useDashboardSelector,
     selectDateFilterConfigsOverrides,
     selectEffectiveDateFilterTitle,
-} from "../../../model/index.js";
+} from "../../model/index.js";
 
 export const useCurrentDateFilterConfig = (
     dateDataSet: ObjRef | undefined,

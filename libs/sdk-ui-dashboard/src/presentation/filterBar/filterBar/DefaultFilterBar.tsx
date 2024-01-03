@@ -37,6 +37,7 @@ import {
     AttributeFilterDropZone,
     AttributeFilterDropZoneHint,
     DraggableAttributeFilter,
+    DraggableDateFilter,
 } from "../../dragAndDrop/index.js";
 import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
@@ -53,7 +54,6 @@ import {
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { areAllFiltersHidden } from "../utils.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
-import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
 
 /**
  * @alpha

@@ -3,8 +3,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { useDashboardSelector } from "../../../../model/index.js";
-import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
+import { useDashboardSelector, selectEnableMultipleDateFilters } from "../../../../model/index.js";
 
 /**
  * @internal

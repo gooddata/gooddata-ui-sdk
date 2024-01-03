@@ -17,3 +17,4 @@ export * from "./Resize/ResizeOverlay.js";
 export * from "./Resize/BulletsBar/BulletsBar.js";
 export * from "./WrapCreatePanelItemWithDrag.js";
 export * from "./WrapInsightListItemWithDrag.js";
+export * from "./useCurrentDateFilterConfig.js";
