@@ -42,7 +42,6 @@ import {
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
-    selectAttributesWithHierarchyDescendantsByWidgetRef,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
@@ -90,11 +89,89 @@ function drillDefinitionToPredicates(drill: DrillDefinition): IHeaderPredicate[]
     ]);
 }
 
+function createDrillDefinition(
+    drill: IAvailableDrillTargetAttribute,
+    descendantRef: ObjRef,
+    allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+): IImplicitDrillWithPredicates {
+    /**
+     * Here we need to distinguish how the drill is defined in the attribute hierarchy.
+     *
+     * On Tiger, the drilldown is defined as "Attr --\> Attr" (so we take the default display form as the drill target)
+     * On Bear, the drilldown is defined as "Attr --\> specific display form" (= drill target implicitly)
+     */
+    const drillTargetAttributeFromCatalog = allCatalogAttributesMap.get(descendantRef);
+    const drillTargetDescriptionObj = drillTargetAttributeFromCatalog
+        ? {
+              target: drillTargetAttributeFromCatalog.defaultDisplayForm.ref,
+              title: drillTargetAttributeFromCatalog.attribute.title, // title is used to distinguish between multiple drill-downs
+          }
+        : {
+              target: descendantRef,
+          };
+
+    return {
+        drillDefinition: {
+            type: "drillDown",
+            origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
+            ...drillTargetDescriptionObj,
+        },
+        predicates: [HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier)],
+    };
+}
+
 function getDrillDownDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithHierarchyDescendants: Record<string, ObjRef[]>,
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    allCatalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
+    ignoredDrillDownHierarchies: IDrillDownReference[],
 ): IImplicitDrillWithPredicates[] {
+    // generate targets on the fly if ignored hierarchies are present
+    // this allows to have `selectAttributesWithHierarchyDescendants` be universal and
+    // be computed only once and not respect the ignores during creation.
+    // For the future, we may consider not creating this at all and always generate on the fly.
+    if (ignoredDrillDownHierarchies?.length) {
+        return availableDrillAttributes.flatMap((drill) => {
+            const attributeRef = drill.attribute.attributeHeader.formOf.ref;
+            const attributeDescendants: ObjRef[] = [];
+            allCatalogAttributeHierarchies.forEach((hierarchy) => {
+                const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
+                    ? hierarchy.attributeHierarchy.ref
+                    : hierarchy.dateDatasetRef;
+                const attributes = isCatalogAttributeHierarchy(hierarchy)
+                    ? hierarchy.attributeHierarchy.attributes
+                    : hierarchy.attributes;
+                const hierarchyAttributes = attributes.filter((attrRef) => {
+                    const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
+                        existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
+                    );
+                    return ignoredIndex < 0;
+                });
+
+                const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
+                    areObjRefsEqual(ref, attributeRef),
+                );
+
+                if (foundAttributeIndex < 0) {
+                    return;
+                }
+
+                const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
+
+                if (!foundDescendant) {
+                    return;
+                }
+
+                attributeDescendants.push(foundDescendant);
+            });
+
+            return attributeDescendants.map((descendantRef) => {
+                return createDrillDefinition(drill, descendantRef, allCatalogAttributesMap);
+            });
+        });
+    }
+
     const matchingAvailableDrillAttributes = availableDrillAttributes.filter(
         (candidate) =>
             objRefToString(candidate.attribute.attributeHeader.formOf.ref) in
@@ -102,36 +179,11 @@ function getDrillDownDefinitionsWithPredicates(
     );
 
     return matchingAvailableDrillAttributes.flatMap((drill) => {
-        const attributeDrillDescendants =
-            attributesWithHierarchyDescendants[objRefToString(drill.attribute.attributeHeader.formOf.ref)];
+        const drillRef = drill.attribute.attributeHeader.formOf.ref;
+        const attributeDrillDescendants = attributesWithHierarchyDescendants[objRefToString(drillRef)];
 
         return attributeDrillDescendants.map((descendantRef): IImplicitDrillWithPredicates => {
-            /**
-             * Here we need to distinguish how the drill is defined in the attribute hierarchy.
-             *
-             * On Tiger, the drilldown is defined as "Attr --\> Attr" (so we take the default display form as the drill target)
-             * On Bear, the drilldown is defined as "Attr --\> specific display form" (= drill target implicitly)
-             */
-            const drillTargetAttributeFromCatalog = allCatalogAttributesMap.get(descendantRef);
-            const drillTargetDescriptionObj = drillTargetAttributeFromCatalog
-                ? {
-                      target: drillTargetAttributeFromCatalog.defaultDisplayForm.ref,
-                      title: drillTargetAttributeFromCatalog.attribute.title, // title is used to distinguish between multiple drill-downs
-                  }
-                : {
-                      target: descendantRef,
-                  };
-
-            return {
-                drillDefinition: {
-                    type: "drillDown",
-                    origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
-                    ...drillTargetDescriptionObj,
-                },
-                predicates: [
-                    HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier),
-                ],
-            };
+            return createDrillDefinition(drill, descendantRef, allCatalogAttributesMap);
         });
     });
 }
@@ -244,25 +296,32 @@ export const selectImplicitDrillsDownByWidgetRef: (
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
-        selectAttributesWithHierarchyDescendantsByWidgetRef(ref),
+        selectAttributesWithHierarchyDescendants,
         selectAllCatalogAttributesMap,
         selectIsDrillDownEnabled,
         selectInsightByWidgetRef(ref),
+        selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
+        selectAllCatalogAttributeHierarchies,
         (
             availableDrillTargets,
             attributesWithHierarchyDescendants,
             allCatalogAttributesMap,
             isDrillDownEnabled,
             widgetInsight,
+            ignoredHierarchies,
+            allCatalogAttributeHierarchies,
         ) => {
             const isWidgetEnableDrillDown = !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
             if (isDrillDownEnabled && isWidgetEnableDrillDown) {
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
+
                 return getDrillDownDefinitionsWithPredicates(
                     availableDrillAttributes,
                     attributesWithHierarchyDescendants,
                     allCatalogAttributesMap,
+                    allCatalogAttributeHierarchies,
+                    ignoredHierarchies,
                 );
             }
 
@@ -517,18 +576,20 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector(
     (
         availableDrillTargets: IAvailableDrillTargets | undefined,
-        ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+        ignoredDrillDownHierarchies: IDrillDownReference[] | undefined = [],
     ) =>
         createSelector(
             selectAttributesWithDisplayFormLink,
-            selectAttributesWithHierarchyDescendants(ignoredDrillDownHierarchies),
+            selectAttributesWithHierarchyDescendants,
             selectAllCatalogAttributesMap,
             selectIsDrillDownEnabled,
+            selectAllCatalogAttributeHierarchies,
             (
                 attributesWithLink,
                 attributesWithHierarchyDescendants,
                 allCatalogAttributesMap,
                 isDrillDownEnabled,
+                allCatalogHierarchies,
             ) => {
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = isDrillDownEnabled
@@ -536,6 +597,8 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                           availableDrillAttributes,
                           attributesWithHierarchyDescendants,
                           allCatalogAttributesMap,
+                          allCatalogHierarchies,
+                          ignoredDrillDownHierarchies,
                       )
                     : [];
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(
