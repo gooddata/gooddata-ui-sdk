@@ -42,7 +42,6 @@ import { createDateValueFormatter } from "../../../../convertors/fromBackend/dat
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
-import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
@@ -156,7 +155,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
 
                     return {
                         label,
-                        values: compact(values),
+                        values: values,
                         complementFilter,
                     };
                 });

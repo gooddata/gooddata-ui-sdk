@@ -601,16 +601,14 @@
                 "properties": {
                     "label": {
                         "type": "string",
-                        "description": "Specifies on which label the filter depends on.",
-                        "default": "null"
+                        "description": "Specifies on which label the filter depends on."
                     },
                     "values": {
                         "type": "array",
                         "description": "Specifies values of the label for element filtering.",
                         "items": {
                             "type": "string",
-                            "description": "Specifies values of the label for element filtering.",
-                            "default": "null"
+                            "nullable": true
                         }
                     },
                     "complementFilter": {
@@ -668,6 +666,13 @@
                             "$ref": "#/components/schemas/DependsOn"
                         }
                     },
+                    "validateBy": {
+                        "type": "array",
+                        "description": "Return only items, what are computable on metric. This feature is experimental.",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidateByItem"
+                        }
+                    },
                     "dataSamplingPercentage": {
                         "type": "number",
                         "description": "Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.",
@@ -688,6 +693,22 @@
                     }
                 },
                 "description": "Specifies what is used for filtering."
+            },
+            "ValidateByItem": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Specifies entity used for valid elements computation."
+                    },
+                    "type": {
+                        "pattern": "^(label)|(attribute)|(fact)|(metric)$",
+                        "type": "string",
+                        "description": "Specifies entity type which could be label, attribute, fact, or metric."
+                    }
+                },
+                "nullable": true
             },
             "AFM": {
                 "required": ["attributes", "filters", "measures"],

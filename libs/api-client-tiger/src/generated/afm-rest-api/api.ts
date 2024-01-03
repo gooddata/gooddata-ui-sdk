@@ -786,7 +786,7 @@ export interface DependsOn {
      * @type {Array<string>}
      * @memberof DependsOn
      */
-    values: Array<string>;
+    values: Array<string | null>;
     /**
      * Inverse filtering mode.
      * @type {boolean}
@@ -905,6 +905,12 @@ export interface ElementsRequest {
      * @memberof ElementsRequest
      */
     dependsOn?: Array<DependsOn>;
+    /**
+     * Return only items, what are computable on metric. This feature is experimental.
+     * @type {Array<ValidateByItem>}
+     * @memberof ElementsRequest
+     */
+    validateBy?: Array<ValidateByItem>;
     /**
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @type {number}
@@ -2126,6 +2132,25 @@ export interface TotalResultHeader {
      * @memberof TotalResultHeader
      */
     function: string;
+}
+/**
+ *
+ * @export
+ * @interface ValidateByItem
+ */
+export interface ValidateByItem {
+    /**
+     * Specifies entity used for valid elements computation.
+     * @type {string}
+     * @memberof ValidateByItem
+     */
+    id: string;
+    /**
+     * Specifies entity type which could be label, attribute, fact, or metric.
+     * @type {string}
+     * @memberof ValidateByItem
+     */
+    type: string;
 }
 
 /**

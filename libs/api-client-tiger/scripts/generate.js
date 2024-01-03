@@ -37,8 +37,8 @@ const specs = [
         },
         // Remove when openapi-generator correctly generates null values in arrays
         apiOverrides: (api) => {
-            // Replace AttributeFilterElements values
-            return api.replace("'values': Array<string>", "'values': Array<string | null>");
+            // Replace AttributeFilterElements and DependsOn values
+            return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
         }
     },
     { path: "/api/v1/schemas/scan", name: "scan-json-api" },
