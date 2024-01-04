@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -860,6 +860,11 @@ class DummyElementsQuery implements IElementsQuery {
     withMeasures(_measures: IMeasure<IMeasureDefinitionType>[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
+
+    withAvailableElementsOnly(_validateBy: ObjRef[]): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+
     withOptions(_options: IElementsQueryOptions): IElementsQuery {
         throw new NotSupported("not supported");
     }

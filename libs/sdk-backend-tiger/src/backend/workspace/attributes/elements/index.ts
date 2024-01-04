@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     ElementsRequest,
     FilterByLabelTypeEnum,
@@ -35,14 +35,17 @@ import {
     filterIsEmpty,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+
 import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
-import { getRelativeDateFilterShiftedValues } from "./date.js";
 import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
-import isEmpty from "lodash/isEmpty.js";
+import { toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
+
+import { getRelativeDateFilterShiftedValues } from "./date.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -66,6 +69,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private signal: AbortSignal | null = null;
     private options: IElementsQueryOptions | undefined;
     private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
+    private validateBy: ObjRef[] | undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -102,7 +106,14 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     public withMeasures(): IElementsQuery {
-        throw new NotSupported("withMeasures is not supported in sdk-backend-tiger yet");
+        throw new NotSupported(
+            "withMeasures is not supported in sdk-backend-tiger yet. Use withAvailableElementsOnly instead.",
+        );
+    }
+
+    public withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery {
+        this.validateBy = validateBy.length > 0 ? validateBy : undefined;
+        return this;
     }
 
     public withOptions(options: IElementsQueryOptions): IElementsQuery {
@@ -190,6 +201,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                                     ? ElementsRequestSortOrderEnum.ASC
                                     : ElementsRequestSortOrderEnum.DESC,
                         }),
+                        ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
                     };
 
                     const elementsRequestWrapped: Parameters<
@@ -239,6 +251,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             this.limit,
             this.offset,
         );
+    }
+
+    private mapValidationItems(item: ObjRef) {
+        return toObjQualifier(item).identifier;
     }
 }
 

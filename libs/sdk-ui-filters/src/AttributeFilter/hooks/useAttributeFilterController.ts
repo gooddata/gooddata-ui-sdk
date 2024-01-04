@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
@@ -11,6 +11,7 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -68,6 +69,7 @@ export const useAttributeFilterController = (
         connectToPlaceholder,
         parentFilters,
         parentFilterOverAttribute,
+        validateElementsBy,
         resetOnParentFilterChange = true,
         onApply,
         onError,
@@ -134,6 +136,7 @@ export const useAttributeFilterController = (
         {
             filter,
             limitingAttributeFilters,
+            limitingValidationItems: validateElementsBy,
             limit: elementsOptions?.limit,
             onApply,
             setConnectedPlaceholderValue,
@@ -209,6 +212,7 @@ function useInitOrReload(
     props: {
         filter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+        limitingValidationItems?: ObjRef[];
         limit?: number;
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
@@ -222,6 +226,7 @@ function useInitOrReload(
     const {
         filter,
         limitingAttributeFilters,
+        limitingValidationItems,
         limit,
         resetOnParentFilterChange,
         setConnectedPlaceholderValue,
@@ -233,6 +238,11 @@ function useInitOrReload(
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
         }
+
+        if (limitingValidationItems?.length > 0) {
+            handler.setLimitingValidationItems(limitingValidationItems);
+        }
+
         if (limit) {
             handler.setLimit(limit);
         }

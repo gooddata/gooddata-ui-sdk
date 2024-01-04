@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     IMultiSelectAttributeFilterHandler,
     AsyncOperationStatus,
@@ -12,6 +12,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -50,6 +51,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             limitingAttributeFilters?: IElementsQueryAttributeFilter[];
             limitingMeasures?: IMeasure[];
             limitingDateFilters?: IRelativeDateFilter[];
+            limitingValidationItems?: ObjRef[];
         };
     };
     selection: {
@@ -114,6 +116,7 @@ export const useAttributeFilterHandlerState = (
                 limitingAttributeFilters: handler.getLimitingAttributeFilters(),
                 limitingDateFilters: handler.getLimitingDateFilters(),
                 limitingMeasures: handler.getLimitingMeasures(),
+                limitingValidationItems: handler.getLimitingValidationItems(),
                 order: handler.getOrder(),
             },
         },

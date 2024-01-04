@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { v4 as uuid } from "uuid";
 import { invariant } from "ts-invariant";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -74,6 +75,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         invariant(
             !(this.config.staticElements?.length && this.getLimitingMeasures()?.length),
             "Using limitingMeasures is not supported when using static attribute elements",
+        );
+        invariant(
+            !(this.config.staticElements?.length && this.getLimitingValidationItems()?.length),
+            "Using limitingValidationItems is not supported when using static attribute elements",
         );
     };
 
@@ -380,6 +385,14 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     getLimitingMeasures = (): IMeasure[] => {
         return this.bridge.getLimitingMeasures();
+    };
+
+    setLimitingValidationItems = (validateBy: ObjRef[]): void => {
+        this.bridge.setLimitingValidationItems(validateBy);
+    };
+
+    getLimitingValidationItems = (): ObjRef[] => {
+        return this.bridge.getLimitingValidationItems();
     };
 
     setLimitingAttributeFilters = (filters: IElementsQueryAttributeFilter[]): void => {

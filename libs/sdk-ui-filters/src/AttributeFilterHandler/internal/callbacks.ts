@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     actions,
     selectInvertableCommittedSelection,
@@ -41,7 +41,7 @@ import {
     OnLoadIrrelevantElementsErrorCallbackPayload,
     OnLoadIrrelevantElementsCancelCallbackPayload,
 } from "../types/index.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
 
 const newCallbackRegistrations = () => {
     return {
@@ -127,9 +127,13 @@ const newCallbackRegistrationsWithGlobalUnsubscribe = () => {
 };
 
 function logError(activity: string, error: GoodDataSdkError): void {
-    const cause = error.getCause();
-    const formattedCause = cause ? `\nInner error: ${cause}` : "";
-    console.error(`Error while ${activity}: ${error.getMessage()}${formattedCause}`);
+    if (isGoodDataSdkError(error)) {
+        const cause = error.getCause();
+        const formattedCause = cause ? `\nInner error: ${cause}` : "";
+        console.error(`Error while ${activity}: ${error.getMessage()}${formattedCause}`);
+    } else {
+        console.error(`Error while ${activity}:`, error);
+    }
 }
 
 /**
@@ -280,6 +284,7 @@ export const newAttributeFilterCallbacks = () => {
                 actions.setOrder.match,
                 actions.setSearch.match,
                 actions.setLimitingMeasures.match,
+                actions.setLimitingValidationItems.match,
                 actions.setLimitingAttributeFilters.match,
                 actions.setLimitingDateFilters.match,
             ].some((m) => m(action))

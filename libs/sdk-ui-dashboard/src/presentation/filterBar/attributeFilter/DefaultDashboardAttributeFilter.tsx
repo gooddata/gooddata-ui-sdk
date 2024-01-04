@@ -75,7 +75,7 @@ export const DefaultDashboardAttributeFilter = (
     const isAttributeFilterDependent = useDashboardSelector(
         selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );
-    const isVritualAttributeFilter = useDashboardSelector(
+    const isVirtualAttributeFilter = useDashboardSelector(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );
 
@@ -190,7 +190,7 @@ export const DefaultDashboardAttributeFilter = (
                     TooltipContentComponent={CustomTooltipComponent}
                     titleExtension={titleExtension}
                     className={
-                        isVritualAttributeFilter ? "gd-virtual-attribute-filter-dropdown-button" : undefined
+                        isVirtualAttributeFilter ? "gd-virtual-attribute-filter-dropdown-button" : undefined
                     }
                 />
             );
@@ -204,7 +204,7 @@ export const DefaultDashboardAttributeFilter = (
         capabilities.supportsKeepingDependentFiltersSelection,
         isAttributeFilterDependent,
         isDraggable,
-        isVritualAttributeFilter,
+        isVirtualAttributeFilter,
     ]);
 
     const CustomDropdownActions = useMemo(() => {
@@ -391,6 +391,7 @@ export const DefaultDashboardAttributeFilter = (
                 }}
                 parentFilters={parentFilters}
                 parentFilterOverAttribute={parentFilterOverAttribute}
+                validateElementsBy={filter.attributeFilter.validateElementsBy}
                 locale={locale}
                 DropdownButtonComponent={CustomDropdownButton}
                 DropdownActionsComponent={CustomDropdownActions}

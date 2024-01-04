@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -9,6 +9,7 @@ import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {
@@ -178,6 +179,17 @@ describe("AttributeFilterHandler", () => {
         await waitForAsync();
 
         attributeFilterHandler.setLimitingMeasures(limitingMeasures);
+        expect(attributeFilterHandler.loadNextElementsPage).toThrowErrorMatchingSnapshot();
+    });
+
+    it("loadNextElementsPage() should throw error if setLimitingValidationItems() was set before the load", async () => {
+        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+
+        attributeFilterHandler.init();
+        await waitForAsync();
+
+        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
         expect(attributeFilterHandler.loadNextElementsPage).toThrowErrorMatchingSnapshot();
     });
 

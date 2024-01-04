@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -145,6 +145,11 @@ export type AttributeFilterControllerData = {
      * @remarks Used only when showing filtered elements is enabled.
      */
     irrelevantSelection?: IAttributeElement[];
+
+    /**
+     * Current validation items used to limit attribute filter elements.
+     */
+    limitingValidationItems?: ObjRef[];
 };
 
 /**

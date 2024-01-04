@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import {
     IElementsQueryFactory,
@@ -9,6 +9,7 @@ import {
     IFilterElementsQuery,
     FilterWithResolvableElements,
     isValueBasedElementsQueryOptionsElements,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     filterObjRef,
@@ -96,6 +97,10 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     public withMeasures(measures: IMeasure[]): IElementsQuery {
         this.measures = measures.length > 0 ? measures : undefined;
         return this;
+    }
+
+    public withAvailableElementsOnly(_validateBy: ObjRef[]): IElementsQuery {
+        throw new NotSupported("Not supported by this backend implementation.");
     }
 
     public withOptions(options: IElementsQueryOptions): IElementsQuery {

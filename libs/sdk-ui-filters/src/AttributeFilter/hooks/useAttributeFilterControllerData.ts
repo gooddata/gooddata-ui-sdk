@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useState, useEffect } from "react";
 import {
     IMultiSelectAttributeFilterHandler,
@@ -50,6 +50,7 @@ export function useAttributeFilterControllerData(
     const searchString = handlerState.elements.options.search;
     const limit = handlerState.elements.options.limit;
     const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
+    const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
 
     const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
     const nextElementsPageSize = hasNextElementsPage
@@ -119,6 +120,8 @@ export function useAttributeFilterControllerData(
         enableShowingFilteredElements: supportsShowingFilteredElements,
 
         irrelevantSelection,
+
+        limitingValidationItems,
     };
 }
 

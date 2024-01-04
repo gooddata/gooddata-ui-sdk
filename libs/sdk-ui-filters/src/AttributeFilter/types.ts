@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     DashboardAttributeFilterSelectionMode,
@@ -115,6 +115,16 @@ export interface IAttributeFilterCoreProps {
      * or you can provide a pure function that will be called for each parent filter to determine the respective over attribute.
      */
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
+
+    /**
+     * Specify the items that are used for elements availability validation (metrics or attributes, labels,
+     * or facts that the backend will use to build validation metrics from). Only the elements that are
+     * compatible with the provided elements will be shown in the filter.
+     *
+     * @remarks
+     * The property is supported only by some backend. The backends that do not support it will ignore it.
+     */
+    validateElementsBy?: ObjRef[];
 
     /**
      * Specify title for the attribute filter.

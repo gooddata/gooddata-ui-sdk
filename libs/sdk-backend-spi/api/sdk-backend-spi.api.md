@@ -257,6 +257,7 @@ export interface IBackendCapabilities {
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsAccessControl?: boolean;
+    supportsAttributeFilterElementsLimiting?: boolean;
     supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;
@@ -356,6 +357,7 @@ export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
 export interface IElementsQuery extends ICancelable<IElementsQuery> {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
+    withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery;
     withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
     withMeasures(measures: IMeasure[]): IElementsQuery;

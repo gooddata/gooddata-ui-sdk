@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
@@ -280,6 +280,11 @@ export interface IBackendCapabilities {
      * Indicates whether backend supports to have multiple date filters.
      */
     supportsMultipleDateFilters?: boolean;
+
+    /**
+     * Indicates whether backend supports limiting of attribute filter elements by a metric, attribute, fact.
+     */
+    supportsAttributeFilterElementsLimiting?: boolean;
 
     /**
      * Catchall for additional capabilities

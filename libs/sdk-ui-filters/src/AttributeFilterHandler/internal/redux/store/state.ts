@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
 import { IAttributeElement, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -78,6 +78,7 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
             limitingAttributeFilters: [],
             limitingDateFilters: [],
             limitingMeasures: [],
+            limitingValidationItems: [],
         },
         initialPageLoad: {
             status: "pending",
