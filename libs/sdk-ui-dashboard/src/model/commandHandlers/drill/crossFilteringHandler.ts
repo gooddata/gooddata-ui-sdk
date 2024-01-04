@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { all, put, call, select } from "redux-saga/effects";
 import {
     IDashboardAttributeFilter,
@@ -50,16 +50,23 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const currentVirtualFilters = currentVirtualFiltersLocalIdentifiers.map((localIdentifier) => {
         return currentFilters.find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
     });
-    const crossFilteringItemByWidget: ReturnType<typeof selectCrossFilteringItemByWidgetRef> = yield select(
-        selectCrossFilteringItemByWidgetRef(widgetRef),
-    );
-    const shouldUpdateExistingCrossFiltering = !isEmpty(crossFilteringItemByWidget);
+    const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
+        yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
 
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
         backendSupportsElementUris,
     );
+
+    const shouldUpdateExistingCrossFiltering =
+        !isEmpty(crossFilteringItemByWidget) &&
+        /**
+         * Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
+         * cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
+         * Otherwise we would want the cross-filtering to be reset together with all virtual filters.
+         */
+        crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
     const virtualFilters = drillIntersectionFilters.map((filter) => {
         const displayForm = filterObjRef(filter);
