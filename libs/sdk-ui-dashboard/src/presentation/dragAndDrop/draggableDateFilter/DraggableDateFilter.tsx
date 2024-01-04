@@ -3,8 +3,7 @@ import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
 import { useDashboardSelector, selectIsInEditMode, selectCanAddMoreFilters } from "../../../model/index.js";
-// TODO INE: Add DateFilter specific ones if needed
-import { AttributeFilterDropZoneHint } from "../draggableAttributeFilter/AttributeFilterDropZoneHint.js";
+import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 
@@ -50,7 +49,7 @@ export function DraggableDateFilter({
     return (
         <div className="draggable-attribute-filter">
             {showDropZones ? (
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     hintPosition="prev"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onDateFilterAdded}
@@ -76,7 +75,7 @@ export function DraggableDateFilter({
             </div>
 
             {showDropZones ? (
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     hintPosition="next"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onDateFilterAdded}

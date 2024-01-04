@@ -148,7 +148,12 @@ export interface FilterOpReplaceAll extends FilterOp {
      */
     readonly ignoreAttributeFilters?: ObjRef[];
 
-    // TODO INE: add dateFilters
+    /**
+     * Dashboard date filters to ignore for particular widget.
+     *
+     * Specify ObjRefs of date data sets that are used by dashboard's date filters which you wish to disable.
+     */
+    readonly ignoreDateFilters?: ObjRef[];
 
     /**
      * Date data set that will be used when constructing date filter for a widget.

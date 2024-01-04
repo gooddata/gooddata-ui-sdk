@@ -34,8 +34,8 @@ import {
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
-    AttributeFilterDropZone,
-    AttributeFilterDropZoneHint,
+    DraggableFilterDropZone,
+    DraggableFilterDropZoneHint,
     DraggableAttributeFilter,
     DraggableDateFilter,
 } from "../../dragAndDrop/index.js";
@@ -116,11 +116,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { commonDateFilter, draggableFiltersWithPlaceholder, attributeFiltersCount, autoOpenFilter },
+        { commonDateFilter, draggableFiltersWithPlaceholder, draggableFiltersCount, autoOpenFilter },
         {
-            addAttributeFilterPlaceholder,
+            addDraggableFilterPlaceholder,
             closeAttributeSelection,
-            selectAttributeFilter,
+            selectDraggableFilter,
             onCloseAttributeFilter,
         },
     ] = useFiltersWithAddedPlaceholder(filters);
@@ -176,11 +176,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                         />
-                        <AttributeFilterDropZoneHint
+                        <DraggableFilterDropZoneHint
                             placement="outside"
                             hintPosition="next"
                             targetIndex={0}
-                            onAddAttributePlaceholder={addAttributeFilterPlaceholder}
+                            onAddAttributePlaceholder={addDraggableFilterPlaceholder}
                             acceptPlaceholder={canAddMoreFilters}
                         />
                     </>
@@ -194,7 +194,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         <CreatingPlaceholderComponent
                             key={filterOrPlaceholder.filterIndex}
                             onClose={closeAttributeSelection}
-                            onSelect={selectAttributeFilter}
+                            onSelect={selectDraggableFilter}
                         />
                     );
                 } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {
@@ -236,7 +236,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
-                            onAttributeFilterAdded={addAttributeFilterPlaceholder}
+                            onAttributeFilterAdded={addDraggableFilterPlaceholder}
                             onAttributeFilterClose={onCloseAttributeFilter}
                         />
                     );
@@ -274,7 +274,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                 readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                                 FilterComponent={CustomDateFilterComponent}
                                 onDateFilterChanged={onDateFilterChanged}
-                                onDateFilterAdded={addAttributeFilterPlaceholder}
+                                onDateFilterAdded={addDraggableFilterPlaceholder}
                                 onDateFilterClose={onCloseAttributeFilter}
                             />
                         );
@@ -282,18 +282,18 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                 }
             })}
             {canAddMoreFilters ? (
-                <AttributeFilterDropZone
-                    targetIndex={attributeFiltersCount}
-                    onDrop={addAttributeFilterPlaceholder}
+                <DraggableFilterDropZone
+                    targetIndex={draggableFiltersCount}
+                    onDrop={addDraggableFilterPlaceholder}
                 />
             ) : null}
             <ResetFiltersButton />
             <div className="filter-bar-dropzone-container">
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     placement="outside"
                     hintPosition="prev"
                     acceptPlaceholder={false}
-                    targetIndex={attributeFiltersCount}
+                    targetIndex={draggableFiltersCount}
                 />
             </div>
         </DefaultFilterBarContainer>

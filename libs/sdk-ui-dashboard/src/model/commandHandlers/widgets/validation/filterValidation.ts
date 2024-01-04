@@ -6,6 +6,7 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { call, SagaReturnType, select } from "redux-saga/effects";
+import partition from "lodash/partition.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -19,15 +20,22 @@ import {
     IKpiWidget,
     IInsightWidget,
     ICatalogDateDataset,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import isEmpty from "lodash/isEmpty.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFiltersWithDimension,
+} from "../../../store/filterContext/filterContextSelectors.js";
 import { IDashboardCommand } from "../../../commands/index.js";
 import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
-import { selectCatalogDateDatasets } from "../../../store/catalog/catalogSelectors.js";
+import {
+    selectAllCatalogDateDatasetsMap,
+    selectCatalogDateDatasets,
+} from "../../../store/catalog/catalogSelectors.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
@@ -191,6 +199,74 @@ export function* validateAttributeFiltersToIgnore(
             ctx,
             cmd,
             `Attempting to disable attribute filters but some of the display form refs to disable filters by are not used for filtering at all: ${badIgnores
+                .map(objRefToString)
+                .join(", ")}`,
+        );
+    }
+
+    return filtersToIgnore;
+}
+
+/**
+ * This generator validates whether it is possible to disable date filtering based on the refs of date data forms.
+ * The validation is not widget-specific - it does not need any info from the widget. It validates that the date data sets
+ * used to specify filters to ignore are valid and that they are actually used in date filters (not common date filter) that are currently
+ * on the dashboard.
+ *
+ * If the result is list of valid filters to ignore. If the
+ * result is negative a DashboardCommandFailed will be thrown.
+ *
+ * The validation against date datasets stored in state.
+ *
+ * @param ctx - dashboard context in which the validation is done
+ * @param cmd - dashboard command in the context of which the validation is done
+ * @param _widget - widget on which the filters should be ignored
+ * @param toIgnore - refs of date data sets used in date filters that should be ignored
+ */
+export function* validateDateFiltersToIgnore(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    _widget: IAnalyticalWidget,
+    toIgnore: ObjRef[],
+): SagaIterator<IDashboardDateFilter[]> {
+    const allAvailableDateDatasetsMap: ReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
+        selectAllCatalogDateDatasetsMap,
+    );
+    const [resolved, missing] = partition(toIgnore, (ref) => allAvailableDateDatasetsMap.has(ref));
+
+    if (!isEmpty(missing)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to disable date filters but some of the date data set refs to disable filters by do not exist: ${missing
+                .map(objRefToString)
+                .join(", ")}`,
+        );
+    }
+
+    const existingFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
+        selectFilterContextDateFiltersWithDimension,
+    );
+    const badIgnores: ObjRef[] = [];
+    const filtersToIgnore: IDashboardDateFilter[] = [];
+
+    for (const toIgnore of resolved.values()) {
+        const filterForDateDataSet = existingFilters.find((filter) =>
+            areObjRefsEqual(filter.dateFilter.dataSet, toIgnore),
+        );
+
+        if (!filterForDateDataSet) {
+            badIgnores.push(toIgnore);
+        } else {
+            filtersToIgnore.push(filterForDateDataSet);
+        }
+    }
+
+    if (!isEmpty(badIgnores)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to disable date filters but some of the date data set refs to disable filters by are not used for filtering at all: ${badIgnores
                 .map(objRefToString)
                 .join(", ")}`,
         );

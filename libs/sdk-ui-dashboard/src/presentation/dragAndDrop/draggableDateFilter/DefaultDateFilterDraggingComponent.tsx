@@ -18,9 +18,8 @@ export const DefaultDateFilterDraggingComponent: DateFilterDraggingComponent = (
         return null;
     }
 
-    // TODO INE: use date specific classes
     return (
-        <div className="attribute-filter-button is-dragging">
+        <div className="s-date-filter-drag attribute-filter-button is-dragging">
             <Icon.DragHandle
                 width={7}
                 height={26}

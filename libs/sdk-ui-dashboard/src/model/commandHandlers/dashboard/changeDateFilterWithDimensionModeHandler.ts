@@ -5,12 +5,13 @@ import { invariant } from "ts-invariant";
 
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 import { SetDashboardDateFilterWithDimensionConfigMode } from "../../commands/dashboard.js";
-// import { dashboardDateConfigModeChanged } from "../../events/filters.js";
-// import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { dateFilterModeChanged } from "../../events/filters.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectFilterContextDateFilterByDataSet } from "../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dateFilterConfigsActions } from "../../store/dateFilterConfigs/index.js";
+import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 export function* changeDateFilterWithDimensionModeHandler(
     ctx: DashboardContext,
@@ -32,12 +33,21 @@ export function* changeDateFilterWithDimensionModeHandler(
         selectFilterContextDateFilterByDataSet(dataSet),
     );
 
+    const filterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
+        selectDateFilterConfigsOverrides,
+    );
+    const changedFilterConfig = filterConfigs.find((item) => item.dateDataSet === dataSet);
+
     invariant(
         changedFilter,
         "Inconsistent state in changeDateModeHandler, cannot update date filter for given data set.",
     );
 
-    // TODO INE: dispatch event
-    //yield dispatchDashboardEvent(dashboardDateConfigModeChanged(ctx, changedFilter));
+    invariant(
+        changedFilterConfig,
+        "Inconsistent state in changeDateModeHandler, cannot update date filter config for given data set.",
+    );
+
+    yield dispatchDashboardEvent(dateFilterModeChanged(ctx, changedFilter, changedFilterConfig.config));
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

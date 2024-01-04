@@ -2,6 +2,7 @@
 
 export * from "./draggableAttributeFilter/index.js";
 export * from "./draggableDateFilter/index.js";
+export * from "./draggableFilterDropZone/index.js";
 export * from "./draggableWidget/index.js";
 export * from "./DragLayer.js";
 export * from "./DeleteDropZone.js";

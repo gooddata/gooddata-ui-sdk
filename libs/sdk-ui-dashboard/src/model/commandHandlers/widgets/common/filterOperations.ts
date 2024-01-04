@@ -30,7 +30,7 @@ import { SagaIterator } from "redux-saga";
 import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
 import {
     selectFilterContextAttributeFilters,
-    selectFilterContextDateFiltersForDimension,
+    selectFilterContextDateFiltersWithDimension,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
 import { query } from "../../../store/_infra/queryCall.js";
@@ -90,7 +90,7 @@ function* replaceFilterSettings(
         );
     }
 
-    let ignoredFilters: IDashboardAttributeFilter[] | undefined = undefined;
+    let ignoredFilters: Array<IDashboardAttributeFilter | IDashboardDateFilter> | undefined = undefined;
     if (op.ignoreAttributeFilters) {
         ignoredFilters = yield call(
             validators.attributeFilterValidator,
@@ -99,6 +99,17 @@ function* replaceFilterSettings(
             widget,
             op.ignoreAttributeFilters,
         );
+    }
+
+    if (op.ignoreDateFilters && validators.dateFilterValidator) {
+        const ignoredDateFilters = yield call(
+            validators.dateFilterValidator,
+            ctx,
+            cmd,
+            widget,
+            op.ignoreDateFilters,
+        );
+        ignoredFilters ? ignoredFilters.push(...ignoredDateFilters) : (ignoredFilters = ignoredDateFilters);
     }
 
     return {
@@ -285,8 +296,8 @@ function* ignoreDateFilter(
         }, []),
     );
 
-    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersForDimension> = yield select(
-        selectFilterContextDateFiltersForDimension,
+    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
+        selectFilterContextDateFiltersWithDimension,
     );
     const alreadyIgnored = getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
 
@@ -320,8 +331,8 @@ function* unignoreDateFilter(
         }, []),
     );
 
-    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersForDimension> = yield select(
-        selectFilterContextDateFiltersForDimension,
+    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
+        selectFilterContextDateFiltersWithDimension,
     );
     const alreadyIgnored = getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
 
@@ -368,9 +379,16 @@ export type AttributeFilterValidator<T extends IAnalyticalWidget> = (
     widget: T,
     refs: ObjRef[],
 ) => SagaIterator<IDashboardAttributeFilter[] | undefined>;
+export type DateFilterValidator<T extends IAnalyticalWidget> = (
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    widget: T,
+    refs: ObjRef[],
+) => SagaIterator<IDashboardDateFilter[] | undefined>;
 export type FilterValidators<T extends IAnalyticalWidget> = {
     dateDatasetValidator: DateDatasetValidator<T>;
     attributeFilterValidator: AttributeFilterValidator<T>;
+    dateFilterValidator?: DateFilterValidator<T>;
 };
 
 export interface FilterOpCommand extends IDashboardCommand {

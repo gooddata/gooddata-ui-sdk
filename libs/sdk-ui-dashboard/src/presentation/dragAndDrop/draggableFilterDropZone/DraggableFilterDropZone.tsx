@@ -14,12 +14,12 @@ import {
 } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 
-export type AttributeFilterDropZoneProps = {
+export type DraggableFilterDropZoneProps = {
     targetIndex: number;
     onDrop: (targetIndex: number) => void;
 };
 
-export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilterDropZoneProps) {
+export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilterDropZoneProps) {
     const theme = useTheme();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);

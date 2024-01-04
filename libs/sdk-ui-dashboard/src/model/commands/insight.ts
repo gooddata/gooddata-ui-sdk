@@ -101,7 +101,7 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
  * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpReplaceAll} operation.
  *
  * Dispatching this command will result in replacement of Insight widget's filter settings; this includes change of
- * data set used for date filter, disabling date filtering, ignoring attribute filters that are defined on the dashboard for the widget.
+ * data set used for common date filter, disabling common date filtering, ignoring attribute/date filters that are defined on the dashboard for the widget.
  *
  * @param ref - reference of the insight widget to modify
  * @param settings - new filter settings to apply

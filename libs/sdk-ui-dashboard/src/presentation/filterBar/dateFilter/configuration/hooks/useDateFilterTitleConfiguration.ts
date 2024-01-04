@@ -17,7 +17,7 @@ export function useDateFilterTitleConfiguration(
 ) {
     const { run: changeTitle, status: titleChangeStatus } = useDashboardCommandProcessing({
         commandCreator: setDateFilterConfigTitle,
-        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
+        successEvent: "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
 

@@ -43,9 +43,7 @@ export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemP
 
     const { title } = useCurrentDateFilterConfig(dataSetRef, dateDataSetTitle);
 
-    // TODO INE: add date support
-    // const isFilterNotApplied = useIsFilterNotApplied(widget, dataSetRef);
-    const isFilterNotApplied = false;
+    const isFilterNotApplied = false; // Execution warnings are not used on Tiger which only supports Multiple DFs
 
     const { handleIgnoreChanged, status } = useDateFilterConfigurationHandling(
         widget,

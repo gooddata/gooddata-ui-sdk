@@ -102,7 +102,7 @@ export function AttributesDropdown({
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
 
     const attributes = useDashboardSelector(selectCatalogAttributes);
-    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const dateDatasets: ICatalogDateDataset[] = useDashboardSelector(selectCatalogDateDatasets);
     const insightsMap = useDashboardSelector(selectInsightsMap);
     const insightWidgets = useDashboardSelector(selectAllInsightWidgets);
 
@@ -145,28 +145,28 @@ export function AttributesDropdown({
         ? dateDatasets.filter((ds) => ds.dataSet.title.toLowerCase().includes(searchQuery.toLowerCase()))
         : dateDatasets;
 
-    const [selectedTabId, setSelectedTabId] = useState("attributes");
+    const [selectedTabId, setSelectedTabId] = useState(
+        attributes.length || !offerDateFilters ? "attributes" : "dateDatasets",
+    );
     const onTabSelect = useCallback((selectedTab: ITab) => {
         setSelectedTabId(selectedTab.id);
     }, []);
 
-    const tabs = [
-        {
-            id: "attributes",
-            iconOnly: true,
-            icon: "gd-icon-attribute",
-        },
-        {
-            id: "dates",
-            iconOnly: true,
-            icon: "gd-icon-date",
-        },
-    ] as ITab[];
+    const tabs = [] as ITab[];
+    if (attributes.length) {
+        tabs.push({ id: "attributes", iconOnly: true, icon: "gd-icon-attribute" });
+    }
+
+    if (offerDateFilters && dateDatasets.length) {
+        tabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
+    }
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 
     const items: Array<ICatalogAttribute | ICatalogDateDataset> =
         selectedTabId === "attributes" ? filteredAttributes : filteredDateDatasets;
+
+    const showTabs = offerDateFilters && tabs.length > 1;
 
     return (
         <Dropdown
@@ -188,7 +188,7 @@ export function AttributesDropdown({
                 <div className={cx(bodyClassName, "attributes-list")}>
                     <DropdownList
                         width={WIDTH}
-                        showTabs={offerDateFilters}
+                        showTabs={showTabs}
                         tabs={tabs}
                         tabsClassName="date-attribute-dropdown-tabs s-filter-attribute-dropdown-tabs"
                         selectedTabId={selectedTabId}

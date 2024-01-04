@@ -66,6 +66,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     filterConfigurationModeHiddenTooltip: { id: "filter.configuration.mode.hidden.tooltip" },
     filterConfigurationModeReadOnlyTooltip: { id: "filter.configuration.mode.locked.tooltip" },
     filterConfigurationModeTitle: { id: "filter.configuration.mode.title" },
+    filterConfigurationTitleTitle: { id: "attributesDropdown.title" },
+    filterConfigurationTitleReset: { id: "attributesDropdown.title.reset" },
     dateFilterDropdownConfigurationHeader: { id: "dateFilterDropdown.configuration" },
     dateFilterDropdownConfigurationSaveText: { id: "dateFilterDropdown.save" },
     dateFilterDropdownConfigurationCancelText: { id: "gs.list.cancel" },

@@ -9,7 +9,7 @@ import { filterContextActions } from "../../../store/filterContext/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
     selectCanAddMoreFilters,
-    selectFilterContextDateFiltersForDimension,
+    selectFilterContextDateFiltersWithDimension,
 } from "../../../store/filterContext/filterContextSelectors.js";
 
 import { AddDateFilter } from "../../../commands/filters.js";
@@ -48,8 +48,8 @@ export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter)
 
     invariant(usedDateDataSet);
 
-    const allFilters: ReturnType<typeof selectFilterContextDateFiltersForDimension> = yield select(
-        selectFilterContextDateFiltersForDimension,
+    const allFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
+        selectFilterContextDateFiltersWithDimension,
     );
 
     const canBeAdded: ReturnType<typeof canFilterBeAdded> = yield call(

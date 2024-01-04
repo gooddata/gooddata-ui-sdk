@@ -9,7 +9,6 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
-    isDashboardDateFilter,
     uriRef,
     idRef,
     IAttributeDisplayFormMetadataObject,
@@ -17,6 +16,7 @@ import {
     IDashboardObjectIdentity,
     isDashboardDateFilterWithDimension,
     isObjRef,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -201,7 +201,7 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
  */
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
-        filters.find(isDashboardDateFilter),
+        filters.find(isDashboardCommonDateFilter),
     );
 
 /**
@@ -230,7 +230,7 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
  *
  * @public
  */
-export const selectFilterContextDateFiltersForDimension: DashboardSelector<IDashboardDateFilter[]> =
+export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter[] =>
         filters.filter(isDashboardDateFilterWithDimension),
     );
@@ -246,7 +246,7 @@ export const selectFilterContextDateFiltersForDimension: DashboardSelector<IDash
 export const selectFilterContextDateFilterByDataSet: (
     dataSet: ObjRef,
 ) => (state: DashboardState) => IDashboardDateFilter | undefined = createMemoizedSelector((dataSet: ObjRef) =>
-    createSelector(selectFilterContextDateFiltersForDimension, (dateFilters) => {
+    createSelector(selectFilterContextDateFiltersWithDimension, (dateFilters) => {
         return dateFilters.find((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
     }),
 );
@@ -262,7 +262,7 @@ export const selectFilterContextDateFilterByDataSet: (
 export const selectFilterContextDateFilterIndexByDataSet: (
     dataSet: ObjRef,
 ) => (state: DashboardState) => number = createMemoizedSelector((dataSet: ObjRef) =>
-    createSelector(selectFilterContextDateFiltersForDimension, (dateFilters) => {
+    createSelector(selectFilterContextDateFiltersWithDimension, (dateFilters) => {
         return dateFilters.findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
     }),
 );
@@ -468,7 +468,7 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
  */
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilters,
-    selectFilterContextDateFiltersForDimension,
+    selectFilterContextDateFiltersWithDimension,
     (attributeFilters, dateFiltersWithDimension) => {
         return attributeFilters.length + dateFiltersWithDimension.length < MAX_DRAGGABLE_FILTERS_COUNT;
     },

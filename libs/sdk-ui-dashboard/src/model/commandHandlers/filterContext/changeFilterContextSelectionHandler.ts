@@ -8,7 +8,7 @@ import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilterByDataSet,
-    selectFilterContextDateFiltersForDimension,
+    selectFilterContextDateFiltersWithDimension,
 } from "../../store/filterContext/filterContextSelectors.js";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -265,8 +265,8 @@ function* getDateFiltersUpdateActions(
     }
 
     if (resetOthers) {
-        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersForDimension> =
-            yield select(selectFilterContextDateFiltersForDimension);
+        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> =
+            yield select(selectFilterContextDateFiltersWithDimension);
 
         // for filters that have not been handled by the loop above, create a clear selection actions
         const unhandledFilters = currentDateFilters.filter(

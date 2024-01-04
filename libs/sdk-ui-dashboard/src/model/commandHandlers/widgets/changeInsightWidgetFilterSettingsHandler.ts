@@ -21,11 +21,13 @@ import { FilterValidators, processFilterOp } from "./common/filterOperations.js"
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
+    validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,
     attributeFilterValidator: validateAttributeFiltersToIgnore,
+    dateFilterValidator: validateDateFiltersToIgnore,
 };
 
 /**

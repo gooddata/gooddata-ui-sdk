@@ -1371,6 +1371,11 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.attributeFilter.tooltip.no_items": {
+        "value": "The filter requires an attribute or a date dataset.",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.attributeFilter.tooltip.no_attributes.link": {
         "value": "Learn more",
         "comment": "",

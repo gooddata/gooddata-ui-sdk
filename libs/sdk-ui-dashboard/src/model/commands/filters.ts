@@ -864,8 +864,6 @@ export interface AddDateFilterPayload {
 }
 
 /**
- * TODO INE: doc
- *
  * @alpha
  */
 export interface AddDateFilter extends IDashboardCommand {
@@ -874,20 +872,27 @@ export interface AddDateFilter extends IDashboardCommand {
 }
 
 /**
- * TODO INE: doc
+ * Creates the AddDateFilter command. Dispatching this command will result in the addition
+ * of another date filter with defined dimension to the dashboard's filter bar, at desired position,
+ * or error in case of invalid update (e.g. wrong or duplicated date dimension/data set)
+ *
+ * The filter will be set for the date dimension provided by reference. When created, the filter will be
+ * no-op - all time filter.
+ *
+ * @param dateDataset - specify date dimension/data set which will be used for filtering of all widgets
+ * @param index - specify index among the filters at which the new filter should be placed.
+ * The index starts at zero and there is convenience that index of -1 would add the filter at the end.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *
  * @alpha
- * @param filterLocalId - TODO: doc
- * @param correlationId - TODO: doc
- * @returns
  */
-export function addDateFilter(index: number, dateDataset: ObjRef, correlationId?: string): AddDateFilter {
+export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): AddDateFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD",
         correlationId,
         payload: {
-            index,
             dateDataset,
+            index,
         },
     };
 }
@@ -913,10 +918,10 @@ export interface RemoveDateFilters extends IDashboardCommand {
 }
 
 /**
- * Creates the RemoveAttributeFilters command. Dispatching this command will result in the removal
- * of dashboard's attribute filter with the provided local identifier.
+ * Creates the RemoveDateFilters command. Dispatching this command will result in the removal
+ * of dashboard's date filter with the provided date data set.
  *
- * @param filterLocalId - dashboard attribute filter's local identifier
+ * @param dataSet - dashboard date filter's date data set ref
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @beta
@@ -932,7 +937,7 @@ export function removeDateFilter(dataSet: ObjRef, correlationId?: string): Remov
 }
 
 /**
- * Payload of the {@link MoveAttributeFilter} command.
+ * Payload of the {@link MoveDateFilter} command.
  * @beta
  */
 export interface MoveDateFilterPayload {
