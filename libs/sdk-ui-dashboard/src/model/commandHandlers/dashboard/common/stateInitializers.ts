@@ -40,6 +40,7 @@ import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js"
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { drillActions } from "../../../store/drill/index.js";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -64,6 +65,7 @@ export function actionsToInitializeNewDashboard(
         layoutActions.setLayout(EmptyDashboardLayout),
         insightsActions.setInsights([]),
         metaActions.setMeta({}),
+        drillActions.resetCrossFiltering(),
     ];
 }
 
@@ -249,5 +251,6 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),
         uiActions.setWidgetsOverlay(modifiedWidgets),
+        drillActions.resetCrossFiltering(),
     ];
 }

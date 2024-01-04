@@ -3,8 +3,6 @@
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { objRefToString } from "@gooddata/sdk-model";
-
 import { DashboardContext } from "../../types/commonTypes.js";
 import { AddDrillDownForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
@@ -18,21 +16,31 @@ export function* addDrillDownForInsightWidgetHandler(
     cmd: AddDrillDownForInsightWidget,
 ): SagaIterator<DashboardInsightWidgetDrillDownAdded> {
     const {
-        payload: { attributeIdentifier, attributeHierarchy },
+        payload: { attributeIdentifier, drillDownIdentifier, drillDownAttributeHierarchyRef },
         correlationId,
     } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
     const { ref: widgetRef, ignoredDrillDownHierarchies: currentBlacklistHierarchies } = insightWidget;
 
+    const updatedInsightDrills = insightWidget.drills.filter(
+        (drill) => drill.localIdentifier !== drillDownIdentifier,
+    );
+
+    yield put(
+        layoutActions.replaceWidgetDrills({
+            ref: insightWidget.ref,
+            drillDefinitions: updatedInsightDrills,
+            undo: {
+                cmd,
+            },
+        }),
+    );
+
     const newBlacklistHierarchies = currentBlacklistHierarchies
         ? currentBlacklistHierarchies.filter(
               (ref) =>
-                  !existBlacklistHierarchyPredicate(
-                      ref,
-                      attributeHierarchy,
-                      objRefToString(attributeIdentifier),
-                  ),
+                  !existBlacklistHierarchyPredicate(ref, drillDownAttributeHierarchyRef, attributeIdentifier),
           )
         : [];
 
@@ -49,7 +57,7 @@ export function* addDrillDownForInsightWidgetHandler(
     return insightWidgetDrillDownAdded(
         ctx,
         widgetRef,
-        attributeHierarchy,
+        drillDownAttributeHierarchyRef,
         attributeIdentifier,
         correlationId,
     );

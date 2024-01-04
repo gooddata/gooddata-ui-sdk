@@ -71,7 +71,7 @@ exports[`PluggableBaseChart > should cut out measures tail when getting nM 0Vb 1
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -203,7 +203,7 @@ exports[`PluggableBaseChart > should handle wrong order of buckets in reference 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -777,7 +777,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -954,7 +954,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -1131,7 +1131,7 @@ exports[`PluggableBaseChart > should return reference point with one metric, one
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -1263,7 +1263,7 @@ exports[`PluggableBaseChart > should return reference point without Date in stac
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -1395,7 +1395,7 @@ exports[`PluggableBaseChart > should use second non-date attribute when switchin
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [

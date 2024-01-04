@@ -5,6 +5,7 @@ import {
     DescriptionTooltipOpenedData,
     ShareDialogInteractionData,
     userInteractionTriggered,
+    AttributeHierarchiesInteractionType,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -61,6 +62,25 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const attributeHierarchiesInteraction = useCallback(
+        (eventType: AttributeHierarchiesInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
+
+    const filterContextStateReset = useCallback(() => {
+        eventDispatch(userInteractionTriggered("filterContextStateReset"));
+    }, [eventDispatch]);
+
+    const interactionPanelOpened = useCallback(() => {
+        eventDispatch(userInteractionTriggered("interactionPanelOpened"));
+    }, [eventDispatch]);
+
+    const addInteractionClicked = useCallback(() => {
+        eventDispatch(userInteractionTriggered("addInteractionClicked"));
+    }, [eventDispatch]);
+
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
@@ -68,5 +88,9 @@ export const useDashboardUserInteraction = () => {
         descriptionTooltipOpened,
         shareDialogInteraction,
         attributeFilterInteraction,
+        filterContextStateReset,
+        interactionPanelOpened,
+        addInteractionClicked,
+        attributeHierarchiesInteraction,
     };
 };

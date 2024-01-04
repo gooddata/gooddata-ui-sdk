@@ -17,3 +17,4 @@ export {
     AddUsersToUserGroupsDialog,
     IAddUsersToUserGroupsDialogProps,
 } from "./AddUsersToUserGroupsDialog.js";
+export { TelemetryEvent, TrackEventCallback, IWithTelemetryProps } from "./TelemetryContext.js";

@@ -17,6 +17,8 @@ Here are basic usage examples of [GoodData.UI](https://github.com/gooddata/goodd
 
 * DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
 
+* Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
+
 * Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
 
 * Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)

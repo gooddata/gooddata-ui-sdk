@@ -60,7 +60,7 @@ export interface IAttributeFilterCoreProps {
      * @remarks
      * Internal purpose that is used for marking if filter reset children filters after changed
      * Default value is "true"
-"     */
+     */
     resetOnParentFilterChange?: boolean;
 
     /**

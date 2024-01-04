@@ -137,6 +137,7 @@ describe("KPI customizer", () => {
                 kpi: ["provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -153,6 +154,7 @@ describe("KPI customizer", () => {
                 kpi: ["provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -180,6 +182,7 @@ describe("KPI customizer", () => {
                 kpi: ["provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -195,6 +198,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -214,6 +218,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator", "provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -232,6 +237,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator", "provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -248,6 +254,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -264,6 +271,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -286,6 +294,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -313,6 +322,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator", "provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });
@@ -338,6 +348,7 @@ describe("KPI customizer", () => {
                 kpi: ["decorator", "provider"],
                 insight: [],
                 attributeFilter: [],
+                dashboardContent: [],
                 layouts: {},
             });
         });

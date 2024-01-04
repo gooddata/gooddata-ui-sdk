@@ -49,9 +49,9 @@
         "validate-locales": "i18n-toolkit --debug",
         "validate-locales-ci": "i18n-toolkit"
     },
-    "dependencies": {        
-        "@gooddata/number-formatter": "^1.0.1",
-        "@gooddata/sdk-backend-spi": "workspace:*",        
+    "dependencies": {
+        "@gooddata/number-formatter": "^1.0.5",
+        "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
         "default-import": "^1.1.5",
@@ -116,7 +116,7 @@
         "stylelint-config-prettier": "^8.0.2",
         "tsd": "^0.21.0",
         "typescript": "5.0.2",
-        "vitest": "0.31.4",
-        "vitest-dom": "0.1.0"
+        "vitest": "1.0.4",
+        "vitest-dom": "0.1.1"
     }
 }

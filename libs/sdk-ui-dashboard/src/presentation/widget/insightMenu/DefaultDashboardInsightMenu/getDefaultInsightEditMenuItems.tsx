@@ -8,7 +8,12 @@ import { InsightConfiguration } from "../../insight/configuration/InsightConfigu
 import { InsightInteractions } from "../../insight/configuration/InsightInteractions.js";
 
 import { Icon } from "@gooddata/sdk-ui-kit";
-import { useDashboardDispatch, eagerRemoveSectionItemByWidgetRef } from "../../../../model/index.js";
+import {
+    useDashboardDispatch,
+    eagerRemoveSectionItemByWidgetRef,
+    useDashboardEventDispatch,
+    userInteractionTriggered,
+} from "../../../../model/index.js";
 import { IInsightWidget } from "@gooddata/sdk-model";
 
 /**
@@ -17,6 +22,7 @@ import { IInsightWidget } from "@gooddata/sdk-model";
 export type MenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
+    eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
 };
 
@@ -25,7 +31,7 @@ export type MenuItemDependencies = {
  */
 export function getDefaultInsightEditMenuItems(
     widget: IInsightWidget,
-    { intl, dispatch, includeInteractions = true }: MenuItemDependencies,
+    { intl, dispatch, eventDispatch, includeInteractions = true }: MenuItemDependencies,
 ): IInsightMenuItem[] {
     return compact([
         {
@@ -47,6 +53,7 @@ export function getDefaultInsightEditMenuItems(
             disabled: false,
             className: "s-configuration-panel-submenu",
             SubmenuComponent: InsightInteractions,
+            onClick: () => eventDispatch(userInteractionTriggered("interactionPanelOpened")),
         },
         {
             type: "separator",

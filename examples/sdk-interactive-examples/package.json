@@ -1,21 +1,21 @@
 {
     "name": "@gooddata/sdk-interactive-examples",
-    "version": "9.5.0-alpha.6",
+    "version": "9.6.0-alpha.6",
     "description": "GoodData React interactive examples",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "type": "module",
-    "private": false,    
+    "private": false,
     "scripts": {
-        "build": "echo Build of sdk-interactive-examples is skipped by default. See build of each example.",                
+        "build": "echo Build of sdk-interactive-examples is skipped by default. See build of each example.",
         "create-example": "node ./scripts/createExample.mjs && node ./scripts/updateRootReadme.mjs",
         "update-examples-template": "node ./scripts/updateTemplate.mjs && node ./scripts/updateRootReadme.mjs",
-        "update-root-readme":"node ./scripts/updateRootReadme.mjs",
-        "validate": "node ./scripts/validateExamplesDependencies.mjs",
-        "validate-ci": "node ./scripts/validateExamplesDependencies.mjs"
+        "update-root-readme": "node ./scripts/updateRootReadme.mjs",
+        "validate": "node ./scripts/validateExamples.mjs",
+        "validate-ci": "node ./scripts/validateExamples.mjs"
     },
     "dependencies": {
+        "validate-npm-package-name": "^5.0.0"
     },
-    "devDependencies": {
-    }
+    "devDependencies": {}
 }

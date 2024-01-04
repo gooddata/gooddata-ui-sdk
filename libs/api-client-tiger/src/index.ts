@@ -201,6 +201,7 @@ export {
     ActionsApiFetchClusteringResultRequest,
     ActionsApiFetchForecastResultRequest,
     DependsOn,
+    ValidateByItem,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
@@ -264,6 +265,35 @@ export {
     ColumnStatisticTypeEnum,
     Table,
 } from "./generated/scan-json-api/api.js";
+
+export {
+    ActionsApiAnalyzeCsvRequest,
+    ActionsApiGetStagingUploadLocationRequest,
+    ActionsApiImportCsvRequest,
+    AnalyzeCsvRequest,
+    AnalyzeCsvRequestItem,
+    AnalyzeCsvRequestItemConfig,
+    AnalyzeCsvResponse,
+    AnalyzeCsvResponseColumn,
+    AnalyzeCsvResponseConfig,
+    CacheRemovalInterval,
+    CacheUsageData,
+    CsvConvertOptions,
+    CsvConvertOptionsColumnType,
+    CsvParseOptions,
+    CsvReadOptions,
+    ImportCsvRequest,
+    ImportCsvRequestTable,
+    ImportCsvRequestTableSource,
+    ImportCsvRequestTableSourceConfig,
+    OrganizationCacheSettings,
+    OrganizationCacheUsage,
+    OrganizationCurrentCacheUsage,
+    StagingUploadLocation,
+    WorkspaceCacheSettings,
+    WorkspaceCacheUsage,
+    WorkspaceCurrentCacheUsage,
+} from "./generated/result-json-api/api.js";
 
 export * from "./client.js";
 

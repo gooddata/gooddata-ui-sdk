@@ -87,7 +87,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     the tool among the devDependencies together with convenience script to add plugin to either workspace specified
     in your `.env` file (default) or another workspace that you specify on the command line.
 
-    Run the `{{packageManager}} run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/{{pluginIdentifier}}.js"` to
+    Run the `{{packageManager}} run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/{{pluginIdentifier}}.mjs"` to
     create a new dashboard plugin object in the workspace specified in the `.env` file. The created dashboard object
     point to the URL of the built plugin.
 
@@ -132,7 +132,7 @@ In order to provide credentials to the development harness, you can use either t
 necessary environment variables before starting the harness.
 
 The contents of `.env.secrets` will never make their way into plugin build artifacts, they are loaded only when starting
-the development harness. Check out the webpack.config.js if you would like to double-check this.
+the development harness. Check out the webpack.config.cjs if you would like to double-check this.
 
 _IMPORTANT: Never include credentials and secrets in your plugin source code or other assets that your plugin requires.
 All this data will be available in the publicly hosted plugin artifacts and can also be found through the browser developer console._
@@ -156,8 +156,10 @@ that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this
 
 ### How can I setup compatibility of the plugin?
 
-You can modify minEngineVersion and maxEngineVersion properties in `src/{{pluginIdentifier}}\_entry/index`.
-By default, we guarantee that plugin will be compatible only with the exact version of the dashboard engine used during its build (`"bundled"` option). But if you are sure, that plugin is compatible also with the other engine versions, you can set concrete range of the versions (e.g. `"minEngineVersion": "8.8.0", "maxEngineVersion": "8.9.0"`). Note that combining multiple plugins created before version `8.8.0` may not work.
+You can edit the compatibility property in `src/{{pluginIdentifier}}\_entry/index`.
+It is a standard SemVer string.
+Usually you want to have ">=version" there, where version is the GoodData.UI version you developed and built the plugin with.
+
 
 ### How do plugin dependencies work?
 

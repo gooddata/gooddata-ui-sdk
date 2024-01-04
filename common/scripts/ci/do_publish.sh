@@ -31,7 +31,7 @@ fi
 # Perform dry-run first
 #
 
-${_RUSH} publish --include-all --set-access-level public
+${_RUSH} publish --include-all --version-policy sdk --set-access-level public
 dry_run_rc=$?
 
 if [ $dry_run_rc -ne 0 ]; then
@@ -62,7 +62,7 @@ fi
 echo "Publishing to NPM"
 
 # forcing restricted access level; switch this to public
-${_RUSH} publish -p --include-all --tag "${TAG_NPM}" --set-access-level public
+${_RUSH} publish -p --include-all --version-policy sdk --tag "${TAG_NPM}" --set-access-level public
 publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then

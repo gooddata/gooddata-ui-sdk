@@ -8,6 +8,7 @@ import stringify from "json-stable-stringify";
 
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
+import { useTelemetry } from "../TelemetryContext.js";
 
 export const useUserDetails = (
     user: IUser,
@@ -22,6 +23,7 @@ export const useUserDetails = (
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
     useEffect(() => {
@@ -66,6 +68,7 @@ export const useUserDetails = (
         ])
             .then(() => {
                 addSuccess(messages.userDetailsUpdatedSuccess);
+                trackEvent("user-detail-updated");
                 onSubmit(sanitizedUser, isUpdatedAdmin);
                 onCancel();
             })
@@ -101,6 +104,7 @@ export const useUserGroupDetails = (
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     // update user group from props (when dialog is opened directly in edit mode and we wait for fetch result)
     useEffect(() => {
@@ -115,6 +119,7 @@ export const useUserGroupDetails = (
             .updateUserGroup(updatedUserGroup)
             .then(() => {
                 addSuccess(messages.userGroupDetailsUpdatedSuccess);
+                trackEvent("group-detail-updated");
                 onSubmit(updatedUserGroup);
                 onCancel();
             })

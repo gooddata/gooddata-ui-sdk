@@ -7,6 +7,7 @@ import noop from "lodash/noop.js";
 
 import { ListMode } from "../types.js";
 import { messages } from "../locales.js";
+import { useTelemetry } from "../TelemetryContext.js";
 
 import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 import { DetailRow } from "./DetailRow.js";
@@ -27,6 +28,7 @@ export const UserDetailsView: React.FC<IDetailsViewProps> = ({
     onChange,
 }) => {
     const intl = useIntl();
+    const trackEvent = useTelemetry();
 
     if (!user) {
         return null;
@@ -65,7 +67,12 @@ export const UserDetailsView: React.FC<IDetailsViewProps> = ({
                         <OrganizationMemberDropdown
                             isDisabled={isBootstrapUser}
                             isAdmin={isAdmin}
-                            onChange={(isAdminNow) => onChange(user, isAdminNow)}
+                            onChange={(isAdminNow) => {
+                                onChange(user, isAdminNow);
+                                trackEvent(
+                                    isAdmin ? "user-role-changed-to-admin" : "user-role-changed-to-member",
+                                );
+                            }}
                         />
                     )}
                 </div>

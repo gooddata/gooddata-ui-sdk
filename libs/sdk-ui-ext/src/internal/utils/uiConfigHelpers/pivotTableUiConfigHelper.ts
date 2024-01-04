@@ -43,6 +43,7 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
+    const hasColumns = !hasNoColumns(buckets);
     forEach(buckets, (bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
@@ -54,9 +55,10 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
             if (bucket.localIdentifier === BucketNames.COLUMNS) {
                 warningMessageId = messages.columns.id;
                 warningMessageValues = {
-                    oldLimit: MAX_TABLE_CATEGORIES_COUNT,
+                    oldLimit: MAX_METRICS_COUNT,
+                    oldRowsLimit: MAX_TABLE_CATEGORIES_COUNT,
                 };
-            } else {
+            } else if (hasColumns) {
                 warningMessageId = messages.measuresAttributes.id;
 
                 if (bucket.localIdentifier === BucketNames.MEASURES) {

@@ -35,12 +35,6 @@ export interface AFM {
      */
     attributes: Array<AttributeItem>;
     /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     * @type {Array<MeasureItem>}
-     * @memberof AFM
-     */
-    auxMeasures?: Array<MeasureItem>;
-    /**
      * Various filter types to filter execution result.
      * @type {Array<FilterDefinition>}
      * @memberof AFM
@@ -52,6 +46,12 @@ export interface AFM {
      * @memberof AFM
      */
     measures: Array<MeasureItem>;
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * @type {Array<MeasureItem>}
+     * @memberof AFM
+     */
+    auxMeasures?: Array<MeasureItem>;
 }
 /**
  * A datetime filter specifying exact from and to values.
@@ -74,18 +74,6 @@ export interface AbsoluteDateFilter {
 export interface AbsoluteDateFilterAbsoluteDateFilter {
     /**
      *
-     * @type {boolean}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmObjectIdentifierDataset}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
-    dataset: AfmObjectIdentifierDataset;
-    /**
-     *
      * @type {string}
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
@@ -96,6 +84,18 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
     to: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmObjectIdentifierDataset}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    dataset: AfmObjectIdentifierDataset;
 }
 /**
  * @type AbstractMeasureValueFilter
@@ -310,13 +310,13 @@ export interface AfmObjectIdentifierIdentifier {
      * @type {string}
      * @memberof AfmObjectIdentifierIdentifier
      */
-    id: string;
+    type: AfmObjectIdentifierIdentifierTypeEnum;
     /**
      *
      * @type {string}
      * @memberof AfmObjectIdentifierIdentifier
      */
-    type: AfmObjectIdentifierIdentifierTypeEnum;
+    id: string;
 }
 
 export const AfmObjectIdentifierIdentifierTypeEnum = {
@@ -359,13 +359,13 @@ export interface AfmObjectIdentifierLabelIdentifier {
      * @type {string}
      * @memberof AfmObjectIdentifierLabelIdentifier
      */
-    id: string;
+    type: AfmObjectIdentifierLabelIdentifierTypeEnum;
     /**
      *
      * @type {string}
      * @memberof AfmObjectIdentifierLabelIdentifier
      */
-    type: AfmObjectIdentifierLabelIdentifierTypeEnum;
+    id: string;
 }
 
 export const AfmObjectIdentifierLabelIdentifierTypeEnum = {
@@ -409,16 +409,16 @@ export interface AfmValidDescendantsResponse {
 export interface AfmValidObjectsQuery {
     /**
      *
-     * @type {AFM}
-     * @memberof AfmValidObjectsQuery
-     */
-    afm: AFM;
-    /**
-     *
      * @type {Array<string>}
      * @memberof AfmValidObjectsQuery
      */
     types: Array<AfmValidObjectsQueryTypesEnum>;
+    /**
+     *
+     * @type {AFM}
+     * @memberof AfmValidObjectsQuery
+     */
+    afm: AFM;
 }
 
 export const AfmValidObjectsQueryTypesEnum = {
@@ -464,12 +464,6 @@ export interface AnomalyDetectionRequest {
 export interface AnomalyDetectionResult {
     /**
      *
-     * @type {Array<boolean>}
-     * @memberof AnomalyDetectionResult
-     */
-    anomalyFlag: Array<boolean>;
-    /**
-     *
      * @type {Array<string>}
      * @memberof AnomalyDetectionResult
      */
@@ -480,6 +474,12 @@ export interface AnomalyDetectionResult {
      * @memberof AnomalyDetectionResult
      */
     values: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResult
+     */
+    anomalyFlag: Array<boolean>;
 }
 /**
  *
@@ -487,12 +487,6 @@ export interface AnomalyDetectionResult {
  * @interface AnomalyDetectionResultAllOf
  */
 export interface AnomalyDetectionResultAllOf {
-    /**
-     *
-     * @type {Array<boolean>}
-     * @memberof AnomalyDetectionResultAllOf
-     */
-    anomalyFlag?: Array<boolean>;
     /**
      *
      * @type {Array<string>}
@@ -505,6 +499,12 @@ export interface AnomalyDetectionResultAllOf {
      * @memberof AnomalyDetectionResultAllOf
      */
     values?: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResultAllOf
+     */
+    anomalyFlag?: Array<boolean>;
 }
 /**
  * Metric representing arithmetics between metrics.
@@ -623,28 +623,10 @@ export interface AttributeHeaderOut {
 export interface AttributeHeaderOutAttributeHeader {
     /**
      *
-     * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
-     */
-    attribute: RestApiIdentifier;
-    /**
-     *
      * @type {string}
      * @memberof AttributeHeaderOutAttributeHeader
      */
-    attributeName: string;
-    /**
-     *
-     * @type {AttributeFormat}
-     * @memberof AttributeHeaderOutAttributeHeader
-     */
-    format?: AttributeFormat;
-    /**
-     *
-     * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
-     */
-    granularity?: AttributeHeaderOutAttributeHeaderGranularityEnum;
+    localIdentifier: string;
     /**
      *
      * @type {RestApiIdentifier}
@@ -659,16 +641,34 @@ export interface AttributeHeaderOutAttributeHeader {
     labelName: string;
     /**
      *
+     * @type {RestApiIdentifier}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    attribute: RestApiIdentifier;
+    /**
+     *
      * @type {string}
      * @memberof AttributeHeaderOutAttributeHeader
      */
-    localIdentifier: string;
+    attributeName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    granularity?: AttributeHeaderOutAttributeHeaderGranularityEnum;
     /**
      *
      * @type {RestApiIdentifier}
      * @memberof AttributeHeaderOutAttributeHeader
      */
     primaryLabel: RestApiIdentifier;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    format?: AttributeFormat;
 }
 
 export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
@@ -701,16 +701,16 @@ export type AttributeHeaderOutAttributeHeaderGranularityEnum =
 export interface AttributeItem {
     /**
      *
-     * @type {AfmObjectIdentifierLabel}
-     * @memberof AttributeItem
-     */
-    label: AfmObjectIdentifierLabel;
-    /**
-     *
      * @type {string}
      * @memberof AttributeItem
      */
     localIdentifier: string;
+    /**
+     *
+     * @type {AfmObjectIdentifierLabel}
+     * @memberof AttributeItem
+     */
+    label: AfmObjectIdentifierLabel;
     /**
      * Specifies that the label should be outer-joined.
      * @type {boolean}
@@ -816,16 +816,10 @@ export interface ComparisonMeasureValueFilter {
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
      *
-     * @type {boolean}
+     * @type {number}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
-    applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
-    measure: AfmIdentifier;
+    treatNullValuesAs?: number;
     /**
      *
      * @type {string}
@@ -837,13 +831,19 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
      * @type {number}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
-    treatNullValuesAs?: number;
+    value: number;
     /**
      *
-     * @type {number}
+     * @type {boolean}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
-    value: number;
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    measure: AfmIdentifier;
 }
 
 export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = {
@@ -898,12 +898,6 @@ export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
  */
 export interface DependsOn {
     /**
-     * Inverse filtering mode.
-     * @type {boolean}
-     * @memberof DependsOn
-     */
-    complementFilter?: boolean;
-    /**
      * Specifies on which label the filter depends on.
      * @type {string}
      * @memberof DependsOn
@@ -915,6 +909,12 @@ export interface DependsOn {
      * @memberof DependsOn
      */
     values: Array<string>;
+    /**
+     * Inverse filtering mode.
+     * @type {boolean}
+     * @memberof DependsOn
+     */
+    complementFilter?: boolean;
 }
 /**
  * Single dimension description.
@@ -923,17 +923,17 @@ export interface DependsOn {
  */
 export interface Dimension {
     /**
-     * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of metrics.
-     * @type {Array<string>}
-     * @memberof Dimension
-     */
-    itemIdentifiers: Array<string>;
-    /**
      * Dimension identification within requests. Other entities can reference this dimension by this value.
      * @type {string}
      * @memberof Dimension
      */
     localIdentifier?: string;
+    /**
+     * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of metrics.
+     * @type {Array<string>}
+     * @memberof Dimension
+     */
+    itemIdentifiers: Array<string>;
     /**
      * List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).
      * @type {Array<SortKey>}
@@ -961,17 +961,17 @@ export interface DimensionHeader {
  */
 export interface Element {
     /**
-     * Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded
-     * @type {string}
-     * @memberof Element
-     */
-    primaryTitle: string | null;
-    /**
      * Title of requested label.
      * @type {string}
      * @memberof Element
      */
     title: string | null;
+    /**
+     * Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded
+     * @type {string}
+     * @memberof Element
+     */
+    primaryTitle: string | null;
 }
 /**
  *
@@ -980,30 +980,11 @@ export interface Element {
  */
 export interface ElementsRequest {
     /**
-     * Inverse filters: * ```false``` - return items matching ```patternFilter``` and ```exactFilter``` * ```true``` - return items not matching ```patternFilter``` and ```exactFilter```
-     * @type {boolean}
+     * Requested label.
+     * @type {string}
      * @memberof ElementsRequest
      */
-    complementFilter?: boolean;
-    /**
-     * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
-     * @type {number}
-     * @memberof ElementsRequest
-     * @deprecated
-     */
-    dataSamplingPercentage?: number;
-    /**
-     * Return only items, whose are not filtered out by the parent filters.
-     * @type {Array<DependsOn>}
-     * @memberof ElementsRequest
-     */
-    dependsOn?: Array<DependsOn>;
-    /**
-     * Return only items, whose ```label``` title exactly matches one of ```filter```.
-     * @type {Array<string>}
-     * @memberof ElementsRequest
-     */
-    exactFilter?: Array<string>;
+    label: string;
     /**
      * Excludes items from the result that differ only by primary label * ```false``` - return items with distinct primary label * ```true``` - return items with distinct requested label
      * @type {boolean}
@@ -1017,11 +998,17 @@ export interface ElementsRequest {
      */
     filterBy?: FilterBy;
     /**
-     * Requested label.
+     * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
      * @type {string}
      * @memberof ElementsRequest
      */
-    label: string;
+    sortOrder?: ElementsRequestSortOrderEnum;
+    /**
+     * Inverse filters: * ```false``` - return items matching ```patternFilter``` and ```exactFilter``` * ```true``` - return items not matching ```patternFilter``` and ```exactFilter```
+     * @type {boolean}
+     * @memberof ElementsRequest
+     */
+    complementFilter?: boolean;
     /**
      * Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.
      * @type {string}
@@ -1029,11 +1016,30 @@ export interface ElementsRequest {
      */
     patternFilter?: string;
     /**
-     * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
-     * @type {string}
+     * Return only items, whose ```label``` title exactly matches one of ```filter```.
+     * @type {Array<string>}
      * @memberof ElementsRequest
      */
-    sortOrder?: ElementsRequestSortOrderEnum;
+    exactFilter?: Array<string>;
+    /**
+     * Return only items, whose are not filtered out by the parent filters.
+     * @type {Array<DependsOn>}
+     * @memberof ElementsRequest
+     */
+    dependsOn?: Array<DependsOn>;
+    /**
+     * Return only items, what are computable on metric. This feature is experimental.
+     * @type {Array<ValidateByItem>}
+     * @memberof ElementsRequest
+     */
+    validateBy?: Array<ValidateByItem>;
+    /**
+     * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
+     * @type {number}
+     * @memberof ElementsRequest
+     * @deprecated
+     */
+    dataSamplingPercentage?: number;
 }
 
 export const ElementsRequestSortOrderEnum = {
@@ -1051,6 +1057,12 @@ export type ElementsRequestSortOrderEnum =
  */
 export interface ElementsResponse {
     /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof ElementsResponse
+     */
+    primaryLabel: RestApiIdentifier;
+    /**
      * List of returned elements.
      * @type {Array<Element>}
      * @memberof ElementsResponse
@@ -1058,10 +1070,10 @@ export interface ElementsResponse {
     elements: Array<Element>;
     /**
      *
-     * @type {AttributeFormat}
+     * @type {Paging}
      * @memberof ElementsResponse
      */
-    format?: AttributeFormat;
+    paging: Paging;
     /**
      * Granularity of requested label in case of date attribute
      * @type {string}
@@ -1070,16 +1082,10 @@ export interface ElementsResponse {
     granularity?: ElementsResponseGranularityEnum;
     /**
      *
-     * @type {Paging}
+     * @type {AttributeFormat}
      * @memberof ElementsResponse
      */
-    paging: Paging;
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof ElementsResponse
-     */
-    primaryLabel: RestApiIdentifier;
+    format?: AttributeFormat;
 }
 
 export const ElementsResponseGranularityEnum = {
@@ -1380,16 +1386,16 @@ export interface InlineFilterDefinition {
 export interface InlineFilterDefinitionInline {
     /**
      *
-     * @type {boolean}
-     * @memberof InlineFilterDefinitionInline
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof InlineFilterDefinitionInline
      */
     filter: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof InlineFilterDefinitionInline
+     */
+    applyOnResult?: boolean;
 }
 /**
  * Metric defined by the raw MAQL query.
@@ -1428,6 +1434,18 @@ export interface KeyDriversDimension {
      * @type {RestApiIdentifier}
      * @memberof KeyDriversDimension
      */
+    label: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    labelName: string;
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
     attribute: RestApiIdentifier;
     /**
      *
@@ -1437,28 +1455,16 @@ export interface KeyDriversDimension {
     attributeName: string;
     /**
      *
-     * @type {AttributeFormat}
-     * @memberof KeyDriversDimension
-     */
-    format?: AttributeFormat;
-    /**
-     *
      * @type {string}
      * @memberof KeyDriversDimension
      */
     granularity?: KeyDriversDimensionGranularityEnum;
     /**
      *
-     * @type {RestApiIdentifier}
+     * @type {AttributeFormat}
      * @memberof KeyDriversDimension
      */
-    label: RestApiIdentifier;
-    /**
-     *
-     * @type {string}
-     * @memberof KeyDriversDimension
-     */
-    labelName: string;
+    format?: AttributeFormat;
 }
 
 export const KeyDriversDimensionGranularityEnum = {
@@ -1491,16 +1497,16 @@ export type KeyDriversDimensionGranularityEnum =
 export interface KeyDriversRequest {
     /**
      *
-     * @type {Array<MeasureItem>}
-     * @memberof KeyDriversRequest
-     */
-    auxMetrics?: Array<MeasureItem>;
-    /**
-     *
      * @type {MeasureItem}
      * @memberof KeyDriversRequest
      */
     metric: MeasureItem;
+    /**
+     *
+     * @type {Array<MeasureItem>}
+     * @memberof KeyDriversRequest
+     */
+    auxMetrics?: Array<MeasureItem>;
     /**
      * Sorting elements - ascending/descending order.
      * @type {string}
@@ -1610,13 +1616,13 @@ export interface MeasureHeaderOut {
      * @type {string}
      * @memberof MeasureHeaderOut
      */
-    format?: string;
+    localIdentifier: string;
     /**
      *
      * @type {string}
      * @memberof MeasureHeaderOut
      */
-    localIdentifier: string;
+    format?: string;
     /**
      *
      * @type {string}
@@ -1632,16 +1638,16 @@ export interface MeasureHeaderOut {
 export interface MeasureItem {
     /**
      *
-     * @type {MeasureDefinition}
-     * @memberof MeasureItem
-     */
-    definition: MeasureDefinition;
-    /**
-     *
      * @type {string}
      * @memberof MeasureItem
      */
     localIdentifier: string;
+    /**
+     *
+     * @type {MeasureDefinition}
+     * @memberof MeasureItem
+     */
+    definition: MeasureDefinition;
 }
 /**
  * Header containing the information related to metrics.
@@ -1684,6 +1690,12 @@ export interface NegativeAttributeFilter {
 export interface NegativeAttributeFilterNegativeAttributeFilter {
     /**
      *
+     * @type {AttributeFilterElements}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    notIn: AttributeFilterElements;
+    /**
+     *
      * @type {boolean}
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
@@ -1694,12 +1706,6 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
     label: AfmIdentifier;
-    /**
-     *
-     * @type {AttributeFilterElements}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
-    notIn: AttributeFilterElements;
 }
 /**
  * Current page description.
@@ -1708,17 +1714,17 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
  */
 export interface Paging {
     /**
+     * Count of returnable items ignoring paging.
+     * @type {number}
+     * @memberof Paging
+     */
+    total: number;
+    /**
      * Count of items in this page.
      * @type {number}
      * @memberof Paging
      */
     count: number;
-    /**
-     * Link to next page, or null if this is last page.
-     * @type {string}
-     * @memberof Paging
-     */
-    next?: string;
     /**
      * Offset of this page.
      * @type {number}
@@ -1726,11 +1732,11 @@ export interface Paging {
      */
     offset: number;
     /**
-     * Count of returnable items ignoring paging.
-     * @type {number}
+     * Link to next page, or null if this is last page.
+     * @type {string}
      * @memberof Paging
      */
-    total: number;
+    next?: string;
 }
 /**
  *
@@ -1772,16 +1778,16 @@ export interface PopDatasetMeasureDefinition {
 export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
     /**
      *
-     * @type {Array<PopDataset>}
-     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
-     */
-    dateDatasets: Array<PopDataset>;
-    /**
-     *
      * @type {AfmLocalIdentifier}
      * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     measureIdentifier: AfmLocalIdentifier;
+    /**
+     *
+     * @type {Array<PopDataset>}
+     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    dateDatasets: Array<PopDataset>;
 }
 /**
  *
@@ -1823,16 +1829,16 @@ export interface PopDateMeasureDefinition {
 export interface PopDateMeasureDefinitionOverPeriodMeasure {
     /**
      *
-     * @type {Array<PopDate>}
-     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
-     */
-    dateAttributes: Array<PopDate>;
-    /**
-     *
      * @type {AfmLocalIdentifier}
      * @memberof PopDateMeasureDefinitionOverPeriodMeasure
      */
     measureIdentifier: AfmLocalIdentifier;
+    /**
+     *
+     * @type {Array<PopDate>}
+     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
+     */
+    dateAttributes: Array<PopDate>;
 }
 /**
  * @type PopMeasureDefinition
@@ -1861,16 +1867,16 @@ export interface PositiveAttributeFilter {
 export interface PositiveAttributeFilterPositiveAttributeFilter {
     /**
      *
-     * @type {boolean}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {AttributeFilterElements}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
     in: AttributeFilterElements;
+    /**
+     *
+     * @type {boolean}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmIdentifier}
@@ -1899,22 +1905,10 @@ export interface RangeMeasureValueFilter {
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     /**
      *
-     * @type {boolean}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {number}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
-    from: number;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
-    measure: AfmIdentifier;
+    treatNullValuesAs?: number;
     /**
      *
      * @type {string}
@@ -1926,13 +1920,25 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
      * @type {number}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
-    to: number;
+    from: number;
     /**
      *
      * @type {number}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
-    treatNullValuesAs?: number;
+    to: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    measure: AfmIdentifier;
 }
 
 export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = {
@@ -1964,12 +1970,6 @@ export interface RankingFilter {
 export interface RankingFilterRankingFilter {
     /**
      *
-     * @type {boolean}
-     * @memberof RankingFilterRankingFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {Array<AfmIdentifier>}
      * @memberof RankingFilterRankingFilter
      */
@@ -1986,6 +1986,12 @@ export interface RankingFilterRankingFilter {
      * @memberof RankingFilterRankingFilter
      */
     value: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RankingFilterRankingFilter
+     */
+    applyOnResult?: boolean;
 }
 
 export const RankingFilterRankingFilterOperatorEnum = {
@@ -2016,6 +2022,24 @@ export interface RelativeDateFilter {
  */
 export interface RelativeDateFilterRelativeDateFilter {
     /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    from: number;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    to: number;
+    /**
      *
      * @type {boolean}
      * @memberof RelativeDateFilterRelativeDateFilter
@@ -2027,24 +2051,6 @@ export interface RelativeDateFilterRelativeDateFilter {
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     dataset: AfmObjectIdentifierDataset;
-    /**
-     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
-     * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
-    from: number;
-    /**
-     * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
-    granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
-    /**
-     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
-     * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
-    to: number;
 }
 
 export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
@@ -2108,16 +2114,16 @@ export interface ResultCacheMetadata {
     executionResponse: ExecutionResponse;
     /**
      *
-     * @type {number}
-     * @memberof ResultCacheMetadata
-     */
-    resultSize: number;
-    /**
-     *
      * @type {ResultSpec}
      * @memberof ResultCacheMetadata
      */
     resultSpec: ResultSpec;
+    /**
+     *
+     * @type {number}
+     * @memberof ResultCacheMetadata
+     */
+    resultSize: number;
 }
 /**
  *
@@ -2183,6 +2189,12 @@ export interface SimpleMeasureDefinition {
  */
 export interface SimpleMeasureDefinitionMeasure {
     /**
+     *
+     * @type {AfmObjectIdentifierCore}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    item: AfmObjectIdentifierCore;
+    /**
      * Definition of aggregation type of the metric.
      * @type {string}
      * @memberof SimpleMeasureDefinitionMeasure
@@ -2200,12 +2212,6 @@ export interface SimpleMeasureDefinitionMeasure {
      * @memberof SimpleMeasureDefinitionMeasure
      */
     filters?: Array<FilterDefinitionForSimpleMeasure>;
-    /**
-     *
-     * @type {AfmObjectIdentifierCore}
-     * @memberof SimpleMeasureDefinitionMeasure
-     */
-    item: AfmObjectIdentifierCore;
 }
 
 export const SimpleMeasureDefinitionMeasureAggregationEnum = {
@@ -2254,26 +2260,19 @@ export interface SortKeyAttributeAttribute {
      */
     attributeIdentifier: string;
     /**
-     * Sorting elements - ascending/descending order.
-     * @type {string}
-     * @memberof SortKeyAttributeAttribute
-     */
-    direction?: SortKeyAttributeAttributeDirectionEnum;
-    /**
      * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
      * @type {string}
      * @memberof SortKeyAttributeAttribute
      */
     sortType?: SortKeyAttributeAttributeSortTypeEnum;
+    /**
+     * Sorting elements - ascending/descending order.
+     * @type {string}
+     * @memberof SortKeyAttributeAttribute
+     */
+    direction?: SortKeyAttributeAttributeDirectionEnum;
 }
 
-export const SortKeyAttributeAttributeDirectionEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type SortKeyAttributeAttributeDirectionEnum =
-    typeof SortKeyAttributeAttributeDirectionEnum[keyof typeof SortKeyAttributeAttributeDirectionEnum];
 export const SortKeyAttributeAttributeSortTypeEnum = {
     DEFAULT: "DEFAULT",
     LABEL: "LABEL",
@@ -2283,6 +2282,13 @@ export const SortKeyAttributeAttributeSortTypeEnum = {
 
 export type SortKeyAttributeAttributeSortTypeEnum =
     typeof SortKeyAttributeAttributeSortTypeEnum[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
+export const SortKeyAttributeAttributeDirectionEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type SortKeyAttributeAttributeDirectionEnum =
+    typeof SortKeyAttributeAttributeDirectionEnum[keyof typeof SortKeyAttributeAttributeDirectionEnum];
 
 /**
  * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
@@ -2305,6 +2311,12 @@ export interface SortKeyTotal {
 export interface SortKeyTotalTotal {
     /**
      *
+     * @type {string}
+     * @memberof SortKeyTotalTotal
+     */
+    totalIdentifier: string;
+    /**
+     *
      * @type {DataColumnLocators}
      * @memberof SortKeyTotalTotal
      */
@@ -2315,12 +2327,6 @@ export interface SortKeyTotalTotal {
      * @memberof SortKeyTotalTotal
      */
     direction?: SortKeyTotalTotalDirectionEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof SortKeyTotalTotal
-     */
-    totalIdentifier: string;
 }
 
 export const SortKeyTotalTotalDirectionEnum = {
@@ -2379,17 +2385,17 @@ export type SortKeyValueValueDirectionEnum =
  */
 export interface Total {
     /**
-     * Aggregation function to compute the total.
-     * @type {string}
-     * @memberof Total
-     */
-    function: TotalFunctionEnum;
-    /**
      * Total identification within this request. Used e.g. in sorting by a total.
      * @type {string}
      * @memberof Total
      */
     localIdentifier: string;
+    /**
+     * Aggregation function to compute the total.
+     * @type {string}
+     * @memberof Total
+     */
+    function: TotalFunctionEnum;
     /**
      * The metric for which the total will be computed
      * @type {string}
@@ -2458,6 +2464,25 @@ export interface TotalResultHeader {
      * @memberof TotalResultHeader
      */
     function: string;
+}
+/**
+ *
+ * @export
+ * @interface ValidateByItem
+ */
+export interface ValidateByItem {
+    /**
+     * Specifies entity used for valid elements computation.
+     * @type {string}
+     * @memberof ValidateByItem
+     */
+    id: string;
+    /**
+     * Specifies entity type which could be label, attribute, fact, or metric.
+     * @type {string}
+     * @memberof ValidateByItem
+     */
+    type: string;
 }
 
 /**
@@ -4040,7 +4065,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 | "SQL"
                 | "SETTINGS",
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
                 workspaceId,
                 afmExecution,
@@ -4587,7 +4612,7 @@ export const ActionsApiFactory = function (
         explainAFM(
             requestParameters: ActionsApiExplainAFMRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<any> {
             return localVarFp
                 .explainAFM(
                     requestParameters.workspaceId,
@@ -4987,7 +5012,7 @@ export interface ActionsApiInterface {
     explainAFM(
         requestParameters: ActionsApiExplainAFMRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<any>;
 
     /**
      *
@@ -7404,7 +7429,7 @@ export const ComputationApiFp = function (configuration?: Configuration) {
                 | "SQL"
                 | "SETTINGS",
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
                 workspaceId,
                 afmExecution,
@@ -7776,7 +7801,7 @@ export const ComputationApiFactory = function (
         explainAFM(
             requestParameters: ComputationApiExplainAFMRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<any> {
             return localVarFp
                 .explainAFM(
                     requestParameters.workspaceId,
@@ -8058,7 +8083,7 @@ export interface ComputationApiInterface {
     explainAFM(
         requestParameters: ComputationApiExplainAFMRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<any>;
 
     /**
      *

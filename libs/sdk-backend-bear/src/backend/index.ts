@@ -97,6 +97,8 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsCircularDependencyInFilters: false,
     allowMultipleInteractionsPerAttributeAndMeasure: false,
     supportsShowingFilteredElements: false,
+    supportsSingleSelectDependentFilters: false,
+    supportsCrossFiltering: false,
 };
 
 /**

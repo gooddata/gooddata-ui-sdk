@@ -1,7 +1,8 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "@babel/polyfill";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "core-js/stable";
 import App from "./App";
 import { AppProviders } from "./contexts";
 import { provideCreateRoot } from "@gooddata/sdk-ui-ext";

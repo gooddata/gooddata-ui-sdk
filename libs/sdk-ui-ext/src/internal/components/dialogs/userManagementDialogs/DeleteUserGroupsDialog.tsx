@@ -7,21 +7,19 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
+import { IWithTelemetryProps, withTelemetry, useTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal
  */
-export interface IDeleteUserGroupsDialogProps {
+export interface IDeleteUserGroupsDialogProps extends IWithTelemetryProps {
     userGroupIds: string[];
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const DeleteUserGroupsDialog: React.FC<IDeleteUserGroupsDialogProps> = ({
+const DeleteUserGroupsDialogComponent: React.FC<IDeleteUserGroupsDialogProps> = ({
     userGroupIds,
     organizationId,
     onSuccess,
@@ -31,6 +29,7 @@ export const DeleteUserGroupsDialog: React.FC<IDeleteUserGroupsDialogProps> = ({
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onConfirm = () => {
         setIsProcessing(true);
@@ -40,6 +39,7 @@ export const DeleteUserGroupsDialog: React.FC<IDeleteUserGroupsDialogProps> = ({
             .deleteUserGroups(userGroupIds)
             .then(() => {
                 addSuccess(messages.userGroupsDeleteSuccess);
+                trackEvent("multiple-groups-deleted");
                 onSuccess();
                 onClose();
             })
@@ -64,3 +64,8 @@ export const DeleteUserGroupsDialog: React.FC<IDeleteUserGroupsDialogProps> = ({
         />
     );
 };
+
+/**
+ * @internal
+ */
+export const DeleteUserGroupsDialog = withTelemetry(DeleteUserGroupsDialogComponent);

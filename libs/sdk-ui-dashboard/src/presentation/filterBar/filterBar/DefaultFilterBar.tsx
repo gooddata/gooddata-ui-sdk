@@ -47,6 +47,7 @@ import {
     convertDashboardAttributeFilterElementsValuesToUris,
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { areAllFiltersHidden } from "../utils.js";
+import { ResetFiltersButton } from "./ResetFiltersButton.js";
 
 /**
  * @alpha
@@ -202,7 +203,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
                     return (
                         <DraggableAttributeFilter
-                            key={objRefToString(displayForm.attribute)}
+                            key={`${objRefToString(displayForm.attribute)}-${
+                                filter.attributeFilter.localIdentifier
+                            }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
                             filterIndex={filterIndex}
@@ -223,6 +226,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     onDrop={addAttributeFilterPlaceholder}
                 />
             ) : null}
+            <ResetFiltersButton />
             <div className="filter-bar-dropzone-container">
                 <AttributeFilterDropZoneHint
                     placement="outside"

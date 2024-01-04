@@ -15,8 +15,7 @@ const { MODULE_FEDERATION_NAME } = require("./src/metadata.json");
 const PORT = 3001;
 const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
 
-function generateGooddataSharePackagesEntries(options = { allowPrereleaseVersions: false }) {
-    const { allowPrereleaseVersions } = options;
+function generateGooddataSharePackagesEntries() {
     // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
     // allow sharing @gooddata/sdk-ui-dashboard here so that multiple plugins can share it among themselves
     // this makes redux related contexts work for example
@@ -24,7 +23,8 @@ function generateGooddataSharePackagesEntries(options = { allowPrereleaseVersion
         .filter(([pkgName]) => pkgName.startsWith("@gooddata"))
         .reduce((acc, [pkgName, version]) => {
             acc[pkgName] = {
-                requiredVersion: allowPrereleaseVersions ? false : version,
+                singleton: true,
+                requiredVersion: false,
             };
             return acc;
         }, {});
@@ -222,9 +222,7 @@ module.exports = (_env, argv) => {
                             requiredVersion: deps["react-dom"],
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
-                        // change the allowPrereleaseVersions to true if you want to work with alpha or beta versions
-                        // beware that alpha and beta versions may break and may contain bugs, use at your own risk
-                        ...generateGooddataSharePackagesEntries({ allowPrereleaseVersions: false }),
+                        ...generateGooddataSharePackagesEntries(),
                     },
                 }),
             ],

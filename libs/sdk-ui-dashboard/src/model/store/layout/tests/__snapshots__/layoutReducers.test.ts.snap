@@ -404,14 +404,15 @@ exports[`layout slice reducer > replaceWidgetBlacklistHierarchies action > shoul
       "cmd": {
         "correlationId": "correlation",
         "payload": {
-          "attributeHierarchy": {
+          "attributeIdentifier": {
+            "identifier": "f_owner.department_id",
+            "type": "attribute",
+          },
+          "drillDownAttributeHierarchyRef": {
             "identifier": "test_attribute_hierarchies_1",
             "type": "attributeHierarchy",
           },
-          "attributeIdentifier": {
-            "identifier": "f_owner.department_id",
-            "type": "displayForm",
-          },
+          "drillDownIdentifier": "identifier",
           "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1310",
           },
@@ -432,13 +433,13 @@ exports[`layout slice reducer > replaceWidgetBlacklistHierarchies action > shoul
           ],
           "value": [
             {
+              "attribute": {
+                "identifier": "f_owner.department_id",
+                "type": "attribute",
+              },
               "attributeHierarchy": {
                 "identifier": "test_attribute_hierarchies_1",
                 "type": "attributeHierarchy",
-              },
-              "label": {
-                "identifier": "f_owner.department_id",
-                "type": "displayForm",
               },
               "type": "attributeHierarchyReference",
             },
@@ -472,6 +473,7 @@ exports[`layout slice reducer > replaceWidgetDrill action > should correctly han
       "cmd": {
         "correlationId": "correlation",
         "payload": {
+          "blacklistHierarchiesToUpdate": [],
           "drills": [
             {
               "localIdentifier": "b4c6999557164163a9e0e75ec74cb854",

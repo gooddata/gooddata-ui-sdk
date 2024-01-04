@@ -7,6 +7,8 @@ import {
     IDrillToInsight,
     IDrillToLegacyDashboard,
     FilterContextItem,
+    ICrossFiltering,
+    IDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
@@ -954,4 +956,124 @@ export function drillableItemsChanged(
  */
 export const isDashboardDrillableItemsChanged = eventGuard<DashboardDrillableItemsChanged>(
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardCrossFilteringRequested} event.
+ * @beta
+ */
+export interface DashboardCrossFilteringRequestedPayload {
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+    /**
+     *  Drill definition.
+     */
+    readonly drillDefinition: ICrossFiltering;
+}
+
+/**
+ * This event is emitted on start of the resolution of the {@link CrossFiltering} command.
+ *
+ * @beta
+ */
+export interface DashboardCrossFilteringRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
+    readonly payload: DashboardCrossFilteringRequestedPayload;
+}
+
+/**
+ * @beta
+ */
+export function crossFilteringRequested(
+    ctx: DashboardContext,
+    drillDefinition: ICrossFiltering,
+    drillEvent: IDashboardDrillEvent,
+    correlationId?: string,
+): DashboardCrossFilteringRequested {
+    return {
+        type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
+        ctx,
+        correlationId,
+        payload: {
+            drillDefinition,
+            drillEvent,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCrossFilteringRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardCrossFilteringRequested = eventGuard<DashboardCrossFilteringRequested>(
+    "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
+);
+
+/**
+ * Payload of the {@link DashboardCrossFilteringResolved} event.
+ * @beta
+ */
+export interface DashboardCrossFilteringResolvedPayload {
+    /**
+     * Dashboard filters from drill intersection.
+     */
+    readonly filters: IDashboardAttributeFilter[];
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+    /**
+     * Drill definition with the custom url that was resolved.
+     */
+    readonly drillDefinition: ICrossFiltering;
+}
+
+/**
+ * This event is emitted as a result of the {@link CrossFiltering} command.
+ *
+ * @beta
+ */
+export interface DashboardCrossFilteringResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
+    readonly payload: DashboardCrossFilteringResolvedPayload;
+}
+
+/**
+ * @beta
+ */
+export function crossFilteringResolved(
+    ctx: DashboardContext,
+    filters: IDashboardAttributeFilter[],
+    drillDefinition: ICrossFiltering,
+    drillEvent: IDashboardDrillEvent,
+    correlationId?: string,
+): DashboardCrossFilteringResolved {
+    return {
+        type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            filters,
+            drillDefinition,
+            drillEvent,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardCrossFilteringResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardCrossFilteringResolved = eventGuard<DashboardCrossFilteringResolved>(
+    "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
 );

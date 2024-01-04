@@ -351,7 +351,7 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> or <span class=\\"date-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "stack": {
         "accepts": [
@@ -688,7 +688,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -719,7 +719,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To add additional attribute, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional attribute, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
     },
     "exportConfig": {
@@ -863,7 +863,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "stack": {
         "accepts": [
@@ -984,7 +984,7 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -1104,7 +1104,7 @@ exports[`PluggableAreaChart > should return reference point when no categories a
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [

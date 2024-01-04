@@ -53,6 +53,7 @@ export interface IInsightMenuSubmenu {
      * Additional class names to be applied to the item.
      */
     className?: string;
+    onClick?: (e: MouseEvent) => void;
 }
 
 /**

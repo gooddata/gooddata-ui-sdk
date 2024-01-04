@@ -2,10 +2,16 @@
 import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import cloneDeep from "lodash/cloneDeep.js";
+import { invariant } from "ts-invariant";
 import { stringUtils } from "@gooddata/util";
 
 import { messages } from "@gooddata/sdk-ui";
-import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
+import {
+    DRILL_TARGET_TYPE,
+    IDrillConfigItem,
+    IDrillDownAttributeHierarchyDefinition,
+} from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
@@ -23,13 +29,15 @@ import {
     selectSelectedWidgetRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { invariant } from "ts-invariant";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
     enabledDrillTargetTypeItems: IDrillTargetType[];
     onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
+    onSetup: (
+        drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+        changedItem: IDrillConfigItem,
+    ) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
 }
 function disableDrillDownIfMeasure(
@@ -37,20 +45,19 @@ function disableDrillDownIfMeasure(
     isMeasure: boolean,
     intl: IntlShape,
 ) {
+    const drillTargetTypes = cloneDeep(enabledDrillTargetTypeItems);
     if (isMeasure) {
-        const drillDownIndex = enabledDrillTargetTypeItems.findIndex(
-            (item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN,
-        );
-        if (drillDownIndex) {
-            const drillDownTarget = enabledDrillTargetTypeItems[drillDownIndex];
+        const drillDownIndex = drillTargetTypes.findIndex((item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN);
+        if (drillDownIndex >= 0) {
+            const drillDownTarget = drillTargetTypes[drillDownIndex];
             drillDownTarget.disabled = true;
             drillDownTarget.disableTooltipMessage = intl.formatMessage(
                 messages.drilldownTooltipDisabledMetric,
             );
-            enabledDrillTargetTypeItems.splice(drillDownIndex, 1, drillDownTarget);
+            drillTargetTypes.splice(drillDownIndex, 1, drillDownTarget);
         }
     }
-    return enabledDrillTargetTypeItems;
+    return drillTargetTypes;
 }
 
 const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
@@ -118,12 +125,10 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                         onSelect={onDrillTargetTypeSelect}
                         selection={item.drillTargetType}
                         enabledDrillTargetTypeItems={drillTargetTypeItems}
-                        isButtonDisabled={
-                            item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN && item.complete
-                        }
+                        isButtonDisabled={false}
                     />
 
-                    <DrillTargets item={item} onSetup={onSetup} />
+                    <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
                     {!!item.warning && (
                         <div className="drill-config-target-warning s-drill-config-target-warning">
                             <span className="gd-icon-warning" />
@@ -132,13 +137,13 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                             </span>
                         </div>
                     )}
-                    {!!showDateFilterTransferWarning && (
+                    {showDateFilterTransferWarning ? (
                         <div className="drill-config-date-filter-warning s-drill-config-date-filter-warning">
                             <span>
                                 <FormattedMessage id="configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning" />
                             </span>
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </div>

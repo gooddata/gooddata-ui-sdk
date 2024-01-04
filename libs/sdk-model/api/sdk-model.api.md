@@ -430,7 +430,7 @@ export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 // @public
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
 
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
@@ -628,9 +628,9 @@ export interface IAttributeHierarchyMetadataObject extends IMetadataObjectIdenti
 // @alpha (undocumented)
 export interface IAttributeHierarchyReference {
     // (undocumented)
-    attributeHierarchy: ObjRef;
+    attribute: ObjRef;
     // (undocumented)
-    label: ObjRef;
+    attributeHierarchy: ObjRef;
     // (undocumented)
     type: "attributeHierarchyReference";
 }
@@ -747,6 +747,20 @@ export interface ICatalogDateAttribute {
     granularity: DateAttributeGranularity;
 }
 
+// @internal (undocumented)
+export interface ICatalogDateAttributeHierarchy {
+    // (undocumented)
+    attributes: ObjRef[];
+    // (undocumented)
+    dateDatasetRef: ObjRef;
+    // (undocumented)
+    templateId: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "dateAttributeHierarchy";
+}
+
 // @public
 export interface ICatalogDateDataset extends ICatalogItemBase {
     dataSet: IDataSetMetadataObject;
@@ -856,6 +870,12 @@ export interface IComparisonConditionBody {
     treatNullValuesAs?: number;
     // (undocumented)
     value: number;
+}
+
+// @public
+export interface ICrossFiltering extends IDrill {
+    title: string;
+    type: "crossFiltering";
 }
 
 // @alpha
@@ -1161,6 +1181,14 @@ export interface IDateHierarchyReference {
     dateHierarchyTemplate: ObjRef;
     // (undocumented)
     type: "dateHierarchyReference";
+}
+
+// @alpha
+export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetadataObjectBase {
+    // (undocumented)
+    granularities: DateAttributeGranularity[];
+    // (undocumented)
+    type: "dateHierarchyTemplate";
 }
 
 // @public
@@ -1800,7 +1828,7 @@ export type InsightDisplayFormUsage = {
 export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage;
 
 // @public
-export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | ICrossFiltering;
 
 // @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
@@ -2283,6 +2311,9 @@ export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 // @public
 export function isCatalogAttributeHierarchy(obj: unknown): obj is ICatalogAttributeHierarchy;
 
+// @internal (undocumented)
+export function isCatalogDateAttributeHierarchy(obj: unknown): obj is ICatalogDateAttributeHierarchy;
+
 // @public
 export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
 
@@ -2337,6 +2368,9 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
+
+// @alpha
+export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
 
 // @alpha
 export function isDashboard(obj: unknown): obj is IDashboard;
@@ -2446,6 +2480,7 @@ export interface ISettings {
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableKDCrossFiltering?: boolean;
     enableKDDependentFilters?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
@@ -2478,6 +2513,7 @@ export interface ISettings {
     openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
+    showHiddenCatalogItems?: boolean;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
     zapierToken?: string;
@@ -2691,6 +2727,12 @@ export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 
 // @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+
+// @alpha
+export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGroupWorkspaceAccessGrantee;
+
+// @alpha
+export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspaceAccessGrantee;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
@@ -3061,20 +3103,6 @@ export interface IUserGroup {
 }
 
 // @alpha
-export interface IUserGroup {
-    id: string;
-    name?: string;
-    ref: ObjRef;
-}
-
-// @alpha
-export interface IUserGroup {
-    id: string;
-    name?: string;
-    ref: ObjRef;
-}
-
-// @alpha
 export interface IUserGroupAccess {
     type: "group";
     userGroup: IWorkspaceUserGroup;
@@ -3085,6 +3113,12 @@ export interface IUserGroupAccessGrantee {
     granteeRef: ObjRef;
     type: "group";
 }
+
+// @alpha
+export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
+
+// @alpha
+export type IUserWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserAccessGrantee;
 
 // @public
 export interface IVariableMetadataObject extends IMetadataObject {
@@ -3166,6 +3200,12 @@ export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 export interface IWidgetDescription {
     readonly description: string;
     readonly title: string;
+}
+
+// @alpha
+export interface IWorkspaceAccess {
+    permissions: WorkspaceAccessPermission;
+    workspace: string;
 }
 
 // @alpha
@@ -3487,7 +3527,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "widgetAlert" | "user" | "userGroup";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "widgetAlert" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -3668,6 +3708,9 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;
+
+// @public
+export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
 
 // @public
 export type WorkspacePermission =

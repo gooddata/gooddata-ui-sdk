@@ -16,7 +16,7 @@ describe("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] },
     it("should not show details icon if attribute button is not selected", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR);
 
-        attributeFilter.titleHasText("Activity Type:").subtitleHasText("Email");
+        attributeFilter.titleHasText("Activity Type").subtitleHasText("Email");
         attributeFilter.expectDetailsIcon(false);
     });
 

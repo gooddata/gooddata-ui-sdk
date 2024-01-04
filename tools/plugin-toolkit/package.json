@@ -46,10 +46,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@babel/cli": "^7.7.2",
-        "@babel/core": "^7.7.2",
-        "@babel/preset-env": "^7.7.2",
-        "@babel/preset-typescript": "^7.7.2",
+        "@babel/cli": "^7.23.4",
+        "@babel/core": "^7.23.5",
+        "@babel/preset-env": "^7.23.5",
+        "@babel/preset-typescript": "^7.23.3",
         "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
@@ -96,6 +96,6 @@
         "prettier": "~2.5.0",
         "ts-node": "^10.4.0",
         "typescript": "5.0.2",
-        "vitest": "0.31.4"
+        "vitest": "1.0.4"
     }
 }

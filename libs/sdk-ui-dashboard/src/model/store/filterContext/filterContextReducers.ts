@@ -221,6 +221,7 @@ export interface IAddAttributeFilterPayload {
     readonly initialSelection?: IAttributeElements;
     readonly initialIsNegativeSelection?: boolean;
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+    readonly localIdentifier?: string;
 }
 
 const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilterPayload>> = (
@@ -229,8 +230,15 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
 ) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters, selectionMode } =
-        action.payload;
+    const {
+        displayForm,
+        index,
+        initialIsNegativeSelection,
+        initialSelection,
+        parentFilters,
+        selectionMode,
+        localIdentifier,
+    } = action.payload;
 
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
 
@@ -241,7 +249,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
             attributeElements: initialSelection ?? { uris: [] },
             displayForm,
             negativeSelection: isNegative,
-            localIdentifier: generateFilterLocalIdentifier(),
+            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
             ...(selectionMode !== undefined ? { selectionMode } : {}),
         },

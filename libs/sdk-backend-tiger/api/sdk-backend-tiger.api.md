@@ -5,6 +5,8 @@
 ```ts
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
+import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
+import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
 import { AnomalyDetectionResult } from '@gooddata/api-client-tiger';
 import { AnomalyUserNotification } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
@@ -31,6 +33,7 @@ import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -53,8 +56,13 @@ import { RecentAnalyticalObject } from '@gooddata/api-client-tiger';
 import { Recommendation } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
+import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { WidgetAlertUserNotification } from '@gooddata/api-client-tiger';
+
+export { AnalyzeCsvRequest }
+
+export { AnalyzeCsvResponse }
 
 export { AnonymousAuthProvider }
 
@@ -280,6 +288,8 @@ export interface IKeyDriverAnalysis {
     labels: string[];
 }
 
+export { ImportCsvRequest }
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
@@ -310,6 +320,8 @@ export const objectTypeToTigerIdType: {
     attributeHierarchy: TigerObjectType;
     widgetAlert: TigerObjectType;
     userGroup: TigerObjectType;
+    dateHierarchyTemplate: TigerObjectType;
+    dateAttributeHierarchy: TigerObjectType;
 };
 
 // @internal (undocumented)
@@ -350,6 +362,8 @@ export type ScanSqlResult = ScanSqlResponse;
 
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+
+export { StagingUploadLocation }
 
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
@@ -461,6 +475,9 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
+    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+    analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
     computeKeyDrivers?: (workspaceId: string, metric: IMeasure, sortDirection: "ASC" | "DESC") => Promise<IKeyDriverAnalysis>;
     processForecastResult?: (workspaceId: string, executionResultId: string, forecastPeriod: number) => Promise<IForecastCacheResult>;
     processClusterResult?: (workspaceId: string, executionResultId: string, numberOfClusters: number) => Promise<IClusteringCacheResult>;

@@ -289,6 +289,12 @@ export interface IChartConfig {
      * @internal
      */
     disableDrillDown?: boolean;
+
+    /**
+     * Use generic interaction tooltip that may include multiple actions
+     * @internal
+     */
+    useGenericInteractionTooltip?: boolean;
 }
 
 /**

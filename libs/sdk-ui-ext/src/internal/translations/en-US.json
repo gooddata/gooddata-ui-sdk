@@ -577,13 +577,13 @@
         "translate": false
     },
     "dashboard.bucket.category_columns_warning._measure": {
-        "value": "To add columns, total count of items from measures or rows should not be higher than {oldLimit}",
-        "comment": "Do not translate {oldLimit}.",
+        "value": "Cannot add columns: limit is {oldLimit} measures and {oldRowsLimit} rows. Follow the limits to add more",
+        "comment": "Do not translate {oldLimit} and {oldRowsLimit}.",
         "limit": 0
     },
     "dashboard.bucket.category_columns_warning._metric": {
-        "value": "To add columns, total count of items from metrics or rows should not be higher than {oldLimit}",
-        "comment": "Do not translate {oldLimit}.",
+        "value": "Cannot add columns: limit is {oldLimit} metrics and {oldRowsLimit} rows. Follow the limits to add more",
+        "comment": "Do not translate {oldLimit} and {oldRowsLimit}.",
         "limit": 0
     },
     "dashboard.bucket.category_measures_rows_warning": {

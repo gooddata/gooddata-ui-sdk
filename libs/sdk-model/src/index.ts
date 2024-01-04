@@ -513,6 +513,7 @@ export {
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
     KpiDrillDefinition,
+    ICrossFiltering,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToAttributeUrl,
@@ -521,6 +522,7 @@ export {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isAttributeHierarchyReference,
+    isCrossFiltering,
 } from "./dashboard/drill.js";
 
 export {
@@ -574,6 +576,7 @@ export {
     ICatalogDateAttribute,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
+    isCatalogDateAttributeHierarchy,
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
@@ -581,6 +584,7 @@ export {
     IGroupableCatalogItemBase,
     GroupableCatalogItem,
     catalogItemMetadataObject,
+    ICatalogDateAttributeHierarchy,
 } from "./ldm/catalog/index.js";
 
 export {
@@ -614,6 +618,7 @@ export {
     attributeDisplayFormMetadataObjectTitle,
     IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
 } from "./ldm/metadata/index.js";
 
 export {
@@ -709,7 +714,14 @@ export {
     IExistingDashboard,
 } from "./dashboard/dashboard.js";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart, IOpenAiConfig } from "./settings/index.js";
+export {
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+    IWhiteLabeling,
+    WeekStart,
+    IOpenAiConfig,
+} from "./settings/index.js";
 
 export { IWorkspaceUserGroup } from "./userGroup/index.js";
 
@@ -807,8 +819,10 @@ export {
     IAvailableUserGroupAccessGrantee,
     IGranularUserAccess,
     IGranularUserGroupAccess,
+    IGranularRulesAccess,
     IGranularUserAccessGrantee,
     IGranularUserGroupAccessGrantee,
+    IGranularRulesAccessGrantee,
     isGranularAccess,
     isAvailableUserGroupAccessGrantee,
     isAvailableUserAccessGrantee,
@@ -818,8 +832,12 @@ export {
     isGranularUserAccess,
     isGranularUserGroupAccess,
     isGranularRulesAccessGrantee,
-    IGranularRulesAccess,
-    IGranularRulesAccessGrantee,
+    WorkspaceAccessPermission,
+    IWorkspaceAccess,
+    IUserWorkspaceAccessGrantee,
+    IUserGroupWorkspaceAccessGrantee,
+    isUserWorkspaceAccessGrantee,
+    isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
 
 export {

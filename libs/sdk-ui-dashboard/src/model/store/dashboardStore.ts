@@ -88,6 +88,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
+    "GDC.DASH/CMD.DRILL.CROSS_FILTERING",
+    "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
+    "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
     "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",
@@ -354,6 +357,9 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                     ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
                     sagaMiddleware,
                 );
+        },
+        devTools: {
+            name: "Dashboard component state",
         },
     });
 

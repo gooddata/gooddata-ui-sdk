@@ -7,6 +7,8 @@ import { Table } from "../../tools/table";
 const regionFilter = new AttributeFilter("Region");
 const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
+const product = new AttributeFilter("Product");
+const stageName = new AttributeFilter("Stage Name");
 const table = new Table(".s-dash-item-0");
 const topBar = new TopBar();
 
@@ -42,6 +44,10 @@ describe("Dependent filter", () => {
             .hasFilterListSize(6)
             .hasSelectedValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
             .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .hasFilterListSize(287)
             .selectAttribute(["Hartford"])
             .apply()
             .isLoaded()
@@ -58,7 +64,38 @@ describe("Dependent filter", () => {
             .hasSubtitle("Hartford")
             .hasFilterListSize(4)
             .hasSelectedValueList([])
-            .hasValueList(["Eugene", "Medford", "Portland", "Salem"]);
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .containElementsListStatus("Hartford")
+            .clearIrrelevantElementValuesIsVisible(true)
+            .clearIrrelevantElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .showAllElementValuesIsVisible(false)
+            .containElementsListStatus("None")
+            .hasFilterListSize(287)
+            .selectAttribute(["New York"])
+            .containElementsListStatus("New York")
+            .close()
+            .open()
+            .hasSubtitle("Hartford")
+            .hasFilterListSize(4)
+            .hasSelectedValueList([])
+            .hasValueList(["Eugene", "Medford", "Portland", "Salem"])
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true)
+            .showAllElementValues()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .close()
+            .open()
+            .searchAndSelectFilterItem("Medford")
+            .containElementsListStatus("Hartford, Medford")
+            .clearIrrelevantElementValues()
+            .clearSearch()
+            .elementsAreLoaded()
+            .hasSelectedValueList(["Medford"]);
 
         stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
 
@@ -143,10 +180,103 @@ describe("Dependent filter", () => {
         table.getColumnValues(1).should("deep.equal", ["California"]);
         table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
 
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["East Coast"])
+            .apply();
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(true)
+            .showAllElementValuesIsVisible(true);
+        regionFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(false)
+            .selectAttribute(["West Coast"])
+            .apply();
+        stateFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .clearIrrelevantElementValuesIsVisible(false)
+            .showAllElementValuesIsVisible(true);
+
         topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
 
         regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
         cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(287);
     });
+
+    it(
+        "child filter can reduce to zero element by parent filter",
+        { tags: "checklist_integrated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
+            product.open().selectAttributesWithoutApply("TouchAll").apply();
+            stageName.open().elementsAreLoaded().hasNoRelevantMessage().showAllElementValuesIsVisible(true);
+            table.isEmpty();
+        },
+    );
+
+    it("can reload elements after unchecking parent filter", { tags: "checklist_integrated_tiger" }, () => {
+        topBar.enterEditMode().editButtonIsVisible(false);
+        stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+        cityFilter
+            .open()
+            .elementsAreLoaded()
+            .hasFilterListSize(5)
+            .configureDependency("State")
+            .elementsAreLoaded()
+            .hasFilterListSize(287);
+    });
+
+    it("can reload elements after removing parent filter", { tags: "checklist_integrated_tiger" }, () => {
+        topBar.enterEditMode().editButtonIsVisible(false);
+        stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+        cityFilter.open().elementsAreLoaded().hasFilterListSize(5);
+        stateFilter.removeFilter();
+        cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
+    });
+
+    it(
+        "should test a circle parent - child filter in edit mode",
+        { tags: "checklist_integrated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
+            cityFilter.open().selectAttribute(["Portland"]).apply();
+
+            stateFilter
+                .open()
+                .elementsAreLoaded()
+                .configureDependency("City")
+                .hasFilterListSize(2)
+                .selectAttribute(["Oregon"])
+                .apply();
+
+            stateFilter
+                .open()
+                .hasFilterListSize(2)
+                .showAllElementValuesIsVisible(true)
+                .showAllElementValues()
+                .close();
+
+            stateFilter.open().showAllElementValuesIsVisible(true);
+            table.waitLoaded().getColumnValues(1).should("deep.equal", ["Oregon"]);
+        },
+    );
 });

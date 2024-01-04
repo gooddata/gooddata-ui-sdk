@@ -11,12 +11,13 @@ const ARROW_OFFSETS = { "bl tl": [-10, 12] };
 interface IAttributeFilterIrrelevantSelectionStatusProps {
     parentFilterTitles: string[];
     irrelevantSelection: IAttributeElement[];
-    onClear: () => void;
+    showClearButton?: boolean;
+    onClear?: () => void;
 }
 
 export const AttributeFilterIrrelevantSelectionStatus: React.FC<
     IAttributeFilterIrrelevantSelectionStatusProps
-> = ({ parentFilterTitles, irrelevantSelection, onClear }) => {
+> = ({ parentFilterTitles, irrelevantSelection, onClear, showClearButton = true }) => {
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -26,7 +27,10 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
     }
 
     return (
-        <Message className="gd-attribute-filter-status-irrelevant-message" type="warning">
+        <Message
+            className="gd-attribute-filter-status-irrelevant-message s-attribute-filter-status-irrelevant-message"
+            type="warning"
+        >
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <FormattedMessage id="attributesDropdown.irrelevantValues" values={{ nbsp: <>&nbsp;</> }} />
                 <Bubble
@@ -43,9 +47,11 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
                     />
                 </Bubble>
             </BubbleHoverTrigger>
-            <span className="gd-action-clear" onClick={onClear}>
-                <FormattedMessage id="attributesDropdown.irrelevantValues.clear" />
-            </span>
+            {showClearButton ? (
+                <span className="gd-action-clear s-action-clear" onClick={onClear}>
+                    <FormattedMessage id="attributesDropdown.irrelevantValues.clear" />
+                </span>
+            ) : null}
         </Message>
     );
 };

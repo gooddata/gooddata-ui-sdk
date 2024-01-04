@@ -104,6 +104,9 @@ export function createAttributeFilterHandlerStore(
                 },
             }).concat([sagaMiddleware, eventListeningMiddleware(context.eventListener)]);
         },
+        devTools: {
+            name: "AttributeFilter state",
+        },
     });
 
     const rootSagaTask = sagaMiddleware.run(rootSaga);

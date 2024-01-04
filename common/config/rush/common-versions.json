@@ -27,7 +27,8 @@
         "typescript": "5.0.2",
 
         // we need correct peer dependency for heroku package in sdk-examples
-        "@opentelemetry/api":"1.4.1"
+        "@opentelemetry/api":"1.4.1",
+        "csstype":"3.1.2"
 
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,

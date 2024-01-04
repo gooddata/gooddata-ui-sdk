@@ -10,6 +10,7 @@ export enum DrillType {
     DRILL_TO_INSIGHT = "drill-to-insight",
     DRILL_TO_URL = "drill-to-url",
     DRILL_DOWN = "drill-down",
+    CROSS_FILTERING = "cross-filtering",
 }
 
 export interface DrillSelectItem {

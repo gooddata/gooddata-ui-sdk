@@ -39,6 +39,8 @@ import {
     ExportInsightWidget,
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
+    ModifyDrillDownForInsightWidget,
+    AttributeHierarchyModified,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -77,6 +79,7 @@ import {
     DrillToInsight,
     DrillToLegacyDashboard,
     ChangeDrillableItems,
+    CrossFiltering,
 } from "./drill.js";
 import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
@@ -247,6 +250,8 @@ export {
     ChangeDrillableItems,
     ChangeDrillableItemsPayload,
     DashboardDrillCommand,
+    CrossFiltering,
+    CrossFilteringPayload,
     drill,
     drillDown,
     drillToAttributeUrl,
@@ -255,6 +260,7 @@ export {
     drillToInsight,
     drillToLegacyDashboard,
     changeDrillableItems,
+    crossFiltering,
 } from "./drill.js";
 
 export {
@@ -336,6 +342,9 @@ export {
     AddDrillDownForInsightWidget,
     AddDrillDownForInsightWidgetPayload,
     addDrillDownForInsightWidget,
+    ModifyDrillDownForInsightWidget,
+    ModifyDrillDownForInsightWidgetPayload,
+    modifyDrillDownForInsightWidget,
     RemoveDrillsSelector,
     RefreshInsightWidget,
     RefreshInsightWidgetPayload,
@@ -343,6 +352,8 @@ export {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     exportInsightWidget,
+    AttributeHierarchyModified,
+    attributeHierarchyModified,
 } from "./insight.js";
 
 export {
@@ -452,5 +463,8 @@ export type DashboardCommands =
     | SetDashboardAttributeFilterConfigMode
     | RemoveDrillDownForInsightWidget
     | AddDrillDownForInsightWidget
+    | ModifyDrillDownForInsightWidget
+    | CrossFiltering
+    | AttributeHierarchyModified
     // fast track
     | PredictionResult;

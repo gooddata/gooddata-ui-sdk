@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component, createRef } from "react";
+import React, { Component, ReactNode, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
@@ -20,8 +20,9 @@ export interface ISingleSelectListItemProps {
     icon?: string;
     type?: SingleSelectListItemType;
     className?: string;
-    info?: string;
-
+    info?: string | ReactNode;
+    eventsOnBubble?: boolean;
+    hideDelayBubble?: number;
     isSelected?: boolean;
 
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -163,9 +164,16 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
             return null;
         }
 
+        const { eventsOnBubble = false, hideDelayBubble } = this.props;
+
         return (
             <div role="item-info" className="gd-list-item-bubble s-list-item-info">
-                <BubbleHoverTrigger tagName="div" showDelay={200} hideDelay={0}>
+                <BubbleHoverTrigger
+                    tagName="div"
+                    showDelay={200}
+                    hideDelay={hideDelayBubble ?? 0}
+                    eventsOnBubble={eventsOnBubble}
+                >
                     <div className="inlineBubbleHelp" />
                     <Bubble
                         className="bubble-primary"

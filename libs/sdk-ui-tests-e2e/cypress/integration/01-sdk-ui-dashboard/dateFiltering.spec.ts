@@ -36,23 +36,17 @@ describe("Date filtering", () => {
         { tags: "checklist_integrated_tiger" },
         () => {
             Navigation.visit("dashboard/dashboard-many-rows-columns");
-            editMode.edit().isInEditMode(true);
             dateFilter
                 .openAndSelectDateFilterByName(DateFilterValue.THIS_YEAR)
                 .apply()
                 .subtitleHasValue(DateFilterValue.THIS_YEAR);
-            editMode.saveButtonEnabled(true).save(true);
-            dateFilter
-                .openAndSelectDateFilterByName(DateFilterValue.ALL_TIME)
-                .apply()
-                .subtitleHasValue(DateFilterValue.ALL_TIME);
             editMode.edit().isInEditMode(true);
-            dateFilter.subtitleHasValue(DateFilterValue.THIS_YEAR);
+            dateFilter.subtitleHasValue(DateFilterValue.ALL_TIME);
         },
     );
 
     it("should display the selected date interval correctly", { tags: "checklist_integrated_tiger" }, () => {
-        Navigation.visit("dashboard/dashboard-many-rows-columns");
+        Navigation.visitCopyOf("dashboard/dashboard-many-rows-columns");
 
         const dateFilterValues = [
             DateFilterValue.THIS_MONTH,
@@ -65,10 +59,6 @@ describe("Date filtering", () => {
             dateFilter.waitDateFilterButtonVisible().openAndSelectDateFilterByName(dateFilterValue).apply();
             editMode.saveButtonEnabled(true).save(true);
             dateFilter.open().hasSelectedDateFilterValue(dateFilterValue);
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
-            dateFilter.waitDateFilterButtonVisible().open().hasSelectedDateFilterValue(dateFilterValue);
-            cy.reload();
-            dateFilter.waitDateFilterButtonVisible().open().hasSelectedDateFilterValue(dateFilterValue);
         });
     });
 

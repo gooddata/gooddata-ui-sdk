@@ -14,21 +14,21 @@ exports[`AttributeFilterHandler > getNextElementsPageStatus() should return prop
 
 exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for successful load > during the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called and there is still running loadInitialElementsPage() 1`] = `"Cannot call loadNextElementsPage() before loadInitialElementsPage() completes."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called and there is still running loadInitialElementsPage() 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() before loadInitialElementsPage() completes.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called before the initialization 1`] = `"Cannot call loadNextElementsPage() before successful initialization."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called before the initialization 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() before successful initialization.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if limit() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if limit() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if order() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if order() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if search() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if search() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingAttributeFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingAttributeFilters() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingDateFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingDateFilters() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
-exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
 exports[`AttributeFilterHandler > loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback > with parameters 1`] = `
 [

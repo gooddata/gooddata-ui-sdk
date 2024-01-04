@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
 
 import React from "react";
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 50 } }];
 
@@ -16,9 +16,9 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  */
 export const AttributeFilterButtonToolip: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     return (
-        <span className="gd-list-item-tooltip">
+        <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
-                <span className="gd-icon-circle-question gd-list-item-tooltip-icon s-attribute-filter-tooltip-icon" />
+                <Icon.QuestionMark height={16} width={14} className={"s-attribute-filter-tooltip-icon"} />
                 <Bubble
                     className="gd-attribute-filter-details s-attribute-filter-details-bubble"
                     alignPoints={bubbleAlignPoints}

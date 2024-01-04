@@ -510,7 +510,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -545,6 +545,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         isLoading={this.isLoading}
                         featureFlags={this.settings}
                         panelConfig={panelConfig}
+                        configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                     />,
                     configPanelElement,
                 );

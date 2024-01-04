@@ -231,7 +231,7 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": ["USE"],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -536,18 +536,12 @@
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "array",
-                        "description": "Column name.",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string",
+                        "description": "Column name."
                     },
                     "message": {
-                        "type": "array",
-                        "description": "Warning message related to the column.",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string",
+                        "description": "Warning message related to the column."
                     }
                 },
                 "description": "Warning related to single column."
@@ -663,18 +657,12 @@
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "array",
-                        "description": "Table name.",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string",
+                        "description": "Table name."
                     },
                     "message": {
-                        "type": "array",
-                        "description": "Warning message related to the table.",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string",
+                        "description": "Warning message related to the table."
                     },
                     "columns": {
                         "type": "array",
@@ -963,7 +951,9 @@
                             "AZURESQL",
                             "SYNAPSESQL",
                             "DATABRICKS",
-                            "GD_STORAGE"
+                            "GDSTORAGE",
+                            "CLICKHOUSE",
+                            "DUCKDB"
                         ]
                     },
                     "url": {

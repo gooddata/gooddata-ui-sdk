@@ -18,6 +18,8 @@ export {
     selectSupportsKeepingDependentFiltersSelection,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectSupportsAttributeHierarchies,
+    selectSupportsSingleSelectDependentFilters,
+    selectSupportsCrossFiltering,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -70,6 +72,7 @@ export {
     selectEnableUnavailableItemsVisibility,
     selectEnableKDDependentFilters,
     selectIsKDDependentFiltersEnabled,
+    selectEnableKDCrossFiltering,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
@@ -98,6 +101,7 @@ export {
     selectCanInviteUserToWorkspace,
     selectCanRefreshData,
     selectCanManageScheduledMail,
+    selectCanManageAttributeHierarchy,
 } from "./permissions/permissionsSelectors.js";
 export { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 export {
@@ -125,6 +129,7 @@ export {
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
     selectCanAddMoreAttributeFilters,
+    selectIsAttributeFilterDependentByDisplayForm,
 } from "./filterContext/filterContextSelectors.js";
 export {
     // Core drills
@@ -208,9 +213,20 @@ export {
     selectHasCatalogFacts,
     selectCatalogAttributeHierarchies,
     selectCatalogDateAttributes,
+    selectDateHierarchyTemplates,
+    selectAdhocDateHierarchies,
+    selectAllCatalogAttributeHierarchies,
 } from "./catalog/catalogSelectors.js";
-export { selectDrillableItems } from "./drill/drillSelectors.js";
+export { catalogActions } from "./catalog/index.js";
+export { drillActions } from "./drill/index.js";
+export {
+    selectDrillableItems,
+    selectCrossFilteringItems,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+} from "./drill/drillSelectors.js";
 export { DrillState } from "./drill/drillState.js";
+export { ICrossFilteringItem } from "./drill/types.js";
 export { AlertsState } from "./alerts/alertsState.js";
 export {
     selectAlerts,

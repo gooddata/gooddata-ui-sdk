@@ -6,6 +6,7 @@ import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 import { AddUserGroup } from "./UserGroups/AddUserGroup.js";
 import { IGrantedUserGroup } from "./types.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedUserGroups: IGrantedUserGroup[] = [];
@@ -13,17 +14,14 @@ const noGrantedUserGroups: IGrantedUserGroup[] = [];
 /**
  * @internal
  */
-export interface IAddUserGroupsToUsersDialogProps {
+export interface IAddUserGroupsToUsersDialogProps extends IWithTelemetryProps {
     userIds: string[];
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const AddUserGroupsToUsersDialog: React.FC<IAddUserGroupsToUsersDialogProps> = ({
+const AddUserGroupsToUsersDialogComponent: React.FC<IAddUserGroupsToUsersDialogProps> = ({
     userIds,
     organizationId,
     onSuccess,
@@ -44,3 +42,8 @@ export const AddUserGroupsToUsersDialog: React.FC<IAddUserGroupsToUsersDialogPro
         </OrganizationIdProvider>
     );
 };
+
+/**
+ * @internal
+ */
+export const AddUserGroupsToUsersDialog = withTelemetry(AddUserGroupsToUsersDialogComponent);

@@ -27,13 +27,14 @@ import { UserGroupDetailsView } from "./Details/UserGroupDetailsView.js";
 import { UsersList } from "./Users/UsersList.js";
 import { extractUserGroupName } from "./utils.js";
 import { UserGroupEditDialogMode } from "./types.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
 /**
  * @internal
  */
-export interface IUserGroupEditDialogProps {
+export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     userGroupId: string;
     organizationId: string;
     isAdmin: boolean;
@@ -42,10 +43,7 @@ export interface IUserGroupEditDialogProps {
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
+const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     userGroupId,
     organizationId,
     isAdmin,
@@ -81,7 +79,7 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         onSuccess,
         onClose,
     );
-    const { isBootstrapUserGroup } = useOrganizationDetails(organizationId);
+    const { isBootstrapUserGroup, bootstrapUserId } = useOrganizationDetails(organizationId);
 
     const { editButtonText, editButtonMode, editButtonIconClassName } = useMemo(() => {
         if (selectedTabId.id === userGroupDialogTabsMessages.workspaces.id) {
@@ -169,7 +167,13 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
                                 />
                             )}
                             {selectedTabId.id === userGroupDialogTabsMessages.users.id && (
-                                <UsersList users={grantedUsers} mode="VIEW" onDelete={removeGrantedUsers} />
+                                <UsersList
+                                    users={grantedUsers}
+                                    mode="VIEW"
+                                    onDelete={removeGrantedUsers}
+                                    isBootstrapUserGroup={isBootstrapUserGroup(userGroup)}
+                                    bootstrapUserId={bootstrapUserId}
+                                />
                             )}
                             {selectedTabId.id === userGroupDialogTabsMessages.details.id && (
                                 <UserGroupDetailsView userGroup={userGroup} mode="VIEW" />
@@ -211,3 +215,8 @@ export const UserGroupEditDialog: React.FC<IUserGroupEditDialogProps> = ({
         </OrganizationIdProvider>
     );
 };
+
+/**
+ * @internal
+ */
+export const UserGroupEditDialog = withTelemetry(UserGroupEditDialogComponent);

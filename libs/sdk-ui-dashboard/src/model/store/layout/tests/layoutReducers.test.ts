@@ -89,7 +89,12 @@ describe("layout slice reducer", () => {
                     ref: SimpleSortedTableWidgetRef,
                     drillDefinitions: drills,
                     undo: {
-                        cmd: modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, "correlation"),
+                        cmd: modifyDrillsForInsightWidget(
+                            SimpleSortedTableWidgetRef,
+                            drills,
+                            [],
+                            "correlation",
+                        ),
                     },
                 });
 
@@ -112,7 +117,7 @@ describe("layout slice reducer", () => {
         };
 
         it("should correctly handle replace widget blacklist hierarchies and create undo entry", () => {
-            const attribute = (ignoredHierarchies[0] as IAttributeHierarchyReference).label;
+            const attribute = (ignoredHierarchies[0] as IAttributeHierarchyReference).attribute;
             const hierarchy = (ignoredHierarchies[0] as IAttributeHierarchyReference).attributeHierarchy;
             const initialState = createLayoutSliceInitialState(SimpleDashboardLayout);
             const newState = produce(initialState, (draft) => {
@@ -123,6 +128,7 @@ describe("layout slice reducer", () => {
                         cmd: addDrillDownForInsightWidget(
                             SimpleSortedTableWidgetRef,
                             attribute,
+                            "identifier",
                             hierarchy,
                             "correlation",
                         ),

@@ -29,6 +29,7 @@ export class Plugin extends DashboardPluginV1 {
     public readonly version = entryPoint.version;
     public readonly minEngineVersion = entryPoint.minEngineVersion;
     public readonly maxEngineVersion = entryPoint.maxEngineVersion;
+    public readonly compatibility = entryPoint.compatibility;
 
     public onPluginLoaded(_ctx: DashboardContext, _parameters?: string): Promise<void> | void {
         /*

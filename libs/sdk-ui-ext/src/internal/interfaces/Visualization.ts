@@ -1,4 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
+import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -55,11 +56,22 @@ export interface IVisConstruct {
     unmountFun: UnmountFunction;
 }
 
+/**
+ * @internal
+ */
+export interface IConfigurationPanelRenderers {
+    InteractionsDetailRenderer?: () => React.ReactNode;
+}
+
+/**
+ * @internal
+ */
 export interface ICustomProps {
     drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
     lastSavedVisClassUrl?: string;
     sourceInsightId?: string;
+    configurationPanelRenderers?: IConfigurationPanelRenderers;
 }
 
 export interface IDimensions {

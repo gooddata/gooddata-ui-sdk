@@ -15,7 +15,7 @@ The Dashboard component is a highly customizable component that renders dashboar
 
 The Dashboard component:
 
-* Allows you to embed a dashboard natively in React in view mode (similarly to [InsightView](../../../learn/visualize_data/insightview/) for visualizations)
+* Allows you to embed a dashboard natively in React (similarly to [InsightView](../../../learn/visualize_data/insightview/) for visualizations)
 * Provides mechanisms to allow you to integrate it with the rest of your application
 * Allows you to customize the way the dashboard is rendered: you can alter the layout and change the way particular widgets are rendered 
 

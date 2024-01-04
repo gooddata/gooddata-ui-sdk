@@ -11,6 +11,7 @@ import {
 import {
     IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
 } from "./attributeHierarchy/index.js";
 import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
 import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
@@ -55,6 +56,7 @@ export {
     attributeDisplayFormMetadataObjectTitle,
     IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
 };
 
 /**

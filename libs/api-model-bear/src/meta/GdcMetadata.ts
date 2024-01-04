@@ -52,7 +52,9 @@ export type ObjectCategory =
     | "colorPalette"
     | "attributeHierarchy"
     | "user"
-    | "userGroup";
+    | "userGroup"
+    | "dateHierarchyTemplate"
+    | "dateAttributeHierarchy";
 
 /**
  * @public

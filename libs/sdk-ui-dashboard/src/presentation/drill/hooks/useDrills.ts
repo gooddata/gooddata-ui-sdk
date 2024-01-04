@@ -15,6 +15,9 @@ import {
     OnDrillToCustomUrlSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
+    OnCrossFiltering,
+    OnCrossFilteringSuccess,
+    OnCrossFilteringError,
 } from "../types.js";
 import { useDrill } from "./useDrill.js";
 import { useDrillDown } from "./useDrillDown.js";
@@ -23,6 +26,7 @@ import { useDrillToDashboard } from "./useDrillToDashboard.js";
 import { useDrillToAttributeUrl } from "./useDrillToAttributeUrl.js";
 import { useDrillToCustomUrl } from "./useDrillToCustomUrl.js";
 import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard.js";
+import { useCrossFiltering } from "./useCrossFiltering.js";
 
 /**
  * @internal
@@ -55,6 +59,10 @@ export interface UseDrillsProps {
     onDrillToLegacyDashboard?: OnDrillToLegacyDashboard;
     onDrillToLegacyDashboardSuccess?: OnDrillToLegacyDashboardSuccess;
     onDrillToLegacyDashboardError?: OnDashboardDrillError;
+    //
+    onCrossFiltering?: OnCrossFiltering;
+    onCrossFilteringSuccess?: OnCrossFilteringSuccess;
+    onCrossFilteringError?: OnCrossFilteringError;
     // Common error handler
     onError?: OnDashboardDrillError;
 }
@@ -90,6 +98,10 @@ export function useDrills({
     onDrillToLegacyDashboard,
     onDrillToLegacyDashboardSuccess,
     onDrillToLegacyDashboardError,
+    //
+    onCrossFiltering,
+    onCrossFilteringSuccess,
+    onCrossFilteringError,
     //
     onError,
 }: UseDrillsProps) {
@@ -135,6 +147,12 @@ export function useDrills({
         onError: onDrillToLegacyDashboardError ?? onError,
     });
 
+    const crossFiltering = useCrossFiltering({
+        onBeforeRun: onCrossFiltering,
+        onSuccess: onCrossFilteringSuccess,
+        onError: onCrossFilteringError ?? onError,
+    });
+
     return {
         drill,
         drillDown,
@@ -143,5 +161,6 @@ export function useDrills({
         drillToAttributeUrl,
         drillToCustomUrl,
         drillToLegacyDashboard,
+        crossFiltering,
     };
 }

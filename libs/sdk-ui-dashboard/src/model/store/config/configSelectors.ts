@@ -544,7 +544,7 @@ export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelec
 export const selectEnableAttributeHierarchies: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableAttributeHierarchies ?? false;
+        return state.settings?.enableAttributeHierarchies ?? true;
     },
 );
 
@@ -559,8 +559,20 @@ export const selectEnableAttributeHierarchies: DashboardSelector<boolean> = crea
 export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelector(
     selectEnableKPIDashboardImplicitDrillDown,
     selectEnableAttributeHierarchies,
-    (isKPIDashboardImplicitDrillDownEnabled, isAttribueHierarchiesEnabled) => {
-        return isKPIDashboardImplicitDrillDownEnabled || isAttribueHierarchiesEnabled;
+    (isKPIDashboardImplicitDrillDownEnabled, isAttributeHierarchiesEnabled) => {
+        return isKPIDashboardImplicitDrillDownEnabled || isAttributeHierarchiesEnabled;
+    },
+);
+
+/**
+ * Returns whether KD cross filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDCrossFiltering ?? false;
     },
 );
 

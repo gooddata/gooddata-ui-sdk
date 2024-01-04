@@ -2,7 +2,7 @@
 
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-import React from "react";
+import React, { ReactNode } from "react";
 import { IAlignPoint } from "../typings/positioning.js";
 import { useIntl } from "react-intl";
 
@@ -34,7 +34,10 @@ export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
         if (!showBubble || !bubbleTextId) {
             return <WrappedComponent {...props} />;
         }
-        const bubbleText = intl.formatMessage({ id: bubbleTextId });
+        const bubbleText = intl.formatMessage(
+            { id: bubbleTextId },
+            { strong: (chunks: ReactNode) => <strong>{chunks}</strong> },
+        );
 
         return (
             <BubbleHoverTrigger className={triggerClassName}>

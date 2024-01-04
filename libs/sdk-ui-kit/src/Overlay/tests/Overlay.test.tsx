@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, forwardRef, createRef } from "react";
+// eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 
@@ -80,6 +81,7 @@ describe("Overlay", () => {
     function renderOverlaySetup(where: HTMLDivElement, props = {}): React.RefObject<unknown> {
         const ref = createRef();
 
+        // eslint-disable-next-line react/no-deprecated
         ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
 
         return ref;

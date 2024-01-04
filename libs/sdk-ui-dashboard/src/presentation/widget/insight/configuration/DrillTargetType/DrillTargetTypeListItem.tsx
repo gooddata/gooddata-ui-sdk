@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import noop from "lodash/noop.js";
 import cx from "classnames";
 import {
@@ -8,6 +8,7 @@ import {
     BubbleHoverTrigger,
     Bubble,
 } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
 
 import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
 
@@ -27,6 +28,7 @@ const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
     isSelected,
     onClick,
 }) => {
+    const { formatMessage } = useIntl();
     const handleClick = item.disabled ? noop : onClick;
     const className = cx(icon, {
         "is-disabled s-is-disable": item.disabled,
@@ -37,6 +39,20 @@ const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
             <SingleSelectListItem
                 className={className}
                 title={item.title}
+                info={formatMessage(
+                    { id: item.tooltipMessage },
+                    {
+                        a: (chunk: ReactNode) => {
+                            return item.documentUrl ? (
+                                <a href={item.documentUrl} target="_blank" rel="noreferrer">
+                                    {chunk}
+                                </a>
+                            ) : null;
+                        },
+                    },
+                )}
+                eventsOnBubble={true}
+                hideDelayBubble={100}
                 isSelected={isSelected}
                 onClick={handleClick}
             />

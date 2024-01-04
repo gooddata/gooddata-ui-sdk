@@ -58,6 +58,14 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableKDDependentFilters = "enableKDDependentFilters",
     //boolean + possible values: enabled, disabled
+    EnableKDSavedFilters = "enableKDSavedFilters",
+    //boolean + possible values: enabled, disabled
+    EnableClickHouseDataSource = "enableClickHouseDataSource",
+    //boolean + possible values: enabled, disabled
+    EnableCsvAnalytics = "enableCsvAnalytics",
+    //boolean + possible values: enabled, disabled
+    EnableKDCrossFiltering = "enableKDCrossFiltering",
+    //boolean + possible values: enabled, disabled
     EnableAdvancedMachineLearningIntegration = "enableAdvancedMachineLearningIntegration",
 }
 
@@ -87,7 +95,11 @@ export type ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
     enableKDDependentFilters: typeof FeatureFlagsValues["enableKDDependentFilters"][number];
-    enableAdvancedMachineLearningIntegration: typeof FeatureFlagsValues["enableAdvancedMachineLearningIntegration"][number]
+    enableKDSavedFilters: typeof FeatureFlagsValues["enableKDSavedFilters"][number];
+    enableClickHouseDataSource: typeof FeatureFlagsValues["enableClickHouseDataSource"][number];
+    enableCsvAnalytics: typeof FeatureFlagsValues["enableCsvAnalytics"][number];
+    enableKDCrossFiltering: typeof FeatureFlagsValues["enableKDCrossFiltering"][number];
+    enableAdvancedMachineLearningIntegration: typeof FeatureFlagsValues["enableAdvancedMachineLearningIntegration"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -111,11 +123,15 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
     enableNewHeadline: true,
-    enableAttributeHierarchies: false,
+    enableAttributeHierarchies: true,
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
-    enableUserManagement: false,
+    enableUserManagement: true,
     enableKDDependentFilters: false,
+    enableKDSavedFilters: false,
+    enableClickHouseDataSource: false,
+    enableCsvAnalytics: false,
+    enableKDCrossFiltering: false,
     enableAdvancedMachineLearningIntegration: false,
 };
 
@@ -149,5 +165,9 @@ export const FeatureFlagsValues = {
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
     enableKDDependentFilters: [true, false] as const,
+    enableKDSavedFilters: [true, false] as const,
+    enableClickHouseDataSource: [true, false] as const,
+    enableCsvAnalytics: [true, false] as const,
+    enableKDCrossFiltering: [true, false] as const,
     enableAdvancedMachineLearningIntegration: [true, false] as const,
 };

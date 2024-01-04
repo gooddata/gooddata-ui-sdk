@@ -10,7 +10,7 @@
     "type": "module",
     "browser": "./esm/index.js",
     "exports": {
-        ".":"./esm/index.js"
+        ".": "./esm/index.js"
     },
     "types": "./esm/index.d.ts",
     "sideEffects": false,
@@ -71,6 +71,6 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "~2.5.0",
         "typescript": "5.0.2",
-        "vitest": "0.31.4"
+        "vitest": "1.0.4"
     }
 }

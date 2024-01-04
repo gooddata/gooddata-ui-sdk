@@ -1587,7 +1587,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -2062,7 +2062,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -2537,7 +2537,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -5148,7 +5148,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -5623,7 +5623,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -6098,7 +6098,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -6573,7 +6573,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -7048,7 +7048,7 @@ BearWorkspaceCatalogWithAvailableItems {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -10217,7 +10217,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -10692,7 +10692,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -11167,7 +11167,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -11642,7 +11642,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -12117,7 +12117,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -13256,7 +13256,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -13440,7 +13440,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -13624,7 +13624,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -13808,7 +13808,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -13992,7 +13992,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -14176,7 +14176,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -18098,7 +18098,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -18282,7 +18282,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -18466,7 +18466,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -18650,7 +18650,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -18834,7 +18834,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -19018,7 +19018,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -20815,7 +20815,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -20999,7 +20999,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -21183,7 +21183,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -21367,7 +21367,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -21551,7 +21551,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -21735,7 +21735,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -23532,7 +23532,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -23716,7 +23716,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -23900,7 +23900,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -24084,7 +24084,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -24268,7 +24268,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -24452,7 +24452,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -26249,7 +26249,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -26433,7 +26433,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -26617,7 +26617,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -26801,7 +26801,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -26985,7 +26985,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -27169,7 +27169,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -29264,7 +29264,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -31337,7 +31337,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -31965,7 +31965,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -32593,7 +32593,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -33221,7 +33221,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -33577,7 +33577,7 @@ BearWorkspaceCatalog {
       "activity.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -34033,7 +34033,7 @@ BearWorkspaceCatalog {
       "closed.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -34489,7 +34489,7 @@ BearWorkspaceCatalog {
       "created.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -34945,7 +34945,7 @@ BearWorkspaceCatalog {
       "snapshot.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -35401,7 +35401,7 @@ BearWorkspaceCatalog {
       "timeline.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -38746,7 +38746,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -39765,7 +39765,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -40784,7 +40784,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -41803,7 +41803,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -42822,7 +42822,7 @@ BearWorkspaceCatalog {
         {
           "attribute": {
             "deprecated": false,
-            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "displayForms": [
               {
                 "attribute": {
@@ -44048,7 +44048,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -44232,7 +44232,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -44416,7 +44416,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -44600,7 +44600,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -44784,7 +44784,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -44968,7 +44968,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -48128,7 +48128,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -48312,7 +48312,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -48496,7 +48496,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -48680,7 +48680,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -48864,7 +48864,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -49048,7 +49048,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -52208,7 +52208,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -52392,7 +52392,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -52576,7 +52576,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -52760,7 +52760,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -52944,7 +52944,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -53128,7 +53128,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -56288,7 +56288,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -56472,7 +56472,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -56656,7 +56656,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -56840,7 +56840,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -57024,7 +57024,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -57208,7 +57208,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -60368,7 +60368,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -60552,7 +60552,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -60736,7 +60736,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -60920,7 +60920,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -61104,7 +61104,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -61288,7 +61288,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -65260,7 +65260,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "activity.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Activity)",
             "updated": "2019-12-10 14:25:38",
@@ -66604,7 +66604,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "closed.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Closed)",
             "updated": "2019-12-10 14:25:36",
@@ -67948,7 +67948,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "created.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Created)",
             "updated": "2019-12-10 14:25:35",
@@ -69292,7 +69292,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "snapshot.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Snapshot)",
             "updated": "2019-12-10 14:25:37",
@@ -70636,7 +70636,7 @@ BearWorkspaceCatalog {
             "deprecated": "0",
             "identifier": "timeline.week",
             "isProduction": 1,
-            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "summary": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
             "tags": "date week",
             "title": "Week (Sun-Sat)/Year (Timeline)",
             "updated": "2019-12-10 14:25:39",
@@ -71562,7 +71562,7 @@ BearWorkspaceCatalog {
       "activity.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -72562,7 +72562,7 @@ BearWorkspaceCatalog {
       "closed.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -73562,7 +73562,7 @@ BearWorkspaceCatalog {
       "created.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -74562,7 +74562,7 @@ BearWorkspaceCatalog {
       "snapshot.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
@@ -75562,7 +75562,7 @@ BearWorkspaceCatalog {
       "timeline.week": {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {
