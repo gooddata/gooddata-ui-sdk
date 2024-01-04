@@ -38,6 +38,7 @@ import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
+import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
@@ -211,6 +212,8 @@ export interface IAttributeElementExpressionToken {
 // @alpha
 export interface IAttributeHierarchiesService {
     createAttributeHierarchy(title: string, attributes: ObjRef[]): Promise<ICatalogAttributeHierarchy>;
+    deleteAttributeHierarchy(attributeHierarchyId: string): Promise<void>;
+    getDateHierarchyTemplates(): Promise<IDateHierarchyTemplate[]>;
     getValidDescendants(attributes: ObjRef[]): Promise<ObjRef[]>;
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
@@ -257,6 +260,7 @@ export interface IBackendCapabilities {
     supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;
+    supportsCrossFiltering?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
@@ -283,6 +287,7 @@ export interface IBackendCapabilities {
     supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;
     supportsShowingFilteredElements?: boolean;
+    supportsSingleSelectDependentFilters?: boolean;
     supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;

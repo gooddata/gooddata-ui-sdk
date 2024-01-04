@@ -6,21 +6,19 @@ import { useIntl } from "react-intl";
 import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUser } from "./dialogHooks.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal
  */
-export interface IDeleteUserDialogProps {
+export interface IDeleteUserDialogProps extends IWithTelemetryProps {
     userId: string;
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
+const DeleteUserDialogComponent: React.FC<IDeleteUserDialogProps> = ({
     userId,
     organizationId,
     onSuccess,
@@ -38,3 +36,8 @@ export const DeleteUserDialog: React.FC<IDeleteUserDialogProps> = ({
         />
     );
 };
+
+/**
+ * @internal
+ */
+export const DeleteUserDialog = withTelemetry(DeleteUserDialogComponent);

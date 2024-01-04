@@ -1,11 +1,10 @@
 // (C) 2022 GoodData Corporation
-import React, { useRef } from "react";
+import React, { RefObject, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
 import { useDashboardSelector, selectLocale, selectIsInEditMode } from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { IDashboardProps } from "../types.js";
-import { DashboardMainContent } from "./DashboardMainContent.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import {
@@ -18,10 +17,11 @@ import {
 import { Toolbar } from "../../toolbar/index.js";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
+import { DashboardContent } from "../DashboardContent.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const DashboardInner: React.FC<IDashboardProps> = () => {
+export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
 
@@ -58,7 +58,12 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
                                 <DashboardHeader />
                             </OverlayControllerProvider>
                         </div>
-                        <DashboardMainContent ref={layoutRef} />
+                        <div
+                            className="gd-flex-item-stretch dash-section dash-section-kpis"
+                            ref={layoutRef as RefObject<HTMLDivElement>}
+                        >
+                            <DashboardContent {...props} />
+                        </div>
                         <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
                     </div>
                 </div>

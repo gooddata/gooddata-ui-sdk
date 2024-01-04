@@ -56,6 +56,10 @@ export {
     GenerateLdmRequest,
     ApiEntitlement,
     ApiEntitlementNameEnum,
+    StagingUploadLocation,
+    AnalyzeCsvRequest,
+    AnalyzeCsvResponse,
+    ImportCsvRequest,
 } from "@gooddata/api-client-tiger";
 export {
     ContextDeferredAuthProvider,

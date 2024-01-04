@@ -8,8 +8,14 @@ import {
     InsightParametersSection,
 } from "./CustomUrlEditorParametersSections/InsightParametersSection.js";
 import { IIdentifierParametersSectionProps } from "./types.js";
+import {
+    DashboardParametersSection,
+    IDashboardParametersSectionProps,
+} from "./CustomUrlEditorParametersSections/DashboardParametersSection.js";
 
-type IParametersPanelProps = IInsightParametersSectionProps & IIdentifierParametersSectionProps;
+type IParametersPanelProps = IInsightParametersSectionProps &
+    IIdentifierParametersSectionProps &
+    IDashboardParametersSectionProps;
 
 export const ParametersPanel: React.FC<IParametersPanelProps> = ({
     attributeDisplayForms,
@@ -19,6 +25,8 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
     enableWidgetIdParameter,
     onAdd,
     intl,
+    dashboardFilters,
+    insightFilters,
 }) => (
     <div>
         <label className="gd-label">
@@ -36,7 +44,9 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
                 loadingAttributeDisplayForms={loadingAttributeDisplayForms}
                 onAdd={onAdd}
                 intl={intl}
+                insightFilters={insightFilters}
             />
+            <DashboardParametersSection intl={intl} onAdd={onAdd} dashboardFilters={dashboardFilters} />
             <IdentifierParametersSection
                 enableClientIdParameter={enableClientIdParameter}
                 enableDataProductIdParameter={enableDataProductIdParameter}

@@ -265,6 +265,7 @@ class DrillConfigItem {
 
     remove() {
         this.getElement().find(".s-drill-config-item-delete").click();
+        return this;
     }
 
     clickTargetUrlButton() {

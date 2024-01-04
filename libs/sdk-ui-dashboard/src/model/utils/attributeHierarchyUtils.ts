@@ -1,5 +1,6 @@
 // (C) 2023 GoodData Corporation
 
+import isEqual from "lodash/isEqual.js";
 import {
     areObjRefsEqual,
     IDrillDownReference,
@@ -14,16 +15,16 @@ import {
 export function existBlacklistHierarchyPredicate(
     reference: IDrillDownReference,
     attributeHierarchyRef: ObjRef,
-    attributeIdentifier?: string,
+    attributeIdentifier?: ObjRef,
 ): boolean {
     if (isAttributeHierarchyReference(reference)) {
         return (
             areObjRefsEqual(reference.attributeHierarchy, attributeHierarchyRef) &&
-            objRefToString(reference.label) === attributeIdentifier
+            areObjRefsEqual(reference.attribute, attributeIdentifier)
         );
     }
     return (
-        areObjRefsEqual(reference.dateHierarchyTemplate, attributeHierarchyRef) &&
-        objRefToString(reference.dateDatasetAttribute) === attributeIdentifier
+        isEqual(objRefToString(reference.dateHierarchyTemplate), objRefToString(attributeHierarchyRef)) &&
+        areObjRefsEqual(reference.dateDatasetAttribute, attributeIdentifier)
     );
 }

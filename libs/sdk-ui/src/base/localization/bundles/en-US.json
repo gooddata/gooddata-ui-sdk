@@ -356,6 +356,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.tooltip.generic.interaction": {
+        "value": "Click to drill or filter",
+        "comment": "",
+        "limit": 0
+    },
     "gs.filterLabel.all": {
         "value": "All",
         "comment": "",
@@ -2141,226 +2146,24 @@
         "comment": "The button title which will display less description text.",
         "limit": 0
     },
-    "workspaceHierarchy.lockedInsight|insight": {
-        "value": "Only Admins can save changes to this insight.",
-        "comment": "Shown when hovering over lock indicator.",
-        "limit": 0
-    },
-    "workspaceHierarchy.lockedInsight|report": {
-        "value": "Only Admins can save changes to this report.",
-        "comment": "Shown when hovering over lock indicator.",
-        "translate": false,
-        "limit": 0
-    },
-    "workspaceHierarchy.inheritedInsight|insight": {
-        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
-        "limit": 0
-    },
-    "workspaceHierarchy.inheritedInsight|report": {
-        "value": "You cannot edit or delete this report.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
-        "translate": false,
-        "limit": 0
-    },
-    "userGroupDialog.workspace.noMatchingItems": {
-        "value": "No matching workspaces.",
-        "comment": "Information shown to the user when query in search input does no match any workspace.",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.searchPlaceholder": {
-        "value": "Search workspaces",
-        "comment": "Placeholder of empty workspace dialog search input.",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.searchError": {
-        "value": "Failed to load workspaces. Try again later.",
-        "comment": "Error message shown to the user when query in search input failed",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.emptySelection.view": {
-        "value": "This user does not have any members.{br}Add one now.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.emptySelection.edit": {
-        "value": "No workspace selected.",
-        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.title": {
-        "value": "Add workspace permission",
-        "comment": "Title of dialog used for granting workspace permission to users or user groups.",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.addButton": {
-        "value": "Add",
-        "comment": "Title of confirm button of grant workspace permission dialog",
-        "limit": 0
-    },
-    "userGroupDialog.tab.workspaces": {
-        "value": "Permission to workspaces",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.tab.groups": {
-        "value": "Groups",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.tab.details": {
-        "value": "Details",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.addWorkspace": {
-        "value": "Add permission",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.addToGroup": {
-        "value": "Add to group",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.edit": {
-        "value": "Edit",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.deleteUser": {
-        "value": "Delete",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.buttons.close": {
-        "value": "Close",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.removeSuccess": {
-        "value": "Great! We deleted the permission!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.removeError": {
-        "value": "Deletion of the permission failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.addSuccess": {
-        "value": "Great! We added the permission(s)!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.addError": {
-        "value": "Added of the permission(s) failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.changeSuccess": {
-        "value": "Great! We changed the permission(s)!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.changeError": {
-        "value": "Change of the permission(s) failed!",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.yes": {
-        "value": "Hierarchy bellow",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.yes.tooltip": {
-        "value": "Apply permission also to all child workspaces of this workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.no": {
-        "value": "This workspace",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.hierarchicalPermission.no.tooltip": {
-        "value": "Apply permission only on this workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.view": {
-        "value": "View",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.view.tooltip": {
-        "value": "Allow to view the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.viewExport": {
-        "value": "View & Export",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.viewExport.tooltip": {
-        "value": "Allow to view and export the objects from the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyze": {
-        "value": "Analyze",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyze.tooltip": {
-        "value": "Allow to analyze the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyzeExport": {
-        "value": "Analyze & Export",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.analyzeExport.tooltip": {
-        "value": "Allow to analyze and export the objects from the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.manage": {
-        "value": "Manage",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.manage.tooltip": {
-        "value": "Allow to manage the objects in the workspace.",
-        "comment": "",
-        "limit": 0
-    },
-    "userGroupDialog.workspace.permission.remove": {
-        "value": "Remove",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.drillConfig.learn.more.link": {
         "value": "Learn more",
         "comment": "Link with additional info",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToDashboard.tooltip": {
-        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context.",
-        "comment": "Tooltip that explain what happens when drilling to dashboard",
+        "value": "Open a related dashboard for an expanded view on the selected data point, carrying over relevant filters and context. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to dashboard. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToInsight.tooltip": {
-        "value": "Open a related insight, maintaining the applied filters from the original view.",
-        "comment": "Tooltip that explain what happens when drilling to insight",
+        "value": "Open a related insight, maintaining the applied filters from the original view. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to insight. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToUrl.tooltip": {
-        "value": "Open a custom URL with dynamic parameters based on the selected data point.",
-        "comment": "Tooltip that explain what happens when drilling to custom URL",
+        "value": "Open a custom URL with dynamic parameters based on the selected data point. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to custom URL. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown": {
@@ -2369,8 +2172,8 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip": {
-        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level.",
-        "comment": "Tooltip that explain what happens when drilling down",
+        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling down. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
@@ -2479,8 +2282,8 @@
         "limit": 0
     },
     "attributeHierarchyEditor.note.message": {
-        "value": "Hierarchy is applied to all visualizations containing one of its attribute.",
-        "comment": "Information shown in create hierarchy editor",
+        "value": "<b>Note:</b> The attribute hierarchy you define is applied globally to all visualizations. This enables drill down interactions not just for the {br}current visualization, but for all visualizations that include any of the attributes within the hierarchy.",
+        "comment": "Information shown in create hierarchy editor. Do not translate html tags <b>, </b> and {br}.",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.title": {
@@ -2491,6 +2294,36 @@
     "attributeHierarchyEditor.howItWorks.message.heading": {
         "value": "Hierarchy is applied to all visualizations.",
         "comment": "Text in description section",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.create.success": {
+        "value": "Great! We created the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is created successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.update.success": {
+        "value": "Great! We saved the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is updated successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.delete.success": {
+        "value": "Great! We deleted the attribute hierarchy!",
+        "comment": "The toast message will be shown when the attribute hierarchy is deleted successfully.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.create.failed": {
+        "value": "Failed to create. Try again later.",
+        "comment": "The toast message will be shown when create the attribute hierarchy is failed.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.update.failed": {
+        "value": "Failed to save. Try again later.",
+        "comment": "The toast message will be shown when save the attribute hierarchy is failed.",
+        "limit": 0
+    },
+    "attributeHierarchyEditor.message.delete.failed": {
+        "value": "Failed to delete. Try again later.",
+        "comment": "The toast message will be shown when delete the attribute hierarchy is failed.",
         "limit": 0
     },
     "attributeHierarchyEditor.howItWorks.message.content": {
@@ -2606,7 +2439,7 @@
         "limit": 0
     },
     "userManagement.tab.workspaces": {
-        "value": "Permission ({count})",
+        "value": "Permissions ({count})",
         "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
         "limit": 0
     },
@@ -3125,6 +2958,11 @@
         "comment": "Tooltip on button that removes particular user from the user group.",
         "limit": 0
     },
+    "userManagement.users.removeUserFromGroupDisabledTooltip": {
+        "value": "This user cannot be removed the group.",
+        "comment": "Tooltip shown over button that remove user from the user group if the action is disabled.",
+        "limit": 0
+    },
     "userManagement.users.removeUserFromSelection": {
         "value": "Remove.",
         "comment": "Label of action that removes selected user.",
@@ -3228,6 +3066,186 @@
     "userManagement.createUserGroup.inputPlaceholder": {
         "value": "Name",
         "comment": "Placeholder shown in input box where user types name of a new user group.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.noMatchingItems": {
+        "value": "No matching workspaces.",
+        "comment": "Information shown to the user when query in search input does no match any workspace.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchPlaceholder": {
+        "value": "Search workspaces",
+        "comment": "Placeholder of empty workspace dialog search input.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.searchError": {
+        "value": "Failed to load workspaces. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.view": {
+        "value": "This user does not have any members.{br}Add one now.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.emptySelection.edit": {
+        "value": "No workspace selected.",
+        "comment": "Information message shown when there is no workspace in grantees list in share dialog.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.title": {
+        "value": "Add workspace permission",
+        "comment": "Title of dialog used for granting workspace permission to users or user groups.",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addButton": {
+        "value": "Add",
+        "comment": "Title of confirm button of grant workspace permission dialog",
+        "limit": 0
+    },
+    "userGroupDialog.tab.workspaces": {
+        "value": "Permission to workspaces",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.groups": {
+        "value": "Groups",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.tab.details": {
+        "value": "Details",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addWorkspace": {
+        "value": "Add permission",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.addToGroup": {
+        "value": "Add to group",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.deleteUser": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.buttons.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeSuccess": {
+        "value": "Great! We deleted the permission!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.removeError": {
+        "value": "Deletion of the permission failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addSuccess": {
+        "value": "Great! We added the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.addError": {
+        "value": "Added of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeSuccess": {
+        "value": "Great! We changed the permission(s)!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.changeError": {
+        "value": "Change of the permission(s) failed!",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes": {
+        "value": "Hierarchy bellow",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.yes.tooltip": {
+        "value": "Apply permission also to all child workspaces of this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no": {
+        "value": "This workspace",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.hierarchicalPermission.no.tooltip": {
+        "value": "Apply permission only on this workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view": {
+        "value": "View",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.view.tooltip": {
+        "value": "Allow to view the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport": {
+        "value": "View & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.viewExport.tooltip": {
+        "value": "Allow to view and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze": {
+        "value": "Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyze.tooltip": {
+        "value": "Allow to analyze the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport": {
+        "value": "Analyze & Export",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.analyzeExport.tooltip": {
+        "value": "Allow to analyze and export the objects from the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage": {
+        "value": "Manage",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.manage.tooltip": {
+        "value": "Allow to manage the objects in the workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "userGroupDialog.workspace.permission.remove": {
+        "value": "Remove",
+        "comment": "",
         "limit": 0
     },
     "userGroupDialog.detail.saveButton": {

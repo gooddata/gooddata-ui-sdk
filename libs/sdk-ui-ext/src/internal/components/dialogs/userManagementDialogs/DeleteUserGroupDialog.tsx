@@ -6,21 +6,19 @@ import { useIntl } from "react-intl";
 import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUserGroup } from "./dialogHooks.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal
  */
-export interface IDeleteUserGroupDialogProps {
+export interface IDeleteUserGroupDialogProps extends IWithTelemetryProps {
     userGroupId: string;
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
+const DeleteUserGroupDialogComponent: React.FC<IDeleteUserGroupDialogProps> = ({
     userGroupId,
     organizationId,
     onSuccess,
@@ -43,3 +41,8 @@ export const DeleteUserGroupDialog: React.FC<IDeleteUserGroupDialogProps> = ({
         />
     );
 };
+
+/**
+ * @internal
+ */
+export const DeleteUserGroupDialog = withTelemetry(DeleteUserGroupDialogComponent);

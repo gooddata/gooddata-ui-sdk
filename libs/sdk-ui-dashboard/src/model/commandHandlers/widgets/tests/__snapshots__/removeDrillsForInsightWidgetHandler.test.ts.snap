@@ -14,11 +14,11 @@ exports[`removeDrillsForInsightWidgetHandler > remove > should emit the appropri
 ]
 `;
 
-exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of kpi widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget."`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of kpi widget 1`] = `"Widget with ref: {"uri":"/gdc/md/referenceworkspace/obj/1386"} exists but is not an insight widget."`;
 
 exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of kpi widget 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {"uri":"missing"}."`;
 
 exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
 

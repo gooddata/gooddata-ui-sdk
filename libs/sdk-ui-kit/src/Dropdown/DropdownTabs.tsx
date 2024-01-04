@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { ITab, Tabs } from "../Tabs/index.js";
 
 /**
@@ -7,6 +8,7 @@ import { ITab, Tabs } from "../Tabs/index.js";
  */
 export interface IDropdownTagsProps {
     tabs?: ITab[];
+    className?: string;
     selectedTabId?: string;
     onTabSelect?: (tab: ITab) => void;
 }
@@ -14,11 +16,16 @@ export interface IDropdownTagsProps {
 /**
  * @internal
  */
-export const DropdownTabs: React.FC<IDropdownTagsProps> = ({ tabs, selectedTabId, onTabSelect }) => {
+export const DropdownTabs: React.FC<IDropdownTagsProps> = ({
+    tabs,
+    selectedTabId,
+    onTabSelect,
+    className,
+}) => {
     return (
         <Tabs
             tabs={tabs}
-            className="gd-dropdown-tabs"
+            className={cx("gd-dropdown-tabs", className)}
             selectedTabId={selectedTabId}
             onTabSelect={onTabSelect}
         />

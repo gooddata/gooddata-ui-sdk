@@ -1,0 +1,47 @@
+{
+    "id": "430df64e-f4e6-46d7-af5d-46b8637fa65c",
+    "name": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_afm_computevalidobjects",
+    "request": {
+        "url": "/api/v1/actions/workspaces/a9699e80b0ae484da980bde0b75499e3/execution/afm/computeValidObjects",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"types\":[\"attributes\",\"measures\",\"facts\"],\"afm\":{\"attributes\":[],\"measures\":[{\"localIdentifier\":\"m_de156d02_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_f_account.id\",\"definition\":{\"overPeriodMeasure\":{\"measureIdentifier\":{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"},\"dateAttributes\":[{\"attribute\":{\"identifier\":{\"id\":\"f_account.id\",\"type\":\"attribute\"}},\"periodsAgo\":1}]}},\"alias\":\"PoP measure\"},{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"973a14c4-acb1-45fb-ba52-5d96fa02f7ba\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_c259efe401270d1198a7d2469f58c0a5\",\"definition\":{\"arithmeticMeasure\":{\"measureIdentifiers\":[{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"},{\"localIdentifier\":\"m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba\"}],\"operator\":\"SUM\"}}},{\"localIdentifier\":\"m_de156d02_m_c259efe401270d1198a7d2469f58c0a5_f_account.id\",\"definition\":{\"overPeriodMeasure\":{\"measureIdentifier\":{\"localIdentifier\":\"m_c259efe401270d1198a7d2469f58c0a5\"},\"dateAttributes\":[{\"attribute\":{\"identifier\":{\"id\":\"f_account.id\",\"type\":\"attribute\"}},\"periodsAgo\":1}]}},\"alias\":\"PoP measure\"}],\"filters\":[],\"auxMeasures\":[]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_actions_workspaces_a9699e80b0ae484da980bde0b75499e3_execution_afm_computevalidobjects-430df64e-f4e6-46d7-af5d-46b8637fa65c.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "430df64e-f4e6-46d7-af5d-46b8637fa65c",
+    "persistent": true,
+    "insertionIndex": 16
+}

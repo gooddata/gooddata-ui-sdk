@@ -8,6 +8,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { sortByName } from "../utils.js";
+import { useTelemetry } from "../TelemetryContext.js";
 
 export const useAddUsers = (
     userGroupIds: string[],
@@ -19,6 +20,7 @@ export const useAddUsers = (
     const [addedUsers, setAddedUsers] = useState<IUserMember[]>([]);
     const { addSuccess, addError } = useToastMessage();
     const [isProcessing, setIsProcessing] = useState(false);
+    const trackEvent = useTelemetry();
 
     const onDelete = (user: IUserMember) => {
         setAddedUsers(addedUsers.filter((item) => item.id !== user.id));
@@ -36,6 +38,7 @@ export const useAddUsers = (
                 )
                 .then(() => {
                     addSuccess(messages.usersAddedSuccess);
+                    trackEvent("users-added-to-single-group");
                     onSave(addedUsers);
                     onCancel();
                 })
@@ -54,6 +57,7 @@ export const useAddUsers = (
                 )
                 .then(() => {
                     addSuccess(messages.usersAddedToUserGroupsSuccess);
+                    trackEvent("users-added-to-multiple-groups");
                     onSave(addedUsers);
                     onCancel();
                 })

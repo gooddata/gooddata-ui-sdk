@@ -109,6 +109,12 @@ export interface ISettings {
     enableUnavailableItemsVisible?: boolean;
 
     /**
+     * Indicates whether unavailable data items are visible in the settings API
+     * only available on Tiger/Panther
+     */
+    showHiddenCatalogItems?: boolean;
+
+    /**
      * Indicates whether dashboard scheduled mails are enabled.
      */
     enableKPIDashboardSchedule?: boolean;
@@ -318,6 +324,11 @@ export interface ISettings {
      * Enable new dependent filters in KD
      */
     enableKDDependentFilters?: boolean;
+
+    /**
+     * Enable cross filtering in KD
+     */
+    enableKDCrossFiltering?: boolean;
 
     /**
      * Enable advanced machine learning integration in KD.

@@ -6,6 +6,7 @@ import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 import { AddWorkspace } from "./Workspace/AddWorkspace.js";
 import { IGrantedWorkspace, WorkspacePermissionSubject } from "./types.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedWorkspaces: IGrantedWorkspace[] = [];
@@ -13,7 +14,7 @@ const noGrantedWorkspaces: IGrantedWorkspace[] = [];
 /**
  * @internal
  */
-export interface IAddWorkspaceToSubjectsProps {
+export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     ids: string[];
     subjectType: WorkspacePermissionSubject;
     organizationId: string;
@@ -21,10 +22,7 @@ export interface IAddWorkspaceToSubjectsProps {
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const AddWorkspaceToSubjects: React.FC<IAddWorkspaceToSubjectsProps> = ({
+const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = ({
     ids,
     subjectType,
     organizationId,
@@ -47,3 +45,8 @@ export const AddWorkspaceToSubjects: React.FC<IAddWorkspaceToSubjectsProps> = ({
         </OrganizationIdProvider>
     );
 };
+
+/**
+ * @internal
+ */
+export const AddWorkspaceToSubjects = withTelemetry(AddWorkspaceToSubjectsComponent);

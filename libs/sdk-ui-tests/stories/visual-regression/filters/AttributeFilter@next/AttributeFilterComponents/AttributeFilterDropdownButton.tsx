@@ -11,7 +11,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
 
 const attributeTitle = "Product";
 
@@ -38,6 +38,26 @@ const TooltipContentComponent: React.FC = () => {
         </div>
     );
 };
+
+const titleExtension = (
+    <div>
+        <Button
+            className="gd-button-action gd-button-small"
+            iconLeft="gd-icon-trash"
+            onClick={action("onButton1Click")}
+        />
+        <Button
+            className="gd-button-action gd-button-small"
+            iconLeft="gd-icon-rain"
+            onClick={action("onButton2Click")}
+        />
+        <Button
+            className="gd-button-action gd-button-small"
+            iconLeft="gd-icon-ghost"
+            onClick={action("onButton3Click")}
+        />
+    </div>
+);
 
 const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownButtonExamplesProps> = (
     props,
@@ -158,6 +178,20 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
                             TooltipContentComponent={TooltipContentComponent}
                         />
                     </div>
+                    <h4>AttributeFilterDropdownButton with title extension</h4>
+                    <AttributeFilterDropdownButton
+                        isOpen={true}
+                        title={attributeTitle}
+                        subtitle={"All"}
+                        selectedItemsCount={10}
+                        isFiltering={false}
+                        isLoaded={true}
+                        isLoading={false}
+                        isDraggable={isDraggable}
+                        icon={icon}
+                        onClick={action("onClick")}
+                        titleExtension={titleExtension}
+                    />
                 </div>
             </div>
         </IntlWrapper>

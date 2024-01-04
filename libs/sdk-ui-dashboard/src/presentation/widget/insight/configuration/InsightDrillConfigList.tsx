@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import InsightDrillConfigItem from "./InsightDrillConfigItem.js";
-import { IDrillConfigItem } from "../../../drill/types.js";
+import { IDrillConfigItem, IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
@@ -9,7 +9,10 @@ import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 export interface IDrillConfigListProps {
     drillConfigItems?: IDrillConfigItem[];
     onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition | undefined, changedItem: IDrillConfigItem) => void;
+    onSetup: (
+        drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+        changedItem: IDrillConfigItem,
+    ) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
     disableDrillDown?: boolean;
 }

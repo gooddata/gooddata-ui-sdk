@@ -159,22 +159,54 @@
     justify-content: space-between;
     padding: 0 10px;
     align-items: center;
-    font-weight: 400;
     cursor: pointer;
     color: kit-variables.$gd-color-text;
 
-    &.is-disabled {
-        opacity: 0.5;
-        &:hover {
-            opacity: 0.5;
-            color: kit-variables.$gd-color-text;
-            font-weight: 400;
-        }
+    .attribute-hierarchy-list-item-description,
+    .attribute-hierarchy-item-edit-button {
+        display: none;
     }
 
     &:hover {
         color: kit-variables.$gd-palette-primary-base;
-        font-weight: 700;
+
+        .attribute-hierarchy-list-item-description,
+        .attribute-hierarchy-item-edit-button {
+            display: block;
+        }
+    }
+
+    &.is-disabled {
+        .attribute-hierarchy-list-item-content {
+            opacity: 0.5;
+            color: kit-variables.$gd-color-disabled;
+
+            &:hover {
+                opacity: 0.5;
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    .attribute-hierarchy-list-item-actions {
+        width: 38px;
+        height: 28px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 5px;
+
+        .attribute-hierarchy-item-edit-button {
+            font-size: 14px;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: kit-variables.$gd-palette-primary-base;
+            }
+        }
     }
 }
 
@@ -182,8 +214,9 @@
     padding-left: 25px;
     font-size: 12px;
     font-style: normal;
+    max-width: calc(100% - 45px);
+    min-width: calc(100% - 45px);
     text-decoration: none;
-    max-width: 130px;
     white-space: nowrap;
 
     &::before {
@@ -204,14 +237,6 @@
         display: inline-block;
         width: 100%;
         white-space: nowrap;
-    }
-}
-
-.attribute-hierarchy-list-item-description {
-    opacity: 0;
-
-    .attribute-hierarchy-list-item:hover & {
-        opacity: 1;
     }
 }
 
@@ -344,6 +369,34 @@
         height: 100%;
         padding: 10px;
         background-color: var(--gd-palette-complementary-2, #e3e9f0);
+
+        .empty-attribute-hierarchy-info-content {
+            position: relative;
+            color: var(--gd-palette-complementary-8, #464e56);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 18px;
+            margin: 10px 1px;
+
+            a.gd-button-link-dimmed {
+                position: absolute;
+                bottom: -1px;
+                color: var(--gd-palette-complementary-7, #6d7680);
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 18px;
+                text-decoration-line: underline;
+                padding-left: 2px;
+            }
+        }
+
+        .add-attribute-hierarchy-button {
+            padding: 0 0 0 17px;
+
+            &::before {
+                left: -6px;
+            }
+        }
     }
 
     .gd-button-small {
@@ -526,6 +579,12 @@ $gd-gd-drill-to-url-body-width: 230px;
             text-align: center;
         }
 
+        &.gd-icon-filter::before {
+            content: "\E63C";
+            color: #94a1ad;
+            text-align: center;
+        }
+
         &.gd-icon-earth::before {
             content: "\E624";
             color: kit-variables.$gd-color-warning-text;
@@ -661,8 +720,13 @@ $gd-gd-drill-to-url-body-width: 230px;
             color: kit-variables.$gd-color-warning-text;
         }
 
+        .cm-filter {
+            color: kit-variables.$gd-color-warning-text;
+        }
+
         .cm-invalid-identifier,
-        .cm-invalid-attribute {
+        .cm-invalid-attribute,
+        .cm-invalid-filter {
             color: kit-variables.$gd-palette-error-base;
         }
     }
@@ -714,4 +778,12 @@ $gd-gd-drill-to-url-body-width: 230px;
         font-size: 14px;
         color: kit-variables.$gd-color-highlight;
     }
+}
+
+.gd-list.gd-infinite-list.gd-infinite-list.hierarchies-dropdown-body {
+    margin-bottom: 0;
+}
+
+.attribute-hierarchy-list-footer {
+    padding: 0 0 10px;
 }

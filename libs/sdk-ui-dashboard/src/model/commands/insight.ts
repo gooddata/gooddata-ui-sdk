@@ -511,6 +511,11 @@ export interface ModifyDrillsForInsightWidgetPayload {
      * then the new definition will be used.
      */
     readonly drills: InsightDrillDefinition[];
+
+    /**
+     * Specify which drill down localIdentifier and its hierarchy should be removed.
+     */
+    readonly blacklistHierarchiesToUpdate?: IDrillDownReference[];
 }
 
 /**
@@ -545,6 +550,7 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
 export function modifyDrillsForInsightWidget(
     ref: ObjRef,
     drills: InsightDrillDefinition[],
+    blacklistHierarchiesToUpdate?: IDrillDownReference[],
     correlationId?: string,
 ): ModifyDrillsForInsightWidget {
     return {
@@ -553,7 +559,30 @@ export function modifyDrillsForInsightWidget(
         payload: {
             ref,
             drills,
+            blacklistHierarchiesToUpdate,
         },
+    };
+}
+
+/**
+ * @beta
+ */
+export interface AttributeHierarchyModified extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
+}
+
+/**
+ * Creates the AttributeHierarchyModified command , dispatching this command will result on reset of catalog.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED",
+        correlationId,
     };
 }
 
@@ -692,29 +721,39 @@ export interface AddDrillDownForInsightWidget extends IDashboardCommand {
 }
 
 /**
- * Payload of the {@link RemoveDrillDownForInsightWidget} command.
+ * Payload of the {@link AddDrillDownForInsightWidget} command.
  * @alpha
  */
 export interface AddDrillDownForInsightWidgetPayload {
     /**
-     * Reference to Insight Widget whose drill items should be removed.
+     * Reference to Insight Widget whose drill items should be added.
      */
     readonly ref: ObjRef;
 
     /**
-     * Specify drill localIdentifier and its hierarchy should be removed.
+     * Specify drill localIdentifier and its hierarchy should be added.
      */
     readonly attributeIdentifier: ObjRef;
 
-    readonly attributeHierarchy: ObjRef;
+    /**
+     * Specify drill down hierarchy localIdentifier that should be added.
+     */
+    readonly drillDownIdentifier: string;
+
+    /**
+     * Specify drill down hierarchy reference that should be added.
+     */
+    readonly drillDownAttributeHierarchyRef: ObjRef;
 }
 
 /**
- * Creates the RemoveDrillDownForInsightWidget command. Dispatching the created command will remove insight widget's
+ * Creates the AddDrillDownForInsightWidget command. Dispatching the created command will create insight widget's
  * drill definition for the provided measure.
  *
- * @param ref - reference of insight widget whose drill should be removed
- * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be removed
+ * @param ref - reference of insight widget whose drill should be created
+ * @param attributeIdentifier - drill localIdentifier that should be added.
+ * @param drillDownIdentifier - drill down hierarchy localIdentifier that should be added.
+ * @param drillDownAttributeHierarchyRef - drill down hierarchy reference that should be added.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -723,7 +762,8 @@ export interface AddDrillDownForInsightWidgetPayload {
 export function addDrillDownForInsightWidget(
     ref: ObjRef,
     attributeIdentifier: ObjRef,
-    attributeHierarchy: ObjRef,
+    drillDownIdentifier: string,
+    drillDownAttributeHierarchyRef: ObjRef,
     correlationId?: string,
 ): AddDrillDownForInsightWidget {
     return {
@@ -732,7 +772,8 @@ export function addDrillDownForInsightWidget(
         payload: {
             ref,
             attributeIdentifier,
-            attributeHierarchy,
+            drillDownIdentifier,
+            drillDownAttributeHierarchyRef,
         },
     };
 }
@@ -741,6 +782,71 @@ export function addDrillDownForInsightWidget(
 //
 //
 
+/**
+ * @alpha
+ */
+export interface ModifyDrillDownForInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN";
+    readonly payload: ModifyDrillDownForInsightWidgetPayload;
+}
+
+/**
+ * Payload of the {@link ModifyDrillDownForInsightWidget} command.
+ * @alpha
+ */
+export interface ModifyDrillDownForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be modified.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Specify drill localIdentifier and its hierarchy should be modified.
+     */
+    readonly attributeIdentifier: ObjRef;
+
+    /**
+     * Specify drill attribute hierarchy ref to be modified.
+     */
+    readonly attributeHierarchyRef: ObjRef;
+
+    /**
+     * Specify drill localIdentifier and its hierarchy should be modified.
+     */
+    readonly blacklistHierarchies: IDrillDownReference[];
+}
+
+/**
+ * Creates the ModifyDrillDownForInsightWidget command. Dispatching the created command will update insight widget's
+ * drill definition for the provided measure.
+ *
+ * @param ref - reference of insight widget whose drill should be modified
+ * @param attributeIdentifier - drill localIdentifier and its hierarchy should be modified.
+ * @param attributeHierarchyRef - drill attribute hierarchy ref to be modified.
+ * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be modified
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function modifyDrillDownForInsightWidget(
+    ref: ObjRef,
+    attributeIdentifier: ObjRef,
+    attributeHierarchyRef: ObjRef,
+    blacklistHierarchies: IDrillDownReference[],
+    correlationId?: string,
+): ModifyDrillDownForInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN",
+        correlationId,
+        payload: {
+            ref,
+            attributeIdentifier,
+            attributeHierarchyRef,
+            blacklistHierarchies,
+        },
+    };
+}
 /**
  * Payload of the {@link RefreshInsightWidget} command.
  * @beta

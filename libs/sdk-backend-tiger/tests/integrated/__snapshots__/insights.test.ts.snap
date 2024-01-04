@@ -260,6 +260,406 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
                 "measure": {
                   "definition": {
                     "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_opportunity.opportunity.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "4281a0b55f65458f98f5e11b20c6faaf",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has hyperlink",
+        "title": "Column chart has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5e61d047dac64eaebcbfd102176cbdc1",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "fbd134a022954e5c94d15939c96d061e",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has many hyperlinks",
+        "title": "Column chart has many hyperlinks",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "92cee6a571f64e09abe8c43055fe5dea",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ddec7417e27f4921bc001317cea32e44",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_owner.salesrep.ownername",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "85b09ca610064d5cbb7f966efe91e09b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "908a5fcd650941f885ed768c243f4d0d",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has not hyperlink",
+        "title": "Column chart has not hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "productthatisrenamedtotestthelongattributename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "7504986dd4854e848a7e9411789bb97c",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart long attribute has hyperlink",
+        "title": "Column chart long attribute has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ded20bdcb90145b68711ae0c1901968d",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "953ecfafba014941ab12ec89f84d1d85",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart only measures",
+        "title": "Column chart only measures",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "be65b4c9d5cd4272a552409f70e4698a",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart with Department attribute",
+        "title": "Column chart with Department attribute",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "computeRatio": false,
                       "filters": [
                         {
@@ -1701,8 +2101,8 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
   ],
   "items": [],
   "limit": 50,
-  "offset": 14,
-  "totalCount": 14,
+  "offset": 20,
+  "totalCount": 20,
 }
 `;
 
@@ -1955,6 +2355,406 @@ exports[`tiger insights > should load insights 1`] = `
         "title": "big insight",
         "uri": "sanitize_uri",
         "visualizationUrl": "local:table",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_opportunity.opportunity.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "4281a0b55f65458f98f5e11b20c6faaf",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has hyperlink",
+        "title": "Column chart has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5e61d047dac64eaebcbfd102176cbdc1",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "fbd134a022954e5c94d15939c96d061e",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has many hyperlinks",
+        "title": "Column chart has many hyperlinks",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "92cee6a571f64e09abe8c43055fe5dea",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ddec7417e27f4921bc001317cea32e44",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_owner.salesrep.ownername",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "85b09ca610064d5cbb7f966efe91e09b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "908a5fcd650941f885ed768c243f4d0d",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has not hyperlink",
+        "title": "Column chart has not hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "productthatisrenamedtotestthelongattributename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "7504986dd4854e848a7e9411789bb97c",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart long attribute has hyperlink",
+        "title": "Column chart long attribute has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ded20bdcb90145b68711ae0c1901968d",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "953ecfafba014941ab12ec89f84d1d85",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart only measures",
+        "title": "Column chart only measures",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "be65b4c9d5cd4272a552409f70e4698a",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart with Department attribute",
+        "title": "Column chart with Department attribute",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
       },
     },
     {
@@ -3663,6 +4463,406 @@ exports[`tiger insights > should load insights 1`] = `
                 "measure": {
                   "definition": {
                     "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_opportunity.opportunity.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "4281a0b55f65458f98f5e11b20c6faaf",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has hyperlink",
+        "title": "Column chart has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "5e61d047dac64eaebcbfd102176cbdc1",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "fbd134a022954e5c94d15939c96d061e",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "9a2ab62b-587a-4b16-9682-1b7962340354",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has many hyperlinks",
+        "title": "Column chart has many hyperlinks",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "92cee6a571f64e09abe8c43055fe5dea",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ddec7417e27f4921bc001317cea32e44",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "label.f_owner.salesrep.ownername",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "85b09ca610064d5cbb7f966efe91e09b",
+                },
+              },
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "908a5fcd650941f885ed768c243f4d0d",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "84d13bd9-f976-4e03-8b00-fec9497d580b",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart has not hyperlink",
+        "title": "Column chart has not hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5cc307a739034b35a8bd485dfba825d5",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "productthatisrenamedtotestthelongattributename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "7504986dd4854e848a7e9411789bb97c",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart long attribute has hyperlink",
+        "title": "Column chart long attribute has hyperlink",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "ded20bdcb90145b68711ae0c1901968d",
+                  "title": "Amount [BOP]",
+                },
+              },
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "best_case",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "953ecfafba014941ab12ec89f84d1d85",
+                  "title": "Best Case",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart only measures",
+        "title": "Column chart only measures",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
+                        "identifier": "amount_bop",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "973a3e7ca8fa497cb2be98bc75eb8950",
+                  "title": "Amount [BOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "be65b4c9d5cd4272a552409f70e4698a",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "created": "sanitize_created",
+        "filters": [],
+        "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+        "isLocked": false,
+        "properties": {
+          "sortItems": [],
+        },
+        "ref": {
+          "identifier": "b1614db1-3058-4071-a2fe-64a017d318c5",
+          "type": "insight",
+        },
+        "sorts": [],
+        "summary": "Column chart with Department attribute",
+        "title": "Column chart with Department attribute",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:column",
+      },
+    },
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "computeRatio": false,
                       "filters": [
                         {
@@ -5104,6 +6304,6 @@ exports[`tiger insights > should load insights 1`] = `
   ],
   "limit": 50,
   "offset": 0,
-  "totalCount": 14,
+  "totalCount": 20,
 }
 `;

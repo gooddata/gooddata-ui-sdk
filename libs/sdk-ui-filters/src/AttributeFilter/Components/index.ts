@@ -81,3 +81,7 @@ export {
 } from "./Addons/AttributeFilterDeleteButton.js";
 export { useAutoOpenAttributeFilterDropdownButton } from "./Addons/hooks/useAutoOpenAttributeFilterDropdownButton.js";
 export { useOnCloseAttributeFilterDropdownButton } from "./Addons/hooks/useOnCloseAttributeFilterDropdownButton.js";
+export {
+    AttributeFilterDependencyTooltip,
+    IAttributeFilterDependencyTooltipProps,
+} from "./Addons/AttributeFilterDependencyTooltip.js";

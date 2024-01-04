@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDrillToAttributeUrl } from "@gooddata/sdk-model";
+import { ICrossFiltering, IDrillToAttributeUrl } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import { IDrillDownDefinition } from "../../../../types.js";
 import { filterDrillFromAttributeByPriority } from "../drillDownUtils.js";
@@ -36,6 +36,13 @@ describe("filterDrillFromAttributeByPriority", () => {
         },
     };
 
+    const crossFiltering: ICrossFiltering = {
+        type: "crossFiltering",
+        origin: {} as any,
+        title: "Cross filtering",
+        transition: "in-place",
+    };
+
     it("should remove duplicities configured once has priority", () => {
         const drillDefinitions = [drillToAttributeUrl, drillToAttributeUrl];
         const configuredDrills = [drillToAttributeUrl];
@@ -64,6 +71,15 @@ describe("filterDrillFromAttributeByPriority", () => {
         const drillDefinitions = [drill, drillToAttributeUrl, drillDown];
         const configuredDrills = [drill];
         const expectedResult = [drill, drillDown];
+
+        const result = filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
+        expect(result).toEqual(expectedResult);
+    });
+
+    it("should not ignore cross filtering", () => {
+        const drillDefinitions = [crossFiltering, drillToAttributeUrl];
+        const configuredDrills = [drillToAttributeUrl];
+        const expectedResult = [crossFiltering, drillToAttributeUrl];
 
         const result = filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
         expect(result).toEqual(expectedResult);

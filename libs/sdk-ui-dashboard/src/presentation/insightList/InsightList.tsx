@@ -30,7 +30,7 @@ import {
     useDashboardSelector,
     selectCurrentUser,
     selectSupportsObjectUris,
-    selectSupportsAccessControlCapability,
+    selectSupportsHierarchicalWorkspacesCapability,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -89,7 +89,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
     const previousSearch = useRef("");
-    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
+    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsHierarchicalWorkspacesCapability);
 
     const params = pagesToLoad.map((pageNumber) => ({
         limit: ITEMS_PER_PAGE,

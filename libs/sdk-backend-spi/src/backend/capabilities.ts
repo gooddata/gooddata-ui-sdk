@@ -267,6 +267,16 @@ export interface IBackendCapabilities {
     supportsShowingFilteredElements?: boolean;
 
     /**
+     * Indicates whether backend supports to set dependencies for single-select filters.
+     */
+    supportsSingleSelectDependentFilters?: boolean;
+
+    /**
+     * Indicates whether backend supports cross filtering.
+     */
+    supportsCrossFiltering?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

@@ -70,7 +70,7 @@ exports[`available item filtering > item filtering > should filter-in date datas
       {
         "attribute": {
           "deprecated": false,
-          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as "Continuous" show both weeks (W53/2009 - W1/2010).",
           "displayForms": [
             {
               "attribute": {

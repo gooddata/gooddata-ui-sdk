@@ -14,11 +14,11 @@ exports[`setDrillForKpiWidgetHandler > set > should emit the appropriate events 
 ]
 `;
 
-exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of insight widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1310\\"} exists but is not a KPI widget."`;
+exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of insight widget 1`] = `"Widget with ref: {"uri":"/gdc/md/referenceworkspace/obj/1310"} exists but is not a KPI widget."`;
 
 exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of insight widget 2`] = `"USER_ERROR"`;
 
-exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
+exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {"uri":"missing"}."`;
 
 exports[`setDrillForKpiWidgetHandler > validate > should fail if trying to set drills of non-existent widget 2`] = `"USER_ERROR"`;
 

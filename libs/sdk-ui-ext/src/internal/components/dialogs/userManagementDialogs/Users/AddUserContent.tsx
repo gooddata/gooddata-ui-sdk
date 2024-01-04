@@ -21,7 +21,14 @@ export const AddUserContent: React.FC<IAddUserContentProps> = ({
     return (
         <>
             <AddUserSelect addedUsers={addedUsers} grantedUsers={grantedUsers} onSelect={onSelect} />
-            <UsersList mode="EDIT" users={addedUsers} onDelete={onDelete} />
+            <UsersList
+                mode="EDIT"
+                users={addedUsers}
+                onDelete={onDelete}
+                // we do not care about bootstrap user group here (this is important only in view mode)
+                isBootstrapUserGroup={false}
+                bootstrapUserId={undefined}
+            />
         </>
     );
 };

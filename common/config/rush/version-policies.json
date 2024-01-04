@@ -15,6 +15,13 @@
     "version": "0.0.0-dev.0",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-ui-all"
+  },
+  {
+    "definitionName": "lockStepVersion",
+    "policyName": "sdk-examples",
+    "version": "0.0.0-dev.0",
+    "nextBump": "prerelease",
+    "mainProject": "@gooddata/sdk-interactive-examples"
   }
   // {
   //   /**

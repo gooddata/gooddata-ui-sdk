@@ -27,13 +27,14 @@ import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
 import { UserEditDialogMode } from "./types.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
 /**
  * @internal
  */
-export interface IUserEditDialogProps {
+export interface IUserEditDialogProps extends IWithTelemetryProps {
     userId: string;
     organizationId: string;
     isAdmin: boolean;
@@ -43,10 +44,7 @@ export interface IUserEditDialogProps {
     onClose: () => void;
 }
 
-/**
- * @internal
- */
-export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
+const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     userId,
     organizationId,
     isAdmin,
@@ -219,3 +217,8 @@ export const UserEditDialog: React.FC<IUserEditDialogProps> = ({
         </OrganizationIdProvider>
     );
 };
+
+/**
+ * @internal
+ */
+export const UserEditDialog = withTelemetry(UserEditDialogComponent);

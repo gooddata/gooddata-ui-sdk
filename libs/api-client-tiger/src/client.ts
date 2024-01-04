@@ -52,6 +52,7 @@ import {
     tigerScanModelClientFactory,
 } from "./scanModel.js";
 import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
+import { tigerResultClientFactory, ResultActionsApiInterface } from "./result.js";
 
 export {
     tigerExecutionClientFactory,
@@ -67,6 +68,7 @@ export {
     tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
     tigerExportClientFactory,
+    tigerResultClientFactory,
     tigerPredictionCacheClientFactory,
     tigerKeyDriversClientFactory,
     MetadataConfiguration,
@@ -91,6 +93,7 @@ export {
     ActionsApiCreateTabularExportRequest,
     TabularExportRequest,
     ActionsApiGetTabularExportRequest,
+    ResultActionsApiInterface,
 };
 
 export interface ITigerClient {
@@ -108,6 +111,7 @@ export interface ITigerClient {
     authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     export: ReturnType<typeof tigerExportClientFactory>;
+    result: ReturnType<typeof tigerResultClientFactory>;
     predictionCache: ReturnType<typeof tigerPredictionCacheClientFactory>;
     keyDrivers: ReturnType<typeof tigerKeyDriversClientFactory>;
 
@@ -139,6 +143,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
     const exportFactory = tigerExportClientFactory(axios);
+    const result = tigerResultClientFactory(axios);
     const predictionCache = tigerPredictionCacheClientFactory(axios);
     const keyDrivers = tigerKeyDriversClientFactory(axios);
 
@@ -156,6 +161,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         actions,
         authActions,
         scanModel,
+        result,
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);
         },

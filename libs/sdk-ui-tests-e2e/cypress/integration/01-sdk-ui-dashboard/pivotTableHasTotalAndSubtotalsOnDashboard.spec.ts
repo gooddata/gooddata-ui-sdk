@@ -8,7 +8,7 @@ const widget = new Widget(0);
 const topBar = new TopBar();
 const exportControl = new Export();
 
-describe("Export dashboard", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Export dashboard", { tags: ["checklist_integrated_tiger_export"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-pivot-table-scenario");
         widget.waitTableLoaded();
@@ -23,11 +23,13 @@ describe("Export dashboard", { tags: ["checklist_integrated_tiger"] }, () => {
         );
     });
 
-    // This test is blocked by ticket NAS-5157
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("should export insight to XLSX from dashboards", () => {
+    it("should export insight to XLSX from dashboards", () => {
         exportControl.exportInsightOnWidgetByIndexToXLSX(0);
-        exportControl.expectExportedXLSX("dashboardInfo.fileName", 1, "");
+        exportControl.expectExportedXLSX(
+            "Table has AM metric.xlsx",
+            3,
+            "CompuSci,274,41055,41329,166,41055,41221,558,41055,41613,123165,124163,145,41055,41200,80,41055,41135,300,41055,41355,123165,123690,246330,247853",
+        );
     });
 });
 

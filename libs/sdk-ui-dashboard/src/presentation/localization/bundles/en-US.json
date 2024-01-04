@@ -288,6 +288,11 @@
         "comment": "Title of widget interactions",
         "limit": 0
     },
+    "drill_modal_picker.cross-filter": {
+        "value": "Cross-filter",
+        "comment": "Title of widget interactions",
+        "limit": 0
+    },
     "drill_modal_picker.more.details": {
         "value": "More details",
         "comment": "",
@@ -305,11 +310,6 @@
     },
     "filters.allTime.lastYear": {
         "value": "prev. year",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.second.previousPeriod": {
-        "value": "prev. second",
         "comment": "",
         "limit": 0
     },
@@ -1089,11 +1089,6 @@
     "header.lockStatus.tooltip": {
         "value": "<b>This dashboard is locked.</b> Only administrators can edit this dashboard.",
         "comment": "Shown when hovering over lock indicator. Dont translate html tags <b>, </b>",
-        "limit": 0
-    },
-    "header.inheritedInsight.tooltip": {
-        "value": "You cannot edit or delete this dashboard.{br}It is centrally managed and certified.",
-        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
         "limit": 0
     },
     "header.shareStatus.private.text": {
@@ -1970,6 +1965,11 @@
         "comment": "Label of the parameters section that contains identifiers in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": {
+        "value": "Dashboard",
+        "comment": "Label of the parameters section that contains dashboard filters in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
         "value": "Apply",
         "comment": "Label of the button that applies changes in Drill to URL 'Custom URL' editor.",
@@ -2190,22 +2190,6 @@
         "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
         "limit": 0
     },
-    "fastTrack.alert.success": {
-        "value": "<b>Success.</b> You have set the alert.",
-        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
-        "limit": 0
-    },
-    "dialogs.flexai.widgetDescriptionApplied": {
-        "value": "Widget description has been updated.",
-        "comment": "",
-        "translate": false,
-        "limit": 0
-    },
-    "fastTrack.alert.success": {
-        "value": "<b>Success.</b> You have set the alert.",
-        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
-        "limit": 0
-    },
     "filter.visibilityMode.tooltip.hidden": {
         "value": "This filter is hidden. It can be accessed only via the Edit mode.",
         "comment": "The tooltip serves as a warning to the user that the filter will be hidden in view mode.",
@@ -2219,6 +2203,11 @@
     "filter.visibilityMode.tooltip.readonly.viewMode": {
         "value": "This filter is locked.",
         "comment": "The tooltip helps users understand why they cannot change its value.",
+        "limit": 0
+    },
+    "filter.resetButton.tooltip": {
+        "value": "Reset all filters",
+        "comment": "The tooltip of the reset button in the filter bar",
         "limit": 0
     },
     "dateFilterDropdown.save": {
@@ -2259,6 +2248,16 @@
     "filter.configuration.mode.hidden.tooltip": {
         "value": "Dashboard users cannot see the filter but it is applied.",
         "comment": "The tooltip of the hidden mode",
+        "limit": 0
+    },
+    "filter.dependency.icon.tooltip": {
+        "value": "Available values for <strong>{filterTitle}</strong> are limited by selection in another filter.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.alreadyUsedTooltip": {
+        "value": "This <strong>hierarchy</strong> is already used for <strong>the same</strong> drill down.",
+        "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
     }
 }

@@ -63,6 +63,10 @@
             color: variables.$gd-palette-primary-base;
         }
     }
+
+    &.no-divider {
+        margin-bottom: 6px;
+    }
 }
 
 .gd-attribute-filter-status-irrelevant-message {

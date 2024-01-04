@@ -51,6 +51,7 @@ import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -147,6 +148,7 @@ function* loadExistingDashboard(
         accessibleDashboards,
         legacyDashboards,
         dashboardPermissions,
+        dateHierarchyTemplates,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfig>,
@@ -159,6 +161,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
+        PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
         call(resolveDashboardConfig, ctx, cmd),
@@ -171,6 +174,7 @@ function* loadExistingDashboard(
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
         call(loadDashboardPermissions, ctx),
+        call(loadDateHierarchyTemplates, ctx),
     ]);
 
     const {
@@ -210,6 +214,7 @@ function* loadExistingDashboard(
                 facts: catalog.facts(),
                 measures: catalog.measures(),
                 attributeHierarchies: catalog.attributeHierarchies(),
+                dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             ...initActions,
             alertsActions.setAlerts(alerts),
@@ -253,6 +258,7 @@ function* initializeNewDashboard(
         listedDashboards,
         accessibleDashboards,
         legacyDashboards,
+        dateHierarchyTemplates,
     ]: [
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
@@ -262,6 +268,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
+        PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
@@ -271,6 +278,7 @@ function* initializeNewDashboard(
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
+        call(loadDateHierarchyTemplates, ctx),
     ]);
 
     const batch: BatchAction = batchActions(
@@ -286,6 +294,7 @@ function* initializeNewDashboard(
                 facts: catalog.facts(),
                 measures: catalog.measures(),
                 attributeHierarchies: catalog.attributeHierarchies(),
+                dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),

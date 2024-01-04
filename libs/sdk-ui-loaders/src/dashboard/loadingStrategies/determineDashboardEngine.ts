@@ -25,8 +25,10 @@ export function isPluginCompatibleWithDashboardEngine(
     engine: IDashboardEngine,
     plugin: IDashboardPluginContract_V1,
 ): boolean {
-    const { minEngineVersion, maxEngineVersion, debugName, displayName, version } = plugin;
-    const requiredVersion = `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
+    const { minEngineVersion, maxEngineVersion, compatibility, debugName, displayName, version } = plugin;
+    const requiredVersion =
+        compatibility ?? `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
+
     const matchesEngineVersion = semverSatisfies(engine.version, requiredVersion, {
         includePrerelease: true,
     });

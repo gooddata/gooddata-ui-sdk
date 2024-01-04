@@ -7,7 +7,7 @@ id: dashboard_plugins_api
 
 Your plugin can take advantage of several categories of APIs that are outlined in this article.
 
-All the public and most of the alpha-level APIs have detailed documentation in form of TSDoc. We generate the API
+All the public and most of the beta-level APIs have detailed documentation in form of TSDoc. We generate the API
 doc website from these comments. You can find the API reference [here](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.html).
 
 ## Plugin contract
@@ -16,7 +16,7 @@ The plugin contract is the first API that you will come in touch with. The contr
 to fill in and functions to implement, including the functions that allow you to specify code
 to run on load, during registration, and after unload.
 
-A new plugin that is bootstrapped using the Plugin Development Toolkitsets up
+A new plugin that is bootstrapped using the Plugin Development Toolkit sets up
 all the contract essentials and provides a template implementation of some of the functions by subclassing
 the `DashboardPluginV1`.
 

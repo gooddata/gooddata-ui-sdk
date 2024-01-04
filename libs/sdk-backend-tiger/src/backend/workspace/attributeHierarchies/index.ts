@@ -8,7 +8,14 @@ import {
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
-import { ICatalogAttributeHierarchy, ObjRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    ICatalogAttributeHierarchy,
+    IDateHierarchyTemplate,
+    idRef,
+    ObjRef,
+    objRefToString,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { toAttributeQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
@@ -87,6 +94,15 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
         return catalogAttributeHierarchy;
     };
 
+    public deleteAttributeHierarchy = async (attributeHierarchyId: string): Promise<void> => {
+        await this.authCall((client) => {
+            return client.entities.deleteEntityAttributeHierarchies({
+                objectId: attributeHierarchyId,
+                workspaceId: this.workspace,
+            });
+        });
+    };
+
     public getValidDescendants = async (attributes: ObjRef[]): Promise<ObjRef[]> => {
         const response = await this.authCall((client) =>
             client.validDescendants.computeValidDescendants({
@@ -105,6 +121,30 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
 
         return Promise.resolve(uniqBy(result, serializeObjRef));
     };
+
+    public getDateHierarchyTemplates(): Promise<IDateHierarchyTemplate[]> {
+        return Promise.resolve([
+            {
+                type: "dateHierarchyTemplate",
+                ref: idRef("default"),
+                id: "default",
+                uri: "/default",
+                title: "Year, quarter, month, date, hour, minute",
+                granularities: [
+                    "GDC.time.year",
+                    "GDC.time.quarter",
+                    "GDC.time.month",
+                    "GDC.time.date",
+                    "GDC.time.hour",
+                    "GDC.time.minute",
+                ],
+                description: "Default hierarchy template for date dataset",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+            },
+        ]);
+    }
 
     private objRefToObjIdentifier(ref: ObjRef) {
         return {

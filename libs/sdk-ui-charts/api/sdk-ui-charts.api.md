@@ -296,6 +296,8 @@ export interface IChartConfig {
     total?: ITotalConfig;
     // @internal (undocumented)
     type?: VisType;
+    // @internal
+    useGenericInteractionTooltip?: boolean;
     xaxis?: IAxisConfig;
     xFormat?: string;
     xLabel?: string;

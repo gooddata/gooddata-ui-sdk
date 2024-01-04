@@ -153,3 +153,23 @@ export const selectSupportsAttributeHierarchies: DashboardSelector<boolean> = cr
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsAttributeHierarchies ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsSingleSelectDependentFilters}
+ *
+ * @internal
+ */
+export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsSingleSelectDependentFilters ?? false,
+);
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsCrossFiltering}
+ *
+ * @internal
+ */
+export const selectSupportsCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsCrossFiltering ?? false,
+);

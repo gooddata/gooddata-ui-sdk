@@ -1,4 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
+// eslint-disable-next-line react/no-deprecated
 import { unmountComponentAtNode } from "react-dom";
 
 /**

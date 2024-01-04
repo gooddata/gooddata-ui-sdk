@@ -4,4 +4,6 @@ export {
     joinDrillUrlParts,
     splitDrillUrlParts,
     getAttributeIdentifiersPlaceholdersFromUrl,
+    getDashboardAttributeFilterPlaceholdersFromUrl,
+    getInsightAttributeFilterPlaceholdersFromUrl,
 } from "./dashboard/drillUrl.js";

@@ -13,6 +13,7 @@ const DRILL_ICON_NAME: Record<DrillType, string> = {
     [DrillType.DRILL_TO_INSIGHT]: "DrillToInsight",
     [DrillType.DRILL_TO_URL]: "Hyperlink",
     [DrillType.DRILL_DOWN]: "DrillDown",
+    [DrillType.CROSS_FILTERING]: "AttributeFilter",
 };
 
 export interface DrillSelectListItemProps {

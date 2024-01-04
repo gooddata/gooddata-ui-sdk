@@ -35,6 +35,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         if (settings.enableSeparateTotalLabels) {
             updatedConfig = { ...updatedConfig, enableSeparateTotalLabels: true };
         }
+
+        if (settings.enableKDCrossFiltering) {
+            updatedConfig = { ...updatedConfig, useGenericInteractionTooltip: true };
+        }
     }
 
     return updatedConfig;

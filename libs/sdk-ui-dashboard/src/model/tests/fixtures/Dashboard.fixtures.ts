@@ -23,6 +23,6 @@ export const ignoredHierarchies: IDrillDownReference[] = [
     {
         type: "attributeHierarchyReference",
         attributeHierarchy: idRef("test_attribute_hierarchies_1", "attributeHierarchy"),
-        label: idRef("f_owner.department_id", "displayForm"),
+        attribute: idRef("f_owner.department_id", "attribute"),
     },
 ];

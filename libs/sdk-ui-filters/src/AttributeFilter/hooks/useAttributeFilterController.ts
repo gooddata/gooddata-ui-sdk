@@ -31,6 +31,7 @@ import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController } from "./types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
 import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -78,7 +79,6 @@ export const useAttributeFilterController = (
 
         selectionMode = "multi",
         selectFirst = false,
-        attribute,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -88,6 +88,7 @@ export const useAttributeFilterController = (
         backend.capabilities.supportsKeepingDependentFiltersSelection;
     const supportsCircularDependencyInFilters = backend.capabilities.supportsCircularDependencyInFilters;
     const supportsShowingFilteredElements = backend.capabilities.supportsShowingFilteredElements;
+    const supportsSingleSelectDependentFilters = backend.capabilities.supportsSingleSelectDependentFilters;
 
     const { shouldReloadElements, setShouldReloadElements } = useShouldReloadElements(
         supportsKeepingDependentFiltersSelection,
@@ -111,7 +112,6 @@ export const useAttributeFilterController = (
         workspace,
         hiddenElements,
         staticElements,
-        attribute,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler,
@@ -119,7 +119,12 @@ export const useAttributeFilterController = (
         shouldIncludeLimitingFilters,
     );
 
-    const forcedInitErrorProp = isValidSingleSelectionFilter(selectionMode, filter, limitingAttributeFilters)
+    const forcedInitErrorProp = isValidSingleSelectionFilter(
+        selectionMode,
+        filter,
+        limitingAttributeFilters,
+        supportsSingleSelectDependentFilters,
+    )
         ? {}
         : { initError: new UnexpectedSdkError() };
 
@@ -137,6 +142,7 @@ export const useAttributeFilterController = (
             setShouldReloadElements,
         },
         supportsKeepingDependentFiltersSelection,
+        supportsCircularDependencyInFilters,
     );
     const callbacks = useCallbacks(
         handler,
@@ -211,6 +217,7 @@ function useInitOrReload(
         setShouldReloadElements: (value: boolean) => void;
     },
     supportsKeepingDependentFiltersSelection: boolean,
+    supportsCircularDependencyInFilters: boolean,
 ) {
     const {
         filter,
@@ -256,7 +263,7 @@ function useInitOrReload(
         };
 
         const change = resetOnParentFilterChange
-            ? updateAutomaticResettingFilter(handler, props)
+            ? updateAutomaticResettingFilter(handler, props, supportsCircularDependencyInFilters)
             : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
     }, [
@@ -268,6 +275,7 @@ function useInitOrReload(
         setConnectedPlaceholderValue,
         selectionMode,
         supportsKeepingDependentFiltersSelection,
+        supportsCircularDependencyInFilters,
         setShouldReloadElements,
     ]);
 }
@@ -301,18 +309,27 @@ function updateNonResettingFilter(
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
+        const irrelevantKeys = handler.getCommittedSelection().irrelevantKeys;
+
+        // Sometimes leftover irrelevant keys may be shown as the app does not know about irrelevant keys.
+        // In this case, we want to reset the irrelevant keys.
+        const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
 
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
+        const shouldReinitilizeAllElements =
+            supportsKeepingDependentFiltersSelection &&
+            (hasNumberOfLimitingAttributesChanged || !isEmpty(leftoverIrrelevantKeys));
 
-        handler.changeSelection({ keys, isInverted });
+        const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
+        handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
         handler.commitSelection();
 
         const nextFilter = handler.getFilter();
         setConnectedPlaceholderValue(nextFilter);
 
-        if (supportsKeepingDependentFiltersSelection && hasNumberOfLimitingAttributesChanged) {
+        if (shouldReinitilizeAllElements) {
             return "init-self";
         }
 
@@ -337,7 +354,15 @@ function updateAutomaticResettingFilter(
         onApply,
         selectionMode,
     }: UpdateFilterProps,
+    supportsCircularDependencyInFilters: boolean,
 ): UpdateFilterType {
+    const canAutomaticallyReset =
+        limitingAttributeFilters.length === 0 || !supportsCircularDependencyInFilters;
+    invariant(
+        canAutomaticallyReset,
+        "It is not possible to automatically reset dependent filters with current backend. Please set attribute filter to not reset on parent filter change (resetOnParentFilterChange prop).",
+    );
+
     if (limitingAttributesChanged) {
         handler.changeSelection({ keys: [], isInverted: selectionMode !== "single" });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -424,9 +449,10 @@ function useCallbacks(
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(attributeFilter));
 
             const keys = selectedItems.map((item) => (isElementsByRef ? item.uri : item.title));
-            handler.changeSelection({ keys, isInverted });
+            const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
+            handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         },
-        [handler],
+        [handler, selectionMode],
     );
 
     // Rule is not working with debounce
@@ -482,7 +508,7 @@ function useCallbacks(
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
             handler.loadInitialElementsPage(RESET_CORRELATION);
-            handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+            !handler.isWorkingSelectionEmpty() && handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
             setShouldReloadElements(false);
         }
     }, [handler, shouldReloadElements, setShouldReloadElements]);
@@ -551,7 +577,7 @@ const useSingleSelectModeHandler = (
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
             const keys = [isElementsByRef ? elements[0].uri : elements[0].title];
 
-            handler.changeSelection({ keys, isInverted: false });
+            handler.changeSelection({ keys, isInverted: false, irrelevantKeys: [] });
             handler.commitSelection();
             onApply();
         }

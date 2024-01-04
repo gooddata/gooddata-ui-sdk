@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/sdk-interactive-example-execute",
-  "version": "9.5.0-alpha.6",
+  "version": "9.6.0-alpha.6",
   "title": "Execute",
   "description": "This example demonstrates using Execute component and build custom visualization.",
   "author": "GoodData Corporation",
@@ -17,6 +17,7 @@
     "clean": "rm -rf esm dist *.log",
     "build": "tsc -p tsconfig.json",
     "build-example": "vite build",
+    "build-example-ci": "vite build -l error",
     "start": "vite serve",
     "preview": "vite preview",
     "refresh-md": "gdc-catalog-export && npm run prettier-write",
@@ -24,7 +25,7 @@
     "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
     "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
     "validate": "npm run prettier-check",
-    "validate-ci": "npm run build-example && npm run prettier-check"
+    "validate-ci": "npm run build-example-ci && npm run prettier-check"
   },
   "exampleDependencies": [
     "highcharts",
@@ -56,11 +57,11 @@
     "@gooddata/catalog-export": "workspace:*",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
-    "@vitejs/plugin-react-swc": "~3.4.1",
+    "@vitejs/plugin-react-swc": "~3.5.0",
     "prettier": "~2.5.0",
     "process": "^0.11.10",
     "typescript": "5.0.2",
-    "vite": "~4.5.0",
+    "vite": "~5.0.8",
     "vite-plugin-html": "~3.2.0"
   }
 }

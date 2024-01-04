@@ -23,7 +23,7 @@ export function* modifyDrillsForInsightWidgetHandler(
     cmd: ModifyDrillsForInsightWidget,
 ): SagaIterator<DashboardInsightWidgetDrillsModified> {
     const {
-        payload: { drills: drillsToModify = [] },
+        payload: { drills: drillsToModify = [], blacklistHierarchiesToUpdate = [] },
         correlationId,
     } = cmd;
 
@@ -37,6 +37,20 @@ export function* modifyDrillsForInsightWidgetHandler(
         drillsToModify,
         ctx,
     );
+
+    if (blacklistHierarchiesToUpdate.length > 0) {
+        const blacklist = insightWidget.ignoredDrillDownHierarchies || [];
+
+        yield put(
+            layoutActions.replaceWidgetBlacklistHierarchies({
+                ref: widgetRef,
+                blacklistHierarchies: [...blacklist, ...blacklistHierarchiesToUpdate],
+                undo: {
+                    cmd,
+                },
+            }),
+        );
+    }
 
     const { drills: currentInsightDrills = [] } = insightWidget;
 

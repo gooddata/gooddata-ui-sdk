@@ -301,6 +301,6 @@ exports[`measure converter > should return measure with two filters 1`] = `
 }
 `;
 
-exports[`measure converter > should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
+exports[`measure converter > should throw an error when measure definition is not supported 1`] = `[Error: The measure definition is not supported: {}]`;
 
-exports[`measure converter > should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;
+exports[`measure converter > should throw an error when toObjQualifier gets an URI ref 1`] = `[Error: Tiger backend does not allow referencing objects by URI.]`;

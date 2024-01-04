@@ -15,6 +15,11 @@ import {
     IInsightWidget,
     IAttributeDisplayFormMetadataObject,
     isAttributeDescriptor,
+    isAttributeElementsByValue,
+    filterObjRef,
+    IFilter,
+    filterAttributeElements,
+    isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -23,12 +28,23 @@ import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { getElementTitle } from "./getElementTitle.js";
-import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils.js";
+import {
+    getAttributeIdentifiersPlaceholdersFromUrl,
+    getDashboardAttributeFilterPlaceholdersFromUrl,
+    getInsightAttributeFilterPlaceholdersFromUrl,
+} from "../../../_staging/drills/drillingUtils.js";
 import { DrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectAllCatalogDisplayFormsMap,
+    selectCatalogDateAttributes,
+} from "../../store/catalog/catalogSelectors.js";
 import groupBy from "lodash/groupBy.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
+import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { query } from "../../store/_infra/queryCall.js";
+import { queryWidgetFilters } from "../../queries/widgets.js";
+import stringify from "json-stable-stringify";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;
@@ -213,6 +229,92 @@ export function* getAttributeIdentifiersReplacements(
     );
 }
 
+export function* getDashboardAttributeFilterReplacements(
+    url: string,
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
+    const attributeFilterPlaceholders = getDashboardAttributeFilterPlaceholdersFromUrl(url);
+
+    if (attributeFilterPlaceholders.length === 0) {
+        return [];
+    }
+
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+        selectAllCatalogDisplayFormsMap,
+    );
+
+    return attributeFilterPlaceholders.map(
+        ({ placeholder: toBeReplaced, ref, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+            const usedFilter = attributeFilters.find((filter) => {
+                const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
+                return df && areObjRefsEqual(idRef(df.id), ref);
+            });
+
+            const elements = usedFilter?.attributeFilter.attributeElements;
+            const attributeElementsValues = isAttributeElementsByValue(elements)
+                ? elements.values
+                : elements?.uris ?? [];
+            const isNegative = usedFilter?.attributeFilter.negativeSelection;
+
+            const parsedFilter = usedFilter
+                ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative!)
+                : undefined;
+
+            const replacement = toBeEncoded ? encodeParameterIfSet(parsedFilter) : parsedFilter;
+
+            return {
+                toBeReplaced,
+                replacement: replacement!,
+            };
+        },
+    );
+}
+
+export function* getInsightAttributeFilterReplacements(
+    url: string,
+    widgetRef: ObjRef,
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
+    const attributeFilterPlaceholders = getInsightAttributeFilterPlaceholdersFromUrl(url);
+
+    if (attributeFilterPlaceholders.length === 0) {
+        return [];
+    }
+
+    const widgetFilters: IFilter[] = yield call(query, queryWidgetFilters(widgetRef));
+    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+        selectAllCatalogDisplayFormsMap,
+    );
+
+    return attributeFilterPlaceholders.map(
+        ({ placeholder: toBeReplaced, ref, toBeEncoded }): IDrillToUrlPlaceholderReplacement => {
+            const usedFilter = widgetFilters.find((filter) => {
+                const filterRef = filterObjRef(filter);
+                const df = filterRef && catalogDisplayForms.get(filterRef);
+                return df && areObjRefsEqual(idRef(df.id), ref);
+            });
+
+            const elements = usedFilter ? filterAttributeElements(usedFilter) : undefined;
+            const attributeElementsValues = isAttributeElementsByValue(elements)
+                ? elements.values
+                : elements?.uris ?? [];
+            const isNegative = isNegativeAttributeFilter(usedFilter);
+
+            const parsedFilter = usedFilter
+                ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative)
+                : undefined;
+
+            const replacement = toBeEncoded ? encodeParameterIfSet(parsedFilter) : parsedFilter;
+
+            return {
+                toBeReplaced,
+                replacement: replacement!,
+            };
+        },
+    );
+}
+
 const createIdentifierReplacement = (
     toBeReplaced: DRILL_TO_URL_PLACEHOLDER,
     replacement = "",
@@ -290,9 +392,22 @@ export function* resolveDrillToCustomUrl(
         ctx,
     );
 
-    const missingReplacement = attributeIdentifiersReplacements.find(
-        ({ replacement }) => replacement === undefined,
+    const dashboardAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
+        getDashboardAttributeFilterReplacements,
+        customUrl,
     );
+
+    const insightAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
+        getInsightAttributeFilterReplacements,
+        customUrl,
+        widgetRef,
+    );
+
+    const missingReplacement = [
+        ...attributeIdentifiersReplacements,
+        ...dashboardAttributeFilterReplacements,
+        ...insightAttributeFilterReplacements,
+    ].find(({ replacement }) => replacement === undefined);
 
     if (missingReplacement) {
         throw invalidArgumentsProvided(
@@ -309,7 +424,16 @@ export function* resolveDrillToCustomUrl(
         ctx,
     );
 
-    const replacements = [...attributeIdentifiersReplacements, ...insightIdentifiersReplacements];
+    const replacements = [
+        ...attributeIdentifiersReplacements,
+        ...dashboardAttributeFilterReplacements,
+        ...insightAttributeFilterReplacements,
+        ...insightIdentifiersReplacements,
+    ];
 
     return applyReplacements(customUrl, replacements);
+}
+
+function stringifyAttributeFilterSelection(selection: (string | null)[], isNegative: boolean): string {
+    return `${isNegative ? "NOT_IN" : "IN"}${stringify(selection)}`;
 }

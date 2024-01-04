@@ -19,6 +19,7 @@ const entryPoint: PluginEntryPoint = {
     author: packageJson.author,
     displayName: packageJson.name,
     version: packageJson.version,
+    compatibility: `^${packageJson.peerDependencies["@gooddata/sdk-ui-dashboard"]}`,
     minEngineVersion: "bundled",
     maxEngineVersion: "bundled",
     // These two must fit the values in the webpack config. Do not edit them unless you know what you are doing

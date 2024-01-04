@@ -63,6 +63,7 @@ options = {
             "src/presentation/topBar/types.ts",
             "src/presentation/toolbar/types.ts",
             "src/presentation/widget/types.ts",
+            "src/presentation/dashboard/types.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [
@@ -94,6 +95,8 @@ options = {
             "src/presentation/types.ts",
             "src/presentation/localization",
             "src/types.ts",
+            "src/converters",
+            "src/presentation/widget/common/useWidgetFilters.ts",
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",

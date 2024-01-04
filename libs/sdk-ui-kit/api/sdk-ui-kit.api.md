@@ -1152,6 +1152,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     headline?: string;
     // (undocumented)
+    isCancelDisabled?: boolean;
+    // (undocumented)
     isPositive?: boolean;
     // (undocumented)
     isSubmitDisabled?: boolean;
@@ -1467,6 +1469,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     isMobile?: boolean;
     // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
     mobileItemHeight?: number;
     // (undocumented)
     onSearch?: (searchString: string) => void;
@@ -1490,6 +1494,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     showTabs?: boolean;
     // (undocumented)
     tabs?: ITab[];
+    // (undocumented)
+    tabsClassName?: string;
     // (undocumented)
     title?: string;
     // (undocumented)
@@ -1531,6 +1537,8 @@ export interface IDropdownProps {
 
 // @internal (undocumented)
 export interface IDropdownTagsProps {
+    // (undocumented)
+    className?: string;
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
     // (undocumented)
@@ -2613,6 +2621,8 @@ export interface IListProps<T> {
     // (undocumented)
     itemsCount?: number;
     // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
     maxVisibleItemsCount?: number;
     // (undocumented)
     onScrollEnd?: ScrollCallback;
@@ -3648,9 +3658,13 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    eventsOnBubble?: boolean;
+    // (undocumented)
+    hideDelayBubble?: number;
+    // (undocumented)
     icon?: string;
     // (undocumented)
-    info?: string;
+    info?: string | ReactNode;
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
@@ -3836,6 +3850,10 @@ export interface ISyntaxHighlightingInputProps {
 
 // @internal (undocumented)
 export interface ITab {
+    // (undocumented)
+    icon?: string;
+    // (undocumented)
+    iconOnly?: boolean;
     // (undocumented)
     id: string;
     // (undocumented)

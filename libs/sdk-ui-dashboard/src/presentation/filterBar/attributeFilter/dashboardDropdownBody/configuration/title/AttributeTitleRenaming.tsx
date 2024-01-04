@@ -39,6 +39,7 @@ export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (p
                 className="configuration-attribute-filter-title s-configuration-attribute-filter-title"
                 value={attributeTitle}
                 onChange={onChange as any}
+                isSmall={true}
             />
         </div>
     );

@@ -304,6 +304,7 @@
     "configurationPanel.drillConfig.clickHintItem": "Когда я щелкну <addon>(значение)</addon>",
     "configurationPanel.drillConfig.drillIntoDashboard": "Углубиться в дашборд",
     "configurationPanel.drillConfig.drillIntoInsight": "Углубиться в анализ",
+    "configurationPanel.drillConfig.drillDown": "Углубиться",
     "configurationPanel.drillConfig.drillIntoUrl": "Углубиться в URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Неверные параметры URL",
     "configurationPanel.drillConfig.select": "Выбрать действие…",
