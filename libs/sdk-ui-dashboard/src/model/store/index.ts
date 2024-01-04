@@ -126,7 +126,7 @@ export {
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
     selectCanAddMoreAttributeFilters,
-    selectIsAttributeFilterDependentByDisplayForm,
+    selectIsAttributeFilterDependentByLocalIdentifier,
 } from "./filterContext/filterContextSelectors.js";
 export {
     // Core drills

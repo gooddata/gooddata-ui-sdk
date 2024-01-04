@@ -40,7 +40,7 @@ import {
     selectAttributeFilterConfigsModeMap,
     selectEnableKDDependentFilters,
     useDashboardUserInteraction,
-    selectIsAttributeFilterDependentByDisplayForm,
+    selectIsAttributeFilterDependentByLocalIdentifier,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -72,7 +72,7 @@ export const DefaultDashboardAttributeFilter = (
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
     const isAttributeFilterDependent = useDashboardSelector(
-        selectIsAttributeFilterDependentByDisplayForm(filter.attributeFilter.displayForm),
+        selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );
 
     const filterRef = useMemo(() => {
