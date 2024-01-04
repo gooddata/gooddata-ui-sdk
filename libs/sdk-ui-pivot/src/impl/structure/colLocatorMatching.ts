@@ -51,6 +51,8 @@ export function searchForLocatorMatch(
                 } else if (isTotalColumnLocator(locator)) {
                     return locator.totalLocatorItem.attributeIdentifier === groupByAttributeLocalId;
                 }
+
+                return undefined;
             });
 
             if (isEmpty(matchingLocator)) {

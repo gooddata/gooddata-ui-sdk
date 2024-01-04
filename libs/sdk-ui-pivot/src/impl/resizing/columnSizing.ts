@@ -129,6 +129,8 @@ export class ResizedColumnsStore {
         if (isSeriesCol(col) && this.isAllMeasureColumWidthUsed()) {
             return this.getAllMeasureColumMapItem();
         }
+
+        return undefined;
     };
 
     public getManuallyResizedColumn = (item: Column | ColDef): IManuallyResizedColumnsItem | undefined => {
@@ -310,7 +312,7 @@ export class ResizedColumnsStore {
 
     public getMatchedWeakMeasuresColumnWidth = (col: AnyCol): IWeakMeasureColumnWidthItem | undefined => {
         if (!isSeriesCol(col)) {
-            return;
+            return undefined;
         }
 
         const measureHeaderLocalIdentifier =
@@ -319,6 +321,8 @@ export class ResizedColumnsStore {
         if (measureHeaderLocalIdentifier) {
             return this.weakMeasuresColumnWidths[measureHeaderLocalIdentifier];
         }
+
+        return undefined;
     };
 
     private filterAllMeasureColumnWidthItem(
@@ -327,6 +331,8 @@ export class ResizedColumnsStore {
         if (columnWidths) {
             return columnWidths.filter(isAllMeasureColumnWidthItem)[0];
         }
+
+        return undefined;
     }
 
     private filterStrongColumnWidthItems(columnWidths: ColumnWidthItem[] | undefined) {
@@ -376,6 +382,8 @@ export class ResizedColumnsStore {
                 ...getAllowGrowToFitProp(width.allowGrowToFit),
             };
         }
+
+        return undefined;
     }
 
     private getWeakMeasureColumMapItem(item: IWeakMeasureColumnWidthItem): IManuallyResizedColumnsItem {

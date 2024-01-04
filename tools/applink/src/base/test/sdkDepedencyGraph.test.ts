@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import flatten from "lodash/flatten";
-import { determinePackageBuildOrder, findDependingPackages } from "../dependencyGraph";
-import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture";
+import { determinePackageBuildOrder, findDependingPackages } from "../dependencyGraph.js";
+import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";
 import { describe, it, expect } from "vitest";
 
 describe("dependency graph", () => {

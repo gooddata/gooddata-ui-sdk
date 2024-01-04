@@ -13,7 +13,6 @@
         "styled-jsx/babel",
         "@babel/plugin-transform-object-rest-spread",
         "@babel/plugin-transform-class-properties",
-        "@babel/plugin-transform-async-to-generator",
-        "lodash"
+        "@babel/plugin-transform-async-to-generator"
     ]
 }

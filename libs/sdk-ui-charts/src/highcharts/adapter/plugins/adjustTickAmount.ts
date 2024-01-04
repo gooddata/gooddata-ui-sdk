@@ -53,6 +53,7 @@ function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
         // isUserMinMax is a custom prop not included in original typing
         return (yAxes[0] as any).isUserMinMax || (yAxes[1] as any).isUserMinMax;
     }
+    return false;
 }
 
 /**

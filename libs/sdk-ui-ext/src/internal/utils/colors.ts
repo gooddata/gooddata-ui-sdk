@@ -55,6 +55,8 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
                     color: assignmentItem.color.value,
                 };
             }
+
+            return undefined;
         });
     }
 

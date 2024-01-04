@@ -91,6 +91,8 @@ export function discoverBackendType(packageJson: Record<string, any>): TargetBac
 
         return "tiger";
     }
+
+    return undefined;
 }
 
 export function extractRootCause(error: any): any {

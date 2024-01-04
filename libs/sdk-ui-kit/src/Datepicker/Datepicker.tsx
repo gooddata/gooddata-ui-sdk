@@ -99,9 +99,9 @@ function parseDate(str: string, dateFormat: string): Date | undefined {
         ) {
             return parsedDate;
         }
-        return;
+        return undefined;
     } catch {
-        return;
+        return undefined;
     }
 }
 

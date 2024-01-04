@@ -1,13 +1,15 @@
 // (C) 2007-2022 GoodData Corporation
 
 import React from "react";
-import Downshift, { ControllerStateAndHelpers } from "downshift";
+import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { SelectButton } from "./SelectButton.js";
 import { SelectMenu } from "./SelectMenu.js";
 import { ISelectItem, ISelectItemOption } from "./types.js";
 import { getSelectableItems, itemToString } from "./utils.js";
+
+const TypedDownshift = Downshift as unknown as React.ComponentClass<DownshiftProps<any>, DownshiftState<any>>;
 
 export interface ISelectProps<V> {
     items: Array<ISelectItem<V>>;
@@ -30,7 +32,7 @@ export const Select = <V extends {}>({
     const selectableOptions = getSelectableItems(items);
 
     return (
-        <Downshift
+        <TypedDownshift
             onChange={onChange}
             itemToString={itemToString}
             selectedItem={selectableOptions.find((item) => item.value === value) || selectableOptions[0]}
@@ -61,7 +63,7 @@ export const Select = <V extends {}>({
                     ) : null}
                 </div>
             )}
-        </Downshift>
+        </TypedDownshift>
     );
 };
 

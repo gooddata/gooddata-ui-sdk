@@ -1,27 +1,23 @@
 {
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "target": "es2017",
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "esModuleInterop": true,
-        "lib": ["es2017", "dom"],
-        "importHelpers": true,
-        "sourceMap": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
         "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        "importHelpers": true,
+        "resolveJsonModule": true,
         "strict": true,
-        "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true,        
-        "baseUrl": "..",
-        "paths": {
-            "@gooddata/sdk-embedding": ["sdk-embedding/src"],
-            "@gooddata/sdk-model": ["sdk-model/src"],
-            "@gooddata/sdk-backend-base": ["sdk-backend-base/src"],
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/api-client-bear": ["api-client-bear/src"],
-            "@gooddata/api-model-bear": ["api-model-bear/src"]
-        }
-    },
-    "exclude": ["**/node_modules", "esm"]
+        "noImplicitReturns": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

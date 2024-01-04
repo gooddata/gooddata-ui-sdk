@@ -1,29 +1,24 @@
 {
-    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "target": "es2017",
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "jsx": "react",
-        "lib": ["es2017", "dom"],
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "esModuleInterop": true,
         "importHelpers": true,
+        "resolveJsonModule": true,
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "./esm",
-        "sourceMap": true,
-        "baseUrl": "..",
-        "paths": {
-            "@gooddata/sdk-ui": ["sdk-ui/src"],
-            "@gooddata/sdk-model": ["sdk-model/src"],
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"],
-            "@gooddata/sdk-ui-kit": ["@gooddata/sdk-ui-kit/src"],
-            "@gooddata/sdk-ui-theme-provider": ["@gooddata/sdk-ui-theme-provider/src"],
-            "@gooddata/sdk-ui-vis-commons": ["@gooddata/sdk-ui-vis-commons/src"]
-        }
-    },
-    "compileOnSave": false,
-    "exclude": ["**/node_modules", "esm", "**/__mocks__/**/*"]
+        "noImplicitReturns": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

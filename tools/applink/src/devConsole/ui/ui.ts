@@ -1,9 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 import blessed from "blessed";
-import { AppLog } from "./appLog";
-import { PackageList } from "./packageList";
-import { appLogInfo, appLogWarn, getTerminalSize } from "./utils";
-import { AppMenu, AppMenuItem } from "./appMenu";
+import { AppLog } from "./appLog.js";
+import { PackageList } from "./packageList.js";
+import { appLogInfo, appLogWarn, getTerminalSize } from "./utils.js";
+import { AppMenu, AppMenuItem } from "./appMenu.js";
 import {
     autobuildToggled,
     DcEvent,
@@ -12,11 +12,11 @@ import {
     IEventListener,
     PackageChange,
     packagesChanged,
-} from "../events";
-import { BuildOutput } from "./buildOutput";
-import { PackageJson, TargetDependency } from "../../base/types";
-import difference from "lodash/difference";
-import isEmpty from "lodash/isEmpty";
+} from "../events.js";
+import { BuildOutput } from "./buildOutput.js";
+import { PackageJson, TargetDependency } from "../../base/types.js";
+import difference from "lodash/difference.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;

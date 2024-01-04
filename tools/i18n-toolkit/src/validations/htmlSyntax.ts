@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { HtmlValidate } from "html-validate";
-import flatten from "lodash/flatten";
+import flatten from "lodash/flatten.js";
 
-import { done, message, skipped, fail } from "../utils/console";
+import { done, message, skipped, fail } from "../utils/console.js";
 
 export async function getHtmlSyntaxCheck(
     localizations: Array<string>,
@@ -23,7 +23,7 @@ export async function getHtmlSyntaxCheck(
     localizations
         .filter((localization) => localization.match(htmlRegex))
         .forEach((localization) => {
-            const validation = htmlValidate.validateString(localization);
+            const validation = htmlValidate.validateStringSync(localization);
 
             if (!validation.valid) {
                 const validationResults = validation.results.map((validationResult) =>

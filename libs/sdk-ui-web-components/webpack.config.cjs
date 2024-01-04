@@ -3,8 +3,10 @@
 const { EnvironmentPlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const path = require("path");
 const npmPackage = require("./package.json");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 module.exports = (env, argv) => ({
     mode: argv.mode,
@@ -22,6 +24,9 @@ module.exports = (env, argv) => ({
         library: {
             type: "module",
         },
+    },
+    optimization: {
+        minimizer: [new EsbuildPlugin()],
     },
     entry: {
         index: "./src/index",
@@ -49,20 +54,11 @@ module.exports = (env, argv) => ({
                 test: /\.tsx?$/,
                 use: [
                     {
-                        loader: "babel-loader",
-                    },
-                    {
                         loader: "ts-loader",
-                        options:
-                            argv.mode === "production"
-                                ? {
-                                      transpileOnly: false,
-                                      configFile: path.resolve("./tsconfig.build.json"),
-                                  }
-                                : {
-                                      transpileOnly: true,
-                                      configFile: path.resolve("./tsconfig.dev.json"),
-                                  },
+                        options: {
+                            transpileOnly: argv.mode === "production" ? false : true,
+                            configFile: path.resolve("./tsconfig.json"),
+                        },
                     },
                 ],
             },
@@ -113,6 +109,7 @@ module.exports = (env, argv) => ({
                 npmPackage.dependencies["@gooddata/sdk-model"].replace(/[\^~]/, ""),
             ),
         }),
+        new ForkTsCheckerWebpackPlugin(),
         argv.mode === "production" && new MiniCssExtractPlugin(),
         env.analyze &&
             new BundleAnalyzerPlugin({

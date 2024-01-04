@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
-import { SourceDescriptor, TargetDescriptor } from "../../../base/types";
+import { SourceDescriptor, TargetDescriptor } from "../../../base/types.js";
 import source from "./source.json";
 import target from "./target.json";
-import { naiveFilterDependencyGraph } from "../../../base/dependencyGraph";
-import { buildFinished, DcEvent, DcEventType, EventBus, IEventListener } from "../../events";
+import { naiveFilterDependencyGraph } from "../../../base/dependencyGraph.js";
+import { buildFinished, DcEvent, DcEventType, EventBus, IEventListener } from "../../events.js";
 
 function loadSource(src: any): SourceDescriptor {
     const sourceDescriptor: SourceDescriptor = src;

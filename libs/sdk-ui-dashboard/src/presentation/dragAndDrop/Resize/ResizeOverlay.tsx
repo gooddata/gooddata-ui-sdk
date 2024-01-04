@@ -44,6 +44,7 @@ function getMessage({
     if (reachedWidthLimit === "max") {
         return messages.maxWidth;
     }
+    return undefined;
 }
 
 function getStatus({

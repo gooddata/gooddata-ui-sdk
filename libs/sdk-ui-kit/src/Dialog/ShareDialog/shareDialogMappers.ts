@@ -127,6 +127,8 @@ export const mapShareStatusToGroupAll = (shareStatus: ShareStatus): IGranteeGrou
     if (shareStatus === "public") {
         return GranteeGroupAll;
     }
+
+    return undefined;
 };
 
 /**
@@ -260,6 +262,8 @@ export const mapAccessGranteeDetailToGrantee = (
     } else if (isGranularRulesAccessGrantee(accessGranteeDetail)) {
         return mapGranularRulesAccessToGrantee(accessGranteeDetail);
     }
+
+    return undefined;
 };
 
 /**

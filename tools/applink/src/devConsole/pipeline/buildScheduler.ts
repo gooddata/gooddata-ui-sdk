@@ -11,13 +11,13 @@ import {
     PackagesChanged,
     packagesRebuilt,
     TargetSelected,
-} from "../events";
-import { DependencyGraph, SourceDescriptor } from "../../base/types";
-import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph";
-import flatten from "lodash/flatten";
-import uniq from "lodash/uniq";
-import { appLogError, appLogWarn } from "../ui/utils";
-import values from "lodash/values";
+} from "../events.js";
+import { DependencyGraph, SourceDescriptor } from "../../base/types.js";
+import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
+import flatten from "lodash/flatten.js";
+import uniq from "lodash/uniq.js";
+import { appLogError, appLogWarn } from "../ui/utils.js";
+import values from "lodash/values.js";
 
 type PackageState = {
     buildRequested: boolean;

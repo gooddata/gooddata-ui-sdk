@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { TargetDependency } from "../../base/types";
+import { TargetDependency } from "../../base/types.js";
 import path from "path";
 import spawn from "cross-spawn";
 import {
@@ -10,11 +10,11 @@ import {
     IEventListener,
     PackagesRebuilt,
     publishFinished,
-} from "../events";
-import { appLogError, appLogInfo, appLogWarn } from "../ui/utils";
-import max from "lodash/max";
-import min from "lodash/min";
-import uniq from "lodash/uniq";
+} from "../events.js";
+import { appLogError, appLogInfo, appLogWarn } from "../ui/utils.js";
+import max from "lodash/max.js";
+import min from "lodash/min.js";
+import uniq from "lodash/uniq.js";
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 

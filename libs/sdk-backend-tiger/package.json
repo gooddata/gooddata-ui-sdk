@@ -21,12 +21,9 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/*",
-        "dev": "bash scripts/build.sh --dev-watch",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-esm": "tsc -p tsconfig.build.json",
-        "build-dev": "bash scripts/build.sh --dev",
+        "build": "bash scripts/build.sh",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "integrated-test": "./scripts/integrated-test.sh",
         "integrated-test-live-backend": "./scripts/integrated-test-live-backend.sh",
@@ -73,7 +70,7 @@
         "@gooddata/fixtures": "1.32.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/spark-md5": "^3.0.1",
         "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^5.57.1",

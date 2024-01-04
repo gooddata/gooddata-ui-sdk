@@ -23,7 +23,7 @@ export function* loadAttributeWorker(): SagaIterator<void> {
  */
 export function* loadAttributeSaga(
     action: ReturnType<typeof actions.loadAttributeRequest> | ReturnType<typeof actions.loadAttributeRequest>,
-): SagaIterator<IAttributeMetadataObject> {
+): SagaIterator<IAttributeMetadataObject | void> {
     if (actions.loadAttributeCancelRequest.match(action)) {
         // Saga was triggered by loadAttributeCancelRequest - do nothing, finally statement was already called, because takeLatest can run only one saga at a time === the previous one was canceled
         return;

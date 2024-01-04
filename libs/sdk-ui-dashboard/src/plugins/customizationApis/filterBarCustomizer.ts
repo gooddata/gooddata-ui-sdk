@@ -52,9 +52,11 @@ class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
  * @internal
  */
 export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
-    private state: IFilterBarCustomizerState = new FilterBarCustomizerState(this.logger);
+    private state: IFilterBarCustomizerState;
 
-    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {
+        this.state = new FilterBarCustomizerState(this.logger);
+    }
 
     setRenderingMode = (mode: FilterBarRenderingMode): this => {
         this.state.setRenderingMode(mode);

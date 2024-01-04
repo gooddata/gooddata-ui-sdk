@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import path from "path";
 
-import { ToolkitOptions, ToolkitConfigFile, DefaultConfigName } from "./data";
-import { readFile } from "./utils";
-import { skipped, message, fail } from "./utils/console";
+import { ToolkitOptions, ToolkitConfigFile, DefaultConfigName } from "./data.js";
+import { readFile } from "./utils/index.js";
+import { skipped, message, fail } from "./utils/console.js";
 
 export async function configure(cwd: string, opts: ToolkitOptions): Promise<ToolkitConfigFile> {
     const [configPath, configFile] = await loadConfigFile(cwd, opts.config);
@@ -32,7 +32,7 @@ async function loadConfigFile(
 
     try {
         await readFile(configPath);
-        return [configPath, require(configPath)];
+        return [configPath, await import(configPath)];
     } catch (e) {
         return [configPath, null];
     }

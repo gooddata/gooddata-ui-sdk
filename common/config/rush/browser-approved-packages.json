@@ -615,6 +615,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "esbuild-loader",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

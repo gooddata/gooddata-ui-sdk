@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import { DependencyGraph } from "../types";
-import { naiveFilterDependencyGraph } from "../dependencyGraph";
+import { DependencyGraph } from "../types.js";
+import { naiveFilterDependencyGraph } from "../dependencyGraph.js";
 
 const SdkDependencySnapshot: Partial<DependencyGraph> = {
     nodes: [

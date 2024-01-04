@@ -330,6 +330,8 @@ class ResultMetaMethods implements IResultMetaMethods {
             } else if (isMeasureLocator(locator)) {
                 return this._measureDescriptorByLocalId[locator.measureLocatorItem.measureIdentifier];
             }
+
+            return false;
         });
     };
 

@@ -9,21 +9,25 @@
         "directory": "tools/applink"
     },
     "license": "MIT",
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "type": "module",
+    "exports": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
     "bin": {
-        "gdc-applink": "dist/index.js"
+        "gdc-applink": "esm/index.js"
     },
+    "sideEffects": false,
     "files": [
-        "dist"
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts src/"
+        "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
-        "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "tsc -p tsconfig.json",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -31,11 +35,11 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
-        "applink": "node dist/index.js $*"
+        "applink": "node esm/index.js $*"
     },
     "dependencies": {
         "blessed": "^0.1.81",
@@ -52,7 +56,7 @@
         "@types/blessed": "^0.1.17",
         "@types/cross-spawn": "^6.0.2",
         "@types/json5": "^0.0.30",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
@@ -60,6 +64,7 @@
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-import-esm": "^1.2.1",
         "eslint-plugin-jest": "^27.1.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",

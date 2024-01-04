@@ -81,6 +81,8 @@ function getDisabledMessageId(
     if (isCalculateAsRatio) {
         return comparisonMessages.labelConditionalDisabledByRatio.id;
     }
+
+    return undefined;
 }
 
 const LabelSubSection: React.FC<ILabelSubSectionProps> = ({

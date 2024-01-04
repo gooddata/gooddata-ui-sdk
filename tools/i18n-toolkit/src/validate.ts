@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
 import * as path from "path";
-import { ToolkitConfigFile } from "./data";
-import { getLocalizationFiles, getParsedLocalizations, getLocalizationValues } from "./localizations";
-import { getDefaultLocalesCheck } from "./validations/defaultLocales";
-import { getStructureCheck } from "./validations/structure";
-import { getIntlMessageFormatCheck } from "./validations/messageFormat";
-import { getHtmlSyntaxCheck } from "./validations/htmlSyntax";
-import { getInsightToReportCheck } from "./validations/insightToReport";
-import { getUsageMessagesCheck } from "./validations/messagesUsage";
+import { ToolkitConfigFile } from "./data.js";
+import { getLocalizationFiles, getParsedLocalizations, getLocalizationValues } from "./localizations.js";
+import { getDefaultLocalesCheck } from "./validations/defaultLocales.js";
+import { getStructureCheck } from "./validations/structure.js";
+import { getIntlMessageFormatCheck } from "./validations/messageFormat.js";
+import { getHtmlSyntaxCheck } from "./validations/htmlSyntax.js";
+import { getInsightToReportCheck } from "./validations/insightToReport.js";
+import { getUsageMessagesCheck } from "./validations/messagesUsage.js";
 
 export async function validate(cwd: string, opts: ToolkitConfigFile) {
     const { paths = [], insightToReport } = opts;

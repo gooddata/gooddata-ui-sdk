@@ -19,10 +19,8 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
-        "dev": "tsc -p tsconfig.dev.json --watch",
-        "copy-data": "mkdir -p esm/recordings && cp -R src/recordings/* esm/recordings && rm -f esm/recordings/index.ts esm/recordings/dataSample.ts",
-        "build": "rm -rf esm/recordings && tsc -p tsconfig.build.json && npm run copy-data",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "tsc -p tsconfig.json",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
@@ -45,7 +43,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/mock-handling": "workspace:*",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",

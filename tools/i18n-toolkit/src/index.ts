@@ -3,10 +3,10 @@
 
 import { program } from "commander";
 
-import { DefaultConfigName, ToolkitOptions, ToolkitConfigFile } from "./data";
-import { validate } from "./validate";
-import { configure } from "./config";
-import { done, fail, error, hr } from "./utils/console";
+import { DefaultConfigName, ToolkitOptions, ToolkitConfigFile } from "./data.js";
+import { validate } from "./validate.js";
+import { configure } from "./config.js";
+import { done, fail, error, hr } from "./utils/console.js";
 
 async function loadConfig(cwd: string, opts: ToolkitOptions) {
     const { debug } = opts;

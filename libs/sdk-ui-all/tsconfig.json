@@ -1,29 +1,23 @@
 {
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "esModuleInterop": true,
-        "target": "es2017",
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "lib": ["es6", "dom", "ES2017.Intl", "ES2018.Intl", "ES2020.Intl", "ESNext.Intl"],
-        "sourceMap": true,
-        "importHelpers": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
         "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        "importHelpers": true,
+        "resolveJsonModule": true,
         "strict": true,
-        "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "resolveJsonModule": true,
-        "baseUrl": "..",
-        "paths": {
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-model": ["sdk-model/src"],
-            "@gooddata/sdk-ui": ["sdk-ui/src"],
-            "@gooddata/sdk-ui-charts": ["sdk-ui-charts/src"],
-            "@gooddata/sdk-ui-filters": ["sdk-ui-filters/src"],
-            "@gooddata/sdk-ui-pivot": ["sdk-ui-pivot/src"],
-            "@gooddata/sdk-ui-ext": ["sdk-ui-ext/src"]
-        }
-    },
-    "exclude": ["**/node_modules", "esm"]
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

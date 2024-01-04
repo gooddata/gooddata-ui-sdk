@@ -21,10 +21,8 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
-        "dev": "bash scripts/build.sh --dev-watch",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-esm": "tsc -p tsconfig.build.json",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "bash scripts/build.sh",
         "openapi-generate": "./scripts/generate.js",
         "generate-client": "rm -rf src/generated/* && npm run openapi-generate && fix-esm-import-path ./src && npm run prettier-write",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
@@ -53,7 +51,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
         "@openapitools/openapi-generator-cli": "^2.6.0",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "commander": "^8.1.0",

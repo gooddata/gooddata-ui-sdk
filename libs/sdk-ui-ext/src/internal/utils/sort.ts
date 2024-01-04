@@ -290,6 +290,8 @@ function reuseAttributeAreaSortItem(currentSortItem: ISortItem, availableSortGro
     if (availableMetricSort) {
         return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
     }
+
+    return undefined;
 }
 
 function reuseMetricSortItem(currentSortItem: IMeasureSortItem, availableSortGroup: IAvailableSortsGroup) {
@@ -307,6 +309,8 @@ function reuseMetricSortItem(currentSortItem: IMeasureSortItem, availableSortGro
     if (availableSortGroup.attributeSort.areaSortEnabled) {
         return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
     }
+
+    return undefined;
 }
 
 function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvailableSortsGroup) {
@@ -321,6 +325,8 @@ function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvai
             return reuseMetricSortItem(currentSortItem, availableSortGroup);
         }
     }
+
+    return undefined;
 }
 
 /**
@@ -357,6 +363,8 @@ export function validateCurrentSort(
             sortsToReuse = modifiedSorts;
             return reusedItem;
         }
+
+        return undefined;
     });
     return availableSorts
         .map((availableSortGroup, index) => {
@@ -382,4 +390,6 @@ export function getCustomSortDisabledExplanation(
     if (relevantAttributes.length === 0) {
         return getTranslation(messages.explanationAttribute.id, intl);
     }
+
+    return undefined;
 }

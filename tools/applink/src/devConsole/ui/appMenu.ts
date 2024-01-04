@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import blessed, { Widgets } from "blessed";
-import { getTerminalSize } from "./utils";
-import { ColorCodes } from "./colors";
+import { getTerminalSize } from "./utils.js";
+import { ColorCodes } from "./colors.js";
 import IKeyEventArg = Widgets.Events.IKeyEventArg;
 
 export type AppMenuItem = {

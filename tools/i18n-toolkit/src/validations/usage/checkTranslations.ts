@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import groupBy from "lodash/groupBy";
-import difference from "lodash/difference";
-import intersection from "lodash/intersection";
-import flatten from "lodash/flatten";
-import uniq from "lodash/uniq";
+import groupBy from "lodash/groupBy.js";
+import difference from "lodash/difference.js";
+import intersection from "lodash/intersection.js";
+import flatten from "lodash/flatten.js";
+import uniq from "lodash/uniq.js";
 
 import {
     ToolkitConfigFile,
@@ -14,8 +14,8 @@ import {
     CheckReportPipe,
     CheckMeasureSuffix,
     CheckMetricSuffix,
-} from "../../data";
-import { LocalesStructure } from "../../schema/localization";
+} from "../../data.js";
+import { LocalesStructure } from "../../schema/localization.js";
 
 type ToolkitTranslationRuleData = ToolkitTranslationRule & {
     messageFilter: (item: any) => boolean;

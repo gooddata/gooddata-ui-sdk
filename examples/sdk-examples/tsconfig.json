@@ -1,20 +1,23 @@
 {
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json", "typings"],
     "compilerOptions": {
-        "module": "commonjs",
-        "allowJs": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "CommonJS",
         "jsx": "react",
-        "sourceMap": true,
-        "esModuleInterop": true,
         "importHelpers": true,
-        "lib": ["es7", "dom"],
-        "outDir": "dist",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
         "strict": true,
-        "noImplicitAny": true,
         "noUnusedLocals": true,
-        "strictNullChecks": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true
-    },
-    "include": ["src", "typings"],
-    "exclude": ["**/node_modules", "dist"]
+        "noImplicitReturns": true,
+        "composite": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
 }

@@ -16,7 +16,7 @@
      * path segment in the "$schema" field for all your Rush config files.  This will ensure
      * correct error-underlining and tab-completion for editors such as VS Code.
      */
-    "rushVersion": "5.97.0",
+    "rushVersion": "5.111.0",
 
     /**
      * The next field selects which package manager should be installed and determines its version.
@@ -373,7 +373,8 @@
             "packageName": "@gooddata/sdk-ui-web-components",
             "projectFolder": "libs/sdk-ui-web-components",
             "reviewCategory": "production",
-            "shouldPublish": false
+            "shouldPublish": false,
+            "tags": ["web-components"]
         },
         {
             "packageName": "@gooddata/sdk-ui-loaders",
@@ -399,7 +400,8 @@
             "packageName": "@gooddata/dashboard-plugin-template",
             "projectFolder": "tools/dashboard-plugin-template",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            "shouldPublish": false,
+            "tags": ["templates"]
         },
         {
             "packageName": "@gooddata/plugin-toolkit",
@@ -412,7 +414,8 @@
             "packageName": "@gooddata/react-app-template",
             "projectFolder": "tools/react-app-template",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            "shouldPublish": false,
+            "tags": ["templates"]
         },
         {
             "packageName": "@gooddata/app-toolkit",
@@ -536,7 +539,7 @@
             "projectFolder": "libs/sdk-ui-tests",
             "reviewCategory": "production",
             // "versionPolicyName": "sdk", // until we publish this, we cannot specify the policy, it overrides the shouldPublish
-            "shouldPublish": false // skipping publishing for now, the package is not ready for publication yet
+            "shouldPublish": false // skipping publishing for now, the package is not ready for publication ye
         },
         {
             "packageName": "@gooddata/reference-workspace",

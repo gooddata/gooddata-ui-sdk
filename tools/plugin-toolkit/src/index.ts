@@ -2,7 +2,6 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { Command, OptionValues, program } from "commander";
-import pkg from "../package.json" assert { type: "json" };
 import { addPluginCmdAction } from "./addPluginCmd/index.js";
 import { initCmdAction } from "./initCmd/index.js";
 import { linkPluginCmdAction } from "./linkPluginCmd/index.js";
@@ -14,9 +13,10 @@ import { inspectCmdAction } from "./inspectCmds/inspectCmdAction.js";
 import { inspectDashboard } from "./inspectCmds/inspectDashboard.js";
 import { updatePluginParamCmdAction } from "./updatePluginParamsCmd/index.js";
 import { removePluginParamCmdAction } from "./removeParamsCmd/index.js";
+import { LIB_VERSION } from "./__version.js";
 
 program
-    .version(pkg.version)
+    .version(LIB_VERSION)
     .name("GoodData Plugin Development Toolkit")
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .option("--hostname <hostname>", "URL of your GoodData host")

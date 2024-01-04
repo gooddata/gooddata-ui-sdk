@@ -427,4 +427,6 @@ function buildDateHierarchy(
             attributes: dateAttributesInHierarchy,
         };
     }
+
+    return undefined;
 }

@@ -25,10 +25,8 @@
         "esm/**/*.map"
     ],
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log",
-        "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "npm run build-esm && npm run api-extractor",
-        "build-esm": "tsc -p tsconfig.build.json",
+        "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "build": "tsc -p tsconfig.json && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "vitest watch",
         "test-once": "vitest run",
@@ -56,7 +54,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
         "@types/json-stable-stringify": "^1.0.32",
-        "@types/lodash": "^4.14.158",
+        "@types/lodash": "^4.14.202",
         "@types/spark-md5": "^3.0.1",
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^5.57.1",

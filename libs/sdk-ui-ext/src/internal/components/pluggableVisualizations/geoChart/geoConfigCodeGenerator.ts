@@ -92,6 +92,8 @@ function getLocationAttributeFromInsight(
         const identifier = controls[bucketName];
         return newAttribute(idRef(identifier, "displayForm"), (a) => a.localId(`a_${identifier}`));
     }
+
+    return undefined;
 }
 
 export function mapBoxTokenPlaceholder(): IGeoConfig {

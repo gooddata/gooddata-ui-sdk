@@ -52,6 +52,7 @@ export function filterDrillFromAttributeByPriority(
             if (!isDrillToLegacyDashboard(drill) && isDrillConfigured(drill, configuredDrills)) {
                 return getDrillOriginLocalIdentifier(drill);
             }
+            return undefined;
         }),
     );
 
