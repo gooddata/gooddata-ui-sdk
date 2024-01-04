@@ -374,11 +374,6 @@ export interface ICrossFiltering extends IDrill {
      * Drill type
      */
     type: "crossFiltering";
-
-    /**
-     * Title of the cross filtering attributes
-     */
-    title: string;
 }
 
 /**

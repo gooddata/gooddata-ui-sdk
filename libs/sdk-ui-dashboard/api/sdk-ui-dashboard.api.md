@@ -6617,7 +6617,7 @@ export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<b
 export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean>;
 
 // @internal
-export const selectIsAttributeFilterDependentByDisplayForm: (attributeFilterDisplayFormRef: ObjRef) => DashboardSelector<boolean>;
+export const selectIsAttributeFilterDependentByLocalIdentifier: (attributeFilterLocalIdentifier: string) => DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean>;

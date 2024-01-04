@@ -874,7 +874,6 @@ export interface IComparisonConditionBody {
 
 // @public
 export interface ICrossFiltering extends IDrill {
-    title: string;
     type: "crossFiltering";
 }
 

@@ -387,13 +387,13 @@ export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = crea
  *
  * @internal
  */
-export const selectIsAttributeFilterDependentByDisplayForm: (
-    attributeFilterDisplayFormRef: ObjRef,
-) => DashboardSelector<boolean> = createMemoizedSelector((attributeFilterDisplayFormRef: ObjRef) =>
+export const selectIsAttributeFilterDependentByLocalIdentifier: (
+    attributeFilterLocalIdentifier: string,
+) => DashboardSelector<boolean> = createMemoizedSelector((attributeFilterLocalIdentifier: string) =>
     createSelector(
-        selectFilterContextAttributeFilterByDisplayForm(attributeFilterDisplayFormRef),
+        selectFilterContextAttributeFilterByLocalId(attributeFilterLocalIdentifier),
         (filterContextAttributeFilter) => {
-            return !isEmpty(filterContextAttributeFilter?.attributeFilter.filterElementsBy);
+            return !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy);
         },
     ),
 );
