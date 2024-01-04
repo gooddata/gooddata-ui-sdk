@@ -41,7 +41,7 @@ describe("Interaction", () => {
             widgetConfig
                 .getDrillConfigItem("Sum of Probability")
                 .chooseAction("Drill into URL")
-                .openCustomUrlEditor();
+                .openCustomUrlEditor();//test
             new CustomURLDialog().hasItem("Created");
             widgetConfig.closeCustomURLDialog().close();
 
