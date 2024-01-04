@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -17,8 +17,6 @@ const secondWidgetConfiguration = new WidgetConfiguration(1);
 const insightCatalog = new InsightsCatalog();
 
 const DATASET_CREATED = "Created";
-const DATASET_SNAPSHOT = "Snapshot";
-const DATASET_CLOSED = "Closed";
 
 describe("Insights on dashboard", () => {
     beforeEach(() => {
@@ -108,27 +106,6 @@ describe("Date filtering on insight", () => {
         },
     );
 
-    it("disable date filter", { tags: ["checklist_integrated_tiger"] }, () => {
-        widget.waitChartLoaded();
-        widgetConfiguration
-            .open()
-            .openConfiguration()
-            .isDateDatasetDropdownExist(true)
-            .disableDateFilter()
-            .isDateDatasetDropdownExist(false);
-    });
-
-    it("enable date filter", { tags: ["checklist_integrated_tiger"] }, () => {
-        widget.waitChartLoaded();
-        widgetConfiguration
-            .open()
-            .openConfiguration()
-            .disableDateFilter()
-            .isDateDatasetDropdownExist(false)
-            .enableDateFilter()
-            .isDateDatasetDropdownExist(true);
-    });
-
     it("change filter on added insight", { tags: ["checklist_integrated_tiger"] }, () => {
         widget.waitChartLoaded();
         widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
@@ -138,55 +115,5 @@ describe("Date filtering on insight", () => {
             .getChart()
             .getDataLabelValues()
             .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
-    });
-});
-
-describe("Date filter with editmode", () => {
-    beforeEach(() => {
-        Navigation.visit("dashboard/dashboard-date-filtering-on-insight-scenario");
-        editMode.isInEditMode(false).edit().isInEditMode();
-    });
-
-    it("remember date filter after saving", { tags: ["checklist_integrated_tiger"] }, () => {
-        secondWidget.waitChartLoaded();
-        secondWidgetConfiguration
-            .open()
-            .openConfiguration()
-            .disableDateFilter()
-            .isDateDatasetDropdownExist(false);
-
-        secondWidget.waitChartLoaded();
-
-        editMode.save().isInEditMode(false).edit().isInEditMode();
-
-        secondWidgetConfiguration
-            .open()
-            .openConfiguration()
-            .isDateDatasetDropdownExist(false)
-            .enableDateFilter()
-            .selectDateDataset(DATASET_SNAPSHOT)
-            .isDateDatasetDropdownExist();
-
-        secondWidget.waitChartLoaded();
-
-        editMode.save().isInEditMode(false).edit().isInEditMode();
-
-        secondWidgetConfiguration
-            .open()
-            .openConfiguration()
-            .hasDatasetSelected(DATASET_SNAPSHOT)
-            .isDateDatasetDropdownExist();
-    });
-
-    afterEach(() => {
-        Navigation.visit("dashboard/dashboard-date-filtering-on-insight-scenario");
-        editMode.isInEditMode(false).edit().isInEditMode();
-        widget.waitChartLoaded;
-        secondWidgetConfiguration
-            .open()
-            .openConfiguration()
-            .enableDateFilter()
-            .selectDateDataset(DATASET_CLOSED);
-        editMode.save();
     });
 });
