@@ -6,4 +6,11 @@
 # Invoke the "rush lint-staged-files" custom command to lint files whenever they
 # are committed. The command is defined in common/config/rush/command-line.json
 # and uses the "lint-staged" autoinstaller.
-node common/scripts/install-run-rush.js lint-staged-files || exit $?
+if command -v node > /dev/null 2>&1; then
+    node common/scripts/install-run-rush.js lint-staged-files || exit $?
+else
+    # when running directly on ci where node is missing, we run this in docker
+    # if this would have some issues, we could just skip this else branch completely
+    _RUSH="common/scripts/ci/docker_rush.sh"
+    $_RUSH lint-staged-files || exit $?;
+fi
