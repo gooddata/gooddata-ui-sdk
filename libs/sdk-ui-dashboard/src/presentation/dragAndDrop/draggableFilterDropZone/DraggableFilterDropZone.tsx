@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -13,6 +13,7 @@ import {
     selectSupportsMultipleDateFilters,
 } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
+import { messages } from "../../../locales.js";
 
 export type DraggableFilterDropZoneProps = {
     targetIndex: number;
@@ -51,10 +52,10 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
     );
 
     const debugStyle = getDropZoneDebugStyle({ isOver });
-    const tooltipId =
+    const tooltip =
         enableMultipleDateFilters && supportsMultipleDateFilters
-            ? "filterBar.filter.dropzone.tooltip.generic"
-            : "filterBar.filter.dropzone.tooltip";
+            ? messages.filterDropzoneTooltipGeneric
+            : messages.filterDropzoneTooltip;
 
     return (
         <div className="attr-filter-dropzone-box-outer" style={debugStyle} ref={dropRef}>
@@ -84,7 +85,7 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
                         </div>
                     </div>
                     <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 0 } }]}>
-                        <FormattedMessage id={tooltipId} />
+                        <FormattedMessage id={tooltip.id} />
                     </Bubble>
                 </BubbleHoverTrigger>
             )}

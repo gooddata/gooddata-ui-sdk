@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -146,7 +146,7 @@ export function AttributesDropdown({
         : dateDatasets;
 
     const [selectedTabId, setSelectedTabId] = useState(
-        attributes.length || !offerDateFilters ? "attributes" : "dateDatasets",
+        attributes.length === 0 && offerDateFilters ? "dateDatasets" : "attributes",
     );
     const onTabSelect = useCallback((selectedTab: ITab) => {
         setSelectedTabId(selectedTab.id);

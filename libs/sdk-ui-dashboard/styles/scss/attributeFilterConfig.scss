@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -26,62 +26,6 @@
 }
 
 .attribute-filter-dropdown-configuration {
-    // .configuration-panel-header {
-    //     display: flex;
-    //     align-items: center;
-    //     width: 100%;
-    //     height: 36px;
-    //     padding: 3px 10px 3px 10px;
-    //     background: var(--gd-palette-complementary-2, #ebeff4);
-    // }
-
-    // .configuration-panel-header-title {
-    //     color: var(--gd-palette-complementary-6, #94a1ad);
-    //     font-size: 11px;
-    //     font-weight: bold;
-    //     text-transform: uppercase;
-    // }
-
-    // .configuration-category-title {
-    //     display: flex;
-    //     justify-content: space-between;
-
-    //     h3 {
-    //         flex-grow: 2;
-    //     }
-
-    //     .attribute-filter-renaming-title-reset {
-    //         padding: 15px 12px 0 0;
-    //         font-size: 13px;
-    //         font-weight: 400;
-
-    //         &.disabled {
-    //             cursor: pointer;
-    //         }
-    //     }
-    // }
-
-    // .configuration-attribute-filter-title {
-    //     padding: 0 10px 10px;
-    // }
-
-    // .configuration-category {
-    //     flex-grow: 2;
-    //     margin-bottom: -5px;
-    //     padding: 10px 10px 0;
-
-    //     ::after {
-    //         content: "";
-    //         position: absolute;
-    //         top: 50%;
-    //         display: inline-block;
-    //         width: 100%;
-    //         height: 0;
-    //         margin-left: 10px;
-    //         border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-    //     }
-    // }
-
     .gd-infinite-list {
         max-height: 350px;
         overflow: auto;

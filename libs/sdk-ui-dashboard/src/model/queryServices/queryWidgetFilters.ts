@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
@@ -264,10 +264,7 @@ function resolveDateFilters(
     // and strip useless all time filters at the end
     const init = dashboardDateFilterDateDatasetPairs
         .filter((item) => !!item.dateDataset)
-        .reduce((acc: IDateFilter[], curr) => {
-            acc.push(curr.filter);
-            return acc;
-        }, []);
+        .map((item) => item.filter);
     return insightDateFilterDateDatasetPairs
         .filter((item) => !!item.dateDataset)
         .reduceRight((acc: IDateFilter[], curr) => {

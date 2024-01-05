@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
@@ -79,4 +79,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     drillToUrlConfig: { id: "configurationPanel.drillConfig.drillIntoUrl" },
     disableDrillDownToolTip: { id: "configurationPanel.drillConfig.disableDrillDownTooltip" },
     disableUsedDrillDownTooltip: { id: "configurationPanel.drillConfig.alreadyUsedTooltip" },
+    filterDropzoneTooltip: { id: "filterBar.filter.dropzone.tooltip" },
+    filterDropzoneTooltipGeneric: { id: "filterBar.filter.dropzone.tooltip.generic" },
 });
