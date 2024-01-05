@@ -1,15 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { useState, useCallback } from "react";
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 
 import {
-    selectDateFilterConfigsOverrides,
-    selectEffectiveDateFilterTitle,
     setDateFilterConfigTitle,
     useDashboardCommandProcessing,
-    useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
+import { useCurrentDateFilterConfig } from "../../../../dragAndDrop/index.js";
 
 export function useDateFilterTitleConfiguration(
     dateDataSet: ObjRef | undefined,
@@ -22,20 +20,8 @@ export function useDateFilterTitleConfiguration(
     });
 
     const userInteraction = useDashboardUserInteraction();
-    const customCommonDateFilterTitle = useDashboardSelector(selectEffectiveDateFilterTitle);
-    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
-    let originalTitle: string;
-
-    const config = dateDataSet
-        ? filterConfigByDimension.find((config) => areObjRefsEqual(config.dateDataSet, dateDataSet))?.config
-        : undefined;
-
-    if (dateDataSet) {
-        originalTitle = !config || config?.filterName === "" ? defaultDateFilterTitle : config?.filterName;
-    } else {
-        originalTitle = customCommonDateFilterTitle ?? defaultDateFilterTitle;
-    }
+    const { title: originalTitle } = useCurrentDateFilterConfig(dateDataSet, defaultDateFilterTitle);
 
     const [title, setTitle] = useState<string | undefined>(originalTitle);
 
@@ -50,7 +36,7 @@ export function useDateFilterTitleConfiguration(
             const updatedTitle = title !== defaultDateFilterTitle ? title?.trim() : undefined;
             changeTitle(dateDataSet, updatedTitle);
         }
-    }, [title, dateDataSet, defaultDateFilterTitle, changeTitle]);
+    }, [title, dateDataSet, defaultDateFilterTitle, changeTitle, titleChanged]);
 
     const onTitleReset = useCallback(() => {
         setTitle(undefined);

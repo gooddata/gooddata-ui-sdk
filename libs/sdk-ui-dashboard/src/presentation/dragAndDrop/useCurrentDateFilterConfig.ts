@@ -1,10 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     selectDateFilterConfigOverrides,
     useDashboardSelector,
     selectDateFilterConfigsOverrides,
-    selectEffectiveDateFilterTitle,
 } from "../../model/index.js";
 
 export const useCurrentDateFilterConfig = (
@@ -14,20 +13,12 @@ export const useCurrentDateFilterConfig = (
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
-    const customCommonDateFilterTitle = useDashboardSelector(selectEffectiveDateFilterTitle);
-
-    let originalTitle: string;
-
     const usedConfig = dateDataSet
         ? filterConfigByDimension.find((config) => areObjRefsEqual(config.dateDataSet, dateDataSet))?.config
         : filterConfig;
 
-    if (dateDataSet) {
-        originalTitle =
-            !usedConfig || usedConfig?.filterName === "" ? defaultDateFilterTitle : usedConfig?.filterName;
-    } else {
-        originalTitle = customCommonDateFilterTitle ?? defaultDateFilterTitle;
-    }
+    const originalTitle =
+        !usedConfig || usedConfig?.filterName === "" ? defaultDateFilterTitle : usedConfig?.filterName;
 
     return {
         mode: usedConfig?.mode ?? "active",
