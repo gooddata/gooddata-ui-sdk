@@ -1,18 +1,41 @@
 // (C) 2022 GoodData Corporation
-import { IDrillToCustomUrl, IInsightWidget, isDrillToCustomUrl, widgetRef } from "@gooddata/sdk-model";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeFilter,
+    IDrillToCustomUrl,
+    IFilter,
+    IInsightWidget,
+    filterObjRef,
+    idRef,
+    isAttributeFilter,
+    isDrillToCustomUrl,
+    isNegativeAttributeFilter,
+    widgetRef,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
-import { extractDisplayFormIdentifiers } from "../widgets/validation/insightDrillDefinitionUtils.js";
+import {
+    extractDisplayFormIdentifiers,
+    extractDashboardFilterDisplayFormIdentifiers,
+    extractInsightFilterDisplayFormIdentifiers,
+} from "../widgets/validation/insightDrillDefinitionUtils.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
+import { queryWidgetFilters } from "../../queries/widgets.js";
+import { query } from "../../store/_infra/queryCall.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;
     invalidDrills: IDrillToCustomUrl[];
 }
 
+//
 export function* validateDrillToCustomUrlParams(widgets: IInsightWidget[]) {
     const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrillToCustomUrlParams>[] = yield all(
         widgets.map((widget) => call(validateWidgetDrillToCustomUrlParams, widget)),
@@ -40,8 +63,21 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
             invalidDrills: [],
         };
     }
-
     const displayForms = yield select(selectAllCatalogDisplayFormsMap);
+
+    const widgetFilters: IFilter[] = yield call(query, queryWidgetFilters(widget.ref));
+    const widgetAttributeFilters = widgetFilters.filter(isAttributeFilter);
+    const sanitizedWidgetAttributeFilters = widgetAttributeFilters.map((filter) =>
+        sanitizeAttributeFilter(filter, displayForms),
+    );
+
+    const dashboardFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+    const dashboardAttributeFilters = dashboardFilters.map(dashboardAttributeFilterToAttributeFilter);
+    const sanitizedDashboardAttributeFilters = dashboardAttributeFilters.map((filter) =>
+        sanitizeAttributeFilter(filter, displayForms),
+    );
 
     return widget.drills.filter(isDrillToCustomUrl).reduce(
         (acc: IInvalidParamsInfo, drillDefinition) => {
@@ -61,7 +97,33 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
                 );
             });
 
-            if (hasInvalidParam) {
+            const dashboardFilterIds = extractDashboardFilterDisplayFormIdentifiers([drillDefinition]);
+            const hasInvalidDashboardFilterParam = dashboardFilterIds.some((identifier) => {
+                const displayForm = displayForms.get(identifier);
+                if (!displayForm) {
+                    // the drill as a whole is invalid, no reason to validate the parameters
+                    return false;
+                }
+
+                return !sanitizedDashboardAttributeFilters.some((filter) =>
+                    areObjRefsEqual(filterObjRef(filter), identifier),
+                );
+            });
+
+            const insightFilterIds = extractInsightFilterDisplayFormIdentifiers([drillDefinition]);
+            const hasInvalidInsightFilterParam = insightFilterIds.some((identifier) => {
+                const displayForm = displayForms.get(identifier);
+                if (!displayForm) {
+                    // the drill as a whole is invalid, no reason to validate the parameters
+                    return false;
+                }
+
+                return !sanitizedWidgetAttributeFilters.some((filter) =>
+                    areObjRefsEqual(filterObjRef(filter), identifier),
+                );
+            });
+
+            if (hasInvalidParam || hasInvalidDashboardFilterParam || hasInvalidInsightFilterParam) {
                 acc.invalidDrills.push(drillDefinition);
             }
 
@@ -69,4 +131,31 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
         },
         { widget, invalidDrills: [] },
     );
+}
+
+function sanitizeAttributeFilter(
+    filter: IAttributeFilter,
+    displayFormMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+) {
+    const displayForm = displayFormMap.get(filterObjRef(filter));
+    if (displayForm) {
+        if (isNegativeAttributeFilter(filter)) {
+            return {
+                ...filter,
+                negativeAttributeFilter: {
+                    ...filter.negativeAttributeFilter,
+                    displayForm: idRef(displayForm.id, "displayForm"),
+                },
+            };
+        } else {
+            return {
+                ...filter,
+                positiveAttributeFilter: {
+                    ...filter.positiveAttributeFilter,
+                    displayForm: idRef(displayForm.id, "displayForm"),
+                },
+            };
+        }
+    }
+    return filter;
 }
