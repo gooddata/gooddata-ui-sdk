@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -288,6 +288,7 @@ export const selectFilterContextDraggableFilterIndexByRef: (
             if (isDashboardAttributeFilter(filter) && typeof ref === "string") {
                 return filter.attributeFilter.localIdentifier === ref;
             }
+            return false;
         });
     }),
 );

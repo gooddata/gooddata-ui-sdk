@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import {
     isAttributeMetadataObject,
@@ -85,7 +85,7 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
                             widget={widget}
                         />
                     );
-                } else if (isDashboardDateFilterWithDimension(filter)) {
+                } else {
                     return (
                         <DateFilterConfigurationItem
                             key={objRefToString(filter.dateFilter.dataSet!)}

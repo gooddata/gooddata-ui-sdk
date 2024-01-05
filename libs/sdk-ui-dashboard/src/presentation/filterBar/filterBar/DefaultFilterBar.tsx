@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
@@ -279,6 +279,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             />
                         );
                     }
+                    return null;
                 }
             })}
             {canAddMoreFilters ? (
