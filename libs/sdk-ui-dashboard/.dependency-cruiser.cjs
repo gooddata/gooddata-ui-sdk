@@ -97,6 +97,7 @@ options = {
             "src/types.ts",
             "src/converters",
             "src/presentation/widget/common/useWidgetFilters.ts",
+            "src/presentation/widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.ts",
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",

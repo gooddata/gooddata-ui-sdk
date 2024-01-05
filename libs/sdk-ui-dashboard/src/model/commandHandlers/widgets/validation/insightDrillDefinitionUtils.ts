@@ -25,7 +25,9 @@ import { typesUtils } from "@gooddata/util";
 
 import {
     getAttributeIdentifiersPlaceholdersFromUrl,
+    getDashboardAttributeFilterPlaceholdersFromUrl,
     getDrillOriginLocalIdentifier,
+    getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../_staging/drills/drillingUtils.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
@@ -117,6 +119,37 @@ export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefi
                     return [drillItem.target.displayForm, drillItem.target.hyperlinkDisplayForm];
                 }
             }),
+    );
+}
+
+export function extractDashboardFilterDisplayFormIdentifiers(
+    drillDefinitions: InsightDrillDefinition[],
+): ObjRef[] {
+    return flatMap(
+        drillDefinitions.filter(isDrillToCustomUrl).map((drillItem) => {
+            const dashboardAttributeFilterPlaceholdersFromUrl =
+                getDashboardAttributeFilterPlaceholdersFromUrl(drillItem.target.url);
+            // normalize ref take the value from state ...
+            // md object has to be identifier
+            return dashboardAttributeFilterPlaceholdersFromUrl.map((param) =>
+                idRef(param.identifier, "displayForm"),
+            );
+        }),
+    );
+}
+
+export function extractInsightFilterDisplayFormIdentifiers(
+    drillDefinitions: InsightDrillDefinition[],
+): ObjRef[] {
+    return flatMap(
+        drillDefinitions.filter(isDrillToCustomUrl).map((drillItem) => {
+            const insightAttributeFilterPlaceholders = getInsightAttributeFilterPlaceholdersFromUrl(
+                drillItem.target.url,
+            );
+            // normalize ref take the value from state ...
+            // md object has to be identifier
+            return insightAttributeFilterPlaceholders.map((param) => idRef(param.identifier, "displayForm"));
+        }),
     );
 }
 
