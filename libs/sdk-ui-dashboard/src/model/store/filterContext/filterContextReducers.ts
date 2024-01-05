@@ -23,8 +23,11 @@ import {
     isDashboardDateFilter,
     IAttributeDisplayFormMetadataObject,
     DashboardAttributeFilterSelectionMode,
+    IDashboardDateFilter,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
+import { AddDateFilterPayload } from "../../commands/index.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -62,10 +65,10 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
             : filter,
     );
 
-    // make sure that date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
-    // we have to keep order of rest of array (attributeFilters) it represent order of filters in filter bar
-    const [dateFilter, attributeFilters] = partition(filtersWithLocalId, isDashboardDateFilter);
-    const filters = [...dateFilter, ...attributeFilters];
+    // make sure that common date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
+    // we have to keep order of rest of array (attributeFilters and date filters with dimension) it represent order of filters in filter bar
+    const [commonDateFilter, otherFilters] = partition(filtersWithLocalId, isDashboardCommonDateFilter);
+    const filters = [...commonDateFilter, ...otherFilters];
 
     state.filterContextDefinition = {
         ...filterContextDefinition,
@@ -127,11 +130,13 @@ const addAttributeFilterDisplayForm: FilterContextReducer<
 
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
+    readonly dataSet?: ObjRef;
 }
 
 export interface IUpsertDateFilterNonAllTimePayload {
     readonly type: DateFilterType;
     readonly granularity: DateFilterGranularity;
+    readonly dataSet?: ObjRef;
     readonly from?: DateString | number;
     readonly to?: DateString | number;
 }
@@ -141,18 +146,35 @@ export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsert
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const existingFilterIndex = state.filterContextDefinition.filters.findIndex((item) =>
-        isDashboardDateFilter(item),
-    );
+    const dateDataSet = action.payload.dataSet;
 
-    /**
-     * TODO: This will cause problems once we support dateDataset-specific date filters (then, we might want
-     * to keep even the all time filters to carry the information about the selected dateDataset).
-     */
+    let existingFilterIndex;
+
+    if (dateDataSet) {
+        existingFilterIndex = state.filterContextDefinition.filters.findIndex(
+            (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet, dateDataSet),
+        );
+    } else {
+        existingFilterIndex = state.filterContextDefinition.filters.findIndex((item) =>
+            isDashboardCommonDateFilter(item),
+        );
+    }
+
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
-            // if allTime remove the date filter altogether
-            state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
+            if (dateDataSet) {
+                const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+
+                if (isDashboardDateFilter(dateFilter)) {
+                    dateFilter.dateFilter.type = "relative";
+                    dateFilter.dateFilter.granularity = "GDC.time.date";
+                    dateFilter.dateFilter.from = undefined;
+                    dateFilter.dateFilter.to = undefined;
+                }
+            } else {
+                //if allTime common DF remove the date filter altogether
+                state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
+            }
         }
     } else if (existingFilterIndex >= 0) {
         const { type, granularity, from, to } = action.payload;
@@ -165,13 +187,14 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             dateFilter.dateFilter.to = to;
         }
     } else {
-        const { type, granularity, from, to } = action.payload;
+        const { type, granularity, from, to, dataSet } = action.payload;
         state.filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
                 type,
                 from,
                 to,
+                dataSet,
             },
         });
     }
@@ -486,6 +509,86 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
     (findFilter as IDashboardAttributeFilter).attributeFilter.selectionMode = selectionMode;
 };
 
+const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { index, dateDataset } = action.payload;
+
+    const filter: IDashboardDateFilter = {
+        dateFilter: {
+            dataSet: dateDataset,
+            type: "relative",
+            granularity: "GDC.time.date",
+        },
+    };
+
+    // Only draggable filters are indexed, if DateFilter is present should be always first item
+    const isCommonDateFilterPresent =
+        state.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+
+    if (index === -1) {
+        state.filterContextDefinition.filters.push(filter);
+    } else {
+        // If CommonDateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
+        const newFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
+        state.filterContextDefinition.filters.splice(newFilterIndex, 0, filter);
+    }
+};
+
+//
+//
+//
+
+export interface IRemoveDateFilterPayload {
+    readonly dataSet: ObjRef;
+}
+
+const removeDateFilter: FilterContextReducer<PayloadAction<IRemoveDateFilterPayload>> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { dataSet } = action.payload;
+
+    state.filterContextDefinition.filters = state.filterContextDefinition.filters.filter(
+        (item) => isDashboardAttributeFilter(item) || !areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
+    );
+};
+
+//
+//
+//
+export interface IMoveDateFilterPayload {
+    readonly dataSet: ObjRef;
+    readonly index: number;
+}
+
+const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { dataSet, index } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
+
+    const filter = state.filterContextDefinition.filters[currentFilterIndex];
+
+    state.filterContextDefinition.filters.splice(currentFilterIndex, 1);
+
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isCommonDateFilterPresent =
+        state.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+
+    if (index === -1) {
+        state.filterContextDefinition.filters.push(filter);
+    } else {
+        // If DateFilter is present we have to move index by 1 because index of filter is calculated just for DraggableFilters array
+        const dateFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
+        state.filterContextDefinition.filters.splice(dateFilterIndex, 0, filter);
+    }
+};
+
 //
 //
 //
@@ -498,6 +601,9 @@ export const filterContextReducers = {
     addAttributeFilter,
     removeAttributeFilter,
     moveAttributeFilter,
+    addDateFilter,
+    removeDateFilter,
+    moveDateFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
     clearAttributeFiltersSelection,

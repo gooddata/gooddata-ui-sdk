@@ -22,6 +22,7 @@ import { RenderModeState } from "./renderMode/renderModeState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
+import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -57,6 +58,8 @@ export interface DashboardState {
     dateFilterConfig: DateFilterConfigState;
     /** @alpha */
     attributeFilterConfigs: AttributeFilterConfigsState;
+    /** @alpha */
+    dateFilterConfigs: DateFilterConfigsState;
     catalog: CatalogState;
     user: UserState;
     /** @beta */

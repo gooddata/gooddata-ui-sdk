@@ -3,11 +3,13 @@ import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
     IDashboardAttributeFilterPlaceholderProps,
+    IDashboardDateFilterProps,
 } from "../filterBar/types.js";
 import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
+    DateFilterDraggableItem,
     DraggableContentItemType,
     IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
@@ -15,6 +17,7 @@ import {
 } from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
+    DateFilterComponentProvider,
     InsightComponentProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
@@ -59,6 +62,14 @@ export type IAttributeFilterDraggingComponentProps = {
 /**
  * @internal
  */
+export type IDateFilterDraggingComponentProps = {
+    itemType: "dateFilter";
+    item: DateFilterDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type IInsightDraggingComponentProps = {
     itemType: "insight";
     item: InsightDraggableItem;
@@ -84,6 +95,12 @@ export type ICustomDraggingComponentProps = {
  * @internal
  */
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type DateFilterDraggingComponent = ComponentType<IDateFilterDraggingComponentProps>;
+
 /**
  * @internal
  */
@@ -104,6 +121,14 @@ export type CustomDraggingComponent = ComponentType<ICustomDraggingComponentProp
 export type AttributeFilterDraggableComponent = {
     DraggingComponent: AttributeFilterDraggingComponent;
     type: "attributeFilter";
+};
+
+/**
+ * @internal
+ */
+export type DateFilterDraggableComponent = {
+    DraggingComponent: DateFilterDraggingComponent;
+    type: "dateFilter";
 };
 
 /**
@@ -137,6 +162,7 @@ export type CustomDraggableComponent = {
 export type DraggableComponent = {
     dragging:
         | AttributeFilterDraggableComponent
+        | DateFilterDraggableComponent
         | KpiDraggableComponent
         | InsightDraggableComponent
         | CustomDraggableComponent;
@@ -243,6 +269,18 @@ export type AttributeFilterComponentSet = CustomComponentBase<
 > &
     DraggableComponent &
     CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> &
+    CreatableByDragComponent;
+
+/**
+ * Definition of date filter components
+ * @internal
+ */
+export type DateFilterComponentSet = CustomComponentBase<
+    IDashboardDateFilterProps,
+    Parameters<DateFilterComponentProvider>
+> &
+    DraggableComponent &
+    CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
     CreatableByDragComponent;
 
 /**

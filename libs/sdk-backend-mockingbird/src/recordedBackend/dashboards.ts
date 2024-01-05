@@ -42,6 +42,7 @@ import {
     IDashboardPluginDefinition,
     IDashboardPermissions,
     IExistingDashboard,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -310,6 +311,14 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
                 },
             },
         ]);
+    }
+
+    public getResolvedFiltersForWidgetWithMultipleDateFilters(
+        widget: IWidget,
+        commonDateFilters: IDateFilter[],
+        otherFilters: IFilter[],
+    ): Promise<IFilter[]> {
+        return this.getResolvedFiltersForWidget(widget, [...commonDateFilters, ...otherFilters]);
     }
 
     public getScheduledMailsForDashboard(

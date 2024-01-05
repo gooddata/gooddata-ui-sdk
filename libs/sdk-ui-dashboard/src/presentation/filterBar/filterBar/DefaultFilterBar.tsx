@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
@@ -8,7 +8,9 @@ import {
     DashboardDateFilterConfigModeValues,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    isAllTimeDashboardDateFilter,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
     changeAttributeFilterSelection,
@@ -25,20 +27,24 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     selectAttributeFilterDisplayFormsMap,
-    selectCanAddMoreAttributeFilters,
     selectEffectiveAttributeFiltersModeMap,
+    selectCanAddMoreFilters,
+    selectCatalogDateDatasets,
+    selectEffectiveDateFiltersModeMap,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
-    AttributeFilterDropZone,
-    AttributeFilterDropZoneHint,
+    DraggableFilterDropZone,
+    DraggableFilterDropZoneHint,
     DraggableAttributeFilter,
+    DraggableDateFilter,
 } from "../../dragAndDrop/index.js";
 import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import {
-    isFilterBarAttributeFilterPlaceholder,
+    isFilterBarAttributeFilter,
+    isFilterBarFilterPlaceholder,
     useFiltersWithAddedPlaceholder,
 } from "./useFiltersWithAddedPlaceholder.js";
 import { HiddenFilterBar } from "./HiddenFilterBar.js";
@@ -78,11 +84,23 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const onDateFilterChanged = useCallback(
         (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
             if (!filter) {
-                // all time filter
                 dispatch(clearDateFilterSelection());
+            } else if (isAllTimeDashboardDateFilter(filter)) {
+                // all time filter
+                dispatch(clearDateFilterSelection(undefined, filter?.dateFilter.dataSet));
             } else {
-                const { type, granularity, from, to } = filter.dateFilter;
-                dispatch(changeDateFilterSelection(type, granularity, from, to, dateFilterOptionLocalId));
+                const { type, granularity, from, to, dataSet } = filter.dateFilter;
+                dispatch(
+                    changeDateFilterSelection(
+                        type,
+                        granularity,
+                        from,
+                        to,
+                        dateFilterOptionLocalId,
+                        undefined,
+                        dataSet,
+                    ),
+                );
             }
         },
         [dispatch],
@@ -98,11 +116,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { dateFilter, attributeFiltersWithPlaceholder, attributeFiltersCount, autoOpenFilter },
+        { commonDateFilter, draggableFiltersWithPlaceholder, draggableFiltersCount, autoOpenFilter },
         {
-            addAttributeFilterPlaceholder,
+            addDraggableFilterPlaceholder,
             closeAttributeSelection,
-            selectAttributeFilter,
+            selectDraggableFilter,
             onCloseAttributeFilter,
         },
     ] = useFiltersWithAddedPlaceholder(filters);
@@ -111,31 +129,35 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
-    const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
+    const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
+    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+
     const isExport = useDashboardSelector(selectIsExport);
     const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
         useDashboardComponentsContext();
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
-    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
+    const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
     const haveAllFiltersHidden = areAllFiltersHidden(
-        attributeFiltersWithPlaceholder,
-        dateFilterMode,
+        draggableFiltersWithPlaceholder,
+        commonDateFilterMode,
         attributeFiltersModeMap,
+        dateFiltersModeMap,
     );
 
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
     }
 
-    const dateFilterComponentConfig: IDashboardDateFilterConfig = {
+    const commonDateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
         dateFilterOptions,
         customFilterName,
     };
 
-    const CustomDateFilterComponent = DashboardDateFilterComponentProvider(dateFilter);
+    const CustomCommonDateFilterComponent = DashboardDateFilterComponentProvider(commonDateFilter);
 
     return (
         <DefaultFilterBarContainer>
@@ -144,38 +166,38 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     "dash-filter-is-edit-mode": isInEditMode,
                 })}
             >
-                {dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN ? (
+                {commonDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN ? (
                     <HiddenDashboardDateFilter />
                 ) : (
                     <>
-                        <CustomDateFilterComponent
-                            filter={dateFilter}
+                        <CustomCommonDateFilterComponent
+                            filter={commonDateFilter}
                             onFilterChanged={onDateFilterChanged}
-                            config={dateFilterComponentConfig}
-                            readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
+                            config={commonDateFilterComponentConfig}
+                            readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                         />
-                        <AttributeFilterDropZoneHint
+                        <DraggableFilterDropZoneHint
                             placement="outside"
                             hintPosition="next"
                             targetIndex={0}
-                            onAddAttributePlaceholder={addAttributeFilterPlaceholder}
-                            acceptPlaceholder={canAddMoreAttributeFilters}
+                            onAddAttributePlaceholder={addDraggableFilterPlaceholder}
+                            acceptPlaceholder={canAddMoreFilters}
                         />
                     </>
                 )}
             </div>
-            {attributeFiltersWithPlaceholder.map((filterOrPlaceholder) => {
-                if (isFilterBarAttributeFilterPlaceholder(filterOrPlaceholder)) {
+            {draggableFiltersWithPlaceholder.map((filterOrPlaceholder) => {
+                if (isFilterBarFilterPlaceholder(filterOrPlaceholder)) {
                     const CreatingPlaceholderComponent =
                         AttributeFilterComponentSet.creating.CreatingPlaceholderComponent;
                     return (
                         <CreatingPlaceholderComponent
                             key={filterOrPlaceholder.filterIndex}
                             onClose={closeAttributeSelection}
-                            onSelect={selectAttributeFilter}
+                            onSelect={selectDraggableFilter}
                         />
                     );
-                } else {
+                } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {
                     const { filter, filterIndex } = filterOrPlaceholder;
                     const convertedFilter = supportElementUris
                         ? filter
@@ -214,25 +236,65 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
-                            onAttributeFilterAdded={addAttributeFilterPlaceholder}
+                            onAttributeFilterAdded={addDraggableFilterPlaceholder}
                             onAttributeFilterClose={onCloseAttributeFilter}
                         />
                     );
+                } else {
+                    if (filterOrPlaceholder.filter.dateFilter.dataSet) {
+                        const { filter, filterIndex } = filterOrPlaceholder;
+
+                        const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
+
+                        const dateFilterMode =
+                            dateFiltersModeMap.get(serializeObjRef(filter.dateFilter.dataSet!)) ||
+                            DashboardDateFilterConfigModeValues.ACTIVE;
+
+                        if (dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN) {
+                            return null;
+                        }
+
+                        const defaultDateFilterName = allDateDatasets.find((ds) =>
+                            areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
+                        )!.dataSet.title;
+
+                        return (
+                            <DraggableDateFilter
+                                key={objRefToString(filterOrPlaceholder.filter.dateFilter.dataSet)}
+                                autoOpen={areObjRefsEqual(
+                                    filterOrPlaceholder.filter.dateFilter.dataSet,
+                                    autoOpenFilter,
+                                )}
+                                filter={filter}
+                                filterIndex={filterIndex}
+                                config={{
+                                    ...commonDateFilterComponentConfig,
+                                    customFilterName: defaultDateFilterName,
+                                }}
+                                readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
+                                FilterComponent={CustomDateFilterComponent}
+                                onDateFilterChanged={onDateFilterChanged}
+                                onDateFilterAdded={addDraggableFilterPlaceholder}
+                                onDateFilterClose={onCloseAttributeFilter}
+                            />
+                        );
+                    }
+                    return null;
                 }
             })}
-            {canAddMoreAttributeFilters ? (
-                <AttributeFilterDropZone
-                    targetIndex={attributeFiltersCount}
-                    onDrop={addAttributeFilterPlaceholder}
+            {canAddMoreFilters ? (
+                <DraggableFilterDropZone
+                    targetIndex={draggableFiltersCount}
+                    onDrop={addDraggableFilterPlaceholder}
                 />
             ) : null}
             <ResetFiltersButton />
             <div className="filter-bar-dropzone-container">
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     placement="outside"
                     hintPosition="prev"
                     acceptPlaceholder={false}
-                    targetIndex={attributeFiltersCount}
+                    targetIndex={draggableFiltersCount}
                 />
             </div>
         </DefaultFilterBarContainer>

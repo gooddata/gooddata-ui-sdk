@@ -6,9 +6,9 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     selectSupportsElementUris,
-    selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
 } from "../../../model/index.js";
-import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint.js";
+import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
@@ -48,7 +48,7 @@ export function DraggableAttributeFilter({
     );
 
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
-    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
+    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreFilters);
     const filterToUse = useMemo(() => {
         if (supportElementUris) {
             return filter;
@@ -65,7 +65,7 @@ export function DraggableAttributeFilter({
     return (
         <div className="draggable-attribute-filter">
             {showDropZones ? (
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     hintPosition="prev"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}
@@ -91,7 +91,7 @@ export function DraggableAttributeFilter({
             </div>
 
             {showDropZones ? (
-                <AttributeFilterDropZoneHint
+                <DraggableFilterDropZoneHint
                     hintPosition="next"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}

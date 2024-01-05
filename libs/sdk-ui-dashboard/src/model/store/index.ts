@@ -20,6 +20,7 @@ export {
     selectSupportsAttributeHierarchies,
     selectSupportsSingleSelectDependentFilters,
     selectSupportsCrossFiltering,
+    selectSupportsMultipleDateFilters,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -73,6 +74,7 @@ export {
     selectEnableKDDependentFilters,
     selectIsKDDependentFiltersEnabled,
     selectEnableKDCrossFiltering,
+    selectEnableMultipleDateFilters,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
@@ -126,6 +128,7 @@ export {
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
     selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
 } from "./filterContext/filterContextSelectors.js";
 export {
@@ -185,6 +188,12 @@ export {
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
 } from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+export { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+export {
+    selectDateFilterConfigsOverrides,
+    selectDateFilterConfigsModeMap,
+    selectEffectiveDateFiltersModeMap,
+} from "./dateFilterConfigs/dateFilterConfigsSelectors.js";
 export {
     selectInsights,
     selectInsightRefs,

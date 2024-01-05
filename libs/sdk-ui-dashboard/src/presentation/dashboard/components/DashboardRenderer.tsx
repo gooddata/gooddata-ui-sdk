@@ -68,6 +68,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         insightWidgetComponentSet,
         kpiWidgetComponentSet,
         attributeFilterComponentSet,
+        dateFilterComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -132,6 +133,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
                                         KpiWidgetComponentSet={kpiWidgetComponentSet}
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
+                                        DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={
                                             props.EmptyLayoutDropZoneBodyComponent ??
                                             DefaultEmptyLayoutDropZoneBody

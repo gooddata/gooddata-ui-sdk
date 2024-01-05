@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
 import { dateFilterConfigReducers } from "./dateFilterConfigReducers.js";
 import { dateFilterConfigInitialState } from "./dateFilterConfigState.js";

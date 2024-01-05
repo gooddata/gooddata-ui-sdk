@@ -1,17 +1,21 @@
 // (C) 2022 GoodData Corporation
 import cx from "classnames";
 import React from "react";
-import { moveAttributeFilter, useDashboardDispatch } from "../../../model/index.js";
+import { moveAttributeFilter, moveDateFilter, useDashboardDispatch } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
-import { isAttributeFilterDraggableItem, isAttributeFilterPlaceholderDraggableItem } from "../types.js";
+import {
+    isAttributeFilterDraggableItem,
+    isAttributeFilterPlaceholderDraggableItem,
+    isDateFilterDraggableItem,
+} from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 
-export type AttributeFilterDropZonePlacement = "inside" | "outside";
-export type AttributeFilterDropZoneHintPosition = "next" | "prev";
+export type DraggableFilterDropZonePlacement = "inside" | "outside";
+export type DraggableFilterDropZoneHintPosition = "next" | "prev";
 
 function getIgnoreIndexes(
-    placement: AttributeFilterDropZonePlacement,
-    position: AttributeFilterDropZoneHintPosition,
+    placement: DraggableFilterDropZonePlacement,
+    position: DraggableFilterDropZoneHintPosition,
     targetIndex: number,
 ) {
     if (placement === "outside") {
@@ -25,29 +29,31 @@ function getIgnoreIndexes(
     return [targetIndex, targetIndex - 1];
 }
 
-export type AttributeFilterDropZoneHintProps = {
-    placement?: AttributeFilterDropZonePlacement;
-    hintPosition: AttributeFilterDropZoneHintPosition;
+export type DraggableFilterDropZoneHintProps = {
+    placement?: DraggableFilterDropZonePlacement;
+    hintPosition: DraggableFilterDropZoneHintPosition;
     targetIndex: number;
     acceptPlaceholder?: boolean;
     onAddAttributePlaceholder?: (index: number) => void;
 };
 
-export function AttributeFilterDropZoneHint({
+export function DraggableFilterDropZoneHint({
     placement = "inside",
     hintPosition,
     targetIndex,
     acceptPlaceholder = true,
     onAddAttributePlaceholder,
-}: AttributeFilterDropZoneHintProps) {
+}: DraggableFilterDropZoneHintProps) {
     const dispatch = useDashboardDispatch();
     const inactiveIndexes = getIgnoreIndexes(placement, hintPosition, targetIndex);
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        acceptPlaceholder ? ["attributeFilter", "attributeFilter-placeholder"] : "attributeFilter",
+        acceptPlaceholder
+            ? ["attributeFilter", "dateFilter", "attributeFilter-placeholder"]
+            : "attributeFilter",
         {
             canDrop: (item) => {
-                if (isAttributeFilterDraggableItem(item)) {
+                if (isAttributeFilterDraggableItem(item) || isDateFilterDraggableItem(item)) {
                     return !inactiveIndexes.includes(item.filterIndex);
                 }
 
@@ -63,6 +69,14 @@ export function AttributeFilterDropZoneHint({
                     const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
                     const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
                     dispatch(moveAttributeFilter(identifier, index));
+                }
+
+                if (isDateFilterDraggableItem(item)) {
+                    const ref = item.filter.dateFilter.dataSet!;
+                    const originalIndex = item.filterIndex;
+                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
+                    const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    dispatch(moveDateFilter(ref, index));
                 }
 
                 if (isAttributeFilterPlaceholderDraggableItem(item) && onAddAttributePlaceholder) {

@@ -39,6 +39,8 @@ export type FilterOperations =
     | "replaceAttributeIgnores"
     | "ignoreAttributeFilter"
     | "unignoreAttributeFilter"
+    | "ignoreDateFilter"
+    | "unignoreDateFilter"
     | "replace";
 
 /**
@@ -147,11 +149,54 @@ export interface FilterOpReplaceAll extends FilterOp {
     readonly ignoreAttributeFilters?: ObjRef[];
 
     /**
+     * Dashboard date filters to ignore for particular widget.
+     *
+     * Specify ObjRefs of date data sets that are used by dashboard's date filters which you wish to disable.
+     */
+    readonly ignoreDateFilters?: ObjRef[];
+
+    /**
      * Date data set that will be used when constructing date filter for a widget.
      *
      * If the widget does not specify any dateDataSet, then no date filtering is applied to it.
      */
     readonly dateDatasetForFiltering?: ObjRef;
+}
+
+/**
+ * This filter operation appends one or more date filters into the widget's filter ignore-list.
+ *
+ * @beta
+ */
+export interface FilterOpIgnoreDateFilter extends FilterOp {
+    type: "ignoreDateFilter";
+
+    /**
+     * The date filters to add to ignore-list; specified using the refs of date data sets that are used during the
+     * filtering.
+     *
+     * If the list is empty, then the operation will not change the filters in any way.
+     * Attempting to add same attribute filter into the ignore list has no effect.
+     */
+    dateDataSetRefs: ObjRef[];
+}
+
+/**
+ * This filter operation removes one or more date filters from the widget's filter ignore-list.
+ *
+ * @beta
+ */
+export interface FilterOpUnignoreDateFilter extends FilterOp {
+    type: "unignoreDateFilter";
+
+    /**
+     * The attribute filters to remove from the ignore-list; specified using the refs of display forms that are
+     * used during the filtering.
+     *
+     * If the list is empty, then the operation will not change the filters in any way.
+     * Attempting to remove same attribute filter twice has no effect.
+     */
+    dateDataSetRefs: ObjRef[];
 }
 
 /**
@@ -166,4 +211,6 @@ export type WidgetFilterOperation =
     | FilterOpReplaceAttributeIgnores
     | FilterOpIgnoreAttributeFilter
     | FilterOpUnignoreAttributeFilter
+    | FilterOpIgnoreDateFilter
+    | FilterOpUnignoreDateFilter
     | FilterOpReplaceAll;

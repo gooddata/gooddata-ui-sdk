@@ -6,6 +6,7 @@ import {
     ShareDialogInteractionData,
     userInteractionTriggered,
     AttributeHierarchiesInteractionType,
+    DateFilterInteractionType,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -81,6 +82,13 @@ export const useDashboardUserInteraction = () => {
         eventDispatch(userInteractionTriggered("addInteractionClicked"));
     }, [eventDispatch]);
 
+    const dateFilterInteraction = useCallback(
+        (eventType: DateFilterInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
+
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
@@ -92,5 +100,6 @@ export const useDashboardUserInteraction = () => {
         interactionPanelOpened,
         addInteractionClicked,
         attributeHierarchiesInteraction,
+        dateFilterInteraction,
     };
 };

@@ -48,6 +48,8 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
     IDashboardPermissions,
+    IDateFilter,
+    isDateFilter,
 } from "@gooddata/sdk-model";
 
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
@@ -462,6 +464,21 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
         return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
             objRefsToUris(refs, this.workspace, this.authCall),
+        );
+    };
+    public getResolvedFiltersForWidgetWithMultipleDateFilters = async (
+        widget: IWidget,
+        commonDateFilters: IDateFilter[],
+        otherFilters: IFilter[],
+    ): Promise<IFilter[]> => {
+        if (commonDateFilters.length + otherFilters.filter(isDateFilter).length) {
+            throw new Error("This backend does not support multiple date filters");
+        }
+        return resolveWidgetFilters(
+            [...commonDateFilters, ...otherFilters],
+            widget.ignoreDashboardFilters,
+            widget.dateDataSet,
+            (refs) => objRefsToUris(refs, this.workspace, this.authCall),
         );
     };
 

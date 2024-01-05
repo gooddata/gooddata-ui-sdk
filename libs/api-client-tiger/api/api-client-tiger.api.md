@@ -751,6 +751,7 @@ declare namespace AnalyticalDashboardModelV2 {
         isFilterContext_2 as isFilterContext,
         isDashboardPlugin,
         isDashboardPluginLink,
+        IDashboardDateFilterConfigItem,
         IAnalyticalDashboard_2 as IAnalyticalDashboard,
         IFilterContext_3 as IFilterContext,
         IDashboardPlugin,
@@ -6019,6 +6020,8 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     dateFilterConfig?: IDashboardDateFilterConfig;
     // (undocumented)
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+    // (undocumented)
     filterContextRef?: ObjRef;
     // (undocumented)
     layout?: IDashboardLayout;
@@ -6036,6 +6039,14 @@ interface IAttribute {
     displayForm: AfmObjectIdentifier;
     // (undocumented)
     localIdentifier: Identifier;
+}
+
+// @public (undocumented)
+interface IDashboardDateFilterConfigItem {
+    // (undocumented)
+    config: IDashboardDateFilterConfig;
+    // (undocumented)
+    dateDataSet: ObjRef;
 }
 
 // @public (undocumented)

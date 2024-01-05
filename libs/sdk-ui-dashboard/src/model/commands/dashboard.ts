@@ -6,6 +6,7 @@ import {
     DashboardDateFilterConfigMode,
     IDashboard,
     IWorkspacePermissions,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
@@ -510,6 +511,117 @@ export function setDashboardAttributeFilterConfigMode(
         payload: {
             localIdentifier,
             mode,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link SetDashboardDateFilterConfigMode} command.
+ * @alpha
+ */
+export interface SetDashboardDateFilterWithDimensionConfigModePayload {
+    /**
+     * Date data set ref of the filter to change mode.
+     */
+    dataSet: ObjRef;
+    /**
+     * Mode of the date filter.
+     */
+    mode?: DashboardDateFilterConfigMode;
+}
+
+/**
+ * Command for changing date filter mode.
+ * @alpha
+ */
+export interface SetDashboardDateFilterWithDimensionConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE";
+    readonly payload: SetDashboardDateFilterWithDimensionConfigModePayload;
+}
+
+/**
+ * Creates the {@link SetDashboardDateFilterWithDimensionConfigMode} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided the mode as a mode for the date filter.
+ *
+ *
+ * @alpha
+ * @param dataSet - dataSet of the filter the mode is changed for
+ * @param mode - newly added mode
+ * @returns change filter mode command
+ */
+export function setDashboardDateFilterWithDimensionConfigMode(
+    dataSet: ObjRef,
+    mode?: DashboardDateFilterConfigMode,
+): SetDashboardDateFilterWithDimensionConfigMode {
+    return {
+        type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE",
+        payload: {
+            dataSet,
+            mode,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link SetDateFilterConfigTitle} command.
+ * @beta
+ */
+export interface SetDateFilterConfigTitlePayload {
+    /**
+     * Date data set ref of the filter to rename.
+     * If not provided title is set to common date filter.
+     */
+    dataSet?: ObjRef;
+    /**
+     * Title of the filter.
+     */
+    title?: string;
+}
+
+/**
+ * Command for changing date filter title.
+ * @beta
+ */
+export interface SetDateFilterConfigTitle extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE";
+    readonly payload: SetDateFilterConfigTitlePayload;
+}
+
+/**
+ * Creates the {@link SetDateFilterConfigTitle} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided title as a selected
+ * title for the date filter.
+ *
+ *
+ * @beta
+ * @param dataSet - date data set ref of the filter the display form is changed for
+ * @param title - newly added title
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change filter title command
+ */
+export function setDateFilterConfigTitle(
+    dataSet?: ObjRef,
+    title?: string,
+    correlationId?: string,
+): SetDateFilterConfigTitle {
+    return {
+        type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE",
+        correlationId,
+        payload: {
+            dataSet,
+            title,
         },
     };
 }

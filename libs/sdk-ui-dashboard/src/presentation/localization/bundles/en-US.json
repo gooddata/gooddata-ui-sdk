@@ -1117,7 +1117,7 @@
         "limit": 0
     },
     "attributesDropdown.placeholder": {
-        "value": "Search attributes…",
+        "value": "Search…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
@@ -1361,8 +1361,18 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.filter": {
+        "value": "Filter",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.attributeFilter.tooltip.no_attributes": {
         "value": "The attribute filter requires an attribute.",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.attributeFilter.tooltip.no_items": {
+        "value": "The filter requires an attribute or a date dataset.",
         "comment": "",
         "limit": 0
     },
@@ -1449,6 +1459,11 @@
     },
     "filterBar.filter.dropzone.tooltip": {
         "value": "Drag the attribute filter here.",
+        "comment": "",
+        "limit": 0
+    },
+    "filterBar.filter.dropzone.tooltip.generic": {
+        "value": "Drag the filter here.",
         "comment": "",
         "limit": 0
     },

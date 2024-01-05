@@ -13,7 +13,7 @@ export function useFilterExpansionByDragAndDrop(
     const shouldBeExpandedAfterDrop = useRef<boolean>(false);
 
     const [{ canDrop }, dropRef] = useDashboardDrop(
-        ["attributeFilter", "attributeFilter-placeholder"],
+        ["attributeFilter", "dateFilter", "attributeFilter-placeholder"],
         {
             drop: (_, monitor) => {
                 if (monitor.didDrop()) {

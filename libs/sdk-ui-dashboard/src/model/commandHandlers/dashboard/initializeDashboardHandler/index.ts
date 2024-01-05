@@ -51,6 +51,7 @@ import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 
 async function loadDashboardFromBackend(
@@ -225,6 +226,9 @@ function* loadExistingDashboard(
             }),
             attributeFilterConfigsActions.setAttributeFilterConfigs({
                 attributeFilterConfigs: dashboard.attributeFilterConfigs,
+            }),
+            dateFilterConfigsActions.setDateFilterConfigs({
+                dateFilterConfigs: dashboard.dateFilterConfigs,
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),

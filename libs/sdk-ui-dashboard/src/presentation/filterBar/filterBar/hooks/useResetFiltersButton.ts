@@ -7,7 +7,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -61,16 +61,16 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
         }
 
         // Normalize filters to include "All time" date filter
-        const [[dateFilter], attributeFilters] = partition(originalFilters, isDashboardDateFilter) as [
-            IDashboardDateFilter[],
-            IDashboardAttributeFilter[],
-        ];
+        const [[commonDateFilter], otherFilters] = partition(
+            originalFilters,
+            isDashboardCommonDateFilter,
+        ) as [IDashboardDateFilter[], Array<IDashboardAttributeFilter | IDashboardDateFilter>];
 
         // Dispatch a command, so it goes through the proper piping and trigger all the events
         dispatch(
             changeFilterContextSelection([
-                dateFilter ?? newAllTimeDashboardDateFilter(),
-                ...attributeFilters,
+                commonDateFilter ?? newAllTimeDashboardDateFilter(),
+                ...otherFilters,
             ]),
         );
         if (enableKDCrossFiltering && supportsCrossFiltering) {

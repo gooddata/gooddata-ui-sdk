@@ -37,6 +37,7 @@ import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -276,6 +277,7 @@ export interface IBackendCapabilities {
     supportsKeepingDependentFiltersSelection?: boolean;
     supportsKpiWidget?: boolean;
     supportsMetadataObjectLocking?: boolean;
+    supportsMultipleDateFilters?: boolean;
     supportsNonProductionDatasets?: boolean;
     supportsObjectUris?: boolean;
     supportsOrganizationSettings?: boolean;
@@ -870,6 +872,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;

@@ -36,11 +36,13 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
     availableGranularities: DateFilterGranularity[];
     isEditMode?: boolean;
+    openOnInit?: boolean;
     customFilterName?: string;
     dateFilterMode: VisibilityMode;
     dateFormat?: string;
     locale?: string;
     isTimeForAbsoluteRangeEnabled?: boolean;
+    showDropDownHeaderMessage?: boolean;
     weekStart?: WeekStart;
     /**
      * Represents a custom icon with associated tooltip information.
@@ -178,10 +180,12 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             excludeCurrentPeriod: originalExcludeCurrentPeriod,
             availableGranularities,
             isEditMode,
+            openOnInit,
             locale,
             isTimeForAbsoluteRangeEnabled,
             weekStart,
             customIcon,
+            showDropDownHeaderMessage,
             FilterConfigurationComponent,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
@@ -190,6 +194,8 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 availableGranularities={availableGranularities}
                 customFilterName={customFilterName}
                 dateFormat={dateFormat}
+                openOnInit={openOnInit}
+                showDropDownHeaderMessage={showDropDownHeaderMessage}
                 disabled={dateFilterMode === "readonly"}
                 excludeCurrentPeriod={excludeCurrentPeriod}
                 originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}

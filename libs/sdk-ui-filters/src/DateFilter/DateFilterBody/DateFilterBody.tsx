@@ -54,6 +54,7 @@ export interface IDateFilterBodyProps {
 
     isEditMode: boolean;
     isMobile: boolean;
+    showHeaderMessage?: boolean;
 
     onApplyClick: () => void;
     onCancelClick: () => void;
@@ -164,7 +165,13 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
     }
 
     private renderDateFilterBody = () => {
-        const { isExcludeCurrentPeriodEnabled, isMobile, isEditMode, selectedFilterOption } = this.props;
+        const {
+            isExcludeCurrentPeriodEnabled,
+            isMobile,
+            isEditMode,
+            selectedFilterOption,
+            showHeaderMessage = true,
+        } = this.props;
 
         const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
         const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
@@ -184,7 +191,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     })}
                     style={wrapperStyle}
                 >
-                    {isEditMode && !isMobile ? <EditModeMessage /> : null}
+                    {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
                     {isMobile ? (
                         this.renderMobileContent()
                     ) : (

@@ -6,13 +6,16 @@ import {
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { messages } from "../../locales.js";
 import {
-    FilterBarAttributeItem,
-    FilterBarAttributeItems,
-    isFilterBarAttributeFilterPlaceholder,
+    FilterBarItem,
+    FilterBarDraggableItems,
+    isFilterBarFilterPlaceholder,
+    isFilterBarAttributeFilter,
+    isFilterBarDateFilterWithDimension,
 } from "./filterBar/useFiltersWithAddedPlaceholder.js";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
@@ -53,28 +56,50 @@ export const getVisibilityIcon = (
 };
 
 export const areAllFiltersHidden = (
-    attributeFilters: FilterBarAttributeItems,
+    draggableFilters: FilterBarDraggableItems,
     effectedDateFilterMode: DashboardDateFilterConfigMode,
     effectedAttributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
+    effectedDateFiltersModeMap: Map<string, DashboardDateFilterConfigMode>,
 ) => {
-    const isDateFilterHidden = effectedDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
-    const areAllAttributeFiltersHidden = attributeFilters.every((it) =>
-        isAttributeFilterHidden(it, effectedAttributeFiltersModeMap),
-    );
+    const isCommonDateFilterHidden = effectedDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
 
-    return isDateFilterHidden && areAllAttributeFiltersHidden;
+    const areAllDraggableFiltersHidden = draggableFilters.every((it) => {
+        if (isFilterBarDateFilterWithDimension(it)) {
+            return isDateFilterHidden(it, effectedDateFiltersModeMap);
+        } else {
+            return isAttributeFilterHidden(it, effectedAttributeFiltersModeMap);
+        }
+    });
+
+    return isCommonDateFilterHidden && areAllDraggableFiltersHidden;
 };
 
 const isAttributeFilterHidden = (
-    attributeFilter: FilterBarAttributeItem,
+    filter: FilterBarItem,
     effectedAttributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
 ) => {
-    if (isFilterBarAttributeFilterPlaceholder(attributeFilter)) {
+    if (isFilterBarFilterPlaceholder(filter)) {
         return false;
     }
+    if (isFilterBarAttributeFilter(filter)) {
+        const attributeFilterMode = effectedAttributeFiltersModeMap.get(
+            filter.filter.attributeFilter.localIdentifier!,
+        );
+        return attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
+    }
+    return false;
+};
 
-    const attributeFilterMode = effectedAttributeFiltersModeMap.get(
-        attributeFilter.filter.attributeFilter.localIdentifier!,
-    );
-    return attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
+const isDateFilterHidden = (
+    filter: FilterBarItem,
+    dateFiltersModeMap: Map<string, DashboardDateFilterConfigMode>,
+) => {
+    if (isFilterBarFilterPlaceholder(filter)) {
+        return false;
+    }
+    if (isFilterBarDateFilterWithDimension(filter)) {
+        const dateFilterMode = dateFiltersModeMap.get(serializeObjRef(filter.filter.dateFilter.dataSet!));
+        return dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
+    }
+    return false;
 };

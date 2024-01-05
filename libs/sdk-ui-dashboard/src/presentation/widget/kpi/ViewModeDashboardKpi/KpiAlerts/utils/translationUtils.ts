@@ -42,12 +42,14 @@ function filterMetadata(filter: IDateFilter | IDashboardDateFilter): DateFilterM
             from: Number.parseInt(filter.dateFilter.from?.toString() ?? "0", 10),
             to: Number.parseInt(filter.dateFilter.to?.toString() ?? "0", 10),
             granularity: filter.dateFilter.granularity,
+            dataSet: filter.dateFilter.dataSet,
         };
     } else {
         return {
             type: "absolute",
             from: filter.dateFilter.from!.toString(),
             to: filter.dateFilter.to!.toString(),
+            dataSet: filter.dateFilter.dataSet,
         };
     }
 }

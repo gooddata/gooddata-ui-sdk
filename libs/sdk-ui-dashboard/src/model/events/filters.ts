@@ -2,6 +2,7 @@
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    IDashboardDateFilterConfig,
     IFilterContextDefinition,
 } from "@gooddata/sdk-model";
 import { IDashboardEvent } from "./base.js";
@@ -622,4 +623,110 @@ export function filterContextChanged(
  */
 export const isDashboardFilterContextChanged = eventGuard<DashboardFilterContextChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardDateFilterTitleChanged} event.
+ * @beta
+ */
+export interface DashboardDateTitleChangedPayload {
+    /**
+     * The updated definition of the dashboard date filter.
+     */
+    readonly filter: IDashboardDateFilter;
+    readonly filterConfig: IDashboardDateFilterConfig;
+}
+
+/**
+ * This event is emitted when the date filter title change.
+ *
+ * @beta
+ */
+export interface DashboardDateFilterTitleChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED";
+    readonly payload: DashboardDateTitleChangedPayload;
+}
+
+export function dateFilterTitleChanged(
+    ctx: DashboardContext,
+    filter: IDashboardDateFilter,
+    filterConfig: IDashboardDateFilterConfig,
+    correlationId?: string,
+): DashboardDateFilterTitleChanged {
+    return {
+        type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+            filterConfig,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterTitleChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardDateFilterTitleChanged = eventGuard<DashboardDateFilterTitleChanged>(
+    "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardDateFilterModeChanged} event.
+ * @beta
+ */
+export interface DashboardDateModeChangedPayload {
+    /**
+     * The updated definition of the dashboard date filter.
+     */
+    readonly filter: IDashboardDateFilter;
+    readonly filterConfig: IDashboardDateFilterConfig;
+}
+
+/**
+ * This event is emitted when the date filter title change.
+ *
+ * @beta
+ */
+export interface DashboardDateFilterModeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED";
+    readonly payload: DashboardDateModeChangedPayload;
+}
+
+export function dateFilterModeChanged(
+    ctx: DashboardContext,
+    filter: IDashboardDateFilter,
+    filterConfig: IDashboardDateFilterConfig,
+    correlationId?: string,
+): DashboardDateFilterModeChanged {
+    return {
+        type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+            filterConfig,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterModeChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardDateFilterModeChanged = eventGuard<DashboardDateFilterModeChanged>(
+    "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
 );

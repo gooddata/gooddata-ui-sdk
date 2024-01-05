@@ -8,7 +8,12 @@ import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
-import { IDashboardAttributeFilterReference, IAnalyticalWidget, IKpiWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilterReference,
+    IAnalyticalWidget,
+    IKpiWidget,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
@@ -48,7 +53,10 @@ export function* changeKpiWidgetFilterSettingsHandler(
     );
     const { dateDataSet, ignoredFilters } = result;
 
-    const ignoreDashboardFilters = ignoredFilters?.map((filter) => {
+    // KPI supports only attribute filters
+    const ignoredAttributeFilters = ignoredFilters?.filter(isDashboardAttributeFilter);
+
+    const ignoreDashboardFilters = ignoredAttributeFilters?.map((filter) => {
         const filterReference: IDashboardAttributeFilterReference = {
             type: "attributeFilterReference",
             displayForm: filter.attributeFilter.displayForm,
@@ -71,7 +79,7 @@ export function* changeKpiWidgetFilterSettingsHandler(
     return kpiWidgetFilterSettingsChanged(
         ctx,
         kpiWidget.ref,
-        ignoredFilters ?? [],
+        ignoredAttributeFilters ?? [],
         result.dateDataSet,
         cmd.correlationId,
     );

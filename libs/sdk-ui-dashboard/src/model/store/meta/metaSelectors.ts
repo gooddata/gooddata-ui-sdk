@@ -19,6 +19,7 @@ import {
     ShareStatus,
     IDashboardWidget,
     IDashboardDateFilterConfig,
+    isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -28,6 +29,7 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
     selectFilterContextDefinition,
+    selectFilterContextDraggableFilters,
     selectFilterContextIdentity,
 } from "../filterContext/filterContextSelectors.js";
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
@@ -35,6 +37,7 @@ import isEqual from "lodash/isEqual.js";
 import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
 import { DashboardDescriptor } from "./metaState.js";
 import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -349,6 +352,22 @@ const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
 );
 
 /**
+ * Selects persisted draggable filters (date filters with dimension and attribute filters) - that is the filters that were used to initialize
+ * the original filters of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardFilterContextDateFilters = createSelector(
+    selectPersistedDashboardFilterContextFilters,
+    (persistedFilters) => {
+        return (persistedFilters ?? []).filter(
+            (f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilter(f),
+        );
+    },
+);
+
+/**
  * Selects persisted title - that is the title that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
@@ -394,6 +413,29 @@ export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> =
 );
 
 /**
+ * Selects persisted attribute filter configs - that is the attribute filter configs array object that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.dateFilterConfigs || [];
+});
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the dashboard date filter configs compared to the persisted version (if any)
+ *
+ */
+export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardDateFilterConfigs,
+    selectDateFilterConfigsOverrides,
+    (persistedDateFilterConfigs, currentDateFilterConfigs) => {
+        return !isEqual(persistedDateFilterConfigs, currentDateFilterConfigs);
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  * @internal
@@ -428,16 +470,40 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
 );
 
 /**
+ * Selects a boolean indication if he dashboard has any changes to the date filters with dimension compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardFilterContextDateFilters,
+    selectFilterContextDraggableFilters,
+    (persistedFilters, currentFilters) => {
+        return !isEqual(persistedFilters, currentFilters);
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the any of the filters compared to the persisted version (if any)
  *
  * @internal
  */
 export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectIsDateFilterChanged,
-    selectIsAttributeFiltersChanged,
+    selectIsOtherFiltersChanged,
     selectIsAttributeFilterConfigsChanged,
-    (isDateFilterChanged, isAttributeFiltersChanged, isAttributeFilterConfigsChanged) => {
-        return isDateFilterChanged || isAttributeFiltersChanged || isAttributeFilterConfigsChanged;
+    selectIsDateFilterConfigsChanged,
+    (
+        isCommonDateFilterChanged,
+        isOtherFiltersChanged,
+        isAttributeFilterConfigsChanged,
+        isDateFilterConfigsChanged,
+    ) => {
+        return (
+            isCommonDateFilterChanged ||
+            isOtherFiltersChanged ||
+            isAttributeFilterConfigsChanged ||
+            isDateFilterConfigsChanged
+        );
     },
 );
 

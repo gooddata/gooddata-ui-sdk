@@ -1,9 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
 import { getUnrelatedDateDataset } from "./utils.js";
+import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";
 
 interface IDateFilterCheckboxProps {
     widget: IWidget;
@@ -68,6 +69,11 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
         [onDateDatasetFilterEnabled, selectedDateDataset],
     );
 
+    const intl = useIntl();
+    const defaultDateFilterName = intl.formatMessage({ id: "dateFilterDropdown.title" });
+
+    const { title } = useCurrentDateFilterConfig(undefined, defaultDateFilterName);
+
     return (
         <div>
             <label className={classes} htmlFor="configurationPanel.date.input">
@@ -79,9 +85,7 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
                     disabled={dateFilterCheckboxDisabled}
                     onChange={handleChange}
                 />
-                <span className="input-label-text title">
-                    <FormattedMessage id="configurationPanel.date" />
-                </span>
+                <span className="input-label-text title">{title}</span>
                 {isFilterLoading ? <div className="gd-spinner small" /> : null}
             </label>
             {!isFilterLoading && showNoRelatedDate ? (

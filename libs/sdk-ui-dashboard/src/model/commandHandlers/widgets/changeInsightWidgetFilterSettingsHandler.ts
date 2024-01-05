@@ -9,16 +9,25 @@ import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
-import { IDashboardAttributeFilterReference, IAnalyticalWidget, IInsightWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilterReference,
+    IAnalyticalWidget,
+    IInsightWidget,
+    isDashboardAttributeFilter,
+    IDashboardDateFilterReference,
+    isDashboardDateFilterWithDimension,
+} from "@gooddata/sdk-model";
 import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
+    validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,
     attributeFilterValidator: validateAttributeFiltersToIgnore,
+    dateFilterValidator: validateDateFiltersToIgnore,
 };
 
 /**
@@ -49,9 +58,17 @@ export function* changeInsightWidgetFilterSettingsHandler(
     const { dateDataSet, ignoredFilters } = result;
 
     const ignoreDashboardFilters = ignoredFilters?.map((filter) => {
-        const filterReference: IDashboardAttributeFilterReference = {
-            type: "attributeFilterReference",
-            displayForm: filter.attributeFilter.displayForm,
+        if (isDashboardAttributeFilter(filter)) {
+            const filterReference: IDashboardAttributeFilterReference = {
+                type: "attributeFilterReference",
+                displayForm: filter.attributeFilter.displayForm,
+            };
+
+            return filterReference;
+        }
+        const filterReference: IDashboardDateFilterReference = {
+            type: "dateFilterReference",
+            dataSet: filter.dateFilter.dataSet!,
         };
 
         return filterReference;
@@ -71,8 +88,9 @@ export function* changeInsightWidgetFilterSettingsHandler(
     return insightWidgetFilterSettingsChanged(
         ctx,
         insightWidget.ref,
-        ignoredFilters ?? [],
+        (ignoredFilters ?? []).filter(isDashboardAttributeFilter),
         result.dateDataSet,
         cmd.correlationId,
+        (ignoredFilters ?? []).filter(isDashboardDateFilterWithDimension),
     );
 }

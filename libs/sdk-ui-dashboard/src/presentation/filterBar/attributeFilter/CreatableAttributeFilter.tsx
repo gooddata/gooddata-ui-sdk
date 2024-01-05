@@ -8,7 +8,9 @@ import {
     useDashboardSelector,
     selectHasCatalogAttributes,
     selectIsWhiteLabeled,
-    selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
+    selectSupportsMultipleDateFilters,
+    selectHasCatalogDateDatasets,
 } from "../../../model/index.js";
 import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 
@@ -18,15 +20,23 @@ import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.
 export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) {
     const { WrapCreatePanelItemWithDragComponent } = props;
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
-    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
+    const hasDateDataSets = useDashboardSelector(selectHasCatalogDateDatasets);
+    const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
+    const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
-    const disabled = !hasAttributes || !canAddMoreAttributeFilters;
+    const noItems = supportsMultipleDateFilters ? !hasAttributes && !hasDateDataSets : !hasAttributes;
+
+    const disabled = noItems || !canAddMoreFilters;
 
     const tooltip =
-        disabled && !hasAttributes ? (
+        disabled && noItems ? (
             <div>
-                <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
+                {supportsMultipleDateFilters ? (
+                    <FormattedMessage id="addPanel.attributeFilter.tooltip.no_items" />
+                ) : (
+                    <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
+                )}
                 &nbsp;
                 {!isWhiteLabeled ? (
                     <a

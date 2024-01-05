@@ -9,7 +9,7 @@ import { IComparator as IComparator_2 } from '../base/comparators.js';
 import { IInsightDefinition as IInsightDefinition_2 } from './index.js';
 
 // @public
-export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
+export function absoluteDateFilterValues(filter: IAbsoluteDateFilter, includeDataSet?: boolean): IAbsoluteDateFilterValues;
 
 // @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess | IGranularRulesAccess;
@@ -496,6 +496,8 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 // @public
 export interface IAbsoluteDateFilterValues {
     // (undocumented)
+    dataSet?: ObjRef;
+    // (undocumented)
     from: string;
     // (undocumented)
     to: string;
@@ -881,6 +883,7 @@ export interface ICrossFiltering extends IDrill {
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -946,6 +949,7 @@ export interface IDashboardDateFilter {
         to?: DateString | number;
         dataSet?: ObjRef;
         attribute?: ObjRef;
+        localIdentifier?: string;
     };
 }
 
@@ -964,6 +968,14 @@ export interface IDashboardDateFilterConfig {
     mode: DashboardDateFilterConfigMode;
 }
 
+// @alpha
+export interface IDashboardDateFilterConfigItem {
+    // (undocumented)
+    config: IDashboardDateFilterConfig;
+    // (undocumented)
+    dateDataSet: ObjRef;
+}
+
 // @public
 export interface IDashboardDateFilterReference {
     dataSet: ObjRef;
@@ -974,6 +986,7 @@ export interface IDashboardDateFilterReference {
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -2118,6 +2131,8 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 // @public
 export interface IRelativeDateFilterValues {
     // (undocumented)
+    dataSet?: ObjRef;
+    // (undocumented)
     from: number;
     // (undocumented)
     granularity: string;
@@ -2356,10 +2371,16 @@ export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttri
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
 
 // @alpha
+export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDateFilter;
+
+// @alpha
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
+// @alpha
+export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
@@ -2462,6 +2483,7 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
@@ -3398,13 +3420,13 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @alpha
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
 
 // @alpha
-export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
+export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter;
@@ -3479,7 +3501,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
 
 // @alpha
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;
@@ -3563,7 +3585,7 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
 export type RelativeDateFilterGranularityOffset = number;
 
 // @public
-export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
+export function relativeDateFilterValues(filter: IRelativeDateFilter, includeDataSet?: boolean): IRelativeDateFilterValues;
 
 // @public
 export function resultHeaderName(header: IResultHeader): string | null;

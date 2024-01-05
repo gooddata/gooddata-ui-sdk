@@ -329,6 +329,10 @@ export interface ISettings {
      * Enable cross filtering in KD
      */
     enableKDCrossFiltering?: boolean;
+    /**
+     * Enable multiple date filters.
+     */
+    enableMultipleDateFilters?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

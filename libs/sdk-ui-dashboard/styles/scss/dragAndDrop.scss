@@ -13,6 +13,7 @@
     flex-wrap: nowrap;
 }
 
+.date-filter-button,
 .attribute-filter-button {
     &.is-draggable,
     &.is-dragging {
@@ -548,8 +549,6 @@
 }
 
 .attributes-list {
-    width: variables.$gd-configuration-panel-inner-width;
-
     .dropdown-body {
         flex-direction: column;
     }

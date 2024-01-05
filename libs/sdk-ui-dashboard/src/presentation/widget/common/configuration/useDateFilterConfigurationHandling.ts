@@ -8,6 +8,8 @@ import {
     disableKpiWidgetDateFilter,
     enableInsightWidgetDateFilter,
     enableKpiWidgetDateFilter,
+    ignoreDateFilterOnInsightWidget,
+    unignoreDateFilterOnInsightWidget,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
@@ -17,6 +19,7 @@ export function useDateFilterConfigurationHandling(
     widget: IWidget,
     relatedDateDatasets: readonly ICatalogDateDataset[] | undefined,
     onAppliedChanged: (applied: boolean) => void,
+    dataSetRef?: ObjRef,
 ) {
     const [status, setStatus] = useState<"ok" | "error" | "loading">("ok");
 
@@ -113,6 +116,44 @@ export function useDateFilterConfigurationHandling(
         ],
     );
 
+    const { run: ignoreInsightFilter } = useDashboardCommandProcessing({
+        commandCreator: ignoreDateFilterOnInsightWidget,
+        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(false);
+        },
+    });
+
+    const { run: unignoreInsightFilter } = useDashboardCommandProcessing({
+        commandCreator: unignoreDateFilterOnInsightWidget,
+        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(true);
+            setStatus("loading");
+        },
+        onError: () => {
+            setStatus("error");
+        },
+        onSuccess: () => {
+            setStatus("ok");
+        },
+    });
+
+    const handleIgnoreChanged = useCallback(
+        (ignored: boolean) => {
+            if (dataSetRef) {
+                if (ignored) {
+                    unignoreInsightFilter(ref, dataSetRef);
+                } else {
+                    ignoreInsightFilter(ref, dataSetRef);
+                }
+            }
+        },
+        [dataSetRef, ignoreInsightFilter, ref, unignoreInsightFilter],
+    );
+
     const handleDateDatasetChanged = useCallback(
         (id: string) => {
             if (isInsightWidget(widget)) {
@@ -128,5 +169,6 @@ export function useDateFilterConfigurationHandling(
         status,
         handleDateDatasetChanged,
         handleDateFilterEnabled,
+        handleIgnoreChanged,
     };
 }

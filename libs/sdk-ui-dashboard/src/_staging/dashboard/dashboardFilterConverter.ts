@@ -14,6 +14,7 @@ import {
     DateFilterGranularity,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, DateFilterOption } from "@gooddata/sdk-ui-filters";
 
@@ -63,17 +64,18 @@ export function attributeFilterToDashboardAttributeFilter(
 }
 
 /**
- * Converts {@link DateFilterOption} to {@link IDashboardDateFilter} or undefined.
+ * Converts {@link DateFilterOption} to {@link IDashboardDateFilter}.
  *
  * @param dateFilterOption - date filter option to convert
  * @param excludeCurrentPeriod - whether or not to exclude the current period
- * @returns converted filter or undefined for All time filter
+ * @returns converted filter
  */
 export function dateFilterOptionToDashboardDateFilter(
     dateFilterOption: DateFilterOption,
     excludeCurrentPeriod: boolean,
+    dataSet?: ObjRef,
 ): IDashboardDateFilter | undefined {
-    const tempDateDatasetId = idRef("TEMP");
+    const tempDateDatasetId = dataSet ?? idRef("TEMP");
     const afmFilter = DateFilterHelpers.mapOptionToAfm(
         dateFilterOption,
         tempDateDatasetId,
@@ -81,7 +83,14 @@ export function dateFilterOptionToDashboardDateFilter(
     );
 
     if (!afmFilter) {
-        return undefined;
+        // All time filter representation
+        return {
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.date",
+                dataSet,
+            },
+        };
     }
 
     if (isRelativeDateFilter(afmFilter)) {
@@ -92,6 +101,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 granularity: granularity as DateFilterGranularity,
                 from,
                 to,
+                dataSet,
             },
         };
     } else {
@@ -102,6 +112,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 granularity: "GDC.time.date",
                 from,
                 to,
+                dataSet,
             },
         };
     }

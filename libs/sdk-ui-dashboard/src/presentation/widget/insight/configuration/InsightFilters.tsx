@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import InsightDateDataSetFilter from "./InsightDateDataSetFilter.js";
 import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { AttributeFilterConfiguration } from "../../common/configuration/AttributeFilterConfiguration.js";
+import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
 
 interface IInsightFiltersProps {
     widget: IInsightWidget;
@@ -17,7 +17,7 @@ export default function InsightFilters({ widget }: IInsightFiltersProps) {
                 <FormattedMessage id="configurationPanel.filterBy" />
             </Typography>
             {isInsightWidget(widget) ? <InsightDateDataSetFilter widget={widget} /> : null}
-            <AttributeFilterConfiguration widget={widget} />
+            <FilterConfiguration widget={widget} />
         </div>
     );
 }

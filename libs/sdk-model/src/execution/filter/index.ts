@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../../objRef/index.js";
@@ -668,21 +668,27 @@ export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
 export interface IAbsoluteDateFilterValues {
     from: string;
     to: string;
+    dataSet?: ObjRef;
 }
 
 /**
  * Gets effective values of an absolute date filter.
  *
  * @param filter - date filter to work with
+ * @param includeDataSet - whether to include data set in the returned values
  * @returns filter values
  * @public
  */
-export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues {
+export function absoluteDateFilterValues(
+    filter: IAbsoluteDateFilter,
+    includeDataSet = false,
+): IAbsoluteDateFilterValues {
     invariant(filter, "filter must be specified");
 
     return {
         from: filter.absoluteDateFilter.from,
         to: filter.absoluteDateFilter.to,
+        ...(includeDataSet ? { dataSet: filter.absoluteDateFilter.dataSet } : {}),
     };
 }
 
@@ -695,22 +701,28 @@ export interface IRelativeDateFilterValues {
     from: number;
     to: number;
     granularity: string;
+    dataSet?: ObjRef;
 }
 
 /**
  * Gets effective values of a relative date filter.
  *
  * @param filter - date filter to work with
+ * @param includeDataSet - whether to include data set in the returned values
  * @returns filter values
  * @public
  */
-export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues {
+export function relativeDateFilterValues(
+    filter: IRelativeDateFilter,
+    includeDataSet = false,
+): IRelativeDateFilterValues {
     invariant(filter, "filter must be specified");
 
     return {
         from: filter.relativeDateFilter.from,
         to: filter.relativeDateFilter.to,
         granularity: filter.relativeDateFilter.granularity,
+        ...(includeDataSet ? { dataSet: filter.relativeDateFilter.dataSet } : {}),
     };
 }
 

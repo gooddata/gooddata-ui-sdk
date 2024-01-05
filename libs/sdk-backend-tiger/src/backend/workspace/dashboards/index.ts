@@ -45,6 +45,7 @@ import {
     FilterContextItem,
     isAllTimeDashboardDateFilter,
     objRefToString,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -63,7 +64,7 @@ import {
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js";
-import { resolveWidgetFilters } from "./widgetFilters.js";
+import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 import includes from "lodash/includes.js";
 import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
@@ -464,6 +465,20 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
         return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
             objRefsToIdentifiers(refs, this.authCall),
+        );
+    };
+
+    public getResolvedFiltersForWidgetWithMultipleDateFilters = async (
+        widget: IWidget,
+        commonDateFilters: IDateFilter[],
+        otherFilters: IFilter[],
+    ): Promise<IFilter[]> => {
+        return resolveWidgetFiltersWithMultipleDateFilters(
+            commonDateFilters,
+            otherFilters,
+            widget.ignoreDashboardFilters,
+            widget.dateDataSet,
+            (refs) => objRefsToIdentifiers(refs, this.authCall),
         );
     };
 

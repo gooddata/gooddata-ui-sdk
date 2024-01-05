@@ -29,6 +29,7 @@ import {
     IInsightWidgetConfiguration,
     IKpiWidgetConfiguration,
     IDrillDownReference,
+    isDashboardAttributeFilterReference,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -594,6 +595,39 @@ const replaceWidgetDateDataset: LayoutReducer<ReplaceWidgetDateDataset> = (state
 
     widget.dateDataSet = dateDataSet;
 };
+//
+//
+//
+
+type RemoveIgnoredDateFilter = {
+    dateDataSets: ObjRef[];
+};
+
+const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, action) => {
+    invariant(state.layout);
+
+    const { dateDataSets } = action.payload;
+
+    state.layout.sections.forEach((section) => {
+        section.items.forEach((item) => {
+            const widget = item.widget;
+
+            if (isInsightWidget(widget) || isKpiWidget(widget)) {
+                const updatedFilters = widget.ignoreDashboardFilters.filter((filter) => {
+                    if (isDashboardAttributeFilterReference(filter)) {
+                        return true;
+                    }
+
+                    return (
+                        dateDataSets.find((removed) => areObjRefsEqual(removed, filter.dataSet)) === undefined
+                    );
+                });
+
+                widget.ignoreDashboardFilters = updatedFilters;
+            }
+        });
+    });
+};
 
 //
 //
@@ -680,6 +714,7 @@ export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
     removeIgnoredAttributeFilter,
+    removeIgnoredDateFilter,
     addSection: withUndo(addSection),
     removeSection: withUndo(removeSection),
     moveSection: withUndo(moveSection),

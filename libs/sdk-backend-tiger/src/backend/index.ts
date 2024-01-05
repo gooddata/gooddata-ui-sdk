@@ -96,6 +96,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsShowingFilteredElements: true,
     supportsSingleSelectDependentFilters: true,
     supportsCrossFiltering: true,
+    supportsMultipleDateFilters: true,
 };
 
 /**

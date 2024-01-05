@@ -10,7 +10,7 @@ import { attributeFilterAdded } from "../../../events/filters.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
-    selectCanAddMoreAttributeFilters,
+    selectCanAddMoreFilters,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
@@ -44,8 +44,8 @@ export function* addAttributeFilterHandler(
         localIdentifier,
     } = cmd.payload;
 
-    const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreAttributeFilters> = yield select(
-        selectCanAddMoreAttributeFilters,
+    const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> = yield select(
+        selectCanAddMoreFilters,
     );
 
     if (!isUnderFilterCountLimit) {

@@ -2,23 +2,16 @@
 
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "sharedFilterConfig";
 
 .date-filter-dropdown-configuration {
     .configuration-panel-header {
-        display: flex;
         justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        height: 36px;
-        padding: 3px 10px 3px 10px;
         background: kit-variables.$is-focused-background;
     }
 
     .configuration-panel-header-title {
         color: kit-variables.$gd-color-state-blank;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
     }
 
     .configuration-category {

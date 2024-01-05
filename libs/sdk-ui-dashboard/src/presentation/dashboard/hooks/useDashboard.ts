@@ -7,6 +7,7 @@ import {
     DefaultDashboardAttributeFilter,
     DefaultDashboardDateFilter,
     DefaultDashboardAttributeFilterComponentSetFactory,
+    DefaultDashboardDateFilterComponentSetFactory,
 } from "../../filterBar/index.js";
 import {
     DefaultDashboardWidget,
@@ -37,6 +38,7 @@ import {
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
+    DateFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
 } from "../../componentDefinition/index.js";
@@ -60,6 +62,7 @@ interface IUseDashboardResult {
     insightWidgetComponentSet: InsightWidgetComponentSet;
     kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
+    dateFilterComponentSet: DateFilterComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -189,6 +192,10 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
     }, [attributeFilterProvider]);
 
+    const dateFilterComponentSet = useMemo<DateFilterComponentSet>(() => {
+        return DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider);
+    }, [dateFilterProvider]);
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -210,5 +217,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightWidgetComponentSet,
         kpiWidgetComponentSet,
         attributeFilterComponentSet,
+        dateFilterComponentSet,
     };
 };

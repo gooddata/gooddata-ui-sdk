@@ -11,6 +11,8 @@ import {
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
     SetDashboardAttributeFilterConfigMode,
+    SetDashboardDateFilterWithDimensionConfigMode,
+    SetDateFilterConfigTitle,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -25,6 +27,9 @@ import {
     SetAttributeFilterDisplayForm,
     SetAttributeFilterTitle,
     SetAttributeFilterSelectionMode,
+    AddDateFilter,
+    RemoveDateFilters,
+    MoveDateFilter,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -113,9 +118,15 @@ export {
     SetDashboardDateFilterConfigMode,
     SetDashboardDateFilterConfigModePayload,
     setDashboardDateFilterConfigMode,
+    SetDashboardDateFilterWithDimensionConfigMode,
+    SetDashboardDateFilterWithDimensionConfigModePayload,
+    setDashboardDateFilterWithDimensionConfigMode,
     SetDashboardAttributeFilterConfigMode,
     setDashboardAttributeFilterConfigMode,
     SetDashboardAttributeFilterConfigModePayload,
+    SetDateFilterConfigTitle,
+    SetDateFilterConfigTitlePayload,
+    setDateFilterConfigTitle,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -134,6 +145,15 @@ export {
     RemoveAttributeFiltersPayload,
     removeAttributeFilter,
     removeAttributeFilters,
+    AddDateFilter,
+    AddDateFilterPayload,
+    addDateFilter,
+    RemoveDateFilters,
+    RemoveDateFiltersPayload,
+    removeDateFilter,
+    MoveDateFilter,
+    MoveDateFilterPayload,
+    moveDateFilter,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
     resetAttributeFilterSelection,
@@ -318,6 +338,8 @@ export {
     replaceInsightWidgetIgnoredFilters,
     ignoreFilterOnInsightWidget,
     unignoreFilterOnInsightWidget,
+    ignoreDateFilterOnInsightWidget,
+    unignoreDateFilterOnInsightWidget,
     ChangeInsightWidgetVisProperties,
     ChangeInsightWidgetVisPropertiesPayload,
     changeInsightWidgetVisProperties,
@@ -462,4 +484,9 @@ export type DashboardCommands =
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget
     | CrossFiltering
-    | AttributeHierarchyModified;
+    | AttributeHierarchyModified
+    | AddDateFilter
+    | RemoveDateFilters
+    | MoveDateFilter
+    | SetDashboardDateFilterWithDimensionConfigMode
+    | SetDateFilterConfigTitle;

@@ -7,6 +7,8 @@ import { filterContextActions } from "../../store/filterContext/index.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
+    selectFilterContextDateFilterByDataSet,
+    selectFilterContextDateFiltersWithDimension,
 } from "../../store/filterContext/filterContextSelectors.js";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -38,6 +40,8 @@ import {
     newAllTimeDashboardDateFilter,
     isRelativeDateFilter,
     newRelativeDashboardDateFilter,
+    serializeObjRef,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -59,14 +63,19 @@ function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterCon
             },
         };
     } else if (isAbsoluteDateFilter(filter)) {
-        return newAbsoluteDashboardDateFilter(filter.absoluteDateFilter.from, filter.absoluteDateFilter.to);
+        return newAbsoluteDashboardDateFilter(
+            filter.absoluteDateFilter.from,
+            filter.absoluteDateFilter.to,
+            filter.absoluteDateFilter.dataSet,
+        );
     } else if (isAllTimeDateFilter(filter)) {
-        return newAllTimeDashboardDateFilter();
+        return newAllTimeDashboardDateFilter(filter.relativeDateFilter.dataSet);
     } else if (isRelativeDateFilter(filter)) {
         return newRelativeDashboardDateFilter(
             filter.relativeDateFilter.granularity as DateFilterGranularity,
             filter.relativeDateFilter.from,
             filter.relativeDateFilter.to,
+            filter.relativeDateFilter.dataSet,
         );
     }
 
@@ -94,14 +103,30 @@ export function* changeFilterContextSelectionHandler(
         return identification ? objRefToString(identification) : identification;
     });
 
-    const [[dateFilter], attributeFilters] = partition(uniqueFilters, isDashboardDateFilter);
+    const [dateFilters, attributeFilters] = partition(uniqueFilters, isDashboardDateFilter);
 
-    const [attributeFilterUpdateActions, dateFilterUpdateActions]: AnyAction[][] = yield all([
+    const [[commonDateFilter], dateFiltersWithDimension] = partition(
+        dateFilters,
+        isDashboardCommonDateFilter,
+    );
+
+    const [
+        attributeFilterUpdateActions,
+        commonDateFilterUpdateActions,
+        dateFiltersUpdateActions,
+    ]: AnyAction[][] = yield all([
         call(getAttributeFiltersUpdateActions, attributeFilters, resetOthers, ctx),
-        call(getDateFilterUpdateActions, dateFilter, resetOthers),
+        call(getDateFilterUpdateActions, commonDateFilter, resetOthers),
+        call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers),
     ]);
 
-    yield put(batchActions([...attributeFilterUpdateActions, ...dateFilterUpdateActions]));
+    yield put(
+        batchActions([
+            ...attributeFilterUpdateActions,
+            ...commonDateFilterUpdateActions,
+            ...dateFiltersUpdateActions,
+        ]),
+    );
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
@@ -194,12 +219,13 @@ function* getDateFilterUpdateActions(
         }
 
         const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-            ? { type: "allTime" }
+            ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
             : {
                   type: dateFilter.dateFilter.type,
                   granularity: dateFilter.dateFilter.granularity,
                   from: dateFilter.dateFilter.from,
                   to: dateFilter.dateFilter.to,
+                  dataSet: dateFilter.dateFilter.dataSet,
               };
 
         return [filterContextActions.upsertDateFilter(upsertPayload)];
@@ -208,6 +234,57 @@ function* getDateFilterUpdateActions(
     }
 
     return [];
+}
+
+function* getDateFiltersUpdateActions(
+    dateFilters: IDashboardDateFilter[],
+    resetOthers: boolean,
+): SagaIterator<AnyAction[]> {
+    const updateActions: AnyAction[] = [];
+    const handledDataSets = new Set<string>();
+
+    for (const dateFilter of dateFilters) {
+        const filterRef = dateFilter.dateFilter.dataSet!;
+        const dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
+            yield select(selectFilterContextDateFilterByDataSet(filterRef));
+
+        if (dashboardFilter) {
+            handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
+        }
+        const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
+            ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
+            : {
+                  type: dateFilter.dateFilter.type,
+                  granularity: dateFilter.dateFilter.granularity,
+                  from: dateFilter.dateFilter.from,
+                  to: dateFilter.dateFilter.to,
+                  dataSet: dateFilter.dateFilter.dataSet,
+              };
+
+        updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
+    }
+
+    if (resetOthers) {
+        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> =
+            yield select(selectFilterContextDateFiltersWithDimension);
+
+        // for filters that have not been handled by the loop above, create a clear selection actions
+        const unhandledFilters = currentDateFilters.filter(
+            (filter) => !handledDataSets.has(serializeObjRef(filter.dateFilter.dataSet!)),
+        );
+        if (unhandledFilters.length > 0) {
+            for (const dateFilter of dateFilters) {
+                updateActions.push(
+                    filterContextActions.upsertDateFilter({
+                        type: "allTime",
+                        dataSet: dateFilter.dateFilter.dataSet,
+                    }),
+                );
+            }
+        }
+    }
+
+    return updateActions;
 }
 
 const getAttributeFilterSelectionPayload = (

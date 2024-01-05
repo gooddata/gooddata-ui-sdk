@@ -7,7 +7,7 @@ import { attributeFilterMoved } from "../../../events/filters.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
 import {
     selectFilterContextAttributeFilterByLocalId,
-    selectFilterContextAttributeFilterIndexByLocalId,
+    selectFilterContextDraggableFilterIndexByRef,
     selectFilterContextFilters,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
@@ -43,8 +43,8 @@ export function* moveAttributeFilterHandler(
         );
     }
 
-    const originalIndex: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterIndexByLocalId>> =
-        yield select(selectFilterContextAttributeFilterIndexByLocalId(filterLocalId));
+    const originalIndex: ReturnType<ReturnType<typeof selectFilterContextDraggableFilterIndexByRef>> =
+        yield select(selectFilterContextDraggableFilterIndexByRef(filterLocalId));
 
     yield put(
         filterContextActions.moveAttributeFilter({
@@ -53,8 +53,8 @@ export function* moveAttributeFilterHandler(
         }),
     );
 
-    const finalIndex: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterIndexByLocalId>> =
-        yield select(selectFilterContextAttributeFilterIndexByLocalId(filterLocalId));
+    const finalIndex: ReturnType<ReturnType<typeof selectFilterContextDraggableFilterIndexByRef>> =
+        yield select(selectFilterContextDraggableFilterIndexByRef(filterLocalId));
 
     yield dispatchDashboardEvent(
         attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),

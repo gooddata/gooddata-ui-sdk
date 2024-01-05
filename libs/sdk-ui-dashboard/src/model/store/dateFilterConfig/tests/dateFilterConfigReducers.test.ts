@@ -53,7 +53,7 @@ describe("dateFilterConfigReducers", () => {
 
             expect(newState.dateFilterConfig).toEqual({
                 mode: DashboardDateFilterConfigModeValues.READONLY,
-                filterName: "Date range",
+                filterName: "",
             });
         });
     });

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -27,6 +27,12 @@ import { IDashboardFilter } from "../../types.js";
  * @public
  */
 export interface DateFilterSelection {
+    /**
+     * The reference to date data set to which date filter belongs.
+     * If not defined it refers to so. called common date filter which data set is defined per widget
+     */
+    readonly dataSet?: ObjRef;
+
     /**
      * Indicates whether the filter should select absolute or relative values.
      *
@@ -117,11 +123,13 @@ export function changeDateFilterSelection(
     to?: DateString | number,
     dateFilterOptionLocalId?: string,
     correlationId?: string,
+    dataSet?: ObjRef,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
+            dataSet,
             type,
             granularity,
             from,
@@ -150,11 +158,12 @@ export function changeDateFilterSelection(
  */
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
     if (isAllTimeDateFilter(filter)) {
-        return clearDateFilterSelection(correlationId);
+        const values = relativeDateFilterValues(filter, true);
+        return clearDateFilterSelection(correlationId, values.dataSet);
     }
 
     if (isRelativeDateFilter(filter)) {
-        const values = relativeDateFilterValues(filter);
+        const values = relativeDateFilterValues(filter, true);
         return changeDateFilterSelection(
             "relative",
             values.granularity as DateFilterGranularity,
@@ -162,9 +171,10 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.to,
             undefined,
             correlationId,
+            values.dataSet,
         );
     } else {
-        const values = absoluteDateFilterValues(filter);
+        const values = absoluteDateFilterValues(filter, true);
         return changeDateFilterSelection(
             "absolute",
             "GDC.time.date",
@@ -172,6 +182,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.to,
             undefined,
             correlationId,
+            values.dataSet,
         );
     }
 }
@@ -184,11 +195,15 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
  *
  * @public
  */
-export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
+export function clearDateFilterSelection(
+    correlationId?: string,
+    dataSet?: ObjRef,
+): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
         correlationId,
         payload: {
+            dataSet,
             type: "relative",
             granularity: "GDC.time.date",
         },
@@ -832,6 +847,138 @@ export function setAttributeFilterSelectionMode(
         payload: {
             filterLocalId,
             selectionMode,
+        },
+    };
+}
+
+//////////////////// DATE FILTER //////////////////////////
+
+/**
+ * Payload of the {@link AddDateFilter} command.
+ *
+ * @alpha
+ */
+export interface AddDateFilterPayload {
+    readonly index: number;
+    readonly dateDataset: ObjRef;
+}
+
+/**
+ * @alpha
+ */
+export interface AddDateFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
+    readonly payload: AddDateFilterPayload;
+}
+
+/**
+ * Creates the AddDateFilter command. Dispatching this command will result in the addition
+ * of another date filter with defined dimension to the dashboard's filter bar, at desired position,
+ * or error in case of invalid update (e.g. wrong or duplicated date dimension/data set)
+ *
+ * The filter will be set for the date dimension provided by reference. When created, the filter will be
+ * no-op - all time filter.
+ *
+ * @param dateDataset - specify date dimension/data set which will be used for filtering of all widgets
+ * @param index - specify index among the filters at which the new filter should be placed.
+ * The index starts at zero and there is convenience that index of -1 would add the filter at the end.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *
+ * @alpha
+ */
+export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): AddDateFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD",
+        correlationId,
+        payload: {
+            dateDataset,
+            index,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link RemoveDateFilters} command.
+ * @beta
+ */
+export interface RemoveDateFiltersPayload {
+    /**
+     * XXX: we do not necessarily need to remove multiple filters atm, but this should
+     *  be very easy to do and adds some extra flexibility.
+     */
+    readonly dataSets: ObjRef[];
+}
+
+/**
+ * @beta
+ */
+export interface RemoveDateFilters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
+    readonly payload: RemoveDateFiltersPayload;
+}
+
+/**
+ * Creates the RemoveDateFilters command. Dispatching this command will result in the removal
+ * of dashboard's date filter with the provided date data set.
+ *
+ * @param dataSet - dashboard date filter's date data set ref
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @beta
+ */
+export function removeDateFilter(dataSet: ObjRef, correlationId?: string): RemoveDateFilters {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE",
+        correlationId,
+        payload: {
+            dataSets: [dataSet],
+        },
+    };
+}
+
+/**
+ * Payload of the {@link MoveDateFilter} command.
+ * @beta
+ */
+export interface MoveDateFilterPayload {
+    /**
+     * Data set of the filter to move.
+     */
+    readonly dataSet: ObjRef;
+    /**
+     * Index to move the filter to.
+     */
+    readonly index: number;
+}
+
+/**
+ * @beta
+ */
+export interface MoveDateFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
+    readonly payload: MoveDateFilterPayload;
+}
+
+/**
+ * Creates the MoveDateFilter command. Dispatching this command will result in move of the dashboard date
+ * filter with the provided dataSet to a new spot. The new spot is defined by index. For convenience the index
+ * of -1 means move to the end of the filter list.
+ *
+ * @param dataSet - dashboard filter's dataSet - no duplicates allowed
+ * @param index - specify index among the draggable filters (attribute filters and date filters with dataSet) at which the new filter should be placed.
+ *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): MoveDateFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE",
+        correlationId,
+        payload: {
+            dataSet,
+            index,
         },
     };
 }

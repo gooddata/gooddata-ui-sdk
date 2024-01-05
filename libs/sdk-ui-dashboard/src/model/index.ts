@@ -57,6 +57,8 @@ export {
     FilterOpReplaceAttributeIgnores,
     FilterOpDisableDateFilter,
     FilterOpEnableDateFilter,
+    FilterOpUnignoreDateFilter,
+    FilterOpIgnoreDateFilter,
     FilterOperations,
     WidgetFilterOperation,
     WidgetHeader,

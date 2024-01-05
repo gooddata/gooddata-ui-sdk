@@ -9,6 +9,8 @@ import {
     FilterContextItem,
     isDashboardAttributeFilter,
     attributeElementsIsEmpty,
+    isDashboardDateFilterWithDimension,
+    isAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import isEqual from "lodash/isEqual.js";
@@ -213,6 +215,10 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
                         areObjRefsEqual(validRef, filter.attributeFilter.displayForm),
                     );
+                } else if (isDashboardDateFilterWithDimension(filter)) {
+                    return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
+                        areObjRefsEqual(validRef, filter.dateFilter.dataSet),
+                    );
                 } else {
                     return !widgetIgnoresDateFilter;
                 }
@@ -274,6 +280,17 @@ function filtersDigest(
                 const isNoop =
                     filter.attributeFilter.negativeSelection &&
                     attributeElementsIsEmpty(filter.attributeFilter.attributeElements);
+
+                return !isNoop || !isInEditMode;
+            } else if (isDashboardDateFilterWithDimension(filter)) {
+                /**
+                 * Remove noop attribute filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
+                 * Keep them in view mode so that switching to and from All on an ignored filter does not show loading.
+                 * This is a tradeoff so that we optimize for the view mode performance and also keep the more frequent use case in edit mode
+                 * (adding a new filter) loading-free as well. Switching to and from All in edit mode will still show loading, but have no way
+                 * of telling whether a noop filter is noop because it was just added or because it was set that way by the user.
+                 */
+                const isNoop = isAllTimeDashboardDateFilter(filter.dateFilter);
 
                 return !isNoop || !isInEditMode;
             } else {
