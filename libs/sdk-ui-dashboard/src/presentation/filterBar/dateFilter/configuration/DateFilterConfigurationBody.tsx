@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { IntlShape } from "react-intl/src/types.js";
 import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
@@ -67,7 +67,7 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
     const cancelText = intl.formatMessage(messages.dateFilterDropdownConfigurationCancelText);
     const saveText = intl.formatMessage(messages.dateFilterDropdownConfigurationSaveText);
     const titleText = intl.formatMessage(messages.filterConfigurationTitleTitle);
-    const resetTitleText = intl.formatMessage(messages.filterConfigurationModeTitleReset);
+    const resetTitleText = intl.formatMessage(messages.filterConfigurationTitleReset);
     const showResetTitle = title !== defaultDateFilterName;
 
     const isSaveDisabled = selectedMode === originConfigMode && !titleChanged;
