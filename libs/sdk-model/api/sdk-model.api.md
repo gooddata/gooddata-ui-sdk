@@ -9,7 +9,7 @@ import { IComparator as IComparator_2 } from '../base/comparators.js';
 import { IInsightDefinition as IInsightDefinition_2 } from './index.js';
 
 // @public
-export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
+export function absoluteDateFilterValues(filter: IAbsoluteDateFilter, includeDataSet?: boolean): IAbsoluteDateFilterValues;
 
 // @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess | IGranularRulesAccess;
@@ -3585,7 +3585,7 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
 export type RelativeDateFilterGranularityOffset = number;
 
 // @public
-export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
+export function relativeDateFilterValues(filter: IRelativeDateFilter, includeDataSet?: boolean): IRelativeDateFilterValues;
 
 // @public
 export function resultHeaderName(header: IResultHeader): string | null;

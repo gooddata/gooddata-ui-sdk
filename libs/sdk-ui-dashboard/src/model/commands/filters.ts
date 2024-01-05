@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -158,12 +158,12 @@ export function changeDateFilterSelection(
  */
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
     if (isAllTimeDateFilter(filter)) {
-        const values = relativeDateFilterValues(filter);
+        const values = relativeDateFilterValues(filter, true);
         return clearDateFilterSelection(correlationId, values.dataSet);
     }
 
     if (isRelativeDateFilter(filter)) {
-        const values = relativeDateFilterValues(filter);
+        const values = relativeDateFilterValues(filter, true);
         return changeDateFilterSelection(
             "relative",
             values.granularity as DateFilterGranularity,
@@ -174,7 +174,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.dataSet,
         );
     } else {
-        const values = absoluteDateFilterValues(filter);
+        const values = absoluteDateFilterValues(filter, true);
         return changeDateFilterSelection(
             "absolute",
             "GDC.time.date",
