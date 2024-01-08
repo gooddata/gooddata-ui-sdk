@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     idRef,
@@ -6,7 +6,6 @@ import {
     IFilterContextDefinition,
     isTempFilterContext,
     IAccessControlAware,
-    isDashboardDateFilter,
     isDashboardAttributeFilter,
     IDashboardDefinition,
     IDashboardObjectIdentity,
@@ -20,6 +19,7 @@ import {
     IDashboardWidget,
     IDashboardDateFilterConfig,
     isDashboardDateFilterWithDimension,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -333,7 +333,7 @@ const selectPersistedDashboardFilterContextFilters = createSelector(
 const selectPersistedDashboardFilterContextDateFilter = createSelector(
     selectPersistedDashboardFilterContextFilters,
     (persistedFilters) => {
-        return (persistedFilters ?? []).find(isDashboardDateFilter);
+        return (persistedFilters ?? []).find(isDashboardCommonDateFilter);
     },
 );
 
@@ -358,7 +358,7 @@ const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  */
-const selectPersistedDashboardFilterContextDateFilters = createSelector(
+const selectPersistedDashboardFilterContextDraggableFilters = createSelector(
     selectPersistedDashboardFilterContextFilters,
     (persistedFilters) => {
         return (persistedFilters ?? []).filter(
@@ -475,7 +475,7 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
  * @internal
  */
 export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardFilterContextDateFilters,
+    selectPersistedDashboardFilterContextDraggableFilters,
     selectFilterContextDraggableFilters,
     (persistedFilters, currentFilters) => {
         return !isEqual(persistedFilters, currentFilters);
