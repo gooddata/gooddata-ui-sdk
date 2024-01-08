@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import {
     AnalyticalDashboardModelV2,
@@ -70,6 +70,7 @@ interface IAnalyticalDashboardContent {
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    disableCrossFiltering?: boolean;
 }
 
 function convertDashboardPluginLink(
@@ -96,6 +97,7 @@ function getConvertedAnalyticalDashboardContent(
             ),
         ),
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
+        disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
     };
 }
 
@@ -109,8 +111,14 @@ export function convertDashboard(
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
 
-    const { dateFilterConfig, layout, plugins, attributeFilterConfigs, dateFilterConfigs } =
-        getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
+    const {
+        dateFilterConfig,
+        layout,
+        plugins,
+        attributeFilterConfigs,
+        dateFilterConfigs,
+        disableCrossFiltering,
+    } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
         type: "IDashboard",
@@ -134,6 +142,7 @@ export function convertDashboard(
         attributeFilterConfigs,
         layout,
         plugins,
+        disableCrossFiltering,
     };
 }
 

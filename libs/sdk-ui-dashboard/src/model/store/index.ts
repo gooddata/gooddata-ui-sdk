@@ -262,6 +262,7 @@ export {
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
+    selectDisableDashboardCrossFiltering,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,

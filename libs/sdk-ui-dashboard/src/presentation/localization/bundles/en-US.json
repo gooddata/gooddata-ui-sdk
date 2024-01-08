@@ -393,6 +393,22 @@
         "comment": "Displayed if there is an error getting the workspace level config.",
         "limit": 0
     },
+    "filters.configurationPanel.header": {
+        "value": "Configuration",
+        "comment": "Cross-filtering configuration panel - header.",
+        "limit": 0
+    },
+    "filters.configurationPanel.sectionHeader.interactions": {
+        "value": "Interactions",
+        "comment": "Cross-filtering configuration panel - interactions sub section header.",
+        "limit": 0
+    },
+    "filters.configurationPanel.crossFiltering.toggle": {
+        "value": "Cross-filtering",
+        "comment": "Cross-filtering configuration panel - label for toggle that disables or enables cross-filtering.",
+        "limit": 0
+    },
+
     "kpi.noData": {
         "value": "No data for current filter settings. Try changing the filters.",
         "comment": "",

@@ -1,11 +1,15 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
 
 /**
  * @public
  */
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<
+    IDashboard,
+    "title" | "description" | "tags" | "disableCrossFiltering"
+> &
+    IAccessControlAware;
 
 export const EmptyDashboardDescriptor: DashboardDescriptor = {
     title: "",

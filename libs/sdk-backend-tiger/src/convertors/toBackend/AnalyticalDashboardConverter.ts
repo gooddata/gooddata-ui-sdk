@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -50,6 +50,7 @@ export function convertAnalyticalDashboard(
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
         layout: cloneWithSanitizedIds(layout),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
+        disableCrossFiltering: dashboard.disableCrossFiltering,
         version: "2",
     };
 }

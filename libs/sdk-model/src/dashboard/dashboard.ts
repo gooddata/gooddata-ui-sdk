@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IAuditableDates, IAuditableUsers, IAuditable } from "../base/metadata.js";
 import {
@@ -291,6 +291,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Plugins used on this dashboard.
      */
     readonly plugins?: IDashboardPluginLink[];
+
+    /**
+     * Disables cross filtering for this dashboard.
+     */
+    readonly disableCrossFiltering?: boolean;
 }
 
 /**
@@ -333,6 +338,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Plugins to use on this dashboard.
      */
     readonly plugins?: IDashboardPluginLink[];
+
+    /**
+     * Disables cross filtering for this dashboard.
+     */
+    readonly disableCrossFiltering?: boolean;
 }
 
 /**

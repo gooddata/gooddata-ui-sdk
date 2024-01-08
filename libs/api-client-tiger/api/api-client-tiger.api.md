@@ -6022,6 +6022,8 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     // (undocumented)
+    disableCrossFiltering?: boolean;
+    // (undocumented)
     filterContextRef?: ObjRef;
     // (undocumented)
     layout?: IDashboardLayout;

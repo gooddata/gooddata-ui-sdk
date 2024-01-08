@@ -305,6 +305,18 @@ export const selectDashboardShareInfo: DashboardSelector<IAccessControlAware> = 
     }),
 );
 
+/**
+ * Selects whether dashboard cross filtering is disabled.
+ *
+ * @public
+ */
+export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.disableCrossFiltering ?? false;
+    },
+);
+
 //
 //
 //
@@ -376,6 +388,17 @@ const selectPersistedDashboardFilterContextDraggableFilters = createSelector(
  */
 const selectPersistedDashboardTitle = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.title;
+});
+
+/**
+ * Selects persisted  - that is the title that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardDisableCrossFiltering = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.disableCrossFiltering;
 });
 
 /**
@@ -512,6 +535,19 @@ export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector
  *
  * @internal
  */
+export const selectIsDisableCrossFilteringChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardDisableCrossFiltering,
+    selectDisableDashboardCrossFiltering,
+    (persistedDisableCrossFiltering = false, currentDisableCrossFiltering) => {
+        return persistedDisableCrossFiltering !== currentDisableCrossFiltering;
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the title compared to the persisted version (if any)
+ *
+ * @internal
+ */
 export const selectIsTitleChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardTitle,
     selectDashboardTitle,
@@ -545,12 +581,27 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsTitleChanged,
     selectIsLayoutChanged,
     selectIsDateFilterConfigChanged,
-    (isNew, layout, isFiltersChanged, isTitleChanged, isLayoutChanged, isDateFilterConfigChanged) => {
+    selectIsDisableCrossFilteringChanged,
+    (
+        isNew,
+        layout,
+        isFiltersChanged,
+        isTitleChanged,
+        isLayoutChanged,
+        isDateFilterConfigChanged,
+        isDisableCrossFilteringChanged,
+    ) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
         }
 
-        return [isFiltersChanged, isTitleChanged, isLayoutChanged, isDateFilterConfigChanged].some(Boolean);
+        return [
+            isFiltersChanged,
+            isTitleChanged,
+            isLayoutChanged,
+            isDateFilterConfigChanged,
+            isDisableCrossFilteringChanged,
+        ].some(Boolean);
     },
 );
 

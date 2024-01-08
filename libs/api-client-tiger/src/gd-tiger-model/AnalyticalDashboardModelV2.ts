@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     ObjRef,
@@ -27,6 +27,7 @@ export interface IAnalyticalDashboard {
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     plugins?: IDashboardPluginLink[];
+    disableCrossFiltering?: boolean;
 }
 
 /**

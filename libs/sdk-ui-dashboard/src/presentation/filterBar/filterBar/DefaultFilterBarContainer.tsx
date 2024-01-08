@@ -1,10 +1,16 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useRef } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
 
 import { IntlWrapper } from "../../localization/index.js";
-import { selectLocale, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectEnableKDCrossFiltering,
+    selectIsInEditMode,
+    selectLocale,
+    selectSupportsCrossFiltering,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 import { BulletsBar } from "../../dragAndDrop/index.js";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -12,6 +18,17 @@ import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js"
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
 import { defaultImport } from "default-import";
+import { createSelector } from "@reduxjs/toolkit";
+import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
+
+const selectShowFiltersConfigurationPanel = createSelector(
+    selectIsInEditMode,
+    selectEnableKDCrossFiltering,
+    selectSupportsCrossFiltering,
+    (isEdit, enableCrossFiltering, supportsCrossFiltering) => {
+        return isEdit && enableCrossFiltering && supportsCrossFiltering;
+    },
+);
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -28,6 +45,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
         setFilterBarExpanded,
     );
 
+    const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
+
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
             <div
@@ -39,6 +58,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
             >
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
+                {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
             </div>
             <ShowAllFiltersButton
                 isFilterBarExpanded={isFilterBarExpanded}
