@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
@@ -17,10 +17,7 @@ import {
 } from "../../store/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { IDashboardFilter } from "../../../types.js";
-import {
-    dashboardAttributeFilterToAttributeFilter,
-    dashboardDateFilterToDateFilterByWidget,
-} from "../../../converters/index.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../converters/index.js";
 import {
     areObjRefsEqual,
     IDashboardAttributeFilter,
@@ -32,8 +29,8 @@ import {
     IInsightWidget,
     IFilter,
     IAttributeFilter,
-    newAllTimeFilter,
-    IDateFilter,
+    IDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
@@ -64,11 +61,15 @@ export function* drillToDashboardHandler(
     invariant(insight);
 
     const shouldUseDateFilter = !!widget.dateDataSet && !isDateFilterDisabled(insight);
-    const dateFilter = shouldUseDateFilter ? yield select(selectDrillingDateFilter, widget) : undefined;
+    // widget's dateDataSet is not needed in common date filter because target dashboard widget's will use their own dateDataSet
+    const commonDateFilter: ReturnType<typeof selectDrillingDateFilter> = shouldUseDateFilter
+        ? yield select(selectDrillingDateFilter)
+        : undefined;
 
     // get proper attr filters
     const isDrillingToSelf = areObjRefsEqual(ctx.dashboardRef, cmd.payload.drillDefinition.target);
 
+    // TODO INE: place where to add other date filters
     const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
           yield select(selectAllAttributeFilters)
@@ -85,7 +86,7 @@ export function* drillToDashboardHandler(
     );
 
     // concat everything, order is important – drill filters must go first
-    const resultingFilters = compact([dateFilter, ...drillIntersectionFilters, ...dashboardFilters]);
+    const resultingFilters = compact([commonDateFilter, ...drillIntersectionFilters, ...dashboardFilters]);
 
     // put end event
     return drillToDashboardResolved(
@@ -97,12 +98,11 @@ export function* drillToDashboardHandler(
     );
 }
 
-function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget): IDateFilter {
+// result needs to be IDashboardDateFilter to allow optional dateDataSet
+function selectDrillingDateFilter(state: DashboardState): IDashboardDateFilter {
     const globalDateFilter = selectFilterContextDateFilter(state);
 
-    return globalDateFilter
-        ? dashboardDateFilterToDateFilterByWidget(globalDateFilter, widget)
-        : newAllTimeFilter(widget.dateDataSet!);
+    return globalDateFilter ?? newAllTimeDashboardDateFilter();
 }
 
 function selectAllAttributeFilters(state: DashboardState): IDashboardAttributeFilter[] {
