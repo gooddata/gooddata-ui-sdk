@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "attributeFilterVariables";
@@ -400,6 +400,19 @@
 
         .gd-attribute-filter-dropdown-button-subtitle__next::after {
             content: none;
+        }
+    }
+
+    .gd-attribute-filter-dropdown-button__next.gd-virtual-attribute-filter-dropdown-button {
+        background: variables.$gd-palette-primary-dimmed;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            background: variables.$gd-palette-primary-dimmed;
         }
     }
 }

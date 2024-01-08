@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -41,6 +41,7 @@ import {
     selectEnableKDDependentFilters,
     useDashboardUserInteraction,
     selectIsAttributeFilterDependentByLocalIdentifier,
+    selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
@@ -73,6 +74,9 @@ export const DefaultDashboardAttributeFilter = (
     const userInteraction = useDashboardUserInteraction();
     const isAttributeFilterDependent = useDashboardSelector(
         selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+    );
+    const isVritualAttributeFilter = useDashboardSelector(
+        selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );
 
     const filterRef = useMemo(() => {
@@ -185,6 +189,9 @@ export const DefaultDashboardAttributeFilter = (
                     isDraggable={isDraggable}
                     TooltipContentComponent={CustomTooltipComponent}
                     titleExtension={titleExtension}
+                    className={
+                        isVritualAttributeFilter ? "gd-virtual-attribute-filter-dropdown-button" : undefined
+                    }
                 />
             );
         };
@@ -197,6 +204,7 @@ export const DefaultDashboardAttributeFilter = (
         capabilities.supportsKeepingDependentFiltersSelection,
         isAttributeFilterDependent,
         isDraggable,
+        isVritualAttributeFilter,
     ]);
 
     const CustomDropdownActions = useMemo(() => {

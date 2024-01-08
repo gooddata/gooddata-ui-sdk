@@ -6809,6 +6809,9 @@ export const selectIsExport: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 
+// @beta (undocumented)
+export const selectIsFilterFromCrossFilteringByLocalIdentifier: (localIdentifier: string) => DashboardSelector<boolean>;
+
 // @public
 export const selectIsInEditMode: DashboardSelector<boolean>;
 

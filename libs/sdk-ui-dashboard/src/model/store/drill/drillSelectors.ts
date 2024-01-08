@@ -53,6 +53,17 @@ export const selectCrossFilteringFiltersLocalIdentifiers: DashboardSelector<stri
 /**
  * @beta
  */
+export const selectIsFilterFromCrossFilteringByLocalIdentifier: (
+    localIdentifier: string,
+) => DashboardSelector<boolean> = createMemoizedSelector((localIdentifier: string) =>
+    createSelector(selectCrossFilteringFiltersLocalIdentifiers, (filterLocalIdentifiers) =>
+        filterLocalIdentifiers.some((localId) => localId === localIdentifier),
+    ),
+);
+
+/**
+ * @beta
+ */
 export const selectCrossFilteringFiltersLocalIdentifiersByWidgetRef: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<string[] | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
