@@ -2108,6 +2108,11 @@
         "comment": "The unrelated items button",
         "limit": 0
     },
+    "gs.date.date-dataset.duplicityWarning": {
+        "value": "Another filter is using the same date dataset. Disable this filter or set a different date.",
+        "comment": "",
+        "limit": 0
+    },
     "layout.widget.width.min": {
         "value": "Widget is at the minimal width",
         "comment": "Shown as red text inside of widget if resized under min limit.",

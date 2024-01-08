@@ -6660,6 +6660,9 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined>;
 
 // @public
+export const selectFilterContextDateFilterByDataSet: (dataSet: ObjRef) => (state: DashboardState) => IDashboardDateFilter | undefined;
+
+// @public
 export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefinition>;
 
 // @public
