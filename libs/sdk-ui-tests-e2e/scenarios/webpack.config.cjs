@@ -15,6 +15,7 @@ process.env.NODE_OPTIONS = "--max-old-space-size=4096";
 
 // we are providing tiger token ourselves, clear it so that it's not
 // baked inside the testing app image
+// result is that scenarios will not work on localhost without cypress
 process.env.TIGER_API_TOKEN = "";
 
 module.exports = async (env, argv) => {
