@@ -27,7 +27,6 @@
     ],
     "scripts": {
         "clean": "rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
-        "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "vitest watch",
