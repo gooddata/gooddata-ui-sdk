@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import React, { useMemo } from "react";
 import stringify from "json-stable-stringify";
@@ -155,7 +155,9 @@ export const createDrillSelectItems = (
         if (isCrossFiltering(drillDefinition)) {
             const title = compact(
                 drillEvent.drillContext.intersection?.map((item) =>
-                    isAttributeDescriptor(item.header) ? item.header.attributeHeader.name : undefined,
+                    isAttributeDescriptor(item.header) && !item.header.attributeHeader.granularity
+                        ? item.header.attributeHeader.name
+                        : undefined,
                 ),
             ).join(", ");
 
