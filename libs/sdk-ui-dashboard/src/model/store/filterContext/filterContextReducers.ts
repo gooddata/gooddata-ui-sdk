@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
@@ -194,7 +194,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 type,
                 from,
                 to,
-                dataSet,
+                ...(dataSet ? { dataSet } : {}),
             },
         });
     }
