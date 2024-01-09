@@ -458,6 +458,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    className?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
     // @alpha

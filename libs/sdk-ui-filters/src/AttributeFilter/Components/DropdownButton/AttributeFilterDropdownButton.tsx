@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
@@ -132,6 +132,13 @@ export interface IAttributeFilterDropdownButtonProps {
     onClick?: () => void;
 
     isError?: boolean;
+
+    /**
+     * Classnames to add to the dropdown button component.
+     *
+     * @beta
+     */
+    className?: string;
 }
 
 /**
@@ -164,6 +171,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         TooltipContentComponent,
         titleExtension,
         onClick,
+        className,
     } = props;
 
     const intl = useIntl();
@@ -206,6 +214,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     "gd-is-draggable": isDraggable,
                     disabled: disabled,
                 },
+                className,
             )}
             onClick={onClick}
         >
