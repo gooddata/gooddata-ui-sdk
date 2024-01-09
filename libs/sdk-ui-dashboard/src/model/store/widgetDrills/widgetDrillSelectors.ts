@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -63,6 +63,7 @@ import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insight
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
+    selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
     selectSupportsCrossFiltering,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
@@ -131,6 +132,7 @@ function getDrillDownDefinitionsWithPredicates(
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
     allCatalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     ignoredDrillDownHierarchies: IDrillDownReference[],
+    supportsAttributeHierarchies?: boolean,
 ): IImplicitDrillWithPredicates[] {
     // generate targets on the fly if ignored hierarchies are present
     // this allows to have `selectAttributesWithHierarchyDescendants` be universal and
@@ -151,7 +153,14 @@ function getDrillDownDefinitionsWithPredicates(
                     const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
                         existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
                     );
-                    return ignoredIndex < 0;
+
+                    if (supportsAttributeHierarchies) {
+                        const attribueHierarchyExist = allCatalogAttributesMap.get(attrRef);
+
+                        return ignoredIndex < 0 && attribueHierarchyExist;
+                    } else {
+                        return ignoredIndex < 0;
+                    }
                 });
 
                 const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
@@ -307,6 +316,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectInsightByWidgetRef(ref),
         selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
         selectAllCatalogAttributeHierarchies,
+        selectBackendCapabilities,
         (
             availableDrillTargets,
             attributesWithHierarchyDescendants,
@@ -315,6 +325,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
             widgetInsight,
             ignoredHierarchies,
             allCatalogAttributeHierarchies,
+            backendCapabilities,
         ) => {
             const isWidgetEnableDrillDown = !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
             if (isDrillDownEnabled && isWidgetEnableDrillDown) {
@@ -327,6 +338,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
                     allCatalogAttributesMap,
                     allCatalogAttributeHierarchies,
                     ignoredHierarchies,
+                    backendCapabilities.supportsAttributeHierarchies,
                 );
             }
 
@@ -659,12 +671,14 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectAllCatalogAttributesMap,
             selectIsDrillDownEnabled,
             selectAllCatalogAttributeHierarchies,
+            selectBackendCapabilities,
             (
                 attributesWithLink,
                 attributesWithHierarchyDescendants,
                 allCatalogAttributesMap,
                 isDrillDownEnabled,
                 allCatalogHierarchies,
+                backendCapabilities,
             ) => {
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = isDrillDownEnabled
@@ -674,6 +688,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                           allCatalogAttributesMap,
                           allCatalogHierarchies,
                           ignoredDrillDownHierarchies,
+                          backendCapabilities.supportsAttributeHierarchies,
                       )
                     : [];
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(
