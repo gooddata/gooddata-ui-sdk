@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 /**
  * This is list of feature flags managed on Panther by FeatureHub
@@ -126,7 +126,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
-    enableKDDependentFilters: false,
+    enableKDDependentFilters: true,
     enableKDSavedFilters: false,
     enableClickHouseDataSource: false,
     enableCsvAnalytics: false,
