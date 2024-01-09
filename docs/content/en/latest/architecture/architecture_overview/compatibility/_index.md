@@ -65,6 +65,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <th class="tg-0lax2" colspan="15">GoodData.UI</th>
   </tr>
   <tr style="background-color:#fff">
+    <th class="tg-kftd">9.5.0</th>
     <th class="tg-kftd">9.4.0</th>
     <th class="tg-kftd">9.3.0</th>
     <th class="tg-kftd">9.2.0</th>
@@ -86,7 +87,28 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
 <tbody>
   <tr>
     <td class="tg-cly1" rowspan="17" >GoodData.CN</td>
+    <td class="tg-kftd" style="background-color:#fff">3.2</td>
+    <td class="tg-0lax">✓</td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
+  </tr>
+  <tr>
     <td class="tg-kftd" style="background-color:#fff">3.1</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -106,6 +128,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">3.0</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
@@ -129,6 +152,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -148,6 +172,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -163,6 +188,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">2.3</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -188,6 +214,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -201,6 +228,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">2.1</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -227,6 +255,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -239,6 +268,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.7</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -267,6 +297,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
@@ -277,6 +308,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.5</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -307,6 +339,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -315,6 +348,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.3</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
@@ -345,6 +379,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
@@ -364,6 +399,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
     <td class="tg-0lax">✓</td>
@@ -372,6 +408,7 @@ The following table shows compatibility between GoodData.UI and GoodData.CN
   </tr>
   <tr>
     <td class="tg-kftd" style="background-color:#fff">1.0</td>
+    <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
     <td class="tg-0lax"></td>
