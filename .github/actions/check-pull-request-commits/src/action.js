@@ -38,19 +38,19 @@ Promise.all([
         core.info(formattedReport);
 
         const allCommitsAreValid = results.every((report) => report.valid);
-        const invalidCommits = results.reduce((result, report) => {
-            if (!report.valid) {
-                result.push(report);
-            }
-            return result;
-        });
+        const invalidCommits = results.filter((report) => !report.valid);
         const allCommitsHaveTicket = commits.every((commit) => {
             return FOOTER_REGEX.test(commit);
+        });
+        const commitsWithoutTicket = commits.filter((commit) => {
+            return !FOOTER_REGEX.test(commit);
         });
 
         if (allCommitsAreValid && allCommitsHaveTicket) {
             core.info("✅ Every commit message is formatted according to the contribution guide");
-        } else {
+        } else if (!allCommitsHaveTicket) {
+            core.setFailed(`⚠️ Not every commit message has ticket: ${JSON.stringify(commitsWithoutTicket)}`);
+        } else if (!allCommitsAreValid) {
             core.setFailed(
                 `⚠️ Not every commit message is formatted according to the contribution guide: ${JSON.stringify(
                     invalidCommits,
