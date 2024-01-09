@@ -52,6 +52,7 @@
     "create.dashboard": "Créer un tableau de bord",
     "drill_modal_picker.drill-down": "Exploration descendante",
     "drill_modal_picker.drill-into": "Explorer",
+    "drill_modal_picker.cross-filter": "Filtres croisés",
     "drill_modal_picker.more.details": "Plus de détails",
     "drillModal.backToTop": "Haut de page",
     "filters.allTime.previousPeriod": "période préc.",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "Identificateur",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "Perception",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "Identificateurs",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "Tableau de bord",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "Appliquer",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "Annuler",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "Saisissez l'URL et ajoutez des paramètres à partir du panneau de droite.",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "Les utilisateurs du tableau de bord peuvent voir le filtre mais ne peuvent pas le modifier.",
     "filter.configuration.mode.hidden.title": "Masqué",
     "filter.configuration.mode.hidden.tooltip": "Les utilisateurs du tableau de bord ne peuvent pas voir le filtre, mais il est appliqué.",
-    "filter.dependency.icon.tooltip": "Les valeurs disponibles pour <strong>{filterTitle}</strong> sont limitées par la sélection dans un autre filtre."
+    "filter.dependency.icon.tooltip": "Les valeurs disponibles pour <strong>{filterTitle}</strong> sont limitées par la sélection dans un autre filtre.",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "Cette <strong>hiérarchie</strong> est déjà utilisée pour <strong>la même</strong> exploration descendante."
 }

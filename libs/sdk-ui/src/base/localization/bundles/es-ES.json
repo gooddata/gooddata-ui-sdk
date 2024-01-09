@@ -62,6 +62,7 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "La configuración del gráfico geográfico requiere un token de acceso a la API válido.",
     "visualization.tooltip.resetZoom": "Restablecer acercar/alejar",
     "visualization.tooltip.interaction": "Haga clic en el gráfico para explorar",
+    "visualization.tooltip.generic.interaction": "Haga clic para explorar o filtrar",
     "gs.filterLabel.all": "Todo",
     "gs.filterLabel.none": "Ninguno",
     "gs.filter.loading": "Cargando filtro…",

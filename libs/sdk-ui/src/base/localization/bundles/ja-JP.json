@@ -62,6 +62,7 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "ジオチャート 設定には有効な API アクセストークンが必要です。",
     "visualization.tooltip.resetZoom": "ズームをリセット",
     "visualization.tooltip.interaction": "チャートをクリックしてドリル",
+    "visualization.tooltip.generic.interaction": "クリックしてドリルまたはフィルターします",
     "gs.filterLabel.all": "すべて",
     "gs.filterLabel.none": "なし",
     "gs.filter.loading": "フィルターを読み込み中…",

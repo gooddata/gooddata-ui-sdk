@@ -52,6 +52,7 @@
     "create.dashboard": "Dashboard erstellen",
     "drill_modal_picker.drill-down": "Drill-Down",
     "drill_modal_picker.drill-into": "Verfeinern von",
+    "drill_modal_picker.cross-filter": "Kreuzfilter",
     "drill_modal_picker.more.details": "Mehr Infos",
     "drillModal.backToTop": "Nach oben",
     "filters.allTime.previousPeriod": "vorh. Zeitraum",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "Kennung",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "Betrachtung",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "Identifikatoren",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "Dashboard",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "Übernehmen",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "Abbrechen",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "URL eingeben und Parameter aus dem rechten Bereich einfügen.",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "Dashboard-Benutzer können den Filter sehen, ihn aber nicht ändern.",
     "filter.configuration.mode.hidden.title": "Ausgeblendet",
     "filter.configuration.mode.hidden.tooltip": "Dashboard-Benutzer können den Filter nicht sehen, er ist jedoch angewendet.",
-    "filter.dependency.icon.tooltip": "Die verfügbaren Werte für <strong>{filterTitle}</strong> werden durch die Auswahl in einem anderen Filter eingeschränkt."
+    "filter.dependency.icon.tooltip": "Die verfügbaren Werte für <strong>{filterTitle}</strong> werden durch die Auswahl in einem anderen Filter eingeschränkt.",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "Diese <strong>Hierarchie</strong> wird bereits für <strong>denselben</strong> Drilldown verwendet."
 }

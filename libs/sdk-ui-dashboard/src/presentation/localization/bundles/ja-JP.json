@@ -52,6 +52,7 @@
     "create.dashboard": "ダッシュボードを作成",
     "drill_modal_picker.drill-down": "ドリルダウン",
     "drill_modal_picker.drill-into": "ドリル",
+    "drill_modal_picker.cross-filter": "クロスフィルター",
     "drill_modal_picker.more.details": "詳細",
     "drillModal.backToTop": "トップに戻る",
     "filters.allTime.previousPeriod": "前期",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "識別子",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "インサイト",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "識別子",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "ダッシュボード",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "適用",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "キャンセル",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "URL を入力後、右パネルよりパラメーターを追加してください。",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "ダッシュボードユーザーはフィルタが表示されますが、変更することはできません。",
     "filter.configuration.mode.hidden.title": "非表示",
     "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。",
-    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> で使用できる値は、別のフィルタでの選択によって制限されます。"
+    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> で使用できる値は、別のフィルタでの選択によって制限されます。",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "この<strong>階層</strong>は<strong>同じ</strong>ドリルダウンにすでに使用されています。"
 }

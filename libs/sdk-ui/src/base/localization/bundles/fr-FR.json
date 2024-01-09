@@ -62,6 +62,7 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "La configuration de graphique géographique nécessite un jeton d'accès à l'API valide.",
     "visualization.tooltip.resetZoom": "Réinitialiser le zoom",
     "visualization.tooltip.interaction": "Cliquez sur le graphique pour l'explorer",
+    "visualization.tooltip.generic.interaction": "Cliquez pour explorer ou filtrer",
     "gs.filterLabel.all": "Tout",
     "gs.filterLabel.none": "Aucun(e)",
     "gs.filter.loading": "Chargement du filtre en cours …",
