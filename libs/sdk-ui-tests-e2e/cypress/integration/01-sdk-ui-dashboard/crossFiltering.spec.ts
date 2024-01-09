@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -29,7 +29,11 @@ describe("Cross filtering", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
         // New filter added, first widget ignores the new filter, second widget is filtered by the new filter
         filterBar.hasAttributeFiltersWithValue([["Department", "Direct Sales"]]);
-        firstWidget.waitChartLoaded().getChart().hasDataLabelValues(["$3,843,400.54", "$1,290,997.11"]);
+        firstWidget
+            .waitChartLoaded()
+            .getChart()
+            .hasDataLabelValues(["$3,843,400.54", "$1,290,997.11"])
+            .seriesPointHasClass("gd-point-highlighted", 0);
         secondWidget.getTable().waitLoaded().hasCellValue(0, 1, "716,947,106.20");
 
         editMode.edit();
