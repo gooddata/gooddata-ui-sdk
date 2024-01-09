@@ -13,9 +13,49 @@ jobs:
   prepare-branch:
     # have dummy password to prevent accidental run
     if: github.event.inputs.password == 'dummy'
+    runs-on: infra1-small
+    permissions:
+      contents: write
 
-    runs-on: [infra1-small]
     steps:
-      - name: Echo message
-        run: |
-          echo "Code drop placeholder action"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run copy branch action
+        uses: ./.github/actions/branch-cutoff-action
+        with:
+          source-branch: 'm1'
+          target-branch: 'r1'
+
+  prepare-versions-release:
+    needs: prepare-branch
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: 'r1'
+        bump: 'prerelease'
+        prerelease-id: 'beta'
+
+  prepare-versions-master:
+    needs: prepare-branch
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: 'm1'
+        bump: 'preminor'
+        prerelease-id: 'alpha'
+
+  slack-notification:
+    runs-on: infra1-small
+    needs: [prepare-versions-release, prepare-versions-master]
+    steps:
+      - name: Inform to slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+            channel-id: '#pb-test-gh-action'
+            slack-message: "Code drop finished"
+            env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
