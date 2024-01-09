@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
+import { DateAttributeGranularity, idRef, CatalogItemType } from "@gooddata/sdk-model";
 import { InitializeDashboard } from "../../../commands/index.js";
 
 const SupportedCatalogGranularity: DateAttributeGranularity[] = [
@@ -20,10 +20,11 @@ export function loadCatalog(ctx: DashboardContext, cmd: InitializeDashboard): Pr
     const { backend, workspace } = ctx;
     const availability = cmd.payload.config?.objectAvailability;
 
+    const metricTypes: CatalogItemType[] = backend.capabilities.supportsKpiWidget ? ["fact", "measure"] : [];
     const options: IWorkspaceCatalogFactoryOptions = {
         excludeTags: (availability?.excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
         includeTags: (availability?.includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-        types: ["attribute", "fact", "measure", "dateDataset", "attributeHierarchy"],
+        types: ["attribute", ...metricTypes, "dateDataset", "attributeHierarchy"],
         includeDateGranularities: SupportedCatalogGranularity,
         loadGroups: false,
     };
