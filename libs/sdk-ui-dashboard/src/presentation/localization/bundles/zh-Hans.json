@@ -52,6 +52,7 @@
     "create.dashboard": "创建控制面板",
     "drill_modal_picker.drill-down": "深入查看",
     "drill_modal_picker.drill-into": "深入了解",
+    "drill_modal_picker.cross-filter": "交叉筛选",
     "drill_modal_picker.more.details": "更多详情",
     "drillModal.backToTop": "返回顶部",
     "filters.allTime.previousPeriod": "前一时间段",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "标识符",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "洞察",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "标识符",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "控制面板",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "应用",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "取消",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "输入 URL 并从右侧面板添加参数。",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "仪表板用户可以看到筛选条件，但不能更改它。",
     "filter.configuration.mode.hidden.title": "隐藏",
     "filter.configuration.mode.hidden.tooltip": "仪表板用户无法看到筛选条件，但其已获应用。",
-    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong>的可用值受另一个筛选器中的选择限制。"
+    "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong>的可用值受另一个筛选器中的选择限制。",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "此<strong>层次结构</strong>已用于<strong>同一</strong>向下挖掘。"
 }

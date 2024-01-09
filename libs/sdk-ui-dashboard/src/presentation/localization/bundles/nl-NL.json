@@ -52,6 +52,7 @@
     "create.dashboard": "Dashboard maken",
     "drill_modal_picker.drill-down": "Zoomen",
     "drill_modal_picker.drill-into": "Inzoomen op",
+    "drill_modal_picker.cross-filter": "Kruisfilter",
     "drill_modal_picker.more.details": "Meer details",
     "drillModal.backToTop": "Terug naar boven",
     "filters.allTime.previousPeriod": "vorige periode",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "Identificator",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "Inzicht",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "Identifiers",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "Dashboard",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "Toepassen",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "Annuleren",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "Voer de URL in en voeg parameters toe vanuit het rechterpaneel.",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "Dashboard-gebruikers kunnen het filter zien maar niet wijzigen.",
     "filter.configuration.mode.hidden.title": "Verborgen",
     "filter.configuration.mode.hidden.tooltip": "Dashboard-gebruikers kunnen het filter niet zien maar het wordt wel toegepast.",
-    "filter.dependency.icon.tooltip": "Beschikbare waarden voor <strong>{filterTitle}</strong> worden beperkt door selectie in een ander filter."
+    "filter.dependency.icon.tooltip": "Beschikbare waarden voor <strong>{filterTitle}</strong> worden beperkt door selectie in een ander filter.",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "Deze <strong>hiërarchie</strong> wordt al gebruikt voor <strong>dezelfde</strong> zoom."
 }

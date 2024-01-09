@@ -52,6 +52,7 @@
     "create.dashboard": "Criar dashboard",
     "drill_modal_picker.drill-down": "Exploração descendente",
     "drill_modal_picker.drill-into": "Aprofundar",
+    "drill_modal_picker.cross-filter": "Filtragem cruzada",
     "drill_modal_picker.more.details": "Mais informações",
     "drillModal.backToTop": "Regressar ao início",
     "filters.allTime.previousPeriod": "período ant.",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "Identificador",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "Insight",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "Identificadores",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "Dashboard",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "Aplicar",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "Cancelar",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "Introduza o URL e adicione parâmetros no painel da direita.",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "Os utilizadores do dashboard podem ver o filtro mas não o podem alterar.",
     "filter.configuration.mode.hidden.title": "Oculto",
     "filter.configuration.mode.hidden.tooltip": "Os utilizadores do dashboard não podem ver o filtro, mas este é aplicado.",
-    "filter.dependency.icon.tooltip": "Os valores disponíveis para <strong>{filterTitle}</strong> encontram-se limitados pela seleção noutro filtro."
+    "filter.dependency.icon.tooltip": "Os valores disponíveis para <strong>{filterTitle}</strong> encontram-se limitados pela seleção noutro filtro.",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "Esta <strong>hierarquia</strong> já é utilizada para <strong>a mesma</strong> exploração descendente."
 }

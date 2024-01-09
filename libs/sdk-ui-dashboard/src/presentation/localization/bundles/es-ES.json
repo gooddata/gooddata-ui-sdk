@@ -52,6 +52,7 @@
     "create.dashboard": "Crear panel",
     "drill_modal_picker.drill-down": "Exploración vertical",
     "drill_modal_picker.drill-into": "Explorar hasta",
+    "drill_modal_picker.cross-filter": "Filtro cruzado",
     "drill_modal_picker.more.details": "Más detalles",
     "drillModal.backToTop": "Volver al principio",
     "filters.allTime.previousPeriod": "period. prev.",
@@ -350,6 +351,7 @@
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": "Identificador",
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": "Perspectiva",
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": "Identificadores",
+    "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": "Panel",
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": "Aplicar",
     "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": "Cancelar",
     "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": "Introduzca la URL y añada parámetros desde el panel derecho.",
@@ -400,5 +402,6 @@
     "filter.configuration.mode.locked.tooltip": "Los usuarios del panel pueden ver el filtro, pero no cambiarlo.",
     "filter.configuration.mode.hidden.title": "Oculto",
     "filter.configuration.mode.hidden.tooltip": "Los usuarios del panel no pueden ver el filtro, pero se aplica.",
-    "filter.dependency.icon.tooltip": "Los valores disponibles para <strong>{filterTitle}</strong> están limitados por la selección en otro filtro."
+    "filter.dependency.icon.tooltip": "Los valores disponibles para <strong>{filterTitle}</strong> están limitados por la selección en otro filtro.",
+    "configurationPanel.drillConfig.alreadyUsedTooltip": "Esta <strong>jerarquía</strong> ya se usa para <strong>la misma</strong> exploración."
 }
