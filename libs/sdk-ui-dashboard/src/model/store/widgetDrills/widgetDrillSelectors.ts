@@ -68,6 +68,7 @@ import {
     selectSupportsCrossFiltering,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
+import { selectDisableDashboardCrossFiltering } from "../meta/metaSelectors.js";
 
 /**
  * @internal
@@ -354,8 +355,14 @@ const selectCrossFilteringByWidgetRef: (
         selectEnableKDCrossFiltering,
         selectSupportsCrossFiltering,
         selectDrillTargetsByWidgetRef(ref),
-        (isCrossFilteringEnabled, isCrossFilteringSupported, availableDrillTargets) => {
-            if (!isCrossFilteringEnabled || !isCrossFilteringSupported) {
+        selectDisableDashboardCrossFiltering,
+        (
+            isCrossFilteringEnabled,
+            isCrossFilteringSupported,
+            availableDrillTargets,
+            disableCrossFiltering,
+        ) => {
+            if (!isCrossFilteringEnabled || !isCrossFilteringSupported || disableCrossFiltering) {
                 return undefined;
             }
 
@@ -471,6 +478,7 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectEnableKDCrossFiltering,
         selectHideKpiDrillInEmbedded,
         selectIsEmbedded,
+        selectDisableDashboardCrossFiltering,
         (
             drills = [],
             disableDefaultDrills,
@@ -481,6 +489,7 @@ export const selectConfiguredDrillsByWidgetRef: (
             enableKDCrossFiltering,
             hideKpiDrillInEmbedded,
             isEmbedded,
+            disableCrossFiltering,
         ) => {
             if (disableDefaultDrills) {
                 return [];
@@ -505,7 +514,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return !(isEmbedded && hideKpiDrillInEmbedded);
                     }
                     case "crossFiltering": {
-                        return enableKDCrossFiltering;
+                        return enableKDCrossFiltering && !disableCrossFiltering;
                     }
                     default: {
                         const unhandledType: never = drillType;

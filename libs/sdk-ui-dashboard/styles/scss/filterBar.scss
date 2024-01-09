@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
@@ -463,4 +463,28 @@ $attribute-filter-drag-handle-left: 10px;
             fill: kit-variables.$gd-palette-primary-base;
         }
     }
+}
+
+.gd-filters-configuration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    height: 100%;
+    width: 40px;
+    padding-top: 18px;
+}
+
+.gd-filters-configuration-button {
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on
+    .gd-configuration-bubble.gd-filters-configuration-panel
+    .arrow-position {
+    display: none;
 }

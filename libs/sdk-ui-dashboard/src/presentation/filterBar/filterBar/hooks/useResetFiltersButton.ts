@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
 import partition from "lodash/partition.js";
@@ -23,6 +23,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     useDashboardUserInteraction,
+    selectDisableDashboardCrossFiltering,
 } from "../../../../model/index.js";
 
 /**
@@ -38,6 +39,8 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
     const currentFilters = useDashboardSelector(selectFilterContextFilters);
     const enableKDCrossFiltering = useDashboardSelector(selectEnableKDCrossFiltering);
     const supportsCrossFiltering = useDashboardSelector(selectSupportsCrossFiltering);
+    const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering);
+
     const dispatch = useDashboardDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
 
@@ -73,7 +76,7 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
                 ...otherFilters,
             ]),
         );
-        if (enableKDCrossFiltering && supportsCrossFiltering) {
+        if (enableKDCrossFiltering && supportsCrossFiltering && !disableCrossFiltering) {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering());
         }
@@ -87,6 +90,7 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
         supportsCrossFiltering,
         filterContextStateReset,
         newlyAddedFiltersLocalIds,
+        disableCrossFiltering,
     ]);
 
     return [canReset, resetFilters];

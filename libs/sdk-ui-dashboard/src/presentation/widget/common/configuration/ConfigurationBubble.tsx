@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -7,9 +7,11 @@ interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
     children?: React.ReactNode;
+    alignTo?: string;
+    alignPoints?: IAlignPoint[];
 }
 
-const alignPoints: IAlignPoint[] = [
+const defaultAlignPoints: IAlignPoint[] = [
     { align: "tr tl" },
     { align: "br bl" },
     { align: "tl tr" },
@@ -34,7 +36,13 @@ const alignTo = ".s-dash-item.is-selected";
 const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
 
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
-    const { children, classNames, onClose } = props;
+    const {
+        children,
+        classNames,
+        onClose,
+        alignTo = ".s-dash-item.is-selected",
+        alignPoints = defaultAlignPoints,
+    } = props;
 
     return (
         <Bubble

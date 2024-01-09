@@ -106,6 +106,8 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/dragAndDrop",
             "src/presentation/localization",
+            "src/presentation/widget/common/configuration/ConfigurationBubble.tsx",
+            "src/model/store/meta/index.ts",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
             "src/_staging/*",
@@ -138,6 +140,7 @@ options = {
             "src/model/types/layoutTypes.ts",
             "src/types.ts",
             "src/widgets",
+            "src/model/store/meta/index.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
             "src/_staging/*",

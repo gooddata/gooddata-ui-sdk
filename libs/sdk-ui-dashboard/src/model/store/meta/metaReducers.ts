@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
@@ -22,6 +22,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               shareStatus: dashboard.shareStatus,
               isUnderStrictControl: dashboard.isUnderStrictControl,
               isLocked: dashboard.isLocked,
+              disableCrossFiltering: dashboard.disableCrossFiltering,
           }
         : { ...EmptyDashboardDescriptor };
 };
@@ -32,7 +33,14 @@ const setDashboardTitle: MetaReducer<PayloadAction<string>> = (state, action) =>
     state.descriptor.title = action.payload;
 };
 
+const setDisableCrossFiltering: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.disableCrossFiltering = action.payload;
+};
+
 export const metaReducers = {
     setMeta,
     setDashboardTitle,
+    setDisableCrossFiltering,
 };
