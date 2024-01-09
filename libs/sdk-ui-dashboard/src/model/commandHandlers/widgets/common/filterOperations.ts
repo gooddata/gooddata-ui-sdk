@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     areObjRefsEqual,
     ObjRef,
@@ -27,7 +27,7 @@ import {
     WidgetFilterOperation,
 } from "../../../types/widgetTypes.js";
 import { SagaIterator } from "redux-saga";
-import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
+import { call, SagaReturnType, select } from "redux-saga/effects";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
@@ -102,7 +102,7 @@ function* replaceFilterSettings(
     }
 
     if (op.ignoreDateFilters && validators.dateFilterValidator) {
-        const ignoredDateFilters = yield call(
+        const ignoredDateFilters: SagaReturnType<typeof validators.dateFilterValidator> = yield call(
             validators.dateFilterValidator,
             ctx,
             cmd,
@@ -214,9 +214,32 @@ function* replaceAttributeIgnores(
         op.displayFormRefs,
     );
 
-    const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, ignoredFilters);
+    const ignoredDateFilters: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
+        getIgnoredDateFiltersWorWidget,
+        widget,
+    );
+
+    const result: SagaReturnType<typeof changeIgnores> = yield call(
+        changeIgnores,
+        widget,
+        ignoredFilters ? [...ignoredFilters, ...ignoredDateFilters] : ignoredDateFilters,
+    );
 
     return result;
+}
+
+function* getIgnoredDateFiltersWorWidget(widget: IAnalyticalWidget) {
+    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
+        selectFilterContextDateFiltersWithDimension,
+    );
+    return getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
+}
+
+function* getIgnoredAttributeFiltersWorWidget(widget: IAnalyticalWidget) {
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+    return getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
 }
 
 function* ignoreAttributeFilter(
@@ -234,19 +257,25 @@ function* ignoreAttributeFilter(
         op.displayFormRefs,
     );
 
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const alreadyIgnored: SagaReturnType<typeof getIgnoredAttributeFiltersWorWidget> = yield call(
+        getIgnoredAttributeFiltersWorWidget,
+        widget,
     );
-    const alreadyIgnored = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
     const addToIgnore = (ignoredFilters ?? []).filter((candidate) => {
         return !alreadyIgnored.some((ignoredFilter) =>
             areObjRefsEqual(ignoredFilter.attributeFilter.displayForm, candidate.attributeFilter.displayForm),
         );
     });
 
+    const ignoredDateFilters: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
+        getIgnoredDateFiltersWorWidget,
+        widget,
+    );
+
     const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, [
         ...alreadyIgnored,
         ...addToIgnore,
+        ...ignoredDateFilters,
     ]);
 
     return result;
@@ -267,17 +296,25 @@ function* unignoreAttributeFilter(
         op.displayFormRefs,
     );
 
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const alreadyIgnored: SagaReturnType<typeof getIgnoredAttributeFiltersWorWidget> = yield call(
+        getIgnoredAttributeFiltersWorWidget,
+        widget,
     );
-    const alreadyIgnored = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
     const reducedIgnores = alreadyIgnored.filter((candidate) => {
         return !(unignoredFilters ?? []).some((toRemove) =>
             areObjRefsEqual(candidate.attributeFilter.displayForm, toRemove.attributeFilter.displayForm),
         );
     });
 
-    const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, reducedIgnores);
+    const ignoredDateFilters: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
+        getIgnoredDateFiltersWorWidget,
+        widget,
+    );
+
+    const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, [
+        ...reducedIgnores,
+        ...ignoredDateFilters,
+    ]);
 
     return result;
 }
@@ -289,29 +326,45 @@ function* ignoreDateFilter(
     widget: IAnalyticalWidget,
     op: FilterOpIgnoreDateFilter,
 ): SagaIterator<FilterOpResult> {
-    const ignoreFilterDataSets: Array<SagaReturnType<typeof validators.dateDatasetValidator>> = yield all(
-        op.dateDataSetRefs.reduce((acc: CallEffect[], candidateRef: ObjRef) => {
-            acc.push(call(validators.dateDatasetValidator, ctx, cmd, widget, candidateRef));
-            return acc;
-        }, []),
-    );
+    let ignoreFilterDataSetRefs: ObjRef[] = [];
+    if (validators.dateFilterValidator) {
+        const ignoreDateFilters: SagaReturnType<typeof validators.dateFilterValidator> = yield call(
+            validators.dateFilterValidator!,
+            ctx,
+            cmd,
+            widget,
+            op.dateDataSetRefs,
+        );
+        ignoreFilterDataSetRefs = ignoreDateFilters.map((df) => df.dateFilter.dataSet!);
+    } else {
+        ignoreFilterDataSetRefs = op.dateDataSetRefs;
+    }
 
     const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
         selectFilterContextDateFiltersWithDimension,
     );
-    const alreadyIgnored = getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
+    const alreadyIgnored: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
+        getIgnoredDateFiltersWorWidget,
+        widget,
+    );
 
     const addToIgnore = dateFilters.filter((df) => {
         return (
             !alreadyIgnored.some((ignoredFilter) =>
                 areObjRefsEqual(ignoredFilter.dateFilter.dataSet, df.dateFilter.dataSet),
-            ) && ignoreFilterDataSets.some((ds) => areObjRefsEqual(ds.dataSet.ref, df.dateFilter.dataSet))
+            ) && ignoreFilterDataSetRefs.some((ds) => areObjRefsEqual(ds, df.dateFilter.dataSet))
         );
     });
+
+    const ignoredAttributeFilters: SagaReturnType<typeof getIgnoredAttributeFiltersWorWidget> = yield call(
+        getIgnoredAttributeFiltersWorWidget,
+        widget,
+    );
 
     const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, [
         ...alreadyIgnored,
         ...addToIgnore,
+        ...ignoredAttributeFilters,
     ]);
 
     return result;
@@ -324,25 +377,40 @@ function* unignoreDateFilter(
     widget: IAnalyticalWidget,
     op: FilterOpUnignoreDateFilter,
 ): SagaIterator<FilterOpResult> {
-    const unignoreFilterDataSets: Array<SagaReturnType<typeof validators.dateDatasetValidator>> = yield all(
-        op.dateDataSetRefs.reduce((acc: CallEffect[], candidateRef: ObjRef) => {
-            acc.push(call(validators.dateDatasetValidator, ctx, cmd, widget, candidateRef));
-            return acc;
-        }, []),
-    );
+    let unignoreFilterDataSets: ObjRef[] = [];
+    if (validators.dateFilterValidator) {
+        const ignoreDateFilters: SagaReturnType<typeof validators.dateFilterValidator> = yield call(
+            validators.dateFilterValidator!,
+            ctx,
+            cmd,
+            widget,
+            op.dateDataSetRefs,
+        );
+        unignoreFilterDataSets = ignoreDateFilters.map((df) => df.dateFilter.dataSet!);
+    } else {
+        unignoreFilterDataSets = op.dateDataSetRefs;
+    }
 
-    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
-        selectFilterContextDateFiltersWithDimension,
+    const alreadyIgnored: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
+        getIgnoredDateFiltersWorWidget,
+        widget,
     );
-    const alreadyIgnored = getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
 
     const reducedIgnores = alreadyIgnored.filter((candidate) => {
         return !(unignoreFilterDataSets ?? []).some((toRemove) =>
-            areObjRefsEqual(candidate.dateFilter.dataSet, toRemove.dataSet.ref),
+            areObjRefsEqual(candidate.dateFilter.dataSet, toRemove),
         );
     });
 
-    const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, reducedIgnores);
+    const ignoredAttributeFilters: SagaReturnType<typeof getIgnoredAttributeFiltersWorWidget> = yield call(
+        getIgnoredAttributeFiltersWorWidget,
+        widget,
+    );
+
+    const result: SagaReturnType<typeof changeIgnores> = yield call(changeIgnores, widget, [
+        ...reducedIgnores,
+        ...ignoredAttributeFilters,
+    ]);
 
     return result;
 }
@@ -384,7 +452,7 @@ export type DateFilterValidator<T extends IAnalyticalWidget> = (
     cmd: IDashboardCommand,
     widget: T,
     refs: ObjRef[],
-) => SagaIterator<IDashboardDateFilter[] | undefined>;
+) => SagaIterator<IDashboardDateFilter[]>;
 export type FilterValidators<T extends IAnalyticalWidget> = {
     dateDatasetValidator: DateDatasetValidator<T>;
     attributeFilterValidator: AttributeFilterValidator<T>;
