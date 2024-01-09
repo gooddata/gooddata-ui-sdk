@@ -14,10 +14,14 @@ import {
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
+    selectFilterContextDraggableFilters,
 } from "../../store/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { IDashboardFilter } from "../../../types.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../converters/index.js";
+import {
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+} from "../../../converters/index.js";
 import {
     areObjRefsEqual,
     IDashboardAttributeFilter,
@@ -31,11 +35,16 @@ import {
     IAttributeFilter,
     IDashboardDateFilter,
     newAllTimeDashboardDateFilter,
+    FilterContextItem,
+    isDashboardAttributeFilter,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardState } from "../../store/types.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
+import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -69,12 +78,17 @@ export function* drillToDashboardHandler(
     // get proper attr filters
     const isDrillingToSelf = areObjRefsEqual(ctx.dashboardRef, cmd.payload.drillDefinition.target);
 
-    // TODO INE: place where to add other date filters
+    const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
+    const enableMultipleDateFilters = yield select(selectEnableMultipleDateFilters);
+    const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
+
     const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
-          yield select(selectAllAttributeFilters)
+          includeOtherDateFilters
+            ? yield select(selectAllOtherFilters)
+            : yield select(selectAllAttributeFilters)
         : // if drilling to other, resolve widget filter ignores
-          yield call(getWidgetAwareAttributeFilters, ctx, widget);
+          yield call(getWidgetAwareFilters, ctx, widget, includeOtherDateFilters);
 
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
@@ -109,15 +123,29 @@ function selectAllAttributeFilters(state: DashboardState): IDashboardAttributeFi
     return selectFilterContextAttributeFilters(state);
 }
 
-function* getWidgetAwareAttributeFilters(
+function selectAllOtherFilters(state: DashboardState): FilterContextItem[] {
+    return selectFilterContextDraggableFilters(state);
+}
+
+function convertFilterItemsToFilters(
+    filter: IDashboardAttributeFilter | IDashboardDateFilter,
+    widget: IInsightWidget,
+): IAttributeFilter | IDateFilter {
+    return isDashboardAttributeFilter(filter)
+        ? dashboardAttributeFilterToAttributeFilter(filter)
+        : dashboardDateFilterToDateFilterByWidget(filter, widget);
+}
+
+function* getWidgetAwareFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
+    includeOtherDateFilters: boolean,
 ): SagaIterator<IAttributeFilter[]> {
     const filterContextItems: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+        includeOtherDateFilters ? selectFilterContextDraggableFilters : selectFilterContextAttributeFilters,
     );
 
-    const filters = filterContextItems.map(dashboardAttributeFilterToAttributeFilter);
+    const filters = filterContextItems.map((filter) => convertFilterItemsToFilters(filter, widget));
 
     return yield call(getResolvedFiltersForWidget, ctx, widget, filters);
 }
@@ -141,5 +169,8 @@ function getResolvedFiltersForWidget(
     widget: IInsightWidget,
     filters: IDashboardFilter[],
 ): Promise<IFilter[]> {
-    return ctx.backend.workspace(ctx.workspace).dashboards().getResolvedFiltersForWidget(widget, filters);
+    return ctx.backend
+        .workspace(ctx.workspace)
+        .dashboards()
+        .getResolvedFiltersForWidgetWithMultipleDateFilters(widget, [], filters);
 }

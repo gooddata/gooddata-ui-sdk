@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -250,18 +250,18 @@ function* getDateFiltersUpdateActions(
 
         if (dashboardFilter) {
             handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
-        }
-        const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-            ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
-            : {
-                  type: dateFilter.dateFilter.type,
-                  granularity: dateFilter.dateFilter.granularity,
-                  from: dateFilter.dateFilter.from,
-                  to: dateFilter.dateFilter.to,
-                  dataSet: dateFilter.dateFilter.dataSet,
-              };
+            const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
+                ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
+                : {
+                      type: dateFilter.dateFilter.type,
+                      granularity: dateFilter.dateFilter.granularity,
+                      from: dateFilter.dateFilter.from,
+                      to: dateFilter.dateFilter.to,
+                      dataSet: dateFilter.dateFilter.dataSet,
+                  };
 
-        updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
+            updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
+        }
     }
 
     if (resetOthers) {

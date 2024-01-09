@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types.js";
 
 export { selectDashboardLoading, selectIsDashboardLoading } from "./loading/loadingSelectors.js";
@@ -130,6 +130,7 @@ export {
     selectCanAddMoreAttributeFilters,
     selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
+    selectFilterContextDateFilterByDataSet,
 } from "./filterContext/filterContextSelectors.js";
 export {
     // Core drills

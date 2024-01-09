@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     layoutWidgetsWithPaths,
@@ -471,7 +471,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
     ): Promise<IFilter[]> => {
-        if (commonDateFilters.length + otherFilters.filter(isDateFilter).length) {
+        if (commonDateFilters.length > 1 || otherFilters.filter(isDateFilter).length) {
             throw new Error("This backend does not support multiple date filters");
         }
         return resolveWidgetFilters(
