@@ -1,9 +1,10 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, IInsight, IInsightWidget, ISeparators } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
+    IDrillEventIntersectionElement,
     IErrorProps,
     ILoadingProps,
     ILocale,
@@ -200,6 +201,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
         separators?: ISeparators;
         forceDisableDrillOnAxes?: boolean;
         isExportMode?: boolean;
+        selectedPoints?: IDrillEventIntersectionElement[][];
     };
 
     /**

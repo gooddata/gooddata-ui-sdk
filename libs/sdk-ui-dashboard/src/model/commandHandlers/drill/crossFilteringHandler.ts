@@ -108,6 +108,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         drillActions.crossFilterByWidget({
             widgetRef,
             filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
+            selectedPoints: cmd.payload.drillEvent.drillContext.intersection
+                ? [cmd.payload.drillEvent.drillContext.intersection]
+                : undefined,
         }),
     );
     yield all(

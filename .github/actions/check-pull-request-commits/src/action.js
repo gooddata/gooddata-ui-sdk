@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 const core = require("@actions/core");
 const load = require("@commitlint/load").default;
@@ -10,7 +10,7 @@ const prHead = core.getInput("pr_head");
 const prBase = core.getInput("pr_base");
 const configFilePath = core.getInput("lint_config");
 
-const FOOTER_REGEX = /\n((JIRA\:\s[A-Z]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
+const FOOTER_REGEX = /\n((JIRA\:\s[A-Z0-9]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
 
 Promise.all([
     load({}, { file: configFilePath, cwd: process.cwd() }),
@@ -39,7 +39,7 @@ Promise.all([
 
         const allCommitsAreValid = results.every((report) => report.valid);
         const invalidCommits = results.reduce((result, report) => {
-            if(!report.valid) {
+            if (!report.valid) {
                 result.push(report);
             }
             return result;
@@ -51,7 +51,11 @@ Promise.all([
         if (allCommitsAreValid && allCommitsHaveTicket) {
             core.info("✅ Every commit message is formatted according to the contribution guide");
         } else {
-            core.setFailed(`⚠️ Not every commit message is formatted according to the contribution guide: ${JSON.stringify(invalidCommits)}`);
+            core.setFailed(
+                `⚠️ Not every commit message is formatted according to the contribution guide: ${JSON.stringify(
+                    invalidCommits,
+                )}`,
+            );
         }
     });
 });

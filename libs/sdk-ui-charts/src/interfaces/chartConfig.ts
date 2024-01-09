@@ -1,6 +1,6 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IColorPalette, Identifier, ISeparators } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 import { IComparison } from "./comparison.js";
 
@@ -295,6 +295,12 @@ export interface IChartConfig {
      * @internal
      */
     useGenericInteractionTooltip?: boolean;
+
+    /**
+     * Selected points to be highlighted defined by drill event intersections.
+     * @internal
+     */
+    selectedPoints?: IDrillEventIntersectionElement[][];
 }
 
 /**
