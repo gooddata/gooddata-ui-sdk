@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export const YAXIS_LABELS_SELECTOR =
     ".highcharts-yaxis-labels text[text-anchor = 'middle'], .highcharts-yaxis-labels text[text-anchor = 'end']";
 export const XAXIS_LABELS_SELECTOR =
@@ -47,6 +47,13 @@ export class Chart {
             .eq(pointIndex)
             .click({ force: true });
         return this;
+    }
+
+    seriesPointHasClass(className: string, seriesIndex: number, pointIndex = 0) {
+        this.getHighchartsContainer()
+            .find(`.highcharts-series.highcharts-series-${seriesIndex} .highcharts-point`)
+            .eq(pointIndex)
+            .should("have.class", className);
     }
 
     hasCountOfDrillPoints(count: number) {
