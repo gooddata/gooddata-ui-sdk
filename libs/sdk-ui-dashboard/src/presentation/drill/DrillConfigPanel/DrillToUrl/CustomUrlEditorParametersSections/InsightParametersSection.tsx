@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
@@ -24,7 +24,7 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
         <>
             {(attributeDisplayForms && attributeDisplayForms.length > 0) ||
             loadingAttributeDisplayForms ||
-            insightFilters ? (
+            (insightFilters && insightFilters.length > 0) ? (
                 <>
                     <DropdownSectionHeader>
                         <FormattedMessage id="configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel" />

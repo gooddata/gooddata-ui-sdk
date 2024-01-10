@@ -77,17 +77,17 @@
         "limit": 0
     },
     "messages.dashboard.invalidCustomUrlDrills.title": {
-        "value": "<b>Some drill into URL interactions were disabled</b>",
+        "value": "<b>Some of the drill-into-URL interactions are not working</b>",
         "comment": "Title of the warning message shown while editing KPI dashboard with some invalid drills.",
         "limit": 0
     },
     "messages.dashboard.invalidCustomUrlDrills.body.modern|insight": {
-        "value": "Some of the drill into URL interactions on the following widgets were disabled because of changes in insight attributes: <b>{listOfWidgetTitles}</b>",
+        "value": "Invalid URL parameters in your custom URLs are causing drill-into-URL interactions to fail on these widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
         "limit": 0
     },
     "messages.dashboard.invalidCustomUrlDrills.body.modern|report": {
-        "value": "Some of the drill into URL interactions on the following widgets were disabled because of changes in report attributes: <b>{listOfWidgetTitles}</b>",
+        "value": "Invalid URL parameters in your custom URLs are causing drill-into-URL interactions to fail on these widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
         "translate": false,
         "limit": 0

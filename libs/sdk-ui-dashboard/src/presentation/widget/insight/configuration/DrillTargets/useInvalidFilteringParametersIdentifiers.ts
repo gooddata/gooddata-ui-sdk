@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { IAttributeFilter, areObjRefsEqual, filterObjRef, idRef } from "@gooddata/sdk-model";
 import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
@@ -10,7 +10,6 @@ import {
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../../_staging/drills/drillingUtils.js";
 
-//
 export function useInvalidFilteringParametersIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,
     insightFilters: IAttributeFilter[] | undefined,
@@ -32,7 +31,7 @@ export function useInvalidFilteringParametersIdentifiers(
                     // parameter is invalid if either it points to display form that no longer exists
                     const relevantDf = displayForms.get(idRef(identifier, "displayForm"));
                     if (!relevantDf) {
-                        return false;
+                        return true;
                     }
 
                     return !dashboardFilters?.some((filter) => {
@@ -46,7 +45,7 @@ export function useInvalidFilteringParametersIdentifiers(
                     // parameter is invalid if either it points to display form that no longer exists
                     const relevantDf = displayForms.get(idRef(identifier, "displayForm"));
                     if (!relevantDf) {
-                        return false;
+                        return true;
                     }
 
                     return !insightFilters?.some((filter) => {

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeFilter,
@@ -101,8 +101,8 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
             const hasInvalidDashboardFilterParam = dashboardFilterIds.some((identifier) => {
                 const displayForm = displayForms.get(identifier);
                 if (!displayForm) {
-                    // the drill as a whole is invalid, no reason to validate the parameters
-                    return false;
+                    // target display form no longer exists, no reason to validate the parameters
+                    return true;
                 }
 
                 return !sanitizedDashboardAttributeFilters.some((filter) =>
@@ -114,8 +114,8 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
             const hasInvalidInsightFilterParam = insightFilterIds.some((identifier) => {
                 const displayForm = displayForms.get(identifier);
                 if (!displayForm) {
-                    // the drill as a whole is invalid, no reason to validate the parameters
-                    return false;
+                    // target display form no longer exists, no reason to validate the parameters
+                    return true;
                 }
 
                 return !sanitizedWidgetAttributeFilters.some((filter) =>
