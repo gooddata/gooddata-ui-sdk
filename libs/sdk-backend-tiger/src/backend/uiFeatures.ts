@@ -127,7 +127,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
     enableKDDependentFilters: false,
-    enableKDSavedFilters: false,
+    enableKDSavedFilters: true,
     enableClickHouseDataSource: false,
     enableCsvAnalytics: false,
     enableKDCrossFiltering: true,
