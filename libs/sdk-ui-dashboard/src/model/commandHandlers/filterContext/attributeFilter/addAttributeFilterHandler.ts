@@ -1,8 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
-import { IDashboardAttributeFilter, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, ObjRef, objRefToString, isInsightWidget } from "@gooddata/sdk-model";
 
 import { AddAttributeFilter } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -28,6 +28,8 @@ import isEmpty from "lodash/isEmpty.js";
 import { batchActions } from "redux-batched-actions";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
+import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
+import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
@@ -149,6 +151,8 @@ export function* addAttributeFilterHandler(
     );
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
+    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
+    yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
 }
 
 export function* getConnectingAttributes(

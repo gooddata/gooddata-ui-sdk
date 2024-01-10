@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useState, useMemo, useCallback } from "react";
 import { IntlShape, FormattedMessage, useIntl } from "react-intl";
 import {
@@ -388,7 +388,10 @@ function useSanitizedInsightFilters(widgetRef: ObjRef) {
         return widgetFiltersResult.status === "success"
             ? // Date filters are currently not supported, so filter them out
               uniqBy(
-                  widgetFiltersResult.result?.filter(isAttributeFilter).map(sanitizeAttributeFilter),
+                  widgetFiltersResult.result
+                      ?.filter(isAttributeFilter)
+                      .map(sanitizeAttributeFilter)
+                      .filter(isAttributeFilter), // filter out undefined values (eg. filters with removed display forms)
                   (f) => serializeObjRef(filterObjRef(f)),
               )
             : undefined;
@@ -401,7 +404,10 @@ function useSanitizedDashboardFilters() {
     const sanitizeAttributeFilter = useSanitizeAttributeFilter();
 
     return useMemo(() => {
-        return dashboardFilters?.map(dashboardAttributeFilterToAttributeFilter).map(sanitizeAttributeFilter);
+        return dashboardFilters
+            ?.map(dashboardAttributeFilterToAttributeFilter)
+            .map(sanitizeAttributeFilter)
+            .filter(isAttributeFilter); // filter out undefined values (eg. filters with removed display forms)
     }, [dashboardFilters, sanitizeAttributeFilter]);
 }
 
@@ -409,7 +415,7 @@ function useSanitizeAttributeFilter() {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
     return useCallback(
-        (filter: IAttributeFilter) => {
+        (filter: IAttributeFilter): IAttributeFilter | undefined => {
             const displayForm = catalogDisplayFormsMap.get(filterObjRef(filter));
             if (displayForm) {
                 if (isNegativeAttributeFilter(filter)) {
@@ -430,7 +436,9 @@ function useSanitizeAttributeFilter() {
                     };
                 }
             }
-            return filter;
+
+            // display form no longer exists -> filter is invalid
+            return undefined;
         },
         [catalogDisplayFormsMap],
     );

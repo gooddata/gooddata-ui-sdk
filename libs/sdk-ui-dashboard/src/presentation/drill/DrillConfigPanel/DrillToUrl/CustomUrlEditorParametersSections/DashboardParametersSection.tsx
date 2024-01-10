@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
@@ -17,7 +17,7 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
 }) => {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    return (
+    return dashboardFilters && dashboardFilters.length > 0 ? (
         <>
             <DropdownSectionHeader>
                 <FormattedMessage id="configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel" />
@@ -39,5 +39,5 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                 ) : null;
             })}
         </>
-    );
+    ) : null;
 };
