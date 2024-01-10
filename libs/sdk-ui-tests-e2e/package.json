@@ -132,7 +132,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "compression-webpack-plugin": "^7.1.0",
         "css-loader": "^6.7.1",
-        "cypress": "^12.10.0",
+        "cypress": "12.10.0",
         "cypress-real-events": "^1.7.6",
         "dependency-cruiser": "^13.0.3",
         "dotenv-webpack": "^7.0.2",

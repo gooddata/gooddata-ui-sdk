@@ -37,5 +37,8 @@ if ! health_check $BOILER_APP_HOST; then
     exit 1
 fi
 
+#start cypress against the running boilder app
+export CYPRESS_HOST=$BOILER_APP_HOST
+
 npm run run-integrated
 npm run delete-ref-workspace

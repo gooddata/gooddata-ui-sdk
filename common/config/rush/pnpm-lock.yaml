@@ -3295,7 +3295,7 @@ importers:
       compression-webpack-plugin: ^7.1.0
       core-js: ^3.34.0
       css-loader: ^6.7.1
-      cypress: ^12.10.0
+      cypress: 12.10.0
       cypress-multi-reporters: ~1.6.3
       cypress-real-events: ^1.7.6
       dependency-cruiser: ^13.0.3
@@ -3384,7 +3384,7 @@ importers:
       '@babel/preset-react': 7.23.3_@babel+core@7.23.6
       '@babel/preset-typescript': 7.23.3_@babel+core@7.23.6
       '@babel/runtime': 7.23.6
-      '@cypress/grep': 3.1.5_qwcuejocdwxtuaqlxllgbzmof4
+      '@cypress/grep': 3.1.5_5vqgwwnytsnutfppfxjf4e7yze
       '@microsoft/api-documenter': 7.23.14_@types+node@18.19.3
       '@microsoft/api-extractor': 7.38.5_@types+node@18.19.3
       '@types/lodash': 4.14.202
@@ -3402,8 +3402,8 @@ importers:
       clean-webpack-plugin: 4.0.0_webpack@5.89.0
       compression-webpack-plugin: 7.1.2_webpack@5.89.0
       css-loader: 6.8.1_webpack@5.89.0
-      cypress: 12.17.4
-      cypress-real-events: 1.11.0_cypress@12.17.4
+      cypress: 12.10.0
+      cypress-real-events: 1.11.0_cypress@12.10.0
       dependency-cruiser: 13.1.5
       dotenv-webpack: 7.1.1_webpack@5.89.0
       eslint: 8.55.0
@@ -6342,12 +6342,12 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@cypress/grep/3.1.5_qwcuejocdwxtuaqlxllgbzmof4:
+  /@cypress/grep/3.1.5_5vqgwwnytsnutfppfxjf4e7yze:
     resolution: {integrity: sha512-dbLKP9wGLId+TwTRFDcWVcr9AvJ06W3K7dVeJzLONiPbI5/XJh2mDZvnoyJlAz+VZxdwe0+nejk/CPmuphuzkQ==}
     peerDependencies:
       cypress: '>=10'
     dependencies:
-      cypress: 12.17.4
+      cypress: 12.10.0
       debug: 4.3.4
       find-test-names: 1.28.14_@babel+core@7.23.6
       globby: 11.1.0
@@ -10215,8 +10215,13 @@ packages:
     dependencies:
       '@types/node': 18.19.3
 
+  /@types/node/14.18.63:
+    resolution: {integrity: sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==}
+    dev: true
+
   /@types/node/16.18.68:
     resolution: {integrity: sha512-sG3hPIQwJLoewrN7cr0dwEy+yF5nD4D/4FxtQpFciRD/xwUzgD+G05uxZHv5mhfXo4F9Jkp13jjn0CC2q325sg==}
+    dev: false
 
   /@types/node/17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
@@ -13185,23 +13190,23 @@ packages:
       - supports-color
     dev: false
 
-  /cypress-real-events/1.11.0_cypress@12.17.4:
+  /cypress-real-events/1.11.0_cypress@12.10.0:
     resolution: {integrity: sha512-4LXVRsyq+xBh5TmlEyO1ojtBXtN7xw720Pwb9rEE9rkJuXmeH3VyoR1GGayMGr+Itqf11eEjfDewtDmcx6PWPQ==}
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
     dependencies:
-      cypress: 12.17.4
+      cypress: 12.10.0
     dev: true
 
-  /cypress/12.17.4:
-    resolution: {integrity: sha512-gAN8Pmns9MA5eCDFSDJXWKUpaL3IDd89N9TtIupjYnzLSmlpVr+ZR+vb4U/qaMp+lB6tBvAmt7504c3Z4RU5KQ==}
+  /cypress/12.10.0:
+    resolution: {integrity: sha512-Y0wPc221xKKW1/4iAFCphkrG2jNR4MjOne3iGn4mcuCaE7Y5EtXL83N8BzRsAht7GYfWVjJ/UeTqEdDKHz39HQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@cypress/request': 2.88.12
       '@cypress/xvfb': 1.2.4
-      '@types/node': 16.18.68
+      '@types/node': 14.18.63
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.8
       arch: 2.2.0
@@ -13234,7 +13239,6 @@ packages:
       minimist: 1.2.8
       ospath: 1.2.2
       pretty-bytes: 5.6.0
-      process: 0.11.10
       proxy-from-env: 1.0.0
       request-progress: 3.0.0
       semver: 7.5.4
@@ -16641,7 +16645,7 @@ packages:
       mute-stream: 0.0.8
       ora: 5.4.1
       run-async: 2.4.1
-      rxjs: 7.8.0
+      rxjs: 7.8.1
       string-width: 4.2.3
       strip-ansi: 6.0.1
       through: 2.3.8
