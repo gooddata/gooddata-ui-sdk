@@ -5,24 +5,31 @@ import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/Attribu
 import { Parameter } from "./Parameter.js";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
-import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    selectAllCatalogAttributesMap,
+    selectFilterContextAttributeFilterByDisplayForm,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 
 interface XProps {
     item: IAttributeDisplayFormMetadataObject;
     onAdd: (placeholder: string) => void;
     iconClassName?: string;
+    isFilter?: boolean;
 }
 
-export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName }) => {
+export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName, isFilter }) => {
     const x = useDashboardSelector(selectAllCatalogAttributesMap);
     const y = x.get(item.attribute);
     const intl = useIntl();
     const projectId = useWorkspaceStrict();
+    const dashboardFilter = useDashboardSelector(selectFilterContextAttributeFilterByDisplayForm(item.ref));
+    const defaultTitle = y?.attribute.title || "";
 
     return (
         <Parameter
             key={item.id}
-            name={y?.attribute.title || ""}
+            name={isFilter ? dashboardFilter?.attributeFilter?.title ?? defaultTitle : defaultTitle}
             description={item.title}
             detailContent={
                 <AttributeDisplayFormParameterDetail
