@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { getSourceDescriptor } from "../base/sourceDiscovery.js";
 import { getTargetDescriptor } from "../base/targetDiscovery.js";
 import { TerminalUi } from "./ui/ui.js";
@@ -12,7 +12,9 @@ import { NoopPublisher } from "./pipeline/noopPublisher.js";
 
 export async function devConsole(targetDir: string): Promise<void> {
     const sourceDescriptor = await getSourceDescriptor(
-        (pkg) => !pkg.projectFolder.startsWith("examples") && !pkg.projectFolder.startsWith("skel"),
+        // omit packages that are not published to npm from the dev builds
+        // (e.g examples, tests, web components. etc)
+        (pkg) => !pkg.shouldPublish === false,
     );
 
     if (!sourceDescriptor) {

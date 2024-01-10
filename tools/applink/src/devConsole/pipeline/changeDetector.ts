@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
 import chokidar from "chokidar";
 import path from "path";
@@ -198,6 +198,15 @@ export class ChangeDetector implements IEventListener {
                 changes[packageName] = change;
             } else {
                 existingRequest.files!.push(...change.files!);
+            }
+        }
+
+        for (const changeId in changes) {
+            const change = changes[changeId];
+            // Omit __version files generated during the build, otherwise build ends up in endless cycle
+            changes[changeId].files = change.files.filter((file) => !file.includes("__version.ts"));
+            if (changes[changeId].files.length === 0) {
+                delete changes[changeId];
             }
         }
 
