@@ -1,0 +1,21 @@
+# (C) 2024 GoodData Corporation
+
+name: Code drop
+
+on:
+  workflow_dispatch:
+      inputs:
+        password:
+          description: Password for the workflow to run
+          required: true
+
+jobs:
+  prepare-branch:
+    # have dummy password to prevent accidental run
+    if: github.event.inputs.password == 'dummy'
+
+    runs-on: [infra1-small]
+    steps:
+      - name: Echo message
+        run: |
+          echo "Code drop placeholder action"
