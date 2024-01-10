@@ -10,6 +10,7 @@
         "module": "CommonJS",
         "jsx": "react",
         "importHelpers": true,
+        "incremental": false,
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "strict": true,

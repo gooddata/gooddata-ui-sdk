@@ -11,6 +11,7 @@
         "moduleResolution": "Node16",
         "jsx": "react",
         "importHelpers": true,
+        "incremental": false,
         "resolveJsonModule": true,
         "strict": true,
         "noUnusedLocals": true,
