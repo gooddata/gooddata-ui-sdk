@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "9.6.0-alpha.19",
+    "version": "9.6.0-alpha.20",
     "description": "GoodData.UI SDK - Charts",
     "repository": {
         "type": "git",
