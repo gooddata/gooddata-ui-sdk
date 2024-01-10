@@ -69,14 +69,22 @@ module.exports = (_env, argv) => {
             },
             module: {
                 rules: [
+                    // TS source files in case TS is used
                     {
-                        test: /\.(jsx?|tsx?)$/,
+                        test: /\.tsx?$/,
                         use: [
                             {
                                 loader: "esbuild-loader",
-                                options: {
-                                    tsconfigRaw: require("./tsconfig.json"),
-                                },
+                            },
+                        ],
+                    },
+                    // JS source files in case JS is used
+                    {
+                        test: /\.jsx?$/,
+                        exclude: /node_modules/,
+                        use: [
+                            {
+                                loader: "esbuild-loader",
                             },
                         ],
                     },
