@@ -248,7 +248,7 @@ describe("Dependent filter", () => {
     it("can reload elements after removing parent filter", { tags: "checklist_integrated_tiger" }, () => {
         topBar.enterEditMode().editButtonIsVisible(false);
         stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
-        cityFilter.open().elementsAreLoaded().hasFilterListSize(5);
+        cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
         stateFilter.removeFilter();
         cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
     });
