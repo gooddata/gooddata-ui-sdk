@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -906,7 +908,7 @@ export interface ElementsRequest {
      */
     dependsOn?: Array<DependsOn>;
     /**
-     * Return only items, what are computable on metric. This feature is experimental.
+     * Return only items, what are computable on metric.
      * @type {Array<ValidateByItem>}
      * @memberof ElementsRequest
      */

@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -17,7 +19,7 @@ import { Configuration } from "./configuration.js";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
 
-export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost:3000".replace(/\/+$/, "");
 
 /**
  *
