@@ -6,6 +6,13 @@ const path = require("path");
 const { URL } = require("url");
 const pack = require("./package.json");
 const { EsbuildPlugin } = require("esbuild-loader");
+const fs = require('fs');
+
+// we don't bundle tscofig.json into js version of the apps
+let tsconfig = {};
+if (fs.existsSync('./tsconfig.json')) {
+    tsconfig = require('./tsconfig.json');
+}
 
 require("dotenv").config();
 
@@ -75,7 +82,7 @@ module.exports = (_env, argv) => {
                             {
                                 loader: "esbuild-loader",
                                 options: {
-                                    tsconfigRaw: require("./tsconfig.json"),
+                                    tsconfigRaw: tsconfig,
                                 },
                             },
                         ],
