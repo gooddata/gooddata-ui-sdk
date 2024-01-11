@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import {
     absoluteDateFilterValues,
     areObjRefsEqual,
@@ -15,7 +15,7 @@ import {
     isRelativeDateFilter,
     relativeDateFilterValues,
     isDashboardAttributeFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilter,
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
@@ -26,7 +26,7 @@ export function isKpiAlertDateFilterSameAsDashboard(
     alert: IWidgetAlertDefinition,
     appliedFilters: IFilter[],
 ): boolean {
-    const alertDateFilter = alert?.filterContext?.filters.find(isDashboardDateFilter);
+    const alertDateFilter = alert?.filterContext?.filters.find(isDashboardCommonDateFilter);
     const appliedDateFilter = last(appliedFilters.filter(isDateFilter));
 
     if (!alertDateFilter) {

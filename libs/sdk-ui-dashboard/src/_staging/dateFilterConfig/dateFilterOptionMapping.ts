@@ -1,10 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
     IDashboardDateFilter,
     DateFilterOptionType,
+    isAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import {
     DateFilterOption,
@@ -31,6 +32,9 @@ interface IDateFilterOptionInfo {
     excludeCurrentPeriod: boolean;
 }
 
+const isAllTimeDateFilter = (dateFilter: IDashboardDateFilter | undefined) =>
+    dateFilter && isAllTimeDashboardDateFilter(dateFilter);
+
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes the provided option if possible.
  *
@@ -51,12 +55,7 @@ export function matchDateFilterToDateFilterOptionWithPreference(
         ? findDateFilterOptionById(preferredOptionId, availableOptions)
         : undefined;
 
-    const isAllTime =
-        dateFilter &&
-        dateFilter.dateFilter.type === "relative" &&
-        dateFilter.dateFilter.granularity === "GDC.time.date" &&
-        dateFilter.dateFilter.from === undefined &&
-        dateFilter.dateFilter.to === undefined;
+    const isAllTime = isAllTimeDateFilter(dateFilter);
 
     // we only really need to handle the cases when the selected option is a form
     // other cases are correctly handled by the unbiased matching function
@@ -69,7 +68,7 @@ export function matchDateFilterToDateFilterOptionWithPreference(
         return reconstructFormForStoredFilter(availableOptions, dateFilter);
     }
 
-    return matchDateFilterToDateFilterOption(dateFilter, availableOptions, isAllTime);
+    return matchDateFilterToDateFilterOption(dateFilter, availableOptions);
 }
 
 /**
@@ -80,9 +79,10 @@ export function matchDateFilterToDateFilterOptionWithPreference(
 export function matchDateFilterToDateFilterOption(
     dateFilter: IDashboardDateFilter | undefined,
     availableOptions: IDateFilterOptionsByType,
-    isAllTime: boolean = false,
 ): IDateFilterOptionInfo {
     // no value means common All Time, try matching against All time (if it is available) or create virtual preset for it
+    const isAllTime = isAllTimeDateFilter(dateFilter);
+
     if (!dateFilter || isAllTime) {
         const { allTime } = availableOptions;
         return allTime

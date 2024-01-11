@@ -1,7 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component, ReactNode, ReactText } from "react";
 import isEqual from "lodash/isEqual.js";
-import last from "lodash/last.js";
+import first from "lodash/first.js";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
@@ -380,7 +380,7 @@ export class KpiAlertDialog extends Component<
             ? alert.filterContext?.filters.filter(isDashboardDateFilter) ?? []
             : filters!.filter(isDateFilter);
 
-        const dateFilter = last<IDashboardDateFilter | IDateFilter>(dateFilters);
+        const dateFilter = first<IDashboardDateFilter | IDateFilter>(dateFilters);
 
         return <KpiAlertDialogDateRange filter={dateFilter} dateFormat={dateFormat} />;
     }
