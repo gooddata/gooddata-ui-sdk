@@ -55,7 +55,7 @@ jobs:
       - name: Inform to slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
-            channel-id: '#pb-test-gh-action'
-            slack-message: "Code drop finished"
-            env:
+            channel-id: '#javascript-notifications'
+            slack-message: "UI SDK code drop finished"
+        env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
