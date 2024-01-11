@@ -23,8 +23,8 @@ jobs:
       - name: Run copy branch action
         uses: ./.github/actions/branch-cutoff-action
         with:
-          source-branch: 'm1'
-          target-branch: 'r1'
+          source-branch: 'master'
+          target-branch: 'release'
 
   prepare-versions-release:
     needs: prepare-branch
@@ -33,7 +33,7 @@ jobs:
     permissions:
       contents: write
     with:
-        source-branch: 'r1'
+        source-branch: 'release'
         bump: 'prerelease'
         prerelease-id: 'beta'
 
@@ -44,7 +44,7 @@ jobs:
     permissions:
       contents: write
     with:
-        source-branch: 'm1'
+        source-branch: 'master'
         bump: 'preminor'
         prerelease-id: 'alpha'
 
@@ -56,6 +56,8 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
             channel-id: '#javascript-notifications'
-            slack-message: "UI SDK code drop finished"
+            slack-message: "UI SDK code drop ${{ github.event.repository.name }} finished. Versions ${{ env.RELEASE_VERSION }} (release) and ${{ env.MASTER_VERSION }} (master)."
         env:
+            RELEASE_VERSION: ${{ needs.prepare-versions-release.outputs.version }}
+            MASTER_VERSION: ${{ needs.prepare-versions-master.outputs.version }}
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
