@@ -1,6 +1,20 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 30 Nov 2023 11:57:11 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jan 2024 12:13:13 GMT and should not be manually modified.
+
+## 9.5.0
+Thu, 11 Jan 2024 12:13:13 GMT
+
+### Updates
+
+- Users can create multiple insight interactions per attribute/measure for the Panther environment.
+- Users can create, edit, and delete attribute hierarchies in the UI. Additionally, they can view and interact with a list of drill-down interactions.
+- Support for dependent filters on Tiger backend added. Attribute filter on Tiger can now be dependent on other filters which will effectively filter out some of its elements. It supports circular dependencies in filters, keeping selected values when parent filter changes and showing/clearing of filtered out elements.
+- Introduce cross-filtering for GoodData Cloud
+- Dashboard plugins no longer support version lock of the GoodData.UI dependencies. Since now, all GoodData.UI dependencies will be injected to the plugin in their latest version at runtime. Also improve way to specify compatibility of the plugin.
+- Add support for attribute filter selection in drill to custom url.
+- Enable decorating attribute filters in plugins customization API.
+- Enable decorating dashboard content in plugins customization API.
 
 ## 9.4.0
 Thu, 30 Nov 2023 11:57:11 GMT
