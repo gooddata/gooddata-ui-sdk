@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import last from "lodash/last.js";
+import first from "lodash/first.js";
 import partition from "lodash/partition.js";
 import {
     areObjRefsEqual,
@@ -88,7 +88,7 @@ export function getBrokenAlertFiltersBasicInfo(
     });
 
     // date filter
-    const alertDateFilter = last(alertDateFilters);
+    const alertDateFilter = first(alertDateFilters);
     if (alertDateFilter) {
         const isIrrelevantNow = isDateFilterIrrelevant(kpi);
         if (isIrrelevantNow) {
