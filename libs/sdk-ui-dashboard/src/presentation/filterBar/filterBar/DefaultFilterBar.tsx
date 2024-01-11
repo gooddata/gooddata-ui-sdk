@@ -19,7 +19,6 @@ import {
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
-    selectEffectiveDateFilterTitle,
     selectFilterContextFilters,
     selectIsExport,
     selectSupportsElementUris,
@@ -126,7 +125,6 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     ] = useFiltersWithAddedPlaceholder(filters);
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
@@ -154,7 +152,6 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const commonDateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
         dateFilterOptions,
-        customFilterName,
     };
 
     const CustomCommonDateFilterComponent = DashboardDateFilterComponentProvider(commonDateFilter);
