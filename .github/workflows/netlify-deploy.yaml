@@ -19,5 +19,5 @@ jobs:
         with:
           args: deploy -d docs/public --prod
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: 8a177d37-8476-44eb-a92a-29eaa19a4a26
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
