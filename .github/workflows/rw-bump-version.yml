@@ -31,6 +31,8 @@ jobs:
           #        with:
           #          node-version: '18.17.0'  # Specify your Node.js version
 
+      - name: Add repository to git safe directories to avoid dubious ownership issue
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
       - name: Create and push branch
         env:
           BUMP: ${{ inputs.bump }}
