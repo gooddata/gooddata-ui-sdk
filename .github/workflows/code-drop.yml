@@ -56,6 +56,8 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
             channel-id: '#javascript-notifications'
-            slack-message: "UI SDK code drop finished"
+            slack-message: "UI SDK code drop ${{ github.event.repository.name }} finished. Versions ${{ env.RELEASE_VERSION }} (release) and ${{ env.MASTER_VERSION }} (master)."
         env:
+            RELEASE_VERSION: ${{ needs.prepare-versions-release.outputs.version }}
+            MASTER_VERSION: ${{ needs.prepare-versions-master.outputs.version }}
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -14,22 +14,23 @@ on:
         required: true
         description: 'The prerelease ID (alpha, beta, etc.)'
         type: string
+    outputs:
+      version:
+        description: "Version which was created"
+        value: ${{ jobs.bump-version.outputs.version }}
 
 jobs:
   bump-version:
     runs-on: infra1-small
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     container:
-      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18
+      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source-branch }}
-
-          #      - name: Set up Node.js
-          #        uses: actions/setup-node@v2
-          #        with:
-          #          node-version: '18.17.0'  # Specify your Node.js version
 
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
@@ -46,3 +47,6 @@ jobs:
           git add -A
           git commit -m "Bump versions"
           git push origin ${{ inputs.source-branch }}
+      - name: Get version
+        id: version
+        run: echo "version=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_OUTPUT
