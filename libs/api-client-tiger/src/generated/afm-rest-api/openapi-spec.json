@@ -668,7 +668,7 @@
                     },
                     "validateBy": {
                         "type": "array",
-                        "description": "Return only items, what are computable on metric. This feature is experimental.",
+                        "description": "Return only items, what are computable on metric.",
                         "items": {
                             "$ref": "#/components/schemas/ValidateByItem"
                         }

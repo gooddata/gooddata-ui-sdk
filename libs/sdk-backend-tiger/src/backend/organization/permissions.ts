@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IOrganizationPermissionService } from "@gooddata/sdk-backend-spi";
 import {
@@ -135,7 +135,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
                 ...Object.keys(userPermissions).map((userId) =>
                     client.actions.manageWorkspacePermissionsForUser({
                         userId,
-                        workspacePermissionAssignments: {
+                        userManagementWorkspacePermissionAssignments: {
                             workspaces: mapWorkspaceAssignments(userPermissions[userId]),
                         },
                     }),
@@ -143,7 +143,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
                 ...Object.keys(userGroupPermissions).map((userGroupId) =>
                     client.actions.manageWorkspacePermissionsForUserGroup({
                         userGroupId,
-                        workspacePermissionAssignments: {
+                        userManagementWorkspacePermissionAssignments: {
                             workspaces: mapWorkspaceAssignments(userGroupPermissions[userGroupId]),
                         },
                     }),
