@@ -12,16 +12,14 @@ describe("Dashboard Shorten Metric Name", { tags: ["checklist_integrated_tiger"]
     });
 
     it("Table should shorten metric name", () => {
-        const table = new Widget(0).getTable();
-        table.waitLoaded();
-        table.assertShortenMetricName(496);
+        const table = new Widget(0).waitTableLoaded();
+        table.getTable().assertShortenMetricName(496);
     });
 
     it("Column chart should shorten metric name in legend", () => {
-        const chart = new Widget(1).getChart();
-        chart.waitLoaded();
+        const chart = new Widget(1).waitChartLoaded().getChart();
         chart.assertShortenMetricName(LEGEND_NAME_CSS, 176);
-        chart.clickSeriesPoint(0);
+        chart.hoverOnHighChartSeries(0);
         chart.hasTooltipTitleWidth(TOOLTIP_TITLE_CSS, 300);
     });
 });
