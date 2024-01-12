@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
@@ -6,6 +6,7 @@ import { defineConfig } from "cypress";
 import axios from "axios";
 import readPdf from "./cypress/plugins/readPdf";
 import parseXlsx from "./cypress/plugins/parseXlsx";
+import removePassingTestVideos from "./cypress/plugins/removePassingTestVideos";
 
 export default defineConfig({
     e2e: {
@@ -33,6 +34,7 @@ export default defineConfig({
             });
             readPdf(on, _config);
             parseXlsx(on, _config);
+            removePassingTestVideos(on, _config);
             return _config;
         },
         viewportWidth: 1400,

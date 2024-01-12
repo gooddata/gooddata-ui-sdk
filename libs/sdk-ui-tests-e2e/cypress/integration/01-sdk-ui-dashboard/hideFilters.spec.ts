@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
 import { BubbleTooltip } from "../../tools/bubbleTooltip";

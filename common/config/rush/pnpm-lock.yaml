@@ -3297,6 +3297,7 @@ importers:
       css-loader: ^6.7.1
       cypress: 12.10.0
       cypress-multi-reporters: ~1.6.3
+      cypress-pipe: ^2.0.0
       cypress-real-events: ^1.7.6
       dependency-cruiser: ^13.0.3
       dotenv: 16.0.3
@@ -3403,6 +3404,7 @@ importers:
       compression-webpack-plugin: 7.1.2_webpack@5.89.0
       css-loader: 6.8.1_webpack@5.89.0
       cypress: 12.10.0
+      cypress-pipe: 2.0.0
       cypress-real-events: 1.11.0_cypress@12.10.0
       dependency-cruiser: 13.1.5
       dotenv-webpack: 7.1.1_webpack@5.89.0
@@ -13189,6 +13191,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /cypress-pipe/2.0.0:
+    resolution: {integrity: sha512-KW9s+bz4tFLucH3rBGfjW+Q12n7S4QpUSSyxiGrgPOfoHlbYWzAGB3H26MO0VTojqf9NVvfd5Kt0MH5XMgbfyg==}
+    dev: true
 
   /cypress-real-events/1.11.0_cypress@12.10.0:
     resolution: {integrity: sha512-4LXVRsyq+xBh5TmlEyO1ojtBXtN7xw720Pwb9rEE9rkJuXmeH3VyoR1GGayMGr+Itqf11eEjfDewtDmcx6PWPQ==}

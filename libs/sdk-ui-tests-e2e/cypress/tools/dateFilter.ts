@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 
@@ -168,16 +168,25 @@ export class DateFilter {
     }
 
     selectConfigurationMode(mode: DashboardDateFilterConfigMode) {
-        this.getConfigurationMode(mode).click();
+        const click = ($el: any) => $el.click();
+
+        this.getConfigurationMode(mode)
+            .pipe(click)
+            .should(($el) => {
+                expect($el.parent(".gd-extended-date-filter-container").find(".s-apply.s-save.disabled")).not
+                    .to.be.exist; // eslint-disable-line jest/valid-expect
+            });
         return this;
     }
 
     hoverOnConfigurationMode(mode: DashboardDateFilterConfigMode) {
-        this.getConfigurationMode(mode).trigger("mouseover");
+        this.getConfigurationMode(mode).scrollIntoView().realHover();
     }
 
     saveConfiguration() {
-        cy.get(".s-gd-extended-date-filter-actions-right-content .s-date-filter-apply").click();
+        cy.get(".s-gd-extended-date-filter-actions-right-content .s-date-filter-apply")
+            .should("not.have.class", "disabled")
+            .click();
         return this;
     }
 
@@ -191,7 +200,7 @@ export class DateFilter {
     }
 
     hoverOnHiddenIcon() {
-        this.getHiddenIcon().trigger("mouseover");
+        this.getHiddenIcon().realHover();
         return this;
     }
 

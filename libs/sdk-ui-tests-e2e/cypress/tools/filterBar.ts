@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
@@ -267,17 +267,24 @@ export class AttributeFilter {
     }
 
     selectConfiguration(delay?: number) {
+        const click = ($el: any) => $el.click();
         // delay to make sure the attribute elements are loaded
         if (delay) {
             cy.wait(delay);
         }
 
-        this.getDropdownElement().find(".s-configuration-button").click();
+        this.getDropdownElement()
+            .find(".s-configuration-button")
+            .pipe(click)
+            .should(($el) => {
+                // eslint-disable-next-line jest/valid-expect
+                expect($el).not.to.exist;
+            });
         return this;
     }
 
     saveConfiguration() {
-        this.getDropdownElement().find(".s-save").click();
+        this.getDropdownElement().find(".s-save").should("be.enabled").click();
         return this;
     }
 
@@ -366,7 +373,15 @@ export class AttributeFilter {
     }
 
     selectConfigurationMode(mode: DashboardAttributeFilterConfigMode) {
-        this.getConfigurationMode(mode).click();
+        const click = ($el: any) => {
+            return $el.click();
+        };
+        this.getConfigurationMode(mode)
+            .pipe(click)
+            .should(($el) => {
+                expect($el.parent(".configuration-category-title").parent().find(".s-apply.s-save.disabled"))
+                    .not.to.be.exist; // eslint-disable-line jest/valid-expect
+            });
         return this;
     }
 
@@ -398,7 +413,7 @@ export class AttributeFilter {
     }
 
     hoverOnLockedIcon() {
-        this.getLockedIcon().trigger("mouseover", { force: true });
+        this.getLockedIcon().scrollIntoView().realHover();
         return this;
     }
 

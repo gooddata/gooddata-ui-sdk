@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { MDObjects } from "../support/getMDObjects";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
@@ -54,7 +54,7 @@ export class InsightsCatalog {
     }
 
     waitForCatalogReload() {
-        cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
+        cy.get(this.getElementSelector(".s-isLoading")).should("exist");
         cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
         return this;
     }
