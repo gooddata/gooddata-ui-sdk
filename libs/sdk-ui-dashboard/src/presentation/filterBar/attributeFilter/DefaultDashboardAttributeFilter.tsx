@@ -220,7 +220,7 @@ export const DefaultDashboardAttributeFilter = (
                 modeChanged,
             } = useAttributeFilterParentFiltering();
 
-            const isTitleDefined = !!title && title.length > 0;
+            const isTitleDefined = !!title && title.trim().length > 0;
             const isSaveDisabled = isTitleDefined
                 ? !(
                       configurationChanged ||

@@ -1,10 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
 import { getUnrelatedDateDataset } from "./utils.js";
 import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";
+import { IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
+
+const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
 interface IDateFilterCheckboxProps {
     widget: IWidget;
@@ -85,7 +88,11 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
                     disabled={dateFilterCheckboxDisabled}
                     onChange={handleChange}
                 />
-                <span className="input-label-text title">{title}</span>
+                <span className="input-label-text title">
+                    <ShortenedText tooltipAlignPoints={tooltipAlignPoints} tagName="span" className="title">
+                        {title}
+                    </ShortenedText>
+                </span>
                 {isFilterLoading ? <div className="gd-spinner small" /> : null}
             </label>
             {!isFilterLoading && showNoRelatedDate ? (

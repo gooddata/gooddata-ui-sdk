@@ -25,6 +25,7 @@ import {
     DashboardAttributeFilterSelectionMode,
     IDashboardDateFilter,
     isDashboardCommonDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
@@ -166,10 +167,8 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
 
                 if (isDashboardDateFilter(dateFilter)) {
-                    dateFilter.dateFilter.type = "relative";
-                    dateFilter.dateFilter.granularity = "GDC.time.date";
-                    dateFilter.dateFilter.from = undefined;
-                    dateFilter.dateFilter.to = undefined;
+                    state.filterContextDefinition.filters[existingFilterIndex] =
+                        newAllTimeDashboardDateFilter(dateFilter.dateFilter.dataSet);
                 }
             } else {
                 //if allTime common DF remove the date filter altogether

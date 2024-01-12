@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
@@ -58,7 +58,7 @@ export function DraggableDateFilter({
             ) : null}
 
             <div
-                className={classNames("dash-filters-notdate", "dash-filters-attribute", {
+                className={classNames("dash-filters-date", "dash-filters-nodate", {
                     "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}

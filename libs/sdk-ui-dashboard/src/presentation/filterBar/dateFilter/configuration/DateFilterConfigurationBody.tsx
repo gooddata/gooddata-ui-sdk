@@ -70,7 +70,8 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
     const resetTitleText = intl.formatMessage(messages.filterConfigurationTitleReset);
     const showResetTitle = title !== defaultDateFilterName;
 
-    const isSaveDisabled = selectedMode === originConfigMode && !titleChanged;
+    const isTitleDefined = !!title && title.trim().length > 0;
+    const isSaveDisabled = isTitleDefined ? selectedMode === originConfigMode && !titleChanged : true;
 
     const titleConfig = capabilities.supportsMultipleDateFilters ? (
         <AttributeTitleRenaming

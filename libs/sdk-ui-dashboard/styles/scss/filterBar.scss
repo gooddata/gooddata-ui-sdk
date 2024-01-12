@@ -131,6 +131,10 @@ $attribute-filter-drag-handle-left: 10px;
     min-height: variables.$filter-bar-height;
     margin-right: variables.$scrollbar-width;
 
+    .dash-filters-date {
+        max-width: 285px;
+    }
+
     .dash-filters-attribute,
     .dash-filters-date {
         position: relative;
