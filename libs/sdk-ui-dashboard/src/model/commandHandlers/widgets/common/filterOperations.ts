@@ -11,6 +11,7 @@ import {
     isKpiWidget,
     IDashboardDateFilter,
     isDashboardDateFilterReference,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
@@ -31,6 +32,7 @@ import { call, SagaReturnType, select } from "redux-saga/effects";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDraggableFilters,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
 import { query } from "../../../store/_infra/queryCall.js";
@@ -48,6 +50,15 @@ function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
 
 function toDateDataSetRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardDateFilterReference).map((reference) => reference.dataSet);
+}
+
+function toRefs(references: IDashboardFilterReference[]) {
+    return references.map((reference) => {
+        if (isDashboardDateFilterReference(reference)) {
+            return reference.dataSet;
+        }
+        return reference.displayForm;
+    });
 }
 
 function getIgnoredAttributeFilters(
@@ -69,6 +80,22 @@ function getIgnoredDateFilters(
 
     return filters.filter((filter) => {
         return ignoredRefs.some((ref) => areObjRefsEqual(filter.dateFilter.dataSet!, ref));
+    });
+}
+
+function getIgnoredFilters(
+    filters: Array<IDashboardDateFilter | IDashboardAttributeFilter>,
+    ignored: IDashboardFilterReference[],
+): Array<IDashboardDateFilter | IDashboardAttributeFilter> {
+    const ignoredRefs = toRefs(ignored);
+
+    return filters.filter((filter) => {
+        return ignoredRefs.some((ref) => {
+            if (isDashboardDateFilter(filter)) {
+                return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
+            }
+            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+        });
     });
 }
 
@@ -122,10 +149,10 @@ function* changeDateFilterIgnore(
     widget: IAnalyticalWidget,
     dateDataSet: ICatalogDateDataset | undefined,
 ): SagaIterator<FilterOpResult> {
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const filters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextDraggableFilters,
     );
-    const ignoredFilters = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
+    const ignoredFilters = getIgnoredFilters(filters, widget.ignoreDashboardFilters);
 
     return {
         dateDataSet,
