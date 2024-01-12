@@ -195,6 +195,7 @@ export class AttributeFilter {
 
     searchAndSelectFilterItem(attributeValue: string) {
         this.search(attributeValue);
+        cy.wait(500); //wait for attribute elements loading
         this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
         return this;
     }
