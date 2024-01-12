@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 import update from "lodash/fp/update.js";
@@ -17,6 +17,9 @@ import {
     ISettings,
     IFilterContext,
     ITempFilterContext,
+    ICatalogDateDataset,
+    isDashboardDateFilterWithDimension,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -105,10 +108,28 @@ function removeFilterElementsByFromFilterContext(
     return sanitizedFilterContext;
 }
 
+const keepOnlyFiltersWithValidRef = (
+    filter: FilterContextItem,
+    availableDfRefs: ObjRef[],
+    availableDateDatasets: ICatalogDateDataset[],
+) => {
+    if (!isDashboardAttributeFilter(filter)) {
+        if (isDashboardDateFilterWithDimension(filter)) {
+            return availableDateDatasets.some((dateDataSet) =>
+                areObjRefsEqual(dateDataSet.dataSet.ref, filter.dateFilter.dataSet!),
+            );
+        }
+        return true; // common date filter is kept always
+    }
+
+    return availableDfRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
+};
+
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
     settings: ISettings,
+    dateDataSets: ICatalogDateDataset[] = [],
 ): SagaIterator<IDashboard["filterContext"]> {
     if (!filterContext || isEmpty(filterContext.filters)) {
         return filterContext;
@@ -138,11 +159,7 @@ function* sanitizeFilterContext(
         "filters",
         (filters: FilterContextItem[]) =>
             filters.filter((filter) => {
-                if (!isDashboardAttributeFilter(filter)) {
-                    return true;
-                }
-
-                return availableRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
+                return keepOnlyFiltersWithValidRef(filter, availableRefs, dateDataSets);
             }),
         filterContextWithSanitizedFilterElementsBy,
     );
@@ -196,8 +213,15 @@ export function* actionsToInitializeExistingDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
+    dateDataSets?: ICatalogDateDataset[],
 ): SagaIterator<Array<PayloadAction<any>>> {
-    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext, settings);
+    const sanitizedFilterContext = yield call(
+        sanitizeFilterContext,
+        ctx,
+        dashboard.filterContext,
+        settings,
+        dateDataSets,
+    );
     const sanitizedPersistedDashboard = sanitizePersistedDashboard(persistedDashboard, dashboard, settings);
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {

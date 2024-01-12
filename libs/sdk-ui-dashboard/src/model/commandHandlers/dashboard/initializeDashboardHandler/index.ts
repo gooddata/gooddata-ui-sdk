@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
@@ -200,6 +200,7 @@ function* loadExistingDashboard(
         effectiveDateFilterConfig.config,
         createDisplayFormMapFromCatalog(catalog),
         cmd.payload.persistedDashboard,
+        catalog.dateDatasets(),
     );
 
     const batch: BatchAction = batchActions(
