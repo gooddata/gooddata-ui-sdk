@@ -17,7 +17,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "composite": true,
+        "composite": false,
         "declarationMap": true,
         "sourceMap": true
     }
