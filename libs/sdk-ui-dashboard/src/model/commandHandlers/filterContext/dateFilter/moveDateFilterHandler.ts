@@ -11,6 +11,8 @@ import {
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { dateFilterMoved } from "../../../events/filters.js";
 
 export function* moveDateFilterHandler(ctx: DashboardContext, cmd: MoveDateFilter): SagaIterator<void> {
     const { dataSet, index } = cmd.payload;
@@ -51,11 +53,8 @@ export function* moveDateFilterHandler(ctx: DashboardContext, cmd: MoveDateFilte
     const finalIndex: ReturnType<ReturnType<typeof selectFilterContextDraggableFilterIndexByRef>> =
         yield select(selectFilterContextDraggableFilterIndexByRef(dataSet));
 
-    // TODO INE: propagate as event to KD
-    // eslint-disable-next-line no-console
-    console.log(originalIndex, finalIndex);
-    // yield dispatchDashboardEvent(
-    //     attributeFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
-    // );
+    yield dispatchDashboardEvent(
+        dateFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
+    );
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
