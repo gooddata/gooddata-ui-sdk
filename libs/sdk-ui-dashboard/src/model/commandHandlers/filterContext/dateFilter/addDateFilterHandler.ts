@@ -9,6 +9,7 @@ import { filterContextActions } from "../../../store/filterContext/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
     selectCanAddMoreFilters,
+    selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
 } from "../../../store/filterContext/filterContextSelectors.js";
 
@@ -17,6 +18,8 @@ import { DashboardContext } from "../../../types/commonTypes.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { invariant } from "ts-invariant";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { dateFilterAdded } from "../../../events/filters.js";
 
 export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter): SagaIterator<void> {
     const { index, dateDataset } = cmd.payload;
@@ -73,8 +76,13 @@ export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter)
         }),
     );
 
-    // TODO INE: propagate as event to KD
-    // yield dispatchDashboardEvent(dateFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId));
+    const addedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> = yield select(
+        selectFilterContextDateFilterByDataSet(dateDataset),
+    );
+
+    invariant(addedFilter, "Inconsistent state in addDateFilterHandler");
+
+    yield dispatchDashboardEvent(dateFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId));
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
