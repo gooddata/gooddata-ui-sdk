@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
@@ -126,9 +126,10 @@ export class AttributeFilter {
     search(attributeValue: string) {
         this.getDropdownElement()
             .find(".gd-list-searchfield .gd-input-field")
+            .as("searchField")
             .should("be.visible")
-            .clear()
-            .type(attributeValue);
+            .clear();
+        cy.get("@searchField").type(attributeValue);
         return this;
     }
 
