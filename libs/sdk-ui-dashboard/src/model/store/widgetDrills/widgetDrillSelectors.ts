@@ -356,13 +356,22 @@ const selectCrossFilteringByWidgetRef: (
         selectSupportsCrossFiltering,
         selectDrillTargetsByWidgetRef(ref),
         selectDisableDashboardCrossFiltering,
+        selectDrillableItems,
         (
             isCrossFilteringEnabled,
             isCrossFilteringSupported,
             availableDrillTargets,
             disableCrossFiltering,
+            drillableItems,
         ) => {
-            if (!isCrossFilteringEnabled || !isCrossFilteringSupported || disableCrossFiltering) {
+            if (
+                !isCrossFilteringEnabled ||
+                !isCrossFilteringSupported ||
+                disableCrossFiltering ||
+                // When some drillable items are present, we need to disable
+                // cross filtering so that drill events are still possible to do.
+                drillableItems.length > 0
+            ) {
                 return undefined;
             }
 
