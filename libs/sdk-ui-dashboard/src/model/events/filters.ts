@@ -730,3 +730,178 @@ export function dateFilterModeChanged(
 export const isDashboardDateFilterModeChanged = eventGuard<DashboardDateFilterModeChanged>(
     "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
 );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardDateFilterAdded} event.
+ * @beta
+ */
+export interface DashboardDateFilterAddedPayload {
+    /**
+     * Definition of the created date filter. The filter's date data set ref can be used in subsequent
+     * commands to identify this filter.
+     */
+    readonly added: IDashboardDateFilter;
+
+    /**
+     * Zero-based index indicating the position of the date filter among the other filters.
+     */
+    readonly index: number;
+}
+
+/**
+ * This event is emitted after a new dashboard date filter is successfully
+ * added into dashboard's filters.
+ *
+ * @beta
+ */
+export interface DashboardDateFilterAdded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED";
+    readonly payload: DashboardDateFilterAddedPayload;
+}
+
+export function dateFilterAdded(
+    ctx: DashboardContext,
+    added: IDashboardDateFilter,
+    index: number,
+    correlationId?: string,
+): DashboardDateFilterAdded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED",
+        ctx,
+        correlationId,
+        payload: {
+            added,
+            index,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterAdded}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardDateFilterAdded = eventGuard<DashboardDateFilterAdded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardDateFilterRemoved} event.
+ * @beta
+ */
+export interface DashboardDateFilterRemovedPayload {
+    /**
+     * Definition of the removed date filter.
+     */
+    readonly removed: IDashboardDateFilter;
+}
+
+/**
+ * This event is emitted after a dashboard date filter is successfully
+ * removed from the dashboard's filters.
+ *
+ * @beta
+ */
+export interface DashboardDateFilterRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED";
+    readonly payload: DashboardDateFilterRemovedPayload;
+}
+
+export function dateFilterRemoved(
+    ctx: DashboardContext,
+    removed: IDashboardDateFilter,
+    correlationId?: string,
+): DashboardDateFilterRemoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            removed,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterRemoved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardDateFilterRemoved = eventGuard<DashboardDateFilterRemoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardDateFilterMoved} event.
+ * @beta
+ */
+export interface DashboardDateFilterMovedPayload {
+    /**
+     * Definition of the dashboard date filter that was moved.
+     */
+    readonly moved: IDashboardDateFilter;
+
+    /**
+     * The original position of the filter.
+     */
+    readonly fromIndex: number;
+
+    /**
+     * New absolute position of the filter.
+     */
+    readonly toIndex: number;
+}
+
+/**
+ * This event is emitted after a dashboard date filter is moved from one position in the filter bar
+ * to a new position
+ *
+ * @beta
+ */
+export interface DashboardDateFilterMoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED";
+    readonly payload: DashboardDateFilterMovedPayload;
+}
+
+export function dateFilterMoved(
+    ctx: DashboardContext,
+    moved: IDashboardDateFilter,
+    fromIndex: number,
+    toIndex: number,
+    correlationId?: string,
+): DashboardDateFilterMoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
+        ctx,
+        correlationId,
+        payload: {
+            moved,
+            fromIndex,
+            toIndex,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDateFilterMoved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardDateFilterMoved = eventGuard<DashboardDateFilterMoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
+);

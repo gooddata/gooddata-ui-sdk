@@ -14,6 +14,8 @@ import { dispatchFilterContextChanged } from "../common.js";
 import { areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 import { layoutActions } from "../../../store/layout/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { dateFilterRemoved } from "../../../events/filters.js";
 
 export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDateFilters): SagaIterator<void> {
     const { dataSets } = cmd.payload;
@@ -54,10 +56,8 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
         ]);
 
         yield put(batch);
-        // TODO INE: propagate as event to KD
-        // yield dispatchDashboardEvent(
-        //     attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId),
-        // );
+
+        yield dispatchDashboardEvent(dateFilterRemoved(ctx, removedFilter!, cmd.correlationId));
     }
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
