@@ -5,10 +5,11 @@ import {
     areObjRefsEqual,
     filterAttributeElements,
     filterObjRef,
+    isDashboardAttributeFilter,
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import {
     addAttributeFilter,
@@ -36,8 +37,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     const backendSupportsElementUris = !!ctx.backend.capabilities.supportsElementUris;
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
-    const currentFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const currentFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
+        selectFilterContextDraggableFilters,
     );
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
@@ -48,7 +49,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         typeof selectCrossFilteringFiltersLocalIdentifiers
     > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
     const currentVirtualFilters = currentVirtualFiltersLocalIdentifiers.map((localIdentifier) => {
-        return currentFilters.find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
+        return currentFilters
+            .filter(isDashboardAttributeFilter)
+            .find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
     });
     const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
         yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
