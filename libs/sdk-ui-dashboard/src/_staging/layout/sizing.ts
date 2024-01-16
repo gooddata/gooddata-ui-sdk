@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     AnalyticalWidgetType,
@@ -16,6 +16,7 @@ import {
     isWidget,
     IWidget,
     widgetType as getWidgetType,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -48,6 +49,7 @@ export function getSizeInfo(
     widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ): IVisualizationSizeInfo {
+    // TODO: RICH TEXT
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
     }
@@ -130,15 +132,21 @@ export function getDashboardLayoutWidgetMaxGridHeight(
  * @internal
  */
 export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>, defaultMin = 0): number {
-    const mins: number[] = widgets
-        .filter(isDashboardWidget)
-        .map((widget) =>
-            getDashboardLayoutWidgetMinGridHeight(
-                { enableKDWidgetCustomHeight: true },
-                getWidgetType(widget),
-                isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
-            ),
+    const mins: number[] = widgets.filter(isDashboardWidget).map((widget) => {
+        let widgetContent: MeasurableWidgetContent | undefined;
+        if (isKpiWidget(widget)) {
+            widgetContent = widget.kpi;
+        } else if (isInsightWidget(widget)) {
+            widgetContent = insightMap.get(widget.insight);
+        } else if (isRichTextWidget(widget)) {
+            // TODO: RICH TEXT
+        }
+        return getDashboardLayoutWidgetMinGridHeight(
+            { enableKDWidgetCustomHeight: true },
+            getWidgetType(widget),
+            widgetContent,
         );
+    });
     return Math.max(defaultMin, ...mins);
 }
 
@@ -146,15 +154,22 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
  * @internal
  */
 export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
-    const maxs: number[] = widgets
-        .filter(isDashboardWidget)
-        .map((widget) =>
-            getDashboardLayoutWidgetMaxGridHeight(
-                { enableKDWidgetCustomHeight: true },
-                getWidgetType(widget),
-                isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
-            ),
+    const maxs: number[] = widgets.filter(isDashboardWidget).map((widget) => {
+        let widgetContent: MeasurableWidgetContent | undefined;
+        if (isKpiWidget(widget)) {
+            widgetContent = widget.kpi;
+        } else if (isInsightWidget(widget)) {
+            widgetContent = insightMap.get(widget.insight);
+        } else if (isRichTextWidget(widget)) {
+            // TODO: RICH TEXT
+        }
+
+        return getDashboardLayoutWidgetMaxGridHeight(
+            { enableKDWidgetCustomHeight: true },
+            getWidgetType(widget),
+            widgetContent,
         );
+    });
     return Math.min(...maxs);
 }
 
@@ -174,10 +189,18 @@ export function getDashboardLayoutWidgetMinGridWidth(
  * @internal
  */
 export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): number {
+    let widgetContent: MeasurableWidgetContent | undefined;
+    if (isKpiWidget(widget)) {
+        widgetContent = widget.kpi;
+    } else if (isInsightWidget(widget)) {
+        widgetContent = insightMap.get(widget.insight);
+    } else if (isRichTextWidget(widget)) {
+        // TODO;
+    }
     return getDashboardLayoutWidgetMinGridWidth(
         { enableKDWidgetCustomHeight: true },
         getWidgetType(widget),
-        isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
+        widgetContent, // isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
     );
 }
 
@@ -204,6 +227,8 @@ export function calculateWidgetMinHeight(
     if (isKpiWidget(widget)) {
         content = widget.kpi;
     }
+
+    // TODO: RICH TEXT
 
     return currentSize
         ? getDashboardLayoutItemHeight(currentSize) ||

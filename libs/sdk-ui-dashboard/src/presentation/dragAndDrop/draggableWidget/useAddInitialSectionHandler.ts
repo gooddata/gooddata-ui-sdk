@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -36,6 +36,8 @@ export function useAddInitialSectionHandler() {
                 if (isKpiPlaceholderDraggableItem(item)) {
                     sizeInfo = getSizeInfo(settings, "kpi");
                 }
+
+                // TODO: RICH TEXT
 
                 if (sizeInfo) {
                     dispatch(

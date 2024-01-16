@@ -9,6 +9,8 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextDraggableItem,
+    isRichTextPlaceholderDraggableItem,
 } from "../types.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
@@ -18,6 +20,7 @@ import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightL
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
+import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 
 export type RowPosition = "above" | "below";
 
@@ -34,6 +37,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
+    const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(index);
     const moveWidgetToNewSection = useMoveWidgetToNewSectionDropHandler(index);
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
@@ -44,6 +48,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             "insight-placeholder",
             "kpi",
             "insight",
+            "richText",
             "richText-placeholder",
         ],
         {
@@ -57,7 +62,13 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
                 }
+                if (isRichTextPlaceholderDraggableItem(item)) {
+                    handleRichTextPlaceholderDrop();
+                }
                 if (isKpiDraggableItem(item)) {
+                    moveWidgetToNewSection(item);
+                }
+                if (isRichTextDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {

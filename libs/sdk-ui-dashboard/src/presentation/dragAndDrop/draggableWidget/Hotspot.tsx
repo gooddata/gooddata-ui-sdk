@@ -9,6 +9,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextPlaceholderDraggableItem,
 } from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
@@ -16,6 +17,7 @@ import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHan
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -36,6 +38,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const handleInsightListItemDrop = useInsightListItemDropHandler(sectionIndex, targetItemIndex);
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(sectionIndex, targetItemIndex);
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(sectionIndex, targetItemIndex);
+    const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(sectionIndex, targetItemIndex);
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, targetItemIndex);
     const { handleDragHoverStart } = useWidgetDragHoverHandlers();
 
@@ -46,6 +49,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             "insight-placeholder",
             "kpi",
             "insight",
+            "richText",
             "richText-placeholder",
         ],
         {
@@ -59,6 +63,10 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
                 }
+                if (isRichTextPlaceholderDraggableItem(item)) {
+                    handleRichTextPlaceholderDrop();
+                }
+                //
 
                 if (isInsightDraggableItem(item) || isKpiDraggableItem(item)) {
                     handleWidgetDrop(item);

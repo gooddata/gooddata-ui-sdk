@@ -12,6 +12,7 @@ import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextPlaceholderDraggableItem,
 } from "../types.js";
 import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
@@ -19,6 +20,7 @@ import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightL
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
+import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -36,12 +38,14 @@ export const EmptyDashboardDropZone: React.FC = () => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(0);
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(0);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(0);
+    const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(0);
     // TODO: RICH TEXT
 
     const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder", "richText-placeholder"],
         {
             drop: (item) => {
+                console.log("drop zone item drop?", { item });
                 if (isInsightDraggableListItem(item)) {
                     handleInsightListItemDrop(item.insight);
                 }
@@ -50,6 +54,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
+                }
+                if (isRichTextPlaceholderDraggableItem(item)) {
+                    handleRichTextPlaceholderDrop();
                 }
             },
         },

@@ -22,7 +22,10 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextDraggableItem,
+    isRichTextPlaceholderDraggableItem,
 } from "../types.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;
@@ -39,6 +42,7 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
     const handleInsightListItemDrop = useInsightListItemDropHandler(sectionIndex, itemIndex);
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(sectionIndex, itemIndex);
+    const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, itemIndex);
 
     const dispatch = useDashboardDispatch();
@@ -64,7 +68,14 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
                 }
-                if (isInsightDraggableItem(item) || isKpiDraggableItem(item)) {
+                if (isRichTextPlaceholderDraggableItem(item)) {
+                    handleRichTextPlaceholderDrop();
+                }
+                if (
+                    isInsightDraggableItem(item) ||
+                    isKpiDraggableItem(item) ||
+                    isRichTextDraggableItem(item)
+                ) {
                     handleWidgetDrop(item);
                 }
             },
