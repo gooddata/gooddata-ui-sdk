@@ -592,6 +592,15 @@ export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = creat
 );
 
 /**
+ * Returns whether rich text widgets are enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDRichText: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKDRichText ?? false;
+});
+
+/**
  * Returns whether KD dependent filters are enabled.
  * On Bear, this is driven by enableKPIDashboardDependentFilters.
  * On Tiger, it is driven by enableKDDependentFilters.

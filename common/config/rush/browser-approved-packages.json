@@ -935,6 +935,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-markdown",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-measure",
       "allowedCategories": [ "examples", "production" ]
     },

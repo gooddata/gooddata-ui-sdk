@@ -226,6 +226,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableADMultipleDateFilters,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableKDRichText,
+            "enableKDRichText",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKDRichText,
+        ),
     };
 }
 

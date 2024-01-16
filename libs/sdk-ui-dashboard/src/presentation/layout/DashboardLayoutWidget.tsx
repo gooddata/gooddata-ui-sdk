@@ -1,10 +1,11 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     IDashboardLayoutSizeByScreenSize,
     IInsight,
     ISettings,
     isInsightWidget,
     isKpiWidget,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
@@ -23,6 +24,7 @@ import {
     selectWidgetsModification,
     selectSectionModification,
     selectIsExport,
+    useWidgetSelection,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -101,19 +103,22 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const widget = item.widget()!;
     const isCustom = isCustomWidget(widget);
     const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustom);
+    const { isSelected } = useWidgetSelection(widget.ref);
+    const isRichText = isRichTextWidget(widget);
+    const isRichTextWidgetInEditState = isSelected && isRichText;
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
                 return createDraggableItem(item, insights, settings);
             },
-            canDrag: isInEditMode && isDraggableWidgetType,
+            canDrag: isInEditMode && isDraggableWidgetType && !isRichTextWidgetInEditState,
             dragStart: (item) => {
                 dispatch(uiActions.setDraggingWidgetSource(item));
             },
             dragEnd: handleDragEnd,
         },
-        [item, insights, isInEditMode],
+        [item, insights, isInEditMode, isDraggableWidgetType, isRichTextWidgetInEditState],
     );
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
@@ -293,6 +298,17 @@ function createDraggableItem(
         return {
             type: "insight",
             insight,
+            sectionIndex,
+            itemIndex,
+            title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isRichTextWidget(widget)) {
+        const sizeInfo = getSizeInfo(settings, "richText");
+
+        return {
+            type: "richText",
             sectionIndex,
             itemIndex,
             title: widget.title,

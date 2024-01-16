@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.
  *
@@ -49,6 +49,7 @@ export {
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
     EmbedInsightDialog,
     IEmbedInsightDialogProps,
 } from "./internal/index.js";

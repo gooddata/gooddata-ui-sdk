@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 /**
  * All available command types.
  *
@@ -74,6 +74,7 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN"
     | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN"
     | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH"
+    | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT"
     | "GDC.DASH/CMD.ALERT.CREATE"
     | "GDC.DASH/CMD.ALERT.UPDATE"
     | "GDC.DASH/CMD.ALERTS.REMOVE"

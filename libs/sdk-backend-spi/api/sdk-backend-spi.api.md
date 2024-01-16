@@ -285,6 +285,7 @@ export interface IBackendCapabilities {
     supportsOwners?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+    supportsRichTextWidgets?: boolean;
     supportsSeparateLatitudeLongitudeLabels?: boolean;
     supportsSettingConnectingAttributes?: boolean;
     supportsShowAllAttributeValues?: boolean;

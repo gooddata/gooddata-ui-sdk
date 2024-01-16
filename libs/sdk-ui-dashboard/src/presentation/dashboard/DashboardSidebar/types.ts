@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ComponentType } from "react";
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
+    RichTextWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
     IWrapCreatePanelItemWithDragComponent,
@@ -64,6 +65,14 @@ export interface ISidebarProps {
      * @internal
      */
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
+
+    /**
+     * Rich text widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
 
     /**
      * Component, that renders delete drop zone.

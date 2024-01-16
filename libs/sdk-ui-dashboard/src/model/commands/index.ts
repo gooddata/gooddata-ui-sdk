@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -58,6 +58,7 @@ import {
     SetDrillForKpiWidget,
     RemoveDrillForKpiWidget,
 } from "./kpi.js";
+import { ChangeRichTextWidgetContent } from "./richText.js";
 import {
     AddLayoutSection,
     AddSectionItems,
@@ -376,6 +377,12 @@ export {
 } from "./insight.js";
 
 export {
+    ChangeRichTextWidgetContent,
+    ChangeRichTextWidgetContentPayload,
+    changeRichTextWidgetContent,
+} from "./richText.js";
+
+export {
     RequestAsyncRender,
     RequestAsyncRenderPayload,
     ResolveAsyncRender,
@@ -468,6 +475,7 @@ export type DashboardCommands =
     | SetAttributeFilterDisplayForm
     | SetAttributeFilterTitle
     | SetAttributeFilterSelectionMode
+    | ChangeRichTextWidgetContent
     //alpha
     | Drill
     | DrillDown

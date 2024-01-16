@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
@@ -39,6 +39,7 @@ import { changeInsightWidgetFilterSettingsHandler } from "./widgets/changeInsigh
 import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsightWidgetVisPropertiesHandler.js";
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler.js";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
+import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { updateAlertHandler } from "./alerts/updateAlertHandler.js";
@@ -157,6 +158,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN": modifyDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
+    "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
     "GDC.DASH/CMD.ALERTS.REMOVE": removeAlertsHandler,

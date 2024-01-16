@@ -21,7 +21,7 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
-export type AnalyticalWidgetType = "kpi" | "insight";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -2212,6 +2212,21 @@ export interface IRgbColorValue {
     r: number;
 }
 
+// @public (undocumented)
+export interface IRichTextWidget extends IRichTextWidgetBase, IDashboardObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IRichTextWidgetBase extends IAnalyticalWidget {
+    readonly content: string;
+    // (undocumented)
+    readonly type: "richText";
+}
+
+// @public (undocumented)
+export interface IRichTextWidgetDefinition extends IRichTextWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
 // @alpha
 export function isAbsoluteDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
 
@@ -2476,6 +2491,7 @@ export interface ISettings {
     enableInsightToReport?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDDependentFilters?: boolean;
+    enableKDRichText?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillFromAttribute?: boolean;
@@ -2687,6 +2703,12 @@ export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
 
 // @public
 export function isRgbColor(obj: unknown): obj is IRgbColor;
+
+// @alpha
+export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
+
+// @alpha
+export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
@@ -3152,7 +3174,7 @@ export interface IWhiteLabeling {
 }
 
 // @public (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -3186,7 +3208,7 @@ export interface IWidgetAttachment {
 }
 
 // @public
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
 
 // @public
 export interface IWidgetDescription {

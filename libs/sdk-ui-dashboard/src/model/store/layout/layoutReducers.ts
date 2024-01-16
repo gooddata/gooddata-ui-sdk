@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState.js";
 import { invariant } from "ts-invariant";
@@ -30,6 +30,7 @@ import {
     IKpiWidgetConfiguration,
     IDrillDownReference,
     isDashboardAttributeFilterReference,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -710,6 +711,25 @@ const replaceKpiWidgetConfiguration: LayoutReducer<ReplaceKpiWidgetConfiguration
     setOrDelete(widget, "configuration", config);
 };
 
+//
+//
+//
+
+type ReplaceRichTextWidgetContent = {
+    ref: ObjRef;
+    content: string;
+};
+
+const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> = (state, action) => {
+    invariant(state.layout);
+
+    const { content, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isRichTextWidget(widget));
+    setOrDelete(widget, "content", content);
+};
+
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
@@ -738,6 +758,7 @@ export const layoutReducers = {
     replaceKpiWidgetDrillWithoutUndo: replaceKpiWidgetDrill, // useful in internal sanitization use cases
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
+    replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,

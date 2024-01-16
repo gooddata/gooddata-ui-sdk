@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { DashboardContext } from "../types/commonTypes.js";
 
@@ -94,6 +94,7 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED"
     | "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED"
+    | "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED"
     | "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED"
     | "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED"
     | "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED"

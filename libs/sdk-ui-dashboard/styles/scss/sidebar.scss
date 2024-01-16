@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -55,6 +57,18 @@
         width: 50px;
         background-repeat: no-repeat;
         background-position: center;
+    }
+
+    &-rich-text {
+        padding: 0 10px 0 0;
+
+        svg {
+            margin: 0 14px;
+        }
+    }
+
+    &-rich-text::before {
+        content: none;
     }
 
     span {

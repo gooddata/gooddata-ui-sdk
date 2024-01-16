@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { VisualizationProperties } from "../insight/index.js";
 import { ObjRef } from "../objRef/index.js";
 import { IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget } from "./baseWidget.js";
@@ -11,7 +11,7 @@ import { IKpi } from "./kpi.js";
  *
  * @public
  */
-export type AnalyticalWidgetType = "kpi" | "insight";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
 
 /**
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
@@ -159,3 +159,25 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
  * @public
  */
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * @public
+ */
+export interface IRichTextWidgetBase extends IAnalyticalWidget {
+    readonly type: "richText";
+
+    /**
+     * Markdown text of the rich text widget.
+     */
+    readonly content: string;
+}
+
+/**
+ * @public
+ */
+export interface IRichTextWidget extends IRichTextWidgetBase, IDashboardObjectIdentity {}
+
+/**
+ * @public
+ */
+export interface IRichTextWidgetDefinition extends IRichTextWidgetBase, Partial<IDashboardObjectIdentity> {}

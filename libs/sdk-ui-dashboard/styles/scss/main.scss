@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/css/list";
 @use "@gooddata/sdk-ui-kit/styles/css/messages";
 @use "@gooddata/sdk-ui-filters/styles/css/attributeFilter";
@@ -28,3 +28,4 @@
 @use "drillConfigPanel";
 @use "toolbar";
 @use "dateFilterConfig";
+@use "richText";

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
 
@@ -14,6 +14,8 @@ export type DraggableContentItemType =
     | "insight-placeholder"
     | "kpi"
     | "kpi-placeholder"
+    | "richText"
+    | "richTextListItem"
     | "custom";
 
 /**
@@ -136,6 +138,34 @@ export function isKpiDraggableItem(item: any): item is KpiDraggableItem {
 /**
  * @internal
  */
+export type RichTextDraggableItem = BaseDraggableMovingItem & {
+    type: "richText";
+};
+
+/**
+ * @internal
+ */
+export function isRichTextDraggableItem(item: any): item is InsightDraggableItem {
+    return item.type === "richText";
+}
+
+/**
+ * @internal
+ */
+export type RichTextDraggableListItem = BaseDraggableLayoutItem & {
+    type: "richTextListItem";
+};
+
+/**
+ * @internal
+ */
+export function isRichTextDraggableListItem(item: any): item is RichTextDraggableListItem {
+    return item.type === "richTextListItem";
+}
+
+/**
+ * @internal
+ */
 export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
     type: "customWidget";
     widget: ICustomWidget;
@@ -220,13 +250,19 @@ export type DraggableContentItem =
     | InsightPlaceholderDraggableItem
     | KpiDraggableItem
     | KpiPlaceholderDraggableItem
+    | RichTextDraggableItem
+    | RichTextDraggableListItem
     | CustomWidgetDraggableItem
     | CustomDraggableItem;
 
 /**
  * @internal
  */
-export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | CustomWidgetDraggableItem;
+export type DraggableLayoutItem =
+    | InsightDraggableItem
+    | KpiDraggableItem
+    | RichTextDraggableItem
+    | CustomWidgetDraggableItem;
 
 /**
  * @internal
@@ -255,6 +291,8 @@ export type DraggableItemComponentTypeMapping = {
     "insight-placeholder": InsightPlaceholderDraggableItem;
     kpi: KpiDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
+    richText: RichTextDraggableItem;
+    richTextListItem: RichTextDraggableListItem;
     custom: CustomDraggableItem;
 };
 

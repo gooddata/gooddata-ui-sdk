@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -182,4 +182,14 @@ export const selectSupportsCrossFiltering: DashboardSelector<boolean> = createSe
 export const selectSupportsMultipleDateFilters: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsMultipleDateFilters ?? false,
+);
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsRichTextWidgets}
+ *
+ * @internal
+ */
+export const selectSupportsRichTextWidgets: DashboardSelector<boolean> = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsRichTextWidgets ?? false,
 );
