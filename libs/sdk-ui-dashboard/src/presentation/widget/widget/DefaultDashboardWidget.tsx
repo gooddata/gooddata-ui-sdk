@@ -1,7 +1,14 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isWidget, isInsightWidget, isDashboardWidget, widgetRef } from "@gooddata/sdk-model";
+import {
+    isWidget,
+    isInsightWidget,
+    isDashboardWidget,
+    widgetRef,
+    isKpiWidget,
+    isRichTextWidget,
+} from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
@@ -15,6 +22,7 @@ import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
+import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 
 /**
  * @internal
@@ -78,25 +86,43 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     const dashboardItemClasses = `s-dash-item-${index}`;
 
     if (isWidget(widget)) {
-        return (
-            <BackendProvider backend={backendWithEventing}>
-                {isInsightWidget(widget) ? (
-                    <RenderModeAwareDashboardInsightWidget
-                        widget={widget}
-                        screen={screen}
-                        dashboardItemClasses={dashboardItemClasses}
-                    />
-                ) : (
-                    <DefaultDashboardKpiWidget
-                        kpiWidget={widget}
-                        screen={screen}
-                        dashboardItemClasses={dashboardItemClasses}
-                        onFiltersChange={onFiltersChange}
-                        onError={onError}
-                    />
-                )}
-            </BackendProvider>
-        );
+        console.log("DefaultDashboardWidget", {
+            widget,
+            isInsightWidget: isInsightWidget(widget),
+            isKpiWidget: isKpiWidget(widget),
+            isRichTextWidget: isRichTextWidget(widget),
+        });
+        //
+        let renderWidget = null;
+        if (isInsightWidget(widget)) {
+            renderWidget = (
+                <RenderModeAwareDashboardInsightWidget
+                    widget={widget}
+                    screen={screen}
+                    dashboardItemClasses={dashboardItemClasses}
+                />
+            );
+        } else if (isKpiWidget(widget)) {
+            renderWidget = (
+                <DefaultDashboardKpiWidget
+                    kpiWidget={widget}
+                    screen={screen}
+                    dashboardItemClasses={dashboardItemClasses}
+                    onFiltersChange={onFiltersChange}
+                    onError={onError}
+                />
+            );
+        } else if (isRichTextWidget(widget)) {
+            renderWidget = (
+                <RenderModeAwareDashboardRichTextWidget
+                    widget={widget}
+                    screen={screen}
+                    dashboardItemClasses={dashboardItemClasses}
+                />
+            );
+        }
+
+        return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
     }
 
     return <div>Unknown widget</div>;

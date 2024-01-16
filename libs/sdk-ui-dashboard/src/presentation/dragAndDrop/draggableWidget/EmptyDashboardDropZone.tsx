@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -24,6 +24,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
     insightListItem: "visualization",
     "kpi-placeholder": "kpi",
+    "richText-placeholder": "richText",
 };
 
 export const EmptyDashboardDropZone: React.FC = () => {
@@ -35,9 +36,10 @@ export const EmptyDashboardDropZone: React.FC = () => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(0);
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(0);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(0);
+    // TODO: RICH TEXT
 
     const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder", "richText-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
@@ -88,6 +90,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
                 <EmptyLayoutDropZoneBodyComponent />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
+                        <Typography tagName="p" className="drop-target-message richText-drop-target">
+                            {message}
+                        </Typography>
                         <Typography tagName="p" className="drop-target-message kpi-drop-target">
                             {message}
                         </Typography>

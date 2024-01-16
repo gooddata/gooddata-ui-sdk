@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import cx from "classnames";
 import React, { useEffect } from "react";
 import { useDashboardDispatch } from "../../../model/index.js";
@@ -38,7 +38,14 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder", "kpi", "insight"],
+        [
+            "insightListItem",
+            "kpi-placeholder",
+            "insight-placeholder",
+            "kpi",
+            "insight",
+            "richText-placeholder",
+        ],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {

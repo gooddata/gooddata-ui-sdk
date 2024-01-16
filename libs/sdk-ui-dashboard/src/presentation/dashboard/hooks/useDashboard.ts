@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -21,6 +21,8 @@ import {
     DefaultDashboardInsightComponentSetFactory,
     DefaultDashboardKpiComponentSetFactory,
     DefaultDashboardInsightMenuTitle,
+    DefaultDashboardRichText,
+    DefaultDashboardRichTextComponentSetFactory,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -35,12 +37,14 @@ import {
     DateFilterComponentProvider,
     InsightMenuTitleComponentProvider,
     DashboardContentComponentProvider,
+    RichTextComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
+    RichTextWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
 
@@ -63,6 +67,8 @@ interface IUseDashboardResult {
     kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
     dateFilterComponentSet: DateFilterComponentSet;
+    richTextProvider: RichTextComponentProvider;
+    richTextWidgetComponentSet: RichTextWidgetComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -80,6 +86,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightComponentSetProvider,
         KpiComponentProvider,
         DashboardContentComponentProvider,
+        RichTextComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -196,6 +203,18 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider);
     }, [dateFilterProvider]);
 
+    const richTextProvider = useCallback<RichTextComponentProvider>(
+        (richText) => {
+            const userSpecified = RichTextComponentProvider?.(richText);
+            return userSpecified ?? DefaultDashboardRichText;
+        },
+        [RichTextComponentProvider],
+    );
+
+    const richTextWidgetComponentSet = useMemo<RichTextWidgetComponentSet>(() => {
+        return DefaultDashboardRichTextComponentSetFactory(richTextProvider);
+    }, [richTextProvider]);
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -218,5 +237,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
+        richTextProvider,
+        richTextWidgetComponentSet,
     };
 };

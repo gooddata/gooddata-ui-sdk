@@ -1,11 +1,16 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
     IDashboardAttributeFilterPlaceholderProps,
     IDashboardDateFilterProps,
 } from "../filterBar/types.js";
-import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types.js";
+import {
+    IDashboardInsightProps,
+    IDashboardKpiProps,
+    IDashboardRichTextProps,
+    IDashboardWidgetProps,
+} from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
@@ -14,15 +19,17 @@ import {
     IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
     KpiDraggableItem,
+    RichTextDraggableItem,
 } from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
     DateFilterComponentProvider,
     InsightComponentProvider,
     KpiComponentProvider,
+    RichTextComponentProvider,
     WidgetComponentProvider,
 } from "../dashboardContexts/types.js";
-import { IInsightWidget, IKpiWidget } from "@gooddata/sdk-model";
+import { IInsightWidget, IKpiWidget, IRichTextWidget } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/index.js";
 
 /**
@@ -86,6 +93,14 @@ export type IKpiDraggingComponentProps = {
 /**
  * @internal
  */
+export type IRichTextDraggingComponentProps = {
+    itemType: "richText";
+    item: RichTextDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type ICustomDraggingComponentProps = {
     itemType: "custom";
     item: CustomDraggableItem;
@@ -105,10 +120,16 @@ export type DateFilterDraggingComponent = ComponentType<IDateFilterDraggingCompo
  * @internal
  */
 export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentProps>;
+
 /**
  * @internal
  */
 export type KpiDraggingComponent = ComponentType<IKpiDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponentProps>;
 
 /**
  * @internal
@@ -150,6 +171,14 @@ export type KpiDraggableComponent = {
 /**
  * @internal
  */
+export type RichTextDraggableComponent = {
+    DraggingComponent?: RichTextDraggingComponent;
+    type: "richText";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -165,6 +194,7 @@ export type DraggableComponent = {
         | DateFilterDraggableComponent
         | KpiDraggableComponent
         | InsightDraggableComponent
+        | RichTextDraggableComponent
         | CustomDraggableComponent;
 };
 
@@ -308,6 +338,19 @@ export type InsightWidgetComponentSet = CustomComponentBase<
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget<IInsightWidget>;
+
+/**
+ * Definition of RichText widget
+ * @internal
+ */
+export type RichTextWidgetComponentSet = CustomComponentBase<
+    IDashboardRichTextProps,
+    Parameters<RichTextComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
+    ConfigurableWidget<IRichTextWidget>;
 
 /**
  * Definition of widget

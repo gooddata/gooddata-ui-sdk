@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import cx from "classnames";
 import React, { useCallback, useEffect, useRef } from "react";
 
@@ -40,7 +40,14 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const { handleDragHoverStart } = useWidgetDragHoverHandlers();
 
     const [{ canDrop, isOver, item }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder", "kpi", "insight"],
+        [
+            "insightListItem",
+            "kpi-placeholder",
+            "insight-placeholder",
+            "kpi",
+            "insight",
+            "richText-placeholder",
+        ],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {

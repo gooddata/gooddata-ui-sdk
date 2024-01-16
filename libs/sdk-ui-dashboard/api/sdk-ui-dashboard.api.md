@@ -168,6 +168,7 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
+import { IDashboardRichTextProps as IDashboardRichTextProps_2 } from './types.js';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -224,6 +225,7 @@ import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
+import { IRichTextWidget } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -1073,6 +1075,9 @@ export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
+
+// @public (undocumented)
+export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
 
 // @public (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
@@ -2756,6 +2761,12 @@ export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Eleme
 // @internal (undocumented)
 export const DefaultDashboardMainContent: (_: IDashboardProps) => React_2.JSX.Element;
 
+// @public
+export const DefaultDashboardRichText: ComponentType<IDashboardRichTextProps_2>;
+
+// @internal (undocumented)
+export function DefaultDashboardRichTextComponentSetFactory(richTextProvider: RichTextComponentProvider): RichTextWidgetComponentSet;
+
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
@@ -2861,14 +2872,14 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | CustomWidgetDraggableItem | CustomDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextPlaceholderDraggableItem | CustomWidgetDraggableItem | CustomDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richText-placeholder" | "custom";
 
 // @internal (undocumented)
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
@@ -2892,6 +2903,8 @@ export type DraggableItemComponentTypeMapping = {
     "insight-placeholder": InsightPlaceholderDraggableItem;
     kpi: KpiDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
+    richText: RichTextDraggableItem;
+    "richText-placeholder": RichTextPlaceholderDraggableItem;
     custom: CustomDraggableItem;
 };
 
@@ -2908,7 +2921,7 @@ export type DraggableItemType = DraggableContentItemType | DraggableInternalItem
 export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
 
 // @internal (undocumented)
-export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | CustomWidgetDraggableItem;
+export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | CustomWidgetDraggableItem;
 
 // @internal (undocumented)
 export interface DraggingComponentProps {
@@ -3634,6 +3647,7 @@ export interface IDashboardCustomComponentProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
     // @alpha
     MenuButtonComponent?: CustomMenuButtonComponent;
+    RichTextComponentProvider?: OptionalRichTextComponentProvider;
     // @alpha
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
     // @internal
@@ -3909,6 +3923,27 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult>
     generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
     // (undocumented)
     name: DashboardQueryType;
+}
+
+// @public
+export interface IDashboardRichTextProps {
+    // @alpha
+    backend?: IAnalyticalBackend;
+    // @alpha (undocumented)
+    clientHeight?: number;
+    // @alpha (undocumented)
+    clientWidth?: number;
+    // @alpha
+    ErrorComponent: ComponentType<IErrorProps>;
+    // @alpha
+    LoadingComponent: ComponentType<ILoadingProps>;
+    // @alpha (undocumented)
+    onError?: OnError;
+    // @alpha (undocumented)
+    onLoadingChanged?: OnLoadingChanged;
+    widget: IRichTextWidget;
+    // @alpha
+    workspace?: string;
 }
 
 // @internal
@@ -4536,6 +4571,12 @@ export interface IResolvedFilterValues {
     dateFilters: ResolvedDateFilterValues;
 }
 
+// @internal (undocumented)
+export type IRichTextDraggingComponentProps = {
+    itemType: "richText";
+    item: RichTextDraggableItem;
+};
+
 // @alpha
 export function isAnyPlaceholderWidget(obj: unknown): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget;
 
@@ -4982,6 +5023,8 @@ export interface ISidebarProps {
     // @internal
     KpiWidgetComponentSet?: KpiWidgetComponentSet;
     // @internal
+    RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+    // @internal
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     // @internal
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
@@ -5016,6 +5059,12 @@ export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidg
 
 // @alpha
 export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+
+// @internal (undocumented)
+export function isRichTextDraggableItem(item: any): item is InsightDraggableItem;
+
+// @internal (undocumented)
+export function isRichTextPlaceholderDraggableItem(item: any): item is RichTextPlaceholderDraggableItem;
 
 // @internal
 export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean;
@@ -5531,6 +5580,9 @@ export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider
 
 // @public (undocumented)
 export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes ? (...args: TArgs) => TRes | undefined : never;
+
+// @public (undocumented)
+export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
 
 // @public (undocumented)
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
@@ -6159,6 +6211,31 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
+
+// @public (undocumented)
+export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextComponent;
+
+// @internal (undocumented)
+export type RichTextDraggableComponent = {
+    DraggingComponent?: RichTextDraggingComponent;
+    type: "richText";
+};
+
+// @internal (undocumented)
+export type RichTextDraggableItem = BaseDraggableMovingItem & {
+    type: "richText";
+};
+
+// @internal (undocumented)
+export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponentProps>;
+
+// @internal (undocumented)
+export type RichTextPlaceholderDraggableItem = BaseDraggableLayoutItem & {
+    type: "richText-placeholder";
+};
+
+// @internal
+export type RichTextWidgetComponentSet = CustomComponentBase<IDashboardRichTextProps, Parameters<RichTextComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IRichTextWidget>;
 
 // @internal (undocumented)
 export const SaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;

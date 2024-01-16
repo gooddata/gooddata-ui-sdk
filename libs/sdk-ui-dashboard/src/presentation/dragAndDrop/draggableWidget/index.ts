@@ -1,7 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 export * from "./DraggableInsightListItem.js";
 export * from "./DraggableKpiCreatePanelItem.js";
+export * from "./DraggableRichTextCreatePanelItem.js";
 export * from "./AddKpiWidgetButton.js";
+export * from "./AddRichTextWidgetButton.js";
 export * from "./SectionHotspot.js";
 export * from "./RowEndHotspot.js";
 export * from "./Hotspot.js";
@@ -17,3 +19,4 @@ export * from "./DashboardLayoutSectionBorder/index.js";
 export * from "./DefaultEmptyLayoutDropZoneBody.js";
 export * from "./InsightDraggingComponent.js";
 export * from "./KpiDraggingComponent.js";
+export * from "./RichTextDraggingComponent.js";

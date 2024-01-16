@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     BackendProvider,
     WorkspaceProvider,
@@ -69,6 +69,8 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
+        richTextProvider,
+        richTextWidgetComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -105,6 +107,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightMenuTitleComponentProvider={insightMenuTitleProvider}
                                         InsightMenuComponentProvider={insightMenuProvider}
                                         KpiComponentProvider={kpiProvider}
+                                        RichTextComponentProvider={richTextProvider}
                                         WidgetComponentProvider={widgetProvider}
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
@@ -132,6 +135,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         }
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
                                         KpiWidgetComponentSet={kpiWidgetComponentSet}
+                                        RichTextWidgetComponentSet={richTextWidgetComponentSet}
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
                                         DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={

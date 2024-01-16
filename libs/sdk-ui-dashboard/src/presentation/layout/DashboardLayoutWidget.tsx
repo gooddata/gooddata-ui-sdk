@@ -1,10 +1,11 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     IDashboardLayoutSizeByScreenSize,
     IInsight,
     ISettings,
     isInsightWidget,
     isKpiWidget,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
@@ -298,6 +299,23 @@ function createDraggableItem(
             title: widget.title,
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isRichTextWidget(widget)) {
+        // const insight = insights.get(widget.insight)!;
+        // const sizeInfo = getSizeInfo(settings, "kpi", insight);
+
+        return {
+            type: "richText",
+            // insight,
+            sectionIndex,
+            itemIndex,
+            title: widget.title,
+            isOnlyItemInSection,
+            // size: getFilledSize(size, sizeInfo),
+            size: {
+                gridHeight: 1,
+                gridWidth: 1,
+            },
         };
     } else {
         return {

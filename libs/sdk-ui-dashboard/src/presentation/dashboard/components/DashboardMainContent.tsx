@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { forwardRef, RefObject, useEffect } from "react";
 import {
     useDispatchDashboardCommand,
@@ -16,7 +16,14 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
 
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
     const [{ isOver }, dropRef] = useDashboardDrop(
-        ["insight", "insight-placeholder", "insightListItem", "kpi", "kpi-placeholder"],
+        [
+            "insight",
+            "insight-placeholder",
+            "insightListItem",
+            "kpi",
+            "kpi-placeholder",
+            "richText-placeholder",
+        ],
         {},
     );
 

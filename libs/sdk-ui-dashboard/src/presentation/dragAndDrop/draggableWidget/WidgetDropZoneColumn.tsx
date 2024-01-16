@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React, { useMemo } from "react";
@@ -44,7 +44,15 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
     const dispatch = useDashboardDispatch();
 
     const [collectedProps, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder", "kpi", "insight"],
+        [
+            "insightListItem",
+            "kpi-placeholder",
+            "insight-placeholder",
+            "kpi",
+            "insight",
+            "richText",
+            "richText-placeholder",
+        ],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {

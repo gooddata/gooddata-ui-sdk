@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React, { useEffect } from "react";
 import {
     useDispatchDashboardCommand,
@@ -19,7 +19,14 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
 
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
     const [{ isOver }, dropRef] = useDashboardDrop(
-        ["insight", "insight-placeholder", "insightListItem", "kpi", "kpi-placeholder"],
+        [
+            "insight",
+            "insight-placeholder",
+            "insightListItem",
+            "kpi",
+            "kpi-placeholder",
+            "richText-placeholder",
+        ],
         {},
     );
 

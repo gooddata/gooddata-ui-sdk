@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { useWidgetSelection } from "../../../model/index.js";
 import { CreationPanel } from "./CreationPanel.js";
@@ -17,6 +17,7 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
         KpiWidgetComponentSet,
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
+        RichTextWidgetComponentSet,
     } = props;
     const { deselectWidgets } = useWidgetSelection();
     const DeleteDropZoneComponent = props.DeleteDropZoneComponent!;
@@ -31,6 +32,7 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
                     KpiWidgetComponentSet={KpiWidgetComponentSet}
                     AttributeFilterComponentSet={AttributeFilterComponentSet}
                     InsightWidgetComponentSet={InsightWidgetComponentSet}
+                    RichTextWidgetComponentSet={RichTextWidgetComponentSet}
                 />
             </div>
             <DeleteDropZoneComponent />

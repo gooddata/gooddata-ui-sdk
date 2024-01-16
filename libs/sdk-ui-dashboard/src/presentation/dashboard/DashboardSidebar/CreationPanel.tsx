@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -22,6 +22,7 @@ import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
+    RichTextWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
@@ -31,6 +32,7 @@ interface ICreationPanelProps {
     KpiWidgetComponentSet?: KpiWidgetComponentSet;
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
+    RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
@@ -42,13 +44,17 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const KpiWidgetComponentSet = props.KpiWidgetComponentSet!;
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
+    const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             InsightWidgetComponentSet.creating,
+            RichTextWidgetComponentSet.creating,
         ]);
+
+        console.log("items", { items });
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
             return (
@@ -58,7 +64,13 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
                 />
             );
         });
-    }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
+    }, [
+        AttributeFilterComponentSet,
+        KpiWidgetComponentSet,
+        InsightWidgetComponentSet,
+        RichTextWidgetComponentSet,
+        supportsKpis,
+    ]);
 
     return (
         <div className={cx("configuration-panel creation-panel", className)}>
