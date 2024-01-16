@@ -1,6 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ComponentType } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+
+import { IDashboardAttributeFilterParentItem } from "../../../model/index.js";
 
 /**
  * @public
@@ -60,5 +62,4 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 /**
  * @internal
  */
-export type CustomDashboardAttributeFilterPlaceholderComponent =
-    ComponentType<IDashboardAttributeFilterPlaceholderProps>;
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;

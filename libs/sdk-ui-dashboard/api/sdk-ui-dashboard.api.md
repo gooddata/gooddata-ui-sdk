@@ -1051,9 +1051,6 @@ export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemCompo
 // @public (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
-// @internal (undocumented)
-export type CustomDashboardAttributeFilterPlaceholderComponent = ComponentType<IDashboardAttributeFilterPlaceholderProps>;
-
 // @alpha (undocumented)
 export type CustomDashboardContentComponent = ComponentType<IDashboardContentBaseProps>;
 
@@ -2358,7 +2355,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes | QueryMetricsAndFacts;
 
 // @beta
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -2409,7 +2406,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS";
 
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
@@ -4410,6 +4407,14 @@ export interface IMenuItemCommonProps {
     visible?: boolean;
 }
 
+// @alpha (undocumented)
+export interface IMetricsAndFacts {
+    // (undocumented)
+    facts: ICatalogFact[];
+    // (undocumented)
+    metrics: ICatalogMeasure[];
+}
+
 // @public
 export interface InitializeDashboard extends IDashboardCommand {
     // (undocumented)
@@ -5764,6 +5769,15 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
 }
 
+// @alpha (undocumented)
+export interface QueryMetricsAndFacts extends IDashboardQuery {
+    // (undocumented)
+    type: "GDC.DASH/QUERY.METRICS_AND_FACTS";
+}
+
+// @alpha
+export function queryMetricsAndFacts(correlationId?: string): QueryMetricsAndFacts;
+
 // @public (undocumented)
 export interface QueryProcessingErrorState {
     // (undocumented)
@@ -6686,6 +6700,9 @@ export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefine
 
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
@@ -8324,6 +8341,9 @@ export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, in
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
+
+// @internal (undocumented)
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

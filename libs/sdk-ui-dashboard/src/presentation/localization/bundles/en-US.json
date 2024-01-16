@@ -2320,5 +2320,55 @@
         "value": "No rich text content",
         "comment": "",
         "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.title": {
+        "value": "Filter values by",
+        "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.empty": {
+        "value": "Add a dashboard filter or metric to filter values.",
+        "comment": "Text shown when list of filters is empty.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addLink": {
+        "value": "Add",
+        "comment": "Link that adds a new filter.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.popupTitle": {
+        "value": "Add filter or metric",
+        "comment": "Title of popup with selection of filter or metric that will limit listed values.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.searchPlaceholder": {
+        "value": "Search…",
+        "comment": "Placeholder in a search field. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.mainTooltip": {
+        "value": "Select one or more dashboard filters to see only the related values in the filter menu.{br}{br}Select one or more metrics to display in the filter menu only the values with relevant (non-null) results for the selected metrics.",
+        "comment": "Explanation tooltip for section that configures filters that limit listed values in the dialog. Do not translate placeholders {br}, they will be replaced in run time with an empty line.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.sumFact": {
+        "value": "Sum of {fact}",
+        "comment": "List item that represents filtering metric which is a sum aggregation of particular data fact. Do not translate placeholder {fact}. It will be replaced with the name of the selected fact in the runtime.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.countAttribute": {
+        "value": "Count of {attribute}",
+        "comment": "List item that represents filtering metric which is a sum aggregation of particular data attribute. Do not translate placeholder {attribute}. It will be replaced with the name of the selected attribute in the runtime.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.filtersEmpty": {
+        "value": "No more dashboard filters to add.",
+        "comment": "Text shown when all dashboard filters were used and there is none offered in the list.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.unknownItem": {
+        "value": "Unknown item",
+        "comment": "The title of item in the list that does not have a title.",
+        "limit": 0
     }
 }

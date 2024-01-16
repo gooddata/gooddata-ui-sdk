@@ -310,6 +310,7 @@ export const DefaultDashboardAttributeFilter = (
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
                             showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
+                            validateElementsBy={filter.attributeFilter.validateElementsBy}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -332,6 +333,7 @@ export const DefaultDashboardAttributeFilter = (
         modeCategoryTitleText,
         intl,
         capabilities,
+        filter,
     ]);
 
     const CustomStatusBarComponent = useMemo(() => {

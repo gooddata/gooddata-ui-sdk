@@ -68,6 +68,7 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableADMultipleDateFilters = "enableADMultipleDateFilters",
     EnableKDRichText = "enableKDRichText",
+    EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
 }
 
 export type ITigerFeatureFlags = {
@@ -102,6 +103,7 @@ export type ITigerFeatureFlags = {
     enableMultipleDateFilters: typeof FeatureFlagsValues["enableMultipleDateFilters"][number];
     enableADMultipleDateFilters: typeof FeatureFlagsValues["enableADMultipleDateFilters"][number];
     enableKDRichText: typeof FeatureFlagsValues["enableKDRichText"][number];
+    enableAttributeFilterValuesValidation: typeof FeatureFlagsValues["enableAttributeFilterValuesValidation"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -136,6 +138,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDateFilters: false,
     enableADMultipleDateFilters: false,
     enableKDRichText: false,
+    enableAttributeFilterValuesValidation: false,
 };
 
 export const FeatureFlagsValues = {
@@ -174,4 +177,5 @@ export const FeatureFlagsValues = {
     enableMultipleDateFilters: [true, false] as const,
     enableADMultipleDateFilters: [true, false] as const,
     enableKDRichText: [true, false] as const,
+    enableAttributeFilterValuesValidation: [true, false] as const,
 };

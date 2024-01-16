@@ -87,7 +87,7 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "validate": "npm run eslint && npm run prettier-check",
         "validate-ci": "npm run eslint-ci && npm run prettier-check",
-        "play?": "# Default is the public proxy, other options: npm run play [sec,secure,stg,stg2,stg3,demo,developer]",
+        "play?": "# Default is the public proxy, other options: npm run play [sec,secure,stg,stg2,stg3,developer,public,reference,tiger-stg]",
         "play": "bash scripts/run-playground.sh",
         "playWithWdyr": "WDYR=true bash scripts/run-playground.sh",
         "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",

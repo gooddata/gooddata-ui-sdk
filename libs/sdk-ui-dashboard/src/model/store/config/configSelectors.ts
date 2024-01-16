@@ -626,3 +626,15 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSe
         return state.settings?.enableKDCrossFiltering ?? false;
     },
 );
+
+/**
+ * Returns whether KD attribute filter values validation/filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAttributeFilterValuesValidation ?? false;
+    },
+);
