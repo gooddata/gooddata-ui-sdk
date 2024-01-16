@@ -198,9 +198,9 @@ function* loadExistingDashboard(
         insights,
         config.settings,
         effectiveDateFilterConfig.config,
+        catalog.dateDatasets(),
         createDisplayFormMapFromCatalog(catalog),
         cmd.payload.persistedDashboard,
-        catalog.dateDatasets(),
     );
 
     const batch: BatchAction = batchActions(
