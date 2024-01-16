@@ -6672,6 +6672,9 @@ export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilt
 export const selectFilterContextDateFilterByDataSet: (dataSet: ObjRef) => (state: DashboardState) => IDashboardDateFilter | undefined;
 
 // @public
+export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]>;
+
+// @public
 export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefinition>;
 
 // @public

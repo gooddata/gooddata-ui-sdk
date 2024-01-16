@@ -117,6 +117,7 @@ export {
     selectFilterContextIdentity,
     selectFilterContextFilters,
     selectFilterContextDateFilter,
+    selectFilterContextDateFiltersWithDimension,
     selectFilterContextAttributeFilters,
     selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
