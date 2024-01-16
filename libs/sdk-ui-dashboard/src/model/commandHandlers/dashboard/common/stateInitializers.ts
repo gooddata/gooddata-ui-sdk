@@ -211,9 +211,9 @@ export function* actionsToInitializeExistingDashboard(
     insights: IInsight[],
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
+    dateDataSets: ICatalogDateDataset[],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
-    dateDataSets?: ICatalogDateDataset[],
 ): SagaIterator<Array<PayloadAction<any>>> {
     const sanitizedFilterContext = yield call(
         sanitizeFilterContext,

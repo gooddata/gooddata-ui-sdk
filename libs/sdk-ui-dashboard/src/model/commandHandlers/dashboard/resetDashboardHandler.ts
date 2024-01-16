@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ResetDashboard } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
@@ -18,6 +18,7 @@ import uniqWith from "lodash/uniqWith.js";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
+import { selectCatalogDateDatasets } from "../../store/catalog/catalogSelectors.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -76,6 +77,9 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         const effectiveConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
         );
+        const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
+            selectCatalogDateDatasets,
+        );
 
         const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
 
@@ -86,6 +90,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             resolvedInsightsValues,
             settings,
             effectiveConfig,
+            dateDataSets,
         );
     } else {
         /*
