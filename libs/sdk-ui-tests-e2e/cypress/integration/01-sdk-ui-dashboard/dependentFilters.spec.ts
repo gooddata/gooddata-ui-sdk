@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
 import { TopBar } from "../../tools/dashboards";
@@ -226,9 +226,16 @@ describe("Dependent filter", () => {
         "child filter can reduce to zero element by parent filter",
         { tags: "checklist_integrated_tiger" },
         () => {
+            cy.intercept("GET", "**/attributes**").as("attributes");
             topBar.enterEditMode().editButtonIsVisible(false);
             product.open().selectAttributesWithoutApply("TouchAll").apply();
-            stageName.open().elementsAreLoaded().hasNoRelevantMessage().showAllElementValuesIsVisible(true);
+            cy.wait("@attributes").then(() => {
+                stageName
+                    .open()
+                    .elementsAreLoaded()
+                    .hasNoRelevantMessage()
+                    .showAllElementValuesIsVisible(true);
+            });
             table.isEmpty();
         },
     );
@@ -246,19 +253,26 @@ describe("Dependent filter", () => {
     });
 
     it("can reload elements after removing parent filter", { tags: "checklist_integrated_tiger" }, () => {
+        cy.intercept("GET", "**/attributes**").as("attributes");
         topBar.enterEditMode().editButtonIsVisible(false);
         stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
-        cityFilter.open().elementsAreLoaded().hasFilterListSize(5);
-        stateFilter.removeFilter();
-        cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
+        cy.wait("@attributes").then(() => {
+            cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
+            stateFilter.removeFilter();
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
+        });
     });
 
     it(
         "should test a circle parent - child filter in edit mode",
         { tags: "checklist_integrated_tiger" },
         () => {
+            cy.intercept("GET", "**/attributes**").as("attributes");
+
             topBar.enterEditMode().editButtonIsVisible(false);
-            cityFilter.open().selectAttribute(["Portland"]).apply();
+            cy.wait("@attributes").then(() => {
+                cityFilter.open().selectAttribute(["Portland"]).apply();
+            });
 
             stateFilter
                 .open()
