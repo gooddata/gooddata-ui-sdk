@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
@@ -36,6 +36,21 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     height: {
         default: 22,
         min: 22,
+        max: 40,
+    },
+};
+
+/**
+ * @internal
+ */
+export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 2,
+        default: 6,
+    },
+    height: {
+        default: 22,
+        min: 6,
         max: 40,
     },
 };

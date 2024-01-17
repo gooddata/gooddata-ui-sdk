@@ -1402,6 +1402,11 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.richText": {
+        "value": "Rich Text",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.kpi.tooltip.no_measures._measure": {
         "value": "The Key Performance Indicator requires a calculated measure.",
         "comment": "",

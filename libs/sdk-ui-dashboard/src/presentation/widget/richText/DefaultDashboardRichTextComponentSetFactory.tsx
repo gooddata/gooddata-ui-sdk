@@ -18,6 +18,7 @@ export function DefaultDashboardRichTextComponentSetFactory(
             type: "richText",
         },
         creating: {
+            // TODO: RICH TEXT do we need to provide a placeholder at all? there is no "before" step (selecting measure for kpi, df for attribute or creating insight), you see the widget immediately
             CreatingPlaceholderComponent: DefaultDashboardRichTextPlaceholderWidget,
             CreatePanelListItemComponent: CreatableRichText,
             type: "richText-placeholder",

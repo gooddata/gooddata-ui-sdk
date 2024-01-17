@@ -22,6 +22,7 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
             "insightListItem",
             "kpi",
             "kpi-placeholder",
+            "richText",
             "richText-placeholder",
         ],
         {},

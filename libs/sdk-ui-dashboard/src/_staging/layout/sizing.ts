@@ -16,7 +16,6 @@ import {
     isWidget,
     IWidget,
     widgetType as getWidgetType,
-    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -26,6 +25,7 @@ import {
     IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap.js";
@@ -49,9 +49,10 @@ export function getSizeInfo(
     widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ): IVisualizationSizeInfo {
-    // TODO: RICH TEXT
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
+    } else if (widgetType === "richText") {
+        return RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
     }
 
     return getVisualizationSizeInfo(settings, widgetContent);
@@ -138,9 +139,8 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
             widgetContent = widget.kpi;
         } else if (isInsightWidget(widget)) {
             widgetContent = insightMap.get(widget.insight);
-        } else if (isRichTextWidget(widget)) {
-            // TODO: RICH TEXT
         }
+
         return getDashboardLayoutWidgetMinGridHeight(
             { enableKDWidgetCustomHeight: true },
             getWidgetType(widget),
@@ -160,8 +160,6 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
             widgetContent = widget.kpi;
         } else if (isInsightWidget(widget)) {
             widgetContent = insightMap.get(widget.insight);
-        } else if (isRichTextWidget(widget)) {
-            // TODO: RICH TEXT
         }
 
         return getDashboardLayoutWidgetMaxGridHeight(
@@ -194,13 +192,12 @@ export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): n
         widgetContent = widget.kpi;
     } else if (isInsightWidget(widget)) {
         widgetContent = insightMap.get(widget.insight);
-    } else if (isRichTextWidget(widget)) {
-        // TODO;
     }
+
     return getDashboardLayoutWidgetMinGridWidth(
         { enableKDWidgetCustomHeight: true },
         getWidgetType(widget),
-        widgetContent, // isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
+        widgetContent,
     );
 }
 
@@ -227,8 +224,6 @@ export function calculateWidgetMinHeight(
     if (isKpiWidget(widget)) {
         content = widget.kpi;
     }
-
-    // TODO: RICH TEXT
 
     return currentSize
         ? getDashboardLayoutItemHeight(currentSize) ||

@@ -43,6 +43,8 @@ export interface IDashboardRichTextProps {
      */
     widget: IRichTextWidget;
 
+    // TODO: RICH TEXT do we need loading changed, on error and so on? (probably yes once we add "variables")
+
     /**
      * Error component to use when insight rendering fails for any reason.
      *
@@ -67,36 +69,6 @@ export interface IDashboardRichTextProps {
      */
     clientWidth?: number;
 
-    // /**
-    //  * @alpha
-    //  */
-    // onDrill?: OnWidgetDrill;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onDrillDown?: OnDrillDownSuccess;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onDrillToInsight?: OnDrillToInsightSuccess;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onDrillToDashboard?: OnDrillToDashboardSuccess;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onDrillToAttributeUrl?: OnDrillToAttributeUrlSuccess;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onDrillToCustomUrl?: OnDrillToCustomUrlSuccess;
-
     /**
      * @alpha
      */
@@ -106,16 +78,6 @@ export interface IDashboardRichTextProps {
      * @alpha
      */
     onLoadingChanged?: OnLoadingChanged;
-
-    // /**
-    //  * @alpha
-    //  */
-    // onExportReady?: OnExportReady;
-
-    // /**
-    //  * @internal
-    //  */
-    // pushData?: (data: IPushData) => void;
 }
 
 ///

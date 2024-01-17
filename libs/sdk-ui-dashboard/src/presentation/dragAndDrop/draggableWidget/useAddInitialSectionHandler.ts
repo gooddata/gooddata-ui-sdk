@@ -14,6 +14,7 @@ import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextPlaceholderDraggableItem,
 } from "../types.js";
 import { newInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing.js";
@@ -37,7 +38,9 @@ export function useAddInitialSectionHandler() {
                     sizeInfo = getSizeInfo(settings, "kpi");
                 }
 
-                // TODO: RICH TEXT
+                if (isRichTextPlaceholderDraggableItem(item)) {
+                    sizeInfo = getSizeInfo(settings, "richText");
+                }
 
                 if (sizeInfo) {
                     dispatch(

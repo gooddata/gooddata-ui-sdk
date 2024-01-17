@@ -301,21 +301,15 @@ function createDraggableItem(
             size: getFilledSize(size, sizeInfo),
         };
     } else if (isRichTextWidget(widget)) {
-        // const insight = insights.get(widget.insight)!;
-        // const sizeInfo = getSizeInfo(settings, "kpi", insight);
+        const sizeInfo = getSizeInfo(settings, "richText");
 
         return {
             type: "richText",
-            // insight,
             sectionIndex,
             itemIndex,
             title: widget.title,
             isOnlyItemInSection,
-            // size: getFilledSize(size, sizeInfo),
-            size: {
-                gridHeight: 1,
-                gridWidth: 1,
-            },
+            size: getFilledSize(size, sizeInfo),
         };
     } else {
         return {

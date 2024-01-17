@@ -86,13 +86,6 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     const dashboardItemClasses = `s-dash-item-${index}`;
 
     if (isWidget(widget)) {
-        console.log("DefaultDashboardWidget", {
-            widget,
-            isInsightWidget: isInsightWidget(widget),
-            isKpiWidget: isKpiWidget(widget),
-            isRichTextWidget: isRichTextWidget(widget),
-        });
-        //
         let renderWidget = null;
         if (isInsightWidget(widget)) {
             renderWidget = (

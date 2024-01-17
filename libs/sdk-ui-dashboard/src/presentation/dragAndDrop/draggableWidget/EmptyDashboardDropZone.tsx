@@ -39,13 +39,11 @@ export const EmptyDashboardDropZone: React.FC = () => {
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(0);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(0);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(0);
-    // TODO: RICH TEXT
 
     const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder", "richText-placeholder"],
         {
             drop: (item) => {
-                console.log("drop zone item drop?", { item });
                 if (isInsightDraggableListItem(item)) {
                     handleInsightListItemDrop(item.insight);
                 }

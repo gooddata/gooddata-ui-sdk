@@ -9,6 +9,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextDraggableItem,
     isRichTextPlaceholderDraggableItem,
 } from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
@@ -66,9 +67,12 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 if (isRichTextPlaceholderDraggableItem(item)) {
                     handleRichTextPlaceholderDrop();
                 }
-                //
 
-                if (isInsightDraggableItem(item) || isKpiDraggableItem(item)) {
+                if (
+                    isInsightDraggableItem(item) ||
+                    isKpiDraggableItem(item) ||
+                    isRichTextDraggableItem(item)
+                ) {
                     handleWidgetDrop(item);
                 }
             },

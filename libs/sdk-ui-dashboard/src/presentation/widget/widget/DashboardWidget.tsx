@@ -56,8 +56,6 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return LoadingDashboardPlaceholderWidget;
         }
 
-        /// Rich Text
-
         if (isKpiPlaceholderWidget(widget) && KpiWidgetComponentSet.creating) {
             return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent;
         }

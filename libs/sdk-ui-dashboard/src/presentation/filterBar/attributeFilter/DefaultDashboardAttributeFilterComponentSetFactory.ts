@@ -5,8 +5,6 @@ import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop/index
 import { AttributesDropdown } from "./addAttributeFilter/index.js";
 import { CreatableAttributeFilter } from "./CreatableAttributeFilter.js";
 
-//
-
 /**
  * @internal
  */

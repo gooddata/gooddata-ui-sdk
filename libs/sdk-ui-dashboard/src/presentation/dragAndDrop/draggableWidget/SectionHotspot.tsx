@@ -65,10 +65,10 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isRichTextPlaceholderDraggableItem(item)) {
                     handleRichTextPlaceholderDrop();
                 }
-                if (isKpiDraggableItem(item)) {
+                if (isRichTextDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
-                if (isRichTextDraggableItem(item)) {
+                if (isKpiDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {

@@ -25,6 +25,7 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
             "insightListItem",
             "kpi",
             "kpi-placeholder",
+            "richText",
             "richText-placeholder",
         ],
         {},

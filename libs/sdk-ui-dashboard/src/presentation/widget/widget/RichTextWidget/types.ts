@@ -7,6 +7,7 @@ export interface IDefaultDashboardRichTextWidgetProps {
     screen: ScreenSize;
     dashboardItemClasses: string;
 
+    // TODO: RICH TEXT do we need loading changed, on error and so on? (probably yes once we add "variables")
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
 }

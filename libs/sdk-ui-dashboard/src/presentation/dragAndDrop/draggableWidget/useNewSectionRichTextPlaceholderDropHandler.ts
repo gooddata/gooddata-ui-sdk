@@ -12,10 +12,13 @@ import {
     addLayoutSection,
 } from "../../../model/index.js";
 import { idRef } from "@gooddata/sdk-model";
+import { v4 as uuidv4 } from "uuid";
 // import {
 //     INSIGHT_PLACEHOLDER_WIDGET_ID,
 //     newInsightPlaceholderWidget
 // } from "../../../widgets/index.js";
+
+// TODO: RICH TEXT
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number) {
     // const dispatch = useDashboardDispatch();
@@ -32,6 +35,7 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number
     });
 
     return useCallback(() => {
+        const id = uuidv4();
         const sizeInfo = getInsightPlaceholderSizeInfo(settings); // TODO: RICH TEXT sizing
         addNewSectionWithRichText(sectionIndex, {}, [
             {
@@ -42,7 +46,6 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-                // TODO: RICH TEXT
                 widget: {
                     type: "richText",
                     description: "",
@@ -50,9 +53,9 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number
                     drills: [],
                     ignoreDashboardFilters: [],
                     title: "",
-                    identifier: "richText",
-                    ref: idRef("richText"),
-                    uri: "/richText",
+                    identifier: id,
+                    ref: idRef(id),
+                    uri: `/${id}`,
                 },
             },
         ]);

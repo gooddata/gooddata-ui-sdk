@@ -16,6 +16,9 @@ import {
 // } from "../../../widgets/index.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 import { idRef } from "@gooddata/sdk-model";
+import { v4 as uuidv4 } from "uuid";
+
+// TODO: RICH TEXT
 
 export function useRichTextPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     // const dispatch = useDashboardDispatch();
@@ -35,6 +38,7 @@ export function useRichTextPlaceholderDropHandler(sectionIndex: number, itemInde
     });
 
     return useCallback(() => {
+        const id = uuidv4();
         const sizeInfo = getSizeInfo(settings, "kpi");
         createKpi(sectionIndex, itemIndex, {
             type: "IDashboardLayoutItem",
@@ -44,7 +48,6 @@ export function useRichTextPlaceholderDropHandler(sectionIndex: number, itemInde
                     gridWidth: sizeInfo.width.default!,
                 },
             },
-            // TODO: RICH TEXT
             widget: {
                 type: "richText",
                 description: "",
@@ -52,9 +55,9 @@ export function useRichTextPlaceholderDropHandler(sectionIndex: number, itemInde
                 drills: [],
                 ignoreDashboardFilters: [],
                 title: "",
-                identifier: "richText",
-                ref: idRef("richText"),
-                uri: "/richText",
+                identifier: id,
+                ref: idRef(id),
+                uri: `/${id}}`,
             },
         });
     }, [createKpi, itemIndex, sectionIndex, settings]);

@@ -1,14 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 import { Icon } from "@gooddata/sdk-ui-kit";
 import React from "react";
-// import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
-export interface AddRichTextPlaceholderProps {
-    disabled?: boolean; // TODO RICH-TEXT remove?
-}
-
-export const AddRichTextWidgetButton: React.FC<AddRichTextPlaceholderProps> = () => {
+export const AddRichTextWidgetButton: React.FC = () => {
     return (
         <div
             className={cx(
@@ -18,8 +14,7 @@ export const AddRichTextWidgetButton: React.FC<AddRichTextPlaceholderProps> = ()
             )}
         >
             <Icon.RichText />
-            Rich Text
-            {/* <FormattedMessage id="addPanel.kpi" /> */}
+            <FormattedMessage id="addPanel.richText" />
         </div>
     );
 };

@@ -50,11 +50,9 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
-            InsightWidgetComponentSet.creating,
+            InsightWidgetComponentSet.creating, // TODO: RICH TEXT capability
             RichTextWidgetComponentSet.creating,
         ]);
-
-        console.log("items", { items });
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
             return (
