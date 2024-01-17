@@ -1,0 +1,36 @@
+name: rw ~ Rush ~ Publish version
+description: 'TODO'
+on:
+  workflow_call:
+    inputs:
+      git-hub-token:
+        description: 'GitHub token with write access to the source branch'
+        required: true
+      source-branch:
+        required: true
+        description: 'The name of the source branch'
+        type: string
+
+jobs:
+  bump-version:
+    runs-on: infra1-medium
+    container:
+      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+          token: ${{ inputs.git-hub-token }} 
+      - name: Install rush
+        run: |
+          npm install -g @microsoft/rush
+      - name: Rush install 
+        run: |
+          rush install
+      - name: Rush build
+        run: |
+          rush build
+      - name: Rush publish
+        run: |
+          echo "TODO - publish to npm"

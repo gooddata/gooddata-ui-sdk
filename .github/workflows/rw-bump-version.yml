@@ -1,4 +1,4 @@
-name: Bump version
+name: rw ~ Rush ~ Bump version
 description: 'This workflow automatically bumps the version of the project based on the specified version bump type and prerelease ID. It also commits the changes to the source branch.'
 on:
   workflow_call:
