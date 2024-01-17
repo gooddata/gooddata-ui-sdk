@@ -1,7 +1,9 @@
 # (C) 2024 GoodData Corporation
 
+# Automated Code Drop Workflow: Initiates a code drop from the master branch to a new release branch. 
+# Manages version increments, setting the master to a new alpha preminor version and the release branch to a beta prerelease version. 
+# Notifies the team via Slack upon successful completion.
 name: Release ~ Code drop
-description: 'Automated Code Drop Workflow: Initiates a code drop from the master branch to a new release branch. Manages version increments, setting the master to a new alpha preminor version and the release branch to a beta prerelease version. Notifies the team via Slack upon successful completion.'
 on:
   workflow_dispatch:
       inputs:
@@ -33,7 +35,6 @@ jobs:
     permissions:
       contents: write
     with:
-        git-hub-token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
         source-branch: 'release'
         bump: 'prerelease'
         prerelease-id: 'beta'
@@ -45,7 +46,6 @@ jobs:
     permissions:
       contents: write
     with:
-        git-hub-token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
         source-branch: 'master'
         bump: 'preminor'
         prerelease-id: 'alpha'

@@ -1,11 +1,12 @@
+# (C) 2024 GoodData Corporation
+
+#This workflow automatically bumps the version of the project based on the specified version bump type and prerelease ID. 
+#It also commits the changes to the source branch.
+
 name: rw ~ Rush ~ Bump version
-description: 'This workflow automatically bumps the version of the project based on the specified version bump type and prerelease ID. It also commits the changes to the source branch.'
 on:
   workflow_call:
     inputs:
-      git-hub-token:
-        description: 'GitHub token with write access to the source branch'
-        required: true
       source-branch:
         required: true
         description: 'The name of the source branch'
@@ -35,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source-branch }}
-          token: ${{ inputs.git-hub-token }} 
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }} 
 
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
