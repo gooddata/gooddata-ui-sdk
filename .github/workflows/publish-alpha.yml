@@ -1,0 +1,17 @@
+# (C) 2024 GoodData Corporation
+
+name: Release ~ Publish alpha
+description: ''
+on:
+  workflow_dispatch:
+jobs:
+  publish-alpha:
+    runs-on: infra1-medium
+    permissions:
+      contents: write
+    steps:
+      - name: Publish alpha from master
+        uses: ./.github/workflows/rw-publish-version.yml
+        with:
+          source-branch: 'master'
+          git-hub-token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
