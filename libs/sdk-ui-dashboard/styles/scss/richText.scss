@@ -1,0 +1,44 @@
+// (C) 2024 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-rich-text-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.gd-rich-text {
+    width: 100%;
+    height: 100%;
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        line-height: 21px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: kit-variables.$measure_sequence_number_font;
+        color: kit-variables.$gd-color-text;
+        border: none;
+        resize: none;
+        outline: none;
+    }
+
+    // textarea:placeholder-shown {
+    //     text-overflow: ellipsis;
+    // }
+
+    // textarea::placeholder {
+    //     text-overflow: ellipsis;
+    //     white-space: nowrap;
+    //     overflow: hidden;
+    // }
+
+    .gd-rich-text-empty {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

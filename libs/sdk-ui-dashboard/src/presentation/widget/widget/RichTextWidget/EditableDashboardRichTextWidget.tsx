@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cx from "classnames";
 // import { IInsight } from "@gooddata/sdk-model";
 // import { VisType } from "@gooddata/sdk-ui";
@@ -12,6 +12,8 @@ import {
 // import { DashboardInsight } from "../../insight/index.js";
 // import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import {
+    selectIsDashboardSaving,
+    useDashboardSelector,
     //     selectIsDashboardSaving,
     //     useDashboardSelector,
     useWidgetSelection,
@@ -19,6 +21,8 @@ import {
 // import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
+import { RichText } from "./RichText.js";
+import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 // import { EditableDashboardRichTextWidgetHeader } from "./EditableDashboardRichTextWidgetHeader.js";
 
 export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = (props) => {
@@ -37,9 +41,10 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
     // const visType = insightVisualizationType(insight) as VisType;
 
     const {
-        // isSelectable,
+        isSelectable,
         isSelected,
-        // onSelected, closeConfigPanel, hasConfigPanelOpen
+        onSelected,
+        //closeConfigPanel, hasConfigPanelOpen
     } = useWidgetSelection(widgetRef(widget));
 
     // const { menuItems } = useEditableInsightMenu({ closeMenu: closeConfigPanel, insight, widget });
@@ -52,8 +57,20 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
     //     [InsightMenuComponentProvider, insight, widget],
     // );
 
-    // const isSaving = useDashboardSelector(selectIsDashboardSaving);
-    // const isEditable = !isSaving;
+    const isSaving = useDashboardSelector(selectIsDashboardSaving);
+    const isEditable = !isSaving;
+
+    const [isRichTextEditing, setIsRichTextEditing] = useState(true);
+    const [richText, setRichText] = useState<string>("");
+
+    useEffect(() => {
+        onSelected();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        isSelected ? setIsRichTextEditing(true) : setIsRichTextEditing(false);
+    }, [isSelected]);
 
     return (
         <DashboardItem
@@ -67,7 +84,15 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
             )}
             screen={screen}
         >
-            <div>Rich text edit mode</div>
+            <DashboardItemBase
+                isSelectable={isSelectable}
+                isSelected={isSelected}
+                onSelected={onSelected}
+                contentClassName={cx({ "is-editable": isEditable })}
+                visualizationClassName="gd-rich-text-wrapper"
+            >
+                {() => <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />}
+            </DashboardItemBase>
             {/* <DashboardItemVisualization
                 isSelectable={isSelectable}
                 isSelected={isSelected}
