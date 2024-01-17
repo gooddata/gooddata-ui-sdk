@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { FC, useMemo } from "react";
 import { XYCoord } from "react-dnd";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
@@ -31,6 +31,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
         InsightWidgetComponentSet,
         KpiWidgetComponentSet,
         DateFilterComponentSet,
+        RichTextWidgetComponentSet,
     } = useDashboardComponentsContext();
     const previewComponentsMap = useMemo<Partial<Record<DraggableContentItemType, any>>>(
         () => ({
@@ -38,12 +39,14 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             dateFilter: DateFilterComponentSet.dragging.DraggingComponent,
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
             kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
+            richText: RichTextWidgetComponentSet.dragging.DraggingComponent,
         }),
         [
             AttributeFilterComponentSet.dragging.DraggingComponent,
             InsightWidgetComponentSet.dragging.DraggingComponent,
             KpiWidgetComponentSet.dragging.DraggingComponent,
             DateFilterComponentSet.dragging.DraggingComponent,
+            RichTextWidgetComponentSet.dragging.DraggingComponent,
         ],
     );
 

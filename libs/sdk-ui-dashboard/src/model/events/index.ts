@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     DashboardInitialized,
     DashboardDeinitialized,
@@ -67,6 +67,7 @@ import {
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetRefreshed,
 } from "./insight.js";
+import { DashboardRichTextWidgetContentChanged } from "./richText.js";
 import {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
@@ -307,6 +308,13 @@ export {
 } from "./insight.js";
 
 export {
+    DashboardRichTextWidgetContentChanged,
+    DashboardRichTextWidgetContentChangedPayload,
+    isDashboardRichTextWidgetContentChanged,
+    richTextWidgetContentChanged,
+} from "./richText.js";
+
+export {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionStartedPayload,
     DashboardWidgetExecutionSucceeded,
@@ -506,6 +514,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportRequested
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
+    | DashboardRichTextWidgetContentChanged
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

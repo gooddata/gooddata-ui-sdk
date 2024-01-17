@@ -1,30 +1,21 @@
 // (C) 2020-2024 GoodData Corporation
 import React, { useEffect, useState } from "react";
 import cx from "classnames";
-// import { IInsight } from "@gooddata/sdk-model";
-// import { VisType } from "@gooddata/sdk-ui";
 
+import { DashboardItem } from "../../../presentationComponents/index.js";
 import {
-    DashboardItem,
-    // DashboardItemVisualization,
-    // getVisTypeCssClass,
-} from "../../../presentationComponents/index.js";
-// import { DashboardInsight } from "../../insight/index.js";
-// import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import {
+    changeRichTextWidgetContent,
+    eagerRemoveSectionItemByWidgetRef,
     selectIsDashboardSaving,
+    useDashboardDispatch,
     useDashboardSelector,
-    //     selectIsDashboardSaving,
-    //     useDashboardSelector,
     useWidgetSelection,
 } from "../../../../model/index.js";
-// import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
 import { RichText } from "./RichText.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { Button } from "@gooddata/sdk-ui-kit";
-// import { EditableDashboardRichTextWidgetHeader } from "./EditableDashboardRichTextWidgetHeader.js";
 
 export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = (props) => {
     return <EditableDashboardRichTextWidgetCore {...props} />;
@@ -36,34 +27,22 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
 const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
     widget,
     screen,
-    // onError, onLoadingChanged,
+    // onError,
+    // onLoadingChanged,
     dashboardItemClasses,
 }) => {
-    // const visType = insightVisualizationType(insight) as VisType;
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
 
-    const {
-        isSelectable,
-        isSelected,
-        onSelected,
-        //closeConfigPanel, hasConfigPanelOpen
-    } = useWidgetSelection(widgetRef(widget));
-
-    // const { menuItems } = useEditableInsightMenu({ closeMenu: closeConfigPanel, insight, widget });
-
-    // const { InsightMenuComponentProvider, ErrorComponent, LoadingComponent } =
-    //     useDashboardComponentsContext();
-
-    // const InsightMenuComponent = useMemo(
-    //     () => InsightMenuComponentProvider(insight, widget),
-    //     [InsightMenuComponentProvider, insight, widget],
-    // );
+    const dispatch = useDashboardDispatch();
 
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
 
     const [isRichTextEditing, setIsRichTextEditing] = useState(true);
-    const [richText, setRichText] = useState<string>("");
 
+    const [richText, setRichText] = useState<string>(widget?.content);
+
+    // TODO: RICH TEXT map to widget selection
     useEffect(() => {
         onSelected();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +59,6 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 "is-edit-mode",
-                // getVisTypeCssClass(widget.type, visType),
                 { "is-selected": isSelected },
             )}
             screen={screen}
@@ -93,6 +71,7 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                 visualizationClassName="gd-rich-text-wrapper"
             >
                 {() => (
+                    // TODO
                     <>
                         <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />
                         {isRichTextEditing ? (
@@ -102,66 +81,25 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                                     className="gd-button-link-dimmed gd-icon-circle-question"
                                 />
                                 <span>
-                                    <Button className="gd-button-link gd-button-icon-only gd-icon-trash" />
+                                    <Button
+                                        className="gd-button-link gd-button-icon-only gd-icon-trash"
+                                        onClick={() => {
+                                            dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref));
+                                        }}
+                                    />
                                     <span className="gd-divider" />
-                                    <Button className="gd-button-link gd-button-icon-only gd-icon-checkmark" />
+                                    <Button
+                                        className="gd-button-link gd-button-icon-only gd-icon-checkmark"
+                                        onClick={() =>
+                                            dispatch(changeRichTextWidgetContent(widget.ref, richText))
+                                        }
+                                    />
                                 </span>
                             </div>
                         ) : null}
                     </>
                 )}
             </DashboardItemBase>
-            {/* <DashboardItemVisualization
-                isSelectable={isSelectable}
-                isSelected={isSelected}
-                onSelected={onSelected}
-                renderHeadline={(clientHeight) =>
-                    !widget.configuration?.hideTitle && (
-                        <EditableDashboardRichTextWidgetHeader
-                            clientHeight={clientHeight}
-                            widget={widget}
-                            insight={insight}
-                        />
-                    )
-                }
-                renderAfterContent={() => {
-                    return (
-                        <>
-                            {!!isSelected && (
-                                <div
-                                    className="dash-item-action dash-item-action-lw-options"
-                                    onClick={onSelected}
-                                />
-                            )}
-                            {!!hasConfigPanelOpen && (
-                                <InsightMenuComponent
-                                    insight={insight}
-                                    widget={widget}
-                                    isOpen={hasConfigPanelOpen}
-                                    onClose={closeConfigPanel}
-                                    items={menuItems}
-                                />
-                            )}
-                        </>
-                    );
-                }}
-                contentClassName={cx({ "is-editable": isEditable })}
-                visualizationClassName={cx({ "is-editable": isEditable })}
-            >
-                {({ clientHeight, clientWidth }) => (
-                    <DashboardInsight
-                        clientHeight={clientHeight}
-                        clientWidth={clientWidth}
-                        insight={insight}
-                        widget={widget}
-                        onExportReady={onExportReady}
-                        onLoadingChanged={onLoadingChanged}
-                        onError={onError}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
-                    />
-                )}
-            </DashboardItemVisualization> */}
         </DashboardItem>
     );
 };

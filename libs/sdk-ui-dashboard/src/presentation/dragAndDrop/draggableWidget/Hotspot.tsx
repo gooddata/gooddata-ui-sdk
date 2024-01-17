@@ -101,7 +101,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 return false;
             }
 
-            if (isInsightDraggableItem(item) || isKpiDraggableItem(item)) {
+            if (isInsightDraggableItem(item) || isKpiDraggableItem(item) || isRichTextDraggableItem(item)) {
                 return isEndingHotspot || item.sectionIndex !== sectionIndex || item.itemIndex !== itemIndex;
             }
 

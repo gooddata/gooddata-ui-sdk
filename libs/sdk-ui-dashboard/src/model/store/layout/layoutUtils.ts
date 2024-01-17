@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IDashboardLayoutSize,
     IDashboardLayout,
@@ -8,6 +8,7 @@ import {
     IWidget,
     isInsightWidget,
     isKpiWidget,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -54,7 +55,7 @@ export function isItemWithBaseWidget(
 ): obj is IDashboardLayoutItem<IWidget> {
     const widget = obj.widget;
 
-    return isInsightWidget(widget) || isKpiWidget(widget);
+    return isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget);
 }
 
 export function resizeInsightWidget(

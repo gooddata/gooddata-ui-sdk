@@ -14,7 +14,7 @@ const RICH_TEXT_PLACEHOLDER = `Add markdown text here...\n
 
 interface IRichTextProps {
     text: string;
-    onChange: (text: string) => void;
+    onChange?: (text: string) => void;
     editMode?: boolean;
     editPlaceholder?: string;
     emptyText?: string;
@@ -30,7 +30,11 @@ export const RichText: React.FC<IRichTextProps> = ({
     return (
         <div className="gd-rich-text-content">
             {editMode ? (
-                <RichTextEdit text={text} onChange={onChange} placeholder={editPlaceholder} />
+                <RichTextEdit
+                    text={text}
+                    onChange={(updatedText) => onChange?.(updatedText)}
+                    placeholder={editPlaceholder}
+                />
             ) : (
                 <RichTextView text={text} emptyText={emptyText} />
             )}
