@@ -23,6 +23,7 @@ import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
 import { RichText } from "./RichText.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
+import { Button } from "@gooddata/sdk-ui-kit";
 // import { EditableDashboardRichTextWidgetHeader } from "./EditableDashboardRichTextWidgetHeader.js";
 
 export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = (props) => {
@@ -91,7 +92,24 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                 contentClassName={cx({ "is-editable": isEditable })}
                 visualizationClassName="gd-rich-text-wrapper"
             >
-                {() => <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />}
+                {() => (
+                    <>
+                        <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />
+                        {isRichTextEditing ? (
+                            <div className="gd-rich-text-footer">
+                                <Button
+                                    value="Formatting options"
+                                    className="gd-button-link-dimmed gd-icon-circle-question"
+                                />
+                                <span>
+                                    <Button className="gd-button-link gd-button-icon-only gd-icon-trash" />
+                                    <span className="gd-divider" />
+                                    <Button className="gd-button-link gd-button-icon-only gd-icon-checkmark" />
+                                </span>
+                            </div>
+                        ) : null}
+                    </>
+                )}
             </DashboardItemBase>
             {/* <DashboardItemVisualization
                 isSelectable={isSelectable}

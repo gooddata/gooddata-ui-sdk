@@ -28,7 +28,7 @@ export const RichText: React.FC<IRichTextProps> = ({
     emptyText,
 }) => {
     return (
-        <div className="gd-rich-text">
+        <div className="gd-rich-text-content">
             {editMode ? (
                 <RichTextEdit text={text} onChange={onChange} placeholder={editPlaceholder} />
             ) : (
@@ -76,7 +76,7 @@ interface IRichTextViewProps {
 
 const RichTextView: React.FC<IRichTextViewProps> = ({ text, emptyText = RICH_TEXT_EMPTY }) => {
     if (!text) {
-        return <div className="gd-rich-text-empty">{emptyText}</div>;
+        return <div className="gd-rich-text-content-empty">{emptyText}</div>;
     }
 
     return <Markdown>{text}</Markdown>;
