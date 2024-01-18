@@ -30,8 +30,8 @@ jobs:
                   method: jwt
                   path: jwt/github
                   role: ecr-push
-              env:
-                  NPM_PUBLISH_TOKEN: secret/v3/int/npm/rw-token
+                  secrets: |
+                    secret/v3/int/npm/rw-token secret | NPM_PUBLISH_TOKEN
             - name: Install rush
               run: |
                   npm install -g @microsoft/rush
