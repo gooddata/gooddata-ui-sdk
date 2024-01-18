@@ -1,36 +1,41 @@
+# (C) 2024 GoodData Corporation
+
 name: rw ~ Rush ~ Publish version
-description: 'TODO'
 on:
-  workflow_call:
-    inputs:
-      git-hub-token:
-        description: 'GitHub token with write access to the source branch'
-        required: true
-      source-branch:
-        required: true
-        description: 'The name of the source branch'
-        type: string
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The name of the source branch"
+                type: string
+            release-tag:
+                required: true
+                description: "The release NPM tag e.g. prerelease, latest, hotfix ..."
+                type: string
 
 jobs:
-  bump-version:
-    runs-on: infra1-medium
-    container:
-      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.source-branch }}
-          token: ${{ inputs.git-hub-token }} 
-      - name: Install rush
-        run: |
-          npm install -g @microsoft/rush
-      - name: Rush install 
-        run: |
-          rush install
-      - name: Rush build
-        run: |
-          rush build
-      - name: Rush publish
-        run: |
-          echo "TODO - publish to npm"
+    publish-version:
+        runs-on: [infra1-medium]
+        container:
+            image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.source-branch }}
+                  token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+            - name: Install rush
+              run: |
+                  npm install -g @microsoft/rush
+            - name: Rush install
+              run: |
+                  rush install
+            - name: Rush build
+              run: |
+                  rush build
+            - name: Rush publish dry run
+              run: |
+                  rush publish --include-all --version-policy sdk --set-access-level public
+            - name: Rush publish
+              run: |
+                  echo "Publishing to NPM"
