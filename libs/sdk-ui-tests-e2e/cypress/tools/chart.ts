@@ -45,7 +45,7 @@ export class Chart {
         this.getHighchartsContainer()
             .find(`.highcharts-series.highcharts-series-${seriesIndex} .highcharts-point`)
             .eq(pointIndex)
-            .click({ force: true });
+            .click();
         return this;
     }
 

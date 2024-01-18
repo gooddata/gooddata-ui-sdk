@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import React, { useEffect, useState } from "react";
 import {
@@ -25,7 +25,8 @@ import {
 interface IBarChartDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;
 }
-
+const measures = [Won, Amount];
+const viewBy = [Product.Name, Region];
 const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
     const { drillableItems } = props;
 
@@ -42,8 +43,8 @@ const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
             <BarChart
                 backend={backend}
                 workspace={workspace}
-                measures={[Amount, Won]}
-                viewBy={[Product.Name, Region]}
+                measures={measures}
+                viewBy={viewBy}
                 onDrill={setLastEvent}
                 drillableItems={drillableItems}
             />
