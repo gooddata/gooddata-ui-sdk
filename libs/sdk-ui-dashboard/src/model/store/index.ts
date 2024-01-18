@@ -21,6 +21,7 @@ export {
     selectSupportsSingleSelectDependentFilters,
     selectSupportsCrossFiltering,
     selectSupportsMultipleDateFilters,
+    selectSupportsRichTextWidgets,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {

@@ -7105,6 +7105,9 @@ export const selectSupportsMultipleDateFilters: DashboardSelector<boolean>;
 export const selectSupportsObjectUris: DashboardSelector<boolean>;
 
 // @internal
+export const selectSupportsRichTextWidgets: DashboardSelector<boolean>;
+
+// @internal
 export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolean>;
 
 // @internal

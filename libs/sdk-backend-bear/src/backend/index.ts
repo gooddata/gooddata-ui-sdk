@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { getFactory as createSdk, SDK, CachingConfiguration, withCaching } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
@@ -100,6 +100,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsSingleSelectDependentFilters: false,
     supportsCrossFiltering: false,
     supportsMultipleDateFilters: false,
+    supportsRichTextWidgets: false,
 };
 
 /**
