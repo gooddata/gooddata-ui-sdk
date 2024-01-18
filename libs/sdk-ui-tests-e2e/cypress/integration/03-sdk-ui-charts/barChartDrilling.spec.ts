@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Chart } from "../../tools/chart";
 
@@ -40,7 +40,7 @@ describe("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
 
             cy.get(lastEventSelector).should("have.text", "null");
 
-            chart.clickSeriesPoint(0, 0);
+            chart.clickSeriesPoint(1, 0);
 
             cy.get(lastEventSelector).contains(/CompuSci/);
         });
