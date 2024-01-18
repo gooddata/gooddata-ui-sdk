@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     SortDirection,
     ObjRef,
@@ -249,6 +249,17 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
      * @returns element query
      */
     withMeasures(measures: IMeasure[]): IElementsQuery;
+
+    /**
+     * Sets the catalog objects based on which the elements are validated, i.e., if set, only the elements
+     * that are available with these metrics, attributes, etc. are returned.
+     *
+     * Note that this functionality is not supported by every backend.
+     *
+     * @param validateBy - metric, attributes, or other objects the elements are validated by.
+     * @returns element query
+     */
+    withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery;
 
     /**
      * Allows to specify advanced options for the elements query.

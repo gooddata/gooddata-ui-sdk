@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     ElementsQueryOptionsElementsSpecification,
     IElementsQueryAttributeFilter,
@@ -9,6 +9,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
@@ -52,6 +53,7 @@ export interface ILoadElementsOptions {
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingMeasures?: IMeasure[];
     limitingDateFilters?: IRelativeDateFilter[];
+    limitingValidationItems?: ObjRef[];
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
     excludePrimaryLabel?: boolean;
@@ -196,6 +198,18 @@ export interface IAttributeElementLoader {
     setLimitingMeasures(measures: IMeasure[]): void;
 
     /**
+     * Set the validation items to filter the upcoming attribute element loads.
+     *
+     * @remarks
+     * When you change the options for the attribute element loads, you should call initial elements page load.
+     *
+     * Throws error when the backend implementation does not support elements validation filtering.
+     *
+     * @param validateBy - measures to use.
+     */
+    setLimitingValidationItems(validateBy: ObjRef[]): void;
+
+    /**
      * Set the attribute filters to filter the upcoming attribute element loads.
      *
      * @remarks
@@ -246,6 +260,11 @@ export interface IAttributeElementLoader {
      * Returns the current attribute filters used to filter the attribute element loads.
      */
     getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
+
+    /**
+     * Return the current validation items used to filter the attribute element loads.
+     */
+    getLimitingValidationItems(): ObjRef[];
 
     /**
      * Returns the current date filters used to filter the attribute element loads.

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -43,6 +43,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             attributeFilters?: IElementsQueryAttributeFilter[];
             dateFilters?: IRelativeDateFilter[];
             measures?: IMeasure[];
+            validateBy?: ObjRef[];
         } = {},
     ) {}
 
@@ -71,6 +72,13 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
         return this.createNew(this.decorated.withMeasures(measures), {
             ...this.settings,
             measures,
+        });
+    }
+
+    public withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery {
+        return this.createNew(this.decorated.withAvailableElementsOnly(validateBy), {
+            ...this.settings,
+            validateBy,
         });
     }
 
@@ -105,6 +113,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             attributeFilters?: IElementsQueryAttributeFilter[];
             dateFilters?: IRelativeDateFilter[];
             measures?: IMeasure[];
+            validateBy?: ObjRef[];
         },
     ): IElementsQuery;
 }

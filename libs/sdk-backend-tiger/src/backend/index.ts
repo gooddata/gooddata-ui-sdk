@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
 import { invariant } from "ts-invariant";
 import {
@@ -97,6 +97,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsSingleSelectDependentFilters: true,
     supportsCrossFiltering: true,
     supportsMultipleDateFilters: true,
+    supportsAttributeFilterElementsLimiting: true,
 };
 
 /**

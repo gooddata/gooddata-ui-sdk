@@ -30,6 +30,8 @@ exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if s
 
 exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
 
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingValidationItems() was set before the load 1`] = `[Invariant Violation: Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first.]`;
+
 exports[`AttributeFilterHandler > loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback > with parameters 1`] = `
 [
   {
@@ -83,6 +85,7 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was successful sho
       "limitingAttributeFilters": [],
       "limitingDateFilters": [],
       "limitingMeasures": [],
+      "limitingValidationItems": [],
       "offset": 2,
       "order": undefined,
       "search": "",

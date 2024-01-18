@@ -112,6 +112,39 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 ]
 `;
 
+exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered by setLimitingValidationItems() 1`] = `
+[
+  {
+    "title": "CompuSci",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+  },
+  {
+    "title": "Educationly",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  },
+  {
+    "title": "Explorer",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+  },
+  {
+    "title": "Grammar Plus",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+  },
+  {
+    "title": "PhoenixSoft",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+  },
+  {
+    "title": "TouchAll",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+  },
+  {
+    "title": "WonderKid",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+  },
+]
+`;
+
 exports[`AttributeFilterHandler > loadInitialElementsPage() should throw error if it's called before the initialization 1`] = `[Invariant Violation: Cannot call loadInitialElementsPage() before successful initialization.]`;
 
 exports[`AttributeFilterHandler > loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback > with parameters 1`] = `
@@ -187,6 +220,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful 
       "limitingAttributeFilters": [],
       "limitingDateFilters": [],
       "limitingMeasures": [],
+      "limitingValidationItems": [],
       "offset": 0,
       "order": undefined,
       "search": "",

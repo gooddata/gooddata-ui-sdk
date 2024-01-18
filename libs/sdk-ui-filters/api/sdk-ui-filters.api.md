@@ -123,6 +123,7 @@ export type AttributeFilterControllerData = {
     currentDisplayFormRef: ObjRef;
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
+    limitingValidationItems?: ObjRef[];
 };
 
 // @internal (undocumented)
@@ -307,6 +308,7 @@ export interface IAttributeElementLoader {
     getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
     getLimitingDateFilters(): IRelativeDateFilter[];
     getLimitingMeasures(): IMeasure[];
+    getLimitingValidationItems(): ObjRef[];
     getNextElementsPageError(): GoodDataSdkError | undefined;
     getNextElementsPageStatus(): AsyncOperationStatus;
     getOffset(): number;
@@ -343,6 +345,7 @@ export interface IAttributeElementLoader {
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
+    setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
     setSearch(search: string): void;
 }
@@ -397,6 +400,7 @@ export interface IAttributeFilterCoreProps {
     selectionMode?: DashboardAttributeFilterSelectionMode;
     staticElements?: IAttributeElement[];
     title?: string;
+    validateElementsBy?: ObjRef[];
     workspace?: string;
 }
 
@@ -795,6 +799,8 @@ export interface ILoadElementsOptions {
     limitingDateFilters?: IRelativeDateFilter[];
     // (undocumented)
     limitingMeasures?: IMeasure[];
+    // (undocumented)
+    limitingValidationItems?: ObjRef[];
     // (undocumented)
     offset?: number;
     // (undocumented)

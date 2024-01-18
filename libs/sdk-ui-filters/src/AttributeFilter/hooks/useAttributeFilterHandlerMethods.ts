@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
 
 /**
@@ -59,6 +59,7 @@ export const useAttributeFilterHandlerMethods = (handler: IMultiSelectAttributeF
         setLimitingAttributeFilters: handler.setLimitingAttributeFilters,
         setLimitingDateFilters: handler.setLimitingDateFilters,
         setLimitingMeasures: handler.setLimitingMeasures,
+        setLimitingValidationItems: handler.setLimitingValidationItems,
 
         changeSelection: handler.changeSelection,
         clearSelection: handler.clearSelection,

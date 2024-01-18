@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
@@ -79,6 +79,12 @@ export interface IDashboardAttributeFilter {
          * @beta
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Items that are limiting attribute elements available in this filter.
+         * @alpha
+         */
+        validateElementsBy?: ObjRef[];
 
         /**
          * Custom title of the attribute filter. If specified has priority over the default attribute filter title.

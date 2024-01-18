@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import compact from "lodash/compact.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -85,6 +86,7 @@ import {
     selectLimitingAttributeFiltersAttributes,
     selectInitTotalCountStatus,
     selectInitTotalCountError,
+    selectLimitingValidationItems,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -417,6 +419,14 @@ export class AttributeFilterReduxBridge {
 
     getLimitingMeasures = (): IMeasure[] => {
         return this.redux.select(selectLimitingMeasures);
+    };
+
+    setLimitingValidationItems = (validateBy: ObjRef[]): void => {
+        this.redux.dispatch(actions.setLimitingValidationItems({ validateBy }));
+    };
+
+    getLimitingValidationItems = (): ObjRef[] => {
+        return this.redux.select(selectLimitingValidationItems);
     };
 
     setLimitingAttributeFilters = (filters: IElementsQueryAttributeFilter[]): void => {

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { testBackend, testWorkspace } from "./backend.js";
 import { ReferenceMd, ReferenceRecordings, ReferenceMdExt } from "@gooddata/reference-workspace";

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -7,6 +7,7 @@ import {
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import { describe, it, expect } from "vitest";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("AttributeFilterHandler", () => {
     it("staticElements option should replace loaded elements on init", async () => {
@@ -46,6 +47,14 @@ describe("AttributeFilterHandler", () => {
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
+    it("staticElements option with setLimitingValidationItems() option should throw error on init() call", async () => {
+        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+
+        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
+        expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
+    });
+
     it("staticElements option with setLimitingDateFilters() option should throw error on init() call", async () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("static");
 
@@ -70,6 +79,17 @@ describe("AttributeFilterHandler", () => {
         await waitForAsync();
 
         attributeFilterHandler.setLimitingMeasures(limitingMeasures);
+        expect(attributeFilterHandler.loadInitialElementsPage).toThrowErrorMatchingSnapshot();
+    });
+
+    it("staticElements option with setLimitingValidationItems() option should throw error on loadInitialElementsPage() call", async () => {
+        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+
+        attributeFilterHandler.init();
+        await waitForAsync();
+
+        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
         expect(attributeFilterHandler.loadInitialElementsPage).toThrowErrorMatchingSnapshot();
     });
 

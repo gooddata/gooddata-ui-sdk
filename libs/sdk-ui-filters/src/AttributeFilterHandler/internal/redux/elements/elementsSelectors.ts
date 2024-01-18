@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IAttributeElement,
     IAttributeMetadataObject,
@@ -6,6 +6,7 @@ import {
     IMeasureDefinitionType,
     IRelativeDateFilter,
     SortDirection,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
@@ -146,6 +147,14 @@ export const selectLimitingMeasures: FilterSelector<IMeasure<IMeasureDefinitionT
 /**
  * @internal
  */
+export const selectLimitingValidationItems: FilterSelector<ObjRef[]> = createSelector(
+    selectState,
+    (state) => state.elements.currentOptions.limitingValidationItems,
+);
+
+/**
+ * @internal
+ */
 export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = createSelector(
     selectState,
     (state) => state.elements.currentOptions.limitingDateFilters,
@@ -162,6 +171,7 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
     selectLimitingAttributeFilters,
     selectLimitingMeasures,
     selectLimitingDateFilters,
+    selectLimitingValidationItems,
     (
         offset,
         limit,
@@ -170,12 +180,14 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
         limitingAttributeFilters,
         limitingMeasures,
         limitingDateFilters,
+        limitingValidationItems,
     ): ILoadElementsOptions => {
         return {
             limit,
             limitingAttributeFilters,
             limitingDateFilters,
             limitingMeasures,
+            limitingValidationItems,
             offset,
             order,
             search,
