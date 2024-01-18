@@ -77,15 +77,18 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                         <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />
                         {isRichTextEditing ? (
                             <div className="gd-rich-text-footer">
-                                <a
-                                    className="gd-button-link-dimmed gd-icon-circle-question"
-                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                >
-                                    <FormattedMessage id="richText.formattingOptions" />
-                                </a>
-                                <span>
+                                <div className="gd-rich-text-footer-options">
+                                    <div className="gd-hider-div" />
+                                    <a
+                                        className="gd-button-link-dimmed gd-icon-circle-question"
+                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        <FormattedMessage id="richText.formattingOptions" />
+                                    </a>
+                                </div>
+                                <div className="gd-rich-text-footer-actions">
                                     <Button
                                         className="gd-button-link gd-button-icon-only gd-icon-trash"
                                         onClick={() => {
@@ -99,7 +102,7 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                                             dispatch(changeRichTextWidgetContent(widget.ref, richText))
                                         }
                                     />
-                                </span>
+                                </div>
                             </div>
                         ) : null}
                     </>

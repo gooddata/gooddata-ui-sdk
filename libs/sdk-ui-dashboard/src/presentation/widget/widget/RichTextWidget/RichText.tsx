@@ -78,10 +78,14 @@ interface IRichTextViewProps {
     emptyText?: string;
 }
 
+const ImageComponent = (props: any) => <img style={{ maxWidth: "100%" }} {...props} />;
+
+const AnchorComponent = (props: any) => <a target="_blank" rel="noopener noreferrer" {...props} />;
+
 const RichTextView: React.FC<IRichTextViewProps> = ({ text, emptyText = RICH_TEXT_EMPTY }) => {
     if (!text) {
         return <div className="gd-rich-text-content-empty">{emptyText}</div>;
     }
 
-    return <Markdown>{text}</Markdown>;
+    return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{text}</Markdown>;
 };
