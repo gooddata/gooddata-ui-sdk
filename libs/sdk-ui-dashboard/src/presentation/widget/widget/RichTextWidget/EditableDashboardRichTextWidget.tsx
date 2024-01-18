@@ -16,6 +16,7 @@ import { widgetRef } from "@gooddata/sdk-model";
 import { RichText } from "./RichText.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { Button } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
 
 export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = (props) => {
     return <EditableDashboardRichTextWidgetCore {...props} />;
@@ -76,10 +77,14 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                         <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />
                         {isRichTextEditing ? (
                             <div className="gd-rich-text-footer">
-                                <Button
-                                    value="Formatting options"
+                                <a
                                     className="gd-button-link-dimmed gd-icon-circle-question"
-                                />
+                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    <FormattedMessage id="richText.formattingOptions" />
+                                </a>
                                 <span>
                                     <Button
                                         className="gd-button-link gd-button-icon-only gd-icon-trash"

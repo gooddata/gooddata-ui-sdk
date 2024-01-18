@@ -2300,5 +2300,10 @@
         "value": "This <strong>hierarchy</strong> is already used for <strong>the same</strong> drill down.",
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
+    },
+    "richText.formattingOptions": {
+        "value": "Formatting options",
+        "comment": "",
+        "limit": 0
     }
 }
