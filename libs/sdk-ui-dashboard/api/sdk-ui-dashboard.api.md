@@ -6720,6 +6720,9 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
 // @internal
 export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableKDRichText: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boolean>;
 

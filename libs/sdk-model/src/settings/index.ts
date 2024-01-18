@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -333,6 +333,11 @@ export interface ISettings {
      * Enable multiple date filters.
      */
     enableMultipleDateFilters?: boolean;
+
+    /**
+     * Enable multiple date filters.
+     */
+    enableKDRichText?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
