@@ -7,6 +7,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .gd-rich-text-content {
