@@ -23,7 +23,15 @@ jobs:
               uses: actions/checkout@v4
               with:
                   ref: ${{ inputs.source-branch }}
-                  token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+            - name: Get NPM_PUBLISH_TOKEN from Vault and set it as env variable
+              uses: hashicorp/vault-action@v2
+              with:
+                  url: "https://vault.ord1.infra.intgdc.com"
+                  method: jwt
+                  path: jwt/github
+                  role: ecr-push
+              env:
+                  NPM_PUBLISH_TOKEN: secret/v3/int/npm/rw-token
             - name: Install rush
               run: |
                   npm install -g @microsoft/rush
@@ -37,5 +45,7 @@ jobs:
               run: |
                   rush publish --include-all --version-policy sdk --set-access-level public
             - name: Rush publish
+              env:
+                  TAG: ${{ inputs.release-tag }}
               run: |
-                  echo "Publishing to NPM"
+                  rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public

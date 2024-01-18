@@ -4,11 +4,22 @@ name: Release ~ Publish alpha
 on:
     workflow_dispatch:
 jobs:
+    bump-version:
+        uses: ./.github/workflows/rw-bump-version.yml
+        permissions:
+            contents: write
+        secrets: inherit
+        with:
+            source-branch: "master"
+            bump: "prerelease"
+            prerelease-id: "alpha"
+
     publish-alpha:
+        needs: [bump-version]
         uses: ./.github/workflows/rw-publish-version.yml
         permissions:
             contents: write
         secrets: inherit
         with:
             source-branch: "master"
-            release-tag: "alpha"
+            release-tag: "prerelease"
