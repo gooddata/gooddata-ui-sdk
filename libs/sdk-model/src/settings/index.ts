@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -304,11 +304,6 @@ export interface ISettings {
      * IANA identifier of time zone in which the platform metadata are stored.
      */
     metadataTimeZone?: string;
-
-    /**
-     * Enable attribute hierarchies.
-     */
-    enableAttributeHierarchies?: boolean;
 
     /**
      * Enable new max bucket size items limit for Pivot Table

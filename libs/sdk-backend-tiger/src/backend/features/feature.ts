@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
 import { convertState } from "./state.js";
@@ -155,13 +155,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableNewHeadline",
             "BOOLEAN",
             FeatureFlagsValues.enableNewHeadline,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAttributeHierarchies,
-            "enableAttributeHierarchies",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAttributeHierarchies,
         ),
         ...loadFeature(
             features,

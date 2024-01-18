@@ -54,7 +54,6 @@ import {
     selectIsDrillDownEnabled,
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
-    selectEnableAttributeHierarchies,
     selectEnableKDCrossFiltering,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
@@ -421,21 +420,18 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
             selectDrillTargetsByWidgetRef(ref),
             selectAllCatalogAttributeHierarchies,
             selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
-            selectEnableAttributeHierarchies,
             selectSupportsAttributeHierarchies,
             selectInsightByWidgetRef(ref),
             (
                 availableDrillTargets,
                 catalogAttributeHierarchies,
                 ignoredDrillDownHierarchies,
-                enableAttributeHierarchies,
                 supportAttributeHierarchies,
                 widgetInsight,
             ) => {
                 const isWidgetEnableDrillDown =
                     !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
-                const enableDrillDown =
-                    enableAttributeHierarchies && supportAttributeHierarchies && isWidgetEnableDrillDown;
+                const enableDrillDown = supportAttributeHierarchies && isWidgetEnableDrillDown;
                 if (enableDrillDown) {
                     return getGlobalDrillDownAttributeHierarchyDefinitions(
                         catalogAttributeHierarchies,

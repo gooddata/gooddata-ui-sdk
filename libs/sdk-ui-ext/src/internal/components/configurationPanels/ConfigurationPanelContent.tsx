@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
@@ -107,16 +107,9 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderInteractionsSection(): React.ReactNode {
-        const {
-            featureFlags,
-            pushData,
-            properties,
-            propertiesMeta,
-            panelConfig,
-            configurationPanelRenderers,
-        } = this.props;
+        const { pushData, properties, propertiesMeta, panelConfig, configurationPanelRenderers } = this.props;
 
-        return featureFlags.enableAttributeHierarchies && panelConfig.supportsAttributeHierarchies ? (
+        return panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
                 controlsDisabled={this.isControlDisabled()}
                 properties={properties}

@@ -2453,7 +2453,6 @@ export interface ISettings {
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;
-    enableAttributeHierarchies?: boolean;
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableAxisNameViewByTwoAttributes?: boolean;

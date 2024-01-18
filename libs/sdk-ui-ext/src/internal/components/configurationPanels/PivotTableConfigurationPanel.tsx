@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -93,7 +93,7 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
             </ConfigDummySection>
         );
 
-        return featureFlags.enableAttributeHierarchies && panelConfig.supportsAttributeHierarchies ? (
+        return panelConfig.supportsAttributeHierarchies ? (
             <ConfigSection
                 id="canvas_section"
                 className="gd-table-canvas-section"

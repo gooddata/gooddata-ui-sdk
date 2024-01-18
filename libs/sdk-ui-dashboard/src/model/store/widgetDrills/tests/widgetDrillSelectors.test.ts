@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -31,7 +31,6 @@ describe("widgetDrillSelectors", () => {
     describe("selectGlobalDrillsDownAttributeHierarchyByWidgetRef", () => {
         const createInitialState = (
             params: {
-                enableAttributeHierarchies?: boolean;
                 supportsAttributeHierarchies?: boolean;
             } = {},
         ): any => {
@@ -39,13 +38,7 @@ describe("widgetDrillSelectors", () => {
                 catalog: {
                     attributeHierarchies: catalogAttributeHierarchies,
                 },
-                config: {
-                    config: {
-                        settings: {
-                            enableAttributeHierarchies: params?.enableAttributeHierarchies ?? false,
-                        },
-                    },
-                },
+                config: { config: {} },
                 backendCapabilities: {
                     backendCapabilities: {
                         supportsAttributeHierarchies: params?.supportsAttributeHierarchies ?? false,
@@ -80,17 +73,8 @@ describe("widgetDrillSelectors", () => {
             vi.clearAllMocks();
         });
 
-        it("should return empty array if enableAttributeHierarchies is off", () => {
-            const initialState = createInitialState({
-                enableAttributeHierarchies: false,
-                supportsAttributeHierarchies: true,
-            });
-            expect(selectGlobalDrillsDownAttributeHierarchyByWidgetRef(widgetRef)(initialState)).toEqual([]);
-        });
-
         it("should return empty array if supportsAttributeHierarchies is off", () => {
             const initialState = createInitialState({
-                enableAttributeHierarchies: true,
                 supportsAttributeHierarchies: false,
             });
             expect(selectGlobalDrillsDownAttributeHierarchyByWidgetRef(widgetRef)(initialState)).toEqual([]);
@@ -98,7 +82,6 @@ describe("widgetDrillSelectors", () => {
 
         it("should return expected result if all conditions are met", () => {
             const initialState = createInitialState({
-                enableAttributeHierarchies: true,
                 supportsAttributeHierarchies: true,
             });
 
@@ -109,7 +92,6 @@ describe("widgetDrillSelectors", () => {
 
         it("should return empty array if no drill targets are available", () => {
             const initialState = createInitialState({
-                enableAttributeHierarchies: true,
                 supportsAttributeHierarchies: true,
             });
             expect(
@@ -122,7 +104,6 @@ describe("widgetDrillSelectors", () => {
         it("should return empty array if the disableDrillDown is true", () => {
             isDisableDrillDown = true;
             const initialState = createInitialState({
-                enableAttributeHierarchies: true,
                 supportsAttributeHierarchies: true,
             });
             expect(
