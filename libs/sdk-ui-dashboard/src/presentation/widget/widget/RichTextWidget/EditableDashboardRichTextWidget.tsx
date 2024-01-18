@@ -7,6 +7,7 @@ import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
     selectIsDashboardSaving,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
@@ -98,9 +99,11 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                                     <span className="gd-divider" />
                                     <Button
                                         className="gd-button-link gd-button-icon-only gd-icon-checkmark"
-                                        onClick={() =>
-                                            dispatch(changeRichTextWidgetContent(widget.ref, richText))
-                                        }
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            dispatch(uiActions.clearWidgetSelection());
+                                            dispatch(changeRichTextWidgetContent(widget.ref, richText));
+                                        }}
                                     />
                                 </div>
                             </div>
