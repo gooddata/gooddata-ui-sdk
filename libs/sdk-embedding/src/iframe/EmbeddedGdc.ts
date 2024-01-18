@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     ILocalIdentifierQualifier as IBearLocalIdentifierQualifier,
     ObjQualifier as BearObjQualifier,
@@ -62,6 +62,12 @@ export interface IAbsoluteDateFilter {
      * @alpha
      */
     mode?: DashboardDateFilterConfigMode;
+    /**
+     * Local identifier of the date filter.
+     *
+     * @alpha
+     */
+    localIdentifier?: string;
 }
 
 /**
@@ -81,6 +87,12 @@ export interface IRelativeDateFilter {
      * @alpha
      */
     mode?: DashboardDateFilterConfigMode;
+    /**
+     * Local identifier of the date filter.
+     *
+     * @alpha
+     */
+    localIdentifier?: string;
 }
 
 /**
