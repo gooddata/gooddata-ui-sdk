@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
 import { convertState } from "./state.js";
@@ -225,6 +225,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMultipleDateFilters",
             "BOOLEAN",
             FeatureFlagsValues.enableMultipleDateFilters,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableADMultipleDateFilters,
+            "enableADMultipleDateFilters",
+            "BOOLEAN",
+            FeatureFlagsValues.enableADMultipleDateFilters,
         ),
     };
 }

@@ -2451,6 +2451,7 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
+    enableADMultipleDateFilters?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;

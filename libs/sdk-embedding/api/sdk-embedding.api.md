@@ -373,6 +373,8 @@ export interface IAbsoluteDateFilter {
         to: string;
     };
     // @alpha
+    localIdentifier?: string;
+    // @alpha
     mode?: DashboardDateFilterConfigMode;
 }
 
@@ -746,6 +748,8 @@ export interface IRankingFilter {
 
 // @public (undocumented)
 export interface IRelativeDateFilter {
+    // @alpha
+    localIdentifier?: string;
     // @alpha
     mode?: DashboardDateFilterConfigMode;
     // (undocumented)
