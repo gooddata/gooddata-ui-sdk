@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 export class BubbleTooltip {
     hasTooltip(tooltip: string) {
