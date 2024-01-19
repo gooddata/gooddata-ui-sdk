@@ -49,7 +49,6 @@ interface IAttributeFilterConfigurationProps {
     intl: IntlShape;
     modeCategoryTitleText: string;
     showConfigModeSection: boolean;
-    validateElementsBy?: ObjRef[];
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
@@ -68,7 +67,6 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         intl,
         modeCategoryTitleText,
         showConfigModeSection,
-        validateElementsBy,
     } = props;
     const theme = useTheme();
 
@@ -117,6 +115,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onSelectionModeUpdate,
         mode,
         onModeUpdate,
+        limitingItems,
+        onLimitingItemsUpdate,
     } = useAttributeFilterParentFiltering();
 
     const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
@@ -188,7 +188,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             />
             <LocalizedLimitValuesConfiguration
                 parentFilters={parents}
-                validateElementsBy={validateElementsBy}
+                validateElementsBy={limitingItems}
+                onUpdate={onLimitingItemsUpdate}
                 metricsAndFacts={metricsAndFacts!}
                 intl={intl}
             />

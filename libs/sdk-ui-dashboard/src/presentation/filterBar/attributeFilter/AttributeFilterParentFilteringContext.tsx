@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
 import { invariant } from "ts-invariant";
 import {
@@ -21,6 +21,7 @@ import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configurati
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
 import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
+import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
 
 /**
  * @internal
@@ -35,7 +36,7 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
         showResetTitle: boolean;
         defaultAttributeFilterTitle?: string;
         attributeFilterDisplayForm: ObjRef;
-    };
+    } & ReturnType<typeof useLimitingItemsConfiguration>;
 
 export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
     null as any,
@@ -142,6 +143,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onConfigurationClose: onModeClose,
     } = useModeConfiguration(currentFilter, DashboardAttributeFilterConfigModeValues.ACTIVE);
 
+    const {
+        limitingItems,
+        limitingItemsChanged,
+        onLimitingItemsUpdate,
+        onLimitingItemsChange,
+        onConfigurationClose: onLimitingItemsClose,
+    } = useLimitingItemsConfiguration(currentFilter);
+
     const onConfigurationSave = useCallback(() => {
         // the order is important to keep the app in valid state
         if (selectionMode === "single") {
@@ -154,6 +163,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange();
         onTitleChange();
         onModeChange();
+        onLimitingItemsChange();
     }, [
         selectionMode,
         onParentFiltersChange,
@@ -161,6 +171,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onTitleChange,
         onSelectionModeChange,
         onModeChange,
+        onLimitingItemsChange,
     ]);
 
     const onConfigurationClose = useCallback(() => {
@@ -169,7 +180,15 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onTitleClose();
         onSelectionModeClose();
         onModeClose();
-    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose, onSelectionModeClose, onModeClose]);
+        onLimitingItemsClose();
+    }, [
+        onParentFiltersClose,
+        onDisplayFormClose,
+        onTitleClose,
+        onSelectionModeClose,
+        onModeClose,
+        onLimitingItemsClose,
+    ]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
     const showResetTitle = title !== defaultAttributeFilterTitle;
@@ -207,6 +226,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 modeChanged,
                 onModeChange,
                 onModeUpdate,
+                limitingItems,
+                limitingItemsChanged,
+                onLimitingItemsUpdate,
+                onLimitingItemsChange,
             }}
         >
             {children}

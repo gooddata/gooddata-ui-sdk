@@ -218,6 +218,7 @@ export const DefaultDashboardAttributeFilter = (
                 onConfigurationClose,
                 selectionModeChanged,
                 modeChanged,
+                limitingItemsChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.trim().length > 0;
@@ -227,7 +228,8 @@ export const DefaultDashboardAttributeFilter = (
                       displayFormChanged ||
                       titleChanged ||
                       selectionModeChanged ||
-                      modeChanged
+                      modeChanged ||
+                      limitingItemsChanged
                   )
                 : true;
 
@@ -310,7 +312,6 @@ export const DefaultDashboardAttributeFilter = (
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
                             showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
-                            validateElementsBy={filter.attributeFilter.validateElementsBy}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -333,7 +334,6 @@ export const DefaultDashboardAttributeFilter = (
         modeCategoryTitleText,
         intl,
         capabilities,
-        filter,
     ]);
 
     const CustomStatusBarComponent = useMemo(() => {

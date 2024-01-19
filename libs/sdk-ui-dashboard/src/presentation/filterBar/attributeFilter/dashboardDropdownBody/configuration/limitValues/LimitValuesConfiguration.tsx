@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, IntlShape } from "react-intl";
 import { Typography, Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
-import { isObjRef, serializeObjRef, ObjRef } from "@gooddata/sdk-model";
+import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../types.js";
@@ -49,18 +49,25 @@ interface ILimitValuesConfigurationProps {
     parentFilters: IDashboardAttributeFilterParentItem[];
     validateElementsBy?: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
+    onUpdate: (items: ObjRef[]) => void;
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     parentFilters,
     validateElementsBy,
     metricsAndFacts,
+    onUpdate,
 }) => {
     const intl = useIntl();
     const [_isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(parentFilters, validateElementsBy, metricsAndFacts);
 
-    const onDelete = (_item: ValuesLimitingItem) => {};
+    const onDelete = (deletedItem: ValuesLimitingItem) => {
+        // parent filters are ignored till UI will get to support them later
+        if (isObjRef(deletedItem)) {
+            onUpdate(validateElementsBy!.filter((item) => !areObjRefsEqual(deletedItem, item)));
+        }
+    };
 
     return (
         <div>
@@ -109,6 +116,7 @@ export const LocalizedLimitValuesConfiguration: React.FC<ILocalizedLimitValuesCo
     parentFilters,
     validateElementsBy,
     metricsAndFacts,
+    onUpdate,
 }) => {
     const isAttributeFilterValuesValidationEnabled = useDashboardSelector(
         selectEnableAttributeFilterValuesValidation,
@@ -122,6 +130,7 @@ export const LocalizedLimitValuesConfiguration: React.FC<ILocalizedLimitValuesCo
                 parentFilters={parentFilters}
                 validateElementsBy={validateElementsBy}
                 metricsAndFacts={metricsAndFacts}
+                onUpdate={onUpdate}
             />
         </IntlWrapper>
     );

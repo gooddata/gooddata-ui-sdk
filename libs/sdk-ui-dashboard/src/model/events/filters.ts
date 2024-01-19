@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -557,6 +557,58 @@ export function dashboardAttributeConfigModeChanged(
 export const isDashboardAttributeFilterConfigModeChanged =
     eventGuard<DashboardAttributeFilterConfigModeChanged>(
         "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
+    );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link isDashboardAttributeFilterConfigLimitingItemsChanged} event.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigLimitingItemsChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of mode represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+/**
+ * This event is emitted when the attribute filter limiting items are changed.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED";
+    readonly payload: DashboardAttributeFilterConfigLimitingItemsChangedPayload;
+}
+
+export function dashboardAttributeConfigLimitingItemsChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+): DashboardAttributeFilterConfigLimitingItemsChanged {
+    return {
+        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",
+        ctx,
+        payload: {
+            filter,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigLimitingItemsChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterConfigLimitingItemsChanged =
+    eventGuard<DashboardAttributeFilterConfigLimitingItemsChanged>(
+        "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",
     );
 
 //

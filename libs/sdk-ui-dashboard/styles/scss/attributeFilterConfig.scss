@@ -194,6 +194,8 @@
 }
 
 .attribute-filter__limit__add-button {
+    padding: 0 0 0 5px;
+
     .gd-button-icon::before {
         line-height: 24px;
     }
@@ -206,6 +208,25 @@
     gap: 10px;
     padding: 3px 10px;
     font-size: 12px;
+
+    .attribute-filter__limit__item__delete {
+        display: none;
+        font-size: 12px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 12px;
+        color: kit-variables.$default-gd-color-text;
+    }
+
+    &:hover {
+        .attribute-filter__limit__item__delete {
+            display: block;
+        }
+    }
+
+    .attribute-filter__limit__item__delete:hover {
+        color: var(--gd-palette-error-base, #e54d42);
+    }
 }
 
 .attribute-filter__limit__item__title {

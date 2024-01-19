@@ -78,13 +78,21 @@ const LimitingItemTitle: React.FC<ILimitingItemProps> = ({ item, title }) => {
 };
 
 export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
-    const { isDisabled } = props;
+    const { isDisabled, onDelete } = props;
     const classNames = cx("attribute-filter__limit__item", {
         "attribute-filter__limit__item--disabled": isDisabled,
     });
     return (
         <div className={classNames}>
             <LimitingItemTitle {...props} />
+            <span
+                className={cx(
+                    "attribute-filter__limit__item__delete gd-icon-trash s-attribute-filter-limit-delete",
+                    { "is-disabled": isDisabled },
+                )}
+                onClick={isDisabled ? undefined : onDelete}
+                aria-label="Attribute filter limit delete"
+            />
         </div>
     );
 };
