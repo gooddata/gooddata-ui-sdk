@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import some from "lodash/some.js";
 import every from "lodash/every.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -127,10 +127,13 @@ function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
 
 export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
     if (filters) {
-        return some(filters.items, (item) => {
-            const interval = (item?.filters?.[0] as IDateFilter)?.interval ?? null;
-            return interval && interval.name !== ALL_TIME;
+        const filterBucketItems = filters?.items ?? [];
+        const dateFilter = filterBucketItems.find((filter: IFiltersBucketItem) => {
+            return filter?.attribute === "attr.datedataset";
         });
+
+        const interval = (dateFilter?.filters?.[0] as IDateFilter)?.interval ?? null;
+        return interval && interval.name !== ALL_TIME;
     }
 
     return false;

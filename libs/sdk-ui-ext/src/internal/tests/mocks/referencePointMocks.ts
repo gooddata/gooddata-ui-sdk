@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -267,6 +267,50 @@ export const samePeriodPrevYearFiltersBucket: IFilters = {
     items: [
         {
             localIdentifier: "f1",
+            type: "date",
+            attribute: "attr.datedataset",
+            filters: [
+                {
+                    overTimeComparisonType: "same_period_previous_year",
+                    attribute: "attr.datedataset",
+                    interval: {
+                        name: "last_year",
+                        granularity: "GDC.time.year",
+                        interval: ["-1", "-1"],
+                        type: "absolute",
+                    },
+                },
+            ],
+            aggregation: null,
+            dateDatasetRef,
+        },
+    ],
+};
+
+export const twoDateFiltersBucket: IFilters = {
+    localIdentifier: "filters",
+    items: [
+        {
+            localIdentifier: "f1",
+            type: "date",
+            attribute: "attr.datedataset",
+            filters: [
+                {
+                    overTimeComparisonType: "same_period_previous_year",
+                    attribute: "attr.datedataset",
+                    interval: {
+                        name: "all_time",
+                        granularity: "GDC.time.year",
+                        interval: [0, 0],
+                        type: "relative",
+                    },
+                },
+            ],
+            aggregation: null,
+            dateDatasetRef,
+        },
+        {
+            localIdentifier: "f2",
             type: "date",
             attribute: "attr.datedataset",
             filters: [
