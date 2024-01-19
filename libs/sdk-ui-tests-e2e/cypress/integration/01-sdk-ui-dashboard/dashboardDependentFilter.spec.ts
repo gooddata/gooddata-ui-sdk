@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -29,8 +29,8 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         stageName.open().selectAllValues().apply();
         product
-            .open()
             .waitFilteringFinished()
+            .open()
             .isAttributeItemFiltered(false)
             .getValueList()
             .should("deep.equal", [
@@ -45,8 +45,8 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         stageName.open().selectAttributeWithoutSearch("Conviction");
         product
-            .open()
             .waitFilteringFinished()
+            .open()
             .isAttributeItemFiltered(true)
             .getValueList()
             .should("deep.equal", [
@@ -65,8 +65,8 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         account.open().selectAttributeWithoutSearch(".decimal");
         stageName
-            .open()
             .waitFilteringFinished()
+            .open()
             .isAttributeItemFiltered(true)
             .getValueList()
             .should("deep.equal", ["Closed Won", "Closed Lost"]);
@@ -74,8 +74,8 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
         isWon.open().isAttributeItemFiltered(true).selectAttributeWithoutSearch("false");
 
         stageName
-            .open()
             .waitFilteringFinished()
+            .open()
             .isAttributeItemFiltered(true)
             .getValueList()
             .should("deep.equal", ["Closed Lost"]);
@@ -88,13 +88,14 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         account.open().selectAttributeWithoutSearch(".decimal");
         stageName
-            .open()
             .waitFilteringFinished()
+            .open()
             .isAttributeItemFiltered(true)
             .getValueList()
             .should("have.length", 2);
 
         account.removeFilter();
+        stageName.waitFilteringFinished();
         new Widget(0).waitTableLoaded();
         stageName.open().isAttributeItemFiltered(false).getValueList().should("have.length", 8);
     });

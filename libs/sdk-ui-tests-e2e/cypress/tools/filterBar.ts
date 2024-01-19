@@ -74,7 +74,7 @@ export class AttributeFilter {
     getValueList() {
         const result = [] as string[];
         cy.get(`.s-attribute-filter-list-item .input-label-text`).each(($li) => {
-            return result.push($li.text());
+            result.push($li.text());
         });
         return cy.wrap(result);
     }
