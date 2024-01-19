@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 import { selectAdhocDateHierarchies } from "../catalogSelectors.js";
@@ -7,7 +7,6 @@ import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSel
 describe("catalogSelectors", () => {
     const createInitialState = (
         params: {
-            enableAttributeHierarchies?: boolean;
             supportsAttributeHierarchies?: boolean;
         } = {},
     ): any => {
@@ -16,13 +15,7 @@ describe("catalogSelectors", () => {
                 dateHierarchyTemplates: defaultDateHierarchyTemplates,
                 dateDatasets: catalogDateDatasets,
             },
-            config: {
-                config: {
-                    settings: {
-                        enableAttributeHierarchies: params?.enableAttributeHierarchies ?? false,
-                    },
-                },
-            },
+            config: { config: {} },
             backendCapabilities: {
                 backendCapabilities: {
                     supportsAttributeHierarchies: params?.supportsAttributeHierarchies ?? false,
@@ -31,17 +24,8 @@ describe("catalogSelectors", () => {
         };
     };
 
-    it("should return empty array if enableAttributeHierarchies is off", () => {
-        const initialState = createInitialState({
-            enableAttributeHierarchies: false,
-            supportsAttributeHierarchies: true,
-        });
-        expect(selectAdhocDateHierarchies(initialState)).toEqual([]);
-    });
-
     it("should return empty array if supportsAttributeHierarchies is off", () => {
         const initialState = createInitialState({
-            enableAttributeHierarchies: true,
             supportsAttributeHierarchies: false,
         });
         expect(selectAdhocDateHierarchies(initialState)).toEqual([]);
@@ -49,7 +33,6 @@ describe("catalogSelectors", () => {
 
     it("should return adhoc date hierarchies", () => {
         const initialState = createInitialState({
-            enableAttributeHierarchies: true,
             supportsAttributeHierarchies: true,
         });
         expect(selectAdhocDateHierarchies(initialState)).toMatchSnapshot();

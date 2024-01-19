@@ -306,11 +306,6 @@ export interface ISettings {
     metadataTimeZone?: string;
 
     /**
-     * Enable attribute hierarchies.
-     */
-    enableAttributeHierarchies?: boolean;
-
-    /**
      * Enable new max bucket size items limit for Pivot Table
      */
     enablePivotTableIncreaseBucketSize?: boolean;

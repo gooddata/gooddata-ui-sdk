@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
@@ -228,9 +228,6 @@ describe("BaseChartConfigurationPanel", () => {
         it("should not render interactions section in configuration panel", async () => {
             createComponent({
                 ...defaultProps,
-                featureFlags: {
-                    enableAttributeHierarchies: false,
-                },
                 insight: insightWithSingleAttribute,
             });
 
@@ -240,9 +237,6 @@ describe("BaseChartConfigurationPanel", () => {
         it("should render interactions section in configuration panel", async () => {
             createComponent({
                 ...defaultProps,
-                featureFlags: {
-                    enableAttributeHierarchies: true,
-                },
                 insight: insightWithSingleAttribute,
                 panelConfig: {
                     supportsAttributeHierarchies: true,

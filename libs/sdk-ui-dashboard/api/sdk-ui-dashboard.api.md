@@ -6584,9 +6584,6 @@ export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefine
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableAttributeHierarchies: DashboardSelector<boolean>;
-
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 

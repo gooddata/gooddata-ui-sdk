@@ -158,13 +158,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAttributeHierarchies,
-            "enableAttributeHierarchies",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAttributeHierarchies,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableUnavailableItemsVisible,
             "enableUnavailableItemsVisible",
             "BOOLEAN",

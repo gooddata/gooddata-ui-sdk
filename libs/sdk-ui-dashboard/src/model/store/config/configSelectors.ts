@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -12,6 +12,7 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
 import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes.js";
 import { ILocale } from "@gooddata/sdk-ui";
+import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -537,18 +538,6 @@ export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelec
 });
 
 /**
- * Returns whether attribute hierarchies are enabled.
- *
- * @internal
- */
-export const selectEnableAttributeHierarchies: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAttributeHierarchies ?? true;
-    },
-);
-
-/**
  * Returns whether drill down is enabled.
  *
  * On Bear, drill down is driven by isKPIDashboardImplicitDrillDown.
@@ -558,7 +547,7 @@ export const selectEnableAttributeHierarchies: DashboardSelector<boolean> = crea
  */
 export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelector(
     selectEnableKPIDashboardImplicitDrillDown,
-    selectEnableAttributeHierarchies,
+    selectSupportsAttributeHierarchies,
     (isKPIDashboardImplicitDrillDownEnabled, isAttributeHierarchiesEnabled) => {
         return isKPIDashboardImplicitDrillDownEnabled || isAttributeHierarchiesEnabled;
     },

@@ -48,8 +48,6 @@ export enum TigerFeaturesNames {
     EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
     EnableNewHeadline = "enableNewHeadline",
     //boolean + possible values: enabled, disabled
-    EnableAttributeHierarchies = "enableAttributeHierarchies",
-    //boolean + possible values: enabled, disabled
     EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
     //boolean + possible values: enabled, disabled
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
@@ -92,7 +90,6 @@ export type ITigerFeatureFlags = {
     enableTableTotalRows: typeof FeatureFlagsValues["enableTableTotalRows"][number];
     enablePdmRemovalDeprecationPhase: typeof FeatureFlagsValues["enablePdmRemovalDeprecationPhase"][number];
     enableNewHeadline: typeof FeatureFlagsValues["enableNewHeadline"][number];
-    enableAttributeHierarchies: typeof FeatureFlagsValues["enableAttributeHierarchies"][number];
     enableUnavailableItemsVisible: typeof FeatureFlagsValues["enableUnavailableItemsVisible"][number];
     enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
@@ -126,7 +123,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
     enableNewHeadline: true,
-    enableAttributeHierarchies: true,
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
@@ -164,7 +160,6 @@ export const FeatureFlagsValues = {
     enableTableTotalRows: [true, false] as const,
     enablePdmRemovalDeprecationPhase: [true, false] as const,
     enableNewHeadline: [true, false] as const,
-    enableAttributeHierarchies: [true, false] as const,
     enableUnavailableItemsVisible: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,

@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { defineMessages } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -18,7 +18,6 @@ import {
     removeDrillsForInsightWidget,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectDrillTargetsByWidgetRef,
-    selectEnableAttributeHierarchies,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectSettings,
@@ -28,6 +27,7 @@ import {
     selectInsightByRef,
     addDrillDownForInsightWidget,
     modifyDrillDownForInsightWidget,
+    selectSupportsAttributeHierarchies,
 } from "../../../../../model/index.js";
 import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import {
@@ -70,9 +70,9 @@ const getUnusedDrillTargets = (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     mergedItems: IDrillConfigItem[],
     allowMultipleInteractionsPerAttributeAndMeasure: boolean,
-    enableAttributeHierarchies: boolean,
+    supportsAttributeHierarchies: boolean,
 ) => {
-    if (allowMultipleInteractionsPerAttributeAndMeasure && enableAttributeHierarchies) {
+    if (allowMultipleInteractionsPerAttributeAndMeasure && supportsAttributeHierarchies) {
         return {
             measures: availableDrillTargets?.measures,
             attributes: availableDrillTargets?.attributes,
@@ -125,7 +125,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const { addSuccess } = useToastMessage();
     const dispatch = useDashboardDispatch();
 
-    const enableAttributeHierarchies = useDashboardSelector(selectEnableAttributeHierarchies);
+    const supportsAttributeHierarchies = useDashboardSelector(selectSupportsAttributeHierarchies);
     const allowMultipleInteractionsPerAttributeAndMeasure = useDashboardSelector(
         selectAllowMultipleInteractionsPerAttributeAndMeasure,
     );
@@ -174,13 +174,13 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                 availableDrillTargets,
                 mergedItems,
                 allowMultipleInteractionsPerAttributeAndMeasure,
-                enableAttributeHierarchies,
+                supportsAttributeHierarchies,
             ),
         [
             availableDrillTargets,
             mergedItems,
             allowMultipleInteractionsPerAttributeAndMeasure,
-            enableAttributeHierarchies,
+            supportsAttributeHierarchies,
         ],
     );
 

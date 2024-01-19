@@ -1,11 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useIntl } from "react-intl";
 import { messages as uiMessages } from "@gooddata/sdk-ui";
 
 import { messages } from "../../../../locales.js";
 import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
 import {
-    selectEnableAttributeHierarchies,
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardDrillToInsight,
     selectEnableKPIDashboardDrillToURL,
@@ -29,7 +28,6 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
     const enableKPIDashboardDrillToDashboard = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
     const enableKPIDashboardDrillToInsight = useDashboardSelector(selectEnableKPIDashboardDrillToInsight);
     const enableKPIDashboardDrillToURL = useDashboardSelector(selectEnableKPIDashboardDrillToURL);
-    const enableAttributeHierarchies = useDashboardSelector(selectEnableAttributeHierarchies);
     const supportsAttributeHierarchies = useDashboardSelector(selectSupportsAttributeHierarchies);
 
     if (enableKPIDashboardDrillToDashboard) {
@@ -52,7 +50,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
         });
     }
 
-    if (enableAttributeHierarchies && supportsAttributeHierarchies) {
+    if (supportsAttributeHierarchies) {
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_DOWN,
             title: intl.formatMessage(messages.drillDownConfig),
