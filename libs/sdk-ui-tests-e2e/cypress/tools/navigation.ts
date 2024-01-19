@@ -1,6 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
-import { getHost, getBackend, getUserName, getPassword } from "../support/constants";
+import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 import { DashboardMenu } from "./dashboardMenu";
 
@@ -34,11 +34,6 @@ export function visitBoilerApp(workspaceSettings?: ISettings): void {
             win["customWorkspaceSettings"] = workspaceSettings;
         },
     });
-    if (getBackend() === "BEAR") {
-        cy.get(".s-login-login").type(getUserName());
-        cy.get(".s-login-password").type(getPassword());
-        cy.get(".s-login-button").click();
-    }
 }
 
 export function visitCopyOf(componentName: string) {
