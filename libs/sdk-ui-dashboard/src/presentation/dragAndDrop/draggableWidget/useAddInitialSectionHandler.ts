@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -14,6 +14,7 @@ import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
+    isRichTextDraggableListItem,
 } from "../types.js";
 import { newInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing.js";
@@ -35,6 +36,10 @@ export function useAddInitialSectionHandler() {
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     sizeInfo = getSizeInfo(settings, "kpi");
+                }
+
+                if (isRichTextDraggableListItem(item)) {
+                    sizeInfo = getSizeInfo(settings, "richText");
                 }
 
                 if (sizeInfo) {

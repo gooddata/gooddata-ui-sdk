@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IIconProps } from "./typings.js";
 
@@ -75,6 +75,7 @@ import { Invite } from "./icons/Invite.js";
 import { Funnel } from "./icons/InsightIcons/Funnel.js";
 import { Pyramid } from "./icons/InsightIcons/Pyramid.js";
 import { Reset } from "./icons/Reset.js";
+import { RichText } from "./icons/RichText.js";
 
 /**
  * @internal
@@ -153,6 +154,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Invite,
     Pyramid,
     Funnel,
+    RichText,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

@@ -334,6 +334,11 @@ export interface ISettings {
      */
     enableADMultipleDateFilters?: boolean;
 
+    /**
+     * Enables rich text widgets on dashboards.
+     */
+    enableKDRichText?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

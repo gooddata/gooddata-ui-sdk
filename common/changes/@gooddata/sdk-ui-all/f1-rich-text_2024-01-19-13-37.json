@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Added new RichText widget to render markdown on dashboard. It is currently only supported in GoodData.CN / GoodData Cloud and you must enable the `enableKDRichText` feature flag (for now it is disabled by default).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

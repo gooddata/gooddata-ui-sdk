@@ -21,6 +21,7 @@ export {
     selectSupportsSingleSelectDependentFilters,
     selectSupportsCrossFiltering,
     selectSupportsMultipleDateFilters,
+    selectSupportsRichTextWidgets,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
 export { ConfigState } from "./config/configState.js";
 export {
@@ -74,6 +75,7 @@ export {
     selectIsKDDependentFiltersEnabled,
     selectEnableKDCrossFiltering,
     selectEnableMultipleDateFilters,
+    selectEnableKDRichText,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";

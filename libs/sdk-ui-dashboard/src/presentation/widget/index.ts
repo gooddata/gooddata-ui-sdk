@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export {
     useWidgetFilters,
     useCustomWidgetExecutionDataView,
@@ -16,4 +16,5 @@ export * from "./insight/index.js";
 export * from "./insightMenu/index.js";
 export * from "./kpi/index.js";
 export * from "./kpiPlaceholder/index.js";
+export * from "./richText/index.js";
 export * from "./widget/index.js";

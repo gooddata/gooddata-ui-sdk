@@ -287,6 +287,11 @@ export interface IBackendCapabilities {
     supportsAttributeFilterElementsLimiting?: boolean;
 
     /**
+     * Indicates whether backend supports rich text widgets.
+     */
+    supportsRichTextWidgets?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

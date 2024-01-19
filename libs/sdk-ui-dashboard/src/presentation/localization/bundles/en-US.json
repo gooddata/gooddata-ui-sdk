@@ -1402,6 +1402,11 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.richText": {
+        "value": "Rich Text",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.kpi.tooltip.no_measures._measure": {
         "value": "The Key Performance Indicator requires a calculated measure.",
         "comment": "",
@@ -2294,6 +2299,26 @@
     "configurationPanel.drillConfig.alreadyUsedTooltip": {
         "value": "This <strong>hierarchy</strong> is already used for <strong>the same</strong> drill down.",
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
+        "limit": 0
+    },
+    "richText.formattingOptions": {
+        "value": "Formatting options",
+        "comment": "",
+        "limit": 0
+    },
+    "richText.deleteDialog.header": {
+        "value": "Delete rich text?",
+        "comment": "",
+        "limit": 0
+    },
+    "richText.deleteDialog.message": {
+        "value": "The rich text and all of its content will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "richText.emptyContent": {
+        "value": "No rich text content",
+        "comment": "",
         "limit": 0
     }
 }

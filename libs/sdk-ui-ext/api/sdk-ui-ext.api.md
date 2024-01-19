@@ -497,6 +497,9 @@ export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizatio
 // @public
 export function provideCreateRoot(createRoot: CreateRoot): void;
 
+// @internal (undocumented)
+export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
 // @public
 export interface Root {
     // (undocumented)

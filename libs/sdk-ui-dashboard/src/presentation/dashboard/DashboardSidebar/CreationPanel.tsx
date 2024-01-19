@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -12,6 +12,8 @@ import {
     useDashboardSelector,
     selectIsNewDashboard,
     selectSettings,
+    selectEnableKDRichText,
+    selectSupportsRichTextWidgets,
 } from "../../../model/index.js";
 import cx from "classnames";
 import {
@@ -22,6 +24,7 @@ import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
+    RichTextWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
@@ -31,23 +34,28 @@ interface ICreationPanelProps {
     KpiWidgetComponentSet?: KpiWidgetComponentSet;
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
+    RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
+    const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
+    const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
     const KpiWidgetComponentSet = props.KpiWidgetComponentSet!;
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
+    const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             InsightWidgetComponentSet.creating,
+            supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
@@ -58,7 +66,16 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
                 />
             );
         });
-    }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
+    }, [
+        AttributeFilterComponentSet,
+        KpiWidgetComponentSet,
+        InsightWidgetComponentSet,
+        RichTextWidgetComponentSet,
+        supportsKpis,
+        supportsRichText,
+        enableRichText,
+        WrapCreatePanelItemWithDragComponent,
+    ]);
 
     return (
         <div className={cx("configuration-panel creation-panel", className)}>

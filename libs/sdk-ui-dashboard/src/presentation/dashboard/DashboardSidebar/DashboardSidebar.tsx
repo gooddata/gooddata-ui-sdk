@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
@@ -15,6 +15,7 @@ export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
         KpiWidgetComponentSet,
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
+        RichTextWidgetComponentSet,
     } = useDashboardComponentsContext();
 
     return (
@@ -23,6 +24,7 @@ export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
             KpiWidgetComponentSet={KpiWidgetComponentSet}
             AttributeFilterComponentSet={AttributeFilterComponentSet}
             InsightWidgetComponentSet={InsightWidgetComponentSet}
+            RichTextWidgetComponentSet={RichTextWidgetComponentSet}
             WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
             WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
             DeleteDropZoneComponent={DeleteDropZoneComponent}

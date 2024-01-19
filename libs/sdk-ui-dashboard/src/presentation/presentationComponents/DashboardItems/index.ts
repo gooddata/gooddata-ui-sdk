@@ -1,5 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 export { DashboardItem } from "./DashboardItem.js";
+export { DashboardItemBase } from "./DashboardItemBase.js";
 export { DashboardItemContent } from "./DashboardItemContent.js";
 export { DashboardItemHeadline } from "./DashboardItemHeadline.js";
 export { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer.js";

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     CustomDashboardInsightComponent,
@@ -9,6 +9,7 @@ import {
     CustomDashboardWidgetComponent,
     CustomInsightBodyComponent,
     IInsightMenuItem,
+    CustomDashboardRichTextComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import {
@@ -26,6 +27,7 @@ import {
     ObjRef,
     IDashboard,
     IWorkspacePermissions,
+    IRichTextWidget,
 } from "@gooddata/sdk-model";
 import { ComponentType } from "react";
 
@@ -131,6 +133,16 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
  * @public
  */
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
+
+/**
+ * @public
+ */
+export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextComponent;
+
+/**
+ * @public
+ */
+export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
 
 /**
  * @public

@@ -1,17 +1,17 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
 
 import {
     useDashboardDispatch,
     moveSectionItemAndRemoveOriginalSectionIfEmpty,
 } from "../../../model/index.js";
-import { InsightDraggableItem, KpiDraggableItem } from "../types.js";
+import { InsightDraggableItem, KpiDraggableItem, RichTextDraggableItem } from "../types.js";
 
 export function useMoveWidgetDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();
 
     return useCallback(
-        (item: KpiDraggableItem | InsightDraggableItem) => {
+        (item: KpiDraggableItem | InsightDraggableItem | RichTextDraggableItem) => {
             let targetIndex = itemIndex;
 
             if (item.sectionIndex === sectionIndex) {

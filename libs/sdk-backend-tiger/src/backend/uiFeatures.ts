@@ -67,6 +67,7 @@ export enum TigerFeaturesNames {
     EnableMultipleDateFilters = "enableMultipleDateFilters",
     //boolean + possible values: enabled, disabled
     EnableADMultipleDateFilters = "enableADMultipleDateFilters",
+    EnableKDRichText = "enableKDRichText",
 }
 
 export type ITigerFeatureFlags = {
@@ -100,6 +101,7 @@ export type ITigerFeatureFlags = {
     enableKDCrossFiltering: typeof FeatureFlagsValues["enableKDCrossFiltering"][number];
     enableMultipleDateFilters: typeof FeatureFlagsValues["enableMultipleDateFilters"][number];
     enableADMultipleDateFilters: typeof FeatureFlagsValues["enableADMultipleDateFilters"][number];
+    enableKDRichText: typeof FeatureFlagsValues["enableKDRichText"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -133,6 +135,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDCrossFiltering: true,
     enableMultipleDateFilters: false,
     enableADMultipleDateFilters: false,
+    enableKDRichText: false,
 };
 
 export const FeatureFlagsValues = {
@@ -170,4 +173,5 @@ export const FeatureFlagsValues = {
     enableKDCrossFiltering: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
     enableADMultipleDateFilters: [true, false] as const,
+    enableKDRichText: [true, false] as const,
 };

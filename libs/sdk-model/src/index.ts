@@ -564,6 +564,9 @@ export {
     IInsightWidgetConfiguration,
     IInsightWidgetDescriptionConfiguration,
     InsightWidgetDescriptionSourceType,
+    IRichTextWidget,
+    IRichTextWidgetBase,
+    IRichTextWidgetDefinition,
 } from "./dashboard/analyticalWidgets.js";
 
 export {
@@ -651,6 +654,8 @@ export {
     isKpiWidget,
     isInsightWidgetDefinition,
     isInsightWidget,
+    isRichTextWidget,
+    isRichTextWidgetDefinition,
 } from "./dashboard/widget.js";
 
 export {

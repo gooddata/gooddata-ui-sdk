@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
 import { isObjRef, ObjRef } from "../objRef/index.js";
@@ -9,18 +9,20 @@ import {
     IInsightWidget,
     IAnalyticalWidget,
     AnalyticalWidgetType,
+    IRichTextWidget,
+    IRichTextWidgetDefinition,
 } from "./analyticalWidgets.js";
 
 /**
  * See {@link IWidget}]
  * @public
  */
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
 
 /**
  * @public
  */
-export type IWidget = IKpiWidget | IInsightWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
@@ -44,7 +46,9 @@ export function isWidget(obj: unknown): obj is IWidget {
 function hasWidgetProps(obj: unknown): boolean {
     return (
         !isEmpty(obj) &&
-        ((obj as IAnalyticalWidget).type === "kpi" || (obj as IAnalyticalWidget).type === "insight")
+        (["kpi", "richText", "insight"] as IAnalyticalWidget["type"][]).some(
+            (x) => (obj as IAnalyticalWidget).type === x,
+        )
     );
 }
 
@@ -143,4 +147,20 @@ export function isKpiWidget(obj: unknown): obj is IKpiWidget {
  */
 export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition {
     return isWidgetDefinition(obj) && (obj as IKpiWidget).type === "kpi";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IRichTextWidget}.
+ * @alpha
+ */
+export function isRichTextWidget(obj: unknown): obj is IRichTextWidget {
+    return isWidget(obj) && (obj as IRichTextWidget).type === "richText";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IRichTextWidgetDefinition}.
+ * @alpha
+ */
+export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IRichTextWidgetDefinition).type === "richText";
 }

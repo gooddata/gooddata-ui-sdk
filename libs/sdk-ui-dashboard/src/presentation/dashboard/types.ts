@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { ComponentType } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -41,6 +41,7 @@ import {
     OptionalDateFilterComponentProvider,
     OptionalInsightMenuTitleComponentProvider,
     OptionalDashboardContentComponentProvider,
+    OptionalRichTextComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -206,6 +207,19 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     KpiComponentProvider?: OptionalKpiComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a rich text.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardRichText} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardRichText}.
+     *    This is useful if you want to customize just one particular rich text and keep default rendering for
+     *    the other rich texts.
+     *
+     * @public
+     */
+    RichTextComponentProvider?: OptionalRichTextComponentProvider;
 
     /**
      * Specify component to use for rendering the scheduled email dialog.
