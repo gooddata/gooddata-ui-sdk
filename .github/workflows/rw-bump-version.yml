@@ -40,7 +40,7 @@ jobs:
 
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Create and push branch
+      - name: Bum rush version and commit to source branch
         env:
           BUMP: ${{ inputs.bump }}
           PRERELEASE_ID: ${{ inputs.prerelease-id }}
@@ -51,7 +51,8 @@ jobs:
           # it needs git configured already user.email/name
           rush version --bump --override-bump $BUMP --override-prerelease-id $PRERELEASE_ID
           git add -A
-          git commit -m "Bump versions"
+          VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
+          git commit -m "Bump versions to $VERSION"
           git push origin ${{ inputs.source-branch }}
       - name: Get version
         id: version
