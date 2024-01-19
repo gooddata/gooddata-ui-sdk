@@ -52,7 +52,10 @@ import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
 import { IDashboardFilter } from "../../../types.js";
 
-function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
+function dashboardFilterToFilterContextItem(
+    filter: IDashboardFilter,
+    keepDatasets: boolean,
+): FilterContextItem {
     if (isAttributeFilter(filter)) {
         return {
             attributeFilter: {
@@ -66,16 +69,16 @@ function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterCon
         return newAbsoluteDashboardDateFilter(
             filter.absoluteDateFilter.from,
             filter.absoluteDateFilter.to,
-            filter.absoluteDateFilter.dataSet,
+            keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
         );
     } else if (isAllTimeDateFilter(filter)) {
-        return newAllTimeDashboardDateFilter(filter.relativeDateFilter.dataSet);
+        return newAllTimeDashboardDateFilter(keepDatasets ? filter.relativeDateFilter.dataSet : undefined);
     } else if (isRelativeDateFilter(filter)) {
         return newRelativeDashboardDateFilter(
             filter.relativeDateFilter.granularity as DateFilterGranularity,
             filter.relativeDateFilter.from,
             filter.relativeDateFilter.to,
-            filter.relativeDateFilter.dataSet,
+            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
         );
     }
 
@@ -92,7 +95,10 @@ export function* changeFilterContextSelectionHandler(
         if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {
             return filter;
         } else {
-            return dashboardFilterToFilterContextItem(filter);
+            return dashboardFilterToFilterContextItem(
+                filter,
+                !!ctx.backend.capabilities.supportsMultipleDateFilters,
+            );
         }
     });
 
