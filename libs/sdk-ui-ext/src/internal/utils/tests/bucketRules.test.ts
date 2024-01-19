@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { describe, it, expect } from "vitest";
@@ -551,6 +551,12 @@ describe("partial rules", () => {
                     referencePointMocks.samePeriodPrevYearFiltersBucket,
                 ),
             ).toBeTruthy();
+        });
+
+        it("should return false when date filter set to last year is not first", () => {
+            expect(
+                bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.twoDateFiltersBucket),
+            ).toBeFalsy();
         });
 
         it("should return false when only attribute filter is in the filter bucket", () => {
