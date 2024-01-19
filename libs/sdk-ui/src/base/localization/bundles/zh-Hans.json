@@ -551,6 +551,7 @@
     "userManagement.users.emptySelection.view": "此组没有任何成员。",
     "userManagement.users.emptySelection.edit": "未选择用户。",
     "userManagement.users.removeUserFromGroup": "从组中移除用户。",
+    "userManagement.users.removeUserFromGroupDisabledTooltip": "无法将该用户从组中删除。",
     "userManagement.users.removeUserFromSelection": "移除。",
     "userManagement.userGroups.removeUserGroupFromSelection": "移除。",
     "userManagement.users.noMatchingItems": "没有匹配的用户。",

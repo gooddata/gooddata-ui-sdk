@@ -551,6 +551,7 @@
     "userManagement.users.emptySelection.view": "Deze groep heeft geen leden.",
     "userManagement.users.emptySelection.edit": "Geen gebruikers geselecteerd.",
     "userManagement.users.removeUserFromGroup": "Verwijder de gebruiker uit de groep.",
+    "userManagement.users.removeUserFromGroupDisabledTooltip": "Deze gebruiker kan niet worden verwijderd uit de groep.",
     "userManagement.users.removeUserFromSelection": "Verwijder.",
     "userManagement.userGroups.removeUserGroupFromSelection": "Verwijder.",
     "userManagement.users.noMatchingItems": "Geen overeenkomende gebruiker.",

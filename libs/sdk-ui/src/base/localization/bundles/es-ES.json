@@ -551,6 +551,7 @@
     "userManagement.users.emptySelection.view": "Este grupo no tiene ningún miembro.",
     "userManagement.users.emptySelection.edit": "Ningún usuario seleccionado.",
     "userManagement.users.removeUserFromGroup": "Eliminar al usuario del grupo.",
+    "userManagement.users.removeUserFromGroupDisabledTooltip": "No se puede eliminar al usuario del grupo.",
     "userManagement.users.removeUserFromSelection": "Eliminar.",
     "userManagement.userGroups.removeUserGroupFromSelection": "Eliminar.",
     "userManagement.users.noMatchingItems": "Ningún usuario coincide.",
