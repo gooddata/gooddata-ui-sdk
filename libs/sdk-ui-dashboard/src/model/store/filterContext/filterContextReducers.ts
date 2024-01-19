@@ -592,6 +592,35 @@ const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>
 //
 //
 
+export interface IChangeAttributeLimitingItemsPayload {
+    readonly filterLocalId: string;
+    readonly limitingItems: ObjRef[];
+}
+
+/**
+ * Changes the element limiting items for the filter given by its local identifier.
+ */
+const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLimitingItemsPayload>> = (
+    state,
+    action,
+) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId, limitingItems } = action.payload;
+
+    const findFilter = state.filterContextDefinition.filters.find(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(findFilter, "Attempt to change limiting items of a non-existing filter");
+
+    (findFilter as IDashboardAttributeFilter).attributeFilter.validateElementsBy = limitingItems;
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -610,4 +639,5 @@ export const filterContextReducers = {
     changeAttributeDisplayForm,
     changeAttributeTitle,
     changeSelectionMode,
+    changeLimitingItems,
 };

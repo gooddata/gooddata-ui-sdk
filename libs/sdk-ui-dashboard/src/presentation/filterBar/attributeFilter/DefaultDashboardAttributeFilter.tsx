@@ -218,6 +218,7 @@ export const DefaultDashboardAttributeFilter = (
                 onConfigurationClose,
                 selectionModeChanged,
                 modeChanged,
+                limitingItemsChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.trim().length > 0;
@@ -227,7 +228,8 @@ export const DefaultDashboardAttributeFilter = (
                       displayFormChanged ||
                       titleChanged ||
                       selectionModeChanged ||
-                      modeChanged
+                      modeChanged ||
+                      limitingItemsChanged
                   )
                 : true;
 

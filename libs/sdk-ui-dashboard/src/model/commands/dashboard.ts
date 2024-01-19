@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
 import {
@@ -622,6 +622,62 @@ export function setDateFilterConfigTitle(
         payload: {
             dataSet,
             title,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link SetAttributeFilterLimitingItems} command.
+ * @alpha
+ */
+export interface SetAttributeFilterLimitingItemsPayload {
+    /**
+     * Local identifier of the filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Limiting items applied on attribute filter elements.
+     */
+    limitingItems: ObjRef[];
+}
+
+/**
+ * Command for changing of attribute filter limiting items.
+ * @alpha
+ */
+export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
+    readonly payload: SetAttributeFilterLimitingItemsPayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterLimitingItems} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting of provided limiting items to a defined attribute filter.
+ *
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter the display form is changed for
+ * @param limitingItems - limiting items set to the specified attribute filter.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change limiting items command
+ */
+export function setAttributeFilterLimitingItems(
+    localIdentifier: string,
+    limitingItems: ObjRef[],
+    correlationId?: string,
+): SetAttributeFilterLimitingItems {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
+        correlationId,
+        payload: {
+            localIdentifier,
+            limitingItems,
         },
     };
 }

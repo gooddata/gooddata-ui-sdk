@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select, SagaReturnType } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";

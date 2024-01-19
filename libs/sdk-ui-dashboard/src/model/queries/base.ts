@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /**
  * @beta
@@ -14,7 +14,8 @@ export type DashboardQueryType =
     | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE"
     | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE"
     | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE"
-    | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+    | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES"
+    | "GDC.DASH/QUERY.METRICS_AND_FACTS";
 
 /**
  * Base type for all dashboard queries. A dashboard query encapsulates how complex, read-only dashboard-specific logic

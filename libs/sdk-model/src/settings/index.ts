@@ -324,6 +324,7 @@ export interface ISettings {
      * Enable cross filtering in KD
      */
     enableKDCrossFiltering?: boolean;
+
     /**
      * Enable multiple date filters.
      */
@@ -338,6 +339,12 @@ export interface ISettings {
      * Enables rich text widgets on dashboards.
      */
     enableKDRichText?: boolean;
+
+    /**
+     * Enable attribute filter values validation by metric, attribute, fact.
+     * The configuration of filter values validation is merged with parent filters UI.
+     */
+    enableAttributeFilterValuesValidation?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

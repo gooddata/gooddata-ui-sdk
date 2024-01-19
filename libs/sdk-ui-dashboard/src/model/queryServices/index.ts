@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { QueryDateDatasetsForInsightService } from "./queryInsightDateDatasets.js";
 import { QueryInsightAttributesMetaService } from "./queryInsightAttributesMeta.js";
 import { QueryWidgetFiltersService } from "./queryWidgetFilters.js";
@@ -10,6 +10,7 @@ import { QueryAttributeByDisplayFormService } from "./queryAttributeByDisplayFor
 import { QueryAttributeDataSetService } from "./queryAttributeDataset.js";
 import { QueryAttributeElementsService } from "./queryAttributeElements.js";
 import { QueryConnectedAttributesService } from "./queryConnectedAttributes.js";
+import { QueryMetricsAndFactsService } from "./queryMetricsAndFacts.js";
 
 export const AllQueryServices = [
     QueryDateDatasetsForInsightService,
@@ -23,4 +24,5 @@ export const AllQueryServices = [
     QueryAttributeDataSetService,
     QueryAttributeElementsService,
     QueryConnectedAttributesService,
+    QueryMetricsAndFactsService,
 ];

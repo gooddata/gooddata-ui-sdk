@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -13,12 +13,6 @@ import {
     IConnectingAttribute,
 } from "../../../../../../model/index.js";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
-
-export interface IConfigurationParentItem {
-    localId: string;
-    displayForm: ObjRef;
-    isSelected: boolean;
-}
 
 export interface IConfigurationParentItemProps {
     currentFilterLocalId: string;

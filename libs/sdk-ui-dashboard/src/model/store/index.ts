@@ -76,6 +76,7 @@ export {
     selectEnableKDCrossFiltering,
     selectEnableMultipleDateFilters,
     selectEnableKDRichText,
+    selectEnableAttributeFilterValuesValidation,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";

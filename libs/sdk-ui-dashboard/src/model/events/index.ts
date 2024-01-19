@@ -196,6 +196,8 @@ export {
     DashboardAttributeFilterAddedPayload,
     DashboardAttributeFilterConfigModeChanged,
     DashboardAttributeFilterConfigModeChangedPayload,
+    DashboardAttributeFilterConfigLimitingItemsChanged,
+    DashboardAttributeFilterConfigLimitingItemsChangedPayload,
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
     isDashboardAttributeFilterParentChanged,
@@ -206,6 +208,7 @@ export {
     isDashboardDateFilterSelectionChanged,
     isDashboardFilterContextChanged,
     isDashboardAttributeFilterConfigModeChanged,
+    isDashboardAttributeFilterConfigLimitingItemsChanged,
 } from "./filters.js";
 
 export {

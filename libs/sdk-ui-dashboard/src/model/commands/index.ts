@@ -13,6 +13,7 @@ import {
     SetDashboardAttributeFilterConfigMode,
     SetDashboardDateFilterWithDimensionConfigMode,
     SetDateFilterConfigTitle,
+    SetAttributeFilterLimitingItems,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -128,6 +129,9 @@ export {
     SetDateFilterConfigTitle,
     SetDateFilterConfigTitlePayload,
     setDateFilterConfigTitle,
+    SetAttributeFilterLimitingItems,
+    SetAttributeFilterLimitingItemsPayload,
+    setAttributeFilterLimitingItems,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -497,4 +501,5 @@ export type DashboardCommands =
     | RemoveDateFilters
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
-    | SetDateFilterConfigTitle;
+    | SetDateFilterConfigTitle
+    | SetAttributeFilterLimitingItems;

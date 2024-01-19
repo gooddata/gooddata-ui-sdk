@@ -21,9 +21,9 @@
 @use "visualization";
 @use "shareIndicators";
 @use "sidebar";
-@use "dateFilterConfigWarnings";
-@use "attributeFilterConfig";
 @use "icons";
+@use "dateFilterConfigWarnings";
+@use "attributeFilterConfig"; // order is important here, must come after "icons"
 @use "resizing";
 @use "drillConfigPanel";
 @use "toolbar";

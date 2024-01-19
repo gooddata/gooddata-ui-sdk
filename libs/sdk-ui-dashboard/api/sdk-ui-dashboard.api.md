@@ -1051,9 +1051,6 @@ export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemCompo
 // @public (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
-// @internal (undocumented)
-export type CustomDashboardAttributeFilterPlaceholderComponent = ComponentType<IDashboardAttributeFilterPlaceholderProps>;
-
 // @alpha (undocumented)
 export type CustomDashboardContentComponent = ComponentType<IDashboardContentBaseProps>;
 
@@ -1263,6 +1260,19 @@ export interface DashboardAttributeFilterAddedPayload {
 }
 
 // @alpha
+export interface DashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: DashboardAttributeFilterConfigLimitingItemsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED";
+}
+
+// @alpha
+export interface DashboardAttributeFilterConfigLimitingItemsChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
+}
+
+// @alpha
 export interface DashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: DashboardAttributeFilterConfigModeChangedPayload;
@@ -1382,7 +1392,7 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @public
-export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ChangeRenderMode | SaveDashboard | RenameDashboard | ResetDashboard | ExportDashboardToPdf | DeleteDashboard | TriggerEvent | UpsertExecutionResult | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | SetAttributeFilterParents | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | ResizeHeight | ResizeWidth | AddSectionItems | ReplaceSectionItem | MoveSectionItem | MoveSectionItemToNewSection | RemoveSectionItem | RemoveSectionItemByWidgetRef | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetDescription | ChangeKpiWidgetConfiguration | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | SetDrillForKpiWidget | RemoveDrillForKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetDescription | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | ExportInsightWidget | CreateAlert | UpdateAlert | RemoveAlerts | CreateScheduledEmail | SaveScheduledEmail | ChangeSharing | SetAttributeFilterDisplayForm | SetAttributeFilterTitle | SetAttributeFilterSelectionMode | ChangeRichTextWidgetContent | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | ChangeDrillableItems | AddDrillTargets | SetDashboardDateFilterConfigMode | SetDashboardAttributeFilterConfigMode | RemoveDrillDownForInsightWidget | AddDrillDownForInsightWidget | ModifyDrillDownForInsightWidget | CrossFiltering | AttributeHierarchyModified | AddDateFilter | RemoveDateFilters | MoveDateFilter | SetDashboardDateFilterWithDimensionConfigMode | SetDateFilterConfigTitle;
+export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ChangeRenderMode | SaveDashboard | RenameDashboard | ResetDashboard | ExportDashboardToPdf | DeleteDashboard | TriggerEvent | UpsertExecutionResult | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | SetAttributeFilterParents | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | ResizeHeight | ResizeWidth | AddSectionItems | ReplaceSectionItem | MoveSectionItem | MoveSectionItemToNewSection | RemoveSectionItem | RemoveSectionItemByWidgetRef | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetDescription | ChangeKpiWidgetConfiguration | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | SetDrillForKpiWidget | RemoveDrillForKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetDescription | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | ExportInsightWidget | CreateAlert | UpdateAlert | RemoveAlerts | CreateScheduledEmail | SaveScheduledEmail | ChangeSharing | SetAttributeFilterDisplayForm | SetAttributeFilterTitle | SetAttributeFilterSelectionMode | ChangeRichTextWidgetContent | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | ChangeDrillableItems | AddDrillTargets | SetDashboardDateFilterConfigMode | SetDashboardAttributeFilterConfigMode | RemoveDrillDownForInsightWidget | AddDrillDownForInsightWidget | ModifyDrillDownForInsightWidget | CrossFiltering | AttributeHierarchyModified | AddDateFilter | RemoveDateFilters | MoveDateFilter | SetDashboardDateFilterWithDimensionConfigMode | SetDateFilterConfigTitle | SetAttributeFilterLimitingItems;
 
 // @beta
 export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
@@ -1398,7 +1408,7 @@ export interface DashboardCommandStartedPayload<TCommand extends IDashboardComma
 }
 
 // @public
-export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DELETE" | "GDC.DASH/CMD.CHANGE_RENDER_MODE" | "GDC.DASH/CMD.SHARING.CHANGE" | "GDC.DASH/CMD.EXPORT.PDF" | "GDC.DASH/CMD.EVENT.TRIGGER" | "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT" | "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.UPDATE" | "GDC.DASH/CMD.ALERTS.REMOVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE" | "GDC.DASH/CMD.DRILL.CROSS_FILTERING" | "GDC.DASH/CMD.DRILL_TARGETS.ADD" | "GDC.DASH/CMD.RENDER.ASYNC.REQUEST" | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE" | "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
+export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DELETE" | "GDC.DASH/CMD.CHANGE_RENDER_MODE" | "GDC.DASH/CMD.SHARING.CHANGE" | "GDC.DASH/CMD.EXPORT.PDF" | "GDC.DASH/CMD.EVENT.TRIGGER" | "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT" | "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.UPDATE" | "GDC.DASH/CMD.ALERTS.REMOVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE" | "GDC.DASH/CMD.DRILL.CROSS_FILTERING" | "GDC.DASH/CMD.DRILL_TARGETS.ADD" | "GDC.DASH/CMD.RENDER.ASYNC.REQUEST" | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE" | "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
 
 // @public
 export interface DashboardConfig {
@@ -1794,7 +1804,7 @@ export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDas
 export type DashboardEvents = DashboardInitialized | DashboardDeinitialized | DateFilterValidationFailed | DashboardSaved | DashboardCopySaved | DashboardRenderRequested | DashboardAsyncRenderRequested | DashboardAsyncRenderResolved | DashboardRenderResolved | DashboardSharingChanged | DashboardRenderModeChanged | DashboardCommandStarted<any> | DashboardCommandFailed<any> | DashboardCommandRejected | DashboardQueryFailed | DashboardQueryRejected | DashboardQueryStarted | DashboardQueryCompleted<any, any> | DashboardRenamed | DashboardWasReset | DashboardExportToPdfRequested | DashboardExportToPdfResolved | DashboardUserInteractionTriggered | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeTitleChanged | DashboardAttributeSelectionModeChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetDescriptionChanged | DashboardKpiWidgetConfigurationChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetDrillRemoved | DashboardKpiWidgetDrillSet | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetDescriptionChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetVisConfigurationChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardInsightWidgetExportRequested | DashboardInsightWidgetExportResolved | DashboardInsightWidgetRefreshed | DashboardRichTextWidgetContentChanged | DashboardWidgetExecutionStarted | DashboardWidgetExecutionSucceeded | DashboardWidgetExecutionFailed | DashboardAlertCreated | DashboardAlertsRemoved | DashboardAlertUpdated | DashboardScheduledEmailCreated | DashboardScheduledEmailSaved | DashboardDrillDownResolved | DashboardDrillToAttributeUrlResolved | DashboardDrillToCustomUrlResolved | DashboardDrillToDashboardResolved | DashboardDrillToInsightResolved | DashboardDrillToLegacyDashboardResolved | DashboardDrillResolved | DashboardDrillDownRequested | DashboardDrillToAttributeUrlRequested | DashboardDrillToCustomUrlRequested | DashboardDrillToDashboardRequested | DashboardDrillToInsightRequested | DashboardDrillToLegacyDashboardRequested | DashboardDrillRequested | DashboardDrillableItemsChanged | CreateInsightRequested | CreateAttributeHierarchyRequested | DeleteAttributeHierarchyRequested;
 
 // @public
-export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.COMMAND.STARTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED" | "GDC.DASH/EVT.INITIALIZED" | "GDC.DASH/EVT.DEINITIALIZED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DELETED" | "GDC.DASH/EVT.RENDER_MODE.CHANGED" | "GDC.DASH/EVT.EXPORT.PDF.REQUESTED" | "GDC.DASH/EVT.EXPORT.PDF.RESOLVED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED" | "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED" | "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED" | "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED" | "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERTS.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED" | "GDC.DASH/EVT.DRILL.REQUESTED" | "GDC.DASH/EVT.DRILL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED" | "GDC.DASH/EVT.DRILL_TARGETS.ADDED" | "GDC.DASH/EVT.RENDER.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED" | "GDC.DASH/EVT.RENDER.RESOLVED" | "GDC.DASH/EVT.SHARING.CHANGED" | "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED" | "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED";
+export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.COMMAND.STARTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED" | "GDC.DASH/EVT.INITIALIZED" | "GDC.DASH/EVT.DEINITIALIZED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DELETED" | "GDC.DASH/EVT.RENDER_MODE.CHANGED" | "GDC.DASH/EVT.EXPORT.PDF.REQUESTED" | "GDC.DASH/EVT.EXPORT.PDF.RESOLVED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED" | "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED" | "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED" | "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED" | "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.UPDATED" | "GDC.DASH/EVT.ALERTS.REMOVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED" | "GDC.DASH/EVT.DRILL.REQUESTED" | "GDC.DASH/EVT.DRILL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED" | "GDC.DASH/EVT.DRILL_TARGETS.ADDED" | "GDC.DASH/EVT.RENDER.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED" | "GDC.DASH/EVT.RENDER.RESOLVED" | "GDC.DASH/EVT.SHARING.CHANGED" | "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED" | "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED";
 
 // @beta
 export interface DashboardExportToPdfRequested extends IDashboardEvent {
@@ -2358,7 +2368,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes | QueryMetricsAndFacts;
 
 // @beta
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -2409,7 +2419,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS";
 
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
@@ -4410,6 +4420,14 @@ export interface IMenuItemCommonProps {
     visible?: boolean;
 }
 
+// @alpha (undocumented)
+export interface IMetricsAndFacts {
+    // (undocumented)
+    facts: ICatalogFact[];
+    // (undocumented)
+    metrics: ICatalogMeasure[];
+}
+
 // @public
 export interface InitializeDashboard extends IDashboardCommand {
     // (undocumented)
@@ -4711,6 +4729,9 @@ export const isDashboardAsyncRenderResolved: (obj: unknown) => obj is DashboardA
 
 // @beta
 export const isDashboardAttributeFilterAdded: (obj: unknown) => obj is DashboardAttributeFilterAdded;
+
+// @alpha
+export const isDashboardAttributeFilterConfigLimitingItemsChanged: (obj: unknown) => obj is DashboardAttributeFilterConfigLimitingItemsChanged;
 
 // @alpha
 export const isDashboardAttributeFilterConfigModeChanged: (obj: unknown) => obj is DashboardAttributeFilterConfigModeChanged;
@@ -5764,6 +5785,15 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
 }
 
+// @alpha (undocumented)
+export interface QueryMetricsAndFacts extends IDashboardQuery {
+    // (undocumented)
+    type: "GDC.DASH/QUERY.METRICS_AND_FACTS";
+}
+
+// @alpha
+export function queryMetricsAndFacts(correlationId?: string): QueryMetricsAndFacts;
+
 // @public (undocumented)
 export interface QueryProcessingErrorState {
     // (undocumented)
@@ -6687,6 +6717,9 @@ export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefine
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 
@@ -7157,6 +7190,23 @@ export interface SetAttributeFilterDisplayFormPayload {
     displayForm: ObjRef;
     // (undocumented)
     filterLocalId: string;
+}
+
+// @alpha
+export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: SetAttributeFilterLimitingItemsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
+}
+
+// @alpha
+export function setAttributeFilterLimitingItems(localIdentifier: string, limitingItems: ObjRef[], correlationId?: string): SetAttributeFilterLimitingItems;
+
+// @alpha
+export interface SetAttributeFilterLimitingItemsPayload {
+    limitingItems: ObjRef[];
+    localIdentifier: string;
 }
 
 // @beta (undocumented)
@@ -8324,6 +8374,9 @@ export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, in
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
+
+// @internal (undocumented)
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

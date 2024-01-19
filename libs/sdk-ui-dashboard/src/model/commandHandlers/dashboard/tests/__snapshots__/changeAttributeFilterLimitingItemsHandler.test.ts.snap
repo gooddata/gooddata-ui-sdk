@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`changeAttributeFilterLimitingItemsHandler > should emit the appropriate events for changed attribute filter limiting items 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterLimitingItemsHandler > should emit the appropriate events when trying to update limiting items of a non-existent attribute filter 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.COMMAND.FAILED",
+  },
+]
+`;
+
+exports[`changeAttributeFilterLimitingItemsHandler > should set the limiting items in state to filter context 1`] = `
+[
+  {
+    "attributeFilter": {
+      "attributeElements": {
+        "uris": [],
+      },
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1089",
+      },
+      "filterElementsBy": [],
+      "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
+      "negativeSelection": true,
+      "validateElementsBy": [
+        {
+          "identifier": "my-metric",
+          "type": "measure",
+        },
+      ],
+    },
+  },
+  {
+    "attributeFilter": {
+      "attributeElements": {
+        "uris": [],
+      },
+      "displayForm": {
+        "uri": "/gdc/md/referenceworkspace/obj/1071",
+      },
+      "filterElementsBy": [],
+      "localIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
+      "negativeSelection": true,
+    },
+  },
+]
+`;
