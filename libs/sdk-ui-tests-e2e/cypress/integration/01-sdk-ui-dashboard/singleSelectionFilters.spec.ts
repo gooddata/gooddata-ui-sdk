@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
 import { Widget } from "../../tools/widget";
@@ -10,7 +10,7 @@ const salesRepFilter = new AttributeFilter("Sales Rep");
 const productFilter = new AttributeFilter("Product");
 const statusFilter = new AttributeFilter("Status");
 
-const getKPI = () => new Widget(0).waitChartLoaded().getKPI();
+const getKPI = () => new Widget(0).waitKpiLoaded().getKPI();
 const getTable = () => new Widget(1).waitTableLoaded().getTable();
 const getChart = () => new Widget(2).waitChartLoaded().getChart();
 
