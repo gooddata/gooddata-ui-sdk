@@ -140,7 +140,6 @@ export function isKpiDraggableItem(item: any): item is KpiDraggableItem {
  */
 export type RichTextDraggableItem = BaseDraggableMovingItem & {
     type: "richText";
-    // TODO: RICH TEXT - ref, content etc, what is the type we need to provide there?
 };
 
 /**

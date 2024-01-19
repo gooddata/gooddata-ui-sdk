@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import cx from "classnames";
 
-import { DashboardItem } from "../../../presentationComponents/index.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
@@ -15,9 +15,9 @@ import {
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
 import { RichText } from "./RichText.js";
-import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
+import { usePrevious } from "@gooddata/sdk-ui";
 
 export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = (props) => {
     return <EditableDashboardRichTextWidgetCore {...props} />;
@@ -29,30 +29,29 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
 const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
     widget,
     screen,
-    // onError,
-    // onLoadingChanged,
     dashboardItemClasses,
 }) => {
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
+    const previousIsSelected = usePrevious(isSelected);
 
     const dispatch = useDashboardDispatch();
-
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
 
-    const [isRichTextEditing, setIsRichTextEditing] = useState(true);
-
     const [richText, setRichText] = useState<string>(widget?.content);
 
-    // TODO: RICH TEXT map to widget selection
-    useEffect(() => {
-        onSelected();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const [isRichTextEditing, setIsRichTextEditing] = useState(true);
 
     useEffect(() => {
-        isSelected ? setIsRichTextEditing(true) : setIsRichTextEditing(false);
+        setIsRichTextEditing(isSelected);
     }, [isSelected]);
+
+    useEffect(() => {
+        // Deselect widget and commit updated markdown text "on blur"
+        if (previousIsSelected === true && isSelected === false && richText !== widget?.content) {
+            dispatch(changeRichTextWidgetContent(widget.ref, richText));
+        }
+    }, [richText, widget?.content, widget.ref, dispatch, isSelected, previousIsSelected]);
 
     return (
         <DashboardItem
@@ -73,7 +72,6 @@ const EditableDashboardRichTextWidgetCore: React.FC<IDefaultDashboardRichTextWid
                 visualizationClassName="gd-rich-text-wrapper"
             >
                 {() => (
-                    // TODO
                     <>
                         <RichText text={richText} onChange={setRichText} editMode={isRichTextEditing} />
                         {isRichTextEditing ? (

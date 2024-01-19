@@ -3961,18 +3961,6 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult>
 export interface IDashboardRichTextProps {
     // @alpha
     backend?: IAnalyticalBackend;
-    // @alpha (undocumented)
-    clientHeight?: number;
-    // @alpha (undocumented)
-    clientWidth?: number;
-    // @alpha
-    ErrorComponent: ComponentType<IErrorProps>;
-    // @alpha
-    LoadingComponent: ComponentType<ILoadingProps>;
-    // @alpha (undocumented)
-    onError?: OnError;
-    // @alpha (undocumented)
-    onLoadingChanged?: OnLoadingChanged;
     widget: IRichTextWidget;
     // @alpha
     workspace?: string;

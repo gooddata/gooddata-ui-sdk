@@ -1,10 +1,9 @@
 // (C) 2020-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { DashboardItem } from "../../../presentationComponents/index.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { RichText } from "./RichText.js";
-import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 
 /**
  * @internal
@@ -12,8 +11,6 @@ import { DashboardItemBase } from "../../../presentationComponents/DashboardItem
 export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
     widget,
     screen,
-    // onError,
-    // onLoadingChanged,
     dashboardItemClasses,
 }) => {
     return (

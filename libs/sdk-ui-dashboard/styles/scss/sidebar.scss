@@ -67,7 +67,7 @@
         }
     }
 
-    &-rich-text:before {
+    &-rich-text::before {
         content: none;
     }
 

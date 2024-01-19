@@ -25,7 +25,7 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<
 /**
  * @beta
  */
-export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight"; // TODO: RICH TEXT
+export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight";
 /**
  * @beta
  */

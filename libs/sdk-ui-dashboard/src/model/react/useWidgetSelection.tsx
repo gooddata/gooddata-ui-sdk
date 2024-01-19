@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { MouseEvent, useCallback } from "react";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
@@ -83,7 +83,11 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 
     const deselectWidgets = useCallback(
         (e?: MouseEvent) => {
-            if (!(e as IHasWidgetSelectMark)?.processedDuringWidgetSelect && selectedWidget) {
+            // Avoid deselect widget when the click event was triggered by selecting text
+            // (eg. selecting markdown text in rich text widget and releasing mouse outside of the widget)
+            const isSelection = window.getSelection()?.type === "Range";
+
+            if (!(e as IHasWidgetSelectMark)?.processedDuringWidgetSelect && selectedWidget && !isSelection) {
                 dispatch(uiActions.clearWidgetSelection());
             }
         },

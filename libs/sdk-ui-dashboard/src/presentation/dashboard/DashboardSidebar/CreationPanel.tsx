@@ -12,6 +12,8 @@ import {
     useDashboardSelector,
     selectIsNewDashboard,
     selectSettings,
+    selectEnableKDRichText,
+    selectSupportsRichTextWidgets,
 } from "../../../model/index.js";
 import cx from "classnames";
 import {
@@ -38,6 +40,8 @@ interface ICreationPanelProps {
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
+    const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
+    const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
@@ -50,8 +54,8 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
-            InsightWidgetComponentSet.creating, // TODO: RICH TEXT capability
-            RichTextWidgetComponentSet.creating,
+            InsightWidgetComponentSet.creating,
+            supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
@@ -68,6 +72,9 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
         supportsKpis,
+        supportsRichText,
+        enableRichText,
+        WrapCreatePanelItemWithDragComponent,
     ]);
 
     return (

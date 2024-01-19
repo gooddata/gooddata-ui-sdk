@@ -1,7 +1,7 @@
 // (C) 2023-2024 GoodData Corporation
-
 import React from "react";
 import Markdown from "react-markdown";
+import cx from "classnames";
 
 const RICH_TEXT_EMPTY = "No rich text content";
 const RICH_TEXT_PLACEHOLDER = `Add markdown text here...\n
@@ -28,7 +28,7 @@ export const RichText: React.FC<IRichTextProps> = ({
     emptyText,
 }) => {
     return (
-        <div className="gd-rich-text-content">
+        <div className={cx(["gd-rich-text-content", { "gd-visible-scrollbar": !editMode }])}>
             {editMode ? (
                 <RichTextEdit
                     text={text}

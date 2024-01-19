@@ -2,7 +2,6 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IRichTextWidget } from "@gooddata/sdk-model";
-import { IErrorProps, ILoadingProps, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 ///
 /// Component props
@@ -42,42 +41,6 @@ export interface IDashboardRichTextProps {
      * @public
      */
     widget: IRichTextWidget;
-
-    // TODO: RICH TEXT do we need loading changed, on error and so on? (probably yes once we add "variables")
-
-    /**
-     * Error component to use when insight rendering fails for any reason.
-     *
-     * @alpha
-     */
-    ErrorComponent: ComponentType<IErrorProps>;
-
-    /**
-     * Loading component to use while loading and preparing data to render.
-     *
-     * @alpha
-     */
-    LoadingComponent: ComponentType<ILoadingProps>;
-
-    /**
-     * @alpha
-     */
-    clientHeight?: number;
-
-    /**
-     * @alpha
-     */
-    clientWidth?: number;
-
-    /**
-     * @alpha
-     */
-    onError?: OnError;
-
-    /**
-     * @alpha
-     */
-    onLoadingChanged?: OnLoadingChanged;
 }
 
 ///

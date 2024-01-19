@@ -1,20 +1,17 @@
 // (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
-import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing.js";
 import {
-    selectSettings,
     useDashboardDispatch,
-    useDashboardSelector,
     useDashboardCommandProcessing,
     uiActions,
     addLayoutSection,
 } from "../../../model/index.js";
 import { idRef } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
+import { RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number) {
     const dispatch = useDashboardDispatch();
-    const settings = useDashboardSelector(selectSettings);
 
     const { run: addNewSectionWithRichText } = useDashboardCommandProcessing({
         commandCreator: addLayoutSection,
@@ -28,14 +25,13 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number
 
     return useCallback(() => {
         const id = uuidv4();
-        const sizeInfo = getInsightPlaceholderSizeInfo(settings); // TODO: RICH TEXT sizing
         addNewSectionWithRichText(sectionIndex, {}, [
             {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
-                        gridHeight: sizeInfo.height.default!,
-                        gridWidth: sizeInfo.width.default!,
+                        gridHeight: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.height.default!,
+                        gridWidth: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.width.default!,
                     },
                 },
                 widget: {
@@ -51,5 +47,5 @@ export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number
                 },
             },
         ]);
-    }, [addNewSectionWithRichText, sectionIndex, settings]);
+    }, [addNewSectionWithRichText, sectionIndex]);
 }

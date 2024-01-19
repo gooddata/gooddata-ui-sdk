@@ -24,6 +24,7 @@ import {
     selectWidgetsModification,
     selectSectionModification,
     selectIsExport,
+    useWidgetSelection,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -102,19 +103,22 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const widget = item.widget()!;
     const isCustom = isCustomWidget(widget);
     const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustom);
+    const { isSelected } = useWidgetSelection(widget.ref);
+    const isRichText = isRichTextWidget(widget);
+    const isRichTextWidgetInEditState = isSelected && isRichText;
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
                 return createDraggableItem(item, insights, settings);
             },
-            canDrag: isInEditMode && isDraggableWidgetType,
+            canDrag: isInEditMode && isDraggableWidgetType && !isRichTextWidgetInEditState,
             dragStart: (item) => {
                 dispatch(uiActions.setDraggingWidgetSource(item));
             },
             dragEnd: handleDragEnd,
         },
-        [item, insights, isInEditMode],
+        [item, insights, isInEditMode, isDraggableWidgetType, isRichTextWidgetInEditState],
     );
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
