@@ -8,6 +8,7 @@ jobs:
         uses: ./.github/workflows/rw-bump-version.yml
         permissions:
             contents: write
+            id-token: write
         secrets: inherit
         with:
             source-branch: "master"
@@ -18,8 +19,22 @@ jobs:
         needs: [bump-version]
         uses: ./.github/workflows/rw-publish-version.yml
         permissions:
-            contents: write
+            contents: read
+            id-token: write
         secrets: inherit
         with:
             source-branch: "master"
             release-tag: "prerelease"
+
+    slack-notification:
+        runs-on: [infra1-small]
+        needs: [bump-version, publish-alpha]
+        steps:
+            - name: Notify to slack
+              uses: slackapi/slack-github-action@v1.23.0
+              with:
+                  channel-id: "#javascript-notifications"
+                  slack-message: "SDK-UI versions *${{ env.RELEASE_VERSION }}* has been successfully published to NPM."
+              env:
+                  RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+                  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

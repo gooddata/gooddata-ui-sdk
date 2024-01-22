@@ -18,20 +18,25 @@ jobs:
         runs-on: [infra1-medium]
         container:
             image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
+        permissions:
+            contents: read
+            id-token: write
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
               with:
                   ref: ${{ inputs.source-branch }}
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
             - name: Get NPM_PUBLISH_TOKEN from Vault and set it as env variable
               uses: hashicorp/vault-action@v2
               with:
                   url: "https://vault.ord1.infra.intgdc.com"
                   method: jwt
                   path: jwt/github
-                  role: ecr-push
+                  role: front-end
                   secrets: |
-                    secret/v3/int/npm/rw-token secret | NPM_PUBLISH_TOKEN
+                    secret/data/v3/int/npm/rw-token secret | NPM_PUBLISH_TOKEN ;
             - name: Install rush
               run: |
                   npm install -g @microsoft/rush
