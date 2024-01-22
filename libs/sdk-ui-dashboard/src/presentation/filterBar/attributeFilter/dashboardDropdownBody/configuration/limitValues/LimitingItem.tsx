@@ -33,14 +33,12 @@ const isFact = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type 
 const isAttribute = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "attribute";
 const isParentFilter = (item: ValuesLimitingItem) => !isObjRef(item);
 
-export interface ILimitingItemProps {
+export interface ILimitingItemTitleProps {
     title: string | React.ReactNode;
     item: ValuesLimitingItem;
-    isDisabled?: boolean;
-    onDelete: () => void;
 }
 
-const LimitingItemTitle: React.FC<ILimitingItemProps> = ({ item, title }) => {
+export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, title }) => {
     if (isParentFilter(item)) {
         return <ItemTitleWithIcon title={title} IconComponent={Icon.AttributeFilter} />;
     }
@@ -76,6 +74,13 @@ const LimitingItemTitle: React.FC<ILimitingItemProps> = ({ item, title }) => {
     }
     return <ItemTitleWithIcon title={title} />;
 };
+
+export interface ILimitingItemProps {
+    title: string | React.ReactNode;
+    item: ValuesLimitingItem;
+    isDisabled?: boolean;
+    onDelete: () => void;
+}
 
 export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
     const { isDisabled, onDelete } = props;

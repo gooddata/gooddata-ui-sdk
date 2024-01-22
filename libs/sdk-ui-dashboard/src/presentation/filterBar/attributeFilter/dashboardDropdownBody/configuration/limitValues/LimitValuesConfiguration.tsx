@@ -2,14 +2,11 @@
 
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-import { Typography, Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+import { Typography, Bubble, BubbleHoverTrigger, Button, NoData } from "@gooddata/sdk-ui-kit";
 import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../types.js";
-
-import { LimitingItem } from "./LimitingItem.js";
-import { useLimitingItems } from "./limitingItemsHook.js";
 import {
     IDashboardAttributeFilterParentItem,
     useDashboardSelector,
@@ -17,6 +14,10 @@ import {
     IMetricsAndFacts,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
+
+import { LimitingItem } from "./LimitingItem.js";
+import { useLimitingItems } from "./limitingItemsHook.js";
+import { AddLimitingItem } from "./AddLimitingItem.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
 
@@ -47,7 +48,7 @@ const extractKey = (item: ValuesLimitingItem) =>
 
 interface ILimitValuesConfigurationProps {
     parentFilters: IDashboardAttributeFilterParentItem[];
-    validateElementsBy?: ObjRef[];
+    validateElementsBy: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
     onUpdate: (items: ObjRef[]) => void;
 }
@@ -59,18 +60,32 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     onUpdate,
 }) => {
     const intl = useIntl();
-    const [_isDropdownOpened, setIsDropdownOpened] = useState(false);
+    const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(parentFilters, validateElementsBy, metricsAndFacts);
+
+    const onAdd = (addedItem: ValuesLimitingItem) => {
+        // parent filters are ignored till UI will get to support them later
+        if (isObjRef(addedItem)) {
+            onUpdate([...validateElementsBy, addedItem]);
+        }
+    };
 
     const onDelete = (deletedItem: ValuesLimitingItem) => {
         // parent filters are ignored till UI will get to support them later
         if (isObjRef(deletedItem)) {
-            onUpdate(validateElementsBy!.filter((item) => !areObjRefsEqual(deletedItem, item)));
+            onUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
         }
     };
 
     return (
         <div>
+            {isDropdownOpened ? (
+                <AddLimitingItem
+                    currentlySelectedItems={validateElementsBy}
+                    onSelect={onAdd}
+                    onClose={() => setIsDropdownOpened(false)}
+                />
+            ) : null}
             <div className="configuration-category attribute-filter__limit__title">
                 <Typography tagName="h3">
                     <FormattedMessage id="attributesDropdown.valuesLimiting.title" />
@@ -88,7 +103,10 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
             <div>
                 {itemsWithTitles.length === 0 ? (
                     <WithExplanationTooltip>
-                        <FormattedMessage id="attributesDropdown.valuesLimiting.empty" />
+                        <NoData
+                            className="attribute-filter__limit__no-data"
+                            noDataLabel={intl.formatMessage(messages.filterAddValuesLimitNoData)}
+                        />
                     </WithExplanationTooltip>
                 ) : (
                     <>
