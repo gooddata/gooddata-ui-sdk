@@ -135,7 +135,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableClickHouseDataSource: false,
     enableCsvAnalytics: false,
     enableKDCrossFiltering: true,
-    enableMultipleDateFilters: false,
+    enableMultipleDateFilters: true,
     enableADMultipleDateFilters: false,
     enableKDRichText: false,
     enableAttributeFilterValuesValidation: false,

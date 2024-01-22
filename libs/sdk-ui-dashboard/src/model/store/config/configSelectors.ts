@@ -587,7 +587,7 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean> = create
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableMultipleDateFilters ?? false;
+        return state.settings?.enableMultipleDateFilters ?? true;
     },
 );
 
