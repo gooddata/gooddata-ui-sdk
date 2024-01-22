@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -598,7 +598,7 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean> = create
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableMultipleDateFilters ?? false;
+        return state.settings?.enableMultipleDateFilters ?? true;
     },
 );
 
