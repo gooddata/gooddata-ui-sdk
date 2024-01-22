@@ -34,6 +34,20 @@ const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (
     state.dateHierarchyTemplates = dateHierarchyTemplates;
 };
 
+export interface SetCatalogMeasuresAndFactsPayload {
+    measures: ICatalogMeasure[];
+    facts: ICatalogFact[];
+}
+
+const setCatalogMeasuresAndFacts: CatalogReducer<PayloadAction<SetCatalogMeasuresAndFactsPayload>> = (
+    state,
+    action,
+) => {
+    const { measures, facts } = action.payload;
+    state.measures = measures;
+    state.facts = facts;
+};
+
 const addAttributeHierarchy: CatalogReducer<PayloadAction<ICatalogAttributeHierarchy>> = (state, action) => {
     const attributeHierarchy = action.payload;
     state.attributeHierarchies = [...(state.attributeHierarchies ?? []), attributeHierarchy];
@@ -67,6 +81,7 @@ const deleteAttributeHierarchy: CatalogReducer<PayloadAction<ICatalogAttributeHi
 
 export const catalogReducers = {
     setCatalogItems,
+    setCatalogMeasuresAndFacts,
     addAttributeHierarchy,
     updateAttributeHierarchy,
     deleteAttributeHierarchy,

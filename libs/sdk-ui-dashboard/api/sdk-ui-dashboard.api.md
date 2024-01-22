@@ -272,6 +272,7 @@ import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
+import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
@@ -552,6 +553,10 @@ export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
 export const catalogActions: CaseReducerActions<    {
 setCatalogItems: (state: WritableDraft<CatalogState_2>, action: {
 payload: SetCatalogItemsPayload;
+type: string;
+}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+setCatalogMeasuresAndFacts: (state: WritableDraft<CatalogState_2>, action: {
+payload: SetCatalogMeasuresAndFactsPayload;
 type: string;
 }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
 addAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
