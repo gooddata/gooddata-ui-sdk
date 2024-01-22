@@ -2,14 +2,14 @@
 
 import { idRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { invalidQueryArguments } from "../events/general.js";
 import { QueryMetricsAndFacts, IMetricsAndFacts } from "../queries/index.js";
-import { selectCatalogMeasures, selectCatalogFacts } from "../store/index.js";
+import { selectCatalogMeasures, selectCatalogFacts, catalogActions } from "../store/index.js";
 
 export const QueryMetricsAndFactsService = createCachedQueryService(
     "GDC.DASH/QUERY.METRICS_AND_FACTS",
@@ -36,7 +36,7 @@ function* queryService(ctx: DashboardContext, query: QueryMetricsAndFacts): Saga
     const facts: ReturnType<typeof selectCatalogFacts> = yield select(selectCatalogFacts);
 
     // metrics and facts were loaded during dashboard initialization in initializeDashboardHandler
-    // it is not necessary to fetch them again
+    // or by previous of this (sic) cached query that stores the result in the catalog slice as well
     if (metrics?.length > 0 && facts?.length > 0) {
         return {
             metrics,
@@ -51,6 +51,15 @@ function* queryService(ctx: DashboardContext, query: QueryMetricsAndFacts): Saga
     if (!catalog) {
         throw invalidQueryArguments(ctx, `Cannot find any metrics and facts`, correlationId);
     }
+
+    // cache the results into catalog slice to be usable by other selectors without necessity to call
+    // this query explicitly first
+    yield put(
+        catalogActions.setCatalogMeasuresAndFacts({
+            facts: catalog.facts(),
+            measures: catalog.measures(),
+        }),
+    );
 
     return {
         metrics: catalog.measures(),
