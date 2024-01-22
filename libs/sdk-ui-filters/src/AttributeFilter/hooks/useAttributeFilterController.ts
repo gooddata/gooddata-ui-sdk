@@ -207,6 +207,8 @@ function useOnError(
 
 //
 
+const EMPTY_LIMITING_VALIDATION_ITEMS: ObjRef[] = [];
+
 function useInitOrReload(
     handler: IMultiSelectAttributeFilterHandler,
     props: {
@@ -226,7 +228,7 @@ function useInitOrReload(
     const {
         filter,
         limitingAttributeFilters,
-        limitingValidationItems,
+        limitingValidationItems = EMPTY_LIMITING_VALIDATION_ITEMS,
         limit,
         resetOnParentFilterChange,
         setConnectedPlaceholderValue,
@@ -261,6 +263,11 @@ function useInitOrReload(
         );
         const filterChanged = !isEqual(filter, handler.getFilter());
 
+        const limitingValidationItemsChanged = !isEqual(
+            limitingValidationItems,
+            handler.getLimitingValidationItems(),
+        );
+
         const props: UpdateFilterProps = {
             filter,
             limitingAttributeFilters,
@@ -270,6 +277,8 @@ function useInitOrReload(
             onApply,
             selectionMode,
             setShouldReloadElements,
+            limitingValidationItems,
+            limitingValidationItemsChanged,
         };
 
         const change = resetOnParentFilterChange
@@ -287,6 +296,7 @@ function useInitOrReload(
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
         setShouldReloadElements,
+        limitingValidationItems,
     ]);
 }
 
@@ -299,6 +309,8 @@ type UpdateFilterProps = {
     onApply: OnApplyCallbackType;
     selectionMode: DashboardAttributeFilterSelectionMode;
     setShouldReloadElements: (value: boolean) => void;
+    limitingValidationItems: ObjRef[];
+    limitingValidationItemsChanged: boolean;
 };
 
 type UpdateFilterType = "init-parent" | "init-self" | undefined;
@@ -312,10 +324,12 @@ function updateNonResettingFilter(
         filterChanged,
         setConnectedPlaceholderValue,
         setShouldReloadElements,
+        limitingValidationItemsChanged,
+        limitingValidationItems,
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
 ): UpdateFilterType {
-    if (limitingAttributesChanged || filterChanged) {
+    if (limitingAttributesChanged || filterChanged || limitingValidationItemsChanged) {
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
@@ -334,6 +348,7 @@ function updateNonResettingFilter(
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
         handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        handler.setLimitingValidationItems(limitingValidationItems);
         handler.commitSelection();
 
         const nextFilter = handler.getFilter();
