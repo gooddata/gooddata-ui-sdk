@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -66,12 +68,6 @@ export interface AnalyzeCsvRequestItemConfig {
      * @memberof AnalyzeCsvRequestItemConfig
      */
     resultRows?: number;
-    /**
-     * Size of sample to use for the analysis. Use -1 to work with the entire file.
-     * @type {number}
-     * @memberof AnalyzeCsvRequestItemConfig
-     */
-    sampleSize?: number;
     /**
      * Maximum number of rows to work with during header detection.
      * @type {number}
