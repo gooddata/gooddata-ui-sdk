@@ -75,7 +75,6 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
             {isRichTextEditing ? (
                 <div className="gd-rich-text-footer">
                     <div className="gd-rich-text-footer-options">
-                        <div className="gd-hider-div" />
                         <a
                             className="gd-button-link-dimmed gd-icon-circle-question"
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
