@@ -40,7 +40,7 @@ jobs:
 
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Bum rush version and commit to source branch
+      - name: Bump rush version and commit to source branch
         env:
           BUMP: ${{ inputs.bump }}
           PRERELEASE_ID: ${{ inputs.prerelease-id }}
