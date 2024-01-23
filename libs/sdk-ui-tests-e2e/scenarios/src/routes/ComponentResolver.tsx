@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/Filters/AttributeFilterButtonPreselectedScenario";
 import { AttributeFilterButtonScenario } from "../components/Scenarios/Filters/AttributeFilterButtonScenario";
@@ -78,6 +78,7 @@ import { DashboardForDateFilterScenario } from "../components/Scenarios/Dashboar
 import { DashboardDateFilteringOnInsightScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringOnInsightScenario";
 import { DashboardTableDrillDown } from "../components/Scenarios/Dashboard/DashboardTableDrillDownScenario";
 import { DashboardTableTranspose } from "../components/Scenarios/Dashboard/DashboardTableTransposeScenario";
+import { DashboardRichTextScenario } from "../components/Scenarios/Dashboard/DashboardRichTextScenario";
 import { ImplictDrill } from "../components/Scenarios/Dashboard/ImplicitDrillScenario";
 import {
     InsightTranspose_MetricRow_ColHeaderLeft,
@@ -151,6 +152,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_WITH_TABLE_MANY_ROWS_COLUMNS: "dashboard/dashboard-many-rows-columns",
     DASHBOARD_ATTRIBUTE_SELECTION: "dashboard/attribute-selection",
     DASHBOARD_FOR_DATE_FILTER: "dashboard/for-date-filter",
+    DASHBOARD_RICH_TEXT: "dashboard/rich-text",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -351,6 +353,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING_ON_INSIGHT_SCENARIO, DashboardDateFilteringOnInsightScenario],
     [SCENARIO_KEYS.DASHBOARD_TABLE_DRILL_DOWN, DashboardTableDrillDown],
     [SCENARIO_KEYS.DASHBOARD_TABLE_TRANSPOSE, DashboardTableTranspose],
+    [SCENARIO_KEYS.DASHBOARD_RICH_TEXT, DashboardRichTextScenario],
     [SCENARIO_KEYS.IMPLICIT_DRILL, ImplictDrill],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW_LEFT, InsightTranspose_MetricRow_ColHeaderLeft],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_COLUMN_LEFT, InsightTranspose_MetricColumn_ColHeaderLeft],

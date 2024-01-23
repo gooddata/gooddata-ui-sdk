@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
@@ -23,6 +23,7 @@ import {
     testItemWithDateDataset,
     testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
+    TestRichTextItem,
 } from "../../../tests/fixtures/Layout.fixtures.js";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 
@@ -81,12 +82,17 @@ describe("add layout section handler", () => {
 
         it("should add a new section and initialize its items", async () => {
             const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
-                addLayoutSection(0, undefined, [TestKpiPlaceholderItem, TestInsightPlaceholderItem]),
+                addLayoutSection(0, undefined, [
+                    TestKpiPlaceholderItem,
+                    TestInsightPlaceholderItem,
+                    TestRichTextItem,
+                ]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
             expect(event.payload.section.items).toMatchObject([
                 TestKpiPlaceholderItem,
                 TestInsightPlaceholderItem,
+                TestRichTextItem,
             ]);
 
             const layout = selectLayout(Tester.state());

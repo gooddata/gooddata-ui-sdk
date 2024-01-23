@@ -5,6 +5,7 @@ import { Table } from "./table";
 import { Kpi } from "./kpi";
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { Headline } from "./headline";
+import { RichText } from "./richText";
 
 export class Widget {
     constructor(private index: number) {}
@@ -66,6 +67,10 @@ export class Widget {
 
     getKPI() {
         return new Kpi(this.getElementSelector());
+    }
+
+    getRichText() {
+        return new RichText(this.getElementSelector());
     }
 
     removeKPIWidget(confirm: boolean) {

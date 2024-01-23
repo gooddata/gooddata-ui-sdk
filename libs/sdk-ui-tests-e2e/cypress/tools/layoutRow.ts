@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { SectionHeader } from "./sectionHeader";
@@ -60,6 +60,11 @@ export class LayoutRow {
 
     addKpiPlaceholder() {
         this.dragAndDropItems(".s-add-kpi:not(.disabled)", ".s-drag-info-placeholder-drop-target");
+        return this;
+    }
+
+    addRichTextWidget() {
+        this.dragAndDropItems(".s-add-rich-text", ".s-last-drop-position");
         return this;
     }
 

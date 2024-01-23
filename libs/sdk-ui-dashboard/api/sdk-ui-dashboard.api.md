@@ -3976,6 +3976,10 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult>
 export interface IDashboardRichTextProps {
     // @alpha
     backend?: IAnalyticalBackend;
+    // @alpha
+    clientHeight?: number;
+    // @alpha
+    clientWidth?: number;
     widget: IRichTextWidget;
     // @alpha
     workspace?: string;

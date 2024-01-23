@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     idRef,
     IInsight,
@@ -11,6 +11,8 @@ import {
     IInsightWidgetDefinition,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutItem,
+    IRichTextWidget,
+    IdentifierRef,
 } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
 import {
@@ -70,6 +72,32 @@ export function createTestInsightItem(
         size: {
             xl: {
                 gridWidth: 2,
+            },
+        },
+    };
+}
+
+export const TestRichTextItem: IDashboardLayoutItem<IRichTextWidget> = createTestRichTextItem(
+    idRef("richTextWidgetRef"),
+);
+
+export function createTestRichTextItem(ref: IdentifierRef): IDashboardLayoutItem<IRichTextWidget> {
+    return {
+        type: "IDashboardLayoutItem",
+        widget: {
+            type: "richText",
+            ref,
+            content: "",
+            ignoreDashboardFilters: [],
+            drills: [],
+            title: "Test Rich Text Item",
+            description: "",
+            identifier: ref.identifier,
+            uri: `/${ref.identifier}`,
+        },
+        size: {
+            xl: {
+                gridWidth: 6,
             },
         },
     };

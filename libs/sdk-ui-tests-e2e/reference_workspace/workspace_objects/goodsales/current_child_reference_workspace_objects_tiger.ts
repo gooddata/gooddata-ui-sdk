@@ -1,5 +1,7 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-01-02T11:50:33.014Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-01-23T09:23:15.872Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -16,14 +18,14 @@ import {
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: attr.f_account.account
-     */
-    Default: newAttribute("attr.f_account.account"),
-    /**
      * Display Form Title: Name
      * Display Form ID: label.f_account.account.name
-     */ Name: newAttribute("label.f_account.account.name"),
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
@@ -46,18 +48,18 @@ export const Activity = {
  */
 export const Opportunity = {
     /**
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
+     */
+    Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
-     */
-    Name: newAttribute("label.f_opportunity.opportunity.name"),
+     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
     /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
      */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
-    /**
-     * Display Form Title: Opportunity
-     * Display Form ID: attr.f_opportunity.opportunity
-     */ Default: newAttribute("attr.f_opportunity.opportunity"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -70,14 +72,14 @@ export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Sales Rep
-     * Display Form ID: attr.f_owner.salesrep
-     */
-    Default: newAttribute("attr.f_owner.salesrep"),
-    /**
      * Display Form Title: Owner Name
      * Display Form ID: label.f_owner.salesrep.ownername
-     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
+     */
+    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
+    /**
+     * Display Form Title: Sales Rep
+     * Display Form ID: attr.f_owner.salesrep
+     */ Default: newAttribute("attr.f_owner.salesrep"),
 };
 /**
  * Attribute Title: Product
@@ -110,13 +112,13 @@ export const StageName = {
      */
     Default: newAttribute("attr.f_stage.stagename"),
     /**
-     * Display Form Title: Order
-     * Display Form ID: label.f_stage.stagename.order
-     */ Order: newAttribute("label.f_stage.stagename.order"),
-    /**
      * Display Form Title: Stage Name
      * Display Form ID: label.f_stage.stagename.stagename
      */ _1: newAttribute("label.f_stage.stagename.stagename"),
+    /**
+     * Display Form Title: Order
+     * Display Form ID: label.f_stage.stagename.order
+     */ Order: newAttribute("label.f_stage.stagename.order"),
 };
 /**
  * Attribute Title: County name
@@ -164,34 +166,34 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
      */
-    Name: newAttribute("f_city.id.cityname"),
-    /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
+    AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
      * Display Form Title: City
      * Display Form ID: f_city.id
      */ Default: newAttribute("f_city.id"),
     /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
     /**
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
      */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -214,14 +216,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const Department = {
     /**
-     * Display Form Title: Department
-     * Display Form ID: f_owner.department_id
-     */
-    Default: newAttribute("f_owner.department_id"),
-    /**
      * Display Form Title: Department hyperlink
      * Display Form ID: f_owner.department_id.departmenthyperlink
-     */ Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+     */
+    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+    /**
+     * Display Form Title: Department
+     * Display Form ID: f_owner.department_id
+     */ Default: newAttribute("f_owner.department_id"),
 };
 /**
  * Attribute Title: Owner Id
@@ -2672,6 +2674,10 @@ export const Dashboards = {
      * Dashboard Title: KD with stage name
      * Dashboard ID: 0e0cb428-c0db-45dc-946e-65b47287a94f
      */ KDWithStageName: "0e0cb428-c0db-45dc-946e-65b47287a94f",
+    /**
+     * Dashboard Title: Cross filtering
+     * Dashboard ID: 1b35747d-d7a3-4052-9f07-a9aa93248389
+     */ CrossFiltering: "1b35747d-d7a3-4052-9f07-a9aa93248389",
     /**
      * Dashboard Title: Dashboard with unknown visualization class
      * Dashboard ID: 2326d431-ccb3-405e-a3d2-394bdf276e61

@@ -1189,6 +1189,107 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "2b51da8e-fe92-400f-9cf6-dc4a3c9cfea7",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "No data",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "content": "# Title\n\n![Image](/image.png)",
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "title": "",
+                                            "type": "richText"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-01-23 13:06",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "8dea7e2f-315d-4d62-ad51-2ed2ab29758b",
+                "modifiedAt": "2024-01-23 15:47",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "VIEW"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "RichText"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "ac7f493d-782f-496b-a5eb-c4b988151df6",
                             "type": "filterContext"
                         }
@@ -2658,6 +2759,24 @@
                                 "to": 0,
                                 "type": "relative"
                             }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "2b51da8e-fe92-400f-9cf6-dc4a3c9cfea7",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
                         },
                         {
                             "attributeFilter": {
@@ -3074,6 +3193,24 @@
                 },
                 "description": "",
                 "id": "5e1ce6df-0d5c-4972-95c0-103103c417a2",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "5fdd5828-215c-45c0-a063-eb0205cc600f",
                 "title": "filterContext"
             },
             {

@@ -597,7 +597,7 @@ export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = creat
  * @internal
  */
 export const selectEnableKDRichText: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKDRichText ?? false;
+    return state.settings?.enableKDRichText ?? true;
 });
 
 /**

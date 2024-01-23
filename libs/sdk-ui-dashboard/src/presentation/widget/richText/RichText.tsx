@@ -27,7 +27,15 @@ export const RichText: React.FC<IRichTextProps> = ({
     emptyElement,
 }) => {
     return (
-        <div className={cx(["gd-rich-text-content", { "gd-visible-scrollbar": !editMode }])}>
+        <div
+            className={cx([
+                "gd-rich-text-content",
+                `gd-rich-text-content-${editMode ? "edit" : "view"}`,
+                "s-rich-text",
+                `s-rich-text-${editMode ? "edit" : "view"}`,
+                { "gd-visible-scrollbar": !editMode },
+            ])}
+        >
             {editMode ? (
                 <RichTextEdit
                     text={text}
@@ -62,6 +70,7 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
 
     return (
         <textarea
+            className="gd-visible-scrollbar"
             value={text}
             autoFocus
             placeholder={placeholder}
