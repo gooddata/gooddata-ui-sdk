@@ -453,11 +453,6 @@
                         "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
                         "format": "int32"
                     },
-                    "sampleSize": {
-                        "type": "integer",
-                        "description": "Size of sample to use for the analysis. Use -1 to work with the entire file.",
-                        "format": "int32"
-                    },
                     "headerDetectMaxRows": {
                         "type": "integer",
                         "description": "Maximum number of rows to work with during header detection.",

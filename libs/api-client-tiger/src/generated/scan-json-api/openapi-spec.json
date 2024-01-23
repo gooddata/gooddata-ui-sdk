@@ -699,7 +699,8 @@
                             "SYNAPSESQL",
                             "DATABRICKS",
                             "GDSTORAGE",
-                            "CLICKHOUSE"
+                            "CLICKHOUSE",
+                            "MYSQL"
                         ]
                     },
                     "url": {

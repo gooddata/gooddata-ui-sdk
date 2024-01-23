@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -392,6 +394,7 @@ export const TestDefinitionRequestTypeEnum = {
     DATABRICKS: "DATABRICKS",
     GDSTORAGE: "GDSTORAGE",
     CLICKHOUSE: "CLICKHOUSE",
+    MYSQL: "MYSQL",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
