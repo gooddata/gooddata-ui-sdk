@@ -258,6 +258,11 @@
 
 .attribute-filter__limit__popup__item {
     span {
-        display: flex;
+        display: flex; // override leaking style fro gd-list-item
+    }
+
+    &.is-disabled {
+        color: kit-variables.$default-gd-color-disabled;
+        cursor: default;
     }
 }

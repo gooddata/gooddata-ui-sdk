@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import React, { useState } from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
+import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
 import { Typography, Bubble, BubbleHoverTrigger, Button, NoData } from "@gooddata/sdk-ui-kit";
 import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -12,12 +12,13 @@ import {
     useDashboardSelector,
     selectEnableAttributeFilterValuesValidation,
     IMetricsAndFacts,
+    selectBackendCapabilities,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
 import { LimitingItem } from "./LimitingItem.js";
 import { useLimitingItems } from "./limitingItemsHook.js";
-import { AddLimitingItem } from "./AddLimitingItem.js";
+import { AddLimitingItemDialog } from "./AddLimitingItemDialog.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
 
@@ -48,40 +49,53 @@ const extractKey = (item: ValuesLimitingItem) =>
 
 interface ILimitValuesConfigurationProps {
     parentFilters: IDashboardAttributeFilterParentItem[];
+    validParentFilters: ObjRef[];
     validateElementsBy: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
-    onUpdate: (items: ObjRef[]) => void;
+    onLimitingItemUpdate: (items: ObjRef[]) => void;
+    onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     parentFilters,
+    validParentFilters,
     validateElementsBy,
     metricsAndFacts,
-    onUpdate,
+    onLimitingItemUpdate,
+    onParentFilterUpdate,
 }) => {
     const intl = useIntl();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
-    const itemsWithTitles = useLimitingItems(parentFilters, validateElementsBy, metricsAndFacts);
+    const itemsWithTitles = useLimitingItems(
+        parentFilters,
+        validParentFilters,
+        validateElementsBy,
+        metricsAndFacts,
+    );
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
-        // parent filters are ignored till UI will get to support them later
         if (isObjRef(addedItem)) {
-            onUpdate([...validateElementsBy, addedItem]);
+            onLimitingItemUpdate([...validateElementsBy, addedItem]);
+        } else {
+            onParentFilterUpdate(addedItem.localIdentifier, true);
         }
     };
 
     const onDelete = (deletedItem: ValuesLimitingItem) => {
-        // parent filters are ignored till UI will get to support them later
         if (isObjRef(deletedItem)) {
-            onUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
+            onLimitingItemUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
+        } else {
+            onParentFilterUpdate(deletedItem.localIdentifier, false);
         }
     };
 
     return (
         <div>
             {isDropdownOpened ? (
-                <AddLimitingItem
+                <AddLimitingItemDialog
                     currentlySelectedItems={validateElementsBy}
+                    parentFilters={parentFilters}
+                    validParentFilters={validParentFilters}
                     onSelect={onAdd}
                     onClose={() => setIsDropdownOpened(false)}
                 />
@@ -125,31 +139,21 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     );
 };
 
-export interface ILocalizedLimitValuesConfiguration extends ILimitValuesConfigurationProps {
-    intl: IntlShape;
-}
+export type LocalizedLimitValuesConfigurationProps = ILimitValuesConfigurationProps & WrappedComponentProps;
 
-export const LocalizedLimitValuesConfiguration: React.FC<ILocalizedLimitValuesConfiguration> = ({
-    intl,
-    parentFilters,
-    validateElementsBy,
-    metricsAndFacts,
-    onUpdate,
-}) => {
+export const LocalizedLimitValuesConfiguration: React.FC<LocalizedLimitValuesConfigurationProps> = (
+    props,
+) => {
     const isAttributeFilterValuesValidationEnabled = useDashboardSelector(
         selectEnableAttributeFilterValuesValidation,
     );
-    if (!isAttributeFilterValuesValidationEnabled) {
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    if (!isAttributeFilterValuesValidationEnabled || !capabilities.supportsAttributeFilterElementsLimiting) {
         return null;
     }
     return (
-        <IntlWrapper locale={intl.locale}>
-            <LimitValuesConfiguration
-                parentFilters={parentFilters}
-                validateElementsBy={validateElementsBy}
-                metricsAndFacts={metricsAndFacts}
-                onUpdate={onUpdate}
-            />
+        <IntlWrapper locale={props.intl.locale}>
+            <LimitValuesConfiguration {...props} />
         </IntlWrapper>
     );
 };

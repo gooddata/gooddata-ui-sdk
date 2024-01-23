@@ -2,13 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
+import cx from "classnames";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, Button, Typography, NoData, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../../locales.js";
 import { ConfigurationBubble } from "../../../../../widget/common/configuration/ConfigurationBubble.js";
+import { IDashboardAttributeFilterParentItem } from "../../../../../../model/index.js";
+import { ValuesLimitingItem } from "../../../types.js";
 
-import { useSearchableLimitingItems, IValidationItemWithTitle } from "./limitingItemsHook.js";
+import { useSearchableLimitingItems, IValuesLimitingItemWithTitle } from "./limitingItemsHook.js";
 import { LimitingItemTitle } from "./LimitingItem.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [
@@ -22,28 +25,31 @@ const ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-export interface IAddLimitingItemProps {
+export interface IAddLimitingItemDialogProps {
+    parentFilters: IDashboardAttributeFilterParentItem[];
+    validParentFilters: ObjRef[];
     currentlySelectedItems: ObjRef[];
-    onSelect: (item: ObjRef) => void;
+    onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
 }
 
-export const AddLimitingItem: React.FC<IAddLimitingItemProps> = ({
+export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
     currentlySelectedItems,
+    parentFilters,
+    validParentFilters,
     onSelect,
     onClose,
 }) => {
     const intl = useIntl();
-
-    const [matchingItems, setMatchingItems] = useState<IValidationItemWithTitle[]>([]);
-    const items = useSearchableLimitingItems(currentlySelectedItems);
+    const [matchingItems, setMatchingItems] = useState<IValuesLimitingItemWithTitle[]>([]);
+    const items = useSearchableLimitingItems(currentlySelectedItems, parentFilters, validParentFilters);
 
     useEffect(() => {
         setMatchingItems(items);
     }, [items]);
 
     const onItemSearch = (keyword: string) =>
-        setMatchingItems(items.filter(({ title }) => title.toLowerCase().includes(keyword.toLowerCase())));
+        setMatchingItems(items.filter(({ title }) => title?.toLowerCase().includes(keyword.toLowerCase())));
 
     return (
         <ConfigurationBubble
@@ -81,14 +87,18 @@ export const AddLimitingItem: React.FC<IAddLimitingItemProps> = ({
                         />
                     )}
                     items={matchingItems}
-                    renderItem={({ item: { item, title } }) => {
+                    renderItem={({ item: { item, title, isDisabled } }) => {
                         return (
                             <div
                                 key={serializeObjRef(item)}
-                                className="gd-list-item attribute-filter__limit__popup__item"
+                                className={cx("gd-list-item attribute-filter__limit__popup__item", {
+                                    "is-disabled": isDisabled,
+                                })}
                                 onClick={() => {
-                                    onSelect(item);
-                                    onClose();
+                                    if (!isDisabled) {
+                                        onSelect(item);
+                                        onClose();
+                                    }
                                 }}
                             >
                                 <LimitingItemTitle item={item} title={title} />

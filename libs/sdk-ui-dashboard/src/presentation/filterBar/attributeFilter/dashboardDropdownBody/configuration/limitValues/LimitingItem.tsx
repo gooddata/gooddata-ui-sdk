@@ -2,7 +2,6 @@
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import cx from "classnames";
 import { isObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { Icon, IIconProps } from "@gooddata/sdk-ui-kit";
 
@@ -78,24 +77,16 @@ export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, tit
 export interface ILimitingItemProps {
     title: string | React.ReactNode;
     item: ValuesLimitingItem;
-    isDisabled?: boolean;
     onDelete: () => void;
 }
 
 export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
-    const { isDisabled, onDelete } = props;
-    const classNames = cx("attribute-filter__limit__item", {
-        "attribute-filter__limit__item--disabled": isDisabled,
-    });
     return (
-        <div className={classNames}>
+        <div className="attribute-filter__limit__item">
             <LimitingItemTitle {...props} />
             <span
-                className={cx(
-                    "attribute-filter__limit__item__delete gd-icon-trash s-attribute-filter-limit-delete",
-                    { "is-disabled": isDisabled },
-                )}
-                onClick={isDisabled ? undefined : onDelete}
+                className="attribute-filter__limit__item__delete gd-icon-trash s-filter-limit-delete"
+                onClick={props.onDelete}
                 aria-label="Attribute filter limit delete"
             />
         </div>
