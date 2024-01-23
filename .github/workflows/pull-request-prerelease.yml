@@ -13,5 +13,8 @@ jobs:
         github.event.pull_request.merged == true &&
         contains(github.event.pull_request.labels.*.name, 'publish pre-release')
     uses: ./.github/workflows/rw-publish-prerelase.yml
+    permissions:
+      contents: write
+      id-token: write
     with:      
       source-branch: ${{ github.event.pull_request.base.ref }}
