@@ -1,0 +1,17 @@
+name: Pull request ~ Prerelease
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - release
+
+jobs:
+  publish-pre-release:
+    name: Publish pre-release
+    if: >
+        github.event.pull_request.merged == true &&
+        any(github.event.pull_request.labels.*.name, '==', 'publish pre-release')
+    uses: ./.github/workflows/rw-publish-prerelase.yml
+    with:      
+      source-branch: ${{ github.event.pull_request.base.ref }}
