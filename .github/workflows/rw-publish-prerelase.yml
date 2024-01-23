@@ -15,7 +15,7 @@ on:
 # if another job or workflow using the same concurrency group in the repository is in progress,
 # the queued job or workflow will be pending. Any previously pending job or workflow in the concurrency group will be canceled.
 concurrency:
-  group: prerelease-${{ github.event.inputs.source-branch }}
+  group: prerelease-${{ inputs.source-branch }}
   cancel-in-progress: false
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
       id-token: write
     secrets: inherit
     with:
-      source-branch: ${{ github.event.inputs.source-branch }}
+      source-branch: ${{ inputs.source-branch }}
       bump: "prerelease"
       prerelease-id: ${{ needs.setup-params.outputs.prerelease-id }}
 
@@ -57,7 +57,7 @@ jobs:
       id-token: write
     secrets: inherit
     with:
-      source-branch: ${{ github.event.inputs.source-branch }}
+      source-branch: ${{ inputs.source-branch }}
       release-tag: "prerelease"
 
   slack-notification:

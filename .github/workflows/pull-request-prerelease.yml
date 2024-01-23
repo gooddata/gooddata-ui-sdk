@@ -11,7 +11,7 @@ jobs:
     name: Publish pre-release
     if: >
         github.event.pull_request.merged == true &&
-        any(github.event.pull_request.labels.*.name, '==', 'publish pre-release')
+        contains(github.event.pull_request.labels.*.name, 'publish pre-release')
     uses: ./.github/workflows/rw-publish-prerelase.yml
     with:      
       source-branch: ${{ github.event.pull_request.base.ref }}
