@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
@@ -7,6 +7,12 @@ import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 import { determineDashboardEngine } from "./determineDashboardEngine.js";
 import { DynamicScriptLoadSdkError } from "@gooddata/sdk-ui";
+
+interface EntryPoint {
+    pluginKey: string;
+    engineKey: string;
+    version: string;
+}
 
 /**
  * @internal
@@ -21,10 +27,7 @@ export async function dynamicDashboardEngineLoader(
 
     const loadedEngines: IDashboardEngine[] = await Promise.all(
         plugins.map(async (plugin) => {
-            const loadedEngineModule = await loadEngine(
-                moduleNameFromUrl(plugin.url),
-                moduleFederationIntegration,
-            )();
+            const loadedEngineModule = await loadEngine(plugin.url, moduleFederationIntegration)();
 
             const engineFactory = loadedEngineModule.default;
             return engineFactory();
@@ -63,10 +66,7 @@ export async function dynamicDashboardPluginLoader(
                 )}`,
             );
 
-            const loadedModule = await loadPlugin(
-                moduleNameFromUrl(pluginMeta.url),
-                moduleFederationIntegration,
-            )();
+            const loadedModule = await loadPlugin(pluginMeta.url, moduleFederationIntegration)();
             const pluginFactory = loadedModule.default;
 
             let plugin: IDashboardPluginContract_V1 = pluginFactory();
@@ -77,10 +77,7 @@ export async function dynamicDashboardPluginLoader(
                 !plugin.compatibility &&
                 (plugin.maxEngineVersion === "bundled" || plugin.minEngineVersion === "bundled")
             ) {
-                const loadedEngineModule = await loadEngine(
-                    moduleNameFromUrl(pluginMeta.url),
-                    moduleFederationIntegration,
-                )();
+                const loadedEngineModule = await loadEngine(pluginMeta.url, moduleFederationIntegration)();
 
                 const engineFactory = loadedEngineModule.default;
                 const engine: IDashboardEngine = engineFactory();
@@ -170,7 +167,7 @@ function loadEntry(
     moduleName: string,
     { __webpack_init_sharing__, __webpack_share_scopes__ }: ModuleFederationIntegration,
 ) {
-    return async (): Promise<{ pluginKey: string; engineKey: string }> => {
+    return async (): Promise<EntryPoint> => {
         // Initializes the share scope. This fills it with known provided modules from this build and all remotes
         await __webpack_init_sharing__("default");
 
@@ -184,22 +181,55 @@ function loadEntry(
     };
 }
 
-function loadPlugin(moduleName: string, moduleFederationIntegration: ModuleFederationIntegration) {
+function loadPlugin(url: string, moduleFederationIntegration: ModuleFederationIntegration) {
+    const moduleName = moduleNameFromUrl(url);
     return async () => {
         const entry = await loadEntry(moduleName, moduleFederationIntegration)();
+
+        const cache = getWindowPluginCache(moduleName);
+        if (cache.plugin) {
+            if (cache.pluginUrl !== url) {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    `Trying to initialize plugin ${moduleName} that is already initialized from different url.
+Returning instance that is already initialized.
+
+Initialized plugin url: ${cache.pluginUrl}
+Initialized plugin version: ${cache.entry?.version ?? "not specified"}
+
+Trying to initialize plugin url: ${url}
+Trying to initialize plugin version: ${entry.version ?? "not specified"}
+`,
+                );
+            }
+
+            return cache.plugin;
+        }
+
         const factory = await (<any>window)[moduleName].get(entry.pluginKey);
 
-        return factory();
+        const plugin = factory();
+        cachePlugin(moduleName, url, entry, plugin);
+        return plugin;
     };
 }
 
-function loadEngine(moduleName: string, moduleFederationIntegration: ModuleFederationIntegration) {
+function loadEngine(url: string, moduleFederationIntegration: ModuleFederationIntegration) {
+    const moduleName = moduleNameFromUrl(url);
     return async () => {
         const entry = await loadEntry(moduleName, moduleFederationIntegration)();
+
+        const cache = getWindowPluginCache(moduleName);
+        if (cache.engine) {
+            return cache.engine;
+        }
+
         const factory = await (<any>window)[moduleName].get(entry.engineKey);
 
         try {
-            return factory();
+            const engine = factory();
+            cacheEngine(moduleName, url, entry, engine);
+            return engine;
         } catch (ex) {
             console.error(
                 `Initialization of ${moduleName} failed. This can happen if you deploy the same plugin multiple times each with the different GoodData.UI version or ${moduleName} is not unique in workspace`,
@@ -207,4 +237,51 @@ function loadEngine(moduleName: string, moduleFederationIntegration: ModuleFeder
             throw ex;
         }
     };
+}
+
+//
+// When there are different plugins versions of the same dashboard plugin
+// loaded in the same browser window context, the plugin initialization fails.
+// (because the plugin is scoped only by its name, not by the version or url)
+// See related module federation issue: https://github.com/module-federation/module-federation-examples/issues/1142
+//
+// If we cache initialized plugins,
+// we can avoid initialization of the another plugin from different url and following failure
+// and rather write warning about it into the console.
+//
+
+function moduleNameToCacheKey(moduleName: string) {
+    return `${moduleName}_cache`;
+}
+
+function initializeWindowPluginCacheIfNotFound(moduleName: string) {
+    const cacheKey = moduleNameToCacheKey(moduleName);
+    if (!(<any>window)[cacheKey]) {
+        (<any>window)[cacheKey] = {};
+    }
+}
+
+function getWindowPluginCache(moduleName: string): {
+    plugin?: any;
+    engine?: any;
+    entry?: EntryPoint;
+    pluginUrl?: string;
+} {
+    initializeWindowPluginCacheIfNotFound(moduleName);
+    const cacheKey = moduleNameToCacheKey(moduleName);
+    return (<any>window)[cacheKey];
+}
+
+function cacheEngine(moduleName: string, url: string, entry: EntryPoint, engine: any) {
+    const cache = getWindowPluginCache(moduleName);
+    cache.engine = engine;
+    cache.pluginUrl = url;
+    cache.entry = entry;
+}
+
+function cachePlugin(moduleName: string, url: string, entry: EntryPoint, plugin: any) {
+    const cache = getWindowPluginCache(moduleName);
+    cache.plugin = plugin;
+    cache.pluginUrl = url;
+    cache.entry = entry;
 }
