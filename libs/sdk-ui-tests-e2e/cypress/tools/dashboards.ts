@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { LayoutRow } from "./layoutRow";
 import { Widget } from "./widget";
 
@@ -58,7 +58,7 @@ export class Dashboard {
     getWidgetList() {
         const result = [] as string[];
         cy.get(".visualization .item-headline").each(($li) => {
-            return result.push($li.text());
+            result.push($li.text());
         });
         return cy.wrap(result);
     }

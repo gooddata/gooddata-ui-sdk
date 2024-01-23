@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -7,7 +7,6 @@ import { KpiConfiguration, KPIMeasureDropdown } from "../../tools/kpiConfigurati
 import { DateFilter, RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 import { Dashboard } from "../../tools/dashboards";
-import { InsightsCatalog } from "../../tools/insightsCatalog";
 
 const editMode = new EditMode();
 const widget = new Widget(0);
@@ -102,8 +101,6 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     it("Check no matching message", () => {
         editMode.edit();
-        new InsightsCatalog().waitForCatalogLoad();
-        cy.wait(1000);
         widget.getKPI().clickValue();
         kpiConfiguration.toggleMeasureDropdown();
         kpiMeasureDropdown.find("abc").noMatchingData();

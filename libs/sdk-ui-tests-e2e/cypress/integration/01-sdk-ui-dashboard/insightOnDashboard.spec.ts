@@ -31,7 +31,6 @@ describe("Insights on dashboard", () => {
     });
 
     it("has insight placeholder title", { tags: ["pre-merge_isolated_tiger"] }, () => {
-        insightCatalog.waitForCatalogLoad();
         widget
             .waitChartLoaded()
             .getTitle()

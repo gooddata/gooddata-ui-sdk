@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardsList } from "./dashboardsList";
 import { InsightsCatalog } from "./insightsCatalog";
@@ -38,7 +38,8 @@ export class EditMode {
 
     edit() {
         this.editButtonEnabled();
-        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).click({ force: true });
+        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).click();
+        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).should("not.exist");
         new InsightsCatalog().waitForCatalogLoad();
         return this;
     }

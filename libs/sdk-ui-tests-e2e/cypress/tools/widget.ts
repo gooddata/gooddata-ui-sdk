@@ -1,11 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { Chart } from "./chart";
 import { Table } from "./table";
 import { Kpi } from "./kpi";
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { Headline } from "./headline";
-import { getMaximumTimeout } from "../support/constants";
 
 export class Widget {
     constructor(private index: number) {}
@@ -19,10 +18,10 @@ export class Widget {
     }
 
     waitChartLoaded() {
-        this.getElement()
-            .find(".visualization-value-loading", { timeout: getMaximumTimeout() })
-            .should("not.exist");
-        this.getElement().find(".s-loading").should("not.exist");
+        // it needs to see visualization-uri-root to know the chart loading
+        this.getElement().find(".visualization-uri-root").should("exist");
+        // wait for .s-loading not existed to make sure chart loaded
+        this.getElement().find(".gd-visualization-content").find(".s-loading").should("not.exist");
         return this;
     }
 
