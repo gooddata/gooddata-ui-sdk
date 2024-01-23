@@ -1,15 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
-import React, { useEffect, useMemo } from "react";
+// (C) 2007-2024 GoodData Corporation
+import React, { useEffect } from "react";
 import { DateDatasetFilter } from "../../common/index.js";
-import {
-    IInsightWidget,
-    IMeasure,
-    insightMeasures,
-    isDateFilter,
-    isSimpleMeasure,
-    measureFilters,
-    widgetRef,
-} from "@gooddata/sdk-model";
+import { IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import {
     MeasureDateDatasets,
@@ -21,7 +13,6 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
-import isEmpty from "lodash/isEmpty.js";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;
@@ -56,15 +47,10 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         result?.dateDatasets,
     );
 
-    const dateOptionsDisabled = useMemo(() => {
-        const measures = insightMeasures(insight);
-        return isEmpty(measures) ? false : measures.every(isDateFiltered);
-    }, [insight]);
-
     return (
         <DateDatasetFilter
             widget={widget}
-            dateFilterCheckboxDisabled={dateOptionsDisabled}
+            dateFilterCheckboxDisabled={false}
             isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
             relatedDateDatasets={result?.dateDatasetsOrdered}
             isLoadingAdditionalData={isLoadingAdditionalData}
@@ -72,12 +58,4 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
             onDateDatasetChanged={handleDateDatasetChanged}
         />
     );
-}
-
-function isDateFiltered(measure: IMeasure) {
-    if (isSimpleMeasure(measure)) {
-        const filters = measureFilters(measure) ?? [];
-        return filters.some(isDateFilter);
-    }
-    return true;
 }
