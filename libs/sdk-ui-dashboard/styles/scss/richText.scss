@@ -27,7 +27,7 @@
         width: 100%;
         height: 100%;
         background-color: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, #fff));
-        line-height: 21px;
+        line-height: 19px;
         font-size: 14px;
         font-weight: 400;
         font-family: kit-variables.$measure_sequence_number_font;
@@ -35,7 +35,6 @@
         border: none;
         resize: none;
         outline: none;
-        overflow: hidden;
     }
 
     .gd-rich-text-content-empty {
