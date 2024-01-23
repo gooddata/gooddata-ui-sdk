@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   setup-params:
-    runs-on: [infra-small]
+    runs-on: [infra1-small]
     outputs:
       prerelease-id: ${{ steps.validate-params.outputs.prerelease-id }}
 
