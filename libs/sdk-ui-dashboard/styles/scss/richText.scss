@@ -1,6 +1,8 @@
 // (C) 2024 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "variables";
 
 .gd-rich-text-wrapper {
     width: 100%;
@@ -8,7 +10,7 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: absolute;
     left: 0;
     top: 0;
@@ -18,6 +20,7 @@
     width: 100%;
     height: 100%;
     padding: 5px;
+    border-radius: variables.$gd-dashboards-content-widget-borderRadius;
 
     textarea {
         width: 100%;
@@ -31,6 +34,7 @@
         border: none;
         resize: none;
         outline: none;
+        overflow: hidden;
     }
 
     .gd-rich-text-content-empty {
@@ -40,12 +44,51 @@
         justify-content: center;
         align-items: center;
     }
+
+    // styles for markdown elements
+    :first-child {
+        margin-top: 0;
+    }
+
+    h1 {
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 23px;
+        letter-spacing: 0;
+        text-align: left;
+    }
+
+    h2 {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: 0;
+        text-align: left;
+    }
+
+    h3 {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 19px;
+        letter-spacing: 0;
+        text-align: left;
+    }
+
+    p,
+    ul,
+    ol {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 19px;
+        letter-spacing: 0;
+        text-align: left;
+    }
 }
 
 $row-height: 50px;
 
 .gd-rich-text-footer {
-    padding-top: 10px;
+    padding-top: 8px;
     padding-right: 4px;
     display: flex;
     justify-content: space-between;
@@ -72,7 +115,11 @@ $row-height: 50px;
         }
 
         .gd-button-link-dimmed::before {
-            top: 5px;
+            top: 6px;
+        }
+
+        .gd-button-link-dimmed:focus {
+            color: button-variables.$button-normal-color;
         }
 
         .gd-button-link-dimmed:hover {
