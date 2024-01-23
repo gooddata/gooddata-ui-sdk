@@ -21,6 +21,7 @@
     height: 100%;
     padding: 5px;
     border-radius: variables.$gd-dashboards-content-widget-borderRadius;
+    min-height: 0;
 
     textarea {
         width: 100%;
@@ -85,21 +86,18 @@
     }
 }
 
-$row-height: 50px;
-
 .gd-rich-text-footer {
-    padding-top: 8px;
-    padding-right: 4px;
+    padding: 0 4px;
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
     overflow: hidden;
-    height: $row-height;
+    height: 40px;
+    min-height: 40px;
 
     .gd-divider {
-        top: -4px;
-        position: relative;
         margin: 4px;
+        height: 20px;
         border-left: 1px solid kit-variables.$gd-border-color;
     }
 
@@ -108,11 +106,7 @@ $row-height: 50px;
         flex-direction: row;
         flex-wrap: wrap;
         overflow: hidden;
-
-        .gd-button-link-dimmed {
-            margin: auto 0;
-            padding-bottom: 18px;
-        }
+        align-items: center;
 
         .gd-button-link-dimmed::before {
             top: 6px;
@@ -129,16 +123,12 @@ $row-height: 50px;
         .gd-button-link-dimmed:hover::before {
             color: kit-variables.$gd-color-text;
         }
-
-        .gd-hider-div {
-            height: $row-height;
-            flex-grow: 1;
-        }
     }
 
     .gd-rich-text-footer-actions {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         .gd-button-link.gd-button-icon-only.gd-icon-trash:hover::before {
             color: kit-variables.$gd-palette-error-base;
