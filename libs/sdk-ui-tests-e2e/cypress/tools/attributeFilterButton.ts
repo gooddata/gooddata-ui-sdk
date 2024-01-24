@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 export class AttributeFilterButton {
     private attributeFilterUniqueSelector;
 
@@ -16,7 +16,7 @@ export class AttributeFilterButton {
     }
 
     openConfiguration(): this {
-        cy.get(".s-configuration-button").click();
+        cy.get(".s-configuration-button").should("be.visible").click();
         return this;
     }
 
