@@ -1,4 +1,4 @@
-# (C) 2023 GoodData Corporation
+# (C) 2024 GoodData Corporation
 
 name: Send notification to slack for failed post-merge workflows
 
