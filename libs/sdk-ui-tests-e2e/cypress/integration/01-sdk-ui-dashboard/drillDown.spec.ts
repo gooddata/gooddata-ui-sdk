@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
@@ -147,14 +147,13 @@ describe("Drilling", () => {
 
             Navigation.visit("dashboard/insight");
             api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
-            firstWidget.scrollIntoView().waitChartLoaded().getChart().waitLoaded();
+            firstWidget.waitChartLoaded().getChart().waitLoaded();
             new DateFilter()
                 .openAndSelectDateFilterByName(DateFilterValue.ALL_TIME)
                 .apply()
                 .subtitleHasValue(DateFilterValue.ALL_TIME);
 
             firstWidget
-                .scrollIntoView()
                 .waitChartLoaded()
                 .getChart()
                 .hasDataLabelValues(assertInsightValues)
