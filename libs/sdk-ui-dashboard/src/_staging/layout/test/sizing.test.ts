@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutWidgetDefaultHeight,
@@ -67,6 +67,10 @@ describe("sizing", () => {
                 ).toMatchSnapshot();
             });
 
+            it("should get default height for rich text widget", () => {
+                expect(getDashboardLayoutWidgetDefaultHeight(settings, "richText")).toMatchSnapshot();
+            });
+
             it("should get default height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetDefaultHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
@@ -100,6 +104,10 @@ describe("sizing", () => {
                 ).toMatchSnapshot();
             });
 
+            it("should get min height for rich text widget", () => {
+                expect(getDashboardLayoutWidgetMinGridHeight(settings, "richText")).toMatchSnapshot();
+            });
+
             it("should get min height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetMinGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
@@ -125,6 +133,10 @@ describe("sizing", () => {
                 expect(getDashboardLayoutWidgetMaxGridHeight(settings, "kpi")).toMatchSnapshot();
             });
 
+            it("should get max height for rich text widget", () => {
+                expect(getDashboardLayoutWidgetMaxGridHeight(settings, "richText")).toMatchSnapshot();
+            });
+
             it("should get max height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetMaxGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
@@ -142,6 +154,10 @@ describe("sizing", () => {
 
             it("should get minimum width for kpi", () => {
                 expect(getDashboardLayoutWidgetMinGridWidth(settings, "kpi")).toBe(2);
+            });
+
+            it("should get minimum width for rich text widget", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "richText")).toBe(2);
             });
 
             type Scenario = [string, string, VisType | undefined, number];

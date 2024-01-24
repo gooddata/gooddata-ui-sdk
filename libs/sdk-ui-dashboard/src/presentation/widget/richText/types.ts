@@ -41,6 +41,20 @@ export interface IDashboardRichTextProps {
      * @public
      */
     widget: IRichTextWidget;
+
+    /**
+     * Height of the rich text widget container.
+     *
+     * @alpha
+     */
+    clientHeight?: number;
+
+    /**
+     * Width of the rich text widget container.
+     *
+     * @alpha
+     */
+    clientWidth?: number;
 }
 
 ///

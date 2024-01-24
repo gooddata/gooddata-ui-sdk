@@ -1,5 +1,7 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-01-02T11:52:17.238Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-01-23T16:32:01.129Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -46,18 +48,18 @@ export const Activity = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: Opportunity Name
-     * Display Form ID: label.f_opportunity.opportunity.name
-     */
-    Name: newAttribute("label.f_opportunity.opportunity.name"),
-    /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+     */
+    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
      */ Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: Opportunity Name
+     * Display Form ID: label.f_opportunity.opportunity.name
+     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -85,14 +87,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */
-    Default: newAttribute("attr.f_product.product"),
-    /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */ Name: newAttribute("label.f_product.product.name"),
+     */
+    Name: newAttribute("label.f_product.product.name"),
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
 };
 /**
  * Attribute Title: Stage History
@@ -164,34 +166,34 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
      */
-    Name: newAttribute("f_city.id.cityname"),
-    /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
+    Longitude: newAttribute("f_city.id.longitude"),
     /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
     /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
+    /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -214,14 +216,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const Department = {
     /**
-     * Display Form Title: Department
-     * Display Form ID: f_owner.department_id
-     */
-    Default: newAttribute("f_owner.department_id"),
-    /**
      * Display Form Title: Department hyperlink
      * Display Form ID: f_owner.department_id.departmenthyperlink
-     */ Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+     */
+    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+    /**
+     * Display Form Title: Department
+     * Display Form ID: f_owner.department_id
+     */ Default: newAttribute("f_owner.department_id"),
 };
 /**
  * Attribute Title: Owner Id
@@ -2736,6 +2738,10 @@ export const Dashboards = {
      * Dashboard Title: KD using long name metric
      * Dashboard ID: 7b2cd4c1-bb41-473a-9017-e404cbc630d2
      */ KDUsingLongNameMetric: "7b2cd4c1-bb41-473a-9017-e404cbc630d2",
+    /**
+     * Dashboard Title: RichText
+     * Dashboard ID: 8dea7e2f-315d-4d62-ad51-2ed2ab29758b
+     */ RichText: "8dea7e2f-315d-4d62-ad51-2ed2ab29758b",
     /**
      * Dashboard Title: Drill to dashboard
      * Dashboard ID: 97aca5e1-ab29-4ad9-a173-72085daf4dbf

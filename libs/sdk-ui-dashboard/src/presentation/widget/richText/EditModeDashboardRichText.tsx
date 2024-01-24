@@ -28,7 +28,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTE
 /**
  * @internal
  */
-export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ widget }) => {
+export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ widget, clientWidth }) => {
     const { isSelected } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
     const intl = useIntl();
@@ -75,23 +75,25 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
             {isRichTextEditing ? (
                 <div className="gd-rich-text-footer">
                     <div className="gd-rich-text-footer-options">
-                        <a
-                            className="gd-button-link-dimmed gd-icon-circle-question"
-                            href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
-                            rel="noopener noreferrer"
-                            target="_blank"
-                        >
-                            <FormattedMessage id="richText.formattingOptions" />
-                        </a>
+                        {typeof clientWidth !== "undefined" && clientWidth > 250 ? (
+                            <a
+                                className="gd-button-link-dimmed gd-icon-circle-question"
+                                href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                <FormattedMessage id="richText.formattingOptions" />
+                            </a>
+                        ) : null}
                     </div>
                     <div className="gd-rich-text-footer-actions">
                         <Button
-                            className="gd-button-link gd-button-icon-only gd-icon-trash"
+                            className="gd-button-link gd-button-icon-only gd-icon-trash s-rich-text-remove-button"
                             onClick={() => setIsConfirmDeleteDialogVisible(true)}
                         />
                         <span className="gd-divider" />
                         <Button
-                            className="gd-button-link gd-button-icon-only gd-icon-checkmark"
+                            className="gd-button-link gd-button-icon-only gd-icon-checkmark s-rich-text-confirm-button"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 dispatch(uiActions.clearWidgetSelection());
@@ -104,6 +106,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
             {isConfirmDeleteDialogVisible ? (
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ConfirmDialog
+                        className="s-rich-text-remove-confirm-dialog"
                         onSubmit={() => dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref))}
                         onCancel={() => setIsConfirmDeleteDialogVisible(false)}
                         headline={intl.formatMessage({ id: "richText.deleteDialog.header" })}

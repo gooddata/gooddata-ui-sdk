@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { Icon } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -233,6 +233,9 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     </IconWrapper>
                     <IconWrapper name="Invite">
                         <Icon.Invite color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="RichText">
+                        <Icon.RichText color="#ccc" />
                     </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
