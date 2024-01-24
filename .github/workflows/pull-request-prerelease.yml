@@ -2,22 +2,40 @@
 
 name: Pull request ~ Prerelease
 on:
-  pull_request:
-    types: [closed]
+  push:    
     branches:
       - master
       - release
 
 jobs:
+  get-pr-from-commit:
+    runs-on: [infra1-small]    
+    outputs:
+        should-prerelease: ${{ steps.needs-prerelease.should-prerelease }}
+    steps:
+      - uses: actions/github-script@v6
+        id: needs-prerelease
+        with:
+          script: |
+              return (
+                await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  commit_sha: context.sha,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                })
+              ).data[0]?.labels?.some((it)=>it.name==='publish pre-release');            
+          result-encoding: string
+      - name: should pre-release
+        run: echo "should-prerelease=${{steps.needs-prerelease.outputs.result}}" >> $GITHUB_OUTPUT
+
   publish-pre-release:
+    needs: [get-pr-from-commit]
     name: Publish pre-release
-    if: >
-        github.event.pull_request.merged == true &&
-        contains(github.event.pull_request.labels.*.name, 'publish pre-release')
+    if: ${{ needs.get-pr-from-commit.outputs.should-prerelease == 'true' }}        
     uses: ./.github/workflows/rw-publish-prerelase.yml
     secrets: inherit
     permissions:
       contents: write
       id-token: write
     with:      
-      source-branch: ${{ github.event.pull_request.base.ref }}
+      source-branch:  ${{ github.event.ref }}
