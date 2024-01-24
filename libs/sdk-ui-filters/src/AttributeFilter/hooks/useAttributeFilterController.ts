@@ -79,6 +79,8 @@ export const useAttributeFilterController = (
 
         selectionMode = "multi",
         selectFirst = false,
+
+        attribute,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -112,6 +114,7 @@ export const useAttributeFilterController = (
         workspace,
         hiddenElements,
         staticElements,
+        attribute,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler,
