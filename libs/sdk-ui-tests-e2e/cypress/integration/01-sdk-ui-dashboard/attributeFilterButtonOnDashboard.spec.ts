@@ -1,9 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterTooltip } from "../../tools/attributeFilterTooltip";
 import { getTestClassByTitle } from "../../support/commands/tools/classes";
+import { InsightsCatalog } from "../../tools/insightsCatalog";
 
 const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activity_type";
 const CONFIGURATION_SELECTOR = ".s-configuration-button";
@@ -11,6 +12,7 @@ const CONFIGURATION_SELECTOR = ".s-configuration-button";
 describe("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/attribute-filter-button-renaming");
+        new InsightsCatalog().waitForCatalogLoad();
     });
 
     it("should not show details icon if attribute button is not selected", () => {
