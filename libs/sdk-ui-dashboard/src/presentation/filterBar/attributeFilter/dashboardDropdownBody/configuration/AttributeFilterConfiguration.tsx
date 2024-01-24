@@ -188,8 +188,10 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             />
             <LocalizedLimitValuesConfiguration
                 parentFilters={parents}
+                validParentFilters={validNeighbourAttributes}
                 validateElementsBy={limitingItems}
-                onUpdate={onLimitingItemsUpdate}
+                onLimitingItemUpdate={onLimitingItemsUpdate}
+                onParentFilterUpdate={onParentSelect}
                 metricsAndFacts={metricsAndFacts!}
                 intl={intl}
             />

@@ -2361,14 +2361,19 @@
         "comment": "List item that represents filtering metric which is a sum aggregation of particular data attribute. Do not translate placeholder {attribute}. It will be replaced with the name of the selected attribute in the runtime.",
         "limit": 0
     },
-    "attributesDropdown.valuesLimiting.filtersEmpty": {
-        "value": "No more dashboard filters to add.",
-        "comment": "Text shown when all dashboard filters were used and there is none offered in the list.",
+    "attributesDropdown.valuesLimiting.metricsEmpty": {
+        "value": "No more items to add.",
+        "comment": "Text shown when all items were used and there is none offered in the list.",
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.unknownItem": {
         "value": "Unknown item",
         "comment": "The title of item in the list that does not have a title.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.searchNoMatch": {
+        "value": "No matching item was found.",
+        "comment": "Text shown when entered search term do not match any item in the list.",
         "limit": 0
     }
 }

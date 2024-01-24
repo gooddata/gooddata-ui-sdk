@@ -2,7 +2,6 @@
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import cx from "classnames";
 import { isObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { Icon, IIconProps } from "@gooddata/sdk-ui-kit";
 
@@ -33,14 +32,12 @@ const isFact = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type 
 const isAttribute = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "attribute";
 const isParentFilter = (item: ValuesLimitingItem) => !isObjRef(item);
 
-export interface ILimitingItemProps {
+export interface ILimitingItemTitleProps {
     title: string | React.ReactNode;
     item: ValuesLimitingItem;
-    isDisabled?: boolean;
-    onDelete: () => void;
 }
 
-const LimitingItemTitle: React.FC<ILimitingItemProps> = ({ item, title }) => {
+export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, title }) => {
     if (isParentFilter(item)) {
         return <ItemTitleWithIcon title={title} IconComponent={Icon.AttributeFilter} />;
     }
@@ -77,20 +74,19 @@ const LimitingItemTitle: React.FC<ILimitingItemProps> = ({ item, title }) => {
     return <ItemTitleWithIcon title={title} />;
 };
 
+export interface ILimitingItemProps {
+    title: string | React.ReactNode;
+    item: ValuesLimitingItem;
+    onDelete: () => void;
+}
+
 export const LimitingItem: React.FC<ILimitingItemProps> = (props) => {
-    const { isDisabled, onDelete } = props;
-    const classNames = cx("attribute-filter__limit__item", {
-        "attribute-filter__limit__item--disabled": isDisabled,
-    });
     return (
-        <div className={classNames}>
+        <div className="attribute-filter__limit__item">
             <LimitingItemTitle {...props} />
             <span
-                className={cx(
-                    "attribute-filter__limit__item__delete gd-icon-trash s-attribute-filter-limit-delete",
-                    { "is-disabled": isDisabled },
-                )}
-                onClick={isDisabled ? undefined : onDelete}
+                className="attribute-filter__limit__item__delete gd-icon-trash s-filter-limit-delete"
+                onClick={props.onDelete}
                 aria-label="Attribute filter limit delete"
             />
         </div>

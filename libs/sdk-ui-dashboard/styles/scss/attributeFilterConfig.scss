@@ -249,3 +249,20 @@
 .attribute-filter__limit__item--disabled {
     color: kit-variables.$default-gd-color-disabled;
 }
+
+.attribute-filter__limit__no-data,
+.attribute-filter__limit__popup__no-data {
+    font-size: 12px;
+    text-align: left;
+}
+
+.attribute-filter__limit__popup__item {
+    span {
+        display: flex; // override leaking style fro gd-list-item
+    }
+
+    &.is-disabled {
+        color: kit-variables.$default-gd-color-disabled;
+        cursor: default;
+    }
+}

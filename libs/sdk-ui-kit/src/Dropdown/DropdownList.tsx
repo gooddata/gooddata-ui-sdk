@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2007-2024 GoodData Corporation
+import React, { useCallback, useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Input } from "../Form/index.js";
@@ -117,8 +117,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         ...listProps
     } = props;
 
+    const [currentSearchString, setCurrentSearchString] = useState(searchString);
     const hasNoData = !isLoading && itemsCount === 0;
-    const hasNoMatchingData = hasNoData && !!searchString;
+    const hasNoMatchingData = hasNoData && !!currentSearchString;
 
     const listClassNames = cx("gd-infinite-list", className);
 
@@ -138,7 +139,18 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         return footer;
     };
 
-    const onChange = useCallback((search: string | number) => onSearch(search.toString()), [onSearch]);
+    const onChange = useCallback(
+        (search: string | number) => {
+            onSearch(search.toString());
+            setCurrentSearchString(search.toString());
+        },
+        [onSearch],
+    );
+
+    useEffect(() => {
+        // update string if dropdown is not getting unmounted on close to not have previous search on re-open
+        setCurrentSearchString(searchString);
+    }, [searchString]);
 
     return (
         <React.Fragment>
@@ -146,7 +158,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
             {showSearch ? (
                 <Input
                     className={searchFieldClassNames}
-                    value={searchString}
+                    value={currentSearchString}
                     onChange={onChange}
                     isSmall={searchFieldSize === "small"}
                     placeholder={searchPlaceholder}
