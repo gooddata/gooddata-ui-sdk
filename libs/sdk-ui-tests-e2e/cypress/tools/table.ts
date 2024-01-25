@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { TotalTypes } from "./enum/TotalTypes";
 
@@ -170,7 +170,7 @@ export class Table {
         this.getElement()
             .find(`.gd-column-index-${columnIndex} .s-value`)
             .each(($li) => {
-                return result.push($li.text());
+                result.push($li.text());
             });
         return cy.wrap(result);
     }
@@ -181,7 +181,7 @@ export class Table {
         this.getElement()
             .find(`[row-index="${rowIndex}"] .s-value`)
             .each(($li) => {
-                return result.push($li.text());
+                result.push($li.text());
             });
         return cy.wrap(result);
     }

@@ -51,7 +51,6 @@ export class InsightsCatalog {
     waitForCatalogLoad() {
         cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
         cy.get(this.getElementSelector(".gd-input-field")).should("exist");
-
         return this;
     }
 
