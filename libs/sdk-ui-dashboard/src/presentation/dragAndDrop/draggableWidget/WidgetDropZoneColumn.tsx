@@ -95,6 +95,10 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
         return null;
     }
 
+    if (!collectedProps?.item) {
+        return null;
+    }
+
     const size = (collectedProps.item as BaseDraggableLayoutItem).size;
 
     return (
