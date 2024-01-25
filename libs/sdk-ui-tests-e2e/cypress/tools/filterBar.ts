@@ -26,7 +26,7 @@ export class AttributeFilter {
 
     select(name?: string): AttributeFilter {
         const testClass = getTestClassByTitle(name ?? this.name);
-        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).click();
+        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).should("be.visible").click();
         return this;
     }
 
@@ -35,7 +35,7 @@ export class AttributeFilter {
     }
 
     selectAllValues() {
-        this.getDropdownElement().find(".s-select-all-checkbox").click();
+        this.getDropdownElement().find(".s-select-all-checkbox").should("be.visible").click();
         return this;
     }
 
@@ -112,7 +112,7 @@ export class AttributeFilter {
     }
 
     apply() {
-        this.getDropdownElement().find(".s-apply").click();
+        this.getDropdownElement().find(".s-apply").should("be.visible").click();
         return this;
     }
 
