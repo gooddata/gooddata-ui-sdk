@@ -15,7 +15,7 @@ jobs:
   prepare-branch:
     # have dummy password to prevent accidental run
     if: github.event.inputs.password == 'dummy'
-    runs-on: infra1-small
+    runs-on: [ubuntu-latest]
     permissions:
       contents: write
 
@@ -51,16 +51,15 @@ jobs:
         prerelease-id: 'alpha'
 
   slack-notification:
-    runs-on: infra1-small
+    runs-on: [ubuntu-latest]
     needs: [prepare-versions-release, prepare-versions-master]
     steps:
       - name: Inform to slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
             channel-id: '#javascript-notifications'
-            slack-message: "UI SDK code drop ${{ github.event.repository.name }} finished. Versions ${{ env.RELEASE_VERSION }} (release) and ${{ env.MASTER_VERSION }} (master)."
+            slack-message: "The *gooddata-ui-sdk*, has successfully completed its code drop. The bumped versions are *${{ env.RELEASE_VERSION }}* (release) and *${{ env.MASTER_VERSION }}* (master)."
         env:
             RELEASE_VERSION: ${{ needs.prepare-versions-release.outputs.version }}
             MASTER_VERSION: ${{ needs.prepare-versions-master.outputs.version }}
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-

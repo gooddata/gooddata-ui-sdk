@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   setup-params:
-    runs-on: [infra1-small]
+    runs-on: [ubuntu-latest]
     outputs:
       prerelease-id: ${{ steps.validate-params.outputs.prerelease-id }}
 
@@ -61,7 +61,7 @@ jobs:
       release-tag: "prerelease"
 
   slack-notification:
-    runs-on: [infra1-small]
+    runs-on: [ubuntu-latest]
     needs: [bump-version, publish-prerelease]
     steps:
       - name: Notify to slack

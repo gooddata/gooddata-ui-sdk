@@ -1,6 +1,6 @@
 # (C) 2024 GoodData Corporation
 
-name: Release ~ Publish alpha
+name: Prerelease ~ Publish alpha
 on:
     workflow_dispatch:
 jobs:
