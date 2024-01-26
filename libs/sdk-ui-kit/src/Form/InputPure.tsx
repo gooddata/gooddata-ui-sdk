@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import DefaultNativeListener from "react-native-listener";
@@ -33,9 +33,13 @@ export interface InputPureProps extends IDomNativeProps {
     prefix: string;
     readonly: boolean;
     suffix: string;
-    label: string;
+    label: React.ReactNode;
     labelPositionTop: boolean;
     value: string | number;
+    id?: string;
+    name?: string;
+    type?: string;
+    required?: boolean;
 }
 /**
  * @internal
@@ -153,7 +157,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    renderLabel(label: string): React.ReactNode {
+    renderLabel(label: React.ReactNode): React.ReactNode {
         return label ? <span className="gd-input-label">{label}</span> : false;
     }
 
@@ -188,6 +192,10 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             value,
             onBlur,
             onFocus,
+            id,
+            name,
+            type,
+            required,
         } = this.props;
 
         return (
@@ -198,6 +206,10 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                         ref={(ref) => {
                             this.inputNodeRef = ref;
                         }}
+                        type={type}
+                        id={id}
+                        name={name}
+                        required={required}
                         className={this.getInputClassNames()}
                         disabled={disabled}
                         maxLength={maxlength}

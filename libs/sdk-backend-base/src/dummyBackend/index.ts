@@ -750,6 +750,9 @@ class DummyOrganization implements IOrganization {
 
     users(): IOrganizationUserService {
         return {
+            createUser: () => {
+                throw new NotSupported("not supported");
+            },
             addUsersToUserGroups: () => Promise.resolve(),
             createUserGroup: () => Promise.resolve(),
             deleteUsers: () => Promise.resolve(),

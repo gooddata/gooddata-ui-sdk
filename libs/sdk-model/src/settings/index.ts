@@ -346,6 +346,11 @@ export interface ISettings {
      */
     enableAttributeFilterValuesValidation?: boolean;
 
+    /**
+     * Enable creating users in user management.
+     */
+    enableCreateUser?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

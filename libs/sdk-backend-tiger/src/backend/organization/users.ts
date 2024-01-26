@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IOrganizationUserService } from "@gooddata/sdk-backend-spi";
 import { IUserGroup, IUser, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
@@ -24,6 +24,27 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((user) => convertUser(user));
         });
     };
+
+    public createUser(user: IUser): Promise<IUser> {
+        return this.authCall(async (client) => {
+            const createdUser = await client.entities.createEntityUsers({
+                jsonApiUserInDocument: {
+                    data: {
+                        id: user.login,
+                        type: "user",
+                        attributes: {
+                            authenticationId: user.authenticationId,
+                            email: user.email,
+                            firstname: user.firstName,
+                            lastname: user.lastName,
+                        },
+                    },
+                },
+            });
+
+            return convertUser(createdUser.data);
+        });
+    }
 
     public getUserGroup = async (id: string): Promise<IUserGroup | undefined> => {
         return this.authCall(async (client) => {
