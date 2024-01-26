@@ -8,6 +8,11 @@ on:
         required: true
         description: "The name of the source branch"
         type: string
+      skip-bump:
+        required: false
+        default: false
+        description: "Skip bumping the version"
+        type: boolean
 
 # limit concurrency to one run per branch at a time
 # so that we can run this from master and a release branch at the same time
@@ -48,6 +53,7 @@ jobs:
       source-branch: ${{ inputs.source-branch }}
       bump: "prerelease"
       prerelease-id: ${{ needs.setup-params.outputs.prerelease-id }}
+      skip-bump: ${{ inputs.skip-bump }}
 
   publish-prerelease:
     needs: [bump-version]
