@@ -71,7 +71,7 @@
         "fix-esm-import-path": "^1.4.0",
         "mkdirp": "^1.0.4",
         "prettier": "~2.5.0",
-        "typescript": "5.0.2",
+        "typescript": "5.3.3",
         "vitest": "1.0.4"
     }
 }

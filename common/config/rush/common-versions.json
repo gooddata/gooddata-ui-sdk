@@ -23,7 +23,7 @@
         "prettier": "~2.5.0",
         "ts-node": "^10.4.0",
         "tslib": "^2.5.0",
-        "typescript": "5.0.2",
+        "typescript": "5.3.3",
         "browserslist": "^4.22.1",
 
         // we need correct peer dependency for heroku package in sdk-examples

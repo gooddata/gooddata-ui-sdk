@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
 
@@ -326,6 +326,11 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     // This is effectively calling super.handlePushData()
     // https://stackoverflow.com/questions/31088947/inheritance-method-call-triggers-typescript-compiler-error
     // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
+    // with new TS we got Property 'handlePushData' is used before its initialization.ts(2729)
+    // it is not possible to call super.handlePushData() directly and get reference to this.handlePushData in constructor
+    // tested in runtime and it works
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     private superHandlePushData = this.handlePushData;
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
