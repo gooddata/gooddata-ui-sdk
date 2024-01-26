@@ -140,7 +140,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDateFilters: true,
     enableADMultipleDateFilters: true,
     enableKDRichText: true,
-    enableAttributeFilterValuesValidation: false,
+    enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
 };
 
