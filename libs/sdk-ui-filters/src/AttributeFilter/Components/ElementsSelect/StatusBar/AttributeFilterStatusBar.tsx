@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import React from "react";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
@@ -21,6 +21,14 @@ export interface IAttributeFilterStatusBarProps {
      * Indicate that elements are filtered by parents filters or not.
      */
     isFilteredByParentFilters: boolean;
+
+    /**
+     * Indicate if the elements are filtered by limit validation items or not.
+     *
+     * @beta
+     * @remarks Use only when platform supports limiting validation items.
+     */
+    isFilteredByLimitingValidationItems?: boolean;
 
     /**
      * List of parent filter titles that filter current elements.
@@ -109,16 +117,18 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
         onShowFilteredElements = noop,
         irrelevantSelection = [],
         onClearIrrelevantSelection = noop,
+        isFilteredByLimitingValidationItems,
     } = props;
 
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">
-                {isFilteredByParentFilters ? (
+                {isFilteredByParentFilters || isFilteredByLimitingValidationItems ? (
                     <AttributeFilterShowFilteredElements
                         attributeTitle={attributeTitle}
                         onClick={onShowFilteredElements}
                         parentFilterTitles={parentFilterTitles}
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                     />
                 ) : null}
                 <AttributeFilterSelectionStatus

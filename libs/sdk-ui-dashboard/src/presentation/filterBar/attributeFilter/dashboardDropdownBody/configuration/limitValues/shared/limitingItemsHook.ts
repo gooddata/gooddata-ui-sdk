@@ -9,7 +9,7 @@ import {
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { ValuesLimitingItem } from "../../../types.js";
+import { ValuesLimitingItem } from "../../../../types.js";
 import {
     useDashboardSelector,
     selectCatalogAttributes,
@@ -18,8 +18,8 @@ import {
     IMetricsAndFacts,
     selectCatalogMeasures,
     selectCatalogFacts,
-} from "../../../../../../model/index.js";
-import { ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
+} from "../../../../../../../model/index.js";
+import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;
@@ -137,22 +137,12 @@ export const useLimitingItems = (
 
 export const useSearchableLimitingItems = (
     currentlySelectedItems: ObjRef[],
-    parentFilters: IDashboardAttributeFilterParentItem[],
-    validParentFilters: ObjRef[],
 ): IValuesLimitingItemWithTitle[] => {
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const measures = useDashboardSelector(selectCatalogMeasures);
     const facts = useDashboardSelector(selectCatalogFacts);
-    const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
     return useMemo(() => {
-        const unusedParentFiltersWithTitles = mapParentFilters(
-            parentFilters,
-            validParentFilters,
-            labels,
-            false,
-        );
-
         const metricsWithTitles = measures.map((measure) => ({
             title: measure.measure.title,
             item: measure.measure.ref,
@@ -165,13 +155,18 @@ export const useSearchableLimitingItems = (
             title: attribute.attribute.title,
             item: attribute.attribute.ref,
         }));
+        return [...metricsWithTitles, ...factsWithTitles, ...attributesWithTitles]
+            .filter((item) => !currentlySelectedItems.includes(item.item))
+            .sort(sortByTypeAndTitle);
+    }, [currentlySelectedItems, measures, facts, attributes]);
+};
 
-        const unusedMetricsWithTitle = [
-            ...metricsWithTitles,
-            ...factsWithTitles,
-            ...attributesWithTitles,
-        ].filter((item) => !currentlySelectedItems.includes(item.item));
-
-        return [...unusedParentFiltersWithTitles, ...unusedMetricsWithTitle].sort(sortByTypeAndTitle);
-    }, [currentlySelectedItems, measures, facts, attributes, labels, parentFilters, validParentFilters]);
+export const useFilterItems = (
+    parentFilters: IDashboardAttributeFilterParentItem[],
+    validParentFilters: ObjRef[],
+): IValuesLimitingItemWithTitle[] => {
+    const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    return useMemo(() => {
+        return mapParentFilters(parentFilters, validParentFilters, labels, false).sort(sortByTypeAndTitle);
+    }, [labels, parentFilters, validParentFilters]);
 };

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { IAttributeFilterStatusBarProps } from "./AttributeFilterStatusBar.js";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
@@ -20,17 +20,19 @@ export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterS
         attributeTitle,
         onShowFilteredElements,
         irrelevantSelection,
+        isFilteredByLimitingValidationItems,
     } = props;
 
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">
-                {isFilteredByParentFilters ? (
+                {isFilteredByParentFilters || isFilteredByLimitingValidationItems ? (
                     <AttributeFilterShowFilteredElements
                         attributeTitle={attributeTitle}
                         onClick={onShowFilteredElements}
                         parentFilterTitles={parentFilterTitles}
                         className="no-divider"
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
                     />
                 ) : null}
                 <AttributeFilterIrrelevantSelectionStatus

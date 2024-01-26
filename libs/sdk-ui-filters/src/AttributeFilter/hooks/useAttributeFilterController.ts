@@ -543,6 +543,7 @@ function useCallbacks(
             setShouldIncludeLimitingFilters(false);
             handler.changeSelection({ ...handler.getWorkingSelection(), irrelevantKeys: [] });
             handler.setLimitingAttributeFilters([]);
+            handler.setLimitingValidationItems([]);
             handler.loadInitialElementsPage(SHOW_FILTERED_ELEMENTS_CORRELATION);
         }
     }, [handler, setShouldIncludeLimitingFilters, supportsShowingFilteredElements]);

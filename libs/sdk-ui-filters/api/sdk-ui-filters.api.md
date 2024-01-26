@@ -624,6 +624,7 @@ export interface IAttributeFilterStatusBarProps {
     enableShowingFilteredElements?: boolean;
     getItemTitle: (item: IAttributeElement) => string;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByLimitingValidationItems?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     onClearIrrelevantSelection?: () => void;
