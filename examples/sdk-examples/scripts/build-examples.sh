@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 PARAMS=$@
 if [ ! -z "$1" ]; then # if first argument is not empty
