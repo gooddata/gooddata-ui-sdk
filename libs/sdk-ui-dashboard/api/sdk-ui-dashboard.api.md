@@ -7159,7 +7159,7 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<IL
 export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
 
 // @internal (undocumented)
 export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined>;

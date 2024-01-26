@@ -57,11 +57,11 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
         }
 
         if (isKpiPlaceholderWidget(widget) && KpiWidgetComponentSet.creating) {
-            return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent;
+            return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent!;
         }
 
         if (isInsightPlaceholderWidget(widget) && InsightWidgetComponentSet.creating) {
-            return InsightWidgetComponentSet.creating.CreatingPlaceholderComponent;
+            return InsightWidgetComponentSet.creating.CreatingPlaceholderComponent!;
         }
 
         if (isDashboardWidget(widget)) {

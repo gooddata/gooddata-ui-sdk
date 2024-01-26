@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     ObjRef,
@@ -14,6 +14,7 @@ import {
     IDrillDownReference,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    DrillDefinition,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
@@ -218,10 +219,10 @@ export const selectIgnoredDrillDownHierarchiesByWidgetRef: (
  */
 export const selectWidgetDrills: (
     ref: ObjRef | undefined,
-) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[]> = createMemoizedSelector(
-    (ref: ObjRef | undefined) =>
+) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]> =
+    createMemoizedSelector((ref: ObjRef | undefined) =>
         createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.drills ?? []),
-);
+    );
 
 /**
  * Selects all filters from filter context converted to filters specific for a widget specified by a ref.
