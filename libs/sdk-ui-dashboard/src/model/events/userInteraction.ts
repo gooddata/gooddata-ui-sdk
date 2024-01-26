@@ -92,7 +92,16 @@ export type AttributeFilterInteractionType =
     | "attributeFilterTitleResetClicked"
     | "attributeFilterConfigurationOpened"
     | "attributeFilterClearIrrelevantValuesClicked"
-    | "attributeFilterShowAllValuesClicked";
+    | "attributeFilterShowAllValuesClicked"
+    | "attributeFilterLimitAddButtonClicked"
+    | "attributeFilterLimitAddParentFilterOptionClicked"
+    | "attributeFilterLimitAddMetricOptionClicked"
+    | "attributeFilterLimitParentFilterClicked"
+    | "attributeFilterLimitMetricClicked"
+    | "attributeFilterLimitFactMetricClicked"
+    | "attributeFilterLimitAttributeMetricClicked"
+    | "attributeFilterLimitRemoveParentFilterClicked"
+    | "attributeFilterLimitRemoveMetricClicked";
 
 /**
  * @beta

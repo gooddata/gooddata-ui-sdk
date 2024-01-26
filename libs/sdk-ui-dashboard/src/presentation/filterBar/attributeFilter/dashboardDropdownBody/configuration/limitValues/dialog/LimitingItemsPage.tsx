@@ -9,8 +9,10 @@ import { messages } from "../../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle } from "../shared/LimitingItem.js";
 import { IValuesLimitingItemWithTitle, useSearchableLimitingItems } from "../shared/limitingItemsHook.js";
+import { useDashboardUserInteraction } from "../../../../../../../model/index.js";
 
 import { PopupHeader } from "./PopupHeader.js";
+import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 
 const NoLimitingItemsFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMatchingData }) => {
     const intl = useIntl();
@@ -31,9 +33,11 @@ interface ILimitingItemProps {
 }
 
 const LimitingItem: React.FC<ILimitingItemProps> = ({ item: { item, title }, onSelect, onClose }) => {
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const onClick = () => {
         onSelect(item);
         onClose();
+        attributeFilterInteraction(getTelemetryEventForLimitingItem(item));
     };
     return (
         <div
