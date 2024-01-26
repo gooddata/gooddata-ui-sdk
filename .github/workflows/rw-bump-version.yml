@@ -26,11 +26,11 @@ on:
 
 jobs:
   bump-version:
-    runs-on: infra1-small
+    runs-on: [ubuntu-latest]
     outputs:
       version: ${{ steps.version.outputs.version }}
     container:
-      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
+      image: node:18.17.0-bullseye
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -8,8 +8,8 @@ on:
       - release
 
 jobs:
-  get-pr-from-commit:
-    runs-on: [infra1-small]    
+  get-label-from-pr:
+    runs-on: [ubuntu-latest]
     outputs:
         should-prerelease: ${{ steps.needs-prerelease.outputs.result }}
         brach-name: ${{ steps.extract-branch.outputs.branch }}
@@ -35,13 +35,13 @@ jobs:
         
 
   publish-pre-release:
-    needs: [get-pr-from-commit]
+    needs: [get-label-from-pr]
     name: Publish pre-release
-    if: ${{ needs.get-pr-from-commit.outputs.should-prerelease == 'true' }}        
+    if: ${{ needs.get-label-from-pr.outputs.should-prerelease == 'true' }}        
     uses: ./.github/workflows/rw-publish-prerelase.yml
     secrets: inherit
     permissions:
       contents: write
       id-token: write
     with:      
-      source-branch:  ${{ needs.get-pr-from-commit.outputs.brach-name }}
+      source-branch:  ${{ needs.get-label-from-pr.outputs.brach-name }}
