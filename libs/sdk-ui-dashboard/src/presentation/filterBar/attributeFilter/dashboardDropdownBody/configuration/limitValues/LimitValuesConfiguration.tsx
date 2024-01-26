@@ -13,6 +13,7 @@ import {
     selectEnableAttributeFilterValuesValidation,
     IMetricsAndFacts,
     selectBackendCapabilities,
+    useDashboardUserInteraction,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
@@ -43,6 +44,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     onParentFilterUpdate,
 }) => {
     const intl = useIntl();
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
         parentFilters,
@@ -50,6 +52,11 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         validateElementsBy,
         metricsAndFacts,
     );
+
+    const onOpenAddDialog = () => {
+        setIsDropdownOpened(true);
+        attributeFilterInteraction("attributeFilterLimitAddButtonClicked");
+    };
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
         if (isObjRef(addedItem)) {
@@ -62,8 +69,10 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     const onDelete = (deletedItem: ValuesLimitingItem) => {
         if (isObjRef(deletedItem)) {
             onLimitingItemUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
+            attributeFilterInteraction("attributeFilterLimitRemoveMetricClicked");
         } else {
             onParentFilterUpdate(deletedItem.localIdentifier, false);
+            attributeFilterInteraction("attributeFilterLimitRemoveParentFilterClicked");
         }
     };
 
@@ -86,7 +95,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
                 <Button
                     className="gd-button-small gd-button-link attribute-filter__limit__add-button"
                     iconLeft="gd-icon-plus"
-                    onClick={() => setIsDropdownOpened(true)}
+                    onClick={onOpenAddDialog}
                     value={intl.formatMessage(messages.filterAddValuesLimit)}
                 />
             </div>
