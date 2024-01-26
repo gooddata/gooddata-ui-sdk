@@ -485,6 +485,7 @@ export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = crea
  * @public
  */
 export const selectCanAddMoreFilters = selectCanAddMoreAttributeFilters;
+
 /**
  * This selector returns information whether attribute filter from filter context has some dependencies.
  *

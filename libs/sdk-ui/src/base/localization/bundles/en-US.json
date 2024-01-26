@@ -1544,8 +1544,18 @@
         "comment": "Do not translate non-breakable space '{nbsp}'",
         "limit": 0
     },
-    "attributesDropdown.relevantValues.tooltip": {
+    "attributesDropdown.relevantValues.tooltip.parentFilters": {
         "value": "Available values for <strong>{child}</strong> are filtered by selected <strong>{parents}</strong>.",
+        "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.relevantValues.tooltip.limits": {
+        "value": "Values for <strong>{child}</strong> are filtered by an additional filter setting. ",
+        "comment": "Do not translate HTML markup enclosed in <> and {child} placeholder as it will be replaced by a filter name.",
+        "limit": 0
+    },
+    "attributesDropdown.relevantValues.tooltip.parentFiltersLimits": {
+        "value": "Values for <strong>{child}</strong> are filtered by the selected <strong>{parents}</strong> and an additional filter setting.",
         "comment": "Do not translate HTML markup enclosed in <> and {child}, {parents} placeholders as it will be replaced by list of filter names.",
         "limit": 0
     },

@@ -5,10 +5,18 @@ import { FormattedMessage } from "react-intl";
 import { isObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { Icon, IIconProps } from "@gooddata/sdk-ui-kit";
 
-import { ValuesLimitingItem } from "../../../types.js";
+import { ValuesLimitingItem } from "../../../../types.js";
+
+export const UnknownItemTitle: React.FC = () => {
+    return (
+        <em>
+            <FormattedMessage id="attributesDropdown.valuesLimiting.unknownItem" />
+        </em>
+    );
+};
 
 interface ITitleWithIconProps {
-    title: React.ReactNode;
+    title?: string;
     IconComponent?: React.FC<IIconProps>;
 }
 
@@ -18,7 +26,7 @@ const ItemTitleWithIcon: React.FC<ITitleWithIconProps> = ({ title, IconComponent
             {IconComponent ? (
                 <IconComponent className="attribute-filter__limit__item__icon" width={14} height={14} />
             ) : null}
-            <span>{title}</span>
+            <span>{title ?? <UnknownItemTitle />}</span>
         </span>
     );
 };
@@ -33,7 +41,7 @@ const isAttribute = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.
 const isParentFilter = (item: ValuesLimitingItem) => !isObjRef(item);
 
 export interface ILimitingItemTitleProps {
-    title: string | React.ReactNode;
+    title?: string;
     item: ValuesLimitingItem;
 }
 
@@ -75,7 +83,7 @@ export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, tit
 };
 
 export interface ILimitingItemProps {
-    title: string | React.ReactNode;
+    title?: string;
     item: ValuesLimitingItem;
     onDelete: () => void;
 }
