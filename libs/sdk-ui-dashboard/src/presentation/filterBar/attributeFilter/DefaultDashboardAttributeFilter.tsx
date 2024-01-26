@@ -351,6 +351,9 @@ export const DefaultDashboardAttributeFilter = (
                         {...props}
                         onShowFilteredElements={handleShowFilteredElements}
                         enableShowingFilteredElements={enableShowingFilteredElements}
+                        isFilteredByLimitingValidationItems={
+                            (filter.attributeFilter.validateElementsBy?.length ?? 0) > 0
+                        }
                     />
                 );
             }
@@ -366,11 +369,15 @@ export const DefaultDashboardAttributeFilter = (
                         );
                     }}
                     enableShowingFilteredElements={enableShowingFilteredElements}
+                    isFilteredByLimitingValidationItems={
+                        (filter.attributeFilter.validateElementsBy?.length ?? 0) > 0
+                    }
                 />
             );
         };
     }, [
         filter.attributeFilter.selectionMode,
+        filter.attributeFilter.validateElementsBy,
         capabilities.supportsShowingFilteredElements,
         enableKDDependentFilters,
         userInteraction,

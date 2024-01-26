@@ -75,8 +75,12 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     filterAddValuesLimit: { id: "attributesDropdown.valuesLimiting.addLink" },
     filterAddValuesLimitPopupSearchPlaceholder: { id: "attributesDropdown.valuesLimiting.searchPlaceholder" },
     filterAddValuesLimitPopupSearchNoMatch: { id: "attributesDropdown.valuesLimiting.searchNoMatch" },
-    filterAddValuesLimitPopupNoData: { id: "attributesDropdown.valuesLimiting.metricsEmpty" },
+    filterAddValuesLimitPopupNoMetrics: { id: "attributesDropdown.valuesLimiting.metricsEmpty" },
+    filterAddValuesLimitPopupNoFilters: { id: "attributesDropdown.valuesLimiting.filtersEmpty" },
     filterAddValuesLimitNoData: { id: "attributesDropdown.valuesLimiting.empty" },
+    filterAddMetricTitle: { id: "attributesDropdown.valuesLimiting.addMetricTitle" },
+    filterAddFilterTitle: { id: "attributesDropdown.valuesLimiting.addFilterTitle" },
+    filterAddItemTitle: { id: "attributesDropdown.valuesLimiting.addItemTitle" },
 
     drillToDashboardConfig: { id: "configurationPanel.drillConfig.drillIntoDashboard" },
     drillIntoInsight: { id: "configurationPanel.drillConfig.drillIntoInsight" },

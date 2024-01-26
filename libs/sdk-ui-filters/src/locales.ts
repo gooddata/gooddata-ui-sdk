@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -133,4 +133,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     "years.future": { id: "filters.interval.years.future" },
     "years.future.sameValue": { id: "filters.interval.years.future.sameValue" },
     "years.mixed": { id: "filters.interval.years.mixed" },
+    relevantValuesParentFiltersTooltip: { id: "attributesDropdown.relevantValues.tooltip.parentFilters" },
+    relevantValuesLimitsTooltip: { id: "attributesDropdown.relevantValues.tooltip.limits" },
+    relevantValuesParentFiltersLimitsTooltip: {
+        id: "attributesDropdown.relevantValues.tooltip.parentFiltersLimits",
+    },
 });
