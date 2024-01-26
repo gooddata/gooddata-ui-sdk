@@ -100,10 +100,6 @@
     // remove line drawn across the dropdown content, made by attribute filter styles
     // targeting every :after in the dropdown, the ones below should not have the line
     .configuration-category.attribute-filter__limit__title {
-        h3::after {
-            width: 0;
-        }
-
         .gd-button-small::after {
             width: 0;
         }
@@ -182,10 +178,7 @@
     justify-content: space-between;
 
     h3 {
-        display: flex;
-        align-items: center;
         flex: 1 0;
-        gap: 5px;
     }
 
     .gd-icon-circle-question {
@@ -196,8 +189,12 @@
 .attribute-filter__limit__add-button {
     padding: 0 0 0 5px;
 
+    .gd-button-text {
+        line-height: 21px;
+    }
+
     .gd-button-icon::before {
-        line-height: 24px;
+        line-height: 22px;
     }
 }
 
@@ -215,7 +212,7 @@
         text-align: center;
         cursor: pointer;
         line-height: 12px;
-        color: kit-variables.$default-gd-color-text;
+        color: kit-variables.$gd-color-link;
     }
 
     &:hover {
@@ -258,11 +255,66 @@
 
 .attribute-filter__limit__popup__item {
     span {
-        display: flex; // override leaking style fro gd-list-item
+        display: flex; // override leaking style from gd-list-item
     }
 
     &.is-disabled {
         color: kit-variables.$default-gd-color-disabled;
         cursor: default;
     }
+}
+
+.attribute-filter__limit__popup {
+    .attribute-filter__limit__popup__content {
+        padding: 10px 0;
+
+        .gd-list-item.gd-list-item-separator {
+            min-height: 20px;
+        }
+    }
+
+    // this specificity seems to be necessary in order to override the wrong color
+    &.bubble {
+        .bubble-content {
+            .content {
+                // stylelint-disable-next-line max-nesting-depth
+                .attribute-filter__limit__popup__action-select__option__link {
+                    color: kit-variables.$default-gd-color-link;
+                }
+            }
+        }
+    }
+}
+
+.attribute-filter__limit__popup__action-select__option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: kit-variables.$is-focused-background;
+    }
+}
+
+.attribute-filter__limit__popup__action-select__title {
+    color: kit-variables.$gd-color-text;
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+.attribute-filter__limit__popup__action-select__description {
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.attribute-filter__limit__popup__action-select__icon::before {
+    font-size: 10px;
+}
+
+.attribute-filter__limit__popup__list {
+    padding: 10px 0;
+}
+
+.attribute-filter__limit__popup__list--searchable {
+    padding: 0 0 10px;
 }

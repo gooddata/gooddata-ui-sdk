@@ -635,6 +635,6 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSe
 export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableAttributeFilterValuesValidation ?? false;
+        return state.settings?.enableAttributeFilterValuesValidation ?? true;
     },
 );

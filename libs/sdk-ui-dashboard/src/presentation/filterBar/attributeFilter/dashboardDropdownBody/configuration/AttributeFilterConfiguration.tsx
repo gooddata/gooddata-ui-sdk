@@ -187,6 +187,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 disabled={getIsSelectionDisabled()}
             />
             <LocalizedLimitValuesConfiguration
+                attributeTitle={title ?? defaultAttributeFilterTitle}
                 parentFilters={parents}
                 validParentFilters={validNeighbourAttributes}
                 validateElementsBy={limitingItems}
