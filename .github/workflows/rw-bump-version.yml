@@ -2,6 +2,7 @@
 
 #This workflow automatically bumps the version of the project based on the specified version bump type and prerelease ID. 
 #It also commits the changes to the source branch.
+#when skip-bump is set to true, it just returns the current version
 
 name: rw ~ Rush ~ Bump version
 on:
@@ -19,6 +20,11 @@ on:
         required: true
         description: 'The prerelease ID (alpha, beta, etc.)'
         type: string
+      skip-bump:
+          required: false
+          default: false
+          description: "Skip bumping the version and just return the current version"
+          type: boolean
     outputs:
       version:
         description: "Version which was created"
@@ -40,7 +46,8 @@ jobs:
 
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Bump rush version and commit to source branch
+      - name: Bump rush version and commit to source branch #if skip-bump is set to true, it just returns the current version
+        if: ${{ !inputs.skip-bump }} 
         env:
           BUMP: ${{ inputs.bump }}
           PRERELEASE_ID: ${{ inputs.prerelease-id }}
