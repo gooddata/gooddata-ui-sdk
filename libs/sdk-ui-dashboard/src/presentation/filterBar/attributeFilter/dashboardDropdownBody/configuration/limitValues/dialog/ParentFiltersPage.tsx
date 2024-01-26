@@ -7,7 +7,10 @@ import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { Bubble, DropdownList, NoData, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ValuesLimitingItem } from "../../../../types.js";
-import { IDashboardAttributeFilterParentItem } from "../../../../../../../model/index.js";
+import {
+    IDashboardAttributeFilterParentItem,
+    useDashboardUserInteraction,
+} from "../../../../../../../model/index.js";
 import { messages } from "../../../../../../../locales.js";
 import { LimitingItemTitle, UnknownItemTitle } from "../shared/LimitingItem.js";
 import { useFilterItems, IValuesLimitingItemWithTitle } from "../shared/limitingItemsHook.js";
@@ -93,6 +96,7 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
     onSelect,
     onClose,
 }) => {
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx("gd-list-item attribute-filter__limit__popup__item", {
         "is-disabled": isDisabled,
     });
@@ -100,6 +104,7 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
         if (!isDisabled) {
             onSelect(item);
             onClose();
+            attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
         }
     };
     return (
