@@ -81,6 +81,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     filterAddMetricTitle: { id: "attributesDropdown.valuesLimiting.addMetricTitle" },
     filterAddFilterTitle: { id: "attributesDropdown.valuesLimiting.addFilterTitle" },
     filterAddItemTitle: { id: "attributesDropdown.valuesLimiting.addItemTitle" },
+    filterCountMetricTitle: { id: "attributesDropdown.valuesLimiting.countAttribute" },
+    filterSumMetricTitle: { id: "attributesDropdown.valuesLimiting.sumFact" },
+    filterUnknownItemTitle: { id: "attributesDropdown.valuesLimiting.unknownItem" },
 
     drillToDashboardConfig: { id: "configurationPanel.drillConfig.drillIntoDashboard" },
     drillIntoInsight: { id: "configurationPanel.drillConfig.drillIntoInsight" },

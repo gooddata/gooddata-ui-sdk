@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { AttributeFilterButtonToolip } from "./AttributeFilterButtonTooltip.js";
+import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
 
 export const ALIGN_POINT = [
@@ -234,9 +234,9 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     {titleExtension}
                     <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
                     {TooltipContentComponent && isLoaded ? (
-                        <AttributeFilterButtonToolip>
+                        <AttributeFilterButtonTooltip>
                             <TooltipContentComponent />
-                        </AttributeFilterButtonToolip>
+                        </AttributeFilterButtonTooltip>
                     ) : null}
                 </div>
                 <div className="gd-attribute-filter-dropdown-button-subtitle__next">
