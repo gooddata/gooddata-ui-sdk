@@ -247,6 +247,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableMySqlDataSource,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableCreateUser,
+            "enableCreateUser",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCreateUser,
+        ),
     };
 }
 

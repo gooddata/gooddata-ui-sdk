@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
 
@@ -16,6 +16,13 @@ export interface IOrganizationUserService {
      * @returns promise
      */
     getUser(id: string): Promise<IUser | undefined>;
+
+    /**
+     * Creates a new user.
+     *
+     * @param user - user to create
+     */
+    createUser(user: IUser): Promise<IUser>;
 
     /**
      * Get user group by ID.

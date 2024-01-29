@@ -2999,7 +2999,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
-    renderLabel(label: string): React_2.ReactNode;
+    renderLabel(label: React_2.ReactNode): React_2.ReactNode;
     // (undocumented)
     renderPrefix(prefix: string): React_2.ReactNode;
     // (undocumented)
@@ -3021,15 +3021,19 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     hasWarning: boolean;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isSearch: boolean;
     // (undocumented)
     isSmall: boolean;
     // (undocumented)
-    label: string;
+    label: React_2.ReactNode;
     // (undocumented)
     labelPositionTop: boolean;
     // (undocumented)
     maxlength: number;
+    // (undocumented)
+    name?: string;
     // (undocumented)
     onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -3047,7 +3051,11 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     readonly: boolean;
     // (undocumented)
+    required?: boolean;
+    // (undocumented)
     suffix: string;
+    // (undocumented)
+    type?: string;
     // (undocumented)
     value: string | number;
 }

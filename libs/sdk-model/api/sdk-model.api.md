@@ -2480,6 +2480,7 @@ export interface ISettings {
     enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
+    enableCreateUser?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableDescriptions?: boolean;
@@ -3089,6 +3090,7 @@ export interface ITotalLocatorItemBody {
 
 // @public
 export interface IUser {
+    authenticationId?: string;
     email?: string;
     firstName?: string;
     fullName?: string;
