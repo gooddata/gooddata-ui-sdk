@@ -14,7 +14,7 @@ jobs:
         should-prerelease: ${{ steps.needs-prerelease.outputs.result }}
         brach-name: ${{ steps.extract-branch.outputs.branch }}
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         id: needs-prerelease
         with:
           script: |

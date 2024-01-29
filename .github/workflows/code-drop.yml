@@ -77,7 +77,7 @@ jobs:
     needs: [prepare-versions-release, prepare-versions-master]
     steps:
       - name: Inform to slack
-        uses: slackapi/slack-github-action@v1.23.0
+        uses: slackapi/slack-github-action@v1.25.0
         with:
             channel-id: '#javascript-notifications'
             slack-message: "The *gooddata-ui-sdk*, has successfully completed its code drop. The bumped versions are *${{ env.RELEASE_VERSION }}* (release) and *${{ env.MASTER_VERSION }}* (master)."
