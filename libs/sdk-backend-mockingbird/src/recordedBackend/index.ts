@@ -95,7 +95,6 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     allowsInconsistentRelations: false,
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
-    supportsElementsQueryParentFiltering: true,
     supportsElementUris: true,
     supportsEveryoneUserGroupForAccessControl: true,
 };

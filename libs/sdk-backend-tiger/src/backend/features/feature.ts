@@ -179,13 +179,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableKDDependentFilters,
-            "enableKDDependentFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKDDependentFilters,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDSavedFilters,
             "enableKDSavedFilters",
             "BOOLEAN",
