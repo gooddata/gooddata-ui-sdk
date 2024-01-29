@@ -188,6 +188,22 @@
 
 .attribute-filter__limit__add-button {
     padding: 0 0 0 5px;
+    outline: none;
+    box-shadow: none;
+    border: 0;
+
+    &:active,
+    &:focus,
+    &:hover {
+        outline: none;
+        border: 0;
+        box-shadow: none;
+
+        .gd-button-text {
+            text-decoration: none;
+            color: kit-variables.$gd-palette-primary-base-darken06;
+        }
+    }
 
     .gd-button-text {
         line-height: 21px;
@@ -207,7 +223,7 @@
     font-size: 12px;
 
     .attribute-filter__limit__item__delete {
-        display: none;
+        visibility: hidden;
         font-size: 12px;
         text-align: center;
         cursor: pointer;
@@ -217,7 +233,7 @@
 
     &:hover {
         .attribute-filter__limit__item__delete {
-            display: block;
+            visibility: visible;
         }
     }
 
@@ -228,16 +244,27 @@
 
 .attribute-filter__limit__item__title {
     display: flex;
+    overflow: hidden;
     align-items: center;
     color: kit-variables.$default-gd-color-text;
 
     .attribute-filter__limit__item__icon {
+        flex-shrink: 0;
         margin: 0 5px 0 0;
+    }
+
+    .attribute-filter__limit__item__name {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
 .attribute-filter__limit__item__title--aggregated {
-    color: kit-variables.$default-gd-color-disabled;
+    white-space: nowrap;
+    overflow: hidden;
+    color: kit-variables.$gd-color-state-blank;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -251,6 +278,14 @@
 .attribute-filter__limit__popup__no-data {
     font-size: 12px;
     text-align: left;
+    margin: 10px;
+}
+
+.attribute-filter__limit__popup__no-data {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 14px;
+    margin: 0;
 }
 
 .attribute-filter__limit__popup__item {
@@ -266,11 +301,7 @@
 
 .attribute-filter__limit__popup {
     .attribute-filter__limit__popup__content {
-        padding: 10px 0;
-
-        .gd-list-item.gd-list-item-separator {
-            min-height: 20px;
-        }
+        padding: 5px 0;
     }
 
     // this specificity seems to be necessary in order to override the wrong color
@@ -279,7 +310,7 @@
             .content {
                 // stylelint-disable-next-line max-nesting-depth
                 .attribute-filter__limit__popup__action-select__option__link {
-                    color: kit-variables.$default-gd-color-link;
+                    color: kit-variables.$gd-color-text;
                 }
             }
         }
@@ -304,7 +335,7 @@
 }
 
 .attribute-filter__limit__popup__action-select__description {
-    color: kit-variables.$gd-color-state-blank;
+    color: kit-variables.$gd-color-link;
 }
 
 .attribute-filter__limit__popup__action-select__icon::before {

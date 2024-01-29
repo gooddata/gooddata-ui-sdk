@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 
@@ -23,7 +23,9 @@ export const AttributeFilterDependencyTooltip: React.FC<IAttributeFilterDependen
                     arrowOffsets={{ "bc tl": [-12, 9], "bc tr": [12, 9] }}
                     alignPoints={[{ align: "bc tl" }, { align: "bc tr" }]}
                 >
-                    {tooltipContent}
+                    <div className="gd-attribute-filter-dropdown-button-icon-tooltip__content">
+                        {tooltipContent}
+                    </div>
                 </Bubble>
             </BubbleHoverTrigger>
         </span>
