@@ -38,7 +38,7 @@ jobs:
     needs: [get-label-from-pr]
     name: Publish pre-release
     if: ${{ needs.get-label-from-pr.outputs.should-prerelease == 'true' }}        
-    uses: ./.github/workflows/rw-publish-prerelase.yml
+    uses: ./.github/workflows/rw-publish-prerelease.yml
     secrets: inherit
     permissions:
       contents: write
