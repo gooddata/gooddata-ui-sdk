@@ -71,7 +71,7 @@ jobs:
     needs: [bump-version, publish-prerelease]
     steps:
       - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.23.0
+        uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: "#javascript-notifications"
           slack-message: "The latest version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM."
