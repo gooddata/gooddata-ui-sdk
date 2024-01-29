@@ -5,6 +5,7 @@ import { useIntl, FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { Bubble, DropdownList, NoData, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { ValuesLimitingItem } from "../../../../types.js";
 import {
@@ -97,9 +98,13 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
     onClose,
 }) => {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
-    const classNames = cx("gd-list-item attribute-filter__limit__popup__item", {
-        "is-disabled": isDisabled,
-    });
+    const classNames = cx(
+        "gd-list-item attribute-filter__limit__popup__item",
+        `s-dashboard-filter-${stringUtils.simplifyText(title ?? "unknown")}`,
+        {
+            "is-disabled": isDisabled,
+        },
+    );
     const onClick = () => {
         if (!isDisabled) {
             onSelect(item);
