@@ -25,7 +25,7 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
         widget.waitTableLoaded();
         filterBar.addAttribute("Product");
 
-        product.configureDependency("Stage Name").close();
+        product.configureBearFilterDependency("Stage Name").close();
 
         stageName.open().selectAllValues().apply();
         product
@@ -147,7 +147,7 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         editMode.edit().isInEditMode();
 
-        stageName.open().configureDependency(["Account", "Is Won?"]);
+        stageName.open().configureBearFilterDependency(["Account", "Is Won?"]);
 
         stageName
             .getValueList()

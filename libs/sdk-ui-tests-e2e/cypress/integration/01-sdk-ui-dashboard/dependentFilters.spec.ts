@@ -127,7 +127,7 @@ describe("Dependent filter", () => {
             .open()
             .hasSubtitle("All")
             .hasFilterListSize(48)
-            .configureDependency("Region")
+            .configureLimitingParentFilterDependency("Region")
             .hasFilterListSize(7)
             .hasSelectedValueList([
                 "Connecticut",
@@ -169,7 +169,7 @@ describe("Dependent filter", () => {
             .open()
             .hasSubtitle("All")
             .hasFilterListSize(50)
-            .configureDependency("Region")
+            .configureLimitingParentFilterDependency("Region")
             .hasFilterListSize(7)
             .selectAttribute(["Sacramento"])
             .apply()
@@ -247,7 +247,7 @@ describe("Dependent filter", () => {
             .open()
             .elementsAreLoaded()
             .hasFilterListSize(5)
-            .configureDependency("State")
+            .configureLimitingParentFilterDependency("State")
             .elementsAreLoaded()
             .hasFilterListSize(287);
     });
@@ -277,7 +277,7 @@ describe("Dependent filter", () => {
             stateFilter
                 .open()
                 .elementsAreLoaded()
-                .configureDependency("City")
+                .configureLimitingParentFilterDependency("City")
                 .hasFilterListSize(2)
                 .selectAttribute(["Oregon"])
                 .apply();

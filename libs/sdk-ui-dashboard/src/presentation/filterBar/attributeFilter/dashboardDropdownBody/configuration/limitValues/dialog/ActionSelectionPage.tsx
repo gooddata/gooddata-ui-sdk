@@ -2,7 +2,9 @@
 
 import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
+import cx from "classnames";
 import { Typography, Separator } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { messages } from "../../../../../../../locales.js";
 
@@ -14,14 +16,18 @@ import {
 } from "../../../../../../../model/index.js";
 
 interface IActionProps {
-    title: React.ReactNode;
+    title: string;
     description: React.ReactNode;
     onClick: () => void;
 }
 
 const Action: React.FC<IActionProps> = ({ title, description, onClick }) => {
+    const classNames = cx(
+        "attribute-filter__limit__popup__action-select__option",
+        `s-add-limit-${stringUtils.simplifyText(title)}`,
+    );
     return (
-        <div className="attribute-filter__limit__popup__action-select__option" onClick={onClick}>
+        <div className={classNames} onClick={onClick}>
             <div>
                 <Typography tagName="h3" className="attribute-filter__limit__popup__action-select__title">
                     {title}
@@ -79,7 +85,9 @@ export const ActionSelectionPage: React.FC<IActionSelectionPageProps> = ({
                         { id: "attributesDropdown.valuesLimiting.addLimitingItem.description" },
                         {
                             a: (chunk: ReactNode) =>
-                                isWhiteLabeled ? null : (
+                                isWhiteLabeled ? (
+                                    <span />
+                                ) : (
                                     <a
                                         href="https://help.gooddata.com/doc/growth/en/dashboards-and-insights/dashboards/filters-in-dashboards/"
                                         rel="noopener noreferrer"

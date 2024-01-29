@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
+import cx from "classnames";
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { serializeObjRef, ObjRef } from "@gooddata/sdk-model";
+import { stringUtils } from "@gooddata/util";
 
 import { messages } from "../../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../../types.js";
@@ -34,17 +36,17 @@ interface ILimitingItemProps {
 
 const LimitingItem: React.FC<ILimitingItemProps> = ({ item: { item, title }, onSelect, onClose }) => {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
+    const classNames = cx(
+        "gd-list-item attribute-filter__limit__popup__item",
+        `s-metric-${stringUtils.simplifyText(title ?? "unknown")}`,
+    );
     const onClick = () => {
         onSelect(item);
         onClose();
         attributeFilterInteraction(getTelemetryEventForLimitingItem(item));
     };
     return (
-        <div
-            key={serializeObjRef(item)}
-            className="gd-list-item attribute-filter__limit__popup__item"
-            onClick={onClick}
-        >
+        <div key={serializeObjRef(item)} className={classNames} onClick={onClick} title={title}>
             <LimitingItemTitle item={item} title={title} />
         </div>
     );
