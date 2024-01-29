@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -10,7 +10,7 @@ export interface IRenderChildrenInPortalProps {
 export class RenderChildrenInPortal extends React.Component<IRenderChildrenInPortalProps> {
     private portalContentWrapperEl: HTMLElement;
 
-    private constructor(props: IRenderChildrenInPortalProps) {
+    public constructor(props: IRenderChildrenInPortalProps) {
         super(props);
 
         this.portalContentWrapperEl = document.createElement("div");
