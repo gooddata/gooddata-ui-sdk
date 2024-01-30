@@ -13,6 +13,8 @@ import {
     insightReduceItems,
     insightSetFilters,
     insightSetProperties,
+    insightSetSorts,
+    insightSorts,
     isAttribute,
     modifyAttribute,
     newPositiveAttributeFilter,
@@ -64,8 +66,7 @@ export function modifyBucketsAttributesForDrillDown(
         },
     );
 
-    // remove duplicate attributes
-    return insightReduceItems(
+    const removedDuplicateAttributes = insightReduceItems(
         replacedDrill,
         (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure): IAttributeOrMeasure[] => {
             if (isAttribute(cur)) {
@@ -78,6 +79,9 @@ export function modifyBucketsAttributesForDrillDown(
             return [...acc, cur];
         },
     );
+
+    // remove invalid sorts: the insightSorts already has the logic to remove invalid sorts
+    return insightSetSorts(removedDuplicateAttributes, insightSorts(removedDuplicateAttributes));
 }
 
 function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
