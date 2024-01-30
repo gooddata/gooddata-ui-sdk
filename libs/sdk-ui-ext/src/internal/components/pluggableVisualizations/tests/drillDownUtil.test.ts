@@ -1,11 +1,13 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
+    insightFilters,
     localIdRef,
     newAttribute,
     newAttributeSort,
     newBucket,
     newInsightDefinition,
+    newRankingFilter,
 } from "@gooddata/sdk-model";
 import { reverseAndTrimIntersection, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -104,6 +106,31 @@ describe("drillDownUtil", () => {
 
             // using the direct reference, not insightSorts, because insightSorts will remove the invalid sorts as well
             expect(result.insight.sorts).toEqual([newAttributeSort(Region, "desc")]);
+        });
+
+        it("should remove filters related to removed attributes", () => {
+            const filters = [
+                newRankingFilter(Won, "TOP", 3),
+                newRankingFilter(Won, [Region], "TOP", 3),
+                newRankingFilter(Won, [Department], "BOTTOM", 3), // this one must go
+            ];
+            const source = newInsightDefinition("visclass", (b) => {
+                return b
+                    .title("sourceInsight")
+                    .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department)])
+                    .filters(filters);
+            });
+
+            const drillConfig: IDrillDownDefinition = {
+                type: "drillDown",
+                origin: localIdRef(Region.attribute.localIdentifier),
+                target: Department.attribute.displayForm,
+            };
+
+            const sourceInsight = insightDefinitionToInsight(source, "uri", "id");
+            const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
+
+            expect(insightFilters(result)).toEqual(filters.slice(0, 2));
         });
     });
 
