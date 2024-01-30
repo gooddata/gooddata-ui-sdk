@@ -316,11 +316,6 @@ export interface ISettings {
     enableUserManagement?: boolean;
 
     /**
-     * Enable new dependent filters in KD
-     */
-    enableKDDependentFilters?: boolean;
-
-    /**
      * Enable cross filtering in KD
      */
     enableKDCrossFiltering?: boolean;

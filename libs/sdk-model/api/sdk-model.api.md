@@ -2492,7 +2492,6 @@ export interface ISettings {
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
     enableKDCrossFiltering?: boolean;
-    enableKDDependentFilters?: boolean;
     enableKDRichText?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
