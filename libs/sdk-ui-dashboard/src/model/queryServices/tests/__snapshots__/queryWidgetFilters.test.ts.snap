@@ -3,6 +3,15 @@
 exports[`query widget filters > advanced scenarios > should return filters for insight with all measures filtered by date 1`] = `
 [
   {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/referenceworkspace/obj/557",
+      },
+      "from": "2010-01-01",
+      "to": "2020-01-01",
+    },
+  },
+  {
     "positiveAttributeFilter": {
       "displayForm": {
         "uri": "/gdc/md/referenceworkspace/obj/1089",
