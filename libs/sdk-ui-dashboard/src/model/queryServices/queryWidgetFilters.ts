@@ -12,14 +12,11 @@ import {
     IFilter,
     IInsightDefinition,
     insightFilters,
-    insightMeasures,
     isAllTimeDateFilter,
     isAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isRankingFilter,
-    isSimpleMeasure,
-    measureFilters,
     newAllTimeFilter,
     ObjectType,
     ObjRef,
@@ -152,30 +149,13 @@ function resolveWidgetFilterIgnore(
     });
 }
 
-/**
- * Tests whether dashboard's date filter should not be applied on the insight included in the provided widget.
- *
- * This should happen for insights whose simple measures are all already set up with date filters. I guess ignoring
- * global date filter is desired because otherwise there is a large chance that the intersection of global date filter
- * and measure's date filters would lead to empty set and no data shown for the insight?
- */
-export function isDashboardDateFilterIgnoredForInsight(insight: IInsightDefinition): boolean {
-    const simpleMeasures = insightMeasures(insight, isSimpleMeasure);
-    return simpleMeasures.length > 0 && simpleMeasures.every((m) => measureFilters(m)?.some(isDateFilter));
-}
-
 function selectResolvedInsightDateFilters(
     state: DashboardState,
-    insight: IInsightDefinition,
     widget: ExtendedDashboardWidget,
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
     insightDateFilters: IDateFilter[],
 ): IDateFilter[] {
-    if (isDashboardDateFilterIgnoredForInsight(insight)) {
-        return insightDateFilters;
-    }
-
     const nonIgnoredDashboardDateFilterDateDatasetPairs = selectResolveWidgetDateFilterIgnore(
         state,
         widget,
@@ -303,7 +283,6 @@ function* queryWithInsight(
     const [dateFilters, attributeFilters] = yield all([
         select(
             selectResolvedInsightDateFilters,
-            insight,
             widget,
             widgetAwareDashboardCommonDateFilters.filter(isDateFilter),
             widgetAwareDashboardOtherFilters.filter(isDateFilter),
