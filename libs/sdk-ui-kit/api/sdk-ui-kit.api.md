@@ -76,7 +76,7 @@ export type ArrowOffset = number[];
 export type ArrowOffsets = Record<string, ArrowOffset>;
 
 // @internal (undocumented)
-export function AsyncList<T>(props: IAsyncListProps<T>): JSX.Element;
+export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
@@ -85,7 +85,7 @@ export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     state: {
         width: number;
@@ -133,7 +133,7 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     // (undocumented)
     onAlign: (alignment: IAlignPoint) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean;
 }
@@ -150,7 +150,7 @@ export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
 export type BubbleFocusTriggerProps = IBubbleTriggerProps;
 
 // @internal (undocumented)
-export const BubbleHeaderSeparator: ({ title, message }: IBubbleHeaderSeparatorProps) => JSX.Element;
+export const BubbleHeaderSeparator: ({ title, message }: IBubbleHeaderSeparatorProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
@@ -173,7 +173,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
     // (undocumented)
     protected eventListeners(): any;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     readonly state: Readonly<IBubbleTriggerState>;
 }
@@ -196,7 +196,7 @@ export class Button extends React_2.Component<IButtonProps> {
         iconRight: string;
     };
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)
@@ -245,7 +245,7 @@ export class Checkbox extends React_2.PureComponent<CheckboxProps> {
     // (undocumented)
     onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)
@@ -290,7 +290,7 @@ export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedCo
 export const ColorPickerPointer: React_2.FC;
 
 // @internal (undocumented)
-export const ColorPreview: (props: IColorPreviewProps) => JSX.Element;
+export const ColorPreview: (props: IColorPreviewProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
@@ -332,7 +332,7 @@ export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 // @internal (undocumented)
 export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)
@@ -520,7 +520,7 @@ export enum ENUM_KEY_CODE {
 // @internal (undocumented)
 export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)
@@ -2948,7 +2948,7 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
     // (undocumented)
     onChange: (value: string | number) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
     // (undocumented)
@@ -3004,7 +3004,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     onKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
@@ -3109,7 +3109,7 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void;
 }
@@ -3154,22 +3154,22 @@ export interface INumericInputProps {
 }
 
 // @internal (undocumented)
-export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
+export function InvertableSelect<T>(props: IInvertableSelectProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps): JSX.Element;
+export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectItem(props: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem(props: IInvertableSelectItem): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps): JSX.Element;
+export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): JSX.Element;
+export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface IOffset {
@@ -4145,7 +4145,7 @@ export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)
@@ -4232,7 +4232,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     onDocumentMouseDown(e: React_2.MouseEvent): void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean;
     // (undocumented)
@@ -4450,13 +4450,13 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 export type SpinnerSize = "large" | "small";
 
 // @internal (undocumented)
-export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => JSX.Element;
+export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => JSX.Element;
+export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingExample: (props: IStylingExampleProps) => JSX.Element;
+export const StylingExample: (props: IStylingExampleProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export type StylingPickerItemContent = ITheme | IColorPalette;
@@ -4548,7 +4548,7 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
 // @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal (undocumented)

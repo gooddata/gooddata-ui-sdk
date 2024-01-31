@@ -212,7 +212,7 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @beta (undocumented)
@@ -1062,7 +1062,7 @@ export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilte
     // (undocumented)
     static defaultProps: Partial<IMeasureValueFilterProps>;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
     // (undocumented)
     state: IMeasureValueFilterState;
 }
@@ -1072,7 +1072,7 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
     // (undocumented)
     static defaultProps: Pick<IMeasureValueFilterDropdownProps, "displayTreatNullAsZeroOption" | "treatNullAsZeroDefaultValue" | "enableOperatorSelection">;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @public (undocumented)

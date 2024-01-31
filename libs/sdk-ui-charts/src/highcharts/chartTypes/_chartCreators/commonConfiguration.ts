@@ -16,9 +16,9 @@ import { ITheme } from "@gooddata/sdk-model";
 const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
-export const DEFAULT_SERIES_LIMIT = 1000;
-export const DEFAULT_CATEGORIES_LIMIT = 3000;
-export const DEFAULT_DATA_POINTS_LIMIT = 2000;
+export const DEFAULT_SERIES_LIMIT = 100_000;
+export const DEFAULT_CATEGORIES_LIMIT = 100_000;
+export const DEFAULT_DATA_POINTS_LIMIT = 1_000_000;
 export const MAX_POINT_WIDTH = 100;
 export const HOVER_BRIGHTNESS = 0.1;
 export const MINIMUM_HC_SAFE_BRIGHTNESS = Number.MIN_VALUE;
@@ -80,7 +80,7 @@ function getThemedConfiguration(theme: ITheme): any {
             series: {
                 animation: false,
                 enableMouseTracking: true, // !Status.exportMode,
-                turboThreshold: DEFAULT_CATEGORIES_LIMIT,
+                turboThreshold: 3000,
                 borderColor: backgroundColor,
                 dataLabels: {
                     style: {

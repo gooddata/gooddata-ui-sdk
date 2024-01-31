@@ -5,4 +5,4 @@
  *
  * @public
  */
-export const ViewByAttributesLimit = 2;
+export const ViewByAttributesLimit = 1_000;

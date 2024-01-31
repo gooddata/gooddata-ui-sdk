@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -296,7 +294,7 @@ export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, w
 export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
-export const PivotTable: (props: IPivotTableProps) => JSX.Element;
+export const PivotTable: (props: IPivotTableProps) => React_2.JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
