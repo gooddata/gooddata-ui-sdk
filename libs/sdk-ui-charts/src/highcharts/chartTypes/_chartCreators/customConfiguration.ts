@@ -88,7 +88,7 @@ const HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET = 16;
 const MIN_RANGE = 2;
 
 // custom limit to hide data labels to improve performance
-const HEATMAP_DATA_LABELS_LIMIT = 150;
+const HEATMAP_DATA_LABELS_LIMIT = 100_000;
 
 // in viewport <= 480, tooltip width is equal to chart container width
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;

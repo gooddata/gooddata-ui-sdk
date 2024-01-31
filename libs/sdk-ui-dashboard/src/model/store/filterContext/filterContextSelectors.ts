@@ -364,7 +364,7 @@ export const selectIsCircularDependency: (
         ),
 );
 
-const MAX_ATTRIBUTE_FILTERS_COUNT = 30;
+const MAX_ATTRIBUTE_FILTERS_COUNT = 1_000;
 
 /**
  * This selector returns whether any more attribute filters can be added.

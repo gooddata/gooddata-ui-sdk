@@ -364,11 +364,11 @@ export class ErrorComponent extends React_2.Component<IErrorProps> {
     // (undocumented)
     static defaultProps: Partial<IErrorProps>;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @public
-export const Execute: (props: IExecuteProps) => JSX.Element;
+export const Execute: (props: IExecuteProps) => React_2.JSX.Element;
 
 // @public
 export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
@@ -1390,7 +1390,7 @@ export class LoadingComponent extends React_2.Component<ILoadingProps> {
     // (undocumented)
     static defaultProps: Partial<ILoadingProps>;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.JSX.Element;
 }
 
 // @internal
