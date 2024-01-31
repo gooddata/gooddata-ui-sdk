@@ -74,7 +74,8 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: "#javascript-notifications"
-          slack-message: "The latest version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM. :tada:"
+          slack-message: "The latest *prerelase* version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM by the user *${{env.GITHUB_USER}}*. :tada:"
         env:
           RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          GITHUB_USER: ${{ github.actor }}
