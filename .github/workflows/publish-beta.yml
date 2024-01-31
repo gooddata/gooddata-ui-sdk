@@ -12,3 +12,4 @@ jobs:
         secrets: inherit
         with:
             source-branch: "release"
+            author-name: ${{ github.actor }}
