@@ -1,0 +1,21 @@
+# (C) 2024 GoodData Corporation
+
+name: Release ~ Release minor version 
+on:
+  workflow_dispatch:
+      inputs:
+        password:
+          description: Password for the workflow to run
+          required: true
+
+jobs: 
+    publish-release:
+      # have dummy password to prevent accidental run
+      if: github.event.inputs.password == 'dummy'
+      uses: ./.github/workflows/rw-publish-release.yml
+      permissions:
+        contents: write
+        id-token: write
+      secrets: inherit
+      with:
+        bump: "minor"
