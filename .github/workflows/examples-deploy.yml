@@ -19,7 +19,7 @@ jobs:
             ref: rel/9.6
 
       - name: Get tokens from Vault and set it as env variable
-        uses: hashicorp/vault-action@v2
+        uses: hashicorp/vault-action@v2.7.5
         with:
             url: "https://vault.ord1.infra.intgdc.com"
             method: jwt
