@@ -29,7 +29,7 @@ jobs:
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
             - name: Get NPM_PUBLISH_TOKEN from Vault and set it as env variable
-              uses: hashicorp/vault-action@v2
+              uses: hashicorp/vault-action@v2.7.5
               with:
                   url: "https://vault.ord1.infra.intgdc.com"
                   method: jwt
