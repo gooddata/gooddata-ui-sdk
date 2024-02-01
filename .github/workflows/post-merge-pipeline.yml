@@ -14,8 +14,8 @@ env:
   WEB_COMPONENTS_DIR: libs/sdk-ui-web-components
 
 jobs:
-  build-web-components:
-    if: ${{ startsWith(github.event.head_commit.message, 'Release ') }}
+  build-web-components: 
+    if: ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, 'Bump versions') }}
     runs-on: [infra1-medium] # need the bigger runner than small because Web component build consume more resource
     permissions:
       contents: read
