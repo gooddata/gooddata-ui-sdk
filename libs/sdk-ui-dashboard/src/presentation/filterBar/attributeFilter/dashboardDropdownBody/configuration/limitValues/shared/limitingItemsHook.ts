@@ -27,10 +27,21 @@ export interface IValuesLimitingItemWithTitle {
     isDisabled?: boolean;
 }
 
+const findAttributeByLabel = (
+    labelRef: ObjRef,
+    labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    attributes: ICatalogAttribute[],
+) => {
+    const attributeRef = labels.get(labelRef)?.attribute;
+    return attributes.find((attribute) => areObjRefsEqual(attribute.attribute.ref, attributeRef));
+};
+
 const findTitleForParentFilter = (
     parentFilter: IDashboardAttributeFilterParentItem,
     labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-) => parentFilter.title ?? labels.get(parentFilter.displayForm)?.title;
+    attributes: ICatalogAttribute[],
+) =>
+    parentFilter.title ?? findAttributeByLabel(parentFilter.displayForm, labels, attributes)?.attribute.title;
 
 const findTitleForCatalogItem = (
     item: ObjRef,
@@ -95,6 +106,7 @@ const mapParentFilters = (
     parentFilters: IDashboardAttributeFilterParentItem[],
     validParentFilters: ObjRef[],
     labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    attributes: ICatalogAttribute[],
     isSelected: boolean,
 ) =>
     parentFilters
@@ -104,7 +116,7 @@ const mapParentFilters = (
                 areObjRefsEqual(validParent, item.displayForm),
             );
             return {
-                title: findTitleForParentFilter(item, labels),
+                title: findTitleForParentFilter(item, labels, attributes),
                 item,
                 isDisabled,
             };
@@ -124,6 +136,7 @@ export const useLimitingItems = (
             parentFilters,
             validParentFilters,
             labels,
+            attributes,
             true,
         );
         const validationItems =
@@ -166,7 +179,10 @@ export const useFilterItems = (
     validParentFilters: ObjRef[],
 ): IValuesLimitingItemWithTitle[] => {
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const attributes = useDashboardSelector(selectCatalogAttributes);
     return useMemo(() => {
-        return mapParentFilters(parentFilters, validParentFilters, labels, false).sort(sortByTypeAndTitle);
-    }, [labels, parentFilters, validParentFilters]);
+        return mapParentFilters(parentFilters, validParentFilters, labels, attributes, false).sort(
+            sortByTypeAndTitle,
+        );
+    }, [labels, attributes, parentFilters, validParentFilters]);
 };
