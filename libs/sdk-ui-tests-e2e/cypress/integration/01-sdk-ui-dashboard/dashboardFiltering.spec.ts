@@ -134,6 +134,7 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
         activityTypeFilter.open().selectAttribute(["Email", "In Person Meeting", "Phone Call"]);
 
         filterBar.getSelectionStatus().should("have.text", "Email, In Person Meeting, Phone Call");
+        editMode.cancel();
     });
 
     it("Delete attribute filter discarded", () => {
@@ -206,15 +207,13 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Test making no affect on widgets when using unconnected filter", () => {
         Navigation.visit("dashboard/stage-name");
         editMode.edit();
-
-        widget.waitTableLoaded();
-
         new WidgetConfiguration(0).open().openConfiguration().toggleAttributeFilter("Stage Name").close();
 
         widget
             .getTable()
             .getColumnValues(0)
             .should("deep.equal", ["Interest", "Discovery", "Short List", "Risk Assessment", "Conviction"]);
+        editMode.cancel().discard();
     });
 
     it("(SEPARATE) Apply multiple filters on insight", () => {
@@ -247,6 +246,7 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
             .openConfiguration()
             .getListFilterItem()
             .should("deep.equal", ["Stage Name", "Region", "Product"]);
+        editMode.cancel().discard();
     });
 
     it("Check attribute filter default state", () => {
@@ -255,6 +255,7 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         filterBar.addAttribute("Region");
         filterBar.getAttributeSubTitle("Region").should("have.text", "All");
+        editMode.cancel().discard();
     });
 
     it("Change position attribute filter", () => {
@@ -283,5 +284,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
             .moveAttributeFilter(2, 1, DropZone.PREV)
             .getAttributeList()
             .should("deep.equal", ["Region", "Product", "Stage Name"]);
+        editMode.cancel().discard();
     });
 });

@@ -20,7 +20,7 @@ const DATASET_CREATED = "Created";
 
 describe("Insights on dashboard", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/insight");
+        Navigation.visitCopyOf("dashboard/insight");
         editMode.isInEditMode(false).edit().isInEditMode();
     });
 
@@ -102,6 +102,7 @@ describe("Date filtering on insight", () => {
             secondWidgetConfiguration.open();
 
             widgetConfiguration.open().openConfiguration().hasDatasetSelected(DATASET_CREATED);
+            editMode.cancel();
         },
     );
 
@@ -114,5 +115,6 @@ describe("Date filtering on insight", () => {
             .getChart()
             .getDataLabelValues()
             .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
+        editMode.cancel().discard();
     });
 });
