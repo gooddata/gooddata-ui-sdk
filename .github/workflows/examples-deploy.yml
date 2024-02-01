@@ -4,43 +4,41 @@
 name: Release ~ Examples deploy
 on:
   workflow_dispatch:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+        default: "release"
 
 jobs:
-  prepare-branch:
-    runs-on: [infra1-medium]
+  release-ui-sdk-examples-deploy:
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-# for testing, have 9.6 as it's currently the release on which examples run
         with:
-            ref: rel/9.6
+            ref: ${{inputs.source-branch}}
 
-      - name: Get tokens from Vault and set it as env variable
-        uses: hashicorp/vault-action@v2.7.5
+      - uses: actions/setup-node@v4
         with:
-            url: "https://vault.ord1.infra.intgdc.com"
-            method: jwt
-            path: jwt/github
-            # TODO: check role
-            role: front-end
-            secrets: |
-              secret/data/v2/na1/int/911/jenkins_ng_slave/data/live-examples-heroku-api secret | HEROKU_API_KEY ;
-#             secret/data/v2/na1/int/911/jenkins_ng_slave/data/mapbox-access-token secret | MAPBOX_TOKEN ;
-
+            node-version: 18.17.0
       - name: Install rush
         run: |
             npm install -g @microsoft/rush
+      - name: Install heroku
+        run: |
+            npm install -g heroku@8.7.1
       - name: Rush install
         run: |
             rush install
       - name: Rush build
         env:
             EXAMPLES_BUILD_TYPE: public
-#           EXAMPLE_MAPBOX_ACCESS_TOKEN: ${{env.MAPBOX_TOKEN}}
-            EXAMPLE_MAPBOX_ACCESS_TOKEN: "abc"
+            EXAMPLE_MAPBOX_ACCESS_TOKEN: ${{secrets.MAPBOX_TOKEN}}
             BROWSERSLIST_IGNORE_OLD_DATA: true
         run: |
             rush build -t @gooddata/sdk-examples
@@ -49,16 +47,15 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
           appdir: "examples/sdk-examples"
-          heroku_api_key: ${{env.HEROKU_API_KEY}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "gdui-examples"
           heroku_email: "rail@gooddata.com"
           team: "gooddata"
           usedocker: true
           docker_heroku_process_type: web
           docker_build_args: |
-            BACKEND_HOST
-            BACKEND_URL
-# Note: heroku config:set BACKEND_HOST=${BACKEND_HOST} -a ${PUBLIC_APP_NAME} has to be there
-          env:
+              BACKEND_HOST
+              BACKEND_URL
+        env:
             BACKEND_URL: "https://live-examples-proxy.herokuapp.com"
             BACKEND_HOST: "live-examples-proxy.herokuapp.com"
