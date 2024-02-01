@@ -48,10 +48,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option with setLimitingValidationItems() option should throw error on init() call", async () => {
-        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
         const attributeFilterHandler = newTestAttributeFilterHandler("static");
 
-        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
+        attributeFilterHandler.setLimitingValidationItems(metricRefs);
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
@@ -83,13 +83,13 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option with setLimitingValidationItems() option should throw error on loadInitialElementsPage() call", async () => {
-        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
         const attributeFilterHandler = newTestAttributeFilterHandler("static");
 
         attributeFilterHandler.init();
         await waitForAsync();
 
-        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
+        attributeFilterHandler.setLimitingValidationItems(metricRefs);
         expect(attributeFilterHandler.loadInitialElementsPage).toThrowErrorMatchingSnapshot();
     });
 
