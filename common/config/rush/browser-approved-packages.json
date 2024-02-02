@@ -487,6 +487,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "axios-cache-interceptor",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "babel-loader",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
