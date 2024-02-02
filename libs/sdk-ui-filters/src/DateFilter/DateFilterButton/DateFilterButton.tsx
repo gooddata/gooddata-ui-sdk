@@ -1,6 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import cx from "classnames";
+import { stringUtils } from "@gooddata/util";
+
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
 
 export interface IDateFilterButtonProps {
@@ -10,6 +12,7 @@ export interface IDateFilterButtonProps {
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
     children?: React.ReactNode;
+    customFilterName?: string;
 }
 
 export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
@@ -19,13 +22,14 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     children,
     disabled,
     customIcon,
+    customFilterName,
 }) => {
     return (
         <div
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",
-                `s-date-filter-button-${title}`,
+                `s-date-filter-button-${stringUtils.simplifyText(customFilterName)}`,
                 "dropdown-button",
                 isMobile && "gd-date-filter-button-mobile",
                 isOpen && "is-active",
