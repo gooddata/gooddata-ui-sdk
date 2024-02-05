@@ -32194,7 +32194,8 @@ ${pendingInterceptorsFormatter.format(pending)}
                             .join("\n")
                     );
                 })
-                .join("\n");
+                .join("\n") +
+            "\n";
 
         console.log(result);
 

@@ -50,7 +50,8 @@ const result =
                     .join("\n")
             );
         })
-        .join("\n");
+        .join("\n") +
+    "\n";
 
 console.log(result);
 

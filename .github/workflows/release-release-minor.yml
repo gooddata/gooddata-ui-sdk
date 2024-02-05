@@ -9,11 +9,12 @@ on:
           required: true
 
 jobs: 
-    publish-release:
+    publish-release-npm:
       # have dummy password to prevent accidental run
       if: github.event.inputs.password == 'dummy'
-      uses: ./.github/workflows/rw-publish-release.yml
+      uses: ./.github/workflows/rw-perform-release-major-minor.yml
       permissions:
+        pull-requests: write
         contents: write
         id-token: write
       secrets: inherit

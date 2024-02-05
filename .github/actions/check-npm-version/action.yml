@@ -4,11 +4,9 @@ inputs:
   package:
     required: true
     description: package
-    type: string
   version:
     required: true
     description: version
-    type: string
 
 outputs:
   exists:

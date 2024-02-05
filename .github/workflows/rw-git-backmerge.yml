@@ -1,4 +1,4 @@
-name: Automated Merge and Conflict Resolution
+name: rw ~ Git ~ Back merge release to master 
 
 on:
   workflow_call:
