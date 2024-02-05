@@ -4,6 +4,6 @@ import { EntitiesApiGetEntityWorkspacesRequest } from "@gooddata/api-client-tige
 
 // all these params are used for fetching workspace even if not needed for all methods to increase cache re-usage
 export const GET_OPTIMIZED_WORKSPACE_PARAMS: Partial<EntitiesApiGetEntityWorkspacesRequest> = {
-    include: ["workspaces"],
+    include: ["parent"],
     metaInclude: ["config", "permissions"],
 };
