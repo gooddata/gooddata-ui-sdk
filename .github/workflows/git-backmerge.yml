@@ -1,0 +1,39 @@
+name: Git ~ Backmerge Release to Master
+on:
+    workflow_dispatch:
+jobs:
+    auto-merge:
+        uses: ./.github/workflows/rw-git-backmerge.yml
+        permissions:
+            contents: write
+            pull-requests: write
+            repository-projects: write
+        secrets: inherit
+        with:
+            source-branch: "release"
+            target-branch: "master"
+    
+    slack-notification:
+        runs-on: [ubuntu-latest]
+        needs: [auto-merge]
+        steps:
+        - name: print auto-merge outputs
+          run: echo "The auto-merge outputs are ${{ needs.auto-merge.outputs.has-conflicts }} and ${{ needs.auto-merge.outputs.pull-request-url }}"
+        - name: Notify to slack no conflicts
+          if: ${{ needs.auto-merge.outputs.has-conflicts == 'false' }}
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            channel-id: "#javascript-notifications"
+            slack-message: "The backmerge from the release is ready and can be easily merged to the master branch. It won't cause any problems because there are *no conflicts*. ${{env.PULL_REQUEST }}"
+          env:            
+            PULL_REQUEST: ${{ needs.auto-merge.outputs.pull-request-url }}
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        - name: Notify to slack has conflicts
+          if: ${{ needs.auto-merge.outputs.has-conflicts == 'true' }}
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            channel-id: "#javascript-notifications"
+            slack-message: "The backmerge from the release is ready and can not be easily merged into the master branch. However, *there are conflicts* in the PR that needs to be resolved. ${{env.PULL_REQUEST }}"
+          env:            
+            PULL_REQUEST: ${{ needs.auto-merge.outputs.pull-request-url }}
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
