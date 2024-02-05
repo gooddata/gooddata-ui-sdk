@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
@@ -70,6 +70,7 @@ import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashb
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -632,7 +633,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const workspaceWithPermissionsResponse = await this.authCall((client) => {
                 return client.entities.getEntityWorkspaces({
                     id: this.workspace,
-                    metaInclude: ["permissions"],
+                    ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                 });
             });
 

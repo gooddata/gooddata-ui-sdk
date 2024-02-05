@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
@@ -11,6 +11,7 @@ import { TigerFeaturesService, pickContext } from "../../features/index.js";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -27,7 +28,7 @@ export class TigerWorkspaceSettings
             } = (
                 await client.entities.getEntityWorkspaces({
                     id: this.workspace,
-                    metaInclude: ["config"],
+                    ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                 })
             ).data;
 
@@ -148,7 +149,7 @@ export function getSettingsForCurrentUser(
         } = (
             await client.entities.getEntityWorkspaces({
                 id: workspace,
-                metaInclude: ["config"],
+                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
             })
         ).data;
 
