@@ -2292,7 +2292,7 @@
         "limit": 0
     },
     "filter.dependency.icon.tooltip": {
-        "value": "Available values for <strong>{filterTitle}</strong> are limited by selection in another filter.",
+        "value": "Values for <strong>{filterTitle}</strong> are filtered by selection in another filter.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
         "limit": 0
     },
@@ -2327,7 +2327,7 @@
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.empty": {
-        "value": "Add a dashboard filter or metric to filter values.",
+        "value": "Limit the filter menu options by applying a dashboard filter or adding a metric.",
         "comment": "Text shown when list of filters is empty.",
         "limit": 0
     },
@@ -2336,19 +2336,24 @@
         "comment": "Link that adds a new filter.",
         "limit": 0
     },
-    "attributesDropdown.valuesLimiting.popupTitle": {
-        "value": "Add filter or metric",
+    "attributesDropdown.valuesLimiting.addMetricTitle": {
+        "value": "Choose metric",
+        "comment": "Title of popup with selection of metric that will limit listed values.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addFilterTitle": {
+        "value": "Choose dashboard filter",
+        "comment": "Title of popup with selection of filter will limit listed values.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addItemTitle": {
+        "value": "Add",
         "comment": "Title of popup with selection of filter or metric that will limit listed values.",
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.searchPlaceholder": {
         "value": "Search…",
         "comment": "Placeholder in a search field. Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "attributesDropdown.valuesLimiting.mainTooltip": {
-        "value": "Select one or more dashboard filters to see only the related values in the filter menu.{br}{br}Select one or more metrics to display in the filter menu only the values with relevant (non-null) results for the selected metrics.",
-        "comment": "Explanation tooltip for section that configures filters that limit listed values in the dialog. Do not translate placeholders {br}, they will be replaced in run time with an empty line.",
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.sumFact": {
@@ -2374,6 +2379,31 @@
     "attributesDropdown.valuesLimiting.searchNoMatch": {
         "value": "No matching item was found.",
         "comment": "Text shown when entered search term do not match any item in the list.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.filtersEmpty": {
+        "value": "No more dashboard filters to add.",
+        "comment": "Text shown when all dashboard filters were used and there is none offered in the list.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addFilters.title": {
+        "value": "Dashboard filter",
+        "comment": "Title of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addFilters.description": {
+        "value": "Use an existing dashboard filter to hide irrelevant values. ",
+        "comment": "Description of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addLimitingItem.title": {
+        "value": "Metric",
+        "comment": "Title of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": {
+        "value": "Use a metric to hide irrelevant values. Only values with non-null results for the metric are shown. <a>Learn more</a>",
+        "comment": "Description of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements. Do not translate <a> and </a> placeholders. They will be replaced with HTML tags in the runtime.",
         "limit": 0
     }
 }

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
-import { Typography, Bubble, BubbleHoverTrigger, Button, NoData } from "@gooddata/sdk-ui-kit";
+import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
 import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
@@ -13,41 +13,19 @@ import {
     selectEnableAttributeFilterValuesValidation,
     IMetricsAndFacts,
     selectBackendCapabilities,
+    useDashboardUserInteraction,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
-import { LimitingItem } from "./LimitingItem.js";
-import { useLimitingItems } from "./limitingItemsHook.js";
-import { AddLimitingItemDialog } from "./AddLimitingItemDialog.js";
-
-const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
-
-const WithExplanationTooltip: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <BubbleHoverTrigger tagName="abbr">
-            {children}
-            <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
-                <FormattedMessage
-                    id="attributesDropdown.valuesLimiting.mainTooltip"
-                    values={{ br: <br /> }}
-                />
-            </Bubble>
-        </BubbleHoverTrigger>
-    );
-};
-
-const UnknownItemTitle: React.FC = () => {
-    return (
-        <em>
-            <FormattedMessage id="attributesDropdown.valuesLimiting.unknownItem" />
-        </em>
-    );
-};
+import { LimitingItem } from "./shared/LimitingItem.js";
+import { useLimitingItems } from "./shared/limitingItemsHook.js";
+import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
     isObjRef(item) ? serializeObjRef(item) : item.localIdentifier;
 
 interface ILimitValuesConfigurationProps {
+    attributeTitle?: string;
     parentFilters: IDashboardAttributeFilterParentItem[];
     validParentFilters: ObjRef[];
     validateElementsBy: ObjRef[];
@@ -57,6 +35,7 @@ interface ILimitValuesConfigurationProps {
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
+    attributeTitle,
     parentFilters,
     validParentFilters,
     validateElementsBy,
@@ -65,6 +44,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     onParentFilterUpdate,
 }) => {
     const intl = useIntl();
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
         parentFilters,
@@ -72,6 +52,11 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         validateElementsBy,
         metricsAndFacts,
     );
+
+    const onOpenAddDialog = () => {
+        setIsDropdownOpened(true);
+        attributeFilterInteraction("attributeFilterLimitAddButtonClicked");
+    };
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
         if (isObjRef(addedItem)) {
@@ -84,8 +69,10 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     const onDelete = (deletedItem: ValuesLimitingItem) => {
         if (isObjRef(deletedItem)) {
             onLimitingItemUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
+            attributeFilterInteraction("attributeFilterLimitRemoveMetricClicked");
         } else {
             onParentFilterUpdate(deletedItem.localIdentifier, false);
+            attributeFilterInteraction("attributeFilterLimitRemoveParentFilterClicked");
         }
     };
 
@@ -93,6 +80,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         <div>
             {isDropdownOpened ? (
                 <AddLimitingItemDialog
+                    attributeTitle={attributeTitle}
                     currentlySelectedItems={validateElementsBy}
                     parentFilters={parentFilters}
                     validParentFilters={validParentFilters}
@@ -103,31 +91,26 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
             <div className="configuration-category attribute-filter__limit__title">
                 <Typography tagName="h3">
                     <FormattedMessage id="attributesDropdown.valuesLimiting.title" />
-                    <WithExplanationTooltip>
-                        <i className="gd-icon-circle-question" />
-                    </WithExplanationTooltip>
                 </Typography>
                 <Button
                     className="gd-button-small gd-button-link attribute-filter__limit__add-button"
                     iconLeft="gd-icon-plus"
-                    onClick={() => setIsDropdownOpened(true)}
+                    onClick={onOpenAddDialog}
                     value={intl.formatMessage(messages.filterAddValuesLimit)}
                 />
             </div>
             <div>
                 {itemsWithTitles.length === 0 ? (
-                    <WithExplanationTooltip>
-                        <NoData
-                            className="attribute-filter__limit__no-data"
-                            noDataLabel={intl.formatMessage(messages.filterAddValuesLimitNoData)}
-                        />
-                    </WithExplanationTooltip>
+                    <NoData
+                        className="attribute-filter__limit__no-data"
+                        noDataLabel={intl.formatMessage(messages.filterAddValuesLimitNoData)}
+                    />
                 ) : (
                     <>
                         {itemsWithTitles.map(({ title, item }) => (
                             <LimitingItem
                                 key={extractKey(item)}
-                                title={title ?? <UnknownItemTitle />}
+                                title={title}
                                 item={item}
                                 onDelete={() => onDelete(item)}
                             />

@@ -73,7 +73,7 @@ export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilter
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
 
 // @beta
-export const AttributeFilterButtonToolip: React_2.FC<{
+export const AttributeFilterButtonTooltip: React_2.FC<{
     children?: React_2.ReactNode;
 }>;
 
@@ -624,6 +624,7 @@ export interface IAttributeFilterStatusBarProps {
     enableShowingFilteredElements?: boolean;
     getItemTitle: (item: IAttributeElement) => string;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByLimitingValidationItems?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     onClearIrrelevantSelection?: () => void;

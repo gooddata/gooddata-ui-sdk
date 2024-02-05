@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import identity from "lodash/identity.js";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -14,6 +14,7 @@ const initStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation
 
 const initSuccess: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.initialization.status = "success";
+    state.initialization.error = undefined; // clear previous error
 };
 
 const initError: AttributeFilterReducer<

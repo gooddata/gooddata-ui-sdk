@@ -183,13 +183,13 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if setLimitingValidationItems() was set before the load", async () => {
-        const metricRef = ReferenceMd.Amount.measure.definition.measureDefinition.item;
+        const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
         await waitForAsync();
 
-        attributeFilterHandler.setLimitingValidationItems([{ identifier: metricRef }]);
+        attributeFilterHandler.setLimitingValidationItems(metricRefs);
         expect(attributeFilterHandler.loadNextElementsPage).toThrowErrorMatchingSnapshot();
     });
 

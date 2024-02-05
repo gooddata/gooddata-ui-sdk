@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export {
     ParentFilterOverAttributeType,
     OnApplyCallbackType,
@@ -32,7 +32,7 @@ export {
     AttributeFilterSimpleDropdownButtonWithSelection,
     AttributeFilterStatusBar,
     SingleSelectionAttributeFilterStatusBar,
-    AttributeFilterButtonToolip,
+    AttributeFilterButtonTooltip,
     AttributeDatasetInfo,
     IAttributeDatasetInfoProps,
     EmptyElementsSearchBar,

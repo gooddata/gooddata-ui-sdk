@@ -9,7 +9,7 @@ import {
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { ValuesLimitingItem } from "../../../types.js";
+import { ValuesLimitingItem } from "../../../../types.js";
 import {
     useDashboardSelector,
     selectCatalogAttributes,
@@ -18,8 +18,8 @@ import {
     IMetricsAndFacts,
     selectCatalogMeasures,
     selectCatalogFacts,
-} from "../../../../../../model/index.js";
-import { ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
+} from "../../../../../../../model/index.js";
+import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;
@@ -27,10 +27,21 @@ export interface IValuesLimitingItemWithTitle {
     isDisabled?: boolean;
 }
 
+const findAttributeByLabel = (
+    labelRef: ObjRef,
+    labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    attributes: ICatalogAttribute[],
+) => {
+    const attributeRef = labels.get(labelRef)?.attribute;
+    return attributes.find((attribute) => areObjRefsEqual(attribute.attribute.ref, attributeRef));
+};
+
 const findTitleForParentFilter = (
     parentFilter: IDashboardAttributeFilterParentItem,
     labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-) => parentFilter.title ?? labels.get(parentFilter.displayForm)?.title;
+    attributes: ICatalogAttribute[],
+) =>
+    parentFilter.title ?? findAttributeByLabel(parentFilter.displayForm, labels, attributes)?.attribute.title;
 
 const findTitleForCatalogItem = (
     item: ObjRef,
@@ -95,6 +106,7 @@ const mapParentFilters = (
     parentFilters: IDashboardAttributeFilterParentItem[],
     validParentFilters: ObjRef[],
     labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    attributes: ICatalogAttribute[],
     isSelected: boolean,
 ) =>
     parentFilters
@@ -104,7 +116,7 @@ const mapParentFilters = (
                 areObjRefsEqual(validParent, item.displayForm),
             );
             return {
-                title: findTitleForParentFilter(item, labels),
+                title: findTitleForParentFilter(item, labels, attributes),
                 item,
                 isDisabled,
             };
@@ -124,6 +136,7 @@ export const useLimitingItems = (
             parentFilters,
             validParentFilters,
             labels,
+            attributes,
             true,
         );
         const validationItems =
@@ -137,22 +150,12 @@ export const useLimitingItems = (
 
 export const useSearchableLimitingItems = (
     currentlySelectedItems: ObjRef[],
-    parentFilters: IDashboardAttributeFilterParentItem[],
-    validParentFilters: ObjRef[],
 ): IValuesLimitingItemWithTitle[] => {
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const measures = useDashboardSelector(selectCatalogMeasures);
     const facts = useDashboardSelector(selectCatalogFacts);
-    const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
     return useMemo(() => {
-        const unusedParentFiltersWithTitles = mapParentFilters(
-            parentFilters,
-            validParentFilters,
-            labels,
-            false,
-        );
-
         const metricsWithTitles = measures.map((measure) => ({
             title: measure.measure.title,
             item: measure.measure.ref,
@@ -165,13 +168,21 @@ export const useSearchableLimitingItems = (
             title: attribute.attribute.title,
             item: attribute.attribute.ref,
         }));
+        return [...metricsWithTitles, ...factsWithTitles, ...attributesWithTitles]
+            .filter((item) => !currentlySelectedItems.includes(item.item))
+            .sort(sortByTypeAndTitle);
+    }, [currentlySelectedItems, measures, facts, attributes]);
+};
 
-        const unusedMetricsWithTitle = [
-            ...metricsWithTitles,
-            ...factsWithTitles,
-            ...attributesWithTitles,
-        ].filter((item) => !currentlySelectedItems.includes(item.item));
-
-        return [...unusedParentFiltersWithTitles, ...unusedMetricsWithTitle].sort(sortByTypeAndTitle);
-    }, [currentlySelectedItems, measures, facts, attributes, labels, parentFilters, validParentFilters]);
+export const useFilterItems = (
+    parentFilters: IDashboardAttributeFilterParentItem[],
+    validParentFilters: ObjRef[],
+): IValuesLimitingItemWithTitle[] => {
+    const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const attributes = useDashboardSelector(selectCatalogAttributes);
+    return useMemo(() => {
+        return mapParentFilters(parentFilters, validParentFilters, labels, attributes, false).sort(
+            sortByTypeAndTitle,
+        );
+    }, [labels, attributes, parentFilters, validParentFilters]);
 };

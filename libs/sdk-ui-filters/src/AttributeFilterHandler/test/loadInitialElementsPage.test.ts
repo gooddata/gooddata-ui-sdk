@@ -10,6 +10,7 @@ import * as elements from "../internal/redux/elements/loadElements.js";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { ObjRef } from "@gooddata/sdk-model";
 
 describe("AttributeFilterHandler", () => {
     it("loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback", async () => {
@@ -208,9 +209,7 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by setLimitingValidationItems()", async () => {
-        const validationItems = [
-            { identifier: ReferenceMd.Amount.measure.definition.measureDefinition.item },
-        ];
+        const validationItems: ObjRef[] = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();

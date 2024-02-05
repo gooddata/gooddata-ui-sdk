@@ -188,6 +188,12 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     // Initial elements page
 
     loadInitialElementsPage = (correlation: Correlation = uuid()): void => {
+        if (this.bridge.getInitStatus() === "error") {
+            // do not try to fetch any elements when filter is in error state as we would end up with
+            // "blank page" error in production. This can happen when user sets limiting metric that
+            // is not LDM compatible (cannot be sliced) with the attribute filter's attribute.
+            return;
+        }
         invariant(
             this.bridge.getInitStatus() === "success",
             "Cannot call loadInitialElementsPage() before successful initialization.",

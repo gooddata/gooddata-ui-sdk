@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "attributeFilterVariables";
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -102,4 +102,8 @@
     path {
         fill: variables.$default-gd-color-state-blank;
     }
+}
+
+.gd-attribute-filter-dropdown-button-icon-tooltip__content {
+    max-width: 160px;
 }

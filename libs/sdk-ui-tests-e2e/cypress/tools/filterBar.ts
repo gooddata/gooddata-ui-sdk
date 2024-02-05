@@ -231,14 +231,14 @@ export class AttributeFilter {
         return this;
     }
 
-    configureDependency(filteredItem: string | string[]) {
+    configureBearFilterDependency(filteredItem: string | string[]) {
         this.selectConfiguration();
-        this.checkDependency(filteredItem);
+        this.checkBearFilterDependency(filteredItem);
         this.getDropdownElement().find(".s-apply").click();
         return this;
     }
 
-    checkDependency(filteredItem: string | string[]) {
+    checkBearFilterDependency(filteredItem: string | string[]) {
         const filteredItems = Array.isArray(filteredItem) ? filteredItem : [filteredItem];
         filteredItems.forEach((filteredItem) => {
             const testClass = getTestClassByTitle(filteredItem);
@@ -249,7 +249,7 @@ export class AttributeFilter {
         return this;
     }
 
-    hasDependencyEnabled(enabled: boolean) {
+    hasBearFilterDependencyEnabled(enabled: boolean) {
         this.getDropdownElement()
             .find(".s-attribute-filter-dropdown-configuration-item")
             .each((item) => {
@@ -420,6 +420,46 @@ export class AttributeFilter {
 
     hasNoRelevantMessage() {
         this.getDropdownElement().find(NO_RELEVANT_VALUES_SELECTOR).should("have.text", "No relevant values");
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name(s) of parent filter that should be configured as elements limit
+     */
+    configureLimitingParentFilterDependency(parentFilterName: string | string[]) {
+        this.selectConfiguration();
+
+        const parentFilters = typeof parentFilterName === "string" ? [parentFilterName] : parentFilterName;
+
+        parentFilters.forEach((parentFilterName) => {
+            cy.get(".s-add").click();
+            cy.get(".s-add-limit-dashboard_filter").click();
+            cy.get(getTestClassByTitle(parentFilterName, "dashboard-filter-")).click();
+        });
+
+        this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param metricName - name(s) of metrics that should be configured as elements limit
+     */
+    configureLimitingMetricDependency(metricName: string | string[]) {
+        this.selectConfiguration();
+
+        const metrics = typeof metricName === "string" ? [metricName] : metricName;
+
+        metrics.forEach((metricName) => {
+            cy.get(".s-add").click();
+            cy.get(".s-add-limit-metric").click();
+            cy.get(getTestClassByTitle(metricName, "metric-")).click();
+        });
+
+        this.getDropdownElement().find(".s-apply").click();
         return this;
     }
 }

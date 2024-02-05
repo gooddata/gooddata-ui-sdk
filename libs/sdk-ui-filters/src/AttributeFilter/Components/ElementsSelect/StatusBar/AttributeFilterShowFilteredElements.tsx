@@ -1,9 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
+
+import { messages } from "../../../../locales.js";
 
 const ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [0, 8] };
@@ -12,6 +14,7 @@ interface IAttributeFilterShowFilteredElementsProps {
     attributeTitle: string;
     onClick: () => void;
     parentFilterTitles: string[];
+    isFilteredByLimitingValidationItems: boolean;
     className?: string;
 }
 
@@ -19,8 +22,17 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
     attributeTitle,
     onClick,
     parentFilterTitles,
+    isFilteredByLimitingValidationItems,
     className,
 }) => {
+    const intl = useIntl();
+    const hasParentFilters = parentFilterTitles.length > 0;
+    const tooltipLocalizationKey = hasParentFilters
+        ? isFilteredByLimitingValidationItems
+            ? messages.relevantValuesParentFiltersLimitsTooltip
+            : messages.relevantValuesParentFiltersTooltip
+        : messages.relevantValuesLimitsTooltip;
+
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -41,14 +53,11 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
                     alignPoints={ALIGN_POINTS}
                     arrowOffsets={ARROW_OFFSETS}
                 >
-                    <FormattedMessage
-                        id="attributesDropdown.relevantValues.tooltip"
-                        values={{
-                            child: attributeTitle,
-                            parents: parentFiltersTooltipText,
-                            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                        }}
-                    />
+                    {intl.formatMessage(tooltipLocalizationKey, {
+                        child: attributeTitle,
+                        parents: parentFiltersTooltipText,
+                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    })}
                 </Bubble>
             </BubbleHoverTrigger>
             <span className="gd-action-show-all s-action-show-all" onClick={onClick}>

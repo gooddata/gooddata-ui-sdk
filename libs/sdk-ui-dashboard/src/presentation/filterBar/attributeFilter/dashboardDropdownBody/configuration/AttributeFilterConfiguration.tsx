@@ -20,6 +20,7 @@ import {
     selectSupportsElementsQueryParentFiltering,
     selectIsKDDependentFiltersEnabled,
     selectSupportsSingleSelectDependentFilters,
+    selectBackendCapabilities,
 } from "../../../../../model/index.js";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
@@ -84,7 +85,11 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const supportsSingleSelectDependentFilters = useDashboardSelector(
         selectSupportsSingleSelectDependentFilters,
     );
-    const showDependentFiltersConfiguration = supportsParentFiltering && isDependentFiltersEnabled;
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const showDependentFiltersConfiguration =
+        supportsParentFiltering &&
+        isDependentFiltersEnabled &&
+        !capabilities.supportsAttributeFilterElementsLimiting;
 
     const neighborFilterDisplayForms = useMemo(() => {
         return neighborFilters.map((filter) => filter.attributeFilter.displayForm);
@@ -187,6 +192,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 disabled={getIsSelectionDisabled()}
             />
             <LocalizedLimitValuesConfiguration
+                attributeTitle={title ?? defaultAttributeFilterTitle}
                 parentFilters={parents}
                 validParentFilters={validNeighbourAttributes}
                 validateElementsBy={limitingItems}
@@ -196,19 +202,21 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 intl={intl}
             />
             {showDependentFiltersConfiguration && parents.length > 0 ? (
-                <ConfigurationCategory categoryTitle={filterByText} />
+                <>
+                    <ConfigurationCategory categoryTitle={filterByText} />
+                    <ParentFiltersList
+                        currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
+                        parents={parents}
+                        setParents={onParentSelect}
+                        onConnectingAttributeChanged={onConnectingAttributeChanged}
+                        connectingAttributes={connectingAttributes}
+                        attributes={attributes}
+                        disabled={disableParentFiltersList}
+                        disabledTooltip={parentFiltersDisabledTooltip}
+                        validParents={validNeighbourAttributes}
+                    />
+                </>
             ) : null}
-            <ParentFiltersList
-                currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
-                parents={parents}
-                setParents={onParentSelect}
-                onConnectingAttributeChanged={onConnectingAttributeChanged}
-                connectingAttributes={connectingAttributes}
-                attributes={attributes}
-                disabled={disableParentFiltersList}
-                disabledTooltip={parentFiltersDisabledTooltip}
-                validParents={validNeighbourAttributes}
-            />
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">
                     <ConfigurationCategory categoryTitle={displayValuesAsText} />
