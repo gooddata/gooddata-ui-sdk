@@ -1,0 +1,34 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Git ~ Create git tag
+on:
+    workflow_call:
+        inputs:
+            source-branch:
+                required: true
+                description: "The source branch"
+                type: string
+            version:
+                required: false
+                description: "The type of version bump (major, minor, patch)"
+                type: string
+
+jobs:
+    create-git-tag:
+        name: Create git tag
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Create Release
+              id: create_release
+              uses: ncipollo/release-action@v1.13.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+              with:
+                  tag: v${{inputs.version}}
+                  name: Release ${{inputs.version}}
+                  commit: "release"
+                  body: |
+                      Please see the [CHANGELOG.md](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md) for details.
+                  makeLatest: true

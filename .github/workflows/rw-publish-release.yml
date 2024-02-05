@@ -40,9 +40,39 @@ jobs:
       source-branch: "release"
       release-tag: "latest"
 
+  add-release-tag:
+    needs: [publish-release, bump-version]
+    uses: ./.github/workflows/rw-git-create-tag.yml
+    permissions:
+      contents: write
+    with:
+      source-branch: "release"
+      version: ${{ needs.bump-version.outputs.version }}
+
+  create-rel-branch:
+    runs-on: [ubuntu-latest]
+    needs: [add-release-tag,bump-version]
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create release name
+        id: create_release_name
+        run: |
+          string=${{needs.bump-version.outputs.version}}
+          base="rel/${string%.*}"
+          echo "version $string converted to $base"
+          echo "target-branch=$base" >> $GITHUB_OUTPUT
+      - name: Run copy branch action
+        uses: ./.github/actions/branch-cutoff-action
+        with:
+          source-branch: 'release'
+          target-branch: ${{ steps.create_release_name.outputs.target-branch }}
+
   slack-notification:
     runs-on: [ubuntu-latest]
-    needs: [bump-version, publish-release]
+    needs: [bump-version, publish-release,add-release-tag,create-rel-branch]
     steps:
       - name: Notify to slack
         uses: slackapi/slack-github-action@v1.25.0
