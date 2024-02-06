@@ -13,6 +13,7 @@ jobs:
             version: "Next"
             is-new-latest: false
     update-apidocs-version:
+        needs: [update-apidocs-next]
         uses: ./.github/workflows/rw-doc-release-apidocs.yml
         permissions:
             contents: write
