@@ -41,6 +41,7 @@ import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
+import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -155,6 +156,7 @@ function selectResolvedInsightDateFilters(
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
     insightDateFilters: IDateFilter[],
+    supportsMultipleDateFilters: boolean,
 ): IDateFilter[] {
     const nonIgnoredDashboardDateFilterDateDatasetPairs = selectResolveWidgetDateFilterIgnore(
         state,
@@ -168,6 +170,7 @@ function selectResolvedInsightDateFilters(
     return resolveDateFilters(
         insightDateFilterDateDatasetPairs,
         nonIgnoredDashboardDateFilterDateDatasetPairs,
+        supportsMultipleDateFilters,
     );
 }
 
@@ -226,6 +229,7 @@ function selectResolvedDateFilters(
     widget: ExtendedDashboardWidget,
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
+    supportsMultipleDateFilters: boolean,
 ): IDateFilter[] {
     const allDateFilterDateDatasetPairs = selectResolveWidgetDateFilterIgnore(
         state,
@@ -233,12 +237,13 @@ function selectResolvedDateFilters(
         dashboardCommonDateFilters,
         dashboardDateFiltersWithDimensions,
     );
-    return resolveDateFilters([], allDateFilterDateDatasetPairs);
+    return resolveDateFilters([], allDateFilterDateDatasetPairs, supportsMultipleDateFilters);
 }
 
 function resolveDateFilters(
     insightDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
     dashboardDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
+    supportsMultipleDateFilters: boolean,
 ): IDateFilter[] {
     // prioritize dashboard filters over insight ones
     // and strip useless all time filters at the end
@@ -258,7 +263,13 @@ function resolveDateFilters(
 
             return acc;
         }, init)
-        .filter((item) => !isAllTimeDateFilter(item));
+        .filter((item) => {
+            if (!supportsMultipleDateFilters) {
+                return !isAllTimeDateFilter(item);
+            } else {
+                return true;
+            }
+        });
 }
 
 function* queryWithInsight(
@@ -270,6 +281,8 @@ function* queryWithInsight(
     const [widgetAwareDashboardCommonDateFilters, widgetAwareDashboardOtherFilters]: ReturnType<
         typeof widgetAwareDashboardFiltersSelector
     > = yield select(widgetAwareDashboardFiltersSelector);
+
+    const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
 
     // add all time filter explicitly in case the date widgetAwareDashboardFilters are empty
     // this will cause the all time filter to be used instead of the insight date filter
@@ -287,6 +300,7 @@ function* queryWithInsight(
             widgetAwareDashboardCommonDateFilters.filter(isDateFilter),
             widgetAwareDashboardOtherFilters.filter(isDateFilter),
             effectiveInsightFilters.filter(isDateFilter),
+            supportsMultipleDateFilters,
         ),
         call(
             getResolvedInsightAttributeFilters,
@@ -324,12 +338,15 @@ function* queryWithoutInsight(
         typeof widgetAwareDashboardFiltersSelector
     > = yield select(widgetAwareDashboardFiltersSelector);
 
+    const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
+
     const [dateFilters, attributeFilters] = yield all([
         select(
             selectResolvedDateFilters,
             widget,
             widgetAwareDashboardCommonDateFilters.filter(isDateFilter),
             widgetAwareDashboardOtherFilters.filter(isDateFilter),
+            supportsMultipleDateFilters,
         ),
         call(
             getResolvedAttributeFilters,
