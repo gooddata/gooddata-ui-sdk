@@ -385,7 +385,7 @@ export class AttributeFilter {
     }
 
     hoverOnHiddenIcon() {
-        this.getHiddenIcon().trigger("mouseover", { force: true });
+        this.getHiddenIcon().trigger("mouseover");
         return this;
     }
 
@@ -399,7 +399,7 @@ export class AttributeFilter {
     }
 
     hoverOnLockedIcon() {
-        this.getLockedIcon().trigger("mouseover", { force: true });
+        this.getLockedIcon().trigger("mouseover");
         return this;
     }
 
@@ -495,7 +495,7 @@ export class FilterBar {
 
     addAttribute(name: string): AttributeFilter {
         this.dragAttributeToFilterBar();
-        new AttributeFilter(name).search(name).select();
+        new AttributeFilter(name).search(name).select(name);
         cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
         return new AttributeFilter(name);
     }

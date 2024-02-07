@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE" | "EXPORT" | "EXPORT_TABULAR" | "EXPORT_PDF";
 
@@ -10,7 +11,10 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
         const response = await this.authCall((client) =>
-            client.entities.getEntityWorkspaces({ id: this.workspace, metaInclude: ["permissions"] }),
+            client.entities.getEntityWorkspaces({
+                id: this.workspace,
+                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
+            }),
         );
         // NOTE: From tiger backend there are permissions like MANAGE, ANALYZE, VIEW. Keep on mind that
         // NOTE: if user has MANAGE permissions, there will be also ANALYZE and VIEW in permissions array.

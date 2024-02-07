@@ -38,6 +38,7 @@ import { TigerWorkspaceFacts } from "./facts/index.js";
 import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -54,7 +55,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                     await this.authCall(async (client) => {
                         return client.entities.getEntityWorkspaces({
                             id: this.workspace,
-                            include: ["workspaces"],
+                            ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                         });
                     })
                 ).data.data,
