@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -58,13 +58,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                         });
                     })
                 ).data.data,
-                (
-                    await this.authCall(async (client) => {
-                        return client.actions.inheritedEntityPrefixes({
-                            workspaceId: this.workspace,
-                        });
-                    })
-                ).data,
+                [],
             );
         }
         return this.descriptor;

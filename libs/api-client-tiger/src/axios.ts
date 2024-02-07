@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import globalAxios, { AxiosInstance, CreateAxiosDefaults } from "axios";
+import { setupCache } from "axios-cache-interceptor";
 import cloneDeep from "lodash/cloneDeep.js";
 import merge from "lodash/merge.js";
 import { LIB_VERSION, LIB_NAME } from "./__version.js";
@@ -36,10 +37,13 @@ const _CONFIG: CreateAxiosDefaults = {
 
 let _TOKEN: string | undefined;
 
+// For now we dont customize caching as we rely on Cache-Control headers from the BE services
+const DEFAULT_CACHE_CONFIG = {};
+
 /**
  * Returns an instance of axios with default configuration.
  */
-export const axios: AxiosInstance = globalAxios.create(_CONFIG);
+export const axios: AxiosInstance = setupCache(globalAxios.create(_CONFIG), DEFAULT_CACHE_CONFIG);
 
 /**
  * This function sets global API token to send in Authorization header on all API calls done by axios. If the token is
@@ -117,6 +121,5 @@ export function newAxiosRequestConfig(
  */
 export function newAxios(baseUrl?: string, headers?: { [name: string]: string }): AxiosInstance {
     const config = newAxiosRequestConfig(baseUrl, headers);
-
-    return globalAxios.create(config);
+    return setupCache(globalAxios.create(config), DEFAULT_CACHE_CONFIG);
 }
