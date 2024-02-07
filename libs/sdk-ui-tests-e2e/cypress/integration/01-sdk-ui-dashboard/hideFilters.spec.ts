@@ -209,7 +209,8 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         editMode.edit().saveButtonEnabled(false);
 
         lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
-
+        // wait for the filter to be removed, otherwise some mouse drag event closes dropdown of newly added filter before filling attribute name
+        cy.wait(500);
         filterBar.addAttribute("Account").isLockedIconVisible(false).isHiddenIconVisible(false);
     });
 
@@ -242,6 +243,8 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         editMode.edit().saveButtonEnabled(false);
 
         lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
+        // wait for the filter to be removed, otherwise some mouse drag event closes dropdown of newly added filter before filling attribute name
+        cy.wait(500);
         filterBar
             .addAttribute("Account")
             .isLoaded()
