@@ -8,53 +8,42 @@ on:
         type: string
       version:
         required: true        
-        description: "Version to update Hugo router params"
+        description: "Version to update hugo router params"
         type: string
       path-to-version-config:
         required: false
-        default: "docs/config/public/params.toml"
+        default: "./docs/config/public/params.toml"
         description: "Path to the Hugo version config file"
         type: string
 
 jobs:
-  update-hugo-version:
-    runs-on: [ubuntu-latest]
-    permissions:
-        contents: write
-    steps:
-      # Checkout the master branch to get the action
-      - name: Checkout master for action
-        uses: actions/checkout@v4
-        with:
-          ref: master
-          path: action
-
-      # Checkout the source branch where changes will be made
-      - name: Checkout source branch
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.source-branch }}
-          path: source
-
-      # Update Hugo version using the action from the master branch
-      - name: Update Hugo version
-        uses: ./action/.github/actions/hugo-update-param-action
-        with:
-            path-to-version-config: ${{ github.workspace }}/source/${{ inputs.path-to-version-config }}
-            version: ${{ inputs.version }}
-
-      # Create and push branch
-      - name: Create and push branch
-        shell: bash
-        run: |
-              cd source
-              git config --global --add safe.directory $GITHUB_WORKSPACE/source
-              git config --global user.email "git-action@gooddata.com"
-              git config --global user.name "git-action"  
-              git add $CONFIG_PATH
-              git commit -m "Update Hugo version to $VERSION"
-              git push origin $BRANCH_NAME
-        env:
-          BRANCH_NAME: ${{inputs.source-branch}}
-          VERSION: ${{inputs.version}}
-          CONFIG_PATH: ${{ inputs.path-to-version-config }}
+    update-hugo-version:
+        runs-on: [ubuntu-latest]
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                ref: ${{ inputs.source-branch }}
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
+            - name: Config user
+              run: |
+                  git config --global user.email "git-action@gooddata.com"
+                  git config --global user.name "git-action"  
+            - name: Update Hugo version
+              uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-update-param-action@master
+              with:
+                  path-to-version-config: ${{ inputs.path-to-version-config }}
+                  version: ${{inputs.version}}
+            - name: Create and push branch
+              shell: bash
+              run: |
+                    git add ${path_to_version_config}
+                    git commit -m "Update Hugo version to ${version}"
+                    git push origin ${brach_name}
+              env:
+                brach_name: ${{inputs.source-branch}}
+                version: ${{inputs.version}}
+                path_to_version_config: ${{ inputs.path-to-version-config }}

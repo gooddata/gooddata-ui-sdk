@@ -11,7 +11,7 @@ jobs:
         with:
           submodules: recursive
       - name: Hugo Build
-        uses: ./.github/actions/hugo-build-versioned-action
+        uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-build-versioned-action@master
         with:
           base-url: https://www.gooddata.com/docs/gooddata-ui
       - name: Publish

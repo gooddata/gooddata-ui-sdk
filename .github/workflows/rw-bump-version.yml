@@ -38,9 +38,11 @@ jobs:
       runs-on: [ubuntu-latest]
       outputs:
         version: ${{ steps.version.outputs.version }}
-      container:
-        image: node:18.17.0-bullseye
       steps:
+        - name: Setup node
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18.17.0
         - name: Checkout code
           uses: actions/checkout@v4
           with:
@@ -48,17 +50,19 @@ jobs:
               token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
 
         - name: Get version
+          uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
           id: version
-          run: echo "version=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_OUTPUT
 
     bump-version-and-commit:
         if: ${{ !inputs.skip-bump && inputs.bump }}
         runs-on: [ubuntu-latest]
         outputs:
             version: ${{ steps.version.outputs.version }}
-        container:
-            image: node:18.17.0-bullseye
         steps:
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
@@ -89,17 +93,18 @@ jobs:
                   BUMP: ${{ inputs.bump }}
               run: rush version --bump --override-bump $BUMP
 
+
+            - name: Get version
+              uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
+              id: version
+
             - name: Git commit and push
               run: |
                 # add changelogs
                 git add libs/sdk-ui-all/CHANGELOG.* || true
                 git ls-files | grep '\.json' | xargs git add
 
-                VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
                 git commit -a -m "Bump versions to $VERSION"
                 git push origin ${{ inputs.source-branch }}
-
-            - name: Get version
-              id: version
-              run: echo "version=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_OUTPUT
-
+              env:
+                VERSION: ${{ steps.version.outputs.version }}

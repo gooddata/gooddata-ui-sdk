@@ -19,11 +19,9 @@ jobs:
     permissions:
       contents: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    steps:      
       - name: Run copy branch action
-        uses: ./.github/actions/branch-cutoff-action
+        uses: gooddata/gooddata-ui-sdk/.github/actions/branch-cutoff-action@master
         with:
           source-branch: 'master'
           target-branch: 'release'

@@ -15,13 +15,15 @@ on:
 
 jobs:
     publish-version:
-        runs-on: [infra1-medium]
-        container:
-            image: node:18.17.0-bullseye
+        runs-on: [infra1-medium]        
         permissions:
             contents: read
             id-token: write
         steps:
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
