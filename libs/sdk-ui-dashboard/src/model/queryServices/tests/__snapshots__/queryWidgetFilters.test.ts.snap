@@ -284,6 +284,7 @@ exports[`query widget filters > basic scenarios > should fail in case the widget
         },
       },
       "currentUser": [Function],
+      "dataSources": [Function],
       "deauthenticate": [Function],
       "entitlements": [Function],
       "isAuthenticated": [Function],

@@ -69,6 +69,7 @@ export enum TigerFeaturesNames {
     EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
+    EnableManageDataSourcePermissions = "enableManageDataSourcePermissions",
 }
 
 export type ITigerFeatureFlags = {
@@ -105,6 +106,7 @@ export type ITigerFeatureFlags = {
     enableAttributeFilterValuesValidation: typeof FeatureFlagsValues["enableAttributeFilterValuesValidation"][number];
     enableMySqlDataSource: typeof FeatureFlagsValues["enableMySqlDataSource"][number];
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
+    enableManageDataSourcePermissions: typeof FeatureFlagsValues["enableManageDataSourcePermissions"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -141,6 +143,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
     enableCreateUser: false,
+    enableManageDataSourcePermissions: false,
 };
 
 export const FeatureFlagsValues = {
@@ -181,4 +184,5 @@ export const FeatureFlagsValues = {
     enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
+    enableManageDataSourcePermissions: [true, false] as const,
 };

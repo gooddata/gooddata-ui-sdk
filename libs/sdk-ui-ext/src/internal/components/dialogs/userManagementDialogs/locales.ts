@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
@@ -6,12 +6,14 @@ export const userDialogTabsMessages = defineMessages({
     workspaces: { id: "userManagement.tab.workspaces" },
     userGroups: { id: "userManagement.tab.groups" },
     details: { id: "userManagement.tab.details" },
+    dataSources: { id: "userManagement.tab.dataSources" },
 });
 
 export const userGroupDialogTabsMessages = defineMessages({
     workspaces: { id: "userManagement.tab.workspaces" },
     users: { id: "userManagement.tab.users" },
     details: { id: "userManagement.tab.details" },
+    dataSources: { id: "userManagement.tab.dataSources" },
 });
 
 export const messages = defineMessages({
@@ -31,6 +33,8 @@ export const messages = defineMessages({
     usersDeletedFailure: { id: "userManagement.multipleUsers.deleteFailure" },
     workspaceAddedSuccess: { id: "userManagement.workspace.addSuccess" },
     workspaceAddedError: { id: "userManagement.workspace.addError" },
+    dataSourceAddedSuccess: { id: "userManagement.dataSource.addSuccess" },
+    dataSourceAddedError: { id: "userManagement.dataSource.addError" },
     workspacesAddedToUsersSuccess: { id: "userManagement.users.multipleWorkspaces.addSuccess" },
     workspacesAddedToUsersError: { id: "userManagement.users.multipleWorkspaces.addError" },
     workspacesAddedToUserGroupsSuccess: { id: "userManagement.userGroups.multipleWorkspaces.addSuccess" },
@@ -58,6 +62,7 @@ export const messages = defineMessages({
     addWorkspaceButton: { id: "userManagement.buttons.addWorkspace" },
     addUserGroupButton: { id: "userManagement.buttons.addToGroup" },
     addUserButton: { id: "userManagement.buttons.addUser" },
+    addDataSourcePermissionButton: { id: "userManagement.buttons.addDataSourcePermission" },
     editUserButton: { id: "userManagement.buttons.edit" },
     editUserGroupButton: { id: "userManagement.buttons.edit" },
     deleteUserLink: { id: "userManagement.users.deleteLink" },
@@ -106,6 +111,7 @@ export const messages = defineMessages({
     addWorkspaceDialogCloseButton: { id: "userManagement.users.cancelButton" },
     addWorkspaceDialogSaveButton: { id: "userManagement.workspace.addButton" },
     searchWorkspaceNoMatch: { id: "userManagement.workspace.noMatchingItems" },
+    searchDataSourceNoMatch: { id: "userManagement.dataSources.noMatchingItems" },
     searchWorkspacePlaceholder: { id: "userManagement.workspace.searchPlaceholder" },
     viewUserWorkspaceListEmpty: { id: "userManagement.workspace.emptySelection.user.view" },
     viewUserGroupWorkspaceListEmpty: { id: "userManagement.workspace.emptySelection.userGroup.view" },
@@ -114,6 +120,9 @@ export const messages = defineMessages({
     editUserListEmpty: { id: "userManagement.users.emptySelection.edit" },
     viewUserGroupListEmpty: { id: "userManagement.userGroups.emptySelection.view" },
     editUserGroupListEmpty: { id: "userManagement.userGroups.emptySelection.edit" },
+    viewUserDataSourceListEmpty: { id: "userManagement.dataSources.emptySelection.view" },
+    viewUserGroupDataSourceListEmpty: { id: "userManagement.dataSources.emptySelection.userGroup.view" },
+    editDataSourceListEmpty: { id: "userManagement.dataSources.emptySelection.edit" },
     removeSavedUserTooltip: { id: "userManagement.users.removeUserFromGroup" },
     removeSavedUserDisabledTooltip: { id: "userManagement.users.removeUserFromGroupDisabledTooltip" },
     removeUnsavedUserTooltip: { id: "userManagement.users.removeUserFromSelection" },
@@ -123,4 +132,14 @@ export const messages = defineMessages({
     adminAlert: { id: "userManagement.admin.alert" },
     adminGroupAlert: { id: "userManagement.adminGroup.alert" },
     adminPill: { id: "userManagement.admin.pill" },
+    dataSourcesAddedToUsersSuccess: { id: "userManagement.users.multipleDataSources.addSuccess" },
+    dataSourcesAddedToUserGroupsSuccess: { id: "userManagement.userGroups.multipleDataSources.addSuccess" },
+    dataSourcesAddedToUsersError: { id: "userManagement.users.multipleDataSources.addError" },
+    dataSourcesAddedToUserGroupsError: { id: "userManagement.userGroups.multipleDataSources.addError" },
+    dataSourceRemovedSuccess: { id: "userManagement.dataSources.removeSuccess" },
+    dataSourceRemovedFailure: { id: "userManagement.dataSources.removeError" },
+    dataSourceChangeSuccess: { id: "userManagement.dataSources.changeSuccess" },
+    dataSourceChangeFailure: { id: "userManagement.dataSources.changeError" },
+    addDataSourceDialogTitle: { id: "userManagement.dataSource.title" },
+    searchDataSourcePlaceholder: { id: "userManagement.dataSource.searchPlaceholder" },
 });

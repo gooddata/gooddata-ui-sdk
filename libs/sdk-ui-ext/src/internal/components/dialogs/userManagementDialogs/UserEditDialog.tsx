@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -16,7 +16,6 @@ import {
     useUserDialogTabs,
     useUserGroups,
     useUser,
-    useWorkspaces,
     useUserDialogMode,
     useDeleteUser,
     useDeleteDialog,
@@ -26,8 +25,11 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
-import { UserEditDialogMode } from "./types.js";
+import { UserEditDialogMode, IGrantedDataSource } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { DataSourceList } from "./DataSources/DataSourceList.js";
+import { AddDataSource } from "./DataSources/AddDataSource.js";
+import { usePermissions } from "./hooks/usePermissions.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -42,6 +44,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     changeUserMembership?: boolean;
     onSuccess: () => void;
     onClose: () => void;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
 }
 
 const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
@@ -52,6 +55,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     onClose,
     initialView = "VIEW",
     changeUserMembership = false,
+    renderDataSourceIcon,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -62,13 +66,23 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         onSuccess,
     );
     const { isBootstrapUser, bootstrapUserGroupId } = useOrganizationDetails(organizationId);
-    const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
-        useWorkspaces(userId, "user", organizationId, onSuccess);
+    const {
+        grantedWorkspaces,
+        onWorkspacesChanged,
+        removeGrantedWorkspace,
+        updateGrantedWorkspace,
+        grantedDataSources,
+        onDataSourcesChanged,
+        removeGrantedDataSource,
+        updateGrantedDataSource,
+    } = usePermissions(userId, "user", organizationId, onSuccess);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup, removeAdminGroup } =
         useUserGroups(userId, organizationId, bootstrapUserGroupId, onSuccess, setIsAdmin);
+
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
         grantedUserGroups,
+        grantedDataSources,
         isCurrentlyAdmin,
     );
     const {
@@ -93,6 +107,13 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                 editButtonMode: "USER_GROUPS" as const,
                 editButtonIconClassName: "gd-icon-add",
                 editButtonText: intl.formatMessage(messages.addUserGroupButton),
+            };
+        }
+        if (selectedTabId.id === userDialogTabsMessages.dataSources.id) {
+            return {
+                editButtonMode: "DATA_SOURCES" as const,
+                editButtonIconClassName: "gd-icon-add",
+                editButtonText: intl.formatMessage(messages.addDataSourcePermissionButton),
             };
         }
         return {
@@ -176,6 +197,16 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                                     mode="VIEW"
                                 />
                             )}
+                            {selectedTabId.id === userDialogTabsMessages.dataSources.id && (
+                                <DataSourceList
+                                    dataSources={grantedDataSources}
+                                    subjectType="user"
+                                    mode="VIEW"
+                                    onDelete={removeGrantedDataSource}
+                                    onChange={updateGrantedDataSource}
+                                    renderDataSourceIcon={renderDataSourceIcon}
+                                />
+                            )}
                         </ViewDialog>
                     )}
                     {dialogMode === "WORKSPACE" && (
@@ -197,6 +228,18 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                             onSubmit={onUserGroupsChanged}
                             onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                             onClose={onClose}
+                        />
+                    )}
+                    {dialogMode === "DATA_SOURCES" && (
+                        <AddDataSource
+                            ids={[userId]}
+                            subjectType="user"
+                            grantedDataSources={grantedDataSources}
+                            enableBackButton={!isOpenedInEditMode}
+                            onSubmit={onDataSourcesChanged}
+                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                            onClose={onClose}
+                            renderDataSourceIcon={renderDataSourceIcon}
                         />
                     )}
                     {dialogMode === "DETAIL" && (

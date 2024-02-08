@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -12,6 +12,7 @@ import {
     IOrganization,
     IOrganizations,
     IEntitlements,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { DecoratorFactories } from "./types.js";
@@ -87,6 +88,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public entitlements(): IEntitlements {
         return this.decorated.entitlements();
+    }
+
+    public dataSources(): IDataSourcesService {
+        return this.decorated.dataSources();
     }
 
     public workspaces(): IWorkspacesQueryFactory {

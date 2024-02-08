@@ -1,6 +1,7 @@
 // (C) 2023-2024 GoodData Corporation
 
 import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * This service provides access to organization users.
@@ -86,11 +87,25 @@ export interface IOrganizationUserService {
     getUsers(): Promise<IOrganizationUser[]>;
 
     /**
+     * List users.
+     *
+     * @returns promise
+     */
+    getUsersQuery(): IOrganizationUsersQuery;
+
+    /**
      * Get list of users groups.
      *
      * @returns promise
      */
     getUserGroups(): Promise<IOrganizationUserGroup[]>;
+
+    /**
+     * List user groups.
+     *
+     * @returns promise
+     */
+    getUserGroupsQuery(): IOrganizationUserGroupsQuery;
 
     /**
      * Get groups assigned to the user.
@@ -130,3 +145,91 @@ export interface IOrganizationUserService {
      */
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
 }
+
+/**
+ * Service to query valid filter elements for particular filter.
+ *
+ * @public
+ */
+export interface IOrganizationUsersQuery {
+    /**
+     * Sets number of users to return per page.
+     * Default size is specific per backend
+     *
+     * @param size - desired max number of organization users per page; must be a positive number
+     * @returns organization users query
+     */
+    withSize(size: number): IOrganizationUsersQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns organization users query
+     */
+    withPage(page: number): IOrganizationUsersQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns organization users query
+     */
+    withFilter(filter: { workspace?: string; group?: string; name?: string }): IOrganizationUsersQuery;
+
+    /**
+     * Starts the organization users query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IOrganizationUsersQueryResult>;
+}
+
+/**
+ * Paged result of organization users query. Last page of data returns empty items.
+ *
+ * @public
+ */
+export type IOrganizationUsersQueryResult = IPagedResource<IOrganizationUser>;
+
+/**
+ * Service to query valid filter elements for particular filter.
+ *
+ * @public
+ */
+export interface IOrganizationUserGroupsQuery {
+    /**
+     * Sets number of users to return per page.
+     * Default size is specific per backend
+     *
+     * @param size - desired max number of organization users per page; must be a positive number
+     * @returns organization users query
+     */
+    withSize(size: number): IOrganizationUserGroupsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns organization users query
+     */
+    withPage(page: number): IOrganizationUserGroupsQuery;
+
+    /**
+     * Starts the organization users query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IOrganizationUserGroupsQueryResult>;
+}
+
+/**
+ * Paged result of organization users query. Last page of data returns empty items.
+ *
+ * @public
+ */
+export type IOrganizationUserGroupsQueryResult = IPagedResource<IOrganizationUserGroup>;

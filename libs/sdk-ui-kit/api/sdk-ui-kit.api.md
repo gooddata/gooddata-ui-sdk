@@ -881,6 +881,8 @@ export interface IAsyncListProps<T> {
     // (undocumented)
     renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
     // (undocumented)
+    renderLoadingItem?: (props: IRenderListItemProps<T>) => JSX.Element;
+    // (undocumented)
     width?: number;
 }
 

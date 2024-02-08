@@ -2328,6 +2328,11 @@
         "comment": "Error message shown to the user when query in search input failed",
         "limit": 0
     },
+    "userManagement.dataSource.searchError": {
+        "value": "Failed to load data sources. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
     "userManagement.workspace.emptySelection.user.view": {
         "value": "This user does not have permissions for any workspaces.",
         "comment": "Information shown when no workspaces were selected yet.",
@@ -2348,6 +2353,11 @@
         "comment": "Title of dialog used for granting workspace permission to users or groups.",
         "limit": 0
     },
+    "userManagement.dataSource.searchPlaceholder": {
+        "value": "Search data sources",
+        "comment": "Placeholder of empty data source dialog search input.",
+        "limit": 0
+    },
     "userManagement.workspace.addButton": {
         "value": "Add",
         "comment": "Title of confirm button that adds new items to the list.",
@@ -2364,7 +2374,7 @@
         "limit": 0
     },
     "userManagement.tab.workspaces": {
-        "value": "Permissions ({count})",
+        "value": "Workspaces ({count})",
         "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
         "limit": 0
     },
@@ -2384,7 +2394,7 @@
         "limit": 0
     },
     "userManagement.buttons.addWorkspace": {
-        "value": "Add permission",
+        "value": "Add workspace permission",
         "comment": "Label of button that opens selection of workspaces user can get permissions to.",
         "limit": 0
     },
@@ -2401,6 +2411,96 @@
     "userManagement.buttons.edit": {
         "value": "Edit",
         "comment": "Label of button that edit user's details (name, surname, etc.)",
+        "limit": 0
+    },
+    "userManagement.dataSource.title": {
+        "value": "Add data source permission",
+        "comment": "Title of dialog used for granting data source permission to users or groups.",
+        "limit": 0
+    },
+    "userManagement.tab.dataSources": {
+        "value": "Data Sources ({count})",
+        "comment": "Label of tab that lists data sources assigned to a user. Do not translate placeholder {count}. It will be replaced by number of data sources in runtime.",
+        "limit": 0
+    },
+    "userManagement.buttons.addDataSourcePermission": {
+        "value": "Add data source permission",
+        "comment": "Label of button that opens selection of users that can be assigned into the group.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.view": {
+        "value": "This user does not have permissions for any data sources.",
+        "comment": "Information shown when no data sources were selected yet.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.userGroup.view": {
+        "value": "This group does not have permissions for any data sources.",
+        "comment": "Information shown when no data sources were selected yet.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.edit": {
+        "value": "No data sources selected.",
+        "comment": "Shown when user did not typed anything to the search dialog.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.manage": {
+        "value": "Manage",
+        "comment": "Name of the data source permission that allows user to fully manage data in data source.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.use": {
+        "value": "Use",
+        "comment": "Name of the data source permission that allows user to use data in data source.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.remove": {
+        "value": "Remove",
+        "comment": "Label of option that removes data source permission from user and user group.",
+        "limit": 0
+    },
+    "userManagement.dataSources.noMatchingItems": {
+        "value": "No matching data source.",
+        "comment": "Message shown when no data source matches search criteria.",
+        "limit": 0
+    },
+    "userManagement.users.multipleDataSources.addSuccess": {
+        "value": "Great! You have successfully added permissions to the users.",
+        "comment": "Confirmation message shown to the user when data source permission was added successfully to multiple users.",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleDataSources.addSuccess": {
+        "value": "Great! You have successfully added permissions to the groups.",
+        "comment": "Confirmation message shown to the user when data source permissions were added to multiple user groups successfully.",
+        "limit": 0
+    },
+    "userManagement.users.multipleDataSources.addError": {
+        "value": "Addition of the permission to the users failed.",
+        "comment": "Error message shown to user when addition of data source permission to multiple users failed.",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleDataSources.addError": {
+        "value": "Addition of the permission to the groups failed.",
+        "comment": "Error message shown to user when addition of data source permission to multiple user groups failed.",
+        "limit": 0
+    },
+    "userManagement.dataSources.removeSuccess": {
+        "value": "Great! You have successfully deleted the data source permission.",
+        "comment": "Confirm message shown to user when data source permission was successfully deleted.",
+        "limit": 0
+    },
+    "userManagement.dataSources.removeError": {
+        "value": "Deletion of the data source permission failed.",
+        "comment": "Error message shown to user when data source permission deletion failed.",
+        "limit": 0
+    },
+    "userManagement.dataSources.changeSuccess": {
+        "value": "Great! You have successfully changed the data source permission(s).",
+        "comment": "Confirmation message shown to the user when change of one or more data source permission succeeded.",
+        "limit": 0
+    },
+    "userManagement.dataSources.changeError": {
+        "value": "Change of the data source permission(s) failed.",
+        "comment": "Error message shown to the user when change of one or more data source permissions failed.",
         "limit": 0
     },
     "userManagement.users.deleteLink": {
@@ -2429,42 +2529,52 @@
         "limit": 0
     },
     "userManagement.workspace.addSuccess": {
-        "value": "Great! You have successfully added the permission(s).",
+        "value": "Great! You have successfully added the workspace permission(s).",
         "comment": "Confirm message shown to user when one or more workspace permissions were successfully added to a single user.",
         "limit": 0
     },
     "userManagement.workspace.addError": {
-        "value": "Addition of the permission(s) failed.",
+        "value": "Addition of the workspace permission(s) failed.",
+        "comment": "Error message shown to user when workspace permission addition failed.",
+        "limit": 0
+    },
+    "userManagement.dataSource.addSuccess": {
+        "value": "Great! You have successfully added the data source permission(s).",
+        "comment": "Confirm message shown to user when one or more workspace permissions were successfully added to a single user.",
+        "limit": 0
+    },
+    "userManagement.dataSource.addError": {
+        "value": "Addition of the data source permission(s) failed.",
         "comment": "Error message shown to user when workspace permission addition failed.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addSuccess": {
-        "value": "Great! You have successfully added permissions to the users.",
+        "value": "Great! You have successfully added workspace permissions to the users.",
         "comment": "Confirmation message shown to the user when workspace permission was added successfully to multiple users.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the users failed.",
+        "value": "Addition of the workspace permission to the users failed.",
         "comment": "Error message shown to user when addition of workspace permission to multiple users failed.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addSuccess": {
-        "value": "Great! You have successfully added permissions to the groups.",
+        "value": "Great! You have successfully added workspace permissions to the groups.",
         "comment": "Confirmation message shown to the user when workspace permissions were added to multiple user groups successfully.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the groups failed.",
+        "value": "Addition of the workspace permission to the groups failed.",
         "comment": "Error message shown to user when addition of workspace permission to multiple user groups failed.",
         "limit": 0
     },
     "userManagement.workspace.changeSuccess": {
-        "value": "Great! You have successfully changed the permission(s).",
+        "value": "Great! You have successfully changed the workspace permission(s).",
         "comment": "Confirmation message shown to the user when change of one or more workspace permission succeeded.",
         "limit": 0
     },
     "userManagement.workspace.changeError": {
-        "value": "Change of the permission(s) failed.",
+        "value": "Change of the workspace permission(s) failed.",
         "comment": "Error message shown to the user when change of one or more workspace permissions failed.",
         "limit": 0
     },
@@ -2501,6 +2611,16 @@
     "userManagement.workspace.permissionGroup.view.tooltip": {
         "value": "The group members can view dashboards that have been shared with the group.",
         "comment": "Tooltip of the workspace permission that allows user group view workspace objects.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionUser.use.tooltip": {
+        "value": "The user can use data sources that have been shared with them.",
+        "comment": "Tooltip of the data source permission that allows user use data source objects.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionGroup.use.tooltip": {
+        "value": "The group members can use data sources that have been shared with the group.",
+        "comment": "Tooltip of the data source permission that allows user group use data source objects.",
         "limit": 0
     },
     "userManagement.workspace.permission.viewExport": {
@@ -2561,6 +2681,16 @@
     "userManagement.workspace.permissionGroup.manage.tooltip": {
         "value": "Covers the View, Analyze, and Export permissions. Additionally, the group members can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
         "comment": "Tooltip of the workspace permission that allows user group to fully manage data in workspace.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionUser.manage.tooltip": {
+        "value": "User can create, edit or delete the data sources.",
+        "comment": "Tooltip of the data source permission that allows user to fully manage data sources.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionGroup.manage.tooltip": {
+        "value": "Group members can create, edit or delete the data sources.",
+        "comment": "Tooltip of the data source permission that allows user group to fully manage data sources.",
         "limit": 0
     },
     "userManagement.workspace.permission.remove": {

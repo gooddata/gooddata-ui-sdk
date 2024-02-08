@@ -62,6 +62,15 @@ export type ArithmeticMeasureBuilderInput = {
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
 // @alpha
+export type AssignedDataSourcePermission = typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
+
+// @alpha
+export const AssignedDataSourcePermissionValue: {
+    readonly MANAGE: "MANAGE";
+    readonly USE: "USE";
+};
+
+// @alpha
 export type AssignedWorkspacePermission = typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
 
 // @alpha
@@ -307,6 +316,9 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 // @public
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
+// @alpha (undocumented)
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL";
+
 // @public
 export type DataValue = null | string | number;
 
@@ -531,6 +543,14 @@ export interface IArithmeticMeasureDefinition {
         measureIdentifiers: Identifier[];
         operator: ArithmeticMeasureOperator;
     };
+}
+
+// @alpha
+export interface IAssignedDataSource {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
 }
 
 // @alpha
@@ -1164,6 +1184,28 @@ export interface IDatasetUser {
     fullName: string;
     // (undocumented)
     login: string;
+}
+
+// @alpha (undocumented)
+export interface IDataSourceIdentifierDescriptor {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    type: DataSourceType;
+}
+
+// @alpha
+export interface IDataSourcePermissionAssignment {
+    // (undocumented)
+    assigneeIdentifier: IOrganizationAssignee;
+    // (undocumented)
+    dataSource: IAssignedDataSource;
+    // (undocumented)
+    permissions: AssignedDataSourcePermission[];
 }
 
 // @public
@@ -1968,6 +2010,8 @@ export interface IOrganizationPermissionAssignment {
 // @alpha
 export interface IOrganizationUser {
     // (undocumented)
+    assignedDataSourceIds: string[];
+    // (undocumented)
     assignedUserGroupIds: string[];
     // (undocumented)
     assignedWorkspaceIds: string[];
@@ -1985,6 +2029,8 @@ export interface IOrganizationUser {
 
 // @alpha
 export interface IOrganizationUserGroup {
+    // (undocumented)
+    assignedDataSourceIds: string[];
     // (undocumented)
     assignedUsersCount: number;
     // (undocumented)
@@ -2503,6 +2549,7 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    enableManageDataSourcePermissions?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;
