@@ -91,11 +91,15 @@ jobs:
 
             - name: Git commit and push
               run: |
-                  git add -A
-                  VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
-                  git commit -m "Bump versions to $VERSION"
-                  git push origin ${{ inputs.source-branch }}
+                # add changelogs
+                git add libs/sdk-ui-all/CHANGELOG.* || true
+                git ls-files | grep '\.json' | xargs git add
+
+                VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
+                git commit -a -m "Bump versions to $VERSION"
+                git push origin ${{ inputs.source-branch }}
 
             - name: Get version
               id: version
               run: echo "version=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_OUTPUT
+
