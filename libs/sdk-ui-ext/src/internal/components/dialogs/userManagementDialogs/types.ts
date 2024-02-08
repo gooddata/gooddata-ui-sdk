@@ -1,7 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 
 export interface IAddWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
@@ -9,24 +10,39 @@ export interface IAddWorkspaceSelectProps {
     grantedWorkspaces: IGrantedWorkspace[];
 }
 
+export interface IAddDataSourceSelectProps {
+    onSelectDataSource: (dataSource: IDataSourceIdentifierDescriptor) => void;
+    addedDataSources: IGrantedDataSource[];
+    grantedDataSources: IGrantedDataSource[];
+}
+
 export interface ISelectOption {
     label: string;
     value: IWorkspaceDescriptor;
+}
+
+export interface IDataSourceSelectOption {
+    label: string;
+    value: IDataSourceIdentifierDescriptor;
 }
 
 export const isWorkspaceItem = (obj: unknown): obj is IWorkspaceDescriptor => {
     return !isEmpty(obj) && (obj as IWorkspaceDescriptor).id !== undefined;
 };
 
-/**
- * @internal
- */
-export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
+export const isDataSourceItem = (obj: unknown): obj is IDataSourceIdentifierDescriptor => {
+    return !isEmpty(obj) && (obj as IDataSourceIdentifierDescriptor).id !== undefined;
+};
 
 /**
  * @internal
  */
-export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
+export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DATA_SOURCES" | "DETAIL";
+
+/**
+ * @internal
+ */
+export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";
 
 export type ListMode = "VIEW" | "EDIT";
 
@@ -35,7 +51,17 @@ export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANAL
 /**
  * @internal
  */
+export type DataSourcePermission = "USE" | "MANAGE";
+
+/**
+ * @internal
+ */
 export type WorkspacePermissionSubject = "user" | "userGroup";
+
+/**
+ * @internal
+ */
+export type DataSourcePermissionSubject = "user" | "userGroup";
 
 export interface IGrantedWorkspace {
     id: string;
@@ -44,8 +70,22 @@ export interface IGrantedWorkspace {
     isHierarchical: boolean;
 }
 
+/**
+ * @internal
+ */
+export interface IGrantedDataSource {
+    id: string;
+    title: string;
+    permission: DataSourcePermission;
+}
+
 export interface IPermissionsItem {
     id: WorkspacePermission;
+    enabled: boolean;
+}
+
+export interface IDataSourcePermissionsItem {
+    id: DataSourcePermission;
     enabled: boolean;
 }
 

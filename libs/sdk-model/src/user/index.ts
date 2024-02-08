@@ -157,6 +157,7 @@ export interface IOrganizationUser {
     isOrganizationAdmin: boolean;
     assignedUserGroupIds: string[];
     assignedWorkspaceIds: string[];
+    assignedDataSourceIds: string[];
 }
 
 /**
@@ -184,6 +185,7 @@ export interface IOrganizationUserGroup {
     isOrganizationAdmin: boolean;
     assignedUsersCount: number;
     assignedWorkspaceIds: string[];
+    assignedDataSourceIds: string[];
 }
 
 /**

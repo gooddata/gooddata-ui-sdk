@@ -16,6 +16,8 @@ import {
     IOrganization,
     IOrganizations,
     IEntitlements,
+    NotSupported,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -369,6 +371,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public entitlements(): IEntitlements {
         return new BearEntitlements();
+    }
+
+    public dataSources(): IDataSourcesService {
+        throw new NotSupported("Backend does not support data sources service");
     }
 
     public currentUser(): IUserService {

@@ -37,6 +37,8 @@ import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
+import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
@@ -57,6 +59,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
 import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
@@ -160,6 +163,7 @@ export interface IAnalyticalBackend {
     readonly capabilities: IBackendCapabilities;
     readonly config: IAnalyticalBackendConfig;
     currentUser(): IUserService;
+    dataSources(): IDataSourcesService;
     deauthenticate(): Promise<void>;
     entitlements(): IEntitlements;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
@@ -325,6 +329,11 @@ export interface IDashboardWithReferences {
     dashboard: IDashboard;
     // (undocumented)
     references: IDashboardReferences;
+}
+
+// @alpha
+export interface IDataSourcesService {
+    getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]>;
 }
 
 // @public
@@ -565,12 +574,19 @@ export interface IOrganization {
 
 // @alpha
 export interface IOrganizationPermissionService {
+    assignPermissions(permissionsAsignment: IPermissionsAssignment): Promise<void>;
     getOrganizationPermissionForUser(userId: string): Promise<OrganizationPermissionAssignment[]>;
     getOrganizationPermissionForUserGroup(userGroupId: string): Promise<OrganizationPermissionAssignment[]>;
-    getWorkspacePermissionsForUser(userId: string): Promise<IWorkspacePermissionAssignment[]>;
-    getWorkspacePermissionsForUserGroup(userGroupId: string): Promise<IWorkspacePermissionAssignment[]>;
+    getPermissionsForUser(userId: string): Promise<{
+        workspacePermissions: IWorkspacePermissionAssignment[];
+        dataSourcePermissions: IDataSourcePermissionAssignment[];
+    }>;
+    getPermissionsForUserGroup(userGroupId: string): Promise<{
+        workspacePermissions: IWorkspacePermissionAssignment[];
+        dataSourcePermissions: IDataSourcePermissionAssignment[];
+    }>;
+    revokePermissions(permissionsAsignment: IPermissionsAssignment): Promise<void>;
     updateOrganizationPermissions(permissionAssignments: IOrganizationPermissionAssignment[]): Promise<void>;
-    updateWorkspacePermissions(permissions: IWorkspacePermissionAssignment[]): Promise<void>;
 }
 
 // @public
@@ -610,6 +626,16 @@ export interface IOrganizationStylingService {
     updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
 }
 
+// @public
+export interface IOrganizationUserGroupsQuery {
+    query(): Promise<IOrganizationUserGroupsQueryResult>;
+    withPage(page: number): IOrganizationUserGroupsQuery;
+    withSize(size: number): IOrganizationUserGroupsQuery;
+}
+
+// @public
+export type IOrganizationUserGroupsQueryResult = IPagedResource<IOrganizationUserGroup>;
+
 // @alpha
 export interface IOrganizationUserService {
     addUsersToUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
@@ -621,12 +647,29 @@ export interface IOrganizationUserService {
     getUserGroup(id: string): Promise<IUserGroup | undefined>;
     getUserGroups(): Promise<IOrganizationUserGroup[]>;
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
+    getUserGroupsQuery(): IOrganizationUserGroupsQuery;
     getUsers(): Promise<IOrganizationUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
+    getUsersQuery(): IOrganizationUsersQuery;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
     updateUser(user: IUser): Promise<void>;
     updateUserGroup(group: IUserGroup): Promise<void>;
 }
+
+// @public
+export interface IOrganizationUsersQuery {
+    query(): Promise<IOrganizationUsersQueryResult>;
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+    }): IOrganizationUsersQuery;
+    withPage(page: number): IOrganizationUsersQuery;
+    withSize(size: number): IOrganizationUsersQuery;
+}
+
+// @public
+export type IOrganizationUsersQueryResult = IPagedResource<IOrganizationUser>;
 
 // @public
 export interface IPagedResource<TItem> {
@@ -642,6 +685,13 @@ export interface IPagedResource<TItem> {
     readonly offset: number;
     // (undocumented)
     readonly totalCount: number;
+}
+
+// @alpha
+export interface IPermissionsAssignment {
+    assignees: IOrganizationAssignee[];
+    dataSources?: Omit<IDataSourcePermissionAssignment, "assigneeIdentifier">[];
+    workspaces?: Omit<IWorkspacePermissionAssignment, "assigneeIdentifier">[];
 }
 
 // @public
