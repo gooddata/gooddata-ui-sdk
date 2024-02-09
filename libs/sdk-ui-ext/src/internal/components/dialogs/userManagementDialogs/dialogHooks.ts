@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
@@ -11,24 +11,15 @@ import {
 } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { useToastMessage, ITab } from "@gooddata/sdk-ui-kit";
-
 import { userDialogTabsMessages, messages, userGroupDialogTabsMessages } from "./locales.js";
-
-import {
-    asPermission,
-    asEmptyPermissionAssignment,
-    sortByName,
-    asPermissionAssignment,
-    extractUserGroupName,
-    extractUserName,
-} from "./utils.js";
+import { sortByName, extractUserGroupName, extractUserName } from "./utils.js";
 import {
     IGrantedWorkspace,
     IGrantedUserGroup,
     UserEditDialogMode,
     IUserMember,
-    WorkspacePermissionSubject,
     UserGroupEditDialogMode,
+    IGrantedDataSource,
 } from "./types.js";
 import { useTelemetry } from "./TelemetryContext.js";
 
@@ -176,109 +167,6 @@ export const useDeleteDialog = () => {
     };
 };
 
-export const useWorkspaces = (
-    id: string,
-    subjectType: WorkspacePermissionSubject,
-    organizationId: string,
-    onSuccess: () => void,
-) => {
-    const { addSuccess, addError } = useToastMessage();
-    const backend = useBackendStrict();
-    const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[]>(undefined);
-
-    // setup API factories based on the subject we are working with
-    const { getWorkspacePermissions } = useMemo(() => {
-        if (subjectType === "user") {
-            return {
-                getWorkspacePermissions: backend.organization(organizationId).permissions()
-                    .getWorkspacePermissionsForUser,
-            };
-        }
-        return {
-            getWorkspacePermissions: backend.organization(organizationId).permissions()
-                .getWorkspacePermissionsForUserGroup,
-        };
-    }, [backend, organizationId, subjectType]);
-
-    // load initial workspaces
-    useEffect(() => {
-        getWorkspacePermissions(id).then((assignments) => {
-            const workspaces = assignments.map((assignment) => {
-                const { workspace, permissions, hierarchyPermissions } = assignment;
-                const permission = asPermission(
-                    hierarchyPermissions.length > 0 ? hierarchyPermissions : permissions,
-                );
-                return {
-                    id: workspace.id,
-                    title: workspace.name,
-                    permission,
-                    isHierarchical: hierarchyPermissions.length > 0,
-                };
-            });
-            setGrantedWorkspaces(workspaces);
-        });
-    }, [getWorkspacePermissions, id, organizationId]);
-
-    const removeGrantedWorkspace = (removedWorkspace: IGrantedWorkspace) => {
-        const payload = grantedWorkspaces.map((workspace) =>
-            workspace.id === removedWorkspace.id
-                ? asEmptyPermissionAssignment(id, subjectType, removedWorkspace)
-                : asPermissionAssignment(id, subjectType, workspace),
-        );
-        backend
-            .organization(organizationId)
-            .permissions()
-            .updateWorkspacePermissions(payload)
-            .then(() => {
-                addSuccess(messages.workspaceRemovedSuccess);
-                setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== removedWorkspace.id));
-                onSuccess();
-            })
-            .catch((error) => {
-                console.error("Removal of workspace permission failed", error);
-                addError(messages.workspaceRemovedFailure);
-            });
-    };
-
-    const updateGrantedWorkspace = (workspace: IGrantedWorkspace) => {
-        const updatedWorkspaces = [
-            ...grantedWorkspaces.filter((item) => item.id !== workspace.id),
-            workspace,
-        ].sort(sortByName);
-
-        backend
-            .organization(organizationId)
-            .permissions()
-            .updateWorkspacePermissions(
-                updatedWorkspaces.map((workspace) => asPermissionAssignment(id, subjectType, workspace)),
-            )
-            .then(() => {
-                addSuccess(messages.workspaceChangeSuccess);
-                setGrantedWorkspaces(updatedWorkspaces);
-            })
-            .catch((error) => {
-                console.error("Change of workspace permission failed", error);
-                addError(messages.workspaceChangeFailure);
-            });
-    };
-
-    // update internal array with workspaces after applied changed in workspaces edit mode
-    const onWorkspacesChanged = (workspaces: IGrantedWorkspace[]) => {
-        const unchangedWorkspaces = grantedWorkspaces.filter(
-            (item) => !workspaces.some((w) => w.id === item.id),
-        );
-        setGrantedWorkspaces([...unchangedWorkspaces, ...workspaces].sort(sortByName));
-        onSuccess();
-    };
-
-    return {
-        grantedWorkspaces,
-        onWorkspacesChanged,
-        removeGrantedWorkspace,
-        updateGrantedWorkspace,
-    };
-};
-
 export const useUserGroups = (
     userId: string,
     organizationId: string,
@@ -416,6 +304,7 @@ export const useUsers = (userGroupId: string, organizationId: string, onSuccess:
 export const useUserDialogTabs = (
     grantedWorkspaces: IGrantedWorkspace[],
     grantedUserGroups: IGrantedUserGroup[],
+    grantedDataSources: IGrantedDataSource[],
     isAdmin: boolean,
 ) => {
     const [selectedTabId, setSelectedTabId] = useState(
@@ -424,19 +313,26 @@ export const useUserDialogTabs = (
 
     const tabs = useMemo<ITab[]>(() => {
         return [
+            {
+                id: userDialogTabsMessages.userGroups.id,
+                values: { count: grantedUserGroups?.length },
+            },
             isAdmin
                 ? undefined
                 : {
                       id: userDialogTabsMessages.workspaces.id,
                       values: { count: grantedWorkspaces?.length },
                   },
-            {
-                id: userDialogTabsMessages.userGroups.id,
-                values: { count: grantedUserGroups?.length },
-            },
+
+            isAdmin
+                ? undefined
+                : {
+                      id: userDialogTabsMessages.dataSources.id,
+                      values: { count: grantedDataSources?.length },
+                  },
             userDialogTabsMessages.details,
         ].filter((tab) => !!tab);
-    }, [isAdmin, grantedWorkspaces, grantedUserGroups]);
+    }, [isAdmin, grantedWorkspaces, grantedUserGroups, grantedDataSources]);
 
     return {
         tabs,
@@ -448,6 +344,7 @@ export const useUserDialogTabs = (
 export const useUserGroupDialogTabs = (
     grantedWorkspaces: IGrantedWorkspace[],
     grantedUsers: IUserMember[],
+    grantedDataSources: IGrantedDataSource[],
     isAdmin: boolean,
 ) => {
     const [selectedTabId, setSelectedTabId] = useState(userGroupDialogTabsMessages.users);
@@ -464,9 +361,15 @@ export const useUserGroupDialogTabs = (
                       id: userGroupDialogTabsMessages.workspaces.id,
                       values: { count: grantedWorkspaces?.length },
                   },
+            isAdmin
+                ? undefined
+                : {
+                      id: userGroupDialogTabsMessages.dataSources.id,
+                      values: { count: grantedDataSources?.length },
+                  },
             userGroupDialogTabsMessages.details,
         ].filter((tab) => !!tab);
-    }, [isAdmin, grantedWorkspaces, grantedUsers]);
+    }, [isAdmin, grantedWorkspaces, grantedUsers, grantedDataSources]);
 
     return {
         tabs,

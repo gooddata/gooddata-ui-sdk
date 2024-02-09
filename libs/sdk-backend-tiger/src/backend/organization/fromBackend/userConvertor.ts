@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup, idRef } from "@gooddata/sdk-model";
 import {
@@ -62,6 +62,7 @@ export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganiz
     isOrganizationAdmin: user.organizationAdmin,
     assignedUserGroupIds: user.groups,
     assignedWorkspaceIds: user.workspaces,
+    assignedDataSourceIds: user.dataSources,
 });
 
 export const convertOrganizationUserGroup = (
@@ -73,4 +74,5 @@ export const convertOrganizationUserGroup = (
     isOrganizationAdmin: userGroup.organizationAdmin,
     assignedUsersCount: userGroup.userCount,
     assignedWorkspaceIds: userGroup.workspaces,
+    assignedDataSourceIds: userGroup.dataSources,
 });

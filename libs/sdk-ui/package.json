@@ -112,7 +112,7 @@
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
         "tsd": "^0.21.0",
-        "typescript": "5.0.2",
+        "typescript": "5.3.3",
         "vitest": "1.0.4",
         "vitest-dom": "0.1.1"
     }

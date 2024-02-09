@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -65,7 +65,7 @@ describe("Header section", () => {
         );
     });
 
-    describe("Localization", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    describe("Localization", () => {
         beforeEach(() => {
             Navigation.visit("dashboard/header-localization");
             editMode.isInEditMode(false).edit().isInEditMode();
@@ -104,7 +104,7 @@ describe("Header section", () => {
             },
         );
 
-        it("Header placeholder should be translated", () => {
+        it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger"] }, () => {
             layoutRow_01
                 .getHeader()
                 .setTitle(" ")

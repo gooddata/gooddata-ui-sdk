@@ -58,7 +58,7 @@
         "@babel/runtime": "^7.23.5",
         "@gooddata/experimental-workspace": "workspace:*",
         "@gooddata/live-examples-workspace": "workspace:*",
-        "@gooddata/mock-handling": "workspace:*",        
+        "@gooddata/mock-handling": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
@@ -152,7 +152,7 @@
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
         "ts-node": "^10.4.0",
-        "typescript": "5.0.2",
+        "typescript": "5.3.3",
         "vitest": "1.0.4",
         "source-map-loader": "^4.0.0"
     }

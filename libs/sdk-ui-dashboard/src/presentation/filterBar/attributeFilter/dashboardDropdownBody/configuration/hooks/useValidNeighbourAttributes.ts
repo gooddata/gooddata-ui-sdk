@@ -1,17 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     selectAttributeFilterDisplayFormsMap,
-    selectSupportsElementsQueryParentFiltering,
     selectSupportsSettingConnectingAttributes,
     useDashboardQueryProcessing,
     useDashboardSelector,
     QueryConnectedAttributes,
     queryConnectedAttributes,
-    selectIsKDDependentFiltersEnabled,
 } from "../../../../../../model/index.js";
 
 interface IUseValidNeighbourAttributesResult {
@@ -29,13 +27,10 @@ export const useValidNeighbourAttributes = (
     attributeFilterDisplayForm: ObjRef,
     neighbourFilterDisplayForms: ObjRef[],
 ): IUseValidNeighbourAttributesResult => {
-    const isDependentFiltersEnabled = useDashboardSelector(selectIsKDDependentFiltersEnabled);
-    const supportsDependentFilters = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
-    const shouldValidateNeighbourAttributes =
-        isDependentFiltersEnabled && supportsDependentFilters && !supportsSettingConnectingAttributes;
+    const shouldValidateNeighbourAttributes = !supportsSettingConnectingAttributes;
     const neighbourFilterDisplayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
     const {

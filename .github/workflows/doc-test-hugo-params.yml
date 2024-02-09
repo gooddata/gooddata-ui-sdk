@@ -1,0 +1,13 @@
+name: Doc ~ Update Hugo Version
+on:
+    workflow_dispatch:
+jobs:
+    update-hugo-version:
+        uses: ./.github/workflows/rw-doc-update-hugo-version.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+        with:
+            source-branch: "master"
+            version: "9.7"

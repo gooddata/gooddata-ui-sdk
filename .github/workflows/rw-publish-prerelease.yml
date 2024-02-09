@@ -8,6 +8,15 @@ on:
         required: true
         description: "The name of the source branch"
         type: string
+      skip-bump:
+        required: false
+        default: false
+        description: "Skip bumping the version"
+        type: boolean
+      author-name:
+        required: false
+        description: "The name of the author"
+        type: string
 
 # limit concurrency to one run per branch at a time
 # so that we can run this from master and a release branch at the same time
@@ -19,8 +28,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check-version:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-branch }}
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+      - name: Get version
+        id: get-version
+        run: echo "VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_ENV
+      - name: Check version
+        run: |
+          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+-(beta|alpha)\.[0-9]+$ ]]; then
+            echo "The version "$VERSION" does not match X.Y.Z-beta.W or X.Y.Z-alpha.W"
+            exit 1
+          fi
+
   setup-params:
-    runs-on: [infra1-small]
+    needs: [check-version]
+    runs-on: [ubuntu-latest]
     outputs:
       prerelease-id: ${{ steps.validate-params.outputs.prerelease-id }}
 
@@ -48,6 +79,7 @@ jobs:
       source-branch: ${{ inputs.source-branch }}
       bump: "prerelease"
       prerelease-id: ${{ needs.setup-params.outputs.prerelease-id }}
+      skip-bump: ${{ inputs.skip-bump }}
 
   publish-prerelease:
     needs: [bump-version]
@@ -61,14 +93,25 @@ jobs:
       release-tag: "prerelease"
 
   slack-notification:
-    runs-on: [infra1-small]
+    runs-on: [ubuntu-latest]
     needs: [bump-version, publish-prerelease]
     steps:
-      - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.23.0
+      - name: Notify to slack with author name
+        if: ${{ inputs.author-name != '' }}
+        uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: "#javascript-notifications"
-          slack-message: "The latest version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM."
+          slack-message: "The latest *prerelase* version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          GITHUB_USER: ${{ inputs.author-name }}
+      - name: Notify to slack with without author name
+        if: ${{ inputs.author-name == '' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: "The latest *prerelase* version, *gooddata-ui-sdk@${{ env.RELEASE_VERSION }}*, has been successfully published on NPM. :tada:"
         env:
           RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

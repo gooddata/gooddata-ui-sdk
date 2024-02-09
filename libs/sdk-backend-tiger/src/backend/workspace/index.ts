@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -38,6 +38,7 @@ import { TigerWorkspaceFacts } from "./facts/index.js";
 import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -54,17 +55,11 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                     await this.authCall(async (client) => {
                         return client.entities.getEntityWorkspaces({
                             id: this.workspace,
-                            include: ["workspaces"],
+                            ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                         });
                     })
                 ).data.data,
-                (
-                    await this.authCall(async (client) => {
-                        return client.actions.inheritedEntityPrefixes({
-                            workspaceId: this.workspace,
-                        });
-                    })
-                ).data,
+                [],
             );
         }
         return this.descriptor;

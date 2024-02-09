@@ -26,7 +26,7 @@ export class AttributeFilter {
 
     select(name?: string): AttributeFilter {
         const testClass = getTestClassByTitle(name ?? this.name);
-        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).click();
+        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).should("be.visible").click();
         return this;
     }
 
@@ -35,7 +35,7 @@ export class AttributeFilter {
     }
 
     selectAllValues() {
-        this.getDropdownElement().find(".s-select-all-checkbox").click();
+        this.getDropdownElement().find(".s-select-all-checkbox").should("be.visible").click();
         return this;
     }
 
@@ -112,7 +112,7 @@ export class AttributeFilter {
     }
 
     apply() {
-        this.getDropdownElement().find(".s-apply").click();
+        this.getDropdownElement().find(".s-apply").should("be.visible").click();
         return this;
     }
 
@@ -385,7 +385,7 @@ export class AttributeFilter {
     }
 
     hoverOnHiddenIcon() {
-        this.getHiddenIcon().trigger("mouseover", { force: true });
+        this.getHiddenIcon().trigger("mouseover");
         return this;
     }
 
@@ -399,7 +399,7 @@ export class AttributeFilter {
     }
 
     hoverOnLockedIcon() {
-        this.getLockedIcon().trigger("mouseover", { force: true });
+        this.getLockedIcon().trigger("mouseover");
         return this;
     }
 
@@ -420,6 +420,16 @@ export class AttributeFilter {
 
     hasNoRelevantMessage() {
         this.getDropdownElement().find(NO_RELEVANT_VALUES_SELECTOR).should("have.text", "No relevant values");
+        return this;
+    }
+
+    deleteFiltervaluesBy(filterName: string) {
+        this.selectConfiguration();
+        cy.get(`.attribute-filter__limit__item__title[title='${filterName}']`).realHover();
+        cy.get(
+            `.attribute-filter__limit__item__title[title='${filterName}'] + .s-filter-limit-delete`,
+        ).click();
+        this.getDropdownElement().find(".s-apply").click();
         return this;
     }
 
@@ -485,7 +495,7 @@ export class FilterBar {
 
     addAttribute(name: string): AttributeFilter {
         this.dragAttributeToFilterBar();
-        new AttributeFilter(name).search(name).select();
+        new AttributeFilter(name).search(name).select(name);
         cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
         return new AttributeFilter(name);
     }

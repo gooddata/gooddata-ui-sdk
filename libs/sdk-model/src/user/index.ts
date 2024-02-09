@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -52,6 +52,11 @@ export interface IUser {
      * Permission of the user
      */
     permissions?: string[];
+
+    /**
+     * Authentication id of the user.
+     */
+    authenticationId?: string;
 }
 
 /**
@@ -152,6 +157,7 @@ export interface IOrganizationUser {
     isOrganizationAdmin: boolean;
     assignedUserGroupIds: string[];
     assignedWorkspaceIds: string[];
+    assignedDataSourceIds: string[];
 }
 
 /**
@@ -179,6 +185,7 @@ export interface IOrganizationUserGroup {
     isOrganizationAdmin: boolean;
     assignedUsersCount: number;
     assignedWorkspaceIds: string[];
+    assignedDataSourceIds: string[];
 }
 
 /**

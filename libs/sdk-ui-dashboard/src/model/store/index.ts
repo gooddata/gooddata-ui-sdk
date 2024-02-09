@@ -8,7 +8,6 @@ export { SavingState } from "./saving/savingState.js";
 export { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
 export {
     selectBackendCapabilities,
-    selectSupportsElementsQueryParentFiltering,
     selectSupportsElementUris,
     selectSupportsKpiWidgetCapability,
     selectSupportsAccessControlCapability,
@@ -64,15 +63,12 @@ export {
     selectAllowCreateInsightRequest,
     selectIsAnalyticalDesignerEnabled,
     selectIsDeleteFilterButtonEnabled,
-    selectIsKPIDashboardDependentFiltersEnabled,
     selectIsAlternativeDisplayFormSelectionEnabled,
     selectEnableKPIDashboardDrillFromAttribute,
     selectIsShareButtonHidden,
     selectWeekStart,
     selectIsDrillDownEnabled,
     selectEnableUnavailableItemsVisibility,
-    selectEnableKDDependentFilters,
-    selectIsKDDependentFiltersEnabled,
     selectEnableKDCrossFiltering,
     selectEnableMultipleDateFilters,
     selectEnableKDRichText,

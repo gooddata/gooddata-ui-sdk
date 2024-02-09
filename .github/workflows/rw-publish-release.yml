@@ -1,0 +1,111 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Release ~ Publish release
+on:
+  workflow_call:
+    inputs:
+      bump:
+        required: true
+        description: "The type of version bump (major, minor, patch)"
+        type: string
+    outputs:
+      version:
+        description: "Version which was created"
+        value: ${{ jobs.bump-version.outputs.version }}
+
+# limit concurrency to one run per branch at a time
+# so that we can run this from master and a release branch at the same time
+# When a concurrent job or workflow is queued,
+# if another job or workflow using the same concurrency group in the repository is in progress,
+# the queued job or workflow will be pending. Any previously pending job or workflow in the concurrency group will be canceled.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  check-version:
+    runs-on: [ubuntu-latest]
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: "release"
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+      - name: Get version
+        id: get-version
+        run: echo "VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_ENV
+      - name: Check version
+        run: |
+          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
+            echo "The version $VERSION does not match X.Y.Z-beta.W"
+            exit 1
+          fi
+
+  bump-version:
+    needs: [check-version]
+    uses: ./.github/workflows/rw-bump-version.yml    
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: "release"
+      bump: ${{ inputs.bump }}
+
+  publish-release:
+    needs: [bump-version]
+    uses: ./.github/workflows/rw-publish-version.yml
+    permissions:
+      contents: read
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: "release"
+      release-tag: "latest"
+  
+  check-npm-package:
+    outputs:
+      verified: ${{ steps.check-npm-package.outputs.exists }}
+    runs-on: [ubuntu-latest]
+    needs: [bump-version,publish-release]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Check NPM package
+        id: check-npm-package
+        uses: ./.github/actions/check-npm-version
+        with:
+          package: "@gooddata/sdk-ui"
+          version: ${{ needs.bump-version.outputs.version }}
+        
+  slack-notification:
+    runs-on: [ubuntu-latest]
+    needs: [bump-version, check-npm-package]
+    steps:
+      - name: Set up message
+        id: set-up-message
+        run: |
+            if [[ "$NPM_PACKAGE_VERIFIED" == "true" ]]; then
+              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been successfully published on NPM by the user *${GITHUB_USER}*. :tada:" >> $GITHUB_ENV
+            else
+              NPM_PACKAGE_LINK="https://www.npmjs.com/package/@gooddata/sdk-ui/v/${RELEASE_VERSION}"
+              SLACK_LINK="<$NPM_PACKAGE_LINK|link>"
+              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been published on NPM by the user *${GITHUB_USER}*, but the NPM package verification failed. Check it on NPM manually at $SLACK_LINK. :warning:" >> $GITHUB_ENV
+            fi
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          BUMP: ${{ inputs.bump }}
+          GITHUB_USER: ${{ github.actor }}
+          NPM_PACKAGE_VERIFIED: ${{ needs.check-npm-package.outputs.verified }}
+      - name: Notify to slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: "#javascript-notifications"
+          slack-message: ${{ env.RELEASE_MESSAGE }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

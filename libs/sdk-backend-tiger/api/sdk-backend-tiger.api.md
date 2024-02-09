@@ -273,6 +273,7 @@ export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
 // @alpha (undocumented)
 export const objectTypeToTigerIdType: {
+    variable: TigerObjectType;
     user: TigerObjectType;
     measure: TigerObjectType;
     fact: TigerObjectType;
@@ -280,7 +281,6 @@ export const objectTypeToTigerIdType: {
     displayForm: TigerObjectType;
     dataSet: TigerObjectType;
     insight: TigerObjectType;
-    variable: TigerObjectType;
     analyticalDashboard: TigerObjectType;
     theme: TigerObjectType;
     colorPalette: TigerObjectType;

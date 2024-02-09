@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
@@ -36,9 +36,11 @@ import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { OrganizationSettingsService } from "./settings.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
-    constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
+    private settingsService: OrganizationSettingsService;
 
-    private settingsService = new OrganizationSettingsService(this.authCall);
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard) {
+        this.settingsService = new OrganizationSettingsService(this.authCall);
+    }
 
     public async getThemes(): Promise<IThemeMetadataObject[]> {
         return await this.authCall((client) =>

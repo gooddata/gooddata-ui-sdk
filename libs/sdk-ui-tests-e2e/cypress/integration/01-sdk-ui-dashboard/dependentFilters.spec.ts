@@ -3,6 +3,7 @@ import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
 import { TopBar } from "../../tools/dashboards";
 import { Table } from "../../tools/table";
+import { InsightsCatalog } from "../../tools/insightsCatalog";
 
 const regionFilter = new AttributeFilter("Region");
 const stateFilter = new AttributeFilter("State");
@@ -240,17 +241,22 @@ describe("Dependent filter", () => {
         },
     );
 
-    it("can reload elements after unchecking parent filter", { tags: "checklist_integrated_tiger" }, () => {
-        topBar.enterEditMode().editButtonIsVisible(false);
-        stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
-        cityFilter
-            .open()
-            .elementsAreLoaded()
-            .hasFilterListSize(5)
-            .configureLimitingParentFilterDependency("State")
-            .elementsAreLoaded()
-            .hasFilterListSize(287);
-    });
+    it(
+        "can reload elements after selecting delete parent filter",
+        { tags: "checklist_integrated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
+            new InsightsCatalog().waitForCatalogLoad();
+            stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+            cityFilter
+                .open()
+                .elementsAreLoaded()
+                .hasFilterListSize(5)
+                .deleteFiltervaluesBy("State")
+                .elementsAreLoaded()
+                .hasFilterListSize(287);
+        },
+    );
 
     it("can reload elements after removing parent filter", { tags: "checklist_integrated_tiger" }, () => {
         cy.intercept("GET", "**/attributes**").as("attributes");
