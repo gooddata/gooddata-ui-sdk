@@ -1,9 +1,9 @@
 # (C) 2024 GoodData Corporation
 
 # Deploy of ui sdk examples
-name: Release ~ Examples deploy
+name: rw ~ Release ~ Examples deploy
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       source-branch:
         required: true

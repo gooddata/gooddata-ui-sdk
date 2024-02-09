@@ -1,0 +1,10 @@
+# (C) 2024 GoodData Corporation
+
+# Deploy of ui sdk examples
+name: Doc ~ Examples deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  release-ui-sdk-examples-deploy:
+    uses: ./.github/workflows/rw-doc-examples-deploy.yml
