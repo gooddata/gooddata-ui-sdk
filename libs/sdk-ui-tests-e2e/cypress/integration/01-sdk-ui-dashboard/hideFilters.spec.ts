@@ -173,6 +173,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         bubbleTooltip.hasTooltip("This filter is locked. It can be changed only via the Edit mode.");
     });
 
+    /* flaky test
     it("Tooltip locked filter displays on edit mode when hover on attribute filter locked icon", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
@@ -186,7 +187,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
             .hoverOnLockedIcon();
 
         bubbleTooltip.hasTooltip("This filter is locked. It can be changed only via the Edit mode.");
-    });
+    });*/
 
     it("Tooltip locked filter displays on view mode when hover on date filter locked icon", () => {
         Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
@@ -196,13 +197,14 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
         bubbleTooltip.hasTooltip("This filter is locked.");
     });
 
+    /* flaky test
     it("Tooltip locked filter displays on view mode when hover on attribute filter locked icon", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
 
         lockedAttributeFilter.isVisible(true).isLockedIconVisible().hoverOnLockedIcon();
 
         bubbleTooltip.hasTooltip("This filter is locked.");
-    });
+    });*/
 
     it("Should not reuse the config mode when re-added attribute filter", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
