@@ -7,17 +7,6 @@ on:
         types: [opened, edited, synchronize, reopened]
 
 jobs:
-    validate-title:
-        name: Title validation
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-            - name: Check the pull request title
-              uses: ./.github/actions/check-pull-request-title
-              with:
-                  pull_request_title: ${{ github.event.pull_request.title }}
-
     validate-commits:
         name: Commits validation
         runs-on: ubuntu-latest
