@@ -33,6 +33,8 @@ Promise.all([
         ),
     );
 
+    const isTrivial = (commit) => commit.toLowerCase().startsWith("trivial:");
+
     Promise.all(lintTasks).then((results) => {
         const formattedReport = format({ results }, { helpUrl });
         core.info(formattedReport);
@@ -40,10 +42,10 @@ Promise.all([
         const allCommitsAreValid = results.every((report) => report.valid);
         const invalidCommits = results.filter((report) => !report.valid);
         const allCommitsHaveTicket = commits.every((commit) => {
-            return FOOTER_REGEX.test(commit);
+            return isTrivial(commit) || FOOTER_REGEX.test(commit);
         });
         const commitsWithoutTicket = commits.filter((commit) => {
-            return !FOOTER_REGEX.test(commit);
+            return !isTrivial(commit) && !FOOTER_REGEX.test(commit);
         });
 
         if (allCommitsAreValid && allCommitsHaveTicket) {
