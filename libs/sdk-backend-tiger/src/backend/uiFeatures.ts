@@ -70,6 +70,8 @@ export enum TigerFeaturesNames {
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
     EnableManageDataSourcePermissions = "enableManageDataSourcePermissions",
+    //boolean + possible values: enabled, disabled
+    EnableDirectQuery = "enableDirectQuery",
 }
 
 export type ITigerFeatureFlags = {
@@ -107,6 +109,7 @@ export type ITigerFeatureFlags = {
     enableMySqlDataSource: typeof FeatureFlagsValues["enableMySqlDataSource"][number];
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
     enableManageDataSourcePermissions: typeof FeatureFlagsValues["enableManageDataSourcePermissions"][number];
+    enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -144,6 +147,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMySqlDataSource: false,
     enableCreateUser: false,
     enableManageDataSourcePermissions: false,
+    enableDirectQuery: false,
 };
 
 export const FeatureFlagsValues = {
@@ -185,4 +189,5 @@ export const FeatureFlagsValues = {
     enableMySqlDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
     enableManageDataSourcePermissions: [true, false] as const,
+    enableDirectQuery: [true, false] as const,
 };
