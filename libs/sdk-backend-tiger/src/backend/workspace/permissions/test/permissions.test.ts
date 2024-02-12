@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { TigerWorkspacePermissionsFactory } from "../index.js";
 import { describe, expect, it, vi } from "vitest";
@@ -27,7 +27,11 @@ describe("TigerWorkspacePermissionsFactory", () => {
         const [client, get] = getWithDefinedPermissions(["VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
+        expect(get).toHaveBeenCalledWith({
+            id: "workspaceId",
+            metaInclude: ["config", "permissions"],
+            include: ["parent"],
+        });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: false,
@@ -57,7 +61,11 @@ describe("TigerWorkspacePermissionsFactory", () => {
         const [client, get] = getWithDefinedPermissions(["ANALYZE", "VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
+        expect(get).toHaveBeenCalledWith({
+            id: "workspaceId",
+            metaInclude: ["config", "permissions"],
+            include: ["parent"],
+        });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,
@@ -87,7 +95,11 @@ describe("TigerWorkspacePermissionsFactory", () => {
         const [client, get] = getWithDefinedPermissions(["MANAGE", "ANALYZE", "VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
+        expect(get).toHaveBeenCalledWith({
+            id: "workspaceId",
+            metaInclude: ["config", "permissions"],
+            include: ["parent"],
+        });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,

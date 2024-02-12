@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { call, put, select } from "redux-saga/effects";
 import { isDrillToDashboard, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
@@ -39,6 +39,9 @@ export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWid
 }
 
 async function getExistingDashboards(ctx: DashboardContext, dashboardRefs: ObjRef[]) {
+    if (dashboardRefs.length === 0) {
+        return [];
+    }
     try {
         return await ctx.backend
             .workspace(ctx.workspace)

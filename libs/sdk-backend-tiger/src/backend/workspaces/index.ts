@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWorkspacesQueryFactory,
     IWorkspacesQuery,
@@ -101,7 +101,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             const filterParam = this.parentWorkspaceId ? `parent.id==${this.parentWorkspaceId}` : undefined;
             return OrganizationUtilities.getAllPagesOf(client, client.entities.getAllEntitiesWorkspaces, {
                 sort: ["name"],
-                include: ["workspaces"],
+                include: ["parent"],
                 filter: filterParam,
             })
                 .then(OrganizationUtilities.mergeEntitiesResults)
