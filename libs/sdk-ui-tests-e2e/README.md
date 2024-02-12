@@ -132,6 +132,17 @@ export const ExampleScenario: React.FC = () => {
 };
 ```
 
+### Previewing scenarios locally
+
+The `TIGER_API_TOKEN` is not bundled into the scenarios and it's provided by the cypress when it runs.
+To preview the examples running locally on http://localhost:9500 you need to provide the token using one of the following methods
+
+-   Use modheader browser extension and add `Authorization` header with `Bearer <API_TOKEN>` (replace `<API_TOKEN>` with your token)
+    Make sure you filter requests to http://localhost:9500 so that your token is not leaked to every site you visit.
+
+-   Comment out `process.env.TIGER_API_TOKEN=""` line in scenarios/webpack_config.cjs and build the
+    scenarios with `rushx build-scenarios`. The token would get bundled there.
+
 ## DEV Guide for integrated tests
 
 ### Run on docker
