@@ -177,7 +177,12 @@ export interface IOrganizationUsersQuery {
      * @param filter - filter to apply
      * @returns organization users query
      */
-    withFilter(filter: { workspace?: string; group?: string; name?: string }): IOrganizationUsersQuery;
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUsersQuery;
 
     /**
      * Starts the organization users query.
@@ -218,6 +223,19 @@ export interface IOrganizationUserGroupsQuery {
      * @returns organization users query
      */
     withPage(page: number): IOrganizationUserGroupsQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns organization user groups query
+     */
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUserGroupsQuery;
 
     /**
      * Starts the organization users query.
