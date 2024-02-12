@@ -1,4 +1,4 @@
-name: rw ~ Git ~ Back merge release to master 
+name: rw ~ Git ~ Back merge release to master
 
 on:
   workflow_call:
@@ -51,6 +51,7 @@ jobs:
         id: prepare-pr
         run: |
           git checkout $TARGET_BRANCH
+          # this needs to be here directly, not via action as we are doing checkout before
           version=$(node -p "require('./libs/sdk-ui/package.json').version")
 
           git checkout $SOURCE_BRANCH
@@ -101,7 +102,7 @@ jobs:
           PR_OUTPUT=$(gh pr create --title "Merge $SOURCE_BRANCH into $TARGET_BRANCH" --body "This PR is created automatically by GitHub Actions. from $SOURCE_BRANCH into $TARGET_BRANCH via temporary branch $TMP_BRANCH" --base $TARGET_BRANCH --head "$TMP_BRANCH")
           PR_URL=$(echo "$PR_OUTPUT" | grep -o 'https://github.com[^ ]*')
           echo "Created pull-request: $PR_URL"
-          
+
           echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
           echo "pr_has_conflicts=$has_conflicts" >> $GITHUB_OUTPUT
         env:
