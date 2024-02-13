@@ -50,6 +50,8 @@ jobs:
             echo "The version "$VERSION" does not match X.Y.Z-beta.W or X.Y.Z-alpha.W"
             exit 1
           fi
+        env:
+          VERSION: ${{ steps.get-version.outputs.version }}
 
   setup-params:
     needs: [check-version]
