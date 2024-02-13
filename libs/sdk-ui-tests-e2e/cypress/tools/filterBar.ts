@@ -2,6 +2,7 @@
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
+import { DateFilter } from "./dateFilter";
 
 export const NEW_ATTRIBUTE_FILTER_SELECTOR = ".s-add-attribute-filter";
 export const ATTRIBUTE_DROPZONE_SELECTOR = ".s-attr-filter-dropzone-box";
@@ -11,6 +12,7 @@ export const ATTRIBUTE_FILTERS_SELECTOR = ".dash-filters-attribute:not(.dash-fil
 export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
 export const FILTER_BAR_SHOW_ALL_BUTTON = ".button-filter-bar-show-all";
 export const NO_RELEVANT_VALUES_SELECTOR = ".gd-attribute-filter-empty-filtered-result__next";
+export const DATE_FILTERS_SELECTOR = ".dash-filters-date";
 
 export class AttributeFilter {
     constructor(private name: string) {}
@@ -500,6 +502,13 @@ export class FilterBar {
         return new AttributeFilter(name);
     }
 
+    addDate(name: string): DateFilter {
+        this.dragDateToFilterBar();
+        new DateFilter(name).search(name).select(name);
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
+        return new DateFilter(name);
+    }
+
     moveAttributeFilter(fromIndex: number, toIndex: number, dropzone: DropZone) {
         const dataTransfer = new DataTransfer();
         cy.get(".s-attribute-filter").eq(fromIndex).trigger("dragstart", { dataTransfer });
@@ -519,6 +528,19 @@ export class FilterBar {
             .should("have.class", "attr-filter-dropzone-box-active")
             .trigger("drop", { dataTransfer });
         cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("exist");
+
+        return this;
+    }
+
+    dragDateToFilterBar() {
+        const dataTransfer = new DataTransfer();
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
+        cy.get(NEW_ATTRIBUTE_FILTER_SELECTOR).trigger("dragstart", { dataTransfer });
+        cy.get(ATTRIBUTE_DROPZONE_SELECTOR)
+            .should("have.class", "attr-filter-dropzone-box-active")
+            .trigger("drop", { dataTransfer });
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("exist");
+        cy.get(".s-datedatasets").click();
         return this;
     }
 
@@ -588,5 +610,23 @@ export class FilterBar {
                 `.dash-filters-attribute ${testClass}.s-attribute-filter .s-attribute-filter-button-subtitle`,
             ).should("have.text", attributeFilter[1]);
         });
+    }
+
+    getDateList() {
+        return cy.get(DATE_FILTERS_SELECTOR);
+    }
+
+    hasDateFilters(names: string[]) {
+        this.getDateList().should("have.length", names.length);
+
+        names.forEach((name, index) => {
+            cy.get(".dash-filters-date .s-date-filter-title").eq(index).should("have.text", name);
+        });
+        return this;
+    }
+
+    getDateSubTitleViewMode(name: string) {
+        const testClass = getTestClassByTitle(name, "date-filter-button-");
+        return cy.get(`.dash-filters-all .s-date-filter-button${testClass} .s-button-text`);
     }
 }
