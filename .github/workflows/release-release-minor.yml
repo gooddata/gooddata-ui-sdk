@@ -1,17 +1,19 @@
 # (C) 2024 GoodData Corporation
 
-name: Release ~ Release minor version 
+name: Release ~ Release minor version
 on:
   workflow_dispatch:
-      inputs:
-        password:
-          description: Password for the workflow to run
-          required: true
 
-jobs: 
+jobs:
+    gate-approval:
+        runs-on: ubuntu-latest
+        environment:
+            name: production
+        steps:
+            - run: echo "Initiating approval"
+
     publish-release-npm:
-      # have dummy password to prevent accidental run
-      if: github.event.inputs.password == 'dummy'
+      needs: gate-approval
       uses: ./.github/workflows/rw-perform-release-major-minor.yml
       permissions:
         pull-requests: write

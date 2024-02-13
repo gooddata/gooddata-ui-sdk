@@ -1,25 +1,27 @@
 # (C) 2024 GoodData Corporation
 
-# Automated Code Drop Workflow: Initiates a code drop from the master branch to a new release branch. 
-# Manages version increments, setting the master to a new alpha preminor version and the release branch to a beta prerelease version. 
+# Automated Code Drop Workflow: Initiates a code drop from the master branch to a new release branch.
+# Manages version increments, setting the master to a new alpha preminor version and the release branch to a beta prerelease version.
 # Notifies the team via Slack upon successful completion.
 name: Release ~ Code drop
 on:
   workflow_dispatch:
-      inputs:
-        password:
-          description: Password for the workflow to run
-          required: true
 
 jobs:
+  gate-approval:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - run: echo "Initiating approval"
+
   prepare-branch:
-    # have dummy password to prevent accidental run
-    if: github.event.inputs.password == 'dummy'
+    needs: gate-approval
     runs-on: [ubuntu-latest]
     permissions:
       contents: write
 
-    steps:      
+    steps:
       - name: Run copy branch action
         uses: gooddata/gooddata-ui-sdk/.github/actions/branch-cutoff-action@master
         with:
@@ -36,7 +38,7 @@ jobs:
         source-branch: 'release'
         bump: 'prerelease'
         prerelease-id: 'beta'
-        
+
   prepare-versions-master:
     needs: prepare-branch
     uses: ./.github/workflows/rw-bump-version.yml
@@ -50,7 +52,7 @@ jobs:
 
   publish-pre-release-master:
     needs: prepare-versions-master
-    uses: ./.github/workflows/rw-publish-prerelase.yml
+    uses: ./.github/workflows/rw-publish-prerelease.yml
     permissions:
       contents: write
       id-token: write
@@ -58,10 +60,10 @@ jobs:
     with:
       source-branch: "master"
       skip-bump: true
-  
+
   publish-pre-release-release:
     needs: prepare-versions-release
-    uses: ./.github/workflows/rw-publish-prerelase.yml
+    uses: ./.github/workflows/rw-publish-prerelease.yml
     permissions:
       contents: write
       id-token: write
