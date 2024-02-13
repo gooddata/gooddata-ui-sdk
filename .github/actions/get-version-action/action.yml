@@ -11,5 +11,8 @@ runs:
   steps:
     - name: Get version
       id: version
-      run: echo "version=$(node -p "require('./libs/sdk-ui/package.json').version")" >> $GITHUB_OUTPUT
+      run: |
+        VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
+        echo "version=$VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
       shell: bash
