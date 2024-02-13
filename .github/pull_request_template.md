@@ -9,7 +9,7 @@ Description of changes.
 
 ---
 
-Refer to [documentation](https://github.com/gooddata/gooddata-ui-sdk/blob/master/docs/continuous_integration.md) to see how to run checks and tests in the pull request. This is the list of the most used commands:
+Refer to [documentation](https://github.com/gooddata/gooddata-ui-sdk/blob/master/dev_docs/continuous_integration.md) to see how to run checks and tests in the pull request. This is the list of the most used commands:
 
 ```
 extended test - backstop
