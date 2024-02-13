@@ -10,7 +10,7 @@ const prHead = core.getInput("pr_head");
 const prBase = core.getInput("pr_base");
 const configFilePath = core.getInput("lint_config");
 
-const FOOTER_REGEX = /\n((JIRA\:\s[A-Z0-9]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
+const FOOTER_REGEX = /\n((JIRA:\s[A-Z0-9]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
 
 Promise.all([
     load({}, { file: configFilePath, cwd: process.cwd() }),
