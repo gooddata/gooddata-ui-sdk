@@ -5,7 +5,15 @@ on:
     workflow_dispatch:
 
 jobs:
+    gate-approval:
+        runs-on: ubuntu-latest
+        environment:
+            name: production
+        steps:
+            - run: echo "Initiating approval"
+
     publish-documentation:
+        needs: gate-approval
         uses: ./.github/workflows/rw-publish-documentation.yml
 
     # TODO: delete-release-branch:
