@@ -46,7 +46,6 @@ jobs:
             exit 1
           fi
         env:
-          # TODO check if correct
           VERSION: ${{ steps.get-version.outputs.version }}
 
   bump-version:
