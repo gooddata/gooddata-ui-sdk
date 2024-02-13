@@ -629,6 +629,12 @@ export interface IOrganizationStylingService {
 // @public
 export interface IOrganizationUserGroupsQuery {
     query(): Promise<IOrganizationUserGroupsQueryResult>;
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUserGroupsQuery;
     withPage(page: number): IOrganizationUserGroupsQuery;
     withSize(size: number): IOrganizationUserGroupsQuery;
 }
@@ -663,6 +669,7 @@ export interface IOrganizationUsersQuery {
         workspace?: string;
         group?: string;
         name?: string;
+        dataSource?: string;
     }): IOrganizationUsersQuery;
     withPage(page: number): IOrganizationUsersQuery;
     withSize(size: number): IOrganizationUsersQuery;

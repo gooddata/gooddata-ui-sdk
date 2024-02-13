@@ -19,6 +19,7 @@ import {
     convertIncludedUser,
 } from "./fromBackend/userConvertor.js";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { ActionsUtilities } from "@gooddata/api-client-tiger";
 
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -119,33 +120,23 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUsers = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all(
-                ids.map((id) =>
-                    client.entities.deleteEntityUsers({
-                        id,
-                    }),
-                ),
-            );
+            await client.actions.removeUsersUserGroups({
+                assigneeIdentifier: ids.map((id) => ({ id, type: "user" })),
+            });
         });
     };
 
     public deleteUserGroups = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all(
-                ids.map((id) =>
-                    client.entities.deleteEntityUserGroups({
-                        id,
-                    }),
-                ),
-            );
+            await client.actions.removeUsersUserGroups({
+                assigneeIdentifier: ids.map((id) => ({ id, type: "userGroup" })),
+            });
         });
     };
 
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
-            return loadAllPages(({ page, size }) =>
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
                 client.actions
                     .listUsers({ page, size })
                     .then((response) => response.data.users.map(convertOrganizationUser)),
@@ -163,7 +154,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
-            return loadAllPages(({ page, size }) =>
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
                 client.actions
                     .listUserGroups({ page, size })
                     .then((response) => response.data.userGroups.map(convertOrganizationUserGroup)),
@@ -245,7 +236,12 @@ export class OrganizationUsersQuery implements IOrganizationUsersQuery {
         return this;
     }
 
-    withFilter(filter: { workspace?: string; group?: string; name?: string }): IOrganizationUsersQuery {
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUsersQuery {
         this.filter = filter;
         return this;
     }
@@ -272,6 +268,7 @@ export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
     private size = 100;
     private page = 0;
+    private filter = {};
 
     withSize(size: number): IOrganizationUserGroupsQuery {
         this.size = size;
@@ -283,11 +280,21 @@ export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery
         return this;
     }
 
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUserGroupsQuery {
+        this.filter = filter;
+        return this;
+    }
+
     query(): Promise<IOrganizationUserGroupsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const result = await this.authCall((client) =>
-                    client.actions.listUserGroups({ size: limit, page: offset / limit }),
+                    client.actions.listUserGroups({ size: limit, page: offset / limit, ...this.filter }),
                 );
 
                 return {
@@ -299,24 +306,4 @@ export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery
             this.page * this.size,
         );
     }
-}
-
-async function loadAllPages<T>(
-    promiseFactory: (params: { page: number; size: number }) => Promise<T[]>,
-): Promise<T[]> {
-    const results: T[] = [];
-    const size = 1000;
-    let page = 0;
-    let lastPageSize = size;
-    while (lastPageSize === size) {
-        const result = await promiseFactory({
-            page,
-            size,
-        });
-        results.push(...result);
-        lastPageSize = result.length;
-        page++;
-    }
-
-    return results;
 }

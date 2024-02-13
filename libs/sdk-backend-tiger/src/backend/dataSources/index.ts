@@ -3,7 +3,7 @@
 import { IDataSourcesService } from "@gooddata/sdk-backend-spi";
 import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
+import { ActionsUtilities, JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 
 function convertdataSourceIdentifier(
     dataSource: JsonApiDataSourceIdentifierOutWithLinks,
@@ -21,31 +21,11 @@ export class TigerDataSourcesService implements IDataSourcesService {
 
     public async getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]> {
         return this.authCall(async (client) => {
-            return loadAllPages(({ page, size }) =>
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
                 client.entities
                     .getAllEntitiesDataSourceIdentifiers({ page, size })
                     .then((response) => response.data.data.map(convertdataSourceIdentifier)),
             );
         });
     }
-}
-
-async function loadAllPages<T>(
-    promiseFactory: (params: { page: number; size: number }) => Promise<T[]>,
-): Promise<T[]> {
-    const results: T[] = [];
-    const size = 1000;
-    let page = 0;
-    let lastPageSize = size;
-    while (lastPageSize === size) {
-        const result = await promiseFactory({
-            page,
-            size,
-        });
-        results.push(...result);
-        lastPageSize = result.length;
-        page++;
-    }
-
-    return results;
 }
