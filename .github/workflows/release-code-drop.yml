@@ -52,7 +52,7 @@ jobs:
 
   publish-pre-release-master:
     needs: prepare-versions-master
-    uses: ./.github/workflows/rw-publish-prerelase.yml
+    uses: ./.github/workflows/rw-publish-prerelease.yml
     permissions:
       contents: write
       id-token: write
@@ -63,7 +63,7 @@ jobs:
 
   publish-pre-release-release:
     needs: prepare-versions-release
-    uses: ./.github/workflows/rw-publish-prerelase.yml
+    uses: ./.github/workflows/rw-publish-prerelease.yml
     permissions:
       contents: write
       id-token: write
