@@ -31,7 +31,7 @@ jobs:
               uses: actions/checkout@v4
               with:
                   ref: ${{ inputs.source-branch }}
-                  token: ${{ secrets.GITHUB_TOKEN }} # Needed admin token to be able to push to the source branch
+                  token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
 
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
