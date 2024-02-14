@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/experimental-workspace",
-    "version": "9.8.0-alpha.26",
+    "version": "9.8.0-alpha.27",
     "author": "GoodData",
     "description": "GoodData SDK - Experimental workspace for features in dev",
     "repository": {
