@@ -150,12 +150,12 @@ Html placeholders (like `<b></b>`) are not supported directly in the newest vers
 
 ## 5. Using `|insight` and `|report` special keys
 
-Special usage of localisations. For some customer we need to rename **insight** to **report**. For this case, there is an implementation which can use piped locales `|insight` and `|report` for this. So everytime insight keyword is used in message, we need to change messages into this special definition as you can se below.
+Special usage of localisations. For some customer we need to rename **insight** to **report**. For this case, there is an implementation which can use piped locales `|insight` and `|report` for this. So everytime insight keyword is used in message, we need to change messages into this special definition as you can se below. Inside the values we now use the word `visualization` instead of `insight`.
 
 ```json
 {
     "message.with.insight|insight": {
-        "value": "INSIGHT CONTEXT",
+        "value": "VISUALIZATION CONTEXT",
         "comment": "...",
         "limit": 0
     },
