@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 
@@ -74,16 +74,16 @@ describe("Interaction", () => {
             message
                 .hasWarningMessage(true)
                 .clickShowMore()
-                .hasInsightNameIsBolder(true, "Insight has invalid interaction");
+                .hasInsightNameIsBolder(true, "Visualization has invalid interaction");
             widget1
                 .waitChartLoaded()
                 .scrollIntoView()
                 .focus()
-                .setTitle("Insight has invalid interaction rename");
+                .setTitle("Visualization has invalid interaction rename");
             message
                 .hasWarningMessage(true)
                 .clickShowMore()
-                .hasInsightNameIsBolder(true, "Insight has invalid interaction rename");
+                .hasInsightNameIsBolder(true, "Visualization has invalid interaction rename");
             widget1.waitChartLoaded().scrollIntoView().focus();
             new WidgetConfiguration(1).removeFromDashboard();
             message.hasWarningMessage(false);
@@ -99,7 +99,7 @@ describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrat
     it("should drill on insight from table with no rows and metrics in rows", () => {
         new Widget(0).getTable().click(0, 1, false);
 
-        drillModal.getTitleElement().should("have.text", "Insight has invalid interaction");
+        drillModal.getTitleElement().should("have.text", "Visualization has invalid interaction");
     });
 
     it("should drill on insight from table with no columns and metrics in rows", () => {

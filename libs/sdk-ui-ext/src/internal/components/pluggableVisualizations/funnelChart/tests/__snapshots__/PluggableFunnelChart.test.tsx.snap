@@ -98,7 +98,7 @@ exports[`PluggableFunnelChart > should return reference point with multiple metr
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an insight can have only one measure",
+        "warningMessage": "To view by, an visualization can have only one measure",
       },
     },
     "exportConfig": {
