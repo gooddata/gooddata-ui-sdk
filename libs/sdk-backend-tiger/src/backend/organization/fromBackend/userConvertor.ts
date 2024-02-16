@@ -1,6 +1,14 @@
 // (C) 2023-2024 GoodData Corporation
 
-import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup, idRef } from "@gooddata/sdk-model";
+import {
+    IUser,
+    IUserGroup,
+    IOrganizationUser,
+    IOrganizationUserGroup,
+    idRef,
+    IWorkspacePermissionAssignment,
+    IDataSourcePermissionAssignment,
+} from "@gooddata/sdk-model";
 import {
     JsonApiUserOutDocument,
     JsonApiUserGroupOutDocument,
@@ -8,6 +16,8 @@ import {
     JsonApiUserOutWithLinks,
     UserManagementUsersItem,
     UserManagementUserGroupsItem,
+    UserManagementWorkspacePermissionAssignment,
+    UserManagementDataSourcePermissionAssignment,
 } from "@gooddata/api-client-tiger";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
@@ -55,24 +65,68 @@ export const convertIncludedUser = (user: JsonApiUserOutWithLinks): IUser => {
 };
 
 export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganizationUser => ({
-    ref: idRef(user.userId),
-    id: user.userId,
+    ref: idRef(user.id),
+    id: user.id,
     email: user.email,
     fullName: user.name,
     isOrganizationAdmin: user.organizationAdmin,
     assignedUserGroupIds: user.groups,
-    assignedWorkspaceIds: user.workspaces,
-    assignedDataSourceIds: user.dataSources,
+    assignedWorkspaces: user.workspaces.map((ws) =>
+        convertWorkspacePermissionsAssignment(user.id, "user", ws),
+    ),
+    assignedDataSources: user.dataSources.map((ds) =>
+        convertDataSourcePermissionsAssignment(user.id, "user", ds),
+    ),
 });
 
 export const convertOrganizationUserGroup = (
     userGroup: UserManagementUserGroupsItem,
 ): IOrganizationUserGroup => ({
-    ref: idRef(userGroup.groupId),
-    id: userGroup.groupId,
+    ref: idRef(userGroup.id),
+    id: userGroup.id,
     name: userGroup.name,
     isOrganizationAdmin: userGroup.organizationAdmin,
     assignedUsersCount: userGroup.userCount,
-    assignedWorkspaceIds: userGroup.workspaces,
-    assignedDataSourceIds: userGroup.dataSources,
+    assignedWorkspaces: userGroup.workspaces.map((ws) =>
+        convertWorkspacePermissionsAssignment(userGroup.id, "userGroup", ws),
+    ),
+    assignedDataSources: userGroup.dataSources.map((ds) =>
+        convertDataSourcePermissionsAssignment(userGroup.id, "userGroup", ds),
+    ),
 });
+
+export function convertWorkspacePermissionsAssignment(
+    id: string,
+    subjectType: "user" | "userGroup",
+    assignment: UserManagementWorkspacePermissionAssignment,
+): IWorkspacePermissionAssignment {
+    return {
+        assigneeIdentifier: {
+            id,
+            type: subjectType,
+        },
+        workspace: {
+            id: assignment.id,
+            name: assignment.name,
+        },
+        ...assignment,
+    };
+}
+
+export function convertDataSourcePermissionsAssignment(
+    id: string,
+    subjectType: "user" | "userGroup",
+    assignment: UserManagementDataSourcePermissionAssignment,
+): IDataSourcePermissionAssignment {
+    return {
+        assigneeIdentifier: {
+            id,
+            type: subjectType,
+        },
+        dataSource: {
+            id: assignment.id,
+            name: assignment.name,
+        },
+        ...assignment,
+    };
+}

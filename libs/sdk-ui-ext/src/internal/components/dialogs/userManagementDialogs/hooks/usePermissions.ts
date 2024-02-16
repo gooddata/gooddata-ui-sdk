@@ -88,8 +88,9 @@ export const usePermissions = (
     };
 
     const updateGrantedWorkspace = (workspace: IGrantedWorkspace) => {
+        const updatedWorkspace = grantedWorkspaces.find((item) => item.id === workspace.id);
         const updatedWorkspaces = [
-            ...grantedWorkspaces.filter((item) => item.id !== workspace.id),
+            ...grantedWorkspaces.filter((item) => item !== updatedWorkspace),
             workspace,
         ].sort(sortByName);
 
@@ -103,6 +104,9 @@ export const usePermissions = (
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);
                 setGrantedWorkspaces(updatedWorkspaces);
+                if (updatedWorkspace.isHierarchical !== workspace.isHierarchical) {
+                    onSuccess();
+                }
             })
             .catch((error) => {
                 console.error("Change of workspace permission failed", error);
@@ -126,6 +130,7 @@ export const usePermissions = (
             .then(() => {
                 addSuccess(messages.dataSourceChangeSuccess);
                 setGrantedDataSources(updatedDataSources);
+                onSuccess();
             })
             .catch((error) => {
                 console.error("Change of data source permission failed", error);

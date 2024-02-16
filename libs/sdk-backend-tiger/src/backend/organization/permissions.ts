@@ -9,12 +9,11 @@ import {
 } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { ITigerClient, PermissionsAssignment } from "@gooddata/api-client-tiger";
 import {
-    ITigerClient,
-    PermissionsAssignment,
-    UserManagementDataSourcePermissionAssignment,
-    UserManagementWorkspacePermissionAssignment,
-} from "@gooddata/api-client-tiger";
+    convertDataSourcePermissionsAssignment,
+    convertWorkspacePermissionsAssignment,
+} from "./fromBackend/userConvertor.js";
 
 const fetchOrganizationPermissions = async (client: ITigerClient, userId: string) => {
     return client.declarativeLayout
@@ -37,7 +36,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         dataSourcePermissions: IDataSourcePermissionAssignment[];
     }> => {
         return this.authCall(async (client) => {
-            return client.actions
+            return client.userManagement
                 .listPermissionsForUser({ userId })
                 .then((response) => response.data)
                 .then((response) => ({
@@ -58,7 +57,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         dataSourcePermissions: IDataSourcePermissionAssignment[];
     }> => {
         return this.authCall(async (client) => {
-            return client.actions
+            return client.userManagement
                 .listPermissionsForUserGroup({ userGroupId })
                 .then((response) => response.data)
                 .then((response) => ({
@@ -100,7 +99,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
 
     public assignPermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.assignPermissions({
+            await client.userManagement.assignPermissions({
                 permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
             });
         });
@@ -108,7 +107,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
 
     public revokePermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.revokePermissions({
+            await client.userManagement.revokePermissions({
                 permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
             });
         });
@@ -129,41 +128,5 @@ function convertPermissionsAssignment(permissionsAssignment: IPermissionsAssignm
                 permissions: ws.permissions,
                 hierarchyPermissions: ws.hierarchyPermissions,
             })) ?? [],
-    };
-}
-
-function convertWorkspacePermissionsAssignment(
-    id: string,
-    subjectType: "user" | "userGroup",
-    assignment: UserManagementWorkspacePermissionAssignment,
-): IWorkspacePermissionAssignment {
-    return {
-        assigneeIdentifier: {
-            id,
-            type: subjectType,
-        },
-        workspace: {
-            id: assignment.id,
-            name: assignment.name,
-        },
-        ...assignment,
-    };
-}
-
-function convertDataSourcePermissionsAssignment(
-    id: string,
-    subjectType: "user" | "userGroup",
-    assignment: UserManagementDataSourcePermissionAssignment,
-): IDataSourcePermissionAssignment {
-    return {
-        assigneeIdentifier: {
-            id,
-            type: subjectType,
-        },
-        dataSource: {
-            id: assignment.id,
-            name: assignment.name,
-        },
-        ...assignment,
     };
 }
