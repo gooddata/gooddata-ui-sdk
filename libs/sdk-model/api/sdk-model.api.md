@@ -2010,11 +2010,11 @@ export interface IOrganizationPermissionAssignment {
 // @alpha
 export interface IOrganizationUser {
     // (undocumented)
-    assignedDataSourceIds: string[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
     // (undocumented)
     assignedUserGroupIds: string[];
     // (undocumented)
-    assignedWorkspaceIds: string[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
     // (undocumented)
     email?: string;
     // (undocumented)
@@ -2030,11 +2030,11 @@ export interface IOrganizationUser {
 // @alpha
 export interface IOrganizationUserGroup {
     // (undocumented)
-    assignedDataSourceIds: string[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
     // (undocumented)
     assignedUsersCount: number;
     // (undocumented)
-    assignedWorkspaceIds: string[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
     // (undocumented)
     id: string;
     // (undocumented)

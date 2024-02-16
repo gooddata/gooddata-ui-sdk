@@ -149,13 +149,13 @@ export interface IDataSourceApiResult {
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
-    decodedParameters?: Array<DataSourceParameter>;
+    decodedParameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     id: string;
     // (undocumented)
     name: string;
     // (undocumented)
-    parameters?: Array<DataSourceParameter>;
+    parameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     permissions?: IDataSourcePermission[];
     // (undocumented)
@@ -163,7 +163,7 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     type: IDataSourceType;
     // (undocumented)
-    url?: string;
+    url?: string | null;
     // (undocumented)
     username?: string;
 }

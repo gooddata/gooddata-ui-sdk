@@ -3,6 +3,7 @@ import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 
 import { ObjRef } from "../objRef/index.js";
+import { IDataSourcePermissionAssignment, IWorkspacePermissionAssignment } from "../organization/index.js";
 
 /**
  * Represents platform user.
@@ -156,8 +157,8 @@ export interface IOrganizationUser {
     email?: string;
     isOrganizationAdmin: boolean;
     assignedUserGroupIds: string[];
-    assignedWorkspaceIds: string[];
-    assignedDataSourceIds: string[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
 }
 
 /**
@@ -184,8 +185,8 @@ export interface IOrganizationUserGroup {
     name?: string;
     isOrganizationAdmin: boolean;
     assignedUsersCount: number;
-    assignedWorkspaceIds: string[];
-    assignedDataSourceIds: string[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
 }
 
 /**

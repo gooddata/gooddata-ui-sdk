@@ -120,7 +120,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUsers = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.actions.removeUsersUserGroups({
+            await client.userManagement.removeUsersUserGroups({
                 assigneeIdentifier: ids.map((id) => ({ id, type: "user" })),
             });
         });
@@ -128,7 +128,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUserGroups = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.actions.removeUsersUserGroups({
+            await client.userManagement.removeUsersUserGroups({
                 assigneeIdentifier: ids.map((id) => ({ id, type: "userGroup" })),
             });
         });
@@ -137,7 +137,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.actions
+                client.userManagement
                     .listUsers({ page, size })
                     .then((response) => response.data.users.map(convertOrganizationUser)),
             );
@@ -155,7 +155,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.actions
+                client.userManagement
                     .listUserGroups({ page, size })
                     .then((response) => response.data.userGroups.map(convertOrganizationUserGroup)),
             );
@@ -192,7 +192,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
                     // this is not ideal, but this can be replaced when new API is created
-                    return client.actions.addGroupMembers({
+                    return client.userManagement.addGroupMembers({
                         userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -208,7 +208,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
                     // this is not ideal, but this can be replaced when new API is created
-                    return client.actions.removeGroupMembers({
+                    return client.userManagement.removeGroupMembers({
                         userGroupId: userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -250,7 +250,7 @@ export class OrganizationUsersQuery implements IOrganizationUsersQuery {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const result = await this.authCall((client) =>
-                    client.actions.listUsers({ size: limit, page: offset / limit, ...this.filter }),
+                    client.userManagement.listUsers({ size: limit, page: offset / limit, ...this.filter }),
                 );
 
                 return {
@@ -294,7 +294,11 @@ export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const result = await this.authCall((client) =>
-                    client.actions.listUserGroups({ size: limit, page: offset / limit, ...this.filter }),
+                    client.userManagement.listUserGroups({
+                        size: limit,
+                        page: offset / limit,
+                        ...this.filter,
+                    }),
                 );
 
                 return {
