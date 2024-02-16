@@ -766,13 +766,13 @@ export interface DataColumnLocators {
 }
 /**
  * @type DateFilter
- * Abstract filter definition type for dates
+ * Abstract filter definition type for dates.
  * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
 /**
- *
+ * Filter definition type specified by label and values.
  * @export
  * @interface DependsOn
  */
@@ -795,6 +795,57 @@ export interface DependsOn {
      * @memberof DependsOn
      */
     complementFilter?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface DependsOnAllOf
+ */
+export interface DependsOnAllOf {
+    /**
+     * Specifies on which label the filter depends on.
+     * @type {string}
+     * @memberof DependsOnAllOf
+     */
+    label?: string;
+    /**
+     * Specifies values of the label for element filtering.
+     * @type {Array<string>}
+     * @memberof DependsOnAllOf
+     */
+    values?: Array<string>;
+    /**
+     * Inverse filtering mode.
+     * @type {boolean}
+     * @memberof DependsOnAllOf
+     */
+    complementFilter?: boolean;
+}
+/**
+ * Filter definition type for dates.
+ * @export
+ * @interface DependsOnDateFilter
+ */
+export interface DependsOnDateFilter {
+    /**
+     *
+     * @type {DateFilter}
+     * @memberof DependsOnDateFilter
+     */
+    dateFilter: DateFilter;
+}
+/**
+ *
+ * @export
+ * @interface DependsOnDateFilterAllOf
+ */
+export interface DependsOnDateFilterAllOf {
+    /**
+     *
+     * @type {DateFilter}
+     * @memberof DependsOnDateFilterAllOf
+     */
+    dateFilter?: DateFilter;
 }
 /**
  * Single dimension description.
@@ -903,10 +954,10 @@ export interface ElementsRequest {
     exactFilter?: Array<string>;
     /**
      * Return only items, whose are not filtered out by the parent filters.
-     * @type {Array<DependsOn>}
+     * @type {Array<DependsOn | DependsOnDateFilter>}
      * @memberof ElementsRequest
      */
-    dependsOn?: Array<DependsOn>;
+    dependsOn?: Array<DependsOn | DependsOnDateFilter>;
     /**
      * Return only items, what are computable on metric.
      * @type {Array<ValidateByItem>}

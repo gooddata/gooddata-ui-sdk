@@ -169,6 +169,7 @@ export {
     AfmValidDescendantsQuery,
     AfmValidDescendantsResponse,
     DependsOn,
+    DependsOnDateFilter,
     ValidateByItem,
 } from "./generated/afm-rest-api/api.js";
 export {
