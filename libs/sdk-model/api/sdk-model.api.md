@@ -2012,7 +2012,7 @@ export interface IOrganizationUser {
     // (undocumented)
     assignedDataSources: IDataSourcePermissionAssignment[];
     // (undocumented)
-    assignedUserGroupIds: string[];
+    assignedUserGroups: IUserGroup[];
     // (undocumented)
     assignedWorkspaces: IWorkspacePermissionAssignment[];
     // (undocumented)

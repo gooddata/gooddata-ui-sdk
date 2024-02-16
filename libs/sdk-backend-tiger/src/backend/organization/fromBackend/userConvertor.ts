@@ -18,6 +18,7 @@ import {
     UserManagementUserGroupsItem,
     UserManagementWorkspacePermissionAssignment,
     UserManagementDataSourcePermissionAssignment,
+    UserGroupIdentifier,
 } from "@gooddata/api-client-tiger";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
@@ -45,6 +46,14 @@ export const convertUserGroup = (userGroup: JsonApiUserGroupOutDocument): IUserG
     name: userGroup.data.attributes?.name,
 });
 
+export const convertUserGroupIdentifier = (userGroup: UserGroupIdentifier): IUserGroup => {
+    return {
+        ref: idRef(userGroup.id),
+        id: userGroup.id,
+        name: userGroup.name,
+    };
+};
+
 export const convertIncludedUserGroup = (group: JsonApiUserGroupOutWithLinks): IUserGroup => ({
     ref: idRef(group.id),
     id: group.id,
@@ -70,7 +79,7 @@ export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganiz
     email: user.email,
     fullName: user.name,
     isOrganizationAdmin: user.organizationAdmin,
-    assignedUserGroupIds: user.groups,
+    assignedUserGroups: user.userGroups.map(convertUserGroupIdentifier),
     assignedWorkspaces: user.workspaces.map((ws) =>
         convertWorkspacePermissionsAssignment(user.id, "user", ws),
     ),

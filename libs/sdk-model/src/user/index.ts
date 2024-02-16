@@ -156,7 +156,7 @@ export interface IOrganizationUser {
     fullName?: string;
     email?: string;
     isOrganizationAdmin: boolean;
-    assignedUserGroupIds: string[];
+    assignedUserGroups: IUserGroup[];
     assignedWorkspaces: IWorkspacePermissionAssignment[];
     assignedDataSources: IDataSourcePermissionAssignment[];
 }
