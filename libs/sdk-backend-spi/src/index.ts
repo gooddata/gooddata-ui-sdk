@@ -48,6 +48,7 @@ export {
     IWorkspaceInsightsService,
     InsightOrdering,
     IInsightsQueryOptions,
+    IInsightsQuery,
     IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
@@ -136,6 +137,8 @@ export {
     SupportedWidgetReferenceTypes,
     IDashboardReferences,
     IDashboardWithReferences,
+    IDashboardsQuery,
+    IDashboardsQueryResult,
 } from "./workspace/dashboards/index.js";
 export {
     isDashboardLayoutEmpty,

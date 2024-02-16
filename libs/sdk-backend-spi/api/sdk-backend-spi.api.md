@@ -323,6 +323,20 @@ export interface IDashboardReferences {
     plugins: IDashboardPlugin[];
 }
 
+// @public
+export interface IDashboardsQuery {
+    query(): Promise<IDashboardsQueryResult>;
+    withFilter(filter: {
+        title?: string;
+    }): IDashboardsQuery;
+    withPage(page: number): IDashboardsQuery;
+    withSize(size: number): IDashboardsQuery;
+    withSorting(sort: string[]): IDashboardsQuery;
+}
+
+// @public
+export type IDashboardsQueryResult = IPagedResource<IListedDashboard>;
+
 // @alpha
 export interface IDashboardWithReferences {
     // (undocumented)
@@ -521,6 +535,17 @@ export interface IInsightReferences {
 // @public
 export interface IInsightReferencing {
     analyticalDashboards?: IMetadataObject[];
+}
+
+// @public
+export interface IInsightsQuery {
+    query(): Promise<IInsightsQueryResult>;
+    withFilter(filter: {
+        title?: string;
+    }): IInsightsQuery;
+    withPage(page: number): IInsightsQuery;
+    withSize(size: number): IInsightsQuery;
+    withSorting(sort: string[]): IInsightsQuery;
 }
 
 // @public
@@ -929,6 +954,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]>;
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
+    getDashboardsQuery(): IDashboardsQuery;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
@@ -979,6 +1005,7 @@ export interface IWorkspaceInsightsService {
     getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
+    getInsightsQuery(): IInsightsQuery;
     getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;

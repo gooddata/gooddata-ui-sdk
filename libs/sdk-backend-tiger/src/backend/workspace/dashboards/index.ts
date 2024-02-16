@@ -23,6 +23,7 @@ import {
     TimeoutError,
     IExportResult,
     IGetDashboardPluginOptions,
+    IDashboardsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -71,6 +72,7 @@ import { convertExportMetadata as convertToBackendExportMetadata } from "../../.
 import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
+import { DashboardsQuery } from "./dashboardsQuery.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -96,6 +98,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertAnalyticalDashboardToListItems(result);
+    };
+
+    public getDashboardsQuery = (): IDashboardsQuery => {
+        return new DashboardsQuery(this.authCall, {
+            workspaceId: this.workspace,
+        });
     };
 
     public getDashboard = async (

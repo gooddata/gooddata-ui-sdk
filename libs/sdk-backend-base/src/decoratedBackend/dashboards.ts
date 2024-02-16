@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
@@ -11,6 +11,7 @@ import {
     IWidgetReferences,
     IExportResult,
     IGetDashboardPluginOptions,
+    IDashboardsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -40,6 +41,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]> {
         return this.decorated.getDashboards(options);
+    }
+
+    getDashboardsQuery(): IDashboardsQuery {
+        return this.decorated.getDashboardsQuery();
     }
 
     getDashboard(
