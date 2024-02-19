@@ -261,6 +261,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDirectQuery,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMariaDbDataSource,
+            "enableMariaDbDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMariaDbDataSource,
+        ),
     };
 }
 
