@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 export class Headline {
     constructor(private parentSelector: string) {}
 
@@ -35,6 +35,10 @@ export class Headline {
     hasValue(value: string) {
         this.getPrimaryItem().find(".s-headline-value").should("have.text", value);
         return this;
+    }
+
+    hasEmpty() {
+        cy.get(".visualization-empty").should("exist");
     }
 
     isValue(exist: boolean = false) {

@@ -3,6 +3,7 @@ import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } fro
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
 import { DateFilter } from "./dateFilter";
+import { AttributeFilterLimit } from "./attributeFilterLimit";
 
 export const NEW_ATTRIBUTE_FILTER_SELECTOR = ".s-add-attribute-filter";
 export const ATTRIBUTE_DROPZONE_SELECTOR = ".s-attr-filter-dropzone-box";
@@ -13,6 +14,8 @@ export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
 export const FILTER_BAR_SHOW_ALL_BUTTON = ".button-filter-bar-show-all";
 export const NO_RELEVANT_VALUES_SELECTOR = ".gd-attribute-filter-empty-filtered-result__next";
 export const DATE_FILTERS_SELECTOR = ".dash-filters-date";
+
+export type FilterByType = "normal" | "aggregated";
 
 export class AttributeFilter {
     constructor(private name: string) {}
@@ -34,6 +37,10 @@ export class AttributeFilter {
 
     getDropdownElement() {
         return cy.get(".overlay.dropdown-body");
+    }
+
+    getAttributeFilterLimit() {
+        return new AttributeFilterLimit();
     }
 
     selectAllValues() {
@@ -424,13 +431,19 @@ export class AttributeFilter {
         this.getDropdownElement().find(NO_RELEVANT_VALUES_SELECTOR).should("have.text", "No relevant values");
         return this;
     }
-
-    deleteFiltervaluesBy(filterName: string) {
+    deleteFiltervaluesBy(filterName: string, filterType: FilterByType = "normal") {
         this.selectConfiguration();
-        cy.get(`.attribute-filter__limit__item__title[title='${filterName}']`).realHover();
-        cy.get(
-            `.attribute-filter__limit__item__title[title='${filterName}'] + .s-filter-limit-delete`,
-        ).click();
+        if (filterType === "normal") {
+            cy.get(`.attribute-filter__limit__item__title[title='${filterName}']`).realHover();
+            cy.get(
+                `.attribute-filter__limit__item__title[title='${filterName}'] + .s-filter-limit-delete`,
+            ).click();
+        } else {
+            cy.get(`.attribute-filter__limit__item__title--aggregated[title='${filterName}']`).realHover();
+            cy.get(
+                `.attribute-filter__limit__item__title--aggregated[title='${filterName}'] + .s-filter-limit-delete`,
+            ).click();
+        }
         this.getDropdownElement().find(".s-apply").click();
         return this;
     }
@@ -462,16 +475,32 @@ export class AttributeFilter {
      */
     configureLimitingMetricDependency(metricName: string | string[]) {
         this.selectConfiguration();
-
         const metrics = typeof metricName === "string" ? [metricName] : metricName;
 
         metrics.forEach((metricName) => {
             cy.get(".s-add").click();
-            cy.get(".s-add-limit-metric").click();
-            cy.get(getTestClassByTitle(metricName, "metric-")).click();
+            this.getAttributeFilterLimit().addMetric().selectMetricItem(metricName);
         });
 
         this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
+    searchMetricDependency(metricName: string) {
+        cy.get(".s-add").click();
+        this.getAttributeFilterLimit().addMetric();
+        this.getAttributeFilterLimit().searchMetricItem(metricName);
+        return this;
+    }
+
+    selectMetricDependency(metricName: string) {
+        this.getAttributeFilterLimit().selectMetricItem(metricName);
+        this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
+    getNoDataMetricDependency() {
+        this.getAttributeFilterLimit().getNodata();
         return this;
     }
 }
