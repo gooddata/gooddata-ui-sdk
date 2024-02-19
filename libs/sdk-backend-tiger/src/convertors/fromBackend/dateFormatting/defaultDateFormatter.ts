@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import format from "date-fns/format/index.js";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";

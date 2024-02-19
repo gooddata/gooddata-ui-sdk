@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { expect, describe, it } from "vitest";
 import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils.js";
 
@@ -33,7 +33,8 @@ describe("sanitizeLocaleForMoment", () => {
         expect(actual).toEqual(expected);
     });
 
-    it.each(["de-DE", "en-US", "es-ES", "fr-FR", "ja-JP", "nl-NL", "pt-BR", "pt-PT", "ru-RU"])(
+    // it-IT
+    it.each(["de-DE", "en-US", "es-ES", "fr-FR", "ja-JP", "nl-NL", "pt-BR", "pt-PT", "ru-RU", "it-IT"])(
         "should not touch %s locale",
         (value: string) => {
             const expected = value;

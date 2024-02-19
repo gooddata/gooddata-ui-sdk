@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce.js";

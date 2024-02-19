@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { translationUtils } from "@gooddata/util";
 
 import enUS from "./bundles/en-US.json";
@@ -11,6 +11,7 @@ import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
 import ruRU from "./bundles/ru-RU.json";
+import itIT from "./bundles-it-IT.json";
 
 /**
  * @internal
@@ -33,4 +34,5 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
     "ru-RU": ruRU,
+    "it-IT": itIT,
 };
