@@ -20,7 +20,7 @@ const DATASET_CREATED = "Created";
 
 describe("Insights on dashboard", () => {
     beforeEach(() => {
-        Navigation.visitCopyOf("dashboard/insight");
+        Navigation.visit("dashboard/insight");
         editMode.isInEditMode(false).edit().isInEditMode();
     });
 
@@ -61,7 +61,21 @@ describe("Insights on dashboard", () => {
         widget.waitChartLoaded().getChart().hasNoDataForFilter();
     });
 
+    //Cover ticket: RAIL-4783
+    it(
+        "Dashboard should be displayed well after drag and drop new insight",
+        { tags: ["checklist_integrated_bear"] },
+        () => {
+            dashboard.getWidget(0).addBefore("ColumnChart");
+            new WidgetConfiguration(0).openInteractions().hasInteractions(true);
+        },
+    );
+});
+
+describe("rename insight on dashboard", () => {
     it("(SEPARATE) can rename an existing insight", { tags: ["pre-merge_isolated_tiger"] }, () => {
+        Navigation.visitCopyOf("dashboard/insight");
+        editMode.isInEditMode(false).edit().isInEditMode();
         widget.waitChartLoaded();
         cy.fixture("widgetName").then((data) => {
             data.forEach((result: { widgetName: string }) => {
@@ -72,16 +86,6 @@ describe("Insights on dashboard", () => {
         editMode.save();
         widget.waitChartLoaded().hasTitle("<button>hello</button>");
     });
-
-    //Cover ticket: RAIL-4783
-    it(
-        "Dashboard should be displayed well after drag and drop new insight",
-        { tags: ["checklist_integrated_bear"] },
-        () => {
-            dashboard.getWidget(0).addBefore("ColumnChart");
-            new WidgetConfiguration(0).openInteractions().hasInteractions(true);
-        },
-    );
 });
 
 describe("Date filtering on insight", () => {
