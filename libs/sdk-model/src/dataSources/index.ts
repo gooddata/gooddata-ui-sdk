@@ -20,7 +20,8 @@ export type DataSourceType =
     | "DATABRICKS"
     | "GDSTORAGE"
     | "CLICKHOUSE"
-    | "MYSQL";
+    | "MYSQL"
+    | "MARIADB";
 
 /**
  * @alpha
