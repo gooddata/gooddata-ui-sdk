@@ -423,6 +423,16 @@ export class AttributeFilter {
         return this;
     }
 
+    deleteFiltervaluesBy(filterName: string) {
+        this.selectConfiguration();
+        cy.get(`.attribute-filter__limit__item__title[title='${filterName}']`).realHover();
+        cy.get(
+            `.attribute-filter__limit__item__title[title='${filterName}'] + .s-filter-limit-delete`,
+        ).click();
+        this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
     /**
      * Works only for Tiger backend (available filter values UI)
      *
