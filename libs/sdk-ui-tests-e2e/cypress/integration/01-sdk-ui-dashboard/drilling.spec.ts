@@ -74,7 +74,7 @@ describe("Interaction", () => {
             message
                 .hasWarningMessage(true)
                 .clickShowMore()
-                .hasInsightNameIsBolder(true, "Visualization has invalid interaction");
+                .hasInsightNameIsBolder(true, "Insight has invalid interaction");
             widget1
                 .waitChartLoaded()
                 .scrollIntoView()
