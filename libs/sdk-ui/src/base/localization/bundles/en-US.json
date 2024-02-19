@@ -2973,6 +2973,36 @@
         "comment": "Error message shown when creation of user group failed.",
         "limit": 0
     },
+    "userManagement.users.loadingError.title": {
+        "value": "Can't open user",
+        "comment": "Error title shown when user detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.users.loadingError.notExist": {
+        "value": "The user you are trying to view does not exist.",
+        "comment": "Error shown when user detail loading ended up with 404 error.",
+        "limit": 0
+    },
+    "userManagement.users.loadingError.unknown": {
+        "value": "The user you are trying to view cannot be loaded.",
+        "comment": "Error shown when user detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.title": {
+        "value": "Can't open group",
+        "comment": "Error title shown when user group detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.notExist": {
+        "value": "The group you are trying to view does not exist.",
+        "comment": "Error shown when user group detail loading ended up with 404 error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.unknown": {
+        "value": "The group you are trying to view cannot be loaded.",
+        "comment": "Error shown when user group detail loading ended up with error.",
+        "limit": 0
+    },
     "userManagement.users.deleteSuccess": {
         "value": "Great! You have successfully deleted the user.",
         "comment": "Confirmation message shown when user was successfully deleted.",

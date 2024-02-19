@@ -1,7 +1,7 @@
 // (C) 2023-2024 GoodData Corporation
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { useBackendStrict } from "@gooddata/sdk-ui";
+import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 import {
     IOrganizationDescriptor,
     IUser,
@@ -29,14 +29,13 @@ export const useUser = (userId: string, organizationId: string, isAdmin: boolean
 
     const backend = useBackendStrict();
 
-    // initial user load
-    useEffect(() => {
-        backend
-            .organization(organizationId)
-            .users()
-            .getUser(userId)
-            .then((user) => setUser(user));
-    }, [backend, userId, organizationId]);
+    const { error, status } = useCancelablePromise(
+        {
+            promise: () => backend.organization(organizationId).users().getUser(userId),
+            onSuccess: (user) => setUser(user),
+        },
+        [backend, userId, organizationId],
+    );
 
     const onUserDetailsChanged = (user: IUser, isAdmin: boolean) => {
         setUser(user);
@@ -49,6 +48,8 @@ export const useUser = (userId: string, organizationId: string, isAdmin: boolean
         onUserDetailsChanged,
         isCurrentlyAdmin,
         setIsAdmin,
+        error,
+        isLoading: status === "loading",
     };
 };
 
@@ -56,14 +57,13 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onSucc
     const [userGroup, setUserGroup] = useState<IUserGroup>();
     const backend = useBackendStrict();
 
-    // initial user group load
-    useEffect(() => {
-        backend
-            .organization(organizationId)
-            .users()
-            .getUserGroup(userGroupId)
-            .then((userGroup) => setUserGroup(userGroup));
-    }, [backend, userGroupId, organizationId]);
+    const { error, status } = useCancelablePromise(
+        {
+            promise: () => backend.organization(organizationId).users().getUserGroup(userGroupId),
+            onSuccess: (userGroup) => setUserGroup(userGroup),
+        },
+        [backend, userGroupId, organizationId],
+    );
 
     const onUserGroupDetailsChanged = (userGroup: IUserGroup) => {
         setUserGroup(userGroup);
@@ -73,6 +73,8 @@ export const useUserGroup = (userGroupId: string, organizationId: string, onSucc
     return {
         userGroup,
         onUserGroupDetailsChanged,
+        error,
+        isLoading: status === "loading",
     };
 };
 
