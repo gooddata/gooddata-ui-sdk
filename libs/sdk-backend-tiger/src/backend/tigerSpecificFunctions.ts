@@ -513,7 +513,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data;
-    const { name, url, type, schema, username, parameters, decodedParameters } = attributes;
+    const { name, url, type, schema, username, parameters, decodedParameters, cacheStrategy } = attributes;
     return {
         id,
         type,
@@ -524,6 +524,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         permissions: meta?.permissions ?? [],
         parameters,
         decodedParameters,
+        cacheStrategy,
     };
 };
 
