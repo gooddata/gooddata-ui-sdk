@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution/index.js";
@@ -8,6 +8,7 @@ import { NotAuthenticated } from "../errors/index.js";
 import { IBackendCapabilities } from "./capabilities.js";
 import { IOrganization, IOrganizations } from "../organization/index.js";
 import { IEntitlements } from "../entitlements/index.js";
+import { IDataSourcesService } from "../dataSources/index.js";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend.
@@ -169,6 +170,11 @@ export interface IAnalyticalBackend {
      * Returns service that can be used to obtain license entitlements.
      */
     entitlements(): IEntitlements;
+
+    /**
+     * Returns service that can be used to work with data sources.
+     */
+    dataSources(): IDataSourcesService;
 }
 
 /**

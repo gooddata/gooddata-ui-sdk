@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -39,6 +39,7 @@ import {
     IOrganizationPermissionService,
     IOrganizationUserService,
     IAttributeHierarchiesService,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -95,7 +96,6 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     allowsInconsistentRelations: false,
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
-    supportsElementsQueryParentFiltering: true,
     supportsElementUris: true,
     supportsEveryoneUserGroupForAccessControl: true,
 };
@@ -158,6 +158,9 @@ export function recordedBackend(
         },
         entitlements(): IEntitlements {
             return recordedEntitlements();
+        },
+        dataSources(): IDataSourcesService {
+            throw new NotSupported("not supported");
         },
     };
 
@@ -365,16 +368,28 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         },
         permissions(): IOrganizationPermissionService {
             return {
-                getWorkspacePermissionsForUser: () => Promise.resolve([]),
-                getWorkspacePermissionsForUserGroup: () => Promise.resolve([]),
                 getOrganizationPermissionForUser: () => Promise.resolve([]),
                 getOrganizationPermissionForUserGroup: () => Promise.resolve([]),
                 updateOrganizationPermissions: () => Promise.resolve(),
-                updateWorkspacePermissions: () => Promise.resolve(),
+                getPermissionsForUser: () =>
+                    Promise.resolve({ workspacePermissions: [], dataSourcePermissions: [] }),
+                getPermissionsForUserGroup: () =>
+                    Promise.resolve({ workspacePermissions: [], dataSourcePermissions: [] }),
+                assignPermissions: () => Promise.resolve(),
+                revokePermissions: () => Promise.resolve(),
             };
         },
         users(): IOrganizationUserService {
             return {
+                createUser: () => {
+                    throw new NotSupported("not supported");
+                },
+                getUsersQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+                getUserGroupsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
                 addUsersToUserGroups: () => Promise.resolve(),
                 createUserGroup: () => Promise.resolve(),
                 deleteUsers: () => Promise.resolve(),

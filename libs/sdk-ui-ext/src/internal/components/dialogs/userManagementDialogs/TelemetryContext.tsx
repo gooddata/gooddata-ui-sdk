@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React from "react";
 import { invariant } from "ts-invariant";
@@ -36,6 +36,10 @@ export type TelemetryEvent =
     | "group-permission-changed-to-analyze-export"
     | "user-permission-changed-to-manage"
     | "group-permission-changed-to-manage"
+    | "user-data-source-permission-changed-to-use"
+    | "group-data-source-permission-changed-to-use"
+    | "user-data-source-permission-changed-to-manage"
+    | "group-data-source-permission-changed-to-manage"
     | "user-role-changed-to-admin"
     | "user-role-changed-to-member";
 

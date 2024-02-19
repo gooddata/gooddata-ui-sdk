@@ -544,14 +544,14 @@ describe("Drilling", () => {
             Navigation.visit("dashboard/dashboard-target");
             new Widget(0).waitTableLoaded().getTable().click(0, 1);
 
-            drillModal.getModalText().should("have.text", "Sorry, we can't display this insight");
+            drillModal.getModalText().should("have.text", "Sorry, we can't display this visualization");
         });
 
         it("Drill down on column chart with invalid drill", () => {
             Navigation.visit("dashboard/dashboard-target");
             new Widget(1).scrollIntoView().waitChartLoaded().getChart().waitLoaded().clickSeriesPoint(0, 0);
 
-            drillModal.getModalText().should("have.text", "Sorry, we can't display this insight");
+            drillModal.getModalText().should("have.text", "Sorry, we can't display this visualization");
         });
 
         it("Check attribute value when drilling in bubble chart", () => {

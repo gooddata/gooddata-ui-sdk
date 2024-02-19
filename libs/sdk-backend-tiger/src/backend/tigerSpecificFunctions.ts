@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import {
     JsonApiOrganizationOutMetaPermissionsEnum,
@@ -116,10 +116,10 @@ export interface IDataSourceConnectionInfo {
     name: string;
     schema: string;
     username?: string;
-    url?: string;
+    url?: string | null;
     permissions?: IDataSourcePermission[];
-    parameters?: Array<DataSourceParameter>;
-    decodedParameters?: Array<DataSourceParameter>;
+    parameters?: Array<DataSourceParameter> | null;
+    decodedParameters?: Array<DataSourceParameter> | null;
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -11,6 +11,7 @@ import {
     IOrganization,
     IOrganizations,
     IEntitlements,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 
 import { invariant } from "ts-invariant";
@@ -92,6 +93,9 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
         },
         entitlements(): IEntitlements {
             return primaryBackend.entitlements();
+        },
+        dataSources(): IDataSourcesService {
+            return primaryBackend.dataSources();
         },
     };
 

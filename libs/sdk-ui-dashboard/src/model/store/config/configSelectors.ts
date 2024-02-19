@@ -509,16 +509,6 @@ export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = cre
 );
 
 /**
- * Returns whether dependent filters are enabled.
- *
- * @internal
- */
-export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => !!(state.settings?.enableKPIDashboardDependentFilters || false),
-);
-
-/**
  * Returns whether choice of alternate display forms is enabled.
  *
  * @internal
@@ -568,18 +558,6 @@ export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> 
 );
 
 /**
- * Returns whether new KD dependent filters are enabled.
- *
- * @internal
- */
-export const selectEnableKDDependentFilters: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDDependentFilters ?? false;
-    },
-);
-
-/**
  * Returns whether multiple date filters are enabled.
  *
  * @internal
@@ -599,21 +577,6 @@ export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = creat
 export const selectEnableKDRichText: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableKDRichText ?? true;
 });
-
-/**
- * Returns whether KD dependent filters are enabled.
- * On Bear, this is driven by enableKPIDashboardDependentFilters.
- * On Tiger, it is driven by enableKDDependentFilters.
- *
- * @internal
- */
-export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
-    selectEnableKDDependentFilters,
-    selectIsKPIDashboardDependentFiltersEnabled,
-    (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
-        return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
-    },
-);
 
 /**
  * Returns whether KD cross filtering is enabled.

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import ReactContentLoader from "react-content-loader";
@@ -24,6 +24,7 @@ export interface IAsyncListProps<T> {
     items: T[];
     itemHeight?: number;
     renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    renderLoadingItem?: (props: IRenderListItemProps<T>) => JSX.Element;
 
     /**
      * Set to true to render the loading indicator instead of the list.
@@ -63,6 +64,7 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
         items,
         itemHeight,
         renderItem,
+        renderLoadingItem,
 
         isLoading,
 
@@ -74,12 +76,12 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
     const itemRenderer = useCallback(
         (renderItemProps: IRenderListItemProps<T>): JSX.Element => {
             if (renderItemProps.rowIndex + 1 > items.length) {
-                return <LoadingPlaceholder />;
+                return renderLoadingItem?.(renderItemProps) ?? <LoadingPlaceholder />;
             }
 
             return renderItem(renderItemProps);
         },
-        [items, renderItem],
+        [items, renderItem, renderLoadingItem],
     );
 
     const handleScrollEnd = useCallback(

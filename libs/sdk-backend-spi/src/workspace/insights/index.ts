@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IVisualizationClass,
@@ -63,6 +63,13 @@ export interface IWorkspaceInsightsService {
      * @returns paged results, empty page with zero total count if there are no insights stored in the workspace
      */
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
+
+    /**
+     * List insights
+     *
+     * @returns methods for querying insights
+     */
+    getInsightsQuery(): IInsightsQuery;
 
     /**
      * Create and save insight for the provided insight definition
@@ -233,6 +240,55 @@ export interface IGetInsightOptions {
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;
+}
+
+/**
+ * Service to query insights.
+ *
+ * @public
+ */
+export interface IInsightsQuery {
+    /**
+     * Sets number of insights to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of insights per page must be a positive number
+     * @returns insights query
+     */
+    withSize(size: number): IInsightsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns insights query
+     */
+    withPage(page: number): IInsightsQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns insights query
+     */
+    withFilter(filter: { title?: string }): IInsightsQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns insights query
+     */
+    withSorting(sort: string[]): IInsightsQuery;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IInsightsQueryResult>;
 }
 
 /**

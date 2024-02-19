@@ -595,28 +595,120 @@
                 },
                 "description": "Object identifier."
             },
+            "AbsoluteDateFilter": {
+                "required": ["absoluteDateFilter"],
+                "type": "object",
+                "properties": {
+                    "absoluteDateFilter": {
+                        "required": ["from", "to", "dataset"],
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                                "type": "string",
+                                "example": "2020-07-01 18:23"
+                            },
+                            "to": {
+                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                                "type": "string",
+                                "example": "2020-07-16 23:59"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            }
+                        }
+                    }
+                },
+                "description": "A datetime filter specifying exact from and to values."
+            },
+            "AfmObjectIdentifierDataset": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["dataset"]
+                            }
+                        }
+                    }
+                }
+            },
+            "DateFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type for dates.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativeDateFilter"
+                    }
+                ]
+            },
             "DependsOn": {
                 "required": ["label", "values"],
                 "type": "object",
-                "properties": {
-                    "label": {
-                        "type": "string",
-                        "description": "Specifies on which label the filter depends on."
+                "description": "Filter definition type specified by label and values.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DependsOnItem"
                     },
-                    "values": {
-                        "type": "array",
-                        "description": "Specifies values of the label for element filtering.",
-                        "items": {
-                            "type": "string",
-                            "nullable": true
+                    {
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "type": "string",
+                                "description": "Specifies on which label the filter depends on."
+                            },
+                            "values": {
+                                "type": "array",
+                                "description": "Specifies values of the label for element filtering.",
+                                "items": {
+                                    "type": "string",
+                                    "nullable": true
+                                }
+                            },
+                            "complementFilter": {
+                                "type": "boolean",
+                                "description": "Inverse filtering mode.",
+                                "default": false
+                            }
                         }
-                    },
-                    "complementFilter": {
-                        "type": "boolean",
-                        "description": "Inverse filtering mode.",
-                        "default": false
                     }
-                },
+                ]
+            },
+            "DependsOnDateFilter": {
+                "required": ["dateFilter"],
+                "type": "object",
+                "description": "Filter definition type for dates.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DependsOnItem"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "dateFilter": {
+                                "$ref": "#/components/schemas/DateFilter"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DependsOnItem": {
+                "type": "object",
                 "nullable": true
             },
             "ElementsRequest": {
@@ -663,7 +755,14 @@
                         "type": "array",
                         "description": "Return only items, whose are not filtered out by the parent filters.",
                         "items": {
-                            "$ref": "#/components/schemas/DependsOn"
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/DependsOn"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DependsOnDateFilter"
+                                }
+                            ]
                         }
                     },
                     "validateBy": {
@@ -693,6 +792,59 @@
                     }
                 },
                 "description": "Specifies what is used for filtering."
+            },
+            "RelativeDateFilter": {
+                "required": ["relativeDateFilter"],
+                "type": "object",
+                "properties": {
+                    "relativeDateFilter": {
+                        "required": ["from", "granularity", "to", "dataset"],
+                        "type": "object",
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity specifying particular date attribute in given dimension.",
+                                "example": "DAY",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
+                            "from": {
+                                "type": "integer",
+                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
+                                "format": "int32",
+                                "example": -6
+                            },
+                            "to": {
+                                "type": "integer",
+                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
+                                "format": "int32",
+                                "example": 0
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            }
+                        }
+                    }
+                },
+                "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension."
             },
             "ValidateByItem": {
                 "required": ["id", "type"],
@@ -744,35 +896,6 @@
                     }
                 },
                 "description": "Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics."
-            },
-            "AbsoluteDateFilter": {
-                "required": ["absoluteDateFilter"],
-                "type": "object",
-                "properties": {
-                    "absoluteDateFilter": {
-                        "required": ["from", "to", "dataset"],
-                        "type": "object",
-                        "properties": {
-                            "from": {
-                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
-                                "type": "string",
-                                "example": "2020-07-01 18:23"
-                            },
-                            "to": {
-                                "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
-                                "type": "string",
-                                "example": "2020-07-16 23:59"
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            },
-                            "dataset": {
-                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
-                            }
-                        }
-                    }
-                },
-                "description": "A datetime filter specifying exact from and to values."
             },
             "AbstractMeasureValueFilter": {
                 "type": "object",
@@ -896,27 +1019,6 @@
                             "type": {
                                 "type": "string",
                                 "enum": ["attribute", "label", "fact", "metric"]
-                            }
-                        }
-                    }
-                }
-            },
-            "AfmObjectIdentifierDataset": {
-                "required": ["identifier"],
-                "type": "object",
-                "properties": {
-                    "identifier": {
-                        "required": ["id", "type"],
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                                "type": "string",
-                                "example": "sample_item.price"
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["dataset"]
                             }
                         }
                     }
@@ -1098,18 +1200,6 @@
                         }
                     }
                 }
-            },
-            "DateFilter": {
-                "type": "object",
-                "description": "Abstract filter definition type for dates",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/AbsoluteDateFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RelativeDateFilter"
-                    }
-                ]
             },
             "Dimension": {
                 "required": ["itemIdentifiers"],
@@ -1466,59 +1556,6 @@
                     }
                 },
                 "description": "Filter the result on top/bottom N values according to given metric(s)."
-            },
-            "RelativeDateFilter": {
-                "required": ["relativeDateFilter"],
-                "type": "object",
-                "properties": {
-                    "relativeDateFilter": {
-                        "required": ["from", "granularity", "to", "dataset"],
-                        "type": "object",
-                        "properties": {
-                            "granularity": {
-                                "type": "string",
-                                "description": "Date granularity specifying particular date attribute in given dimension.",
-                                "example": "DAY",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
-                                ]
-                            },
-                            "from": {
-                                "type": "integer",
-                                "description": "Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for '2 days/weeks, ... ago').",
-                                "format": "int32",
-                                "example": -6
-                            },
-                            "to": {
-                                "type": "integer",
-                                "description": "End of the filtering interval. Specified by number of periods (with respect to given granularity). Value 'O' is representing current time-interval (current day, week, ...).",
-                                "format": "int32",
-                                "example": 0
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            },
-                            "dataset": {
-                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
-                            }
-                        }
-                    }
-                },
-                "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension."
             },
             "ResultSpec": {
                 "required": ["dimensions"],

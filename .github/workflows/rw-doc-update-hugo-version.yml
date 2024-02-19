@@ -1,0 +1,49 @@
+name: rw ~ Doc ~ Update Hugo version
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+      version:
+        required: true        
+        description: "Version to update hugo router params"
+        type: string
+      path-to-version-config:
+        required: false
+        default: "./docs/config/public/params.toml"
+        description: "Path to the Hugo version config file"
+        type: string
+
+jobs:
+    update-hugo-version:
+        runs-on: [ubuntu-latest]
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                ref: ${{ inputs.source-branch }}
+            - name: Add repository to git safe directories to avoid dubious ownership issue
+              run: git config --global --add safe.directory $GITHUB_WORKSPACE
+            - name: Config user
+              run: |
+                  git config --global user.email "git-action@gooddata.com"
+                  git config --global user.name "git-action"  
+            - name: Update Hugo version
+              uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-update-param-action@master
+              with:
+                  path-to-version-config: ${{ inputs.path-to-version-config }}
+                  version: ${{inputs.version}}
+            - name: Create and push branch
+              shell: bash
+              run: |
+                    git add ${path_to_version_config}
+                    git commit -m "Update Hugo version to ${version}"
+                    git push origin ${brach_name}
+              env:
+                brach_name: ${{inputs.source-branch}}
+                version: ${{inputs.version}}
+                path_to_version_config: ${{ inputs.path-to-version-config }}

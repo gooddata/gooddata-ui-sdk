@@ -1,0 +1,29 @@
+# (C) 2024 GoodData Corporation
+
+name: Release ~ Post-release tasks
+on:
+    workflow_dispatch:
+
+jobs:
+    gate-approval:
+        runs-on: ubuntu-latest
+        environment:
+            name: production
+        steps:
+            - run: echo "Initiating approval"
+
+    publish-documentation:
+        needs: gate-approval
+        uses: ./.github/workflows/rw-publish-documentation.yml
+
+    # TODO: delete-release-branch:
+
+    slack-notification:
+        runs-on: [ubuntu-latest]
+        needs: [ publish-documentation ]
+        steps:
+          - name: Notify to slack
+            uses: slackapi/slack-github-action@v1.25.0
+            with:
+              channel-id: "#javascript-notifications"
+              slack-message: "Post-release task was done"

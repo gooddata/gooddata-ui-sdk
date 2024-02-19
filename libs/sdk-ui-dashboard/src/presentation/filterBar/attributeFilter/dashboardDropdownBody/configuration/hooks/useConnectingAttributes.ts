@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import {
@@ -6,7 +6,6 @@ import {
     queryConnectingAttributes,
     QueryConnectingAttributes,
     useDashboardQueryProcessing,
-    selectSupportsElementsQueryParentFiltering,
     useDashboardSelector,
     selectSupportsSettingConnectingAttributes,
 } from "../../../../../../model/index.js";
@@ -25,11 +24,7 @@ export function useConnectingAttributes(
     currentFilterDisplayForm: ObjRef,
     neighborFiltersDisplayForms: ObjRef[],
 ): IUseConnectingAttributesResult {
-    const supportsDependentFilters = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
-    const supportsSettingConnectingAttributes = useDashboardSelector(
-        selectSupportsSettingConnectingAttributes,
-    );
-    const shouldLoadConnectingAttributes = supportsDependentFilters && supportsSettingConnectingAttributes;
+    const shouldLoadConnectingAttributes = useDashboardSelector(selectSupportsSettingConnectingAttributes);
 
     const pairs = useMemo<[ObjRef, ObjRef][]>(
         () =>

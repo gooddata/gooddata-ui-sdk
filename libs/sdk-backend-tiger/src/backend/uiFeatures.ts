@@ -54,8 +54,6 @@ export enum TigerFeaturesNames {
     // boolean + possible values: enabled, disabled
     EnableUserManagement = "enableUserManagement",
     //boolean + possible values: enabled, disabled
-    EnableKDDependentFilters = "enableKDDependentFilters",
-    //boolean + possible values: enabled, disabled
     EnableKDSavedFilters = "enableKDSavedFilters",
     //boolean + possible values: enabled, disabled
     EnableClickHouseDataSource = "enableClickHouseDataSource",
@@ -70,6 +68,10 @@ export enum TigerFeaturesNames {
     EnableKDRichText = "enableKDRichText",
     EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
     EnableMySqlDataSource = "enableMySqlDataSource",
+    EnableCreateUser = "enableCreateUser",
+    EnableManageDataSourcePermissions = "enableManageDataSourcePermissions",
+    //boolean + possible values: enabled, disabled
+    EnableDirectQuery = "enableDirectQuery",
 }
 
 export type ITigerFeatureFlags = {
@@ -96,7 +98,6 @@ export type ITigerFeatureFlags = {
     enableUnavailableItemsVisible: typeof FeatureFlagsValues["enableUnavailableItemsVisible"][number];
     enablePivotTableIncreaseBucketSize: typeof FeatureFlagsValues["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
-    enableKDDependentFilters: typeof FeatureFlagsValues["enableKDDependentFilters"][number];
     enableKDSavedFilters: typeof FeatureFlagsValues["enableKDSavedFilters"][number];
     enableClickHouseDataSource: typeof FeatureFlagsValues["enableClickHouseDataSource"][number];
     enableCsvAnalytics: typeof FeatureFlagsValues["enableCsvAnalytics"][number];
@@ -106,6 +107,9 @@ export type ITigerFeatureFlags = {
     enableKDRichText: typeof FeatureFlagsValues["enableKDRichText"][number];
     enableAttributeFilterValuesValidation: typeof FeatureFlagsValues["enableAttributeFilterValuesValidation"][number];
     enableMySqlDataSource: typeof FeatureFlagsValues["enableMySqlDataSource"][number];
+    enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
+    enableManageDataSourcePermissions: typeof FeatureFlagsValues["enableManageDataSourcePermissions"][number];
+    enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -132,7 +136,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
-    enableKDDependentFilters: false,
     enableKDSavedFilters: true,
     enableClickHouseDataSource: false,
     enableCsvAnalytics: false,
@@ -142,6 +145,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDRichText: true,
     enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
+    enableCreateUser: false,
+    enableManageDataSourcePermissions: false,
+    enableDirectQuery: false,
 };
 
 export const FeatureFlagsValues = {
@@ -172,7 +178,6 @@ export const FeatureFlagsValues = {
     enableUnavailableItemsVisible: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
-    enableKDDependentFilters: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,
     enableClickHouseDataSource: [true, false] as const,
     enableCsvAnalytics: [true, false] as const,
@@ -182,4 +187,7 @@ export const FeatureFlagsValues = {
     enableKDRichText: [true, false] as const,
     enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
+    enableCreateUser: [true, false] as const,
+    enableManageDataSourcePermissions: [true, false] as const,
+    enableDirectQuery: [true, false] as const,
 };

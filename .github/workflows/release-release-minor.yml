@@ -1,0 +1,24 @@
+# (C) 2024 GoodData Corporation
+
+name: Release ~ Release minor version
+on:
+  workflow_dispatch:
+
+jobs:
+    gate-approval:
+        runs-on: ubuntu-latest
+        environment:
+            name: production
+        steps:
+            - run: echo "Initiating approval"
+
+    publish-release-npm:
+      needs: gate-approval
+      uses: ./.github/workflows/rw-perform-release-major-minor.yml
+      permissions:
+        pull-requests: write
+        contents: write
+        id-token: write
+      secrets: inherit
+      with:
+        bump: "minor"

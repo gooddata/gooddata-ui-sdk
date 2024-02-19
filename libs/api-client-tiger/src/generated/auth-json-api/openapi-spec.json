@@ -247,6 +247,23 @@
                     }
                 }
             },
+            "ApiEntitlement": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "expiry": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                },
+                "description": "Defines entitlements for given organization."
+            },
             "FeatureFlagsContext": {
                 "required": ["earlyAccess"],
                 "type": "object",
@@ -325,6 +342,7 @@
             },
             "Profile": {
                 "required": [
+                    "entitlements",
                     "features",
                     "links",
                     "organizationId",
@@ -372,6 +390,13 @@
                                 "$ref": "#/components/schemas/StaticFeatures"
                             }
                         ]
+                    },
+                    "entitlements": {
+                        "type": "array",
+                        "description": "Defines entitlements for given organization.",
+                        "items": {
+                            "$ref": "#/components/schemas/ApiEntitlement"
+                        }
                     }
                 }
             },

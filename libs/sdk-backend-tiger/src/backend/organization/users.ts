@@ -1,6 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
-import { IOrganizationUserService } from "@gooddata/sdk-backend-spi";
+import {
+    IOrganizationUserService,
+    IOrganizationUsersQuery,
+    IOrganizationUsersQueryResult,
+    IOrganizationUserGroupsQuery,
+    IOrganizationUserGroupsQueryResult,
+} from "@gooddata/sdk-backend-spi";
 import { IUserGroup, IUser, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -12,6 +18,8 @@ import {
     convertIncludedUserGroup,
     convertIncludedUser,
 } from "./fromBackend/userConvertor.js";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { ActionsUtilities } from "@gooddata/api-client-tiger";
 
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -24,6 +32,27 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 .then((user) => convertUser(user));
         });
     };
+
+    public createUser(user: IUser): Promise<IUser> {
+        return this.authCall(async (client) => {
+            const createdUser = await client.entities.createEntityUsers({
+                jsonApiUserInDocument: {
+                    data: {
+                        id: user.login,
+                        type: "user",
+                        attributes: {
+                            authenticationId: user.authenticationId,
+                            email: user.email,
+                            firstname: user.firstName,
+                            lastname: user.lastName,
+                        },
+                    },
+                },
+            });
+
+            return convertUser(createdUser.data);
+        });
+    }
 
     public getUserGroup = async (id: string): Promise<IUserGroup | undefined> => {
         return this.authCall(async (client) => {
@@ -91,43 +120,45 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUsers = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all(
-                ids.map((id) =>
-                    client.entities.deleteEntityUsers({
-                        id,
-                    }),
-                ),
-            );
+            await client.userManagement.removeUsersUserGroups({
+                assigneeIdentifier: ids.map((id) => ({ id, type: "user" })),
+            });
         });
     };
 
     public deleteUserGroups = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all(
-                ids.map((id) =>
-                    client.entities.deleteEntityUserGroups({
-                        id,
-                    }),
-                ),
-            );
+            await client.userManagement.removeUsersUserGroups({
+                assigneeIdentifier: ids.map((id) => ({ id, type: "userGroup" })),
+            });
         });
     };
 
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
-            return client.actions
-                .listUsers()
-                .then((response) => response.data.users.map(convertOrganizationUser));
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
+                client.userManagement
+                    .listUsers({ page, size })
+                    .then((response) => response.data.users.map(convertOrganizationUser)),
+            );
         });
+    };
+
+    public getUsersQuery = () => {
+        return new OrganizationUsersQuery(this.authCall);
+    };
+
+    public getUserGroupsQuery = () => {
+        return new OrganizationUserGroupsQuery(this.authCall);
     };
 
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
-            return client.actions
-                .listUserGroups()
-                .then((response) => response.data.userGroups.map(convertOrganizationUserGroup));
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
+                client.userManagement
+                    .listUserGroups({ page, size })
+                    .then((response) => response.data.userGroups.map(convertOrganizationUserGroup)),
+            );
         });
     };
 
@@ -161,7 +192,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
                     // this is not ideal, but this can be replaced when new API is created
-                    return client.actions.addGroupMembers({
+                    return client.userManagement.addGroupMembers({
                         userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -177,7 +208,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
                     // this is not ideal, but this can be replaced when new API is created
-                    return client.actions.removeGroupMembers({
+                    return client.userManagement.removeGroupMembers({
                         userGroupId: userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -187,4 +218,96 @@ export class OrganizationUsersService implements IOrganizationUserService {
             );
         });
     };
+}
+
+export class OrganizationUsersQuery implements IOrganizationUsersQuery {
+    constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
+    private size = 100;
+    private page = 0;
+    private filter = {};
+
+    withSize(size: number): IOrganizationUsersQuery {
+        this.size = size;
+        return this;
+    }
+
+    withPage(page: number): IOrganizationUsersQuery {
+        this.page = page;
+        return this;
+    }
+
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUsersQuery {
+        this.filter = filter;
+        return this;
+    }
+
+    query(): Promise<IOrganizationUsersQueryResult> {
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const result = await this.authCall((client) =>
+                    client.userManagement.listUsers({ size: limit, page: offset / limit, ...this.filter }),
+                );
+
+                return {
+                    items: result.data.users.map(convertOrganizationUser),
+                    totalCount: result.data.totalCount,
+                };
+            },
+            this.size,
+            this.page * this.size,
+        );
+    }
+}
+
+export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery {
+    constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
+    private size = 100;
+    private page = 0;
+    private filter = {};
+
+    withSize(size: number): IOrganizationUserGroupsQuery {
+        this.size = size;
+        return this;
+    }
+
+    withPage(page: number): IOrganizationUserGroupsQuery {
+        this.page = page;
+        return this;
+    }
+
+    withFilter(filter: {
+        workspace?: string;
+        group?: string;
+        name?: string;
+        dataSource?: string;
+    }): IOrganizationUserGroupsQuery {
+        this.filter = filter;
+        return this;
+    }
+
+    query(): Promise<IOrganizationUserGroupsQueryResult> {
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const result = await this.authCall((client) =>
+                    client.userManagement.listUserGroups({
+                        size: limit,
+                        page: offset / limit,
+                        ...this.filter,
+                    }),
+                );
+
+                return {
+                    items: result.data.userGroups.map(convertOrganizationUserGroup),
+                    totalCount: result.data.totalCount,
+                };
+            },
+            this.size,
+            this.page * this.size,
+        );
+    }
 }

@@ -25,6 +25,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
+ * Defines entitlements for given organization.
+ * @export
+ * @interface ApiEntitlement
+ */
+export interface ApiEntitlement {
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    value?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    expiry?: string;
+}
+/**
  * Entity representing user in authentication system.
  * @export
  * @interface AuthUser
@@ -238,6 +263,12 @@ export interface Profile {
      * @memberof Profile
      */
     features: LiveFeatures | StaticFeatures;
+    /**
+     * Defines entitlements for given organization.
+     * @type {Array<ApiEntitlement>}
+     * @memberof Profile
+     */
+    entitlements: Array<ApiEntitlement>;
 }
 
 export const ProfilePermissionsEnum = {

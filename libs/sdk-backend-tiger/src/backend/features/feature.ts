@@ -179,13 +179,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableKDDependentFilters,
-            "enableKDDependentFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKDDependentFilters,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDSavedFilters,
             "enableKDSavedFilters",
             "BOOLEAN",
@@ -246,6 +239,27 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMySqlDataSource",
             "BOOLEAN",
             FeatureFlagsValues.enableMySqlDataSource,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableCreateUser,
+            "enableCreateUser",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCreateUser,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableManageDataSourcePermissions,
+            "enableManageDataSourcePermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableManageDataSourcePermissions,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDirectQuery,
+            "enableDirectQuery",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDirectQuery,
         ),
     };
 }

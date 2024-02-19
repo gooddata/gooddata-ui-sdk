@@ -1,14 +1,12 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 
 import { IAttributeMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
 import {
     useDashboardSelector,
-    selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
     IConnectingAttribute,
-    selectIsKDDependentFiltersEnabled,
     selectSupportsSettingConnectingAttributes,
 } from "../../../../../../model/index.js";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -45,15 +43,11 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
         validParents,
     } = props;
 
-    const supportsParentFiltering = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
-    const isDependentFiltersEnabled = useDashboardSelector(selectIsKDDependentFiltersEnabled);
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
 
-    const showDependentFiltersConfiguration = supportsParentFiltering && isDependentFiltersEnabled;
-
-    if (!showDependentFiltersConfiguration || parents.length < 1) {
+    if (parents.length < 1) {
         return null;
     }
 

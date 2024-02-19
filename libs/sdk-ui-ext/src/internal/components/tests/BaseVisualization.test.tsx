@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -453,7 +453,7 @@ describe("BaseVisualization", () => {
         });
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        expect(screen.getByText("Sorry, we can't display this insight")).toBeInTheDocument();
+        expect(screen.getByText("Sorry, we can't display this visualization")).toBeInTheDocument();
     });
 
     describe("getExtendedReferencePoint in componentDidMount", () => {
