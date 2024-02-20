@@ -82,7 +82,7 @@ jobs:
           done
 
           # commit only if bump produced some changes
-          git diff --exit-code || git commit --no-verify -a -m "Bumped version of sdk packages to $version which is in $TARGET_BRANCH"
+          git diff --exit-code || git commit --no-verify -a -m "chore: bumped version of sdk packages to $version which is in $TARGET_BRANCH" -m "" -m "TRIVIAL"
 
           # rush bump to something that's in target branch
           git merge --verbose --no-ff origin/$TARGET_BRANCH || true

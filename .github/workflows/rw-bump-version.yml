@@ -104,7 +104,7 @@ jobs:
                 git add libs/sdk-ui-all/CHANGELOG.* || true
                 git ls-files | grep '\.json' | xargs git add
 
-                git commit -a -m "Bump versions to $VERSION"
+                git commit -a -m "chore: bump versions to $VERSION" -m "" -m "TRIVIAL"
                 git push origin ${{ inputs.source-branch }}
               env:
                 VERSION: ${{ steps.version.outputs.version }}

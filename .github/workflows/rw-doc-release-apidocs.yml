@@ -85,7 +85,7 @@ jobs:
         run: |
           cd gooddata-ui-apidocs
           git add --all
-          git commit -m "Create a new api docs version $VERSION"
+          git commit -m "chore: create a new api docs version $VERSION" -m "" -m "TRIVIAL"
           git show --stat
 
           echo "Going to push to gooddata-ui-apidocs"

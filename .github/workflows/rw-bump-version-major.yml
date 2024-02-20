@@ -85,7 +85,7 @@ jobs:
               run: |
                 git ls-files | grep '\.json' | xargs git add
 
-                git commit -a -m "Bump versions to $NEXT_VERSION"
+                git commit -a -m "chore: bump versions to $NEXT_VERSION" -m "" -m "TRIVIAL"
                 git push origin ${SOURCE_BRANCH}
 
             - name: Get version

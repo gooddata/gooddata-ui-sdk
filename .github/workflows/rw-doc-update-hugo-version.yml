@@ -64,7 +64,7 @@ jobs:
               shell: bash
               run: |
                     git add ${path_to_version_config}
-                    git commit -m "Update Hugo version to ${version}"
+                    git commit -m "chore: update Hugo version to ${version}" -m "" -m "TRIVIAL"
                     git push origin ${brach_name}
               env:
                 brach_name: ${{inputs.source-branch}}
