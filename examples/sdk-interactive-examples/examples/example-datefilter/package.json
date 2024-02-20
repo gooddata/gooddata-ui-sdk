@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-datefilter",
-    "version": "9.8.0-alpha.33",
+    "version": "9.8.0-alpha.34",
     "title": "DateFilter",
     "description": "Example demonstrates usage of Date Filter component.",
     "author": "GoodData Corporation",
