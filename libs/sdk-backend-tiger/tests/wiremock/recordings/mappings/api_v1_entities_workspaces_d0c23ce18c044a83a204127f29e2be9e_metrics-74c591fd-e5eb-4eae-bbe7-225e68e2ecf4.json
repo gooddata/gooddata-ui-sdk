@@ -1,8 +1,8 @@
 {
-    "id": "68060892-eb33-4c46-99fe-f5b9bf3046b5",
-    "name": "api_v1_entities_workspaces_a9699e80b0ae484da980bde0b75499e3_attributes",
+    "id": "74c591fd-e5eb-4eae-bbe7-225e68e2ecf4",
+    "name": "api_v1_entities_workspaces_d0c23ce18c044a83a204127f29e2be9e_metrics",
     "request": {
-        "url": "/api/v1/entities/workspaces/a9699e80b0ae484da980bde0b75499e3/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&size=250&page=0",
+        "url": "/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,12 +16,12 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_a9699e80b0ae484da980bde0b75499e3_attributes-68060892-eb33-4c46-99fe-f5b9bf3046b5.json",
+        "bodyFileName": "api_v1_entities_workspaces_d0c23ce18c044a83a204127f29e2be9e_metrics-74c591fd-e5eb-4eae-bbe7-225e68e2ecf4.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
-            "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Vary": [
                 "Accept-Encoding",
@@ -34,7 +34,7 @@
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "68060892-eb33-4c46-99fe-f5b9bf3046b5",
+    "uuid": "74c591fd-e5eb-4eae-bbe7-225e68e2ecf4",
     "persistent": true,
-    "insertionIndex": 5
+    "insertionIndex": 8
 }
