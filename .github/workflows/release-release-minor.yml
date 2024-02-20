@@ -14,7 +14,7 @@ jobs:
 
     publish-release-npm:
       needs: gate-approval
-      uses: ./.github/workflows/rw-perform-release-major-minor.yml
+      uses: ./.github/workflows/rw-perform-release.yml
       permissions:
         pull-requests: write
         contents: write
@@ -22,3 +22,5 @@ jobs:
       secrets: inherit
       with:
         bump: "minor"
+        source-branch: "release"
+

@@ -12,6 +12,10 @@ on:
                 required: false
                 description: "Version semver"
                 type: string
+            is-latest:
+                required: false
+                description: "Bump type minor, major, patch"
+                type: string
 
 jobs:
     create-git-tag:
@@ -31,4 +35,4 @@ jobs:
                   commit: ${{inputs.source-branch}}
                   body: |
                       Please see the [CHANGELOG.md](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md) for details.
-                  makeLatest: true
+                  makeLatest: ${{ inputs.is-latest }}

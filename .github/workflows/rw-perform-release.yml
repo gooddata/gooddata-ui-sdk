@@ -1,10 +1,10 @@
-name: rw ~ Release ~ Perform release major or minor
+name: rw ~ Release ~ Perform release
 on:
     workflow_call:
         inputs:
             bump:
                 required: true
-                description: "The type of version bump (major, minor)"
+                description: "The type of version bump (minor, path)"
                 type: string
             source-branch:
                 required: true
@@ -60,13 +60,14 @@ jobs:
           version: ${{ needs.prepare-variables.outputs.short-version }}
 
     add-release-tag:
-        needs: [prepare-variables,update-hugo-version]
+        needs: [publish-release,prepare-variables,update-hugo-version]
         uses: ./.github/workflows/rw-git-create-tag.yml
         permissions:
           contents: write
         with:
           source-branch: ${{ inputs.source-branch }}
           version: ${{ needs.prepare-variables.outputs.version }}
+          is-latest: ${{ needs.publish-release.outputs.is-latest}}
 
     create-rel-branch:
       runs-on: [ubuntu-latest]

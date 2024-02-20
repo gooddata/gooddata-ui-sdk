@@ -4,6 +4,10 @@ name: rw ~ Release ~ Publish release
 on:
   workflow_call:
     inputs:
+      source-branch:
+        required: true
+        description: "source branch"
+        type: string
       bump:
         required: true
         description: "The type of version bump (major, minor, patch)"
@@ -12,6 +16,9 @@ on:
       version:
         description: "Version which was created"
         value: ${{ jobs.bump-version.outputs.version }}
+      is-latest:
+        description: "Is the version latest"
+        value: ${{ jobs.prape-release-releasde-tag.outputs.is_latest }}
 
 # limit concurrency to one run per branch at a time
 # so that we can run this from master and a release branch at the same time
@@ -31,15 +38,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: "release"
+          ref: ${{ inputs.source-branch }}
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18.17.0
-      - name: Get version
+      - name: Get version from branch ${{ inputs.source-branch }}
         id: get-version
         uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
-      - name: Check version
+      - name: Check version on ${{ inputs.source-branch }} branch
         run: |
           if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
             echo "The version $VERSION does not match X.Y.Z-beta.W"
@@ -56,19 +63,56 @@ jobs:
       id-token: write
     secrets: inherit
     with:
-      source-branch: "release"
+      source-branch: ${{ inputs.source-branch }}
       bump: ${{ inputs.bump }}
 
-  publish-release:
+  prape-release-releasde-tag:
+    outputs:
+      is_latest: ${{ steps.check-release-is-latest.outputs.is-latest }}
+      release_tag: ${{ steps.calculate-release-tag.outputs.release_tag }}
     needs: [bump-version]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check Release Version is latest
+        id: check-release-is-latest
+        uses: gooddata/gooddata-ui-sdk/.github/actions/git-check-release@master
+        with:
+          version: ${{ needs.bump-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Calculate release tag and set output
+        id: calculate-release-tag
+        run: |
+          if [[ "$BUMP" == "minor" ]]; then
+            echo "release_tag=latest" >> $GITHUB_OUTPUT
+          else
+            if [[ "$IS_LATEST" == "true" ]]; then
+              echo "release_tag=latest" >> $GITHUB_OUTPUT
+            else
+              echo "release_tag=patch" >> $GITHUB_OUTPUT
+            fi
+          fi
+        env:
+          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+          IS_LATEST: ${{ steps.check-release-is-latest.outputs.is-latest }}
+          BUMP: ${{ inputs.bump }}
+
+  publish-release:
+    needs: [bump-version,prape-release-releasde-tag]
     uses: ./.github/workflows/rw-publish-version.yml
     permissions:
       contents: read
       id-token: write
     secrets: inherit
     with:
-      source-branch: "release"
-      release-tag: "latest"
+      source-branch: ${{ inputs.source-branch }}
+      release-tag: ${{ needs.prape-release-releasde-tag.outputs.release_tag }}
 
   check-npm-package:
     outputs:

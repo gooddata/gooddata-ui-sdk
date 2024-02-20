@@ -1,6 +1,6 @@
 # (C) 2022 GoodData Corporation
 
-name: Check pull request
+name: Pull request ~ Commits validation
 
 on:
     pull_request:
