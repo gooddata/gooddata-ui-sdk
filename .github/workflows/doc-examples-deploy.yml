@@ -1,6 +1,6 @@
 # (C) 2024 GoodData Corporation
 
-# Deploy of ui sdk examples
+# Deploy of ui sdk examples test
 name: Doc ~ Examples deploy
 on:
   workflow_dispatch:
