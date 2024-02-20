@@ -22,7 +22,7 @@ jobs:
             - name: Setup node
               uses: actions/setup-node@v4
               with:
-                node-version: 18.17.0
+                  node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
@@ -42,8 +42,27 @@ jobs:
               run: |
                   rush publish --include-all --version-policy sdk --set-access-level public
             - name: Rush publish
+              uses: nick-fields/retry@v3
               env:
-                  TAG: ${{ inputs.release-tag }}
                   NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-              run: |
-                  rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+                  TAG: ${{ inputs.release-tag }}
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  retry_wait_seconds: 10
+                  command: |
+                      rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+
+    notify-publish-failed-to-slack:
+        if: ${{ always() && needs.publish-version.result == 'failure' }}
+        needs: publish-version
+        runs-on: [ubuntu-latest]
+        steps:
+            - name: Inform to slack when publish workflows failed
+              uses: slackapi/slack-github-action@v1.25.0
+              with:
+                  channel-id: "#javascript-notifications"
+                  slack-message: ":warning: Publish to NPM in *gooddata-ui-sdk* encountered an error during execution. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
+              env:
+                  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
