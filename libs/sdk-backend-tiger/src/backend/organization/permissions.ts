@@ -1,41 +1,19 @@
 // (C) 2023-2024 GoodData Corporation
 
-import { IOrganizationPermissionService } from "@gooddata/sdk-backend-spi";
+import { IOrganizationPermissionService, IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
 import {
     IWorkspacePermissionAssignment,
     IOrganizationPermissionAssignment,
     OrganizationPermissionAssignment,
+    IDataSourcePermissionAssignment,
 } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { ITigerClient } from "@gooddata/api-client-tiger";
-
-type GroupedWorkspacePermissions = { [key: string]: IWorkspacePermissionAssignment[] };
-
-const groupPermissionsById = (permissions: IWorkspacePermissionAssignment[]): GroupedWorkspacePermissions =>
-    permissions.reduce((groupedPermissions: GroupedWorkspacePermissions, permission) => {
-        const assigneeId = permission.assigneeIdentifier.id;
-        if (!groupedPermissions[assigneeId]) {
-            groupedPermissions[assigneeId] = [];
-        }
-        groupedPermissions[assigneeId].push(permission);
-        return groupedPermissions;
-    }, {});
-
-const getPermissionsByType = (
-    type: string,
-    permissions: IWorkspacePermissionAssignment[],
-): GroupedWorkspacePermissions =>
-    groupPermissionsById(permissions.filter((permission) => permission.assigneeIdentifier.type === type));
-
-const mapWorkspaceAssignments = (workspaceAssignments: IWorkspacePermissionAssignment[]) =>
-    workspaceAssignments.map(
-        ({ workspace, permissions, hierarchyPermissions }: IWorkspacePermissionAssignment) => ({
-            id: workspace.id,
-            permissions,
-            hierarchyPermissions,
-        }),
-    );
+import { ITigerClient, PermissionsAssignment } from "@gooddata/api-client-tiger";
+import {
+    convertDataSourcePermissionsAssignment,
+    convertWorkspacePermissionsAssignment,
+} from "./fromBackend/userConvertor.js";
 
 const fetchOrganizationPermissions = async (client: ITigerClient, userId: string) => {
     return client.declarativeLayout
@@ -51,49 +29,45 @@ const fetchOrganizationPermissions = async (client: ITigerClient, userId: string
 export class OrganizationPermissionService implements IOrganizationPermissionService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
-    public getWorkspacePermissionsForUser = async (
+    public getPermissionsForUser = async (
         userId: string,
-    ): Promise<IWorkspacePermissionAssignment[]> => {
+    ): Promise<{
+        workspacePermissions: IWorkspacePermissionAssignment[];
+        dataSourcePermissions: IDataSourcePermissionAssignment[];
+    }> => {
         return this.authCall(async (client) => {
-            return client.actions
-                .listWorkspacePermissionsForUser({ userId })
+            return client.userManagement
+                .listPermissionsForUser({ userId })
                 .then((response) => response.data)
-                .then((response) =>
-                    response.workspaces.map((assignment) => ({
-                        assigneeIdentifier: {
-                            id: userId,
-                            type: "user",
-                        },
-                        workspace: {
-                            id: assignment.id,
-                            name: assignment.name,
-                        },
-                        ...assignment,
-                    })),
-                );
+                .then((response) => ({
+                    workspacePermissions: response.workspaces.map((assignment) =>
+                        convertWorkspacePermissionsAssignment(userId, "user", assignment),
+                    ),
+                    dataSourcePermissions: response.dataSources.map((assignment) =>
+                        convertDataSourcePermissionsAssignment(userId, "user", assignment),
+                    ),
+                }));
         });
     };
 
-    public getWorkspacePermissionsForUserGroup = async (
+    public getPermissionsForUserGroup = async (
         userGroupId: string,
-    ): Promise<IWorkspacePermissionAssignment[]> => {
+    ): Promise<{
+        workspacePermissions: IWorkspacePermissionAssignment[];
+        dataSourcePermissions: IDataSourcePermissionAssignment[];
+    }> => {
         return this.authCall(async (client) => {
-            return client.actions
-                .listWorkspacePermissionsForUserGroup({ userGroupId })
+            return client.userManagement
+                .listPermissionsForUserGroup({ userGroupId })
                 .then((response) => response.data)
-                .then((response) =>
-                    response.workspaces.map((assignment) => ({
-                        assigneeIdentifier: {
-                            id: userGroupId,
-                            type: "userGroup",
-                        },
-                        workspace: {
-                            id: assignment.id,
-                            name: assignment.name,
-                        },
-                        ...assignment,
-                    })),
-                );
+                .then((response) => ({
+                    workspacePermissions: response.workspaces.map((assignment) =>
+                        convertWorkspacePermissionsAssignment(userGroupId, "userGroup", assignment),
+                    ),
+                    dataSourcePermissions: response.dataSources.map((assignment) =>
+                        convertDataSourcePermissionsAssignment(userGroupId, "userGroup", assignment),
+                    ),
+                }));
         });
     };
 
@@ -123,32 +97,36 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         });
     };
 
-    public updateWorkspacePermissions = async (
-        permissions: IWorkspacePermissionAssignment[],
-    ): Promise<void> => {
+    public assignPermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
         return this.authCall(async (client) => {
-            const userPermissions = getPermissionsByType("user", permissions);
-            const userGroupPermissions = getPermissionsByType("userGroup", permissions);
-
-            // this is not ideal, but this can be replaced when bulk API is created
-            await Promise.all([
-                ...Object.keys(userPermissions).map((userId) =>
-                    client.actions.manageWorkspacePermissionsForUser({
-                        userId,
-                        userManagementWorkspacePermissionAssignments: {
-                            workspaces: mapWorkspaceAssignments(userPermissions[userId]),
-                        },
-                    }),
-                ),
-                ...Object.keys(userGroupPermissions).map((userGroupId) =>
-                    client.actions.manageWorkspacePermissionsForUserGroup({
-                        userGroupId,
-                        userManagementWorkspacePermissionAssignments: {
-                            workspaces: mapWorkspaceAssignments(userGroupPermissions[userGroupId]),
-                        },
-                    }),
-                ),
-            ]);
+            await client.userManagement.assignPermissions({
+                permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
+            });
         });
+    }
+
+    public revokePermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
+        return this.authCall(async (client) => {
+            await client.userManagement.revokePermissions({
+                permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
+            });
+        });
+    }
+}
+
+function convertPermissionsAssignment(permissionsAssignment: IPermissionsAssignment): PermissionsAssignment {
+    return {
+        assignees: permissionsAssignment.assignees,
+        dataSources:
+            permissionsAssignment.dataSources?.map((ds) => ({
+                id: ds.dataSource.id,
+                permissions: ds.permissions,
+            })) ?? [],
+        workspaces:
+            permissionsAssignment.workspaces?.map((ws) => ({
+                id: ws.workspace.id,
+                permissions: ws.permissions,
+                hierarchyPermissions: ws.hierarchyPermissions,
+            })) ?? [],
     };
 }

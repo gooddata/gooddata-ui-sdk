@@ -11,9 +11,6 @@ first_word=$(echo ${msg%% *} | awk '{print tolower($0)}')
 retval=0
 
 case "$first_word" in
-*"trivial:"*)
-  retval=1
-  ;;
 *"feature:"*)
   retval=1
   ;;
@@ -29,7 +26,7 @@ case "$first_word" in
 esac
 
 if [ $retval -eq 1 ]; then
-    echo "ABORTING COMMIT: Please do not use TRIVIAL, FEATURE, RELATED, BUGFIX or CONFIG prefixes in commit messages. Check out the docs/contributing.md and docs/sdk-dev.md for additional guidelines and information useful when making contributions."
+    echo "ABORTING COMMIT: Please do not use FEATURE, RELATED, BUGFIX or CONFIG prefixes in commit messages. Check out the docs/contributing.md and docs/sdk-dev.md for additional guidelines and information useful when making contributions."
 fi
 
 exit ${retval}

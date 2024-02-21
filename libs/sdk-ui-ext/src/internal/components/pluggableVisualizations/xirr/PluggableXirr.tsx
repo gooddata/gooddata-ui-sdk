@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -192,6 +192,11 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     // This is effectively calling super.pushData()
     // https://stackoverflow.com/questions/31088947/inheritance-method-call-triggers-typescript-compiler-error
     // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
+    // with new TS we got Property 'handlePushData' is used before its initialization.ts(2729)
+    // it is not possible to call super.handlePushData() directly and get reference to this.handlePushData in constructor
+    // tested in runtime and it works
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     private superPushData = this.pushData;
 
     protected pushData = (data: IPushData, options?: IVisualizationOptions): void => {

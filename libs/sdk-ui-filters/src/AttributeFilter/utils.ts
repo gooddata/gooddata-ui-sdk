@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
@@ -57,8 +57,7 @@ export function getElementKey(element: IAttributeElement) {
  * @internal
  */
 export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
-    const { connectToPlaceholder, filter, onApply, parentFilters, hiddenElements, staticElements, backend } =
-        props;
+    const { connectToPlaceholder, filter, onApply, hiddenElements, staticElements } = props;
 
     invariant(
         !(filter && connectToPlaceholder),
@@ -76,16 +75,7 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
     );
 
     invariant(
-        !(!backend?.capabilities?.supportsElementsQueryParentFiltering && !isEmpty(parentFilters)),
-        "Parent filtering is not supported by the current backend implementation.",
-    );
-
-    invariant(
-        !(
-            !backend?.capabilities?.supportsElementsQueryParentFiltering &&
-            !isEmpty(hiddenElements) &&
-            isEmpty(staticElements)
-        ),
+        !(!isEmpty(hiddenElements) && isEmpty(staticElements)),
         "Hidden elements are not supported by the current backend implementation.",
     );
 }

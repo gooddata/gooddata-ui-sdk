@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { layoutWidgets, UnexpectedError, NotSupported } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -88,6 +88,8 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
     isKpiWithComparison,
+    IInsightWidget,
+    IInsightWidgetDefinition,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter.js";
@@ -459,7 +461,11 @@ export const convertWidget = (
         };
     }
 
-    const { insight, properties: widgetProperties = {}, configuration } = widget;
+    const {
+        insight,
+        properties: widgetProperties = {},
+        configuration,
+    } = widget as IInsightWidget | IInsightWidgetDefinition;
 
     const { properties, references } = convertUrisToReferences({
         properties: widgetProperties,

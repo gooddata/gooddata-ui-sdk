@@ -169,6 +169,64 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "af127447-1e69-44e1-9f14-2c07a1ba69a3",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "a40866ab-5272-4f2c-9b5a-dd255b1e5d42",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Column chart",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-02-13 07:31",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "0c120022-243d-4146-987c-eadfaa58b0d0",
+                "title": "Dashboard multiple date filters"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "b2c3b1d2-b990-44a2-bf02-a857747a02b7",
                             "type": "filterContext"
                         }
@@ -3831,6 +3889,55 @@
                 },
                 "description": "",
                 "id": "ac7f493d-782f-496b-a5eb-c4b988151df6",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["Adam Bradley", "Alejandro Vabiano", "Alexsandr Fyodr", "Antony"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_owner.salesrep.ownername",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "569694f5c5af4307ace4b75fce3b43a4",
+                                "negativeSelection": false
+                            }
+                        },
+                        {
+                            "dateFilter": {
+                                "dataSet": {
+                                    "identifier": {
+                                        "id": "dt_activity_timestamp",
+                                        "type": "dataset"
+                                    }
+                                },
+                                "granularity": "GDC.time.date",
+                                "type": "relative"
+                            }
+                        },
+                        {
+                            "dateFilter": {
+                                "dataSet": {
+                                    "identifier": {
+                                        "id": "dt_oppcreated_timestamp",
+                                        "type": "dataset"
+                                    }
+                                },
+                                "granularity": "GDC.time.date",
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "af127447-1e69-44e1-9f14-2c07a1ba69a3",
                 "title": "filterContext"
             },
             {

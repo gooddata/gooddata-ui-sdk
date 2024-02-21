@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { uriRef, IDashboardAttachment, IWidgetAttachment } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
@@ -58,21 +58,21 @@ describe("Scheduled email management utils", () => {
                 pdfDashboardAttachment,
             ]);
 
-            expect(result.attachmentLabel).toEqual("Dashboard and 2 insights");
+            expect(result.attachmentLabel).toEqual("Dashboard and 2 visualizations");
             expect(result.AttachmentIcon).toEqual(Icon.Many);
         });
 
         it("should return correct label describing number of insight attachments and 'Icon.Insight' component", () => {
             const result = getAttachmentType(intl, [csvWidgetAttachment, xlsxWidgetAttachment]);
 
-            expect(result.attachmentLabel).toEqual("2 insights");
+            expect(result.attachmentLabel).toEqual("2 visualizations");
             expect(result.AttachmentIcon).toEqual(Icon.Insight);
         });
 
         it("should return correct label describing insight attachment and 'Icon.Insight' component", () => {
             const result = getAttachmentType(intl, [csvWidgetAttachment]);
 
-            expect(result.attachmentLabel).toEqual("1 insight");
+            expect(result.attachmentLabel).toEqual("1 visualization");
             expect(result.AttachmentIcon).toEqual(Icon.Insight);
         });
 

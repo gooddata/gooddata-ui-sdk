@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 import flow from "lodash/flow.js";
 import map from "lodash/fp/map.js";
@@ -12,6 +12,8 @@ import {
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     IGetInsightOptions,
+    IInsightsQuery,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { IObjectXrefEntry, IVisualization, IVisualizationClassWrapped } from "@gooddata/api-model-bear";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
@@ -115,6 +117,10 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
 
         return this.getInsightsInner(options ?? {}, visualizationClassUrlByVisualizationClassUri, new Map());
     };
+
+    public getInsightsQuery(): IInsightsQuery {
+        throw new NotSupported("not supported");
+    }
 
     private getInsightsInner = async (
         options: IInsightsQueryOptions,

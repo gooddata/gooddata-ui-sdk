@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 _build_styles() {
     # --quiet-deps avoid ag-grid deprecation warnings

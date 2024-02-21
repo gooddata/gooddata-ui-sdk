@@ -7,7 +7,7 @@ weight: 11
 
 An **execution** is a combination of attributes, measures, and filters that describes what data you want to calculate.
 
-> A measure contains numeric data (for example, revenue). Measures can be sliced by selected attributes (for example, city, date in years, or both) and filtered by attribute values or date constraints. For more information, see the [main concepts](./execution_model/).
+> A measure contains numeric data (for example, revenue). Measures can be sliced by selected attributes (for example, city, date in years, or both) and filtered by attribute values or date constraints. For more information, see the [main concepts](../../get_raw_data/#measures-attributes-and-filters).
 
 ## End-to-end flow
 

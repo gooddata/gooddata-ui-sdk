@@ -15,28 +15,20 @@ on:
 
 jobs:
     publish-version:
-        runs-on: [infra1-medium]
-        container:
-            image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye
+        runs-on: [ubuntu-latest]
         permissions:
             contents: read
-            id-token: write
         steps:
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
                   ref: ${{ inputs.source-branch }}
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
-            - name: Get NPM_PUBLISH_TOKEN from Vault and set it as env variable
-              uses: hashicorp/vault-action@v2
-              with:
-                  url: "https://vault.ord1.infra.intgdc.com"
-                  method: jwt
-                  path: jwt/github
-                  role: front-end
-                  secrets: |
-                    secret/data/v3/int/npm/rw-token secret | NPM_PUBLISH_TOKEN ;
             - name: Install rush
               run: |
                   npm install -g @microsoft/rush
@@ -50,7 +42,27 @@ jobs:
               run: |
                   rush publish --include-all --version-policy sdk --set-access-level public
             - name: Rush publish
+              uses: nick-fields/retry@v3
               env:
+                  NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
                   TAG: ${{ inputs.release-tag }}
-              run: |
-                  rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  retry_wait_seconds: 10
+                  command: |
+                      rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+
+    notify-publish-failed-to-slack:
+        if: ${{ always() && needs.publish-version.result == 'failure' }}
+        needs: publish-version
+        runs-on: [ubuntu-latest]
+        steps:
+            - name: Inform to slack when publish workflows failed
+              uses: slackapi/slack-github-action@v1.25.0
+              with:
+                  channel-id: "#javascript-notifications"
+                  slack-message: ":warning: Publish to NPM in *gooddata-ui-sdk* encountered an error during execution. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
+              env:
+                  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

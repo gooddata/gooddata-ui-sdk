@@ -38,6 +38,7 @@ import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
+import { IDashboardsQuery } from '@gooddata/sdk-backend-spi';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -527,6 +528,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     // (undocumented)
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
+    // (undocumented)
+    getDashboardsQuery(): IDashboardsQuery;
     // (undocumented)
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     // (undocumented)

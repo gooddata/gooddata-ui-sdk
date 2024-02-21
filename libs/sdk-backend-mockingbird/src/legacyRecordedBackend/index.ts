@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     isAttributeHeader,
     IExecutionResult as IBearExecutionResult,
@@ -41,6 +41,7 @@ import {
     IExplainProvider,
     IEntitlements,
     IAttributeHierarchiesService,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -152,6 +153,9 @@ export function legacyRecordedBackend(
             return Promise.resolve({ userId: "recordedUser" });
         },
         entitlements(): IEntitlements {
+            throw new NotSupported("not yet supported");
+        },
+        dataSources(): IDataSourcesService {
             throw new NotSupported("not yet supported");
         },
     };

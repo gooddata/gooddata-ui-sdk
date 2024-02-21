@@ -48,7 +48,7 @@ function shutdownAIO() {
 }
 
 if [[ "$IS_AIO" == true ]]; then
-  DATA_LOADER_IMAGE='registry.gitlab.com/gooddata/gdc-nas/data-loader:master'
+  DATA_LOADER_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/nas/data-loader:master'
   PORT_NUMBER=300${EXECUTOR_NUMBER}
   HOST=http://localhost:$PORT_NUMBER
   TEST_HOST=http://$CONTAINER_ID:$PORT_NUMBER
@@ -56,13 +56,7 @@ if [[ "$IS_AIO" == true ]]; then
   TIGER_API_TOKEN=YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz
   TIGER_DATASOURCES_NAME=pg_staging-goodsales
   EXTRA_PARAMS=" --net=$NETWORK_ID "
-
-  if [[ "$AIO_VERSION" == "master" || "$AIO_VERSION" == "stable" ]]; then
-    # Will be done in QA-19631 after  GL -> GH migration (gdc-nas) is done
-    AIO_IMAGE="registry.gitlab.com/gooddata/gdc-nas/gooddata-cn-ce:$AIO_VERSION"
-  else
-    AIO_IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/nas/gooddata-cn-ce:$AIO_VERSION"
-  fi
+  AIO_IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/nas/gooddata-cn-ce:$AIO_VERSION"
 
   trap shutdownAIO EXIT
   docker network create $NETWORK_ID

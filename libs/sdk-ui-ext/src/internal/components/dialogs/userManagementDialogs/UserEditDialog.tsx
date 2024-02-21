@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { LoadingComponent } from "@gooddata/sdk-ui";
-import { Tabs, Overlay, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
 
 import { userDialogTabsMessages, messages } from "./locales.js";
 import { WorkspaceList } from "./Workspace/WorkspaceList.js";
@@ -16,7 +16,6 @@ import {
     useUserDialogTabs,
     useUserGroups,
     useUser,
-    useWorkspaces,
     useUserDialogMode,
     useDeleteUser,
     useDeleteDialog,
@@ -26,8 +25,13 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
-import { UserEditDialogMode } from "./types.js";
+import { UserEditDialogMode, IGrantedDataSource } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { DataSourceList } from "./DataSources/DataSourceList.js";
+import { AddDataSource } from "./DataSources/AddDataSource.js";
+import { usePermissions } from "./hooks/usePermissions.js";
+import { ErrorDialog } from "./ErrorDialog.js";
+import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -42,6 +46,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     changeUserMembership?: boolean;
     onSuccess: () => void;
     onClose: () => void;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
 }
 
 const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
@@ -52,23 +57,36 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     onClose,
     initialView = "VIEW",
     changeUserMembership = false,
+    renderDataSourceIcon,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
-    const { user, isCurrentlyAdmin, onUserDetailsChanged, setIsAdmin } = useUser(
-        userId,
-        organizationId,
-        isAdmin,
-        onSuccess,
-    );
+    const {
+        user,
+        isCurrentlyAdmin,
+        onUserDetailsChanged,
+        setIsAdmin,
+        error,
+        isLoading: userIsLoading,
+    } = useUser(userId, organizationId, isAdmin, onSuccess);
     const { isBootstrapUser, bootstrapUserGroupId } = useOrganizationDetails(organizationId);
-    const { grantedWorkspaces, onWorkspacesChanged, removeGrantedWorkspace, updateGrantedWorkspace } =
-        useWorkspaces(userId, "user", organizationId, onSuccess);
+    const {
+        grantedWorkspaces,
+        onWorkspacesChanged,
+        removeGrantedWorkspace,
+        updateGrantedWorkspace,
+        grantedDataSources,
+        onDataSourcesChanged,
+        removeGrantedDataSource,
+        updateGrantedDataSource,
+    } = usePermissions(userId, "user", organizationId, onSuccess);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup, removeAdminGroup } =
         useUserGroups(userId, organizationId, bootstrapUserGroupId, onSuccess, setIsAdmin);
+
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
         grantedUserGroups,
+        grantedDataSources,
         isCurrentlyAdmin,
     );
     const {
@@ -95,6 +113,13 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                 editButtonText: intl.formatMessage(messages.addUserGroupButton),
             };
         }
+        if (selectedTabId.id === userDialogTabsMessages.dataSources.id) {
+            return {
+                editButtonMode: "DATA_SOURCES" as const,
+                editButtonIconClassName: "gd-icon-add",
+                editButtonText: intl.formatMessage(messages.addDataSourcePermissionButton),
+            };
+        }
         return {
             editButtonMode: "DETAIL" as const,
             editButtonIconClassName: "gd-icon-pencil gd-user-management-dialog-edit-mode-icon",
@@ -102,7 +127,10 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         };
     }, [intl, selectedTabId]);
 
-    const isLoaded = user !== undefined && grantedWorkspaces !== null && grantedUserGroups !== null;
+    const isLoading = error
+        ? false
+        : userIsLoading || !grantedWorkspaces || !grantedUserGroups || !grantedDataSources;
+
     const isOpenedInEditMode = initialView !== "VIEW";
 
     return (
@@ -122,95 +150,138 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                 positionType="fixed"
                 className={dialogOverlayClassNames}
             >
-                {!isLoaded && <LoadingComponent className="gd-user-management-dialog-loading" />}
                 <div className={dialogWrapperClassNames}>
-                    {dialogMode === "VIEW" && (
-                        <ViewDialog
-                            dialogTitle={extractUserName(user)}
-                            isAdmin={isCurrentlyAdmin}
-                            isDeleteLinkEnabled={!isBootstrapUser(user)}
-                            deleteLinkDisabledTooltipTextId={messages.deleteUserDisabledTooltip.id}
-                            deleteLinkText={intl.formatMessage(messages.deleteUserLink)}
-                            onOpenDeleteDialog={onOpenDeleteDialog}
+                    {isLoading ? (
+                        <>
+                            <LoadingComponent className="gd-user-management-dialog-loading" />
+                            <ErrorDialog dialogTitle="" onClose={onClose} />
+                        </>
+                    ) : error ? (
+                        <ErrorDialog
                             onClose={onClose}
-                            onEdit={() => setDialogMode(editButtonMode)}
-                            editButtonText={editButtonText}
-                            editButtonIconClassName={editButtonIconClassName}
+                            dialogTitle={intl.formatMessage(messages.userLoadingErrorTitle)}
                         >
-                            {isCurrentlyAdmin ? (
-                                <div className="gd-message progress gd-user-management-admin-alert s-admin-message">
-                                    <div className="gd-message-text">
-                                        {intl.formatMessage(messages.adminAlert)}
-                                    </div>
-                                </div>
-                            ) : null}
-                            <Tabs
-                                selectedTabId={selectedTabId.id}
-                                onTabSelect={setSelectedTabId}
-                                tabs={tabs}
-                                className="gd-user-management-dialog-tabs s-user-management-tabs"
-                            />
-                            {selectedTabId.id === userDialogTabsMessages.workspaces.id && (
-                                <WorkspaceList
-                                    workspaces={grantedWorkspaces}
+                            <Message type="error" className="gd-user-management-dialog-error">
+                                {intl.formatMessage(
+                                    isUnexpectedResponseError(error) && error.httpStatus === 404
+                                        ? messages.userLoadingErrorNotExist
+                                        : messages.userLoadingErrorUnknown,
+                                )}
+                            </Message>
+                        </ErrorDialog>
+                    ) : (
+                        <>
+                            {dialogMode === "VIEW" && (
+                                <ViewDialog
+                                    dialogTitle={extractUserName(user)}
+                                    isAdmin={isCurrentlyAdmin}
+                                    isDeleteLinkEnabled={!isBootstrapUser(user)}
+                                    deleteLinkDisabledTooltipTextId={messages.deleteUserDisabledTooltip.id}
+                                    deleteLinkText={intl.formatMessage(messages.deleteUserLink)}
+                                    onOpenDeleteDialog={onOpenDeleteDialog}
+                                    onClose={onClose}
+                                    onEdit={() => setDialogMode(editButtonMode)}
+                                    editButtonText={editButtonText}
+                                    editButtonIconClassName={editButtonIconClassName}
+                                >
+                                    {isCurrentlyAdmin ? (
+                                        <div className="gd-message progress gd-user-management-admin-alert s-admin-message">
+                                            <div className="gd-message-text">
+                                                {intl.formatMessage(messages.adminAlert)}
+                                            </div>
+                                        </div>
+                                    ) : null}
+                                    <Tabs
+                                        selectedTabId={selectedTabId.id}
+                                        onTabSelect={setSelectedTabId}
+                                        tabs={tabs}
+                                        className="gd-user-management-dialog-tabs s-user-management-tabs"
+                                    />
+                                    {selectedTabId.id === userDialogTabsMessages.workspaces.id && (
+                                        <WorkspaceList
+                                            workspaces={grantedWorkspaces}
+                                            subjectType="user"
+                                            mode="VIEW"
+                                            onDelete={removeGrantedWorkspace}
+                                            onChange={updateGrantedWorkspace}
+                                        />
+                                    )}
+                                    {selectedTabId.id === userDialogTabsMessages.userGroups.id && (
+                                        <UserGroupsList
+                                            userGroups={grantedUserGroups}
+                                            mode="VIEW"
+                                            onDelete={removeGrantedUserGroup}
+                                            isBootstrapUser={isBootstrapUser(user)}
+                                            bootstrapUserGroupId={bootstrapUserGroupId}
+                                        />
+                                    )}
+                                    {selectedTabId.id === userDialogTabsMessages.details.id && (
+                                        <UserDetailsView
+                                            user={user}
+                                            isAdmin={isCurrentlyAdmin}
+                                            isBootstrapUser={isBootstrapUser(user)}
+                                            mode="VIEW"
+                                        />
+                                    )}
+                                    {selectedTabId.id === userDialogTabsMessages.dataSources.id && (
+                                        <DataSourceList
+                                            dataSources={grantedDataSources}
+                                            subjectType="user"
+                                            mode="VIEW"
+                                            onDelete={removeGrantedDataSource}
+                                            onChange={updateGrantedDataSource}
+                                            renderDataSourceIcon={renderDataSourceIcon}
+                                        />
+                                    )}
+                                </ViewDialog>
+                            )}
+                            {dialogMode === "WORKSPACE" && (
+                                <AddWorkspace
+                                    ids={[userId]}
                                     subjectType="user"
-                                    mode="VIEW"
-                                    onDelete={removeGrantedWorkspace}
-                                    onChange={updateGrantedWorkspace}
+                                    grantedWorkspaces={grantedWorkspaces}
+                                    enableBackButton={!isOpenedInEditMode}
+                                    onSubmit={onWorkspacesChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onClose={onClose}
                                 />
                             )}
-                            {selectedTabId.id === userDialogTabsMessages.userGroups.id && (
-                                <UserGroupsList
-                                    userGroups={grantedUserGroups}
-                                    mode="VIEW"
-                                    onDelete={removeGrantedUserGroup}
-                                    isBootstrapUser={isBootstrapUser(user)}
-                                    bootstrapUserGroupId={bootstrapUserGroupId}
+                            {dialogMode === "USER_GROUPS" && (
+                                <AddUserGroup
+                                    userIds={[userId]}
+                                    grantedUserGroups={grantedUserGroups}
+                                    enableBackButton={!isOpenedInEditMode}
+                                    onSubmit={onUserGroupsChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onClose={onClose}
                                 />
                             )}
-                            {selectedTabId.id === userDialogTabsMessages.details.id && (
-                                <UserDetailsView
+                            {dialogMode === "DATA_SOURCES" && (
+                                <AddDataSource
+                                    ids={[userId]}
+                                    subjectType="user"
+                                    grantedDataSources={grantedDataSources}
+                                    enableBackButton={!isOpenedInEditMode}
+                                    onSubmit={onDataSourcesChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onClose={onClose}
+                                    renderDataSourceIcon={renderDataSourceIcon}
+                                />
+                            )}
+                            {dialogMode === "DETAIL" && (
+                                <EditUserDetails
                                     user={user}
                                     isAdmin={isCurrentlyAdmin}
                                     isBootstrapUser={isBootstrapUser(user)}
-                                    mode="VIEW"
+                                    enableBackButton={!isOpenedInEditMode}
+                                    changeUserMembership={changeUserMembership}
+                                    onSubmit={onUserDetailsChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onClose={onClose}
+                                    removeAdminGroup={removeAdminGroup}
                                 />
                             )}
-                        </ViewDialog>
-                    )}
-                    {dialogMode === "WORKSPACE" && (
-                        <AddWorkspace
-                            ids={[userId]}
-                            subjectType="user"
-                            grantedWorkspaces={grantedWorkspaces}
-                            enableBackButton={!isOpenedInEditMode}
-                            onSubmit={onWorkspacesChanged}
-                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
-                            onClose={onClose}
-                        />
-                    )}
-                    {dialogMode === "USER_GROUPS" && (
-                        <AddUserGroup
-                            userIds={[userId]}
-                            grantedUserGroups={grantedUserGroups}
-                            enableBackButton={!isOpenedInEditMode}
-                            onSubmit={onUserGroupsChanged}
-                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
-                            onClose={onClose}
-                        />
-                    )}
-                    {dialogMode === "DETAIL" && (
-                        <EditUserDetails
-                            user={user}
-                            isAdmin={isCurrentlyAdmin}
-                            isBootstrapUser={isBootstrapUser(user)}
-                            enableBackButton={!isOpenedInEditMode}
-                            changeUserMembership={changeUserMembership}
-                            onSubmit={onUserDetailsChanged}
-                            onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
-                            onClose={onClose}
-                            removeAdminGroup={removeAdminGroup}
-                        />
+                        </>
                     )}
                 </div>
             </Overlay>

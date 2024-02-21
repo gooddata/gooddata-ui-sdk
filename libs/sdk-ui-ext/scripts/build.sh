@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 _build_styles() {
     sass --load-path=node_modules styles/internal/scss:styles/internal/css

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import {
     DrillOrigin,
@@ -55,7 +55,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             originLocalIdentifier: item.originLocalIdentifier,
         };
 
-        props.onSetup(drillDownItem, { ...item, attributeHierarchyRef: hierarchyRef });
+        props.onSetup(drillDownItem, { ...item, attributeHierarchyRef: hierarchyRef } as IDrillConfigItem);
     };
     const onInsightTargetSelect = (targetItem: IInsight) => {
         const drillConfigItem: IDrillToInsight = {

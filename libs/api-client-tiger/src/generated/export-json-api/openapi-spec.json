@@ -241,7 +241,9 @@
                         },
                         "content": {
                             "text/csv": {},
-                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {}
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
+                            "text/html": {},
+                            "application/pdf": {}
                         }
                     },
                     "202": {
@@ -254,6 +256,18 @@
                                 }
                             },
                             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/pdf": {
                                 "schema": {
                                     "type": "string",
                                     "format": "binary"
@@ -376,7 +390,7 @@
                         "type": "string",
                         "description": "Expected file format.",
                         "example": "CSV",
-                        "enum": ["CSV", "XLSX"]
+                        "enum": ["CSV", "XLSX", "HTML", "PDF"]
                     },
                     "executionResult": {
                         "type": "string",

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -139,4 +139,8 @@
     cursor: default;
     line-height: 20px;
     padding: 0 7px;
+}
+
+.gd-user-management-dialog-error {
+    display: block;
 }

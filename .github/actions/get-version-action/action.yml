@@ -1,0 +1,18 @@
+name: Get current version of the sdk
+description: This action assumes nodejs installed and repository checkouted
+
+outputs:
+  version:
+    description: current version
+    value: ${{ steps.version.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get version
+      id: version
+      run: |
+        VERSION=$(node -p "require('./libs/sdk-ui/package.json').version")
+        echo "version=$VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+      shell: bash

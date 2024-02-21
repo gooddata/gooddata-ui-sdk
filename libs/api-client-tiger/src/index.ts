@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *
@@ -169,6 +169,7 @@ export {
     AfmValidDescendantsQuery,
     AfmValidDescendantsResponse,
     DependsOn,
+    DependsOnDateFilter,
     ValidateByItem,
 } from "./generated/afm-rest-api/api.js";
 export {
@@ -271,6 +272,8 @@ export {
     OrganizationGetEntitiesFn,
     OrganizationGetEntitiesParams,
 } from "./organizationUtilities.js";
+
+export { ActionsUtilities } from "./actionsUtilities.js";
 
 const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 

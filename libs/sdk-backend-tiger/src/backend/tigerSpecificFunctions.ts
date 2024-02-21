@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import {
     JsonApiOrganizationOutMetaPermissionsEnum,
@@ -47,6 +47,7 @@ import {
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
+    JsonApiDataSourceInAttributesCacheStrategyEnum,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -105,6 +106,11 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 /**
  * @internal
  */
+export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
+
+/**
+ * @internal
+ */
 export type IDataSourcePermission = "MANAGE" | "USE";
 
 /**
@@ -116,10 +122,11 @@ export interface IDataSourceConnectionInfo {
     name: string;
     schema: string;
     username?: string;
-    url?: string;
+    url?: string | null;
     permissions?: IDataSourcePermission[];
-    parameters?: Array<DataSourceParameter>;
-    decodedParameters?: Array<DataSourceParameter>;
+    parameters?: Array<DataSourceParameter> | null;
+    decodedParameters?: Array<DataSourceParameter> | null;
+    cacheStrategy?: IDataSourceCacheStrategy;
 }
 
 /**
@@ -143,6 +150,7 @@ export interface IDataSourceUpsertRequest {
     url?: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
+    cacheStrategy?: IDataSourceCacheStrategy;
 }
 
 /**
@@ -158,6 +166,7 @@ export interface IDataSourcePatchRequest {
     url?: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
+    cacheStrategy?: IDataSourceCacheStrategy;
 }
 
 /**
@@ -504,7 +513,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data;
-    const { name, url, type, schema, username, parameters, decodedParameters } = attributes;
+    const { name, url, type, schema, username, parameters, decodedParameters, cacheStrategy } = attributes;
     return {
         id,
         type,
@@ -515,6 +524,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         permissions: meta?.permissions ?? [],
         parameters,
         decodedParameters,
+        cacheStrategy,
     };
 };
 
@@ -941,7 +951,8 @@ export const buildTigerSpecificFunctions = (
         }
     },
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
-        const { id, name, password, schema, token, type, url, username, parameters } = requestData;
+        const { id, name, password, schema, token, type, url, username, parameters, cacheStrategy } =
+            requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -957,6 +968,7 @@ export const buildTigerSpecificFunctions = (
                                     url,
                                     username,
                                     parameters,
+                                    cacheStrategy,
                                 },
                                 id,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -982,6 +994,7 @@ export const buildTigerSpecificFunctions = (
             url,
             username,
             parameters,
+            cacheStrategy,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -999,6 +1012,7 @@ export const buildTigerSpecificFunctions = (
                                     url,
                                     username,
                                     parameters,
+                                    cacheStrategy,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -1024,6 +1038,7 @@ export const buildTigerSpecificFunctions = (
             url,
             username,
             parameters,
+            cacheStrategy,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1041,6 +1056,7 @@ export const buildTigerSpecificFunctions = (
                                     url,
                                     username,
                                     parameters,
+                                    cacheStrategy,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
