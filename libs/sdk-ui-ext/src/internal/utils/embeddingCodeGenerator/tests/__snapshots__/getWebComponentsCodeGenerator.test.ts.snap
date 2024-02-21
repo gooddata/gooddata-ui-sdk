@@ -3,7 +3,7 @@
 exports[`getWebComponentsCodeGenerator > display the custom insight title 1`] = `
 "<!-- Load the library... -->
 <script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight
     insight="insightId"
@@ -15,7 +15,7 @@ exports[`getWebComponentsCodeGenerator > display the custom insight title 1`] = 
 exports[`getWebComponentsCodeGenerator > display the insight title 1`] = `
 "<!-- Load the library... -->
 <script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight
     insight="insightId"
@@ -27,7 +27,7 @@ exports[`getWebComponentsCodeGenerator > display the insight title 1`] = `
 exports[`getWebComponentsCodeGenerator > with the custom height 1`] = `
 "<!-- Load the library... -->
 <script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight
     insight="insightId"
@@ -40,7 +40,7 @@ exports[`getWebComponentsCodeGenerator > with the custom height 1`] = `
 exports[`getWebComponentsCodeGenerator > with the locale 1`] = `
 "<!-- Load the library... -->
 <script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight
     insight="insightId"
@@ -53,7 +53,7 @@ exports[`getWebComponentsCodeGenerator > with the locale 1`] = `
 exports[`getWebComponentsCodeGenerator > without any configuration 1`] = `
 "<!-- Load the library... -->
 <script type="module" src="https://localhost/components/workspaceId.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight
     insight="insightId"
