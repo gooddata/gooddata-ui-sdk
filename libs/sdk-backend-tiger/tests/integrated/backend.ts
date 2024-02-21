@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -77,7 +77,7 @@ export function testWorkspace(): string {
 }
 
 function getRecordingsWorkspaceId() {
-    return "a9699e80b0ae484da980bde0b75499e3";
+    return "d0c23ce18c044a83a204127f29e2be9e";
 }
 
 export function sanitizeKeyWithNewValue(result: object, key: string, newValue: string) {
@@ -104,8 +104,7 @@ export function sanitizeWorkspace(result: object) {
 
 export function doSanitizeCommon(result: object) {
     const newURIResult = sanitizeKeyWithNewValue(result, "uri", "sanitize_uri");
-    const newCreatedResult = sanitizeKeyWithNewValue(newURIResult, "created", "sanitize_created");
-    return newCreatedResult;
+    return sanitizeKeyWithNewValue(newURIResult, "created", "sanitize_created");
 }
 
 export function sortToOrder(json: any) {
