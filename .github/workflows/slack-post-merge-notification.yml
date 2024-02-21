@@ -1,10 +1,10 @@
 # (C) 2024 GoodData Corporation
 
-name: Send notification to slack for failed post-merge workflows
+name: WF run ~ Send notification to slack for failed post-merge workflows
 
 on:
   workflow_run:
-    workflows: ["Build web component's container image"]
+    workflows: ["Push ~ Build web component's container image"]
     types: [completed]
     branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
 
