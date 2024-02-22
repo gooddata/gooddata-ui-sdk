@@ -8,7 +8,10 @@ inputs:
         description: "Path to hugo version config"
         required: true
     version:
-        description: "New version to be set"
+        description: "New version to be set like 9.1.0"
+        required: true
+    short-version:
+        description: "Short version to be set like 9.1"
         required: true
 
 runs:
