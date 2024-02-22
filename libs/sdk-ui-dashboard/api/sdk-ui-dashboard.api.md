@@ -2994,7 +2994,7 @@ export enum DRILL_TO_URL_PLACEHOLDER {
     // (undocumented)
     DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
     // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{insight_id}",
+    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{visualization_id}",
     // (undocumented)
     DRILL_TO_URL_PLACEHOLDER_PROJECT_ID = "{project_id}",
     // (undocumented)
@@ -6745,9 +6745,6 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
 export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableKDRichText: DashboardSelector<boolean>;
 
 // @public
@@ -6969,17 +6966,11 @@ export const selectIsInEditMode: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
 
-// @internal
-export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
-
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
-
-// @internal
-export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsKpiDeleteDialogOpen: DashboardSelector<boolean>;
@@ -7113,9 +7104,6 @@ export const selectSupportsAttributeHierarchies: DashboardSelector<boolean>;
 // @internal
 export const selectSupportsCrossFiltering: DashboardSelector<boolean>;
 
-// @public
-export const selectSupportsElementsQueryParentFiltering: DashboardSelector<boolean>;
-
 // @internal
 export const selectSupportsElementUris: DashboardSelector<boolean>;
 
@@ -7159,7 +7147,7 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<IL
 export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
 
 // @internal (undocumented)
 export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined>;

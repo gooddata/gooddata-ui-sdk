@@ -54,16 +54,16 @@ const config = {
 
 ## Properties of location definition
 
-| Name | Required? | Type | Description |
-| :--- | :--- | :--- | :--- |
-| location | true | [IAttribute](50_custom__execution.md#attribute) | The attribute definition that determines the longitude and latitude of the pins |
+| Name | Required? | Type       | Description |
+| :--- | :--- |:-----------| :--- |
+| location | true | IAttribute | The attribute definition that determines the longitude and latitude of the pins |
 
 OR
 
-| Name | Required? | Type | Description |
-| :--- | :--- | :--- | :--- |
-| latitude | true | [IAttribute](50_custom__execution.md#attribute) | The attribute definition that determines the latitude of the pins |
-| longitude | true | [IAttribute](50_custom__execution.md#attribute) | The attribute definition that determines the longitude of the pins |
+| Name | Required? | Type                                           | Description |
+| :--- | :--- |:-----------------------------------------------| :--- |
+| latitude | true | IAttribute                                     | The attribute definition that determines the latitude of the pins |
+| longitude | true | IAttribute | The attribute definition that determines the longitude of the pins |
 
 ## Other properties
 

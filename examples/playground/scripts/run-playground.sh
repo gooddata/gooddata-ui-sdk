@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 if test -z "$WDYR"
 then
     WDYR="false"

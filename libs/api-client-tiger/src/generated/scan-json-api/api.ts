@@ -395,6 +395,7 @@ export const TestDefinitionRequestTypeEnum = {
     GDSTORAGE: "GDSTORAGE",
     CLICKHOUSE: "CLICKHOUSE",
     MYSQL: "MYSQL",
+    MARIADB: "MARIADB",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

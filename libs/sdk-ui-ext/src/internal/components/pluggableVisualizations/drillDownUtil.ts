@@ -1,19 +1,29 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     areObjRefsEqual,
+    attributeIdentifier,
     attributeLocalId,
+    attributeUri,
     bucketItemLocalId,
     IAttribute,
     IAttributeOrMeasure,
     IFilter,
     IInsight,
+    insightAttributes,
+    insightFilters,
     insightItems,
     insightModifyItems,
     insightProperties,
     insightReduceItems,
     insightSetFilters,
     insightSetProperties,
+    insightSetSorts,
+    insightSorts,
     isAttribute,
+    isIdentifierRef,
+    isLocalIdRef,
+    isRankingFilter,
+    isUriRef,
     modifyAttribute,
     newPositiveAttributeFilter,
     VisualizationProperties,
@@ -64,8 +74,7 @@ export function modifyBucketsAttributesForDrillDown(
         },
     );
 
-    // remove duplicate attributes
-    return insightReduceItems(
+    const removedDuplicateAttributes = insightReduceItems(
         replacedDrill,
         (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure): IAttributeOrMeasure[] => {
             if (isAttribute(cur)) {
@@ -78,6 +87,15 @@ export function modifyBucketsAttributesForDrillDown(
             return [...acc, cur];
         },
     );
+
+    // remove invalid sorts: the insightSorts already has the logic to remove invalid sorts
+    const removedInvalidSorts = insightSetSorts(
+        removedDuplicateAttributes,
+        insightSorts(removedDuplicateAttributes),
+    );
+
+    // remove ranking filters that are related to any of the removed attributes
+    return removeRankingFiltersForRemovedAttributes(removedInvalidSorts);
 }
 
 function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
@@ -161,4 +179,28 @@ export function addIntersectionFiltersToInsight(
     const resultFilters = [...source.insight.filters, ...filters];
 
     return insightSetFilters(source, resultFilters);
+}
+
+function removeRankingFiltersForRemovedAttributes(insight: IInsight): IInsight {
+    const attributes = insightAttributes(insight);
+    return insightSetFilters(
+        insight,
+        insightFilters(insight).filter((def) => {
+            if (isRankingFilter(def)) {
+                return (
+                    def.rankingFilter.attributes?.some((attrRef) => {
+                        return (
+                            (isLocalIdRef(attrRef) &&
+                                attributes.some((a) => attributeLocalId(a) === attrRef.localIdentifier)) ||
+                            (isIdentifierRef(attrRef) &&
+                                attributes.some((a) => attributeIdentifier(a) === attrRef.identifier)) ||
+                            (isUriRef(attrRef) && attributes.some((a) => attributeUri(a) === attrRef.uri))
+                        );
+                    }) ?? true
+                );
+            }
+
+            return true;
+        }),
+    );
 }

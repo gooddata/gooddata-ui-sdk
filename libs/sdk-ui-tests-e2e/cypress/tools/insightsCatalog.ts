@@ -51,7 +51,6 @@ export class InsightsCatalog {
     waitForCatalogLoad() {
         cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
         cy.get(this.getElementSelector(".gd-input-field")).should("exist");
-
         return this;
     }
 
@@ -86,7 +85,7 @@ export class InsightsCatalog {
 
     hasNoDataMessage() {
         cy.get(this.getElementSelector(".s-visualization-list-no-data-message"))
-            .contains("No insight matched.")
+            .contains("No visualization matched.")
             .should("exist");
         return this;
     }

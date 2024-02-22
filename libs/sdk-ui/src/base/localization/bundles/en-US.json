@@ -135,12 +135,12 @@
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the insight by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the visualization by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the insight by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the visualization by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
         "limit": 0
     },
@@ -157,7 +157,7 @@
         "translate": false
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the insight by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
         "limit": 0
     },
@@ -263,7 +263,7 @@
         "limit": 0
     },
     "visualization.ErrorMessageGeneric|insight": {
-        "value": "Sorry, we can't display this insight",
+        "value": "Sorry, we can't display this visualization",
         "comment": "",
         "limit": 0
     },
@@ -309,7 +309,7 @@
         "limit": 0
     },
     "visualization.ErrorDescriptionUnauthorized|insight": {
-        "value": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
+        "value": "Sorry you don't have access to this visualization. Login or ask your administrator to grant you permissions.",
         "comment": "",
         "limit": 0
     },
@@ -320,7 +320,7 @@
         "translate": false
     },
     "visualization.ErrorMessageNotFound|insight": {
-        "value": "Sorry, we can't find this insight",
+        "value": "Sorry, we can't find this visualization",
         "comment": "",
         "limit": 0
     },
@@ -331,7 +331,7 @@
         "translate": false
     },
     "visualization.ErrorDescriptionNotFound|insight": {
-        "value": "The insight with this URL does not exist.",
+        "value": "The visualization with this URL does not exist.",
         "comment": "",
         "limit": 0
     },
@@ -1387,7 +1387,7 @@
         "limit": 0
     },
     "rankingFilter.allRecords.tooltip|insight": {
-        "value": "Apply the filter to all attributes in the insight.",
+        "value": "Apply the filter to all attributes in the visualization.",
         "comment": "Explanation of 'All' option.",
         "limit": 0
     },
@@ -1398,7 +1398,7 @@
         "translate": false
     },
     "rankingFilter.attributeDropdown.oneAttributeTooltip|insight": {
-        "value": "The insight is sliced only by one attribute. The filter will apply to all its values.",
+        "value": "The visualization is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown.",
         "limit": 0
     },
@@ -1454,7 +1454,7 @@
         "limit": 0
     },
     "rankingFilter.valueTooltip|insight": {
-        "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
+        "value": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
         "limit": 0
     },
@@ -1506,7 +1506,7 @@
     },
     "attributesDropdown.display_as": {
         "value": "Display as: {title}",
-        "comment": "Label shown on dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'",
+        "comment": "Label shown on dropdown button that changes form of the attribute used in visualization. For example 'Display as: Shortened name'",
         "limit": 0
     },
     "attributesDropdown.empty.item.tooltip": {
@@ -1750,7 +1750,7 @@
         "limit": 0
     },
     "sorting.dropdown.header|insight": {
-        "value": "Sort insight",
+        "value": "Sort visualization",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
         "limit": 0
     },
@@ -1762,37 +1762,37 @@
     },
     "sorting.type.alphabetical.asc": {
         "value": "A to Z",
-        "comment": "Title of sort option when insight is sorted alphabetically and in ascending order.",
+        "comment": "Title of sort option when visualization is sorted alphabetically and in ascending order.",
         "limit": 0
     },
     "sorting.type.alphabetical.desc": {
         "value": "Z to A",
-        "comment": "Title of sort option when insight is sorted alphabetically and in descending order.",
+        "comment": "Title of sort option when visualization is sorted alphabetically and in descending order.",
         "limit": 0
     },
     "sorting.type.date.asc": {
         "value": "Oldest to newest",
-        "comment": "Title of sort option when insight is sorted by date and in ascending order.",
+        "comment": "Title of sort option when visualization is sorted by date and in ascending order.",
         "limit": 0
     },
     "sorting.type.date.desc": {
         "value": "Newest to oldest",
-        "comment": "Title of sort option when insight is sorted by date and in descending order.",
+        "comment": "Title of sort option when visualization is sorted by date and in descending order.",
         "limit": 0
     },
     "sorting.type.default": {
         "value": "Default",
-        "comment": "Title of sort option when insight is sorted by default order.",
+        "comment": "Title of sort option when visualization is sorted by default order.",
         "limit": 0
     },
     "sorting.type.numerical.asc": {
         "value": "Smallest to largest",
-        "comment": "Title of sort option when insight is sorted numerically and in ascending order.",
+        "comment": "Title of sort option when visualization is sorted numerically and in ascending order.",
         "limit": 0
     },
     "sorting.type.numerical.desc": {
         "value": "Largest to smallest",
-        "comment": "Title of sort option when insight is sorted numerically and in descending order.",
+        "comment": "Title of sort option when visualization is sorted numerically and in descending order.",
         "limit": 0
     },
     "sorting.by": {
@@ -1807,7 +1807,7 @@
     },
     "sorting.default.tooltip": {
         "value": "Use the order defined in the attribute.",
-        "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the insight.",
+        "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the visualization.",
         "limit": 0
     },
     "embedInsightDialog.actions.close": {
@@ -1861,7 +1861,7 @@
         "limit": 0
     },
     "embedInsightDialog.code.options.include.config.info|insight": {
-        "value": "Include the insight configuration of colors, axes, legend, and canvas if available.",
+        "value": "Include the visualization configuration of colors, axes, legend, and canvas if available.",
         "comment": "Tool tip that explain Include configuration",
         "limit": 0
     },
@@ -1882,7 +1882,7 @@
         "limit": 0
     },
     "embedInsightDialog.headLine.embedInsight|insight": {
-        "value": "Embed insight",
+        "value": "Embed visualization",
         "comment": "",
         "limit": 0
     },
@@ -1893,18 +1893,18 @@
         "translate": false
     },
     "embedInsightDialog.componentType.byReference.tooltip|insight": {
-        "value": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a live insight means",
+        "value": "Embed as a reference to a saved visualization in a generic GD.UI react component. Any future changes to the visualization (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
+        "comment": "Tooltip that explain what Embed as a live visualization means",
         "limit": 0
     },
     "embedInsightDialog.componentType.byReference.tooltip|report": {
         "value": "Embed as a reference to a saved report in a generic GD.UI react component. Any future changes to the report (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a live insight means",
+        "comment": "Tooltip that explain what Embed as a live visualization means",
         "limit": 0,
         "translate": false
     },
     "embedInsightDialog.componentType.byDefinition.tooltip|insight": {
-        "value": "Embed as an insight definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the insight (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
+        "value": "Embed as an visualization definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the visualization (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report",
         "limit": 0
     },
@@ -1950,7 +1950,7 @@
         "limit": 0
     },
     "embedInsightDialog.emptyInsight.byReference|insight": {
-        "value": "Code snipped will be displayed here once you <a>save the insight</a>.",
+        "value": "Code snipped will be displayed here once you <a>save the visualization</a>.",
         "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
         "limit": 0
     },
@@ -1961,7 +1961,7 @@
         "translate": false
     },
     "embedInsightDialog.emptyInsight.byDefinition|insight": {
-        "value": "This insight type cannot be embedded as programmatic type component.",
+        "value": "This visualization type cannot be embedded as programmatic type component.",
         "comment": "The disabled message for code area",
         "limit": 0
     },
@@ -2082,8 +2082,8 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToInsight.tooltip": {
-        "value": "Open a related insight, maintaining the applied filters from the original view. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling to insight. Do not translate html tags <a>, </a>.",
+        "value": "Open a related visualization, maintaining the applied filters from the original view. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to visualization. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToUrl.tooltip": {
@@ -2097,13 +2097,13 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip": {
-        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
+        "value": "Drill down within the current visualization, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
         "comment": "Tooltip that explain what happens when drilling down. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
-        "value": "Drill down is turned off in this insight's configuration.",
-        "comment": "Tooltip that explain drill down is disabled by insight's configuration",
+        "value": "Drill down is turned off in this visualization's configuration.",
+        "comment": "Tooltip that explain drill down is disabled by visualization's configuration",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric": {
@@ -2292,7 +2292,7 @@
         "limit": 0
     },
     "workspaceHierarchy.lockedInsight|insight": {
-        "value": "Only Admins can save changes to this insight.",
+        "value": "Only Admins can save changes to this visualization.",
         "comment": "Shown when hovering over lock indicator.",
         "limit": 0
     },
@@ -2303,7 +2303,7 @@
         "limit": 0
     },
     "workspaceHierarchy.inheritedInsight|insight": {
-        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
+        "value": "You cannot edit or delete this visualization.{br}It is centrally managed and certified.",
         "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
         "limit": 0
     },
@@ -2328,6 +2328,11 @@
         "comment": "Error message shown to the user when query in search input failed",
         "limit": 0
     },
+    "userManagement.dataSource.searchError": {
+        "value": "Failed to load data sources. Try again later.",
+        "comment": "Error message shown to the user when query in search input failed",
+        "limit": 0
+    },
     "userManagement.workspace.emptySelection.user.view": {
         "value": "This user does not have permissions for any workspaces.",
         "comment": "Information shown when no workspaces were selected yet.",
@@ -2348,6 +2353,11 @@
         "comment": "Title of dialog used for granting workspace permission to users or groups.",
         "limit": 0
     },
+    "userManagement.dataSource.searchPlaceholder": {
+        "value": "Search data sources",
+        "comment": "Placeholder of empty data source dialog search input.",
+        "limit": 0
+    },
     "userManagement.workspace.addButton": {
         "value": "Add",
         "comment": "Title of confirm button that adds new items to the list.",
@@ -2364,7 +2374,7 @@
         "limit": 0
     },
     "userManagement.tab.workspaces": {
-        "value": "Permissions ({count})",
+        "value": "Workspaces ({count})",
         "comment": "Label of tab that lists user permissions to workspaces. Do not translate placeholder {count}. It will be replaced by number of assigned permissions in runtime.",
         "limit": 0
     },
@@ -2384,7 +2394,7 @@
         "limit": 0
     },
     "userManagement.buttons.addWorkspace": {
-        "value": "Add permission",
+        "value": "Add workspace permission",
         "comment": "Label of button that opens selection of workspaces user can get permissions to.",
         "limit": 0
     },
@@ -2401,6 +2411,96 @@
     "userManagement.buttons.edit": {
         "value": "Edit",
         "comment": "Label of button that edit user's details (name, surname, etc.)",
+        "limit": 0
+    },
+    "userManagement.dataSource.title": {
+        "value": "Add data source permission",
+        "comment": "Title of dialog used for granting data source permission to users or groups.",
+        "limit": 0
+    },
+    "userManagement.tab.dataSources": {
+        "value": "Data Sources ({count})",
+        "comment": "Label of tab that lists data sources assigned to a user. Do not translate placeholder {count}. It will be replaced by number of data sources in runtime.",
+        "limit": 0
+    },
+    "userManagement.buttons.addDataSourcePermission": {
+        "value": "Add data source permission",
+        "comment": "Label of button that opens selection of users that can be assigned into the group.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.view": {
+        "value": "This user does not have permissions for any data sources.",
+        "comment": "Information shown when no data sources were selected yet.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.userGroup.view": {
+        "value": "This group does not have permissions for any data sources.",
+        "comment": "Information shown when no data sources were selected yet.",
+        "limit": 0
+    },
+    "userManagement.dataSources.emptySelection.edit": {
+        "value": "No data sources selected.",
+        "comment": "Shown when user did not typed anything to the search dialog.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.manage": {
+        "value": "Manage",
+        "comment": "Name of the data source permission that allows user to fully manage data in data source.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.use": {
+        "value": "Use",
+        "comment": "Name of the data source permission that allows user to use data in data source.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permission.remove": {
+        "value": "Remove",
+        "comment": "Label of option that removes data source permission from user and user group.",
+        "limit": 0
+    },
+    "userManagement.dataSources.noMatchingItems": {
+        "value": "No matching data source.",
+        "comment": "Message shown when no data source matches search criteria.",
+        "limit": 0
+    },
+    "userManagement.users.multipleDataSources.addSuccess": {
+        "value": "Great! You have successfully added permissions to the users.",
+        "comment": "Confirmation message shown to the user when data source permission was added successfully to multiple users.",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleDataSources.addSuccess": {
+        "value": "Great! You have successfully added permissions to the groups.",
+        "comment": "Confirmation message shown to the user when data source permissions were added to multiple user groups successfully.",
+        "limit": 0
+    },
+    "userManagement.users.multipleDataSources.addError": {
+        "value": "Addition of the permission to the users failed.",
+        "comment": "Error message shown to user when addition of data source permission to multiple users failed.",
+        "limit": 0
+    },
+    "userManagement.userGroups.multipleDataSources.addError": {
+        "value": "Addition of the permission to the groups failed.",
+        "comment": "Error message shown to user when addition of data source permission to multiple user groups failed.",
+        "limit": 0
+    },
+    "userManagement.dataSources.removeSuccess": {
+        "value": "Great! You have successfully deleted the data source permission.",
+        "comment": "Confirm message shown to user when data source permission was successfully deleted.",
+        "limit": 0
+    },
+    "userManagement.dataSources.removeError": {
+        "value": "Deletion of the data source permission failed.",
+        "comment": "Error message shown to user when data source permission deletion failed.",
+        "limit": 0
+    },
+    "userManagement.dataSources.changeSuccess": {
+        "value": "Great! You have successfully changed the data source permission(s).",
+        "comment": "Confirmation message shown to the user when change of one or more data source permission succeeded.",
+        "limit": 0
+    },
+    "userManagement.dataSources.changeError": {
+        "value": "Change of the data source permission(s) failed.",
+        "comment": "Error message shown to the user when change of one or more data source permissions failed.",
         "limit": 0
     },
     "userManagement.users.deleteLink": {
@@ -2429,42 +2529,52 @@
         "limit": 0
     },
     "userManagement.workspace.addSuccess": {
-        "value": "Great! You have successfully added the permission(s).",
+        "value": "Great! You have successfully added the workspace permission(s).",
         "comment": "Confirm message shown to user when one or more workspace permissions were successfully added to a single user.",
         "limit": 0
     },
     "userManagement.workspace.addError": {
-        "value": "Addition of the permission(s) failed.",
+        "value": "Addition of the workspace permission(s) failed.",
+        "comment": "Error message shown to user when workspace permission addition failed.",
+        "limit": 0
+    },
+    "userManagement.dataSource.addSuccess": {
+        "value": "Great! You have successfully added the data source permission(s).",
+        "comment": "Confirm message shown to user when one or more workspace permissions were successfully added to a single user.",
+        "limit": 0
+    },
+    "userManagement.dataSource.addError": {
+        "value": "Addition of the data source permission(s) failed.",
         "comment": "Error message shown to user when workspace permission addition failed.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addSuccess": {
-        "value": "Great! You have successfully added permissions to the users.",
+        "value": "Great! You have successfully added workspace permissions to the users.",
         "comment": "Confirmation message shown to the user when workspace permission was added successfully to multiple users.",
         "limit": 0
     },
     "userManagement.users.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the users failed.",
+        "value": "Addition of the workspace permission to the users failed.",
         "comment": "Error message shown to user when addition of workspace permission to multiple users failed.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addSuccess": {
-        "value": "Great! You have successfully added permissions to the groups.",
+        "value": "Great! You have successfully added workspace permissions to the groups.",
         "comment": "Confirmation message shown to the user when workspace permissions were added to multiple user groups successfully.",
         "limit": 0
     },
     "userManagement.userGroups.multipleWorkspaces.addError": {
-        "value": "Addition of the permission to the groups failed.",
+        "value": "Addition of the workspace permission to the groups failed.",
         "comment": "Error message shown to user when addition of workspace permission to multiple user groups failed.",
         "limit": 0
     },
     "userManagement.workspace.changeSuccess": {
-        "value": "Great! You have successfully changed the permission(s).",
+        "value": "Great! You have successfully changed the workspace permission(s).",
         "comment": "Confirmation message shown to the user when change of one or more workspace permission succeeded.",
         "limit": 0
     },
     "userManagement.workspace.changeError": {
-        "value": "Change of the permission(s) failed.",
+        "value": "Change of the workspace permission(s) failed.",
         "comment": "Error message shown to the user when change of one or more workspace permissions failed.",
         "limit": 0
     },
@@ -2501,6 +2611,16 @@
     "userManagement.workspace.permissionGroup.view.tooltip": {
         "value": "The group members can view dashboards that have been shared with the group.",
         "comment": "Tooltip of the workspace permission that allows user group view workspace objects.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionUser.use.tooltip": {
+        "value": "The user can use data sources that have been shared with them.",
+        "comment": "Tooltip of the data source permission that allows user use data source objects.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionGroup.use.tooltip": {
+        "value": "The group members can use data sources that have been shared with the group.",
+        "comment": "Tooltip of the data source permission that allows user group use data source objects.",
         "limit": 0
     },
     "userManagement.workspace.permission.viewExport": {
@@ -2561,6 +2681,16 @@
     "userManagement.workspace.permissionGroup.manage.tooltip": {
         "value": "Covers the View, Analyze, and Export permissions. Additionally, the group members can create, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
         "comment": "Tooltip of the workspace permission that allows user group to fully manage data in workspace.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionUser.manage.tooltip": {
+        "value": "User can create, edit or delete the data sources.",
+        "comment": "Tooltip of the data source permission that allows user to fully manage data sources.",
+        "limit": 0
+    },
+    "userManagement.dataSources.permissionGroup.manage.tooltip": {
+        "value": "Group members can create, edit or delete the data sources.",
+        "comment": "Tooltip of the data source permission that allows user group to fully manage data sources.",
         "limit": 0
     },
     "userManagement.workspace.permission.remove": {
@@ -2754,7 +2884,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.user.body": {
-        "value": "The user will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
+        "value": "The user will be irreversibly deleted, but their visualizations and dashboards will remain unaffected.",
         "comment": "Body of dialog that deletes a users",
         "limit": 0
     },
@@ -2779,7 +2909,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.multipleUsers.body": {
-        "value": "<b>{count} users</b> will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
+        "value": "<b>{count} users</b> will be irreversibly deleted, but their visualizations and dashboards will remain unaffected.",
         "comment": "Body of dialog that deletes multiple users. Do not translate placeholder {count}. It will be replaced with number of selected users in runtime.",
         "limit": 0
     },
@@ -2841,6 +2971,36 @@
     "userManagement.createUserGroup.createFailure": {
         "value": "Creation of the group failed.",
         "comment": "Error message shown when creation of user group failed.",
+        "limit": 0
+    },
+    "userManagement.users.loadingError.title": {
+        "value": "Can't open user",
+        "comment": "Error title shown when user detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.users.loadingError.notExist": {
+        "value": "The user you are trying to view does not exist.",
+        "comment": "Error shown when user detail loading ended up with 404 error.",
+        "limit": 0
+    },
+    "userManagement.users.loadingError.unknown": {
+        "value": "The user you are trying to view cannot be loaded.",
+        "comment": "Error shown when user detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.title": {
+        "value": "Can't open group",
+        "comment": "Error title shown when user group detail loading ended up with error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.notExist": {
+        "value": "The group you are trying to view does not exist.",
+        "comment": "Error shown when user group detail loading ended up with 404 error.",
+        "limit": 0
+    },
+    "userManagement.userGroups.loadingError.unknown": {
+        "value": "The group you are trying to view cannot be loaded.",
+        "comment": "Error shown when user group detail loading ended up with error.",
         "limit": 0
     },
     "userManagement.users.deleteSuccess": {

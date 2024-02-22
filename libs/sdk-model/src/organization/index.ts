@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { ObjRef } from "../objRef/index.js";
 
@@ -64,6 +64,45 @@ export interface IWorkspacePermissionAssignment {
     workspace: IAssignedWorkspace;
     permissions: AssignedWorkspacePermission[];
     hierarchyPermissions: AssignedWorkspacePermission[];
+}
+
+/**
+ * Information about assigned data source.
+ *
+ * @alpha
+ */
+export interface IAssignedDataSource {
+    id: string;
+    name?: string;
+}
+
+/**
+ * Possible data source permissions that can be assigned.
+ *
+ * @alpha
+ */
+export const AssignedDataSourcePermissionValue = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+/**
+ * Data source permission values.
+ *
+ * @alpha
+ */
+export type AssignedDataSourcePermission =
+    typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
+
+/**
+ * Descriptor contains details about data source permission of organization user or user group.
+ *
+ * @alpha
+ */
+export interface IDataSourcePermissionAssignment {
+    assigneeIdentifier: IOrganizationAssignee;
+    dataSource: IAssignedDataSource;
+    permissions: AssignedDataSourcePermission[];
 }
 
 /**

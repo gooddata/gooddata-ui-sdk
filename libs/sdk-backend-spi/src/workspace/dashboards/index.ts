@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IFilter,
     ObjRef,
@@ -22,6 +22,7 @@ import {
     IDateFilter,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * Dashboard referenced objects
@@ -187,6 +188,13 @@ export interface IWorkspaceDashboardsService {
      * @returns promise of list of the dashboards
      */
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
+
+    /**
+     * List dashboards
+     *
+     * @returns methods for querying dashboards
+     */
+    getDashboardsQuery(): IDashboardsQuery;
 
     /**
      * Load dashboard by its reference,
@@ -481,3 +489,59 @@ export interface IWorkspaceDashboardsService {
      */
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
 }
+
+/**
+ * Service to query dashboards.
+ *
+ * @public
+ */
+export interface IDashboardsQuery {
+    /**
+     * Sets number of dashboards to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of dashboards per page must be a positive number
+     * @returns dashboards query
+     */
+    withSize(size: number): IDashboardsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns dashboards query
+     */
+    withPage(page: number): IDashboardsQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns dashboards query
+     */
+    withFilter(filter: { title?: string }): IDashboardsQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns dashboards query
+     */
+    withSorting(sort: string[]): IDashboardsQuery;
+
+    /**
+     * Starts the dashboards query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IDashboardsQueryResult>;
+}
+
+/**
+ * Queried dashboards are returned in a paged representation.
+ *
+ * @public
+ */
+export type IDashboardsQueryResult = IPagedResource<IListedDashboard>;

@@ -1,8 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     DrillDefinition,
     IInsightWidget,
     IKpiWidget,
+    IRichTextWidget,
     InsightDrillDefinition,
     isInsightWidget,
     widgetRef,
@@ -29,7 +30,7 @@ interface IInvalidDrillInfo {
 export function* validateDrills(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
-    widgets: (IKpiWidget | IInsightWidget)[],
+    widgets: (IKpiWidget | IInsightWidget | IRichTextWidget)[],
 ) {
     const possibleInvalidDrills: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
         widgets

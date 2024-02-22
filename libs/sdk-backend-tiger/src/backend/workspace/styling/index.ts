@@ -25,14 +25,16 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
      * @returns boolean
      */
     private async isStylizable(activeStyleId: string): Promise<boolean> {
-        const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) =>
-            client.actions.resolveAllEntitlements().then((res) => {
-                const customTheming = res?.data?.find(
-                    (entitlement) => entitlement.name === ApiEntitlementNameEnum.CUSTOM_THEMING,
-                );
-                return !!customTheming;
-            }),
-        );
+        const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+            const entitlements =
+                profile.entitlements ??
+                (await this.authCall((client) => client.actions.resolveAllEntitlements())).data;
+            const customTheming = entitlements.find(
+                (entitlement) => entitlement.name === ApiEntitlementNameEnum.CUSTOM_THEMING,
+            );
+            return !!customTheming;
+        });
 
         return isCustomThemingIncludedInEntitlements && activeStyleId !== "";
     }

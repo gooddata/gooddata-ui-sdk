@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IEntitlements } from "@gooddata/sdk-backend-spi";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
@@ -8,7 +8,10 @@ export class TigerEntitlements implements IEntitlements {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
     public async resolveEntitlements(): Promise<IEntitlementDescriptor[]> {
-        const entitlements = await this.authCall((client) => client.actions.resolveAllEntitlements());
-        return entitlements.data;
+        const profile = await this.authCall((client) => client.profile.getCurrent());
+        return (
+            profile.entitlements ??
+            (await this.authCall((client) => client.actions.resolveAllEntitlements())).data
+        );
     }
 }

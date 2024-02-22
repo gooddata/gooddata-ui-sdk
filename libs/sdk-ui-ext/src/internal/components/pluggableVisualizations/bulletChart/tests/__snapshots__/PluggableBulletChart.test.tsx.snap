@@ -6,7 +6,7 @@ exports[`PluggableBulletChart > Sort config > should return expected sort config
   "availableSorts": [],
   "defaultSort": [],
   "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this insight configuration.",
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
   "supported": true,
 }
 `;
@@ -27,7 +27,7 @@ exports[`PluggableBulletChart > Sort config > should return expected sort config
   "availableSorts": [],
   "defaultSort": [],
   "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this insight configuration.",
+  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
   "supported": true,
 }
 `;
@@ -569,8 +569,8 @@ exports[`PluggableBulletChart > should return reference point with target and co
       },
     },
     "customError": {
-      "heading": "No primary measure in your insight",
-      "text": "Add a primary measure to your insight, or switch to table.
+      "heading": "No primary measure in your visualization",
+      "text": "Add a primary measure to your visualization, or switch to table.
 Once done, you'll be able to save it.",
     },
     "exportConfig": {

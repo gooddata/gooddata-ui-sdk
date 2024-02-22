@@ -851,5 +851,10 @@ export {
     OrganizationPermissionAssignment,
     OrganizationPermissionAssignmentValue,
     IOrganizationAssignee,
+    AssignedDataSourcePermission,
+    AssignedDataSourcePermissionValue,
+    IAssignedDataSource,
+    IDataSourcePermissionAssignment,
 } from "./organization/index.js";
 export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
+export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";

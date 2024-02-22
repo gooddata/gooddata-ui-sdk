@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -171,6 +173,8 @@ export interface TabularExportRequest {
 export const TabularExportRequestFormatEnum = {
     CSV: "CSV",
     XLSX: "XLSX",
+    HTML: "HTML",
+    PDF: "PDF",
 } as const;
 
 export type TabularExportRequestFormatEnum =

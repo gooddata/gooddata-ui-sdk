@@ -37,6 +37,9 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export const AddDataSourceToSubjects: React_2.FC<IAddDataSourceToSubjectsProps>;
+
+// @internal (undocumented)
 export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
 
 // @internal (undocumented)
@@ -68,6 +71,12 @@ export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
 
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
+
+// @internal (undocumented)
+export type DataSourcePermission = "USE" | "MANAGE";
+
+// @internal (undocumented)
+export type DataSourcePermissionSubject = "user" | "userGroup";
 
 // @internal (undocumented)
 export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
@@ -118,6 +127,22 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisua
 
 // @internal (undocumented)
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
+
+// @internal (undocumented)
+export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
+    // (undocumented)
+    ids: string[];
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSuccess: () => void;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    // (undocumented)
+    subjectType: DataSourcePermissionSubject;
+}
 
 // @internal (undocumented)
 export interface IAddUserGroupsToUsersDialogProps extends IWithTelemetryProps {
@@ -314,6 +339,16 @@ export interface IFluidLayoutDescriptor extends ILayoutDescriptor {
 }
 
 // @internal (undocumented)
+export interface IGrantedDataSource {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    permission: DataSourcePermission;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
 export interface IInsightErrorProps {
     // (undocumented)
     clientHeight?: number;
@@ -428,6 +463,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     organizationId: string;
     // (undocumented)
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    // (undocumented)
     userId: string;
 }
 
@@ -443,6 +480,8 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     // (undocumented)
     organizationId: string;
+    // (undocumented)
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     // (undocumented)
     userGroupId: string;
 }
@@ -509,7 +548,7 @@ export interface Root {
 }
 
 // @internal (undocumented)
-export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";
+export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
@@ -518,13 +557,13 @@ export type TrackEventCallback = (event: TelemetryEvent) => void;
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
 
 // @internal (undocumented)
-export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DETAIL";
+export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DATA_SOURCES" | "DETAIL";
 
 // @internal (undocumented)
 export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 
 // @internal (undocumented)
-export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DETAIL";
+export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";
 
 // @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

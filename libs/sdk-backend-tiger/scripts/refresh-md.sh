@@ -4,7 +4,7 @@ SCRIPTDIR=`dirname $0`
 ROOTDIR="${SCRIPTDIR}/.."
 EXPORTER="${ROOTDIR}/node_modules/.bin/gdc-catalog-export"
 OUTPUT="${ROOTDIR}/src/fixtures/full.ts"
-PROJECTID="a9699e80b0ae484da980bde0b75499e3"
+PROJECTID="d0c23ce18c044a83a204127f29e2be9e"
 
 $EXPORTER \
   --hostname "https://staging.dev-latest.stg11.panther.intgdc.com" \

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -16,6 +16,7 @@ import {
     UnexpectedResponseError,
     walkLayout,
     IGetDashboardPluginOptions,
+    IDashboardsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -114,6 +115,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
         return Promise.resolve(result);
     };
+
+    public getDashboardsQuery(): IDashboardsQuery {
+        throw new NotSupported("not supported");
+    }
 
     public getDashboard = (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
         if (filterContextRef) {
