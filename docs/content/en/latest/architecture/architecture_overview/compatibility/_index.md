@@ -69,10 +69,3 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 ## Migration from v8 to v9
 
 Since there are not many changes at the API level between v8 and v9, we believe that read [what is new in version 9](../../whats_new/) should be sufficient to process the migration.
-
-## Supported Dashboard Plugin Versions
-
-Due to the continuous development of our platform and direct integration of plugins, we can only guarantee compatibility with plugins built with the latest 3 minor versions of GoodData.UI, and you should update plugins regularly.
-The currently supported version is >=8.11.0.
-
-Plugins created with v8 should transition to v9 by the end of this year, after which they'll lose support.
