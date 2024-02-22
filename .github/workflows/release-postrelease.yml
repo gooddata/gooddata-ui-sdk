@@ -25,7 +25,6 @@ jobs:
         outputs:
             version: ${{ steps.get-version.outputs.version }}
         runs-on: [ubuntu-latest]
-        secrets: inherit
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
