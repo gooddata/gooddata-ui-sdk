@@ -7,6 +7,7 @@ const core = require("@actions/core");
 // Get input from action
 const filePath = core.getInput("path-to-version-config");
 const newVersion = core.getInput("version");
+const shortVersion = core.getInput("short-version");
 
 const data = fs.readFileSync(filePath, "utf-8");
 
@@ -30,7 +31,7 @@ first.dirpath = lastLatestVersion;
 first.url = `/${lastLatestVersion}/`;
 
 const versions = [
-    { version: newVersion, dirpath: "latest", url: `/latest/` },
+    { version: shortVersion, dirpath: "latest", url: `/latest/` },
     first,
     ...rest2.reverse(),
     last,
@@ -53,7 +54,34 @@ const result =
         .join("\n") +
     "\n";
 
+console.log(`Updating ${filePath}:`);
 console.log(result);
-
-// Write to file
 fs.writeFileSync(filePath, result);
+
+// transform index.redir file
+
+const redirFilePath = core.getInput("path-to-redir-config");
+const redir = fs.readFileSync(redirFilePath, "utf-8");
+const split = redir.split("\n");
+const redirLines = split.filter((line) => !line.trim().startsWith("#"));
+const redirComment = split.filter((line) => line.trim().startsWith("#"));
+const [base, docs, actualSort, actualLong, ...remainingVersions] = redirLines;
+
+// extract version between slashes /x.y.z/...
+const parsedActualVersion = actualLong.match(/^\/(.*?)\//)[1];
+const parsedActualVersionShort = parsedActualVersion.substring(0, parsedActualVersion.lastIndexOf("."));
+const redirResult = [
+    ...redirComment,
+    base,
+    docs,
+    `/${shortVersion}/ {{ .Site.BaseURL }}/latest/ 301!`,
+    `/${newVersion}/ {{ .Site.BaseURL }}/latest/ 301!`,
+    `/${parsedActualVersion}/ {{ .Site.BaseURL }}/${parsedActualVersionShort}/ 301!`,
+    ...remainingVersions,
+];
+
+const redirResultJoined = redirResult.join("\n");
+
+console.log(`Updating ${redirFilePath}:`);
+console.log(redirResultJoined);
+fs.writeFileSync(redirFilePath, redirResultJoined);

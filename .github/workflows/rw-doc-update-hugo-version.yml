@@ -15,6 +15,11 @@ on:
         default: "./docs/config/public/params.toml"
         description: "Path to the Hugo version config file"
         type: string
+      path-to-redir-config:
+        required: false
+        default: "./docs/layouts/index.redir"
+        description: "Path to the Hugo redir index file"
+        type: string
 
 jobs:
     update-hugo-version:
@@ -58,15 +63,19 @@ jobs:
               uses: gooddata/gooddata-ui-sdk/.github/actions/hugo-update-param-action@master
               with:
                   path-to-version-config: ${{ inputs.path-to-version-config }}
-                  version: ${{steps.check-version.outputs.short_version}}
+                  path-to-redir-config: ${{ inputs.path-to-redir-config }}
+                  version: ${{inputs.version}}
+                  short-version: ${{steps.check-version.outputs.short_version}}
             - name: Create and push branch
               if: steps.check-version.outputs.is_patch == 'false'
               shell: bash
               run: |
                     git add ${path_to_version_config}
+                    git add ${path_to_redir_config}
                     git commit -m "chore: update Hugo version to ${version}" -m "" -m "TRIVIAL"
                     git push origin ${brach_name}
               env:
                 brach_name: ${{inputs.source-branch}}
                 version: ${{steps.check-version.outputs.short_version}}
                 path_to_version_config: ${{ inputs.path-to-version-config }}
+                path_to_redir_config: ${{ inputs.path-to-redir-config }}
