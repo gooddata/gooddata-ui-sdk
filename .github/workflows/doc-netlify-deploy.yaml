@@ -4,4 +4,5 @@ on:
 
 jobs:
   netlify-deploy:
+    secrets: inherit
     uses: ./.github/workflows/rw-doc-netlify-deploy.yml
