@@ -57,7 +57,7 @@ jobs:
         secrets: inherit
         with:
           source-branch: ${{ inputs.source-branch }}
-          version: ${{ needs.prepare-variables.outputs.short-version }}
+          version: ${{ needs.prepare-variables.outputs.version }}
 
     add-release-tag:
         needs: [publish-release,prepare-variables,update-hugo-version]
