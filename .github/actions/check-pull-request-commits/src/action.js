@@ -10,7 +10,7 @@ const prHead = core.getInput("pr_head");
 const prBase = core.getInput("pr_base");
 const configFilePath = core.getInput("lint_config");
 
-const FOOTER_REGEX = /\n((JIRA\:\s[A-Z0-9]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
+const FOOTER_REGEX = /\n((JIRA:\s[A-Z0-9]+-\d+(, [A-Z]+-\d+)*)|TRIVIAL)(\n+)?$/;
 
 Promise.all([
     load({}, { file: configFilePath, cwd: process.cwd() }),
@@ -33,6 +33,8 @@ Promise.all([
         ),
     );
 
+    const isTrivial = (commit) => commit.toLowerCase().startsWith("trivial:");
+
     Promise.all(lintTasks).then((results) => {
         const formattedReport = format({ results }, { helpUrl });
         core.info(formattedReport);
@@ -40,10 +42,10 @@ Promise.all([
         const allCommitsAreValid = results.every((report) => report.valid);
         const invalidCommits = results.filter((report) => !report.valid);
         const allCommitsHaveTicket = commits.every((commit) => {
-            return FOOTER_REGEX.test(commit);
+            return isTrivial(commit) || FOOTER_REGEX.test(commit);
         });
         const commitsWithoutTicket = commits.filter((commit) => {
-            return !FOOTER_REGEX.test(commit);
+            return !isTrivial(commit) && !FOOTER_REGEX.test(commit);
         });
 
         if (allCommitsAreValid && allCommitsHaveTicket) {

@@ -44,6 +44,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             isMobile={isMobile}
             disabled={disabled}
             customIcon={customIcon}
+            customFilterName={customFilterName}
         >
             <span className="s-button-text">
                 <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />

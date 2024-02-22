@@ -102,20 +102,20 @@ and this will contain the full build output.
 
 On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):
 
-| Command               | Description                                                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `rush audit`          | Performs security audit of all packages listed in global lock file                                          |
-| `rush purge`          | Delete all installed npm modules, clean temp and node_modules directories                                            |
+| Command               | Description                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------- |
+| `rush audit`          | Performs security audit of all packages listed in global lock file                      |
+| `rush purge`          | Delete all installed npm modules, clean temp and node_modules directories               |
 | `rush clean`          | Cleans up artifacts created by build and tests. Full 'rebuild' required after cleaning. |
-| `rush validate`       | Validates code in all projects.                                                                             |
-| `rush validate-ci`    | Validates code in all projects in CI mode.                                                                  |
-| `rush test-once`      | Tests code in all projects.                                                                                 |
-| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                                              |
-| `rush dep-cruiser`    | Runs dependency-cruiser in all projects.                                                                    |
-| `rush dep-cruiser-ci` | Runs dependency-cruiser in CI mode in all projects. This creates HTML reports                               |
-| `rush prettier-check` | Verifies code formatting in all projects.                                                                   |
-| `rush prettier-write` | Formats code in all projects.                                                                               |
-| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                                     |
+| `rush validate`       | Validates code in all projects.                                                         |
+| `rush validate-ci`    | Validates code in all projects in CI mode.                                              |
+| `rush test-once`      | Tests code in all projects.                                                             |
+| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                          |
+| `rush dep-cruiser`    | Runs dependency-cruiser in all projects.                                                |
+| `rush dep-cruiser-ci` | Runs dependency-cruiser in CI mode in all projects. This creates HTML reports           |
+| `rush prettier-check` | Verifies code formatting in all projects.                                               |
+| `rush prettier-write` | Formats code in all projects.                                                           |
+| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                 |
 
 ## How do I...?
 
@@ -218,6 +218,9 @@ Must be one of the following:
 -   `refactor` - A code change that neither fixes a bug nor adds a feature. Refactor and cleanup of the
     source code that retains original functionality.
 -   `test` - Adding new tests or correcting existing tests
+-   `chore` - Change of code that do not fit anything described above. Changing of `.gitignore`, configuration of linter, etc.
+-   `config` - Code change adjusting environment or tooling configuration.
+-   `trivial` - Simple, low-risk code change, not bringing a new functionality. This type of change does not have to have JIRA footer.
 
 #### Scope
 
@@ -239,7 +242,7 @@ description in the title. The lines must be wrapped at 72 characters.
 #### Footer
 
 Footer should contain JIRA ID reference in the form of `JIRA: PROJECT-TICKET_ID`.
-Changes that do not require a JIRA ticket (e.g. typo fixes) should have `TRIVIAL` in the footer instead.
+Changes that do not require a JIRA ticket (e.g. typo fixes) should have `TRIVIAL` in the footer instead or omit the footer.
 
 #### Breaking changes
 
@@ -262,34 +265,31 @@ and complete description how commit message can be structured.
 
 ### What should the pull requests look like?
 
-The PR title should follow this general template:
+The pull request title should give a brief description of the changes introduced by the included commits.
+It is no longer required to have it in any specific format as it is no longer parsed by any tooling.
 
--   `CHANGE_TYPE: JIRA_TICKET_ID description of the pull request`
--   `CHANGE_TYPE: JIRA_TICKET_ID1, JIRA_TICKET_ID2 description of the pull request`
--   `CHANGE_TYPE: description of the pull request` (valid only for `CHANGE_TYPE` values `TRIVIAL` and `CONFIG`)
-
-The `CHANGE_TYPE` can be the following:
-
--   `FEATURE` - The pull request introduces a new feature. The JIRA ticket linked to this commit is of the "Story" type.
--   `BUGFIX` - The pull request fixes some feature. The JIRA ticket linked to this commit is of the "Bug" type.
--   `RELATED` - The pull request does not introduce or fix any feature. It only relates to another pull
-    request that has the actual _FEATURE_ or _BUGFIX_ keyword.
--   `TRIVIAL` - The pull request does not need to have JIRA ticket ID. It is used to lower the need for "paperwork"
-    for simple changes such as fixing the typos.
--   `CONFIG` - The pull request does not need to have JIRA ticket ID (but it is better if it has). It
-    can contain changes of the build configuration and similar updates.
+> Note: It is OK to leave the pull request name same as the commit name in the case of a single commit.
 
 Examples:
 
 ```
-FEATURE: RAIL-123 Support for drill to custom url
-BUGFIX: RAIL-196, RAIL-197, RAIL-198 Arithmetic measure bugfixes
-RELATED: RAIL-321 Poll on correct url after 303 redirect
-TRIVIAL: Update localization strings
-CONFIG: Update docker build base image
+Support for drill to custom url
 ```
 
-In the PR body, please follow the checklist and really try to explain the changes happening in the PR (for single commit PR this will be pre-filled from your well described commit already). All the communication about the PR should happen in the PR via comments so that the process is transparent and traceable.
+```
+Update localization strings
+```
+
+```
+build(lint): enable effect exhausting dependencies rule
+```
+
+In the pull request body, more detailed information can be provided about the changes. Try to explain the
+changes happening in the PR (for single commit PR this will be pre-filled from your well described commit
+already).
+
+All the communication about the PR should happen in the PR via comments so that the process is
+transparent and traceable.
 
 ### How do I tell if my Pull Request needs approval by a Code Owner?
 

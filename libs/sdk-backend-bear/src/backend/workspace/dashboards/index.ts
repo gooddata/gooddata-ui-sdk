@@ -15,6 +15,8 @@ import {
     IGetScheduledMailOptions,
     IExportResult,
     IGetDashboardPluginOptions,
+    NotSupported,
+    IDashboardsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -150,6 +152,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             return toSdkModel.convertListedDashboard(link, availability, userMap);
         });
     };
+
+    public getDashboardsQuery(): IDashboardsQuery {
+        throw new NotSupported("not supported");
+    }
 
     public getDashboard = async (
         dashboardRef: ObjRef,

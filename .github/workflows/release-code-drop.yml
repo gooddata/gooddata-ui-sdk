@@ -1,0 +1,90 @@
+# (C) 2024 GoodData Corporation
+
+# Automated Code Drop Workflow: Initiates a code drop from the master branch to a new release branch.
+# Manages version increments, setting the master to a new alpha preminor version and the release branch to a beta prerelease version.
+# Notifies the team via Slack upon successful completion.
+name: Release ~ Code drop
+on:
+  workflow_dispatch:
+
+jobs:
+  gate-approval:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - run: echo "Initiating approval"
+
+  prepare-branch:
+    needs: gate-approval
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Run copy branch action
+        uses: gooddata/gooddata-ui-sdk/.github/actions/branch-cutoff-action@master
+        with:
+          source-branch: 'master'
+          target-branch: 'release'
+
+  prepare-versions-release:
+    needs: prepare-branch
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: 'release'
+        bump: 'prerelease'
+        prerelease-id: 'beta'
+
+  prepare-versions-master:
+    needs: prepare-branch
+    uses: ./.github/workflows/rw-bump-version.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+        source-branch: 'master'
+        bump: 'preminor'
+        prerelease-id: 'alpha'
+
+  publish-pre-release-master:
+    needs: prepare-versions-master
+    uses: ./.github/workflows/rw-publish-prerelease.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: "master"
+      skip-bump: true
+
+  publish-pre-release-release:
+    needs: prepare-versions-release
+    uses: ./.github/workflows/rw-publish-prerelease.yml
+    permissions:
+      contents: write
+      id-token: write
+    secrets: inherit
+    with:
+      source-branch: "release"
+      skip-bump: true
+
+  slack-notification:
+    strategy:
+      matrix:
+        channels: ["#javascript-notifications", "#ask-delivery"]
+    runs-on: [ubuntu-latest]
+    needs: [prepare-versions-release, prepare-versions-master]
+    steps:
+      - name: Inform to slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+            channel-id: ${{ matrix.channels }}
+            slack-message: "The *gooddata-ui-sdk*, has successfully completed its code drop. The bumped versions are *${{ env.RELEASE_VERSION }}* (release) and *${{ env.MASTER_VERSION }}* (master)."
+        env:
+            RELEASE_VERSION: ${{ needs.prepare-versions-release.outputs.version }}
+            MASTER_VERSION: ${{ needs.prepare-versions-master.outputs.version }}
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

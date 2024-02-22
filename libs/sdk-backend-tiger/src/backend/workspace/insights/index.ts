@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IInsightsQueryOptions,
     IInsightsQueryResult,
@@ -8,6 +8,7 @@ import {
     SupportedInsightReferenceTypes,
     UnexpectedError,
     IGetInsightOptions,
+    IInsightsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -49,6 +50,7 @@ import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
 import { insightListComparator } from "./comparator.js";
+import { InsightsQuery } from "./insightsQuery.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -107,6 +109,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 : allInsights;
 
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
+    };
+
+    public getInsightsQuery = (): IInsightsQuery => {
+        return new InsightsQuery(this.authCall, { workspaceId: this.workspace });
     };
 
     private getInsightsRequestParameters = (

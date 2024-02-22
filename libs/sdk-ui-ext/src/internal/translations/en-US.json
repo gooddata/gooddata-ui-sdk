@@ -495,12 +495,12 @@
         "limit": 0
     },
     "dashboard.bucket.category_view_by_warning._measure|insight": {
-        "value": "To view by another attribute, an insight can have only one measure",
+        "value": "To view by another attribute, an visualization can have only one measure",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.category_view_by_warning._metric|insight": {
-        "value": "To view by another attribute, an insight can have only one metric",
+        "value": "To view by another attribute, an visualization can have only one metric",
         "comment": "",
         "limit": 0
     },
@@ -522,12 +522,12 @@
         "limit": 0
     },
     "dashboard.bucket.category_stack_by_warning._measure|insight": {
-        "value": "To stack by, an insight can have only one measure",
+        "value": "To stack by, an visualization can have only one measure",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.category_stack_by_warning._metric|insight": {
-        "value": "To stack by, an insight can have only one metric",
+        "value": "To stack by, an visualization can have only one metric",
         "comment": "",
         "limit": 0
     },
@@ -544,7 +544,7 @@
         "translate": false
     },
     "dashboard.bucket.stack_view_by_warning|insight": {
-        "value": "To stack by, an insight can have only one attribute in view by",
+        "value": "To stack by, an visualization can have only one attribute in view by",
         "comment": "",
         "limit": 0
     },
@@ -555,12 +555,12 @@
         "translate": false
     },
     "dashboard.bucket.measure_stack_by_warning._measure|insight": {
-        "value": "To stack by an attribute, an insight can have only one measure",
+        "value": "To stack by an attribute, an visualization can have only one measure",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.measure_stack_by_warning._metric|insight": {
-        "value": "To stack by an attribute, an insight can have only one metric",
+        "value": "To stack by an attribute, an visualization can have only one metric",
         "comment": "",
         "limit": 0
     },
@@ -592,12 +592,12 @@
         "limit": 0
     },
     "dashboard.bucket.category_category_by_warning._measure|insight": {
-        "value": "To view by, an insight can have only one measure",
+        "value": "To view by, an visualization can have only one measure",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.category_category_by_warning._metric|insight": {
-        "value": "To view by, an insight can have only one metric",
+        "value": "To view by, an visualization can have only one metric",
         "comment": "",
         "limit": 0
     },
@@ -614,12 +614,12 @@
         "translate": false
     },
     "dashboard.bucket.category_segment_by_warning._measure|insight": {
-        "value": "To segment by, an insight can have only one measure",
+        "value": "To segment by, an visualization can have only one measure",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.category_segment_by_warning._metric|insight": {
-        "value": "To segment by, an insight can have only one metric",
+        "value": "To segment by, an visualization can have only one metric",
         "comment": "",
         "limit": 0
     },
@@ -676,12 +676,12 @@
         "limit": 0
     },
     "dashboard.error.missing_primary_bucket_item.heading._measure|insight": {
-        "value": "No primary measure in your insight",
+        "value": "No primary measure in your visualization",
         "comment": "",
         "limit": 0
     },
     "dashboard.error.missing_primary_bucket_item.heading._metric|insight": {
-        "value": "No primary metric in your insight",
+        "value": "No primary metric in your visualization",
         "comment": "",
         "limit": 0
     },
@@ -698,12 +698,12 @@
         "translate": false
     },
     "dashboard.error.missing_primary_bucket_item.text._measure|insight": {
-        "value": "Add a primary measure to your insight, or switch to table.\nOnce done, you'll be able to save it.",
+        "value": "Add a primary measure to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
         "limit": 0
     },
     "dashboard.error.missing_primary_bucket_item.text._metric|insight": {
-        "value": "Add a primary metric to your insight, or switch to table.\nOnce done, you'll be able to save it.",
+        "value": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
         "limit": 0
     },
@@ -726,12 +726,12 @@
     },
     "dashboard.xirr.error.invalid_buckets.text._measure": {
         "value": "Make sure you have selected one measure and one date attribute",
-        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the insight",
+        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the visualization",
         "limit": 0
     },
     "dashboard.xirr.error.invalid_buckets.text._metric": {
         "value": "Make sure you have selected one metric and one date attribute",
-        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the insight",
+        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the visualization",
         "limit": 0
     },
     "properties.unsupported": {
@@ -740,7 +740,7 @@
         "limit": 0
     },
     "properties.config.not_applicable|insight": {
-        "value": "Configuration Panel is not applicable for this configuration of the insight",
+        "value": "Configuration Panel is not applicable for this configuration of the visualization",
         "comment": "",
         "limit": 0
     },
@@ -751,7 +751,7 @@
         "translate": false
     },
     "properties.not_applicable|insight": {
-        "value": "Property is not applicable for this configuration of the insight",
+        "value": "Property is not applicable for this configuration of the visualization",
         "comment": "",
         "limit": 0
     },
@@ -937,12 +937,12 @@
         "limit": 0
     },
     "properties.axis.format.info.inherit._measure|insight": {
-        "value": "The format is inherited from the first measure in the insight.",
+        "value": "The format is inherited from the first measure in the visualization.",
         "comment": "Info text for axis format option.",
         "limit": 0
     },
     "properties.axis.format.info.inherit._metric|insight": {
-        "value": "The format is inherited from the first metric in the insight.",
+        "value": "The format is inherited from the first metric in the visualization.",
         "comment": "Info text for axis format option.",
         "limit": 0
     },
@@ -1224,7 +1224,7 @@
         "limit": 0
     },
     "properties.colors.unsupported|insight": {
-        "value": "There are no colors for this configuration of the insight",
+        "value": "There are no colors for this configuration of the visualization",
         "comment": "",
         "limit": 0
     },
@@ -1235,7 +1235,7 @@
         "translate": false
     },
     "export_unsupported.colors|insight": {
-        "value": "The insight is not compatible with custom colors. To open the insight as a report, click Reset Colors in Configuration —> Colors.",
+        "value": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
         "comment": "",
         "limit": 0
     },
@@ -1291,7 +1291,7 @@
         "limit": 0
     },
     "sorting.disabled.explanation.attribute|insight": {
-        "value": "Sorting is not possible for this insight configuration.",
+        "value": "Sorting is not possible for this visualization configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
         "limit": 0
     },
@@ -1302,7 +1302,7 @@
         "translate": false
     },
     "sorting.disabled.explanation.measure._measure|insight": {
-        "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Measures section to change their position in the insight.",
+        "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Measures section to change their position in the visualization.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
         "limit": 0
     },
@@ -1313,7 +1313,7 @@
         "translate": false
     },
     "sorting.disabled.explanation.measure._metric|insight": {
-        "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Metrics section to change their position in the insight.",
+        "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
         "limit": 0
     },

@@ -1,0 +1,131 @@
+name: rw ~ Release ~ Perform release
+on:
+    workflow_call:
+        inputs:
+            bump:
+                required: true
+                description: "The type of version bump (minor, path)"
+                type: string
+            source-branch:
+                required: true
+                description: "Source branch to release from (release, rel/*)"
+                type: string
+
+jobs:
+    publish-release:
+        uses: ./.github/workflows/rw-publish-release.yml
+        permissions:
+            contents: write
+            id-token: write
+        secrets: inherit
+        with:
+            bump: ${{ inputs.bump }}
+            source-branch: ${{ inputs.source-branch }}
+
+    prepare-variables:
+        runs-on: [ubuntu-latest]
+        needs: [publish-release]
+        outputs:
+            version: ${{ steps.set_variables.outputs.version }}
+            rel-branch: ${{ steps.set_variables.outputs.target-branch }}
+            short-version: ${{ steps.set_variables.outputs.short-version }}
+        permissions:
+            contents: read
+        steps:
+            - name: Set variables names for release aka rel branch name and short version
+              id: set_variables
+              run: |
+                  echo "version $VERSION"
+                  echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+                  string=$VERSION
+                  base="rel/${string%.*}"
+                  echo "version $string converted to $base"
+                  echo "target-branch=$base" >> $GITHUB_OUTPUT
+
+                  short=${string%.*}
+                  echo "version $string converted to $short"
+                  echo "short-version=$short" >> $GITHUB_OUTPUT
+              env:
+                  VERSION: ${{ needs.publish-release.outputs.version }}
+
+    update-hugo-version:
+        needs: [prepare-variables]
+        uses: ./.github/workflows/rw-doc-update-hugo-version.yml
+        permissions:
+          contents: write
+        secrets: inherit
+        with:
+          source-branch: ${{ inputs.source-branch }}
+          version: ${{ needs.prepare-variables.outputs.short-version }}
+
+    add-release-tag:
+        needs: [publish-release,prepare-variables,update-hugo-version]
+        uses: ./.github/workflows/rw-git-create-tag.yml
+        permissions:
+          contents: write
+        with:
+          source-branch: ${{ inputs.source-branch }}
+          version: ${{ needs.prepare-variables.outputs.version }}
+          is-latest: ${{ needs.publish-release.outputs.is-latest}}
+
+    create-rel-branch:
+      runs-on: [ubuntu-latest]
+      needs: [add-release-tag, prepare-variables]
+      permissions:
+          contents: write
+      steps:
+        - name: Decision to proceed or skip creating rel/X.Y
+          id: decision
+          run: |
+               if [[ "${SOURCE_BRANCH}" == "release" ]]; then
+                echo "SOURCE_BRANCH (${SOURCE_BRANCH}) is 'release' need to create rel/X.Y branch"
+                  echo "need_rel_branch=true" >> $GITHUB_OUTPUT
+               else
+               echo "need_rel_branch=false" >> $GITHUB_OUTPUT
+                  echo "Skipping creation of rel/X.Y branch because SOURCE_BRANCH (${SOURCE_BRANCH}) is not 'release'"
+               fi
+          env:
+            SOURCE_BRANCH: ${{ inputs.source-branch }}
+        - name: Run copy branch action
+          if: steps.decision.outputs.need_rel_branch == 'true'
+          uses: gooddata/gooddata-ui-sdk/.github/actions/branch-cutoff-action@master
+          with:
+              source-branch: ${{ inputs.source-branch }}
+              target-branch: ${{ needs.prepare-variables.outputs.rel-branch }}
+
+    back-merge-release-to-master:
+      needs: [create-rel-branch]
+      uses: ./.github/workflows/rw-git-backmerge.yml
+      permissions:
+        contents: write
+        pull-requests: write
+      secrets: inherit
+      with:
+        source-branch: ${{ inputs.source-branch }}
+        target-branch: "master"
+
+    slack-notification:
+      runs-on: [ubuntu-latest]
+      needs: [back-merge-release-to-master]
+      steps:
+        - name: Set up message
+          id: set-up-message
+          run: |
+            if [[ "${HAS_CONFLICTS}" == "true" ]]; then
+              echo "RELEASE_MESSAGE=The backmerge from the ${SOURCE_BRANCH} is ready and can not be easily merged into the master branch. However, *there are conflicts* in the PR that needs to be resolved. ${PULL_REQUEST}" >> $GITHUB_ENV
+            else
+              echo "RELEASE_MESSAGE=The backmerge from the ${SOURCE_BRANCH} is ready and can be easily merged to the master branch. It won't cause any problems because there are *no conflicts*. ${PULL_REQUEST}" >> $GITHUB_ENV
+            fi
+          env:
+            PULL_REQUEST: ${{ needs.back-merge-release-to-master.outputs.pull-request-url }}
+            HAS_CONFLICTS: ${{ needs.back-merge-release-to-master.outputs.has-conflicts }}
+            SOURCE_BRANCH: ${{ inputs.source-branch }}
+
+        - name: Notify to slack
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            channel-id: "#javascript-notifications"
+            slack-message: ${{ env.RELEASE_MESSAGE }}
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

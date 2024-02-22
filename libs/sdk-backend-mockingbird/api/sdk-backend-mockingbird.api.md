@@ -75,7 +75,7 @@ export type DashboardRecording = {
 };
 
 // @internal (undocumented)
-export const DataViewAll: string;
+export const DataViewAll = "dataView_all";
 
 // @internal (undocumented)
 export const DataViewFirstPage: string;

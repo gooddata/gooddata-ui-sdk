@@ -31,6 +31,7 @@ import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -147,15 +148,20 @@ export interface IDataSourceApiResult {
 }
 
 // @internal (undocumented)
+export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrategyEnum;
+
+// @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
-    decodedParameters?: Array<DataSourceParameter>;
+    cacheStrategy?: IDataSourceCacheStrategy;
+    // (undocumented)
+    decodedParameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     id: string;
     // (undocumented)
     name: string;
     // (undocumented)
-    parameters?: Array<DataSourceParameter>;
+    parameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     permissions?: IDataSourcePermission[];
     // (undocumented)
@@ -163,7 +169,7 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     type: IDataSourceType;
     // (undocumented)
-    url?: string;
+    url?: string | null;
     // (undocumented)
     username?: string;
 }
@@ -178,6 +184,8 @@ export interface IDataSourceDeletedResponse {
 
 // @internal (undocumented)
 export interface IDataSourcePatchRequest {
+    // (undocumented)
+    cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
     id: string;
     // (undocumented)
@@ -233,6 +241,8 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 // @internal (undocumented)
 export interface IDataSourceUpsertRequest {
     // (undocumented)
+    cacheStrategy?: IDataSourceCacheStrategy;
+    // (undocumented)
     id: string;
     // (undocumented)
     name: string;
@@ -273,6 +283,7 @@ export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
 // @alpha (undocumented)
 export const objectTypeToTigerIdType: {
+    variable: TigerObjectType;
     user: TigerObjectType;
     measure: TigerObjectType;
     fact: TigerObjectType;
@@ -280,7 +291,6 @@ export const objectTypeToTigerIdType: {
     displayForm: TigerObjectType;
     dataSet: TigerObjectType;
     insight: TigerObjectType;
-    variable: TigerObjectType;
     analyticalDashboard: TigerObjectType;
     theme: TigerObjectType;
     colorPalette: TigerObjectType;

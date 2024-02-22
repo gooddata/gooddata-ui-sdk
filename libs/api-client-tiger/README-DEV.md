@@ -4,12 +4,12 @@ Client is generated with [openapi-generator](https://github.com/OpenAPITools/ope
 
 ## How to generate client
 
-`BASE_URL=http://your-tiger-host/ npm run generate-client`
+`BASE_URL=http://your-tiger-host npm run generate-client`
 
 Or you can create a `.env` file with the following format
 
 ```
-BASE_URL=http://your-tiger-host/
+BASE_URL=http://your-tiger-host
 ```
 
 and then run `npm run generate-client`.
