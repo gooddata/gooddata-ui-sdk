@@ -15,6 +15,9 @@ jobs:
     publish-documentation:
         needs: gate-approval
         uses: ./.github/workflows/rw-publish-documentation.yml
+        permissions:
+            contents: write
+            id-token: write
 
     get-version-from-release-branch:
         needs: gate-approval
