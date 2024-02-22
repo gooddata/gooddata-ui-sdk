@@ -186,7 +186,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
             {draggableFiltersWithPlaceholder.map((filterOrPlaceholder) => {
                 if (isFilterBarFilterPlaceholder(filterOrPlaceholder)) {
                     const CreatingPlaceholderComponent =
-                        AttributeFilterComponentSet.creating.CreatingPlaceholderComponent;
+                        AttributeFilterComponentSet.creating.CreatingPlaceholderComponent!;
                     return (
                         <CreatingPlaceholderComponent
                             key={filterOrPlaceholder.filterIndex}

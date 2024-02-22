@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { useIntl } from "react-intl";
 import React, { useCallback } from "react";
@@ -9,7 +9,7 @@ import { messages } from "../locales.js";
 
 import { AddWorkspaceSelect } from "./AddWorkspaceSelect.js";
 import { WorkspaceList } from "./WorkspaceList.js";
-import { useAddWorkspace } from "./workspaceHooks.js";
+import { useAddWorkspace } from "./useAddWorkspace.js";
 
 export interface IAddWorkspaceProps {
     ids: string[];
@@ -34,7 +34,6 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     const { addedWorkspaces, isProcessing, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
         ids,
         subjectType,
-        grantedWorkspaces,
         onSubmit,
         onCancel,
     );

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IInsightsQueryOptions,
@@ -9,6 +9,8 @@ import {
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
+    NotSupported,
+    IInsightsQuery,
 } from "@gooddata/sdk-backend-spi";
 import { InsightRecording, RecordedRefType, RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
@@ -99,6 +101,10 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         }
 
         return new InMemoryPaging<IInsight>(insights, limit, offset);
+    }
+
+    public getInsightsQuery(): IInsightsQuery {
+        throw new NotSupported("not supported");
     }
 
     public async updateInsight(insight: IInsight): Promise<IInsight> {

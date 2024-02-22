@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AxiosInstance } from "axios";
+import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;
@@ -33,6 +34,7 @@ export interface IUserProfile {
     };
     features?: ILiveFeatures | IStaticFeatures;
     permissions?: string[];
+    entitlements: ApiEntitlement[]; // reuse better type from metadata-api instead of original from auth-api
 }
 
 export interface ProfileApiInterface {

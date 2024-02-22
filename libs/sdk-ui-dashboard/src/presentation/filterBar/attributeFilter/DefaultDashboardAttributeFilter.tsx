@@ -38,7 +38,6 @@ import {
     selectIsInEditMode,
     selectBackendCapabilities,
     selectAttributeFilterConfigsModeMap,
-    selectEnableKDDependentFilters,
     useDashboardUserInteraction,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
@@ -68,7 +67,6 @@ export const DefaultDashboardAttributeFilter = (
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
-    const enableKDDependentFilters = useDashboardSelector(selectEnableKDDependentFilters);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
@@ -176,9 +174,7 @@ export const DefaultDashboardAttributeFilter = (
             }, [displayAttributeTooltip, defaultAttributeFilterTitle, attributeDataSet, isOpen, title]);
 
             const shouldExtendTitle =
-                enableKDDependentFilters &&
-                !!capabilities.supportsKeepingDependentFiltersSelection &&
-                isAttributeFilterDependent;
+                !!capabilities.supportsKeepingDependentFiltersSelection && isAttributeFilterDependent;
             const titleExtension = shouldExtendTitle ? (
                 <AttributeFilterDependencyTooltip tooltipContent={filterDependencyIconTooltip} />
             ) : null;
@@ -200,7 +196,6 @@ export const DefaultDashboardAttributeFilter = (
         onCloseFilter,
         isEditMode,
         intl,
-        enableKDDependentFilters,
         capabilities.supportsKeepingDependentFiltersSelection,
         isAttributeFilterDependent,
         isDraggable,
@@ -338,8 +333,7 @@ export const DefaultDashboardAttributeFilter = (
 
     const CustomStatusBarComponent = useMemo(() => {
         return function StatusBar(props: IAttributeFilterStatusBarProps) {
-            const enableShowingFilteredElements =
-                !!capabilities.supportsShowingFilteredElements && enableKDDependentFilters;
+            const enableShowingFilteredElements = !!capabilities.supportsShowingFilteredElements;
             const handleShowFilteredElements = () => {
                 props.onShowFilteredElements?.();
                 userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
@@ -379,7 +373,6 @@ export const DefaultDashboardAttributeFilter = (
         filter.attributeFilter.selectionMode,
         filter.attributeFilter.validateElementsBy,
         capabilities.supportsShowingFilteredElements,
-        enableKDDependentFilters,
         userInteraction,
     ]);
 

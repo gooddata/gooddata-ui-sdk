@@ -1,8 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 
 import { ObjRef } from "../objRef/index.js";
+import { IDataSourcePermissionAssignment, IWorkspacePermissionAssignment } from "../organization/index.js";
 
 /**
  * Represents platform user.
@@ -52,6 +53,11 @@ export interface IUser {
      * Permission of the user
      */
     permissions?: string[];
+
+    /**
+     * Authentication id of the user.
+     */
+    authenticationId?: string;
 }
 
 /**
@@ -150,8 +156,9 @@ export interface IOrganizationUser {
     fullName?: string;
     email?: string;
     isOrganizationAdmin: boolean;
-    assignedUserGroupIds: string[];
-    assignedWorkspaceIds: string[];
+    assignedUserGroups: IUserGroup[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
 }
 
 /**
@@ -178,7 +185,8 @@ export interface IOrganizationUserGroup {
     name?: string;
     isOrganizationAdmin: boolean;
     assignedUsersCount: number;
-    assignedWorkspaceIds: string[];
+    assignedWorkspaces: IWorkspacePermissionAssignment[];
+    assignedDataSources: IDataSourcePermissionAssignment[];
 }
 
 /**

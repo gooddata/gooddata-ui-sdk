@@ -17,8 +17,6 @@ import {
     useDashboardSelector,
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
-    selectSupportsElementsQueryParentFiltering,
-    selectIsKDDependentFiltersEnabled,
     selectSupportsSingleSelectDependentFilters,
     selectBackendCapabilities,
 } from "../../../../../model/index.js";
@@ -80,16 +78,11 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
     );
-    const supportsParentFiltering = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
-    const isDependentFiltersEnabled = useDashboardSelector(selectIsKDDependentFiltersEnabled);
     const supportsSingleSelectDependentFilters = useDashboardSelector(
         selectSupportsSingleSelectDependentFilters,
     );
     const capabilities = useDashboardSelector(selectBackendCapabilities);
-    const showDependentFiltersConfiguration =
-        supportsParentFiltering &&
-        isDependentFiltersEnabled &&
-        !capabilities.supportsAttributeFilterElementsLimiting;
+    const showDependentFiltersConfiguration = !capabilities.supportsAttributeFilterElementsLimiting;
 
     const neighborFilterDisplayForms = useMemo(() => {
         return neighborFilters.map((filter) => filter.attributeFilter.displayForm);

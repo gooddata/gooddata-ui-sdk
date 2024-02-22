@@ -700,7 +700,8 @@
                             "DATABRICKS",
                             "GDSTORAGE",
                             "CLICKHOUSE",
-                            "MYSQL"
+                            "MYSQL",
+                            "MARIADB"
                         ]
                     },
                     "url": {

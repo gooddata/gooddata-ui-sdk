@@ -18,6 +18,7 @@ import {
     IOrganizations,
     IEntitlements,
     isContractExpired,
+    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty.js";
@@ -46,6 +47,7 @@ import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
 import { LIB_VERSION, LIB_NAME } from "../__version.js";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
 import { TigerEntitlements } from "./entitlements/index.js";
+import { TigerDataSourcesService } from "./dataSources/index.js";
 
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
@@ -64,7 +66,6 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsCsvUploader: false,
     supportsRankingFilter: true,
     supportsRankingFilterWithMeasureValueFilter: false,
-    supportsElementsQueryParentFiltering: true,
     supportsKpiWidget: false,
     supportsWidgetEntity: false,
     supportsHyperlinkAttributeLabels: true,
@@ -206,6 +207,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public entitlements(): IEntitlements {
         return new TigerEntitlements(this.authApiCall);
+    }
+
+    public dataSources(): IDataSourcesService {
+        return new TigerDataSourcesService(this.authApiCall);
     }
 
     public currentUser(): IUserService {

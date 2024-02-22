@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
  *
@@ -107,6 +107,7 @@ export {
     WorkspaceEntitiesDatasets,
     ScanRequest,
     ScanResult,
+    IDataSourceCacheStrategy,
 } from "./backend/tigerSpecificFunctions.js";
 
 export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";

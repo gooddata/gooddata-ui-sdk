@@ -1,0 +1,1868 @@
+{
+    "data": [
+        {
+            "id": "2_literals_in_datetime_diff",
+            "type": "metric",
+            "attributes": {
+                "title": "2 literals in datetime_diff",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE\n DATETIME_DIFF(\"2018\",\"2020\", YEAR)> 2"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/2_literals_in_datetime_diff"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+            "type": "metric",
+            "attributes": {
+                "title": "_Timeline [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/6b1411d5-e253-418e-8fd3-137a9f56ea92"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+            "type": "metric",
+            "attributes": {
+                "title": "# Of Opportunities",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/768414e1-4bbe-4f01-b125-0cdc6305dc76"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+            "type": "metric",
+            "attributes": {
+                "title": "Amount",
+                "description": "Amount metric description",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/87a053b0-3947-49f3-b0c5-de53fd01f050"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+            "type": "metric",
+            "attributes": {
+                "title": "# Of Opportunities Won",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/8d33a0b1-cfdf-4074-a26a-4c4357774967"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+            "type": "metric",
+            "attributes": {
+                "title": "Win Rate",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/973a14c4-acb1-45fb-ba52-5d96fa02f7ba"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "amount_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "Amount [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/amount_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "argument_bigger_granularity",
+            "type": "metric",
+            "attributes": {
+                "title": "Argument bigger granularity",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.day},{label/dt_oppcreated_timestamp.hour}, DAY)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/argument_bigger_granularity"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "avg._amount",
+            "type": "metric",
+            "attributes": {
+                "title": "Avg. Amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/avg._amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+            "type": "metric",
+            "attributes": {
+                "title": "Probability",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "best_case",
+            "type": "metric",
+            "attributes": {
+                "title": "Best Case",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT SUM(\n    SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n      WHERE {label/f_stage.status_id} = \"Open\")"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/best_case"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
+            "type": "metric",
+            "attributes": {
+                "title": "_Snapshot [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/c5ee7836-126c-41aa-bd69-1873d379a065"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "close_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Close [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/close_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "close_eop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Close [EOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/close_eop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_and_datetime_condition",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep and datetime condition",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \"2010-26\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_and_datetime_condition"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_with_datetime_add_and_max",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep with datetime add and max",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE {label/dt_closedate_timestamp.week} >= DATETIME_ADD(MAX({label/dt_oppcreated_timestamp.week}, {dataset/f_opportunitysnapshot}), -1)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_with_datetime_add_and_max"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_with_datetime_and_previous",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep with datetime and previous",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE {label/dt_closedate_timestamp.week} <= DATETIME_ADD(PREVIOUS(YEAR, 2), WEEK, -551)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_with_datetime_and_previous"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_with_diff_and_3_difference_params",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep with diff and 3 difference params",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, {label/dt_closedate_timestamp.hour}, MINUTE) < 50000"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_with_diff_and_3_difference_params"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_with_diff_and_add",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep with diff and add",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.month}, DATETIME_ADD((\n        SELECT MAX({label/dt_closedate_timestamp.day}, {dataset/f_opportunitysnapshot})\n          BY {dataset/f_opportunitysnapshot}), -1), HOUR) < 600"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_with_diff_and_add"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_of_sales_rep_with_diff_and_max_by_all_other",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales rep with diff and max by all other",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_DIFF({label/dt_closedate_timestamp.month},\n    SELECT MAX({label/dt_oppcreated_timestamp.week})\n      BY ALL OTHER\n      USING {dataset/f_opportunitysnapshot}, DAY) > 670"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_of_sales_rep_with_diff_and_max_by_all_other"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "count_sales_reps_with_diff_and_max_condition",
+            "type": "metric",
+            "attributes": {
+                "title": "Count of sales reps with diff and max condition",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, \n    SELECT MAX({label/dt_closedate_timestamp.month}) \n      USING {dataset/f_opportunitysnapshot}, MONTH) > 8"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/count_sales_reps_with_diff_and_max_condition"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_day",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of day",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.day} = DATETIME_ADD({label/dt_closedate_timestamp.year}, DAY, -150)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_day"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_hour",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of hour",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.hour} >= DATETIME_ADD({label/dt_closedate_timestamp.year}, HOUR, 1000)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_hour"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_minute",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of minute",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.minute} <= DATETIME_ADD({label/dt_closedate_timestamp.year}, MINUTE, -10)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_minute"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_month",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of month",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} = DATETIME_ADD({label/dt_closedate_timestamp.year}, MONTH, -2)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_month"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_this_year",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of this year",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(THIS(YEAR), YEAR, -13)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_this_year"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_week",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of week",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.week} < DATETIME_ADD({label/dt_closedate_timestamp.year}, WEEK, 1)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_week"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_of_year",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add of year",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = DATETIME_ADD({label/dt_closedate_timestamp.year}, YEAR, -2)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_of_year"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_with_if_else",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime add with if else",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT IF DATETIME_ADD(MAX({label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}), YEAR, 1) = {label/dt_snapshotdate_timestamp.year} THEN 1\n    ELSE -1\n  END\n  BY {dataset/f_opportunitysnapshot}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_with_if_else"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_add_with_quarter",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime_add with quarter",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_ADD({label/dt_closedate_timestamp.quarter}, 2) <= PREVIOUS(QUARTER)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_add_with_quarter"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_2_diffrence_params",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (2 difference params)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_2_diffrence_params"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_2_params_string",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (2 params and string)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \"2010-12\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_2_params_string"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_2_same_params",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (2 same params)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_2_same_params"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_3_diffenrence_params",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (3 difference params)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_3_diffenrence_params"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_3_parameters",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (3 parameters)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_3_parameters"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_month_3_params_string",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of month (3 params and string)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(\"2010-12\", {label/dt_snapshotdate_timestamp.month}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_month_3_params_string"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_week_2_same_params",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of week (2 same params)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_week_2_same_params"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_week_3_parameters",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of week (3 parameters)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))\n  WHERE {label/dt_closedate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_week_3_parameters"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_week_month_week",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of week (month week)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.week}))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_week_month_week"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_week_week_year",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of week (week year)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.week}))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_week_week_year"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_2_parameters",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (2 parameters)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_2_parameters"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_3_parameters",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (3 parameters)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_3_parameters"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_next",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (next)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_next"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_previous",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (previous)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_previous"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_previous_next",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (previous and next)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(PREVIOUS(YEAR), NEXT(YEAR)))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_previous_next"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_string",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (string)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \"2015\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_string"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_of_year_string_and_this",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of year (string and this)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(\"2010\", THIS(YEAR), YEAR))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_of_year_string_and_this"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "datetime_diff_with_quarter",
+            "type": "metric",
+            "attributes": {
+                "title": "Datetime_diff with quarter",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.quarter},{label/dt_closedate_timestamp.quarter})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/datetime_diff_with_quarter"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "diff_of_week_string",
+            "type": "metric",
+            "attributes": {
+                "title": "Diff of week (string)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \"2010-12\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/diff_of_week_string"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+            "type": "metric",
+            "attributes": {
+                "title": "Parent metric",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": { "format": "#,##0", "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})" }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/e519fa2a-86c3-4e32-8313-0c03061626b1"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+            "type": "metric",
+            "attributes": {
+                "title": "Won",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n  WHERE {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/e519fa2a-86c3-4e32-8313-0c03062348j3"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "filter_time_transformation_datetime_add",
+            "type": "metric",
+            "attributes": {
+                "title": "Filter time transformation (datetime add)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \"2010-01\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/filter_time_transformation_datetime_add"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_amount_by_quarter",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of amount by quarter",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(\n    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_closedate_timestamp.quarter}\n  BY {label/dt_closedate_timestamp.year}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_amount_by_quarter"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_amount_by_sales_rep",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of amount by sales rep",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select\n first_value(\n   select sum({fact/f_opportunitysnapshot.f_amount})\n   by {label/attr.f_owner.salesrep}\n   )\n order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n within ({label/f_owner.department_id})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_amount_by_sales_rep"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_amount_order_asc",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of amount order asc",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_amount_order_asc"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_amount_order_desc",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of amount order desc",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_amount_order_desc"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_amount_with_previous",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of amount with previous",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  by {label/attr.f_owner.salesrep}\n  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_amount_with_previous"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_rank_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of rank amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(\n    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  BY ALL {label/f_owner.department_id}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_rank_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_runvar_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of runvar amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.month}\n  BY {label/dt_oppcreated_timestamp.year}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_runvar_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "first_value_of_runvar_amount_2",
+            "type": "metric",
+            "attributes": {
+                "title": "First value of runvar amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.month}\n  BY {label/dt_oppcreated_timestamp.year}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/first_value_of_runvar_amount_2"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "for_next_first_value_of_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "For Next first value of amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR NEXT({label/dt_closedate_timestamp.year})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/for_next_first_value_of_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "for_next_last_value_of_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "For Next last value of amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR NEXT({label/dt_closedate_timestamp.year})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/for_next_last_value_of_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "for_previous_first_value_of_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "For Previous first value of amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR Previous({label/dt_closedate_timestamp.year})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/for_previous_first_value_of_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "for_previous_last_value_of_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "For Previous last value of amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR Previous({label/dt_closedate_timestamp.year})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/for_previous_last_value_of_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "incorrect_literal_string_with_datetime_add_with_day",
+            "type": "metric",
+            "attributes": {
+                "title": "Incorrect literal string with datetime_add with day",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\"2022\", DAY, 1)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/incorrect_literal_string_with_datetime_add_with_day"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "incorrect_literal_string_with_datetime_add_with_month",
+            "type": "metric",
+            "attributes": {
+                "title": "Incorrect literal string with datetime_add with month",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\"2022-09-30\", MONTH, -1)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/incorrect_literal_string_with_datetime_add_with_month"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "incorrect_literal_string_with_datetime_diff",
+            "type": "metric",
+            "attributes": {
+                "title": "Incorrect literal string with datetime_diff",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF(\"2020\", NEXT(MONTH), MONTH)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/incorrect_literal_string_with_datetime_diff"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_amount_by_quarter",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of amount by quarter",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(\n    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_closedate_timestamp.quarter}\n  BY {label/dt_closedate_timestamp.year}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_amount_by_quarter"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_amount_by_sales_rep",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of amount by sales rep",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select\n last_value(\n   select sum({fact/f_opportunitysnapshot.f_amount})\n   by {label/attr.f_owner.salesrep}\n   )\n order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n within ({label/f_owner.department_id})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_amount_by_sales_rep"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_amount_order_asc",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of amount order asc",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_amount_order_asc"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_amount_order_desc",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of amount order desc",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_amount_order_desc"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_amount_with_previous",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of amount with previous",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  by {label/attr.f_owner.salesrep}\n  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_amount_with_previous"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "last_value_of_rank_amount",
+            "type": "metric",
+            "attributes": {
+                "title": "Last value of rank amount",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(\n    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  BY ALL {label/f_owner.department_id}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/last_value_of_rank_amount"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "type": "metric",
+            "attributes": {
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+                "description": "Metric with long name",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "maximum_literal_of_datetime_add",
+            "type": "metric",
+            "attributes": {
+                "title": "Maximum literal of datetime_add",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.day} < DATETIME_ADD({label/dt_closedate_timestamp.minute}, MONTH, 9999999999999999999999999999999)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/maximum_literal_of_datetime_add"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "max_of_top_level",
+            "type": "metric",
+            "attributes": {
+                "title": "Max of top level",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({label/dt_closedate_timestamp.week}, {dataset/f_opportunitysnapshot})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/max_of_top_level"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "metric_has_null_value",
+            "type": "metric",
+            "attributes": {
+                "title": "Metric has null value",
+                "description": "Metric has null value",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\"\", NULL, \"East Coast\", \"West Coast\" )"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/metric_has_null_value"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "missing_required_datetime_add_granularity",
+            "type": "metric",
+            "attributes": {
+                "title": "Missing required datetime_add granularity",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\"2010-07\", 1)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/missing_required_datetime_add_granularity"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "negative_metric",
+            "type": "metric",
+            "attributes": {
+                "title": "Negative Metric",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": { "format": "#,##0.00", "maql": "SELECT SUM({metric/amount_bop} * -1 )" }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/negative_metric"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "not_allow_datetime_types_for_datetime_diff",
+            "type": "metric",
+            "attributes": {
+                "title": "Not allow datetime types for datetime_diff",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.dayOfWeek},{label/dt_oppcreated_timestamp.weekOfYear})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/not_allow_datetime_types_for_datetime_diff"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "not_enough_context_for_max",
+            "type": "metric",
+            "attributes": {
+                "title": "Not enough context for MAX",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} = (\n  SELECT MAX(\n      SELECT {label/dt_oppcreated_timestamp.year})\n    BY ALL OTHER)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/not_enough_context_for_max"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "not_enough_context_for_min",
+            "type": "metric",
+            "attributes": {
+                "title": "Not enough context for MIN",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN(\n      SELECT {label/dt_closedate_timestamp.year})\n    BY ALL OTHER)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/not_enough_context_for_min"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "no_time_transformation",
+            "type": "metric",
+            "attributes": {
+                "title": "No Time transformation",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} = \"2010-01\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/no_time_transformation"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "of_activities",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Activities",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": { "format": "#,##0", "maql": "SELECT COUNT({label/f_activity.id})" }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/of_activities"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "of_lost_opps.",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Lost Opps.",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}\n  WHERE {label/f_stage.status_id} = \"Lost\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/of_lost_opps."
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "of_won_opps.",
+            "type": "metric",
+            "attributes": {
+                "title": "# of Won Opps.",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Won\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/of_won_opps."
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "opp._first_snapshot",
+            "type": "metric",
+            "attributes": {
+                "title": "_Opp. First Snapshot",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/opp._first_snapshot"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "runsum_first_value_of_amount_with_condition",
+            "type": "metric",
+            "attributes": {
+                "title": "Runsum first value of amount with condition",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT RUNSUM(FIRST_VALUE(\n      SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n        BY {label/attr.f_owner.salesrep}\n        WHERE {label/attr.f_owner.salesrep} = \"Adam Bradley\")\n    ORDER BY {label/dt_oppcreated_timestamp.year})"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/runsum_first_value_of_amount_with_condition"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "runsum_last_value_of_amount_with_condition",
+            "type": "metric",
+            "attributes": {
+                "title": "Runsum last value of amount with condition",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT RUNSUM(LAST_VALUE(\n      SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n        BY {label/attr.f_owner.salesrep}\n        HAVING {label/attr.f_owner.salesrep} = \"Adam Bradley\")\n    ORDER BY {label/dt_oppcreated_timestamp.year})\n"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/runsum_last_value_of_amount_with_condition"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "snapshot_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Snapshot [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} >= {metric/timeline_bop}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/snapshot_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_amount_with_datetime_add_and_between",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum amount with datetime_add and between",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year}\n  BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND NEXT(YEAR)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_amount_with_datetime_add_and_between"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_amount_with_datetime_add_and_not_between",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum amount with datetime_add and not between",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year}\n  NOT BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND PREVIOUS(YEAR)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_amount_with_datetime_add_and_not_between"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_between_max_created_year_and_previous_year",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount between max created year and previous year",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} BETWEEN (\n  SELECT MAX({label/dt_oppcreated_timestamp.year})\n    USING {label/f_opportunity.id}) AND PREVIOUS(YEAR)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_between_max_created_year_and_previous_year"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_not_between_max_created_year_and_this_year",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount not between max created year and this year",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT sum({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} NOT BETWEEN (\n  SELECT MAX(SELECT {label/dt_oppcreated_timestamp.year}\n        BY {dataset/f_opportunitysnapshot})) AND THIS(YEAR)"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_not_between_max_created_year_and_this_year"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_with_case_and_max",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount with case and max",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} = CASE\n    WHEN {label/county_name} = \"Clark\" THEN MAX(\n      SELECT {label/dt_oppcreated_timestamp.year}\n        BY {dataset/f_opportunitysnapshot})\n    ELSE \"2010\"\n  END"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_with_case_and_max"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_with_if_having_and_min",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount with if, having and min",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \"Clark\" THEN (\n    SELECT MIN(\n        {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))\n    ELSE \"2009\"\n  END"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_with_if_having_and_min"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_with_min_and_by_all_other",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount with min and by all other",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN((\n      SELECT {label/dt_closedate_timestamp.year}\n    BY ALL OTHER)))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_with_min_and_by_all_other"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "sum_of_amount_with_min_and_by_all_other_except",
+            "type": "metric",
+            "attributes": {
+                "title": "Sum of amount with min and by all other except",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN((\n      SELECT {label/dt_closedate_timestamp.year}\n    BY ALL IN ALL OTHER DIMENSIONS EXCEPT {label/county_name})))"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/sum_of_amount_with_min_and_by_all_other_except"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "timeline_bop",
+            "type": "metric",
+            "attributes": {
+                "title": "_Timeline [BOP]",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_timeline.timelinedate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/timeline_bop"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "time_transformation",
+            "type": "metric",
+            "attributes": {
+                "title": "Time transformation",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  FOR Next({label/dt_oppcreated_timestamp.month})\n  WHERE {label/dt_oppcreated_timestamp.month} = \"2010-01\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/time_transformation"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "top_level_of_datetime_add",
+            "type": "metric",
+            "attributes": {
+                "title": "Top level of datetime_add",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": { "format": "#,##0.00", "maql": "SELECT DATETIME_ADD(THIS(MONTH), MONTH, -1)" }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/top_level_of_datetime_add"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "top_level_metric_for_max",
+            "type": "metric",
+            "attributes": {
+                "title": "Top level metric for MAX",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX(SELECT {label/dt_closedate_timestamp.year} BY {dataset/f_opportunitysnapshot})   "
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/top_level_metric_for_max"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "top_level_metric_for_min",
+            "type": "metric",
+            "attributes": {
+                "title": "Top level metric for MIN",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MIN({label/dt_closedate_timestamp.year}) USING {dataset/f_opportunitysnapshot}"
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/top_level_metric_for_min"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        },
+        {
+            "id": "time_transformation_combined",
+            "type": "metric",
+            "attributes": {
+                "title": "Time transformation (combined)",
+                "description": "",
+                "areRelationsValid": true,
+                "createdAt": "2024-02-20 14:32",
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  FOR Next({label/dt_oppcreated_timestamp.month})\n  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \"2010-01\""
+                }
+            },
+            "links": {
+                "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics/time_transformation_combined"
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "d0c23ce18c044a83a204127f29e2be9e" } }
+        }
+    ],
+    "links": {
+        "self": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics?page=0&size=250",
+        "next": "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/d0c23ce18c044a83a204127f29e2be9e/metrics?page=1&size=250"
+    }
+}

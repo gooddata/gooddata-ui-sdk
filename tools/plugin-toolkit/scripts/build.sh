@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
 echo '// (C) 2021 GoodData Corporation' >src/__version.ts

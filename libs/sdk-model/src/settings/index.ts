@@ -316,11 +316,6 @@ export interface ISettings {
     enableUserManagement?: boolean;
 
     /**
-     * Enable new dependent filters in KD
-     */
-    enableKDDependentFilters?: boolean;
-
-    /**
      * Enable cross filtering in KD
      */
     enableKDCrossFiltering?: boolean;
@@ -345,6 +340,16 @@ export interface ISettings {
      * The configuration of filter values validation is merged with parent filters UI.
      */
     enableAttributeFilterValuesValidation?: boolean;
+
+    /**
+     * Enable creating users in user management.
+     */
+    enableCreateUser?: boolean;
+
+    /**
+     * Enable managing data source permissions in user management.
+     */
+    enableManageDataSourcePermissions?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     IFluidLayoutColSize,
@@ -218,6 +218,10 @@ function implicitWidgetWidth(
 ) {
     if (widget.type === "kpi") {
         return KPI_SIZE;
+    }
+
+    if (widget.type === "richText") {
+        return 6;
     }
 
     const visualizationUri = (widget.insight as UriRef).uri;

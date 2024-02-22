@@ -1,5 +1,4 @@
-// (C) 2023 GoodData Corporation
-
+// (C) 2023-2024 GoodData Corporation
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     IWorkspacePermissionAssignment,
@@ -9,6 +8,9 @@ import {
     IUser,
     isIOrganizationUser,
     IUserGroup,
+    IDataSourcePermissionAssignment,
+    AssignedDataSourcePermission,
+    IDataSourceIdentifierDescriptor,
 } from "@gooddata/sdk-model";
 
 import {
@@ -17,6 +19,9 @@ import {
     IGrantedUserGroup,
     IUserMember,
     WorkspacePermissionSubject,
+    DataSourcePermissionSubject,
+    IGrantedDataSource,
+    DataSourcePermission,
 } from "./types.js";
 
 export interface IComparableItemWithTitle {
@@ -31,6 +36,10 @@ export const sortByName = (itemA: IComparableItemWithTitle, itemB: IComparableIt
 
 export const getWorkspaceItemTestId = (workspace: IWorkspaceDescriptor): string => {
     return `s-workspace-item-id-${workspace.id}`;
+};
+
+export const getDataSourceItemTestId = (dataSource: IDataSourceIdentifierDescriptor): string => {
+    return `s-data-source-item-id-${dataSource.id}`;
 };
 
 export const getUserGroupItemTestId = (userGroup: IGrantedUserGroup): string => {
@@ -57,6 +66,28 @@ const asPermissions = (permission: WorkspacePermission): AssignedWorkspacePermis
     }
 };
 
+const asDataSourcePermissions = (permission: DataSourcePermission): AssignedDataSourcePermission[] => {
+    switch (permission) {
+        case "USE":
+            return ["USE"];
+        case "MANAGE":
+            return ["MANAGE"];
+        default:
+            throw Error("Unsupported permission value");
+    }
+};
+
+export const asDataSourcePermission = (permissions: AssignedDataSourcePermission[]): DataSourcePermission => {
+    if (permissions.includes("MANAGE")) {
+        return "MANAGE";
+    }
+    if (permissions.includes("USE")) {
+        return "USE";
+    }
+
+    return "USE";
+};
+
 export const asPermission = (permissions: AssignedWorkspacePermission[]): WorkspacePermission => {
     if (permissions.includes("MANAGE")) {
         return "MANAGE";
@@ -68,6 +99,23 @@ export const asPermission = (permissions: AssignedWorkspacePermission[]): Worksp
         return permissions.includes("EXPORT") ? "VIEW_AND_EXPORT" : "VIEW";
     }
     return "VIEW";
+};
+
+export const asEmptyDataSourcePermissionAssignment = (
+    subjectId: string,
+    subjectType: WorkspacePermissionSubject,
+    dataSource: IGrantedDataSource,
+): IDataSourcePermissionAssignment => {
+    return {
+        assigneeIdentifier: {
+            id: subjectId,
+            type: subjectType,
+        },
+        dataSource: {
+            id: dataSource.id,
+        },
+        permissions: [],
+    };
 };
 
 export const asEmptyPermissionAssignment = (
@@ -107,6 +155,24 @@ export const asPermissionAssignment = (
     };
 };
 
+export const asDataSourcePermissionAssignment = (
+    subjectId: string,
+    subjectType: DataSourcePermissionSubject,
+    dataSource: IGrantedDataSource,
+): IDataSourcePermissionAssignment => {
+    const permissions = asDataSourcePermissions(dataSource.permission);
+    return {
+        assigneeIdentifier: {
+            id: subjectId,
+            type: subjectType,
+        },
+        dataSource: {
+            id: dataSource.id,
+        },
+        permissions,
+    };
+};
+
 export const extractUserName = (user?: IOrganizationUser | IUser): string | undefined => {
     if (!user) {
         return undefined;
@@ -119,4 +185,56 @@ export const extractUserName = (user?: IOrganizationUser | IUser): string | unde
 
 export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGroup): string | undefined => {
     return userGroup?.name || userGroup?.id;
+};
+
+export const grantedWorkspaceAsPermissionAssignment = (
+    grantedWorkspace: IGrantedWorkspace,
+): Omit<IWorkspacePermissionAssignment, "assigneeIdentifier"> => {
+    const permissions = asPermissions(grantedWorkspace.permission);
+    return {
+        workspace: {
+            id: grantedWorkspace.id,
+        },
+        permissions: grantedWorkspace.isHierarchical ? [] : permissions,
+        hierarchyPermissions: grantedWorkspace.isHierarchical ? permissions : [],
+    };
+};
+
+export const grantedDataSourceAsPermissionAssignment = (
+    grantedDataSource: IGrantedDataSource,
+): Omit<IDataSourcePermissionAssignment, "assigneeIdentifier"> => {
+    const permissions = asDataSourcePermissions(grantedDataSource.permission);
+    return {
+        dataSource: {
+            id: grantedDataSource.id,
+        },
+        permissions,
+    };
+};
+
+export const workspacePermissionsAssignmentToGrantedWorkspace = (
+    assignment: IWorkspacePermissionAssignment,
+): IGrantedWorkspace => {
+    const { workspace } = assignment;
+    const permission = asPermission(
+        assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions,
+    );
+    return {
+        id: workspace.id,
+        title: workspace.name,
+        permission,
+        isHierarchical: assignment.hierarchyPermissions.length > 0,
+    };
+};
+
+export const dataSourcePermissionsAssignmentToGrantedDataSource = (
+    assignment: IDataSourcePermissionAssignment,
+): IGrantedDataSource => {
+    const { dataSource } = assignment;
+    const permission = asDataSourcePermission(assignment.permissions);
+    return {
+        id: dataSource.id,
+        title: dataSource.name,
+        permission,
+    };
 };
