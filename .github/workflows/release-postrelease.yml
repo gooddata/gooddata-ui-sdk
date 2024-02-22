@@ -15,6 +15,7 @@ jobs:
     publish-documentation:
         needs: gate-approval
         uses: ./.github/workflows/rw-publish-documentation.yml
+        secrets: inherit
         permissions:
             contents: write
             id-token: write
@@ -24,6 +25,7 @@ jobs:
         outputs:
             version: ${{ steps.get-version.outputs.version }}
         runs-on: [ubuntu-latest]
+        secrets: inherit
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
