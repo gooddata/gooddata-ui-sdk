@@ -971,6 +971,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "react-select-async-paginate",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-syntax-highlighter",
       "allowedCategories": [ "examples" ]
     },

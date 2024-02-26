@@ -1,10 +1,9 @@
-// (C) 2023 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
-import debounce from "debounce-promise";
+// (C) 2023-2024 GoodData Corporation
+import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { OnChangeValue, SelectInstance } from "react-select";
-import AsyncSelect from "react-select/async";
+import { OnChangeValue } from "react-select";
 import { useBackendStrict } from "@gooddata/sdk-ui";
+import { AsyncPaginate } from "react-select-async-paginate";
 
 import { IUserSelectOption, IUserMember, isUserItem } from "../types.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
@@ -15,7 +14,7 @@ import {
     GroupHeadingRenderer,
     InputRendered,
     LoadingMessageRenderer,
-    MenuListRendered,
+    MenuListRenderer,
     NoOptionsMessageRenderer,
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
@@ -31,13 +30,8 @@ export interface IAddUserSelectProps {
 
 export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grantedUsers, onSelect }) => {
     const intl = useIntl();
-    const selectRef = useRef<SelectInstance<any, false>>(null);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
-
-    useEffect(() => {
-        selectRef.current.focus();
-    }, []);
 
     const onChange = useCallback(
         (value: OnChangeValue<IUserSelectOption, boolean>) => {
@@ -52,13 +46,9 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
 
     const noOptionsMessage = useMemo(() => () => intl.formatMessage(messages.searchUserNoMatch), [intl]);
 
-    const loadOptions = useMemo(
-        () =>
-            debounce(loadUsersOptionsPromise(backend, organizationId, intl), SEARCH_INTERVAL, {
-                leading: true,
-            }),
-        [backend, organizationId, intl],
-    );
+    const loadOptions = useMemo(() => {
+        return loadUsersOptionsPromise(backend, organizationId, intl);
+    }, [backend, organizationId, intl]);
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
         const target = e.target as HTMLInputElement;
@@ -90,8 +80,8 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-user-select">
-            <AsyncSelect
-                ref={selectRef}
+            <AsyncPaginate
+                autoFocus
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"
                 components={{
@@ -102,7 +92,7 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
                     GroupHeading: GroupHeadingRenderer,
                     LoadingMessage: LoadingMessageRenderer,
                     LoadingIndicator: EmptyRenderer,
-                    MenuList: MenuListRendered,
+                    MenuList: MenuListRenderer,
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
@@ -113,6 +103,10 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
                 onChange={onChange}
                 value={null}
                 filterOption={filterOption}
+                additional={{
+                    page: 0,
+                }}
+                debounceTimeout={SEARCH_INTERVAL}
             />
         </div>
     );

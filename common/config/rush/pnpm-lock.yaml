@@ -2325,6 +2325,7 @@ importers:
       react-lines-ellipsis: ^0.15.0
       react-measure: ^2.5.2
       react-select: ^5.7.3
+      react-select-async-paginate: ^0.7.3
       react-transition-group: ^4.4.2
       sass: ^1.52.3
       stylelint: ^13.8.0
@@ -2363,6 +2364,7 @@ importers:
       react-lines-ellipsis: 0.15.4_biqbaboplfbrettd7655fr4n2y
       react-measure: 2.5.2_biqbaboplfbrettd7655fr4n2y
       react-select: 5.7.3_4lf4xofvn366h3sgouxfymsrw4
+      react-select-async-paginate: 0.7.3_oxaew3hmijaooife2silzcbf2u
       react-transition-group: 4.4.5_biqbaboplfbrettd7655fr4n2y
       ts-invariant: 0.7.5
       tslib: 2.6.2
@@ -8641,6 +8643,10 @@ packages:
       string-argv: 0.3.2
     dev: true
 
+  /@seznam/compose-react-refs/1.0.6:
+    resolution: {integrity: sha512-izzOXQfeQLonzrIQb8u6LQ8dk+ymz3WXTIXjvOlTXHq6sbzROg3NWU+9TTAOpEoK9Bth24/6F/XrfHJ5yR5n6Q==}
+    dev: false
+
   /@sideway/address/4.1.4:
     resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
     dependencies:
@@ -10693,6 +10699,14 @@ packages:
       diff-sequences: 29.6.3
       loupe: 2.3.7
       pretty-format: 29.7.0
+
+  /@vtaits/use-lazy-ref/0.1.0_react@18.2.0:
+    resolution: {integrity: sha512-/m5z3Df6I6i/B0lnv6pB2O1+X/nWVquqbnltq+irW1+Nhpv0PpeMzSNf9lTjzT/eHRZtH2fM1370AdYqc3FTyQ==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@webassemblyjs/ast/1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
@@ -20710,6 +20724,20 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
+  /react-select-async-paginate/0.7.3_oxaew3hmijaooife2silzcbf2u:
+    resolution: {integrity: sha512-5r1vcXsVhG2zWbEEAnsnT55UIbU0H0kW+l0x/qJyEX/jwmn+7DyI8DbV92GYa4V4WsmMg224eki00erayqK/sQ==}
+    peerDependencies:
+      react: ^16.14.0 || ^17.0.0 || ^18.0.0
+      react-select: ^5.0.0
+    dependencies:
+      '@seznam/compose-react-refs': 1.0.6
+      '@vtaits/use-lazy-ref': 0.1.0_react@18.2.0
+      react: 18.2.0
+      react-select: 5.7.3_4lf4xofvn366h3sgouxfymsrw4
+      sleep-promise: 9.1.0
+      use-is-mounted-ref: 1.5.0_react@18.2.0
+    dev: false
+
   /react-select/5.7.3_4lf4xofvn366h3sgouxfymsrw4:
     resolution: {integrity: sha512-z8i3NCuFFWL3w27xq92rBkVI2onT0jzIIPe480HlBjXJ3b5o6Q+Clp4ydyeKrj9DZZ3lrjawwLC5NGl0FSvUDg==}
     peerDependencies:
@@ -21873,6 +21901,10 @@ packages:
   /slash/4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
+    dev: false
+
+  /sleep-promise/9.1.0:
+    resolution: {integrity: sha512-UHYzVpz9Xn8b+jikYSD6bqvf754xL2uBUzDFwiU6NcdZeifPr6UfgU43xpkPu67VMS88+TI2PSI7Eohgqf2fKA==}
     dev: false
 
   /slice-ansi/3.0.0:
@@ -23678,6 +23710,14 @@ packages:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /use-is-mounted-ref/1.5.0_react@18.2.0:
+    resolution: {integrity: sha512-p5FksHf/ospZUr5KU9ese6u3jp9fzvZ3wuSb50i0y6fdONaHWgmOqQtxR/PUcwi6hnhQDbNxWSg3eTK3N6m+dg==}
+    peerDependencies:
+      react: '>=16.0.0'
     dependencies:
       react: 18.2.0
     dev: false

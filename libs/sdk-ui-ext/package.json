@@ -78,6 +78,7 @@
         "react-lines-ellipsis": "^0.15.0",
         "react-measure": "^2.5.2",
         "react-select": "^5.7.3",
+        "react-select-async-paginate": "^0.7.3",
         "react-transition-group": "^4.4.2",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0",
