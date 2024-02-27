@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
@@ -12,14 +12,16 @@ export class TigerUserSettingsService
     extends TigerSettingsService<IUserSettings>
     implements IUserSettingsService
 {
+    private tigerFeatureService: TigerFeaturesService;
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {
         super();
+        this.tigerFeatureService = new TigerFeaturesService(this.authCall);
     }
 
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
-            const features = await new TigerFeaturesService(this.authCall).getFeatures(profile);
+            const features = await this.tigerFeatureService.getFeatures(profile);
             const { data } = await client.actions.resolveAllSettingsWithoutWorkspace();
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({

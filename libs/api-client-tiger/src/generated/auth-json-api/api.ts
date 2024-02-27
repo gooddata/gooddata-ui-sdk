@@ -146,29 +146,10 @@ export interface LiveFeatureFlagConfiguration {
 export interface LiveFeatures {
     /**
      *
-     * @type {FeatureFlagsContext}
+     * @type {Features & object}
      * @memberof LiveFeatures
      */
-    context: FeatureFlagsContext;
-    /**
-     *
-     * @type {LiveFeatureFlagConfiguration}
-     * @memberof LiveFeatures
-     */
-    configuration: LiveFeatureFlagConfiguration;
-}
-/**
- *
- * @export
- * @interface LiveFeaturesAllOf
- */
-export interface LiveFeaturesAllOf {
-    /**
-     *
-     * @type {LiveFeatureFlagConfiguration}
-     * @memberof LiveFeaturesAllOf
-     */
-    configuration?: LiveFeatureFlagConfiguration;
+    live: Features & object;
 }
 /**
  * Matomo service.
@@ -311,29 +292,10 @@ export interface ProfileLinks {
 export interface StaticFeatures {
     /**
      *
-     * @type {FeatureFlagsContext}
+     * @type {Features & object}
      * @memberof StaticFeatures
      */
-    context: FeatureFlagsContext;
-    /**
-     *
-     * @type {{ [key: string]: string; }}
-     * @memberof StaticFeatures
-     */
-    items: { [key: string]: string };
-}
-/**
- *
- * @export
- * @interface StaticFeaturesAllOf
- */
-export interface StaticFeaturesAllOf {
-    /**
-     *
-     * @type {{ [key: string]: string; }}
-     * @memberof StaticFeaturesAllOf
-     */
-    items?: { [key: string]: string };
+    static: Features & object;
 }
 /**
  * Telemetry configuration to be used by client.

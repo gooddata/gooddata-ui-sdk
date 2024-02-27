@@ -4,13 +4,24 @@ import {
     IUserProfile,
     ILiveFeatures,
     FeatureContext,
-    JsonApiWorkspaceInAttributes,
+    JsonApiWorkspaceOutAttributes,
 } from "@gooddata/api-client-tiger";
+import { LRUCache } from "lru-cache";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures.js";
 
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
+
+const getKeyFromContext = (wsContext?: Partial<FeatureContext>): string => {
+    return `${wsContext?.organizationId}-${wsContext?.earlyAccess}`;
+};
+const responseMap: LRUCache<string, Promise<ITigerFeatureFlags>> = new LRUCache<
+    string,
+    Promise<ITigerFeatureFlags>
+>({
+    max: 10,
+});
 
 export class TigerFeaturesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -19,7 +30,11 @@ export class TigerFeaturesService {
         profile?: IUserProfile,
         wsContext?: Partial<FeatureContext>,
     ): Promise<ITigerFeatureFlags> {
-        return this.authCall(async (client) => {
+        const cachedResponse = responseMap.get(getKeyFromContext(wsContext));
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        const response = this.authCall(async (client) => {
             const prof = profile || (await client.profile.getCurrent());
             const results = await loadFeatures(prof, wsContext);
 
@@ -28,6 +43,8 @@ export class TigerFeaturesService {
                 ...results,
             };
         });
+        responseMap.set(getKeyFromContext(wsContext), response);
+        return response;
     }
 }
 
@@ -56,7 +73,7 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
 }
 
 export function pickContext(
-    attributes: JsonApiWorkspaceInAttributes | undefined,
+    attributes: JsonApiWorkspaceOutAttributes | undefined,
     organizationId: string | undefined,
 ): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};
