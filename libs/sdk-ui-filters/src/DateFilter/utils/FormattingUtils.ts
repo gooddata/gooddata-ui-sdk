@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
 
@@ -29,6 +29,7 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "pt-PT": "dd/MM/y",
     "zh-Hans": "y/M/d",
     "ru-RU": "dd.MM.y",
+    "it-IT": "dd/MM/y",
 };
 
 /**

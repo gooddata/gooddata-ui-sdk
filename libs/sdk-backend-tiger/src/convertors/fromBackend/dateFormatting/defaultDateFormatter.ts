@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import format from "date-fns/format/index.js";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -16,6 +16,7 @@ import pt from "date-fns/locale/pt/index.js";
 import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
+import it from "date-fns/locale/it/index.js";
 
 const defaultLocaleCode = "en-US";
 
@@ -58,6 +59,7 @@ const localeConversions = {
     "pt-PT": pt,
     "zh-Hans": zhCN,
     "ru-RU": ru,
+    "it-IT": it,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;
