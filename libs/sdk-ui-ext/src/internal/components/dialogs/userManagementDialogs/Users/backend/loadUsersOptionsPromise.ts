@@ -1,11 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IntlShape } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { IUserSelectOption, IUserMember, ISelectErrorOption } from "../../types.js";
-import { sortByName, extractUserName } from "../../utils.js";
 import { messages } from "../../locales.js";
+import { extractUserName } from "../../utils.js";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
     return [
@@ -19,39 +19,53 @@ const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
 
 export const loadUsersOptionsPromise =
     (backend: IAnalyticalBackend, organizationId: string, intl: IntlShape) =>
-    async (inputValue: string): Promise<IUserSelectOption[] | ISelectErrorOption[]> => {
+    async (
+        search: string,
+        _options: any,
+        { page }: { page: number },
+    ): Promise<{
+        options: IUserSelectOption[] | ISelectErrorOption[];
+        hasMore: boolean;
+        additional: {
+            page: number;
+        };
+    }> => {
         try {
             return await backend
                 .organization(organizationId)
                 .users()
-                .getUsers()
-                .then((users) =>
-                    users.filter(
-                        (user) =>
-                            inputValue === "" ||
-                            extractUserName(user).toLowerCase().includes(inputValue.toLowerCase()),
-                    ),
-                )
-                .then((users) =>
-                    users
-                        .map(
-                            (user): IUserMember => ({
-                                id: user.id,
-                                title: extractUserName(user),
-                                email: user.email,
-                            }),
-                        )
-                        .sort(sortByName),
-                )
-                .then((matchingUsers) =>
-                    matchingUsers.map((user) => {
-                        return {
-                            label: user.title,
-                            value: user,
-                        };
-                    }),
-                );
+                .getUsersQuery()
+                .withFilter({
+                    name: search,
+                })
+                .withPage(page)
+                .query()
+                .then((result) => {
+                    return {
+                        options: result.items.map((item) => {
+                            const userMember: IUserMember = {
+                                id: item.id,
+                                title: extractUserName(item),
+                                email: item.email,
+                            };
+                            return {
+                                label: item.fullName || item.id,
+                                value: userMember,
+                            };
+                        }),
+                        hasMore: result.items.length > 0,
+                        additional: {
+                            page: page + 1,
+                        },
+                    };
+                });
         } catch {
-            return createErrorOption(intl);
+            return {
+                options: createErrorOption(intl),
+                hasMore: false,
+                additional: {
+                    page: 0,
+                },
+            };
         }
     };

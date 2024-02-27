@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import {
     components as ReactSelectComponents,
@@ -9,6 +9,7 @@ import {
     NoticeProps,
 } from "react-select";
 import { Typography, LoadingMask } from "@gooddata/sdk-ui-kit";
+import { wrapMenuList } from "react-select-async-paginate";
 
 import { IUserSelectOption, isUserItem, ISelectErrorOption, isSelectErrorOption } from "../types.js";
 import { getUserItemTestId } from "../utils.js";
@@ -33,15 +34,17 @@ export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
     );
 };
 
-export const MenuListRendered = (props: MenuListProps<IUserSelectOption, false>): JSX.Element => {
-    return (
-        <ReactSelectComponents.MenuList {...props}>
-            <div className="s-user-management-dialog-menu" aria-label="Share dialog menu list">
-                {props.children}
-            </div>
-        </ReactSelectComponents.MenuList>
-    );
-};
+export const MenuListRenderer = wrapMenuList(
+    (props: MenuListProps<IUserSelectOption, false>): JSX.Element => {
+        return (
+            <ReactSelectComponents.MenuList {...props}>
+                <div className="s-user-management-dialog-menu" aria-label="Share dialog menu list">
+                    {props.children}
+                </div>
+            </ReactSelectComponents.MenuList>
+        );
+    },
+);
 
 export const InputRendered = (props: InputProps): JSX.Element => {
     return (
