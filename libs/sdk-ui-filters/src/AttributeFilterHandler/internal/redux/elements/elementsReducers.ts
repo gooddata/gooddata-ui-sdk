@@ -102,6 +102,13 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };
 
+const setResultCorrelation: AttributeFilterReducer<
+    PayloadAction<{
+        resultCorrelation: string | undefined;
+    }>
+> = (state, action) => {
+    state.elements.resultCorrelation = action.payload.resultCorrelation;
+};
 /**
  * @internal
  */
@@ -122,4 +129,5 @@ export const elementsReducers = {
     setLimitingValidationItems,
     setLimitingDateFilters,
     setLimitingAttributeFiltersAttributes,
+    setResultCorrelation,
 };

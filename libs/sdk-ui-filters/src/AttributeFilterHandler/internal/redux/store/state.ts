@@ -40,6 +40,7 @@ export interface AttributeFilterState {
         lastLoadedOptions?: ILoadElementsOptions;
         currentOptions: ILoadElementsOptions;
         limitingAttributeFiltersAttributes: IAttributeMetadataObject[];
+        resultCorrelation?: string;
     };
     selection: {
         commited: {

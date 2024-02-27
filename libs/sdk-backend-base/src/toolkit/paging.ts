@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import range from "lodash/range.js";
@@ -63,6 +63,7 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 export interface IServerPagingResult<T> {
     items: T[];
     totalCount: number;
+    resultCorrelation?: string;
 }
 
 /**
@@ -71,6 +72,7 @@ export interface IServerPagingResult<T> {
 export type IServerPagingParams = {
     offset: number;
     limit: number;
+    resultCorrelation?: string;
 };
 
 /**
@@ -83,13 +85,22 @@ export class ServerPaging<T> implements IPagedResource<T> {
         getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>,
         limit = 50,
         offset = 0,
+        resultCorrelation?: string,
     ): Promise<IPagedResource<TItem>> {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
-        const { totalCount, items } = await getData({ limit, offset });
+        const {
+            totalCount,
+            items,
+            resultCorrelation: responseResultCorrelation,
+        } = await getData({
+            limit,
+            offset,
+            resultCorrelation,
+        });
         // must use isNil, totalCount: 0 is a valid case (e.g. when searching for a nonsensical string)
         invariant(!isNil(totalCount), `total count must be specified, got: ${totalCount}`);
-        return new ServerPaging(getData, limit, offset, totalCount, items);
+        return new ServerPaging(getData, limit, offset, totalCount, items, responseResultCorrelation);
     }
 
     constructor(
@@ -98,6 +109,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
         public readonly offset = 0,
         public readonly totalCount: number,
         public readonly items: T[],
+        public readonly resultCorrelation?: string,
     ) {}
 
     public next = async (): Promise<IPagedResource<T>> => {
@@ -108,23 +120,46 @@ export class ServerPaging<T> implements IPagedResource<T> {
 
         // We are on the last page with the items - return empty result for the next page immediately
         if (this.items.length < this.limit || this.offset + this.items.length === this.totalCount) {
-            return new ServerPaging(this.getData, this.limit, this.offset + this.limit, this.totalCount, []);
+            return new ServerPaging(
+                this.getData,
+                this.limit,
+                this.offset + this.limit,
+                this.totalCount,
+                [],
+                this.resultCorrelation,
+            );
         }
 
-        const pageData = await this.getData({ limit: this.limit, offset: this.offset + this.limit });
+        const pageData = await this.getData({
+            limit: this.limit,
+            offset: this.offset + this.limit,
+            resultCorrelation: this.resultCorrelation,
+        });
         return new ServerPaging(
             this.getData,
             this.limit,
             this.offset + this.limit,
             pageData.totalCount,
             pageData.items,
+            this.resultCorrelation,
         );
     };
 
     public goTo = async (pageIndex: number): Promise<IPagedResource<T>> => {
         const offset = pageIndex * this.limit;
-        const pageData = await this.getData({ limit: this.limit, offset });
-        return new ServerPaging(this.getData, this.limit, offset, pageData.totalCount, pageData.items);
+        const pageData = await this.getData({
+            limit: this.limit,
+            offset,
+            resultCorrelation: this.resultCorrelation,
+        });
+        return new ServerPaging(
+            this.getData,
+            this.limit,
+            offset,
+            pageData.totalCount,
+            pageData.items,
+            this.resultCorrelation,
+        );
     };
 
     public all = async (): Promise<T[]> => {

@@ -3504,6 +3504,7 @@ export interface ElementsRequest {
     filterBy?: FilterBy;
     label: string;
     patternFilter?: string;
+    resultCorrelation?: string;
     sortOrder?: ElementsRequestSortOrderEnum;
     validateBy?: Array<ValidateByItem>;
 }
@@ -3524,6 +3525,7 @@ export interface ElementsResponse {
     granularity?: ElementsResponseGranularityEnum;
     paging: Paging;
     primaryLabel: RestApiIdentifier;
+    resultCorrelation?: string;
 }
 
 // @public (undocumented)

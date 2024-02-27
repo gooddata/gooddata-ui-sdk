@@ -971,6 +971,12 @@ export interface ElementsRequest {
      * @deprecated
      */
     dataSamplingPercentage?: number;
+    /**
+     * Result correlation. If specified, the element data will be taken from the result with the same correlation if it is available.
+     * @type {string}
+     * @memberof ElementsRequest
+     */
+    resultCorrelation?: string;
 }
 
 export const ElementsRequestSortOrderEnum = {
@@ -1017,6 +1023,12 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     format?: AttributeFormat;
+    /**
+     * Result correlation. The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results.
+     * @type {string}
+     * @memberof ElementsResponse
+     */
+    resultCorrelation?: string;
 }
 
 export const ElementsResponseGranularityEnum = {

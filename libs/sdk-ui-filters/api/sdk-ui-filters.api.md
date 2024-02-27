@@ -124,6 +124,7 @@ export type AttributeFilterControllerData = {
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
+    resultCorrelation?: string;
 };
 
 // @internal (undocumented)
@@ -313,6 +314,7 @@ export interface IAttributeElementLoader {
     getNextElementsPageStatus(): AsyncOperationStatus;
     getOffset(): number;
     getOrder(): SortDirection;
+    getResultCorrelation(): string | undefined;
     getSearch(): string;
     getTotalElementsCount(): number;
     getTotalElementsCountWithCurrentSettings(): number;
@@ -347,6 +349,7 @@ export interface IAttributeElementLoader {
     setLimitingMeasures(measures: IMeasure[]): void;
     setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
+    setResultCorrelation(resultCorrelation: string | undefined): void;
     setSearch(search: string): void;
 }
 
@@ -816,6 +819,8 @@ export interface ILoadElementsResult {
     elements: IAttributeElement[];
     // (undocumented)
     options: ILoadElementsOptions;
+    // (undocumented)
+    resultCorrelation?: string;
     // (undocumented)
     totalCount: number;
 }

@@ -87,6 +87,7 @@ import {
     selectInitTotalCountStatus,
     selectInitTotalCountError,
     selectLimitingValidationItems,
+    selectResultCorrelation,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -443,6 +444,14 @@ export class AttributeFilterReduxBridge {
 
     getLimitingDateFilters = (): IRelativeDateFilter[] => {
         return this.redux.select(selectLimitingDateFilters);
+    };
+
+    setResultCorrelation = (resultCorrelation: string | undefined): void => {
+        this.redux.dispatch(actions.setResultCorrelation({ resultCorrelation }));
+    };
+
+    getResultCorrelation = (): string | undefined => {
+        return this.redux.select(selectResultCorrelation);
     };
 
     //

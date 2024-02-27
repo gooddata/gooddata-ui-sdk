@@ -29,6 +29,7 @@ export interface ILoadElementsResult {
     elements: IAttributeElement[];
     totalCount: number;
     options: ILoadElementsOptions;
+    resultCorrelation?: string;
 }
 
 /**
@@ -227,9 +228,16 @@ export interface IAttributeElementLoader {
      * @remarks
      * When you change the options for the attribute element loads, you should call initial elements page load.
      *
-     * @param measures - measures to use.
+     * @param filters - filters to use.
      */
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
+
+    /**
+     * Set the result correlation for the subsequent attribute element loads.
+     *
+     * @param resultCorrelation - result correlation to use
+     */
+    setResultCorrelation(resultCorrelation: string | undefined): void;
 
     /**
      * Returns the current offset used for the attribute element loads.
@@ -270,6 +278,11 @@ export interface IAttributeElementLoader {
      * Returns the current date filters used to filter the attribute element loads.
      */
     getLimitingDateFilters(): IRelativeDateFilter[];
+
+    /**
+     * Returns the result correlation for the subsequent attribute element loads.
+     */
+    getResultCorrelation(): string | undefined;
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

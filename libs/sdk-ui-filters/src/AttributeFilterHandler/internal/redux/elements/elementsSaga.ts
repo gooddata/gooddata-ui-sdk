@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import omit from "lodash/omit.js";
 import { call, select, SagaReturnType } from "redux-saga/effects";
@@ -19,6 +19,7 @@ import { loadElements } from "./loadElements.js";
  */
 export function* elementsSaga(
     options: ILoadElementsOptions & CancelableOptions,
+    resultCorrelation?: string,
 ): SagaIterator<ILoadElementsResult> {
     const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
 
@@ -45,11 +46,13 @@ export function* elementsSaga(
             attribute,
         },
         staticElements,
+        resultCorrelation,
     );
 
     return {
         elements: elementsQueryResult.items,
         totalCount: elementsQueryResult.totalCount,
         options: omit(options, "signal"),
+        resultCorrelation: elementsQueryResult.resultCorrelation,
     };
 }

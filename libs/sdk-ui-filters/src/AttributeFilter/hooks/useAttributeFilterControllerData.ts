@@ -51,6 +51,7 @@ export function useAttributeFilterControllerData(
     const limit = handlerState.elements.options.limit;
     const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
     const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
+    const resultCorrelation = handlerState.elements.options.resultCorrelation;
 
     const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
     const nextElementsPageSize = hasNextElementsPage
@@ -122,6 +123,8 @@ export function useAttributeFilterControllerData(
         irrelevantSelection,
 
         limitingValidationItems,
+
+        resultCorrelation,
     };
 }
 

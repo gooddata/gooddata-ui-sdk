@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IElementsQueryResult, CancelableOptions } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 
@@ -16,8 +16,9 @@ export async function loadElements(
     options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
     staticElements: IAttributeElement[] | undefined,
+    resultCorrelation?: string,
 ): Promise<IElementsQueryResult> {
     return staticElements?.length
         ? loadElementsFromStaticElements(options, hiddenElementsInfo, staticElements)
-        : loadElementsFromBackend(context, options, hiddenElementsInfo);
+        : loadElementsFromBackend(context, options, hiddenElementsInfo, resultCorrelation);
 }

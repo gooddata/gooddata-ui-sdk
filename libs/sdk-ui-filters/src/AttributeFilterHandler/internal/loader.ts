@@ -417,6 +417,14 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getLimitingDateFilters();
     };
 
+    setResultCorrelation(resultCorrelation: string | undefined) {
+        this.bridge.setResultCorrelation(resultCorrelation);
+    }
+
+    getResultCorrelation(): string | undefined {
+        return this.bridge.getResultCorrelation();
+    }
+
     getAllElements = (): IAttributeElement[] => {
         return this.bridge.getAllElements();
     };

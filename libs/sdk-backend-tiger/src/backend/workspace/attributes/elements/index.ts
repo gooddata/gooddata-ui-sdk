@@ -184,7 +184,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         }
 
         return ServerPaging.for(
-            async ({ offset, limit }) => {
+            async ({ offset, limit, resultCorrelation }) => {
                 const response = await this.authCall((client) => {
                     const elementsRequest: ElementsRequest = {
                         label: ref.identifier,
@@ -202,6 +202,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                                     : ElementsRequestSortOrderEnum.DESC,
                         }),
                         ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
+                        ...(resultCorrelation && { resultCorrelation }),
                     };
 
                     const elementsRequestWrapped: Parameters<
@@ -218,7 +219,13 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     });
                 });
 
-                const { paging, elements, format, granularity } = response.data;
+                const {
+                    paging,
+                    elements,
+                    format,
+                    granularity,
+                    resultCorrelation: responseResultCorrelation,
+                } = response.data;
 
                 const elementsGranularity = granularity as ElementsResponseGranularityEnum;
                 const sdkGranularity = toSdkGranularity(elementsGranularity);
@@ -246,10 +253,12 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         };
                     }),
                     totalCount: paging.total,
+                    resultCorrelation: responseResultCorrelation,
                 };
             },
             this.limit,
             this.offset,
+            this.options?.resultCorrelation,
         );
     }
 

@@ -410,6 +410,7 @@ export interface IElementsQueryOptions {
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
+    resultCorrelation?: string;
 }
 
 // @public
@@ -715,6 +716,8 @@ export interface IPagedResource<TItem> {
     next(): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly offset: number;
+    // (undocumented)
+    readonly resultCorrelation?: string | undefined;
     // (undocumented)
     readonly totalCount: number;
 }

@@ -163,6 +163,14 @@ export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = 
 /**
  * @internal
  */
+export const selectResultCorrelation: FilterSelector<string | undefined> = createSelector(
+    selectState,
+    (state) => state.elements.resultCorrelation,
+);
+
+/**
+ * @internal
+ */
 export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = createSelector(
     selectOffset,
     selectLimit,

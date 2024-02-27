@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
 import { getAttributeFilterContext } from "../common/sagas.js";
@@ -7,6 +7,7 @@ import { selectElementsForm } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
 import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors.js";
+import { selectResultCorrelation } from "../elements/elementsSelectors.js";
 
 /**
  * @internal
@@ -58,15 +59,19 @@ export function* loadNextElementsPageSaga(
             selectLoadNextElementsPageOptions,
         );
 
+        const resultCorrelation: ReturnType<typeof selectResultCorrelation> = yield select(
+            selectResultCorrelation,
+        );
+
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
-        const loadOptionsWithExcludePrimaryLabel = {
+        const loadOptionsWithExcludePrimaryLabel: Parameters<typeof elementsSaga>[0] = {
             ...loadOptions,
             excludePrimaryLabel:
                 !context.backend.capabilities.supportsElementUris && elementsForm === "values",
         };
 
-        const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel);
+        const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, resultCorrelation);
 
         yield put(actions.loadNextElementsPageSuccess({ ...result, correlation }));
     } catch (error) {

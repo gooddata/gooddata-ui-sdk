@@ -52,6 +52,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             limitingMeasures?: IMeasure[];
             limitingDateFilters?: IRelativeDateFilter[];
             limitingValidationItems?: ObjRef[];
+            resultCorrelation?: string;
         };
     };
     selection: {
@@ -118,6 +119,7 @@ export const useAttributeFilterHandlerState = (
                 limitingMeasures: handler.getLimitingMeasures(),
                 limitingValidationItems: handler.getLimitingValidationItems(),
                 order: handler.getOrder(),
+                resultCorrelation: handler.getResultCorrelation(),
             },
         },
         selection: {
