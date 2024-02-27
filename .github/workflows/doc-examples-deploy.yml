@@ -1,10 +1,42 @@
 # (C) 2024 GoodData Corporation
 
 # Deploy of ui sdk examples
-name: Doc ~ Examples deploy
+name: FOSSA ~ Update attribtion file
 on:
   workflow_dispatch:
 
 jobs:
-  release-ui-sdk-examples-deploy:
-    uses: ./.github/workflows/rw-doc-examples-deploy.yml
+  fossa-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+           ref: "barani"
+      - name: get current commit
+        id: get-commit
+        run: |
+            revision=$(git rev-parse HEAD)
+            echo "hash=$revision" > $GITHUB_OUTPUT
+      - name: dummy package.json
+        run: |
+          echo '{}' > common/config/rush/package.json
+      - name: install/setup fossa
+        run: |
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.sh | bash
+      - name: run fossa
+        env:
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+        run: |
+          fossa analyze --branch ${{ github.ref_name }} --project "gooddata-ui-sdk"
+      - name: Generate FOSSA Attribution Report
+        env:
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+        run: |
+          fossa report attribution --format json | tee attribution.json
+      - name: Archive attribution file
+        uses: actions/upload-artifact@v4
+        with:
+          name: atttribution.json
+          path: |
+            attribution.json
