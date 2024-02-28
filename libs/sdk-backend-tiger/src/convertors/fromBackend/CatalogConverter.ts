@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     idRef,
     ICatalogAttribute,
@@ -95,6 +95,7 @@ export const convertMeasure = (
                     .expression(maql)
                     .format(format)
                     .isLocked(isInheritedObject(measure))
+                    .tags(measure.attributes?.tags ?? [])
                     .created(measure.attributes?.createdAt)
                     .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
                     .updated(measure.attributes?.modifiedAt)
