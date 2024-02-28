@@ -191,6 +191,8 @@ export {
     CustomLabel,
     CustomMetric,
     PdfExportRequest,
+    PdfTableStyle,
+    PdfTableStyleProperty,
 } from "./generated/export-json-api/api.js";
 
 export {
