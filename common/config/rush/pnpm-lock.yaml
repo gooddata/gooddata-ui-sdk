@@ -1588,6 +1588,7 @@ importers:
       eslint-plugin-sonarjs: ^0.16.0
       eslint-plugin-tsdoc: ^0.2.14
       lodash: ^4.17.19
+      lru-cache: ^10.0.1
       prettier: ~2.5.0
       spark-md5: ^3.0.0
       ts-invariant: ^0.7.3
@@ -1603,6 +1604,7 @@ importers:
       axios: 1.6.2
       date-fns: 2.30.0
       lodash: 4.17.21
+      lru-cache: 10.1.0
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
       tslib: 2.6.2

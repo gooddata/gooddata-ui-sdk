@@ -136,6 +136,25 @@ function* loadExistingDashboard(
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
+    const { usesStrictAccessControl } = backend.capabilities;
+
+    const calls = [
+        call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
+        call(resolveDashboardConfig, ctx, cmd),
+        call(resolvePermissions, ctx, cmd),
+        call(resolveEntitlements, ctx),
+        call(loadCatalog, ctx, cmd),
+        call(loadDashboardAlerts, ctx),
+        call(loadUser, ctx),
+        call(loadDashboardList, ctx),
+        call(loadLegacyDashboards, ctx),
+        call(loadDashboardPermissions, ctx),
+        call(loadDateHierarchyTemplates, ctx),
+    ];
+
+    if (!usesStrictAccessControl) {
+        calls.push(call(loadAccessibleDashboardList, ctx));
+    }
 
     const [
         dashboardWithReferences,
@@ -146,10 +165,10 @@ function* loadExistingDashboard(
         alerts,
         user,
         listedDashboards,
-        accessibleDashboards,
         legacyDashboards,
         dashboardPermissions,
         dateHierarchyTemplates,
+        accessibleDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfig>,
@@ -159,24 +178,11 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
-        PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
-    ] = yield all([
-        call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
-        call(resolveDashboardConfig, ctx, cmd),
-        call(resolvePermissions, ctx, cmd),
-        call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx, cmd),
-        call(loadDashboardAlerts, ctx),
-        call(loadUser, ctx),
-        call(loadDashboardList, ctx),
-        call(loadAccessibleDashboardList, ctx),
-        call(loadLegacyDashboards, ctx),
-        call(loadDashboardPermissions, ctx),
-        call(loadDateHierarchyTemplates, ctx),
-    ]);
+        PromiseFnReturnType<typeof loadAccessibleDashboardList>,
+    ] = yield all(calls);
 
     const {
         dashboard,
@@ -232,7 +238,7 @@ function* loadExistingDashboard(
                 dateFilterConfigs: dashboard.dateFilterConfigs,
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
-            accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards || listedDashboards),
             legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),

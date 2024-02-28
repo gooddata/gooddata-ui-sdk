@@ -365,25 +365,101 @@
                 },
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
+            "PdfTableStyle": {
+                "required": ["selector"],
+                "type": "object",
+                "properties": {
+                    "selector": {
+                        "type": "string",
+                        "description": "CSS selector where to apply given properties."
+                    },
+                    "properties": {
+                        "type": "array",
+                        "description": "List of CSS properties.",
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyleProperty"
+                        }
+                    }
+                },
+                "description": "Custom CSS styles for the table. (PDF, HTML)",
+                "example": [
+                    {
+                        "selector": "th",
+                        "properties": [
+                            {
+                                "key": "font-size",
+                                "value": "30px"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "PdfTableStyleProperty": {
+                "required": ["key", "value"],
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "CSS property key."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "CSS property value."
+                    }
+                },
+                "description": "CSS property."
+            },
             "Settings": {
-                "required": ["mergeHeaders", "showFilters"],
                 "type": "object",
                 "properties": {
                     "mergeHeaders": {
                         "type": "boolean",
-                        "description": "Merge equal headers in neighbouring cells.",
+                        "description": "Merge equal headers in neighbouring cells. (XLSX)",
                         "example": true
                     },
                     "showFilters": {
                         "type": "boolean",
-                        "description": "Print applied filters on top of the document.",
+                        "description": "Print applied filters on top of the document. (Not supported yet)",
                         "example": false
+                    },
+                    "pdfPageSize": {
+                        "type": "string",
+                        "description": "Page size and orientation. (PDF)",
+                        "example": "a4 landscape"
+                    },
+                    "pdfTableStyle": {
+                        "type": "array",
+                        "description": "Custom CSS styles for the table. (PDF, HTML)",
+                        "example": [
+                            {
+                                "selector": "th",
+                                "properties": [
+                                    {
+                                        "key": "font-size",
+                                        "value": "30px"
+                                    }
+                                ]
+                            }
+                        ],
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyle"
+                        }
+                    },
+                    "pdfTopLeftContent": {
+                        "type": "string",
+                        "description": "Top left header content. (PDF)",
+                        "example": "Good"
+                    },
+                    "pdfTopRightContent": {
+                        "type": "string",
+                        "description": "Top right header content. (PDF)",
+                        "example": "Morning"
                     }
                 },
-                "description": "XLSX specific settings."
+                "description": "Additional settings."
             },
             "TabularExportRequest": {
-                "required": ["executionResult", "fileName", "format"],
+                "required": ["fileName", "format"],
                 "type": "object",
                 "properties": {
                     "format": {
@@ -407,6 +483,11 @@
                     },
                     "customOverride": {
                         "$ref": "#/components/schemas/CustomOverride"
+                    },
+                    "visualizationObject": {
+                        "type": "string",
+                        "description": "Visualization object identifier. Alternative to executionResult property. (HTML/PDF only)",
+                        "example": "f7c359bc-c230-4487-b15b-ad9685bcb537"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."

@@ -114,23 +114,85 @@ export interface PdfExportRequest {
     metadata?: object;
 }
 /**
- * XLSX specific settings.
+ * Custom CSS styles for the table. (PDF, HTML)
+ * @export
+ * @interface PdfTableStyle
+ */
+export interface PdfTableStyle {
+    /**
+     * CSS selector where to apply given properties.
+     * @type {string}
+     * @memberof PdfTableStyle
+     */
+    selector: string;
+    /**
+     * List of CSS properties.
+     * @type {Array<PdfTableStyleProperty>}
+     * @memberof PdfTableStyle
+     */
+    properties?: Array<PdfTableStyleProperty>;
+}
+/**
+ * CSS property.
+ * @export
+ * @interface PdfTableStyleProperty
+ */
+export interface PdfTableStyleProperty {
+    /**
+     * CSS property key.
+     * @type {string}
+     * @memberof PdfTableStyleProperty
+     */
+    key: string;
+    /**
+     * CSS property value.
+     * @type {string}
+     * @memberof PdfTableStyleProperty
+     */
+    value: string;
+}
+/**
+ * Additional settings.
  * @export
  * @interface Settings
  */
 export interface Settings {
     /**
-     * Merge equal headers in neighbouring cells.
+     * Merge equal headers in neighbouring cells. (XLSX)
      * @type {boolean}
      * @memberof Settings
      */
-    mergeHeaders: boolean;
+    mergeHeaders?: boolean;
     /**
-     * Print applied filters on top of the document.
+     * Print applied filters on top of the document. (Not supported yet)
      * @type {boolean}
      * @memberof Settings
      */
-    showFilters: boolean;
+    showFilters?: boolean;
+    /**
+     * Page size and orientation. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfPageSize?: string;
+    /**
+     * Custom CSS styles for the table. (PDF, HTML)
+     * @type {Array<PdfTableStyle>}
+     * @memberof Settings
+     */
+    pdfTableStyle?: Array<PdfTableStyle>;
+    /**
+     * Top left header content. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfTopLeftContent?: string;
+    /**
+     * Top right header content. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfTopRightContent?: string;
 }
 /**
  * Export request object describing the export properties and overrides for tabular exports.
@@ -149,7 +211,7 @@ export interface TabularExportRequest {
      * @type {string}
      * @memberof TabularExportRequest
      */
-    executionResult: string;
+    executionResult?: string;
     /**
      * Filename of downloaded file without extension.
      * @type {string}
@@ -168,6 +230,12 @@ export interface TabularExportRequest {
      * @memberof TabularExportRequest
      */
     customOverride?: CustomOverride;
+    /**
+     * Visualization object identifier. Alternative to executionResult property. (HTML/PDF only)
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    visualizationObject?: string;
 }
 
 export const TabularExportRequestFormatEnum = {
