@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -68,7 +68,7 @@ const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
                 isSubmitDisabled={userGroupName === "" || isProcessing}
                 onCancel={onCancel}
                 isPositive={true}
-                className="s-user-management-delete-confirm-dialog gd-user-management-create-dialog"
+                className="s-user-management-create-group-dialog gd-user-management-create-dialog"
                 headline={intl.formatMessage(messages.createUserGroupDialogTitle)}
                 submitButtonText={intl.formatMessage(messages.createUserGroupButton)}
                 showProgressIndicator={isProcessing}
@@ -79,7 +79,7 @@ const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
                     onChange={onChange}
                     autofocus={true}
                     placeholder={intl.formatMessage(messages.createUserGroupInputPlaceholder)}
-                    className="gd-user-management-create-user-group-input"
+                    className="gd-user-management-create-user-group-input s-group-name-input"
                 />
             </ConfirmDialogBase>
         </Overlay>
