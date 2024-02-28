@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 export { BaseChart, IBaseChartProps } from "./_base/BaseChart.js";
 
 export { AreaChart, IAreaChartProps, IAreaChartBucketProps } from "./areaChart/AreaChart.js";
@@ -66,5 +66,9 @@ export {
 export { Xirr, IXirrProps, IXirrBucketProps } from "./xirr/Xirr.js";
 
 export { CoreXirr } from "./xirr/CoreXirr.js";
+
+export { Repeater, IRepeaterProps, IRepeaterBucketProps } from "./repeater/Repeater.js";
+
+export { CoreRepeater } from "./repeater/CoreRepeater.js";
 
 export { withJsxExport } from "./withJsxExport.js";

@@ -112,6 +112,9 @@ export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, Com
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
 
+// @internal (undocumented)
+export const CoreRepeater: React_2.ComponentClass<ICoreChartProps, any>;
+
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 
@@ -615,6 +618,18 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @beta (undocumented)
+export interface IRepeaterBucketProps {
+    attribute: AttributeOrPlaceholder;
+    columns: AttributesMeasuresOrPlaceholders;
+    filters?: NullableFiltersOrPlaceholders;
+    placeholdersResolutionContext?: any;
+}
+
+// @beta (undocumented)
+export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+}
+
 // @public (undocumented)
 export interface ISankeyChartBucketProps {
     attributeFrom?: AttributeOrPlaceholder;
@@ -767,6 +782,9 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
 export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
+
+// @beta (undocumented)
+export const Repeater: (props: IRepeaterProps) => JSX.Element;
 
 // @public
 export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;

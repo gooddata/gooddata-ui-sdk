@@ -158,7 +158,7 @@ export class CancelledSdkError extends GoodDataSdkError {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
 
 // @alpha
 export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
@@ -1768,6 +1768,7 @@ export const VisualizationTypes: {
     SANKEY: "sankey";
     DEPENDENCY_WHEEL: "dependencywheel";
     XIRR: "xirr";
+    REPEATER: "repeater";
 };
 
 // @internal

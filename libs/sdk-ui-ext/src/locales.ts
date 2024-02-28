@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -62,6 +62,8 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     segment_pushpin: { id: "dashboard.bucket.segment_title.pushpin" },
     trend_line: { id: "dashboard.bucket.trend_title.line" },
     columns_table: { id: "dashboard.bucket.columns_title.table" },
+    attribute_repeater: { id: "dashboard.bucket.attribute_title.repeater" },
+    columns_repeater: { id: "dashboard.bucket.columns_title.repeater" },
 });
 
 export const subtitles: Record<string, MessageDescriptor> = defineMessages({

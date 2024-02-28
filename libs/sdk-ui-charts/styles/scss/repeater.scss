@@ -1,0 +1,16 @@
+// (C) 2024 GoodData Corporation
+
+.repeater {
+    table,
+    th,
+    td {
+        border: 1px solid gray;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
