@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React from "react";
 import { useIntl } from "react-intl";
@@ -46,7 +46,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
             <div className="gd-dialog-header-wrapper">
                 <div className="gd-dialog-header">
                     <Typography tagName="h3" className="gd-dialog-header-title">
-                        <span>{dialogTitle}</span>
+                        <span className="s-user-management-title">{dialogTitle}</span>
                         {isAdmin ? (
                             <span className="gd-setting-widget-status-pill">
                                 {intl.formatMessage(messages.adminPill)}
@@ -60,7 +60,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
                 <div className="gd-user-management-dialog-buttons">
                     <div className="gd-user-management-dialog-buttons-left">
                         <Button
-                            className="gd-button gd-button-secondary"
+                            className="gd-button gd-button-secondary s-user-management-edit-button"
                             iconLeft={cx(editButtonIconClassName, "gd-user-management-dialog-edit-mode-icon")}
                             value={editButtonText}
                             onClick={onEdit}
@@ -74,7 +74,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
                             disabledLinkTooltipTextId={deleteLinkDisabledTooltipTextId}
                         />
                         <Button
-                            className="gd-button gd-button-secondary"
+                            className="gd-button gd-button-secondary s-user-management-close-button"
                             value={intl.formatMessage(messages.closeDialog)}
                             onClick={onClose}
                         />

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React from "react";
 import { Button, IAlignPoint, withBubble } from "@gooddata/sdk-ui-kit";
@@ -15,7 +15,7 @@ export interface IDeleteLinkProps {
 const Link: React.FC<IDeleteLinkProps> = ({ deleteLinkText, onOpenDeleteDialog, isDeleteLinkEnabled }) => {
     return isDeleteLinkEnabled ? (
         <Button
-            className="gd-button gd-button-link-dimmed gd-user-management-dialog-button-underlined"
+            className="gd-button gd-button-link-dimmed gd-user-management-dialog-button-underlined s-user-management-delete-link"
             value={deleteLinkText}
             onClick={onOpenDeleteDialog}
         />

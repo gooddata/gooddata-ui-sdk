@@ -25,7 +25,7 @@ export const loadUserDataSourceOptionsPromise =
             const dataSources = await backend.dataSources().getDataSourceIdentifiers();
             // eslint-disable-next-line sonarjs/no-empty-collection
             return dataSources
-                .filter((ds) => ds.name.toLocaleLowerCase().includes(inputValue))
+                .filter((ds) => ds.name.toLocaleLowerCase().includes(inputValue.toLowerCase()))
                 .sort((itemA, itemB): number => {
                     const textA = itemA.name.toUpperCase();
                     const textB = itemB.name.toUpperCase();

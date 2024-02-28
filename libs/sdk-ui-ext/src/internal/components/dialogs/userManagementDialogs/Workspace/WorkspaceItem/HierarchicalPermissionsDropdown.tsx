@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
@@ -75,7 +75,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
         <div className={className}>
             <div
                 className={cx(
-                    "s-user-management-permission-button",
+                    "s-user-management-hierarchical-permission-button",
                     "gd-granular-permission-button",
                     "dropdown-button",
                     `gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`,
