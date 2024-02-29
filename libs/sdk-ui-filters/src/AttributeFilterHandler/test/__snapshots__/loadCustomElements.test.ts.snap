@@ -28,6 +28,7 @@ exports[`AttributeFilterHandler > loadCustomElements() that was canceled by canc
 exports[`AttributeFilterHandler > loadCustomElements() that was successful should trigger onLoadCustomElementsSuccess() callback > with parameters 1`] = `
 [
   {
+    "cacheId": undefined,
     "correlation": "success",
     "elements": [
       {

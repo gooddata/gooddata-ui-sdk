@@ -68,6 +68,7 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was canceled by ca
 exports[`AttributeFilterHandler > loadNextElementsPage() that was successful should trigger onLoadNextElementsPageSuccess() callback > with parameters 1`] = `
 [
   {
+    "cacheId": undefined,
     "correlation": "success",
     "elements": [
       {

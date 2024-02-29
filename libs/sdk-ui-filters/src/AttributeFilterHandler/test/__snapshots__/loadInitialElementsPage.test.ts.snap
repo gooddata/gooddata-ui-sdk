@@ -183,6 +183,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() that was canceled by
 exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful should trigger onLoadInitialElementsPageSuccess() callback > with parameters 1`] = `
 [
   {
+    "cacheId": undefined,
     "correlation": "success",
     "elements": [
       {

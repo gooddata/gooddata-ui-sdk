@@ -4,6 +4,7 @@ exports[`bear dateFilterConfigs > should load date filter configs 1`] = `
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -162,6 +163,7 @@ exports[`bear dateFilterConfigs > should load empty date filter configs for out-
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
