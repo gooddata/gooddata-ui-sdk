@@ -1,5 +1,6 @@
+---
 # (C) 2023 GoodData Corporation
-
+# yamllint disable rule:line-length
 name: Push ~ Build web component's container image
 
 on:
@@ -18,7 +19,7 @@ jobs:
     # there has to be | and if needs to be at new line because : breaks the yaml parser
     if: |
       ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message,'chore: bump versions to') }}
-    runs-on: [infra1-medium] # need the bigger runner than small because Web component build consume more resource
+    runs-on: [infra1-medium]  # need the bigger runner than small because Web component build consume more resource
     permissions:
       contents: read
       id-token: write
@@ -110,38 +111,17 @@ jobs:
       github_short_sha: ${{ env.GITHUB_SHORT_SHA }}
   generate-update:
     runs-on: [infra1-small]
-    permissions:
-      contents: read
-      id-token: write
     needs: [docker-build-web-components]
-    container:
-      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/infra/tools:3.5.0
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
         with:
-          fetch-depth: 0
-      - name: Add repository to git safe directories to void dubious ownership issue
-        run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Get the commit before SHA
-        run: echo "GITHUB_COMMIT_BEFORE_SHA=$(git rev-parse HEAD^)" >> $GITHUB_ENV
-      - name: Get Vault secrets for creating MR to gdc-nas gitlab project
-        uses: hashicorp/vault-action@v2
-        with:
-          url: "https://vault.ord1.infra.intgdc.com"
-          method: jwt
-          path: jwt/github
-          role: front-end
-          secrets: |
-            secret/data/v3/int/github/github-runner-gitlab-token gitlab_approver_token | GITLAB_APPROVER_TOKEN ;
-            secret/data/v3/int/github/github-runner-gitlab-token gitlab_merger_token | GITLAB_MERGER_TOKEN ;
-      - name: Generate MR with a new version of web-components image to gdc-nas
-        run: /scripts/update_ext_image_version.py web-components
-        env:
-          CI_API_V4_URL: https://gitlab.com/api/v4
-          CI_PROJECT_NAME: ${{ github.event.repository.name }}
-          CI_COMMIT_SHORT_SHA: ${{ needs.docker-build-web-components.outputs.github_short_sha }}
-          CI_COMMIT_BEFORE_SHA: ${{ env.GITHUB_COMMIT_BEFORE_SHA }}
-          CI_COMMIT_BRANCH: ${{ github.ref_name }}
-          GITLAB_APPROVER_TOKEN: ${{ env.GITLAB_APPROVER_TOKEN }}
-          GITLAB_MERGER_TOKEN: ${{ env.GITLAB_MERGER_TOKEN }}
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
+          repository: gooddata/github-actions
+          event-type: public-ext-update
+          client-payload: |
+            {
+                "component": "web-components",
+                "branch": "${{ github.ref_name }}",
+                "github_short_sha": "${{ needs.docker-build-web-components.outputs.github_short_sha }}"
+            }
