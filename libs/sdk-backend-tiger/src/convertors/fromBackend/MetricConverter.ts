@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     JsonApiMetricOutDocument,
@@ -30,6 +30,7 @@ export function convertMetricFromBackend(
             .id(id)
             .title(attributes?.title || "")
             .isLocked(isInheritedObject(object))
+            .tags(object.attributes.tags ?? [])
             .description(attributes?.description || "")
             .expression(attributes.content.maql)
             .format(attributes.content.format || "")
