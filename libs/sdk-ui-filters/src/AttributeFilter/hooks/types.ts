@@ -150,12 +150,6 @@ export type AttributeFilterControllerData = {
      * Current validation items used to limit attribute filter elements.
      */
     limitingValidationItems?: ObjRef[];
-
-    /**
-     * Cache ID to use when requesting subsequent elements from the backend.
-     * This is to prevent inconsistent results when the underlying datasource is volatile.
-     */
-    cacheId?: string;
 };
 
 /**

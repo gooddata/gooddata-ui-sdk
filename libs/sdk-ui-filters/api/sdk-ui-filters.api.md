@@ -124,7 +124,6 @@ export type AttributeFilterControllerData = {
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
-    cacheId?: string;
 };
 
 // @internal (undocumented)
@@ -299,7 +298,6 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
-    getCacheId(): string | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;
@@ -343,7 +341,6 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
-    setCacheId(cacheId: string | undefined): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;

@@ -233,13 +233,6 @@ export interface IAttributeElementLoader {
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
 
     /**
-     * Set the result cache ID for the subsequent attribute element loads.
-     *
-     * @param cacheId - cache ID to use
-     */
-    setCacheId(cacheId: string | undefined): void;
-
-    /**
      * Returns the current offset used for the attribute element loads.
      */
     getOffset(): number;
@@ -278,11 +271,6 @@ export interface IAttributeElementLoader {
      * Returns the current date filters used to filter the attribute element loads.
      */
     getLimitingDateFilters(): IRelativeDateFilter[];
-
-    /**
-     * Returns the result correlation for the subsequent attribute element loads.
-     */
-    getCacheId(): string | undefined;
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

@@ -417,14 +417,6 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getLimitingDateFilters();
     };
 
-    setCacheId(cacheId: string | undefined) {
-        this.bridge.setCacheId(cacheId);
-    }
-
-    getCacheId(): string | undefined {
-        return this.bridge.getCacheId();
-    }
-
     getAllElements = (): IAttributeElement[] => {
         return this.bridge.getAllElements();
     };

@@ -52,7 +52,6 @@ export interface IUseAttributeFilterHandlerStateResult {
             limitingMeasures?: IMeasure[];
             limitingDateFilters?: IRelativeDateFilter[];
             limitingValidationItems?: ObjRef[];
-            cacheId?: string; // TODO is this necessary?
         };
     };
     selection: {
@@ -119,7 +118,6 @@ export const useAttributeFilterHandlerState = (
                 limitingMeasures: handler.getLimitingMeasures(),
                 limitingValidationItems: handler.getLimitingValidationItems(),
                 order: handler.getOrder(),
-                cacheId: handler.getCacheId(),
             },
         },
         selection: {

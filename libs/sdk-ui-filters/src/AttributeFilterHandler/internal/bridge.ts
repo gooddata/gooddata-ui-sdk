@@ -87,7 +87,6 @@ import {
     selectInitTotalCountStatus,
     selectInitTotalCountError,
     selectLimitingValidationItems,
-    selectCacheId,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -444,14 +443,6 @@ export class AttributeFilterReduxBridge {
 
     getLimitingDateFilters = (): IRelativeDateFilter[] => {
         return this.redux.select(selectLimitingDateFilters);
-    };
-
-    setCacheId = (cacheId: string | undefined): void => {
-        this.redux.dispatch(actions.setCacheId({ cacheId }));
-    };
-
-    getCacheId = (): string | undefined => {
-        return this.redux.select(selectCacheId);
     };
 
     //
