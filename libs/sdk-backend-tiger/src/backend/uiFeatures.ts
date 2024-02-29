@@ -69,7 +69,6 @@ export enum TigerFeaturesNames {
     EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
-    EnableManageDataSourcePermissions = "enableManageDataSourcePermissions",
     //boolean + possible values: enabled, disabled
     EnableDirectQuery = "enableDirectQuery",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
@@ -109,7 +108,6 @@ export type ITigerFeatureFlags = {
     enableAttributeFilterValuesValidation: typeof FeatureFlagsValues["enableAttributeFilterValuesValidation"][number];
     enableMySqlDataSource: typeof FeatureFlagsValues["enableMySqlDataSource"][number];
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
-    enableManageDataSourcePermissions: typeof FeatureFlagsValues["enableManageDataSourcePermissions"][number];
     enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
 };
@@ -147,8 +145,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDRichText: true,
     enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
-    enableCreateUser: false,
-    enableManageDataSourcePermissions: false,
+    enableCreateUser: true,
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
 };
@@ -191,7 +188,6 @@ export const FeatureFlagsValues = {
     enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
-    enableManageDataSourcePermissions: [true, false] as const,
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
 };

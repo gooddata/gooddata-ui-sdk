@@ -346,11 +346,6 @@ export interface ISettings {
      */
     enableCreateUser?: boolean;
 
-    /**
-     * Enable managing data source permissions in user management.
-     */
-    enableManageDataSourcePermissions?: boolean;
-
     [key: string]: number | boolean | string | object | undefined;
 }
 
