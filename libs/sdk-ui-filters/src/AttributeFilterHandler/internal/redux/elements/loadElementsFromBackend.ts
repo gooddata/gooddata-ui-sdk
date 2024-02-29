@@ -72,7 +72,7 @@ export async function loadElementsFromBackend(
     context: AttributeFilterHandlerStoreContext,
     options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
-    resultCorrelation?: string,
+    cacheId?: string,
 ): Promise<IElementsQueryResult> {
     const { backend, workspace } = context;
     const {
@@ -121,7 +121,7 @@ export async function loadElementsFromBackend(
 
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     const loaderOptions: IElementsQueryOptions = {
-        resultCorrelation,
+        cacheId: cacheId,
     };
 
     if (limit) {

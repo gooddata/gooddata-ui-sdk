@@ -3495,6 +3495,7 @@ export { Element_2 as Element }
 
 // @public
 export interface ElementsRequest {
+    cacheId?: string;
     complementFilter?: boolean;
     // @deprecated
     dataSamplingPercentage?: number;
@@ -3504,7 +3505,6 @@ export interface ElementsRequest {
     filterBy?: FilterBy;
     label: string;
     patternFilter?: string;
-    resultCorrelation?: string;
     sortOrder?: ElementsRequestSortOrderEnum;
     validateBy?: Array<ValidateByItem>;
 }
@@ -3520,12 +3520,12 @@ export type ElementsRequestSortOrderEnum = typeof ElementsRequestSortOrderEnum[k
 
 // @public
 export interface ElementsResponse {
+    cacheId?: string;
     elements: Array<Element_2>;
     format?: AttributeFormat;
     granularity?: ElementsResponseGranularityEnum;
     paging: Paging;
     primaryLabel: RestApiIdentifier;
-    resultCorrelation?: string;
 }
 
 // @public (undocumented)

@@ -51,7 +51,7 @@ export function useAttributeFilterControllerData(
     const limit = handlerState.elements.options.limit;
     const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
     const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
-    const resultCorrelation = handlerState.elements.options.resultCorrelation;
+    const cacheId = handlerState.elements.options.cacheId;
 
     const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
     const nextElementsPageSize = hasNextElementsPage
@@ -124,7 +124,7 @@ export function useAttributeFilterControllerData(
 
         limitingValidationItems,
 
-        resultCorrelation,
+        cacheId,
     };
 }
 

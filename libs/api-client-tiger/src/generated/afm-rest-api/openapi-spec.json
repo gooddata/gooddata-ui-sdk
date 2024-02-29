@@ -546,9 +546,9 @@
                     "format": {
                         "$ref": "#/components/schemas/AttributeFormat"
                     },
-                    "resultCorrelation": {
+                    "cacheId": {
                         "type": "string",
-                        "description": "Result correlation. The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results."
+                        "description": "The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results and to also avoid excessive queries to the database itself."
                     }
                 },
                 "description": "Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging."
@@ -783,9 +783,9 @@
                         "deprecated": true,
                         "default": 100
                     },
-                    "resultCorrelation": {
+                    "cacheId": {
                         "type": "string",
-                        "description": "Result correlation. If specified, the element data will be taken from the result with the same correlation if it is available."
+                        "description": "If specified, the element data will be taken from the result with the same cacheId if it is available."
                     }
                 }
             },

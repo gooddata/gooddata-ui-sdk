@@ -6,7 +6,7 @@ import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
 
 import { elementsSaga } from "../elements/elementsSaga.js";
-import { selectLoadElementsOptions, selectResultCorrelation } from "../elements/elementsSelectors.js";
+import { selectLoadElementsOptions, selectCacheId } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
 
@@ -47,9 +47,7 @@ export function* loadInitialElementsPageSaga(
             selectLoadElementsOptions,
         );
 
-        const resultCorrelation: ReturnType<typeof selectResultCorrelation> = yield select(
-            selectResultCorrelation,
-        );
+        const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
 
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
@@ -63,7 +61,7 @@ export function* loadInitialElementsPageSaga(
         const result: SagaReturnType<typeof elementsSaga> = yield call(
             elementsSaga,
             loadOptionsWithExcludePrimaryLabel,
-            resultCorrelation,
+            cacheId,
         );
         const limitingAttributeFiltersAttributes = yield call(
             loadLimitingAttributeFiltersAttributes,
@@ -74,7 +72,7 @@ export function* loadInitialElementsPageSaga(
         yield put(
             actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
         );
-        yield put(actions.setResultCorrelation({ resultCorrelation: result.resultCorrelation }));
+        yield put(actions.setCacheId({ cacheId: result.cacheId }));
         yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation }));
     } catch (error) {
         yield put(

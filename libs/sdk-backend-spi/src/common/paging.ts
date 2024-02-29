@@ -10,7 +10,7 @@ export interface IPagedResource<TItem> {
     readonly limit: number;
     readonly offset: number;
     readonly totalCount: number;
-    readonly resultCorrelation?: string | undefined;
+    readonly cacheId?: string;
 
     /**
      * Request next page of the resource

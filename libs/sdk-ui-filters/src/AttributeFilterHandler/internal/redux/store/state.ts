@@ -40,7 +40,7 @@ export interface AttributeFilterState {
         lastLoadedOptions?: ILoadElementsOptions;
         currentOptions: ILoadElementsOptions;
         limitingAttributeFiltersAttributes: IAttributeMetadataObject[];
-        resultCorrelation?: string;
+        cacheId?: string;
     };
     selection: {
         commited: {

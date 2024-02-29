@@ -16,9 +16,9 @@ export async function loadElements(
     options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
     staticElements: IAttributeElement[] | undefined,
-    resultCorrelation?: string,
+    cacheId?: string,
 ): Promise<IElementsQueryResult> {
     return staticElements?.length
         ? loadElementsFromStaticElements(options, hiddenElementsInfo, staticElements)
-        : loadElementsFromBackend(context, options, hiddenElementsInfo, resultCorrelation);
+        : loadElementsFromBackend(context, options, hiddenElementsInfo, cacheId);
 }

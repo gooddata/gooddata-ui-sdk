@@ -753,15 +753,15 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
 export type IServerPagingParams = {
     offset: number;
     limit: number;
-    resultCorrelation?: string;
+    cacheId?: string;
 };
 
 // @internal (undocumented)
 export interface IServerPagingResult<T> {
     // (undocumented)
-    items: T[];
+    cacheId?: string;
     // (undocumented)
-    resultCorrelation?: string;
+    items: T[];
     // (undocumented)
     totalCount: number;
 }
@@ -962,13 +962,15 @@ export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySetti
 
 // @internal
 export class ServerPaging<T> implements IPagedResource<T> {
-    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[], resultCorrelation?: string | undefined);
+    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[], cacheId?: string | undefined);
     // (undocumented)
     all: () => Promise<T[]>;
     // (undocumented)
     allSorted: (compareFn: (a: T, b: T) => number) => Promise<T[]>;
     // (undocumented)
-    static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number, resultCorrelation?: string): Promise<IPagedResource<TItem>>;
+    readonly cacheId?: string | undefined;
+    // (undocumented)
+    static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number, cacheId?: string): Promise<IPagedResource<TItem>>;
     // (undocumented)
     protected readonly getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>;
     // (undocumented)
@@ -981,8 +983,6 @@ export class ServerPaging<T> implements IPagedResource<T> {
     next: () => Promise<IPagedResource<T>>;
     // (undocumented)
     readonly offset: number;
-    // (undocumented)
-    readonly resultCorrelation?: string | undefined;
     // (undocumented)
     readonly totalCount: number;
 }

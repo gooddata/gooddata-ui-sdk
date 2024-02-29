@@ -404,13 +404,13 @@ export interface IElementsQueryFactory {
 
 // @public
 export interface IElementsQueryOptions {
+    cacheId?: string;
     complement?: boolean;
     elements?: ElementsQueryOptionsElementsSpecification;
     excludePrimaryLabel?: boolean;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
-    resultCorrelation?: string;
 }
 
 // @public
@@ -708,6 +708,8 @@ export type IOrganizationUsersQueryResult = IPagedResource<IOrganizationUser>;
 export interface IPagedResource<TItem> {
     all(): Promise<TItem[]>;
     allSorted(compareFn: (a: TItem, b: TItem) => number): Promise<TItem[]>;
+    // (undocumented)
+    readonly cacheId?: string;
     goTo(pageIndex: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly items: TItem[];
@@ -716,8 +718,6 @@ export interface IPagedResource<TItem> {
     next(): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly offset: number;
-    // (undocumented)
-    readonly resultCorrelation?: string | undefined;
     // (undocumented)
     readonly totalCount: number;
 }

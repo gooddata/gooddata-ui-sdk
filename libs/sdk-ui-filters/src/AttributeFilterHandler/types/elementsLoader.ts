@@ -29,7 +29,7 @@ export interface ILoadElementsResult {
     elements: IAttributeElement[];
     totalCount: number;
     options: ILoadElementsOptions;
-    resultCorrelation?: string;
+    cacheId?: string;
 }
 
 /**
@@ -233,11 +233,11 @@ export interface IAttributeElementLoader {
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
 
     /**
-     * Set the result correlation for the subsequent attribute element loads.
+     * Set the result cache ID for the subsequent attribute element loads.
      *
-     * @param resultCorrelation - result correlation to use
+     * @param cacheId - cache ID to use
      */
-    setResultCorrelation(resultCorrelation: string | undefined): void;
+    setCacheId(cacheId: string | undefined): void;
 
     /**
      * Returns the current offset used for the attribute element loads.
@@ -282,7 +282,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the result correlation for the subsequent attribute element loads.
      */
-    getResultCorrelation(): string | undefined;
+    getCacheId(): string | undefined;
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

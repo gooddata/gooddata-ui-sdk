@@ -19,7 +19,7 @@ import { loadElements } from "./loadElements.js";
  */
 export function* elementsSaga(
     options: ILoadElementsOptions & CancelableOptions,
-    resultCorrelation?: string,
+    cacheId?: string,
 ): SagaIterator<ILoadElementsResult> {
     const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
 
@@ -46,13 +46,13 @@ export function* elementsSaga(
             attribute,
         },
         staticElements,
-        resultCorrelation,
+        cacheId,
     );
 
     return {
         elements: elementsQueryResult.items,
         totalCount: elementsQueryResult.totalCount,
         options: omit(options, "signal"),
-        resultCorrelation: elementsQueryResult.resultCorrelation,
+        cacheId: elementsQueryResult.cacheId,
     };
 }

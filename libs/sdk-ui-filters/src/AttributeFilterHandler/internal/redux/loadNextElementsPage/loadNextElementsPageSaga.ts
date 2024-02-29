@@ -7,7 +7,7 @@ import { selectElementsForm } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
 import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors.js";
-import { selectResultCorrelation } from "../elements/elementsSelectors.js";
+import { selectCacheId } from "../elements/elementsSelectors.js";
 
 /**
  * @internal
@@ -59,9 +59,7 @@ export function* loadNextElementsPageSaga(
             selectLoadNextElementsPageOptions,
         );
 
-        const resultCorrelation: ReturnType<typeof selectResultCorrelation> = yield select(
-            selectResultCorrelation,
-        );
+        const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
 
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
@@ -71,7 +69,7 @@ export function* loadNextElementsPageSaga(
                 !context.backend.capabilities.supportsElementUris && elementsForm === "values",
         };
 
-        const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, resultCorrelation);
+        const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, cacheId);
 
         yield put(actions.loadNextElementsPageSuccess({ ...result, correlation }));
     } catch (error) {

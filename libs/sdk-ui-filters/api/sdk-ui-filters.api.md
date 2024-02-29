@@ -124,7 +124,7 @@ export type AttributeFilterControllerData = {
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
-    resultCorrelation?: string;
+    cacheId?: string;
 };
 
 // @internal (undocumented)
@@ -299,6 +299,7 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
+    getCacheId(): string | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;
@@ -314,7 +315,6 @@ export interface IAttributeElementLoader {
     getNextElementsPageStatus(): AsyncOperationStatus;
     getOffset(): number;
     getOrder(): SortDirection;
-    getResultCorrelation(): string | undefined;
     getSearch(): string;
     getTotalElementsCount(): number;
     getTotalElementsCountWithCurrentSettings(): number;
@@ -343,13 +343,13 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
+    setCacheId(cacheId: string | undefined): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
     setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
-    setResultCorrelation(resultCorrelation: string | undefined): void;
     setSearch(search: string): void;
 }
 
@@ -816,11 +816,11 @@ export interface ILoadElementsOptions {
 // @public
 export interface ILoadElementsResult {
     // (undocumented)
+    cacheId?: string;
+    // (undocumented)
     elements: IAttributeElement[];
     // (undocumented)
     options: ILoadElementsOptions;
-    // (undocumented)
-    resultCorrelation?: string;
     // (undocumented)
     totalCount: number;
 }

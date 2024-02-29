@@ -163,9 +163,9 @@ export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = 
 /**
  * @internal
  */
-export const selectResultCorrelation: FilterSelector<string | undefined> = createSelector(
+export const selectCacheId: FilterSelector<string | undefined> = createSelector(
     selectState,
-    (state) => state.elements.resultCorrelation,
+    (state) => state.elements.cacheId,
 );
 
 /**

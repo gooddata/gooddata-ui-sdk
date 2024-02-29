@@ -63,7 +63,7 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 export interface IServerPagingResult<T> {
     items: T[];
     totalCount: number;
-    resultCorrelation?: string;
+    cacheId?: string;
 }
 
 /**
@@ -72,7 +72,7 @@ export interface IServerPagingResult<T> {
 export type IServerPagingParams = {
     offset: number;
     limit: number;
-    resultCorrelation?: string;
+    cacheId?: string;
 };
 
 /**
@@ -85,22 +85,22 @@ export class ServerPaging<T> implements IPagedResource<T> {
         getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>,
         limit = 50,
         offset = 0,
-        resultCorrelation?: string,
+        cacheId?: string,
     ): Promise<IPagedResource<TItem>> {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
         const {
             totalCount,
             items,
-            resultCorrelation: responseResultCorrelation,
+            cacheId: responseCacheId,
         } = await getData({
             limit,
             offset,
-            resultCorrelation,
+            cacheId,
         });
         // must use isNil, totalCount: 0 is a valid case (e.g. when searching for a nonsensical string)
         invariant(!isNil(totalCount), `total count must be specified, got: ${totalCount}`);
-        return new ServerPaging(getData, limit, offset, totalCount, items, responseResultCorrelation);
+        return new ServerPaging(getData, limit, offset, totalCount, items, responseCacheId);
     }
 
     constructor(
@@ -109,7 +109,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
         public readonly offset = 0,
         public readonly totalCount: number,
         public readonly items: T[],
-        public readonly resultCorrelation?: string,
+        public readonly cacheId?: string,
     ) {}
 
     public next = async (): Promise<IPagedResource<T>> => {
@@ -126,14 +126,14 @@ export class ServerPaging<T> implements IPagedResource<T> {
                 this.offset + this.limit,
                 this.totalCount,
                 [],
-                this.resultCorrelation,
+                this.cacheId,
             );
         }
 
         const pageData = await this.getData({
             limit: this.limit,
             offset: this.offset + this.limit,
-            resultCorrelation: this.resultCorrelation,
+            cacheId: this.cacheId,
         });
         return new ServerPaging(
             this.getData,
@@ -141,7 +141,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
             this.offset + this.limit,
             pageData.totalCount,
             pageData.items,
-            this.resultCorrelation,
+            this.cacheId,
         );
     };
 
@@ -150,7 +150,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
         const pageData = await this.getData({
             limit: this.limit,
             offset,
-            resultCorrelation: this.resultCorrelation,
+            cacheId: this.cacheId,
         });
         return new ServerPaging(
             this.getData,
@@ -158,7 +158,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
             offset,
             pageData.totalCount,
             pageData.items,
-            this.resultCorrelation,
+            this.cacheId,
         );
     };
 

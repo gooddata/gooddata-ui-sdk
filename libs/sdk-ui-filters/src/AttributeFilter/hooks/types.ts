@@ -152,10 +152,10 @@ export type AttributeFilterControllerData = {
     limitingValidationItems?: ObjRef[];
 
     /**
-     * Correlation to use when requesting subsequent elements from the backend.
+     * Cache ID to use when requesting subsequent elements from the backend.
      * This is to prevent inconsistent results when the underlying datasource is volatile.
      */
-    resultCorrelation?: string;
+    cacheId?: string;
 };
 
 /**

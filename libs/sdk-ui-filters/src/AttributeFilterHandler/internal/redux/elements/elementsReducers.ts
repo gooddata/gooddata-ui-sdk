@@ -102,12 +102,11 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };
 
-const setResultCorrelation: AttributeFilterReducer<
-    PayloadAction<{
-        resultCorrelation: string | undefined;
-    }>
-> = (state, action) => {
-    state.elements.resultCorrelation = action.payload.resultCorrelation;
+const setCacheId: AttributeFilterReducer<PayloadAction<{ cacheId: string | undefined }>> = (
+    state,
+    action,
+) => {
+    state.elements.cacheId = action.payload.cacheId;
 };
 /**
  * @internal
@@ -129,5 +128,5 @@ export const elementsReducers = {
     setLimitingValidationItems,
     setLimitingDateFilters,
     setLimitingAttributeFiltersAttributes,
-    setResultCorrelation,
+    setCacheId,
 };

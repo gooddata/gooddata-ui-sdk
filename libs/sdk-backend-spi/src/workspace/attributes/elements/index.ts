@@ -149,14 +149,14 @@ export interface IElementsQueryOptions {
     excludePrimaryLabel?: boolean;
 
     /**
-     * Correlation to use when requesting subsequent elements from the backend.
+     * Cache ID to use when requesting subsequent elements from the backend.
      *
      * @remarks
      * This is to prevent inconsistent results when the underlying datasource is volatile.
      * If not specified, the backend will generate a value that the client should use in subsequent requests.
      * Note that not all backend types support this.
      */
-    resultCorrelation?: string;
+    cacheId?: string;
 }
 
 /**
