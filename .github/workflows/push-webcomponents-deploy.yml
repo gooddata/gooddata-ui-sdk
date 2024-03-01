@@ -16,9 +16,7 @@ env:
 
 jobs:
   build-web-components:
-    # there has to be | and if needs to be at new line because : breaks the yaml parser
-    if: |
-      ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message,'chore: bump versions to') }}
+    if: ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) }}
     runs-on: [infra1-medium]  # need the bigger runner than small because Web component build consume more resource
     permissions:
       contents: read

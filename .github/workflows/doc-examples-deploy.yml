@@ -7,4 +7,5 @@ on:
 
 jobs:
   release-ui-sdk-examples-deploy:
+    secrets: inherit
     uses: ./.github/workflows/rw-doc-examples-deploy.yml
