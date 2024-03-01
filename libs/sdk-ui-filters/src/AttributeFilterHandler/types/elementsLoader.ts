@@ -29,6 +29,7 @@ export interface ILoadElementsResult {
     elements: IAttributeElement[];
     totalCount: number;
     options: ILoadElementsOptions;
+    cacheId?: string;
 }
 
 /**
@@ -227,7 +228,7 @@ export interface IAttributeElementLoader {
      * @remarks
      * When you change the options for the attribute element loads, you should call initial elements page load.
      *
-     * @param measures - measures to use.
+     * @param filters - filters to use.
      */
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
 

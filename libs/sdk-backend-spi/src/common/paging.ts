@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * Interface to interact with paged asynchronous resources
@@ -10,6 +10,7 @@ export interface IPagedResource<TItem> {
     readonly limit: number;
     readonly offset: number;
     readonly totalCount: number;
+    readonly cacheId?: string;
 
     /**
      * Request next page of the resource

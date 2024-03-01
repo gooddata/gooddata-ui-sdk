@@ -1,16 +1,14 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
-import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
 
 import { elementsSaga } from "../elements/elementsSaga.js";
-import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
+import { selectLoadElementsOptions, selectCacheId } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
-import { ILoadElementsOptions } from "../../../types/index.js";
 
 /**
  * @internal
@@ -49,9 +47,11 @@ export function* loadInitialElementsPageSaga(
             selectLoadElementsOptions,
         );
 
+        const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
+
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
-        const loadOptionsWithExcludePrimaryLabel: ILoadElementsOptions & CancelableOptions = {
+        const loadOptionsWithExcludePrimaryLabel: Parameters<typeof elementsSaga>[0] = {
             ...loadOptions,
             signal: abortController.signal,
             excludePrimaryLabel:
@@ -61,6 +61,7 @@ export function* loadInitialElementsPageSaga(
         const result: SagaReturnType<typeof elementsSaga> = yield call(
             elementsSaga,
             loadOptionsWithExcludePrimaryLabel,
+            cacheId,
         );
         const limitingAttributeFiltersAttributes = yield call(
             loadLimitingAttributeFiltersAttributes,
@@ -71,6 +72,7 @@ export function* loadInitialElementsPageSaga(
         yield put(
             actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
         );
+        yield put(actions.setCacheId({ cacheId: result.cacheId }));
         yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation }));
     } catch (error) {
         yield put(

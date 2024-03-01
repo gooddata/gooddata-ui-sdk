@@ -3496,6 +3496,7 @@ export { Element_2 as Element }
 
 // @public
 export interface ElementsRequest {
+    cacheId?: string;
     complementFilter?: boolean;
     // @deprecated
     dataSamplingPercentage?: number;
@@ -3520,6 +3521,7 @@ export type ElementsRequestSortOrderEnum = typeof ElementsRequestSortOrderEnum[k
 
 // @public
 export interface ElementsResponse {
+    cacheId?: string;
     elements: Array<Element_2>;
     format?: AttributeFormat;
     granularity?: ElementsResponseGranularityEnum;

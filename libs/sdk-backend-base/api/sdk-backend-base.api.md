@@ -753,10 +753,13 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
 export type IServerPagingParams = {
     offset: number;
     limit: number;
+    cacheId?: string;
 };
 
 // @internal (undocumented)
 export interface IServerPagingResult<T> {
+    // (undocumented)
+    cacheId?: string;
     // (undocumented)
     items: T[];
     // (undocumented)
@@ -961,13 +964,15 @@ export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySetti
 
 // @internal
 export class ServerPaging<T> implements IPagedResource<T> {
-    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[]);
+    constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[], cacheId?: string | undefined);
     // (undocumented)
     all: () => Promise<T[]>;
     // (undocumented)
     allSorted: (compareFn: (a: T, b: T) => number) => Promise<T[]>;
     // (undocumented)
-    static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number): Promise<IPagedResource<TItem>>;
+    readonly cacheId?: string | undefined;
+    // (undocumented)
+    static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number, cacheId?: string): Promise<IPagedResource<TItem>>;
     // (undocumented)
     protected readonly getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>;
     // (undocumented)
