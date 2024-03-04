@@ -30,7 +30,7 @@
             "dashboardTitle": "KD with invalid insight",
             "dashboardURL": "dashboard/invalidinsight",
             "fileName": "KD with invalid insight.pdf",
-            "contents": "SORRY, WE CAN'T DISPLAY THIS INSIGHT\nContact your administrator.\ninvalid insight\nKD with invalid insight"
+            "contents": "SORRY, WE CAN'T DISPLAY THIS VISUALIZATION\nContact your administrator.\ninvalid insight\nKD with invalid insight"
         },
         {
             "dashboardTitle": "KD with No data",
