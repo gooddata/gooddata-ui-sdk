@@ -1,0 +1,51 @@
+# (C) 2024 GoodData Corporation
+
+name: rw ~ Doc ~ Storybook deploy
+on:
+  workflow_call:
+    inputs:
+      source-branch:
+        required: true
+        description: "The name of the source branch"
+        type: string
+
+jobs:
+  storybook-deploy:
+    runs-on: [infra1-medium] #for AWS access we need to use private runner
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+            ref: ${{inputs.source-branch}}
+
+      - uses: actions/setup-node@v4
+        with:
+            node-version: 18.17.0
+      - name: Install rush
+        run: |
+            npm install -g @microsoft/rush
+      - name: Rush install
+        run: |
+            rush install
+      - name: Rush build
+        run: |
+            rush build -t sdk-ui-tests
+      - name: Build storybook
+        run: |
+            cd libs/sdk-ui-tests && rushx build-storybook
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.STORYBOOK_S3_CREDENTIALS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.STORYBOOK_S3_CREDENTIALS_SECRET_KEY }}
+            aws-region: "us-east-1"
+      - name: Deploy storybook
+        env:
+            BUCKET: "gdc-storybook-static-site"
+        run: |
+            LAST_COMMIT_HASH=$(git rev-parse HEAD)
+            aws s3 cp --recursive libs/sdk-ui-tests/dist-storybook s3://${BUCKET}
+            echo $LAST_COMMIT_HASH | aws s3 cp - s3://${BUCKET}/.current_version
