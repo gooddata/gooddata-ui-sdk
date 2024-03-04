@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
@@ -38,6 +38,7 @@ const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component
 const MARGIN_BOTTOM = 8;
 const MOBILE_WIDTH = 414; // iPhone 11 Pro Max
+const SMALL_SCREEN_HEIGHT = 640;
 
 export interface IDateFilterBodyProps {
     dateFormat: string;
@@ -175,6 +176,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
 
         const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
         const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
+        const visibleScrollbarClassName = this.getVisibleScrollbarClassName();
         let wrapperStyle: React.CSSProperties = {};
         let scrollerStyle: React.CSSProperties = {};
         if (bodyHeight) {
@@ -195,10 +197,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     {isMobile ? (
                         this.renderMobileContent()
                     ) : (
-                        <VisibleScrollbar
-                            className="gd-extended-date-filter-body-scrollable"
-                            style={scrollerStyle}
-                        >
+                        <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
                             {this.renderDefaultContent()}
                         </VisibleScrollbar>
                     )}
@@ -432,5 +431,13 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             return window.innerHeight - excludeOpenPeriodHeight - ACTIONS_BUTTONS_HEIGHT - MARGIN_BOTTOM;
         }
         return undefined;
+    };
+
+    private getVisibleScrollbarClassName = (): string => {
+        if (window.innerHeight <= SMALL_SCREEN_HEIGHT) {
+            return "gd-extended-date-filter-body-scrollable-small-screen";
+        }
+
+        return "gd-extended-date-filter-body-scrollable";
     };
 }

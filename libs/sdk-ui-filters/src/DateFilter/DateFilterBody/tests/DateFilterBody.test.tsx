@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
@@ -84,7 +84,11 @@ describe("ExtendedDateFilterBody", () => {
         };
 
         const getBodyScroller = () => {
-            return document.querySelector(".gd-extended-date-filter-body-scrollable");
+            const bodyScrollerClass =
+                window.innerHeight <= 640
+                    ? ".gd-extended-date-filter-body-scrollable-small-screen"
+                    : ".gd-extended-date-filter-body-scrollable";
+            return document.querySelector(bodyScrollerClass);
         };
 
         it("should not resize body wrapper and scroller", () => {
