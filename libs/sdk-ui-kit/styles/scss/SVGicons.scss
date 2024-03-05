@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 $base_path: "~@gooddata/sdk-ui-kit/styles";
 
 @mixin gd-svg-icon-base {
@@ -273,4 +273,8 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
     &-warning {
         @include gd-svg-icon("hyperlink-warning");
     }
+}
+
+.gd-icon-image {
+    @include gd-svg-icon("image");
 }
