@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-columnchart",
-    "version": "9.8.0-beta.6",
+    "version": "9.8.0-beta.7",
     "title": "ColumnChart",
     "description": "This example demonstrates the usage of the ColumnChart component with the viewBy and stackBy properties.",
     "author": "GoodData Corporation",
