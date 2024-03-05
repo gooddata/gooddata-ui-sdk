@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 /**
  * Language codes that can be used with GoodData.
@@ -15,7 +15,8 @@ export type ILocale =
     | "pt-BR"
     | "pt-PT"
     | "zh-Hans"
-    | "ru-RU";
+    | "ru-RU"
+    | "it-IT";
 
 /**
  * Array of locales for type-guard. It must be the same as {@link ILocale}
@@ -33,6 +34,7 @@ export const LOCALES = [
     "pt-PT",
     "zh-Hans",
     "ru-RU",
+    "it-IT",
 ];
 
 /**
