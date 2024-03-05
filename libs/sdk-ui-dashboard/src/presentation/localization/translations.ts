@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import merge from "lodash/merge.js";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
@@ -13,6 +13,7 @@ import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
 import ruRU from "./bundles/ru-RU.json";
+import itIT from "./bundles/it-IT.json";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),
@@ -25,6 +26,7 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
     "ru-RU": ruRU,
+    "it-IT": itIT,
 };
 
 /**
