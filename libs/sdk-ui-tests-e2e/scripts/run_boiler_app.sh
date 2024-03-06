@@ -9,9 +9,10 @@ trap "npm run delete-ref-workspace || true" EXIT
 npm run create-ref-workspace
 export TEST_WORKSPACE_ID=$(grep TEST_WORKSPACE_ID .env | cut -d '=' -f 2)
 
-apt-get update && apt-get install -y curl jq sed && apt-get clean
-
-npx --yes @gooddata/$BOILER_APP_VERSION init $BOILER_APP_NAME --language $SDK_LANG
+#create folder .npm-global/lib as workaround for npm install issue
+#because npm config prefix is somehow set to /home/cypressuser/.npm-global
+mkdir -p /home/cypressuser/.npm-global/lib
+npx --verbose --yes @gooddata/$BOILER_APP_VERSION init $BOILER_APP_NAME --language $SDK_LANG
 
 tmp=$(mktemp)
 jq --arg host "${HOST}" --arg ws "${TEST_WORKSPACE_ID}" --arg backend "${sdk_backend}" \
