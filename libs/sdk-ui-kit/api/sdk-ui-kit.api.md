@@ -64,7 +64,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading">>;
+export const AppHeader: React_2.ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -4628,6 +4628,6 @@ export interface UseToastMessageType {
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
 
 // @internal (undocumented)
-export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;
+export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 ```
