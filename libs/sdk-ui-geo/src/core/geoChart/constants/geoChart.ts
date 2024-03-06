@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import mapboxgl from "mapbox-gl";
+// (C) 2019-2024 GoodData Corporation
+import type mapboxgl from "mapbox-gl";
 import { IGeoLngLat, IGeoViewports } from "../../../GeoChart.js";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { colorPaletteToColors } from "@gooddata/sdk-model";
