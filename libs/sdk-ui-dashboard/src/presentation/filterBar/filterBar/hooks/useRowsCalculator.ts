@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useCallback, MutableRefObject } from "react";
 import { ContentRect } from "react-measure";
 
@@ -8,7 +8,7 @@ export type CalculatedRows = {
     rows: number[];
 };
 
-export const CalculatedRowsDefault = { expandedHeight: 0, collapsedHeight: 0, rows: [] };
+export const CalculatedRowsDefault = { expandedHeight: 56, collapsedHeight: 56, rows: [] };
 
 export function useRowsCalculator(
     element: MutableRefObject<Element | null>,
