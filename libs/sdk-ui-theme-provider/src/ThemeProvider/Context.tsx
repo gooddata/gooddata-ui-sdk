@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import compose from "lodash/flowRight.js";
 import { ITheme } from "@gooddata/sdk-model";
@@ -10,6 +10,13 @@ ThemeContext.displayName = "ThemeContext";
 const ThemeIsLoadingContext = React.createContext<boolean | undefined>(undefined);
 ThemeIsLoadingContext.displayName = "ThemeIsLoadingContext";
 
+const ThemeStatusContext = React.createContext<ThemeStatus | undefined>("pending");
+ThemeStatusContext.displayName = "ThemeStatusContext";
+
+/**
+ * @public
+ */
+export type ThemeStatus = "pending" | "loading" | "success";
 /**
  * @public
  */
@@ -21,8 +28,18 @@ export interface IThemeContextProviderProps {
 
     /**
      * Flag telling whether the theme object is being loaded or not
+     * @deprecated use themeStatus instead
+     *
      */
     themeIsLoading: boolean;
+
+    /**
+     * Status telling whether the theme object is being loaded or not
+     * Started in pending state, then switches to loading and finally to success
+     * Can skip loading if theme does not have to be loaded from backend
+     *
+     */
+    themeStatus?: ThemeStatus;
 
     /**
      * React children
@@ -31,7 +48,7 @@ export interface IThemeContextProviderProps {
 }
 
 /**
- * Provides the theme object and themeIsLoading flag into context
+ * Provides the theme object, themeIsLoading flag and themeStatus into context
  *
  * @public
  */
@@ -39,10 +56,13 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
     children,
     theme,
     themeIsLoading,
+    themeStatus,
 }) => {
     return (
         <ThemeContext.Provider value={theme}>
-            <ThemeIsLoadingContext.Provider value={themeIsLoading}>{children}</ThemeIsLoadingContext.Provider>
+            <ThemeIsLoadingContext.Provider value={themeIsLoading}>
+                <ThemeStatusContext.Provider value={themeStatus}>{children}</ThemeStatusContext.Provider>
+            </ThemeIsLoadingContext.Provider>
         </ThemeContext.Provider>
     );
 };
@@ -81,6 +101,15 @@ export const useThemeIsLoading = (): boolean | undefined => {
 };
 
 /**
+ * Hook for reaching the themeStatus from context
+ *
+ * @public
+ */
+export const useThemeStatus = (): ThemeStatus | undefined => {
+    return React.useContext(ThemeStatusContext);
+};
+
+/**
  * @internal
  */
 export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boolean }>(
@@ -115,12 +144,34 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
 }
 
 /**
+ * @internal
+ */
+export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
+    Component: React.ComponentType<T>,
+): React.ComponentType<Omit<T, "themeStatus">> {
+    const ComponentWithInjectedThemeStatus: React.FC<T> = (props) => {
+        return (
+            <ThemeStatusContext.Consumer>
+                {(themeStatus) => <Component themeStatus={themeStatus} {...props} />}
+            </ThemeStatusContext.Consumer>
+        );
+    };
+
+    return wrapDisplayName("withThemeStatus", ThemeContextProvider)(ComponentWithInjectedThemeStatus);
+}
+
+/**
  * Injects both theme object and isThemeLoading flag into component as properties
  *
  * @public
  */
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
     Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "theme" | "themeIsLoading">> {
-    return compose(wrapDisplayName("withContexts"), withThemeObject, withThemeIsLoading)(Component);
+): React.ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">> {
+    return compose(
+        wrapDisplayName("withContexts"),
+        withThemeObject,
+        withThemeIsLoading,
+        withThemeStatus,
+    )(Component);
 }
