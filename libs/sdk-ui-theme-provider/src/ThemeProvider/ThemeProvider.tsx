@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
 import { getLuminance } from "polished";
 import identity from "lodash/identity.js";
@@ -7,7 +7,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 
 import { clearCssProperties, setCssProperties } from "../cssProperties.js";
-import { ThemeContextProvider } from "./Context.js";
+import { ThemeContextProvider, ThemeStatus } from "./Context.js";
 import { prepareTheme } from "./prepareTheme.js";
 
 /**
@@ -113,6 +113,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
 
     const [theme, setTheme] = useState(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<ThemeStatus>("pending");
 
     const lastWorkspace = useRef<string>();
     lastWorkspace.current = workspace;
@@ -122,6 +123,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
         if (themeParam) {
             const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
             setTheme(preparedTheme);
+            setStatus("success");
             clearCssProperties();
             setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             return;
@@ -134,6 +136,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
             }
 
             setIsLoading(true);
+            setStatus("loading");
             const selectedTheme = await backend.workspace(workspace).styling().getTheme();
 
             if (lastWorkspace.current === workspace) {
@@ -143,6 +146,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
                 clearCssProperties();
                 setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
                 setIsLoading(false);
+                setStatus("success");
             }
         };
 
@@ -158,7 +162,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     }, [removeGlobalStylesOnUnmout]);
 
     return (
-        <ThemeContextProvider theme={theme} themeIsLoading={isLoading}>
+        <ThemeContextProvider theme={theme} themeIsLoading={isLoading} themeStatus={status}>
             {children}
         </ThemeContextProvider>
     );

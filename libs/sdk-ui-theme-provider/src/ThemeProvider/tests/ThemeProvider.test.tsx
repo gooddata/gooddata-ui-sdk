@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { render, RenderResult } from "@testing-library/react";
@@ -132,7 +132,10 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(TestComponent).toHaveBeenLastCalledWith({ themeIsLoading: false, theme }, {});
+        expect(TestComponent).toHaveBeenLastCalledWith(
+            { themeIsLoading: false, theme, themeStatus: "success" },
+            {},
+        );
     });
 
     it("should pass themeIsLoading flag set to false if backend is missing", async () => {
@@ -144,7 +147,10 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(TestComponent).toHaveBeenCalledWith({ themeIsLoading: false, theme: {} }, {});
+        expect(TestComponent).toHaveBeenCalledWith(
+            { themeIsLoading: false, theme: {}, themeStatus: "pending" },
+            {},
+        );
     });
 
     it("should pass themeIsLoading flag set to false if workspace is missing", async () => {
@@ -156,7 +162,10 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(TestComponent).toHaveBeenCalledWith({ themeIsLoading: false, theme: {} }, {});
+        expect(TestComponent).toHaveBeenCalledWith(
+            { themeIsLoading: false, theme: {}, themeStatus: "pending" },
+            {},
+        );
     });
 
     it("should use the theme from props if provided and not load anything", async () => {
@@ -230,6 +239,7 @@ describe("ThemeProvider", () => {
             {
                 themeIsLoading: false,
                 theme: expectedTheme,
+                themeStatus: "success",
             },
             {},
         );

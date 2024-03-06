@@ -34,7 +34,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 };
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading">>;
+export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {

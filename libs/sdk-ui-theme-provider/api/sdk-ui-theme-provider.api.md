@@ -15,7 +15,9 @@ export const isDarkTheme: (theme: ITheme) => boolean;
 export interface IThemeContextProviderProps {
     children?: React_2.ReactNode;
     theme: ITheme;
+    // @deprecated
     themeIsLoading: boolean;
+    themeStatus?: ThemeStatus;
 }
 
 // @public (undocumented)
@@ -38,6 +40,9 @@ export type ThemeModifier = (theme: ITheme) => ITheme;
 // @public
 export const ThemeProvider: React_2.FC<IThemeProviderProps>;
 
+// @public (undocumented)
+export type ThemeStatus = "pending" | "loading" | "success";
+
 // @public
 export const useTheme: (theme?: ITheme) => ITheme | undefined;
 
@@ -45,9 +50,12 @@ export const useTheme: (theme?: ITheme) => ITheme | undefined;
 export const useThemeIsLoading: () => boolean | undefined;
 
 // @public
+export const useThemeStatus: () => ThemeStatus | undefined;
+
+// @public
 export function withTheme<T extends {
     theme?: ITheme;
     workspace?: string;
-}>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "theme" | "themeIsLoading">>;
+}>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">>;
 
 ```
