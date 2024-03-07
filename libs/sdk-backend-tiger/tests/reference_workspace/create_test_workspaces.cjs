@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
 
-fs = require("fs");
+const fs = require("fs");
 
 require("dotenv").config();
 
-const {
-    createTigerWorkspaceWithPrefix,
-    setTigerWorkspaceLayoutFromFixtures,
-} = require("@gooddata/fixtures");
+const { createTigerWorkspaceWithPrefix, setTigerWorkspaceLayoutFromFixtures } = require("@gooddata/fixtures");
 const { log } = require("@gooddata/fixtures/logger.js");
 
 const UISDK_WORKSPACE_PREFIX = "Test UISDK reference workspace";
@@ -49,6 +46,20 @@ async function main() {
         fs.appendFileSync(".env", `\nWORKSPACE_ID=${testWorkspaceId}`);
         process.env.WORKSPACE_ID = testWorkspaceId;
         log(`WORKSPACE_ID ${testWorkspaceId} added to the .env file\n`);
+
+        // update the workspace id also in the other files that need it hardcoded
+        fs.writeFileSync(
+            "./scripts/refresh-md.sh",
+            fs
+                .readFileSync("./scripts/refresh-md.sh", "utf8")
+                .replace(/PROJECTID=".*"/, `PROJECTID="${testWorkspaceId}"`),
+        );
+        fs.writeFileSync(
+            "./tests/integrated/backend.ts",
+            fs
+                .readFileSync("./tests/integrated/backend.ts", "utf8")
+                .replace(/return ".*"; \/\/ update-marker/, `return "${testWorkspaceId}"; // update-marker`),
+        );
     } catch (e) {
         log(e.toString());
         // eslint-disable-next-line no-console

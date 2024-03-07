@@ -77,7 +77,8 @@ export function testWorkspace(): string {
 }
 
 function getRecordingsWorkspaceId() {
-    return "f15bcbc5bcd04b8b8093c70a1a479c35";
+    // do not change or remove the comment on the next line - it is used by the workspace create script
+    return "f15bcbc5bcd04b8b8093c70a1a479c35"; // update-marker
 }
 
 export function sanitizeKeyWithNewValue(result: object, key: string, newValue: string) {
