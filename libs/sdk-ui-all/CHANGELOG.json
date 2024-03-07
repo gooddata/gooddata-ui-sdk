@@ -2,6 +2,21 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.8.0",
+      "tag": "@gooddata/sdk-ui-all_v9.8.0",
+      "date": "Thu, 07 Mar 2024 09:02:52 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename word 'Insight' to 'Visualization'"
+          },
+          {
+            "comment": "Add services to list insights and dashboards with paging"
+          }
+        ]
+      }
+    },
+    {
       "version": "9.7.0",
       "tag": "@gooddata/sdk-ui-all_v9.7.0",
       "date": "Thu, 22 Feb 2024 09:17:23 GMT",

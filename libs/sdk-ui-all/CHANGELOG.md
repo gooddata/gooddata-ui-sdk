@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 22 Feb 2024 09:17:23 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Mar 2024 09:02:52 GMT and should not be manually modified.
+
+## 9.8.0
+Thu, 07 Mar 2024 09:02:52 GMT
+
+### Updates
+
+- Rename word 'Insight' to 'Visualization'
+- Add services to list insights and dashboards with paging
 
 ## 9.7.0
 Thu, 22 Feb 2024 09:17:23 GMT
