@@ -4,15 +4,15 @@
 name: Push ~ Build web component's container image
 
 on:
-  push:
-    branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
+    push:
+        branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
 
 concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+    group: ${{ github.ref }}
+    cancel-in-progress: true
 
 env:
-  WEB_COMPONENTS_DIR: libs/sdk-ui-web-components
+    WEB_COMPONENTS_DIR: libs/sdk-ui-web-components
 
 jobs:
   build-web-components:
