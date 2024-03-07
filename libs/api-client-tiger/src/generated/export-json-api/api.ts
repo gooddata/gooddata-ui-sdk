@@ -808,7 +808,7 @@ export interface ActionsApiCreateTabularExportRequest {
     /**
      *
      * @type {TabularExportRequest}
-     * @memberof ActionsApiCreateTabularExport
+     * @memberof ActionsApiCreateTabkularExport
      */
     readonly tabularExportRequest: TabularExportRequest;
 }
