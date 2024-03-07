@@ -193,13 +193,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCsvAnalytics,
-            "enableCsvAnalytics",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCsvAnalytics,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDCrossFiltering,
             "enableKDCrossFiltering",
             "BOOLEAN",
