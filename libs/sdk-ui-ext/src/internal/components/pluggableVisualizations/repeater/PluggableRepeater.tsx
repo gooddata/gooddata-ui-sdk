@@ -5,14 +5,11 @@ import {
     IDimension,
     IInsightDefinition,
     ISettings,
-    MeasureGroupIdentifier,
     areObjRefsEqual,
-    bucketAttributes,
-    bucketMeasures,
     insightBucket,
-    newDimension,
+    insightBuckets,
 } from "@gooddata/sdk-model";
-import { CoreRepeater, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
+import { CoreRepeater, constructRepeaterDimensions, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
@@ -74,10 +71,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         executionFactory: IExecutionFactory,
     ) {
         const { dateFormat } = options;
+        const dimensions = this.getRepeaterDimensions(insight);
 
         return executionFactory
             .forInsight(insight)
-            .withDimensions(this.getRepeaterDimensions(insight))
+            .withDimensions(...dimensions)
             .withDateFormat(dateFormat);
     }
 
@@ -112,20 +110,9 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return undefined;
     }
 
-    private getRepeaterDimensions(insight: IInsightDefinition): IDimension {
-        const attributeBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-        const attributes = attributeBucket ? bucketAttributes(attributeBucket) : [];
-        const rowAttribute = attributes[0];
-
-        const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
-        const measures = columnsBucket ? bucketMeasures(columnsBucket) : [];
-        const otherAttributes = columnsBucket ? bucketAttributes(columnsBucket) : [];
-
-        if (measures.length) {
-            return newDimension([rowAttribute, ...otherAttributes, MeasureGroupIdentifier]);
-        }
-
-        return newDimension([rowAttribute, ...otherAttributes]);
+    private getRepeaterDimensions(insight: IInsightDefinition): IDimension[] {
+        const buckets = insightBuckets(insight);
+        return constructRepeaterDimensions(buckets);
     }
 
     private insightHasColumns(insight: IInsightDefinition): boolean {
@@ -182,8 +169,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}
                 onError={this.onError}
-                LoadingComponent={null}
-                ErrorComponent={null}
             />,
             this.getElement(),
         );

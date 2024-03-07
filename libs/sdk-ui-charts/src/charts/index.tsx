@@ -67,8 +67,11 @@ export { Xirr, IXirrProps, IXirrBucketProps } from "./xirr/Xirr.js";
 
 export { CoreXirr } from "./xirr/CoreXirr.js";
 
+export {
+    constructRepeaterBuckets,
+    constructRepeaterDimensions,
+} from "./repeater/internal/repeaterExecution.js";
 export { Repeater, IRepeaterProps, IRepeaterBucketProps } from "./repeater/Repeater.js";
-
 export { CoreRepeater } from "./repeater/CoreRepeater.js";
 
 export { withJsxExport } from "./withJsxExport.js";

@@ -2,17 +2,8 @@
 
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IAttribute, IAttributeOrMeasure, IBucket, INullableFilter } from "@gooddata/sdk-model";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    INullableFilter,
-    MeasureGroupIdentifier,
-    newBucket,
-    newDimension,
-} from "@gooddata/sdk-model";
-import {
-    BucketNames,
     Subtract,
     useResolveValuesWithPlaceholders,
     AttributeOrPlaceholder,
@@ -23,6 +14,7 @@ import {
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
 import omit from "lodash/omit.js";
 import { CoreRepeater } from "./CoreRepeater.js";
+import { constructRepeaterBuckets, constructRepeaterDimensions } from "./internal/repeaterExecution.js";
 
 //
 // Public interface
@@ -40,7 +32,12 @@ export interface IRepeaterBucketProps {
     /**
      * Definition of columns which are sliced by the main attribute.
      */
-    columns: AttributesMeasuresOrPlaceholders;
+    columns?: AttributesMeasuresOrPlaceholders;
+
+    /**
+     * Slicing attribute to be used for visualization measures.
+     */
+    sliceVisualizationBy?: AttributeOrPlaceholder;
 
     /**
      * Specify filters to apply on the data to compute with.
@@ -84,14 +81,18 @@ type IIrrelevantRepeaterProps = IRepeaterBucketProps & IBucketChartProps;
 type IRepeaterNonBucketProps = Subtract<IRepeaterProps, IIrrelevantRepeaterProps>;
 
 export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
-    const buckets = [
-        newBucket(BucketNames.ATTRIBUTE, props.attribute as IAttribute),
-        newBucket(BucketNames.COLUMNS, ...(props.columns as IAttributeOrMeasure[])),
-    ];
+    const { attribute, columns = [], sliceVisualizationBy } = props;
+
+    const buckets = constructRepeaterBuckets(
+        attribute as IAttribute,
+        columns as IAttributeOrMeasure[],
+        sliceVisualizationBy as IAttribute,
+    );
 
     const newProps: IRepeaterNonBucketProps = omit<IRepeaterProps, keyof IIrrelevantRepeaterProps>(props, [
         "attribute",
         "columns",
+        "sliceVisualizationBy",
         "filters",
         "backend",
     ]);
@@ -99,17 +100,19 @@ export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
     return {
         ...newProps,
         execution: createExecution(buckets, props),
-        exportTitle: props.exportTitle || "Repeater",
+        exportTitle: props.exportTitle || "Repeater", // TODO: is this correct? at least translate
     };
 }
 
 function createExecution(buckets: IBucket[], props: IRepeaterProps): IPreparedExecution {
     const { backend, workspace, execConfig } = props;
+    const dimensions = constructRepeaterDimensions(buckets);
+
     return backend
         .withTelemetry("Repeater", props)
         .workspace(workspace)
         .execution()
         .forBuckets(buckets, props.filters as INullableFilter[])
-        .withDimensions(newDimension([props.attribute as IAttribute, MeasureGroupIdentifier])) // TODO: sync this with pluggable vis
+        .withDimensions(...dimensions)
         .withExecConfig(execConfig);
 }

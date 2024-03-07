@@ -58,7 +58,6 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
             attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
             columns: multipleAttributesOrMeasuresBucketConversion("columns", BucketNames.COLUMNS),
             filters: filtersInsightConversion("filters"),
-            // sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
             execConfig: executionConfigInsightConversion("execConfig"),

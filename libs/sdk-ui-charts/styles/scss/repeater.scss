@@ -1,16 +1,682 @@
 // (C) 2024 GoodData Corporation
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-.repeater {
-    table,
-    th,
-    td {
-        border: 1px solid gray;
-        border-collapse: collapse;
+$custom-foreground-color: var(
+    --gd-table-valueColor,
+    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
+);
+$custom-secondary-foreground-color: var(
+    --gd-table-valueColor,
+    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
+);
+
+$default-background: kit-variables.$default-gd-color-white;
+$custom-background-color: kit-variables.$gd-table-background;
+
+$cell-border: 1px dashed transparent;
+$cell-border-color: var(
+    --gd-table-gridColor,
+    var(--gd-palette-complementary-4, color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5))
+);
+$header-cell-resize-width: 20px;
+$table-menu-hover: var(
+    --gd-palette-primary-base-dimmed-darken03,
+    color.adjust(
+        color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-text-light, 10%),
+        $lightness: -3%
+    )
+);
+
+$header-label-color: var(
+    --gd-table-headerLabelColor,
+    var(--gd-palette-complementary-7, kit-variables.$gd-color-text)
+);
+
+$header-hover-background-color: var(
+    --gd-table-headerHoverBackgroundColor,
+    var(--gd-palette-complementary-1, kit-variables.$gd-palette-primary-dimmed)
+);
+
+$total-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-2, rgba(176, 190, 202, 0.2))
+);
+
+$row-column-subtotal-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
+);
+
+$row-total-column-subtotal-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
+);
+
+$row-column-total-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.4))
+);
+
+$total-value-color: var(
+    --gd-table-totalValueColor,
+    var(--gd-palette-complementary-9, kit-variables.$gd-color-dark)
+);
+
+$subtotal-even-background-color: var(
+    --gd-table-subtotalBackgroundColor,
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.15))
+);
+$subtotal-odd-background-color: var(
+    --gd-table-subtotalBackgroundColor,
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.1))
+);
+
+@use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
+
+.gd-repeater {
+    width: 100%;
+    height: 100%;
+
+    &.gd-repeater-header-hide {
+        .ag-header-row {
+            display: none;
+        }
     }
 
-    th,
-    td {
+    @include meta.load-css("@ag-grid-community/all-modules/dist/styles/ag-grid");
+
+    // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
+    // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
+    // we must use the borders-critical: true with border-color: transparent so that the positioning of headers is the same as in ag-grid 22
+    &.ag-theme-balham {
+        @include ag-balham.ag-theme-balham(
+            (
+                borders: false,
+                borders-critical: true,
+                border-color: transparent,
+                foreground-color: $custom-foreground-color,
+                disabled-foreground-color: null,
+                chip-background-color: null,
+                font-size: 12px,
+                font-family: kit-variables.$gd-font-primary,
+                background-color: $custom-background-color,
+                modal-overlay-background-color: $custom-background-color,
+                odd-row-background-color: transparent,
+                secondary-foreground-color: $custom-secondary-foreground-color,
+                row-hover-color:
+                    var(
+                        --gd-table-hoverBackgroundColor,
+                        var(
+                            --gd-palette-complementary-1,
+                            color.adjust(kit-variables.$default-gd-color-label, $alpha: -0.9)
+                        )
+                    ),
+                cell-horizontal-border: none,
+                header-background-color: $custom-background-color,
+                header-foreground-color: $header-label-color,
+                header-cell-hover-background-color: $header-hover-background-color,
+                suppress-css-var-overrides: true,
+            )
+        );
+
+        .ag-filter-toolpanel-header,
+        .ag-filter-toolpanel-search,
+        .ag-status-bar,
+        .ag-header-row {
+            font-weight: normal;
+        }
+
+        .ag-numeric-cell {
+            text-align: right;
+        }
+
+        .ag-header-group-cell.ag-header-group-cell-no-group:not(.ag-header-cell-moving):hover,
+        .ag-header-group-cell:not(.ag-column-resizing)
+            + .ag-header-group-cell.ag-header-group-cell-no-group:not(.ag-header-cell-moving):hover {
+            // prevent empty header cells from being highlighted on hover
+            background-color: $custom-background-color;
+        }
+
+        .ag-header-row:not(:first-child) .ag-header-cell {
+            border-top: $cell-border;
+        }
+
+        //////
+
+        .ag-root-wrapper {
+            text-align: left;
+        }
+
+        .ag-root {
+            border: none;
+
+            // workaround for https://www.ag-grid.com/ag-grid-changelog/ issue AG-4088 that is fixed in ag-grid 23.1.0 which has styles breaking changes which makes migration not feasible for now
+            // ideally we should use enableCellTextSelection: true in CorePivotTable
+            // stylelint-disable-next-line declaration-no-important
+            user-select: auto !important;
+        }
+
+        .ag-header-cell,
+        .ag-header-group-cell {
+            &::after {
+                display: none;
+            }
+
+            &,
+            .ag-react-container {
+                width: 100%;
+            }
+
+            overflow: visible;
+        }
+
+        .ag-header {
+            border-bottom: none;
+        }
+
+        .ag-cell {
+            outline: none;
+
+            &,
+            &.ag-cell-focus {
+                border-top: $cell-border;
+                border-top-color: $cell-border-color;
+                border-right: none;
+                border-left: none;
+            }
+
+            &,
+            .ag-react-container {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        [row-index="0"] {
+            .ag-cell {
+                border-top-color: transparent;
+            }
+        }
+
+        .gd-column-group-header.gd-column-total {
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $total-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
+        .gd-column-group-header.gd-column-subtotal {
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $subtotal-odd-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
+        .ag-header-cell,
+        .gd-column-group-header {
+            border-bottom: $cell-border;
+            border-bottom-color: $cell-border-color;
+
+            &.gd-column-group-header--subtotal {
+                border-bottom: none;
+            }
+        }
+
+        .gd-column-group-header-0,
+        .gd-column-measure-0,
+        .ag-header-group-cell-with-group,
+        .gd-transpose-header {
+            &,
+            &.ag-cell-focus {
+                border-left: $cell-border;
+                border-left-color: $cell-border-color;
+            }
+        }
+
+        .gd-column-subtotal,
+        .gd-column-total,
+        .gd-column-attribute-column.gd-table-row-metric-cell,
+        .gd-mixed-values-column {
+            &.gd-transpose-header,
+            &.gd-transpose {
+                border-left: $cell-border;
+                border-left-color: $cell-border-color;
+            }
+        }
+
+        .gd-column-index-0,
+        .gd-column-group-header--first {
+            border-left: none;
+        }
+
+        .gd-column-group-header--empty {
+            border-bottom-color: transparent;
+
+            .ag-header-cell-resize {
+                display: none;
+            }
+        }
+
+        .ag-header-row {
+            overflow: visible;
+
+            &:last-child {
+                border-bottom: none;
+
+                // stylelint-disable-next-line max-nesting-depth
+                .ag-header-cell,
+                .ag-header-group-cell-with-group {
+                    border-bottom-style: solid;
+                }
+
+                // stylelint-disable-next-line max-nesting-depth
+                .gd-pivot-table-header {
+                    min-height: 30px;
+                }
+            }
+        }
+
+        .ag-header-group-cell {
+            overflow: visible;
+        }
+
+        .ag-header-cell-resize {
+            right: calc(-#{$header-cell-resize-width} / 2);
+            width: $header-cell-resize-width;
+            opacity: 0;
+
+            &::after {
+                content: "";
+                box-sizing: content-box;
+                display: block;
+                width: calc($header-cell-resize-width / 2);
+                margin-right: calc($header-cell-resize-width / 2);
+                margin-top: 8px;
+                border-right: 1px solid kit-variables.$gd-palette-primary-base;
+                text-indent: calc($header-cell-resize-width / 2);
+                height: 16px;
+            }
+        }
+
+        .gd-column-group-header:hover {
+            .gd-pivot-table-header-label--clickable,
+            .gd-pivot-table-header-menu ~ .gd-pivot-table-header-label {
+                background-color: $header-hover-background-color;
+            }
+
+            .ag-header-cell-resize {
+                opacity: 1;
+            }
+        }
+
+        .gd-table-row {
+            border: none;
+        }
+
+        .gd-mixed-values-column-header,
+        .gd-transpose-header,
+        .gd-row-slice-measure-header {
+            cursor: default;
+        }
+
+        .gd-column-total {
+            border-left: 1px solid $cell-border-color;
+            color: $total-value-color;
+            font-weight: bold;
+            background-color: $total-background-color;
+        }
+
+        .gd-row-total {
+            border-bottom-color: transparent;
+            color: $total-value-color;
+            font-weight: bold;
+            background-color: $total-background-color;
+
+            &,
+            &.ag-cell-focus {
+                border-top: 1px solid $cell-border-color;
+            }
+        }
+
+        .gd-column-subtotal {
+            font-weight: bold;
+            background-color: rgba(176, 190, 202, 0.1);
+        }
+
+        .gd-table-row-subtotal {
+            font-weight: bold;
+            border-top: 1px solid $cell-border-color;
+            &-even {
+                background-color: $subtotal-even-background-color;
+            }
+            &-odd {
+                background-color: $subtotal-odd-background-color;
+            }
+        }
+
+        .gd-table-row-subtotal-column-subtotal {
+            background-color: $total-background-color;
+        }
+
+        .gd-table-row-total-column-subtotal {
+            background-color: $row-total-column-subtotal-background-color;
+        }
+
+        .gd-table-row-subtotal-column-total {
+            background-color: $row-total-column-subtotal-background-color;
+        }
+
+        .gd-table-row-total-column-total {
+            background-color: $row-column-total-background-color;
+        }
+
+        .gd-column-merged {
+            display: none;
+        }
+
+        .gd-table-row-separator {
+            border-top: 1px solid $cell-border-color;
+        }
+
+        .ag-floating-top {
+            position: absolute;
+            z-index: 1;
+            display: none;
+            // stylelint-disable-next-line declaration-no-important
+            overflow: hidden !important;
+            pointer-events: none;
+            border-bottom: none;
+
+            &.gd-visible-sticky-row {
+                display: inherit;
+            }
+
+            .ag-row {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: transparent !important; // TODO: remove !important after IE11 deprecation
+
+                // stylelint-disable-next-line max-nesting-depth
+                .ag-cell {
+                    background-color: $custom-background-color;
+                    border-top-color: $custom-background-color;
+
+                    // stylelint-disable-next-line max-nesting-depth
+                    &.gd-hidden-sticky-column {
+                        color: transparent;
+                        border-top-color: transparent;
+                        // stylelint-disable-next-line declaration-no-important
+                        background-color: transparent !important; // TODO: remove !important after IE11 deprecation
+                    }
+
+                    // stylelint-disable-next-line max-nesting-depth
+                    &.gd-measure-column,
+                    &.gd-column-attribute-column {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .ag-floating-bottom {
+            // stylelint-disable-next-line declaration-no-important
+            overflow: auto !important;
+            border-top: none;
+        }
+
+        .gd-cell-drillable {
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .gd-cell-hide {
+            color: transparent;
+            border-top: 1px solid transparent;
+            background-color: $custom-background-color;
+        }
+
+        .gd-cell-show-hidden {
+            color: inherit;
+        }
+
+        .gd-table-loading {
+            position: absolute;
+            z-index: 1; // we need zIndex of at least 1, otherwise some table cells can show through the overlay
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: $custom-background-color;
+        }
+    }
+}
+
+.gd-pivot-table-header {
+    position: relative;
+    display: flex;
+    margin: 0 -11px 1px;
+    flex-direction: row;
+    flex: 1 1 auto;
+    overflow: hidden;
+
+    &:not(.gd-row-measure-name) {
+        line-height: 28px;
+        min-height: 29px;
+    }
+
+    .ag-header-group-cell-with-group & {
+        line-height: 26px;
+    }
+
+    &-label {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-end;
         overflow: hidden;
-        text-overflow: ellipsis;
+        padding: 0 11px;
+        color: $header-label-color;
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--clickable {
+            cursor: pointer;
+        }
+
+        &-text {
+            position: relative;
+            flex: 0 1 auto;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        > span {
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &-next-sort {
+        min-width: 12px;
+    }
+
+    &--numeric {
+        flex-direction: row-reverse;
+    }
+
+    &--numeric &-label {
+        &-text {
+            text-align: right;
+            flex: 1 1 auto;
+        }
+    }
+
+    &--numeric &-sort {
+        flex: 0 0 auto;
+    }
+
+    &--numeric &-next-sort {
+        flex: 0 0 auto;
+    }
+
+    &-sort {
+        flex: 1 0 auto;
+    }
+
+    &-menu {
+        display: inline-flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border-top: 2px solid transparent;
+        background-color: $header-hover-background-color;
+        opacity: 0;
+        cursor: pointer;
+        transition: width 200ms, opacity 100ms;
+
+        &:hover {
+            background-color: $table-menu-hover;
+        }
+
+        .menu-icon {
+            display: flex;
+        }
+
+        &--hide {
+            width: 0;
+            opacity: 0;
+        }
+
+        &--show {
+            width: 32px;
+            opacity: 1;
+        }
+
+        &--open {
+            &,
+            .ag-header-cell-sortable & {
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                &,
+                &:hover {
+                    border-color: button-variables.$button-normal-border-color;
+                    background-color: button-variables.$button-normal-hover-bg;
+                }
+
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                &:active {
+                    border-color: button-variables.$button-normal-active-border-color;
+
+                    @include mixins.gradient-linear(
+                        button-variables.$button-normal-active-gradient-top,
+                        button-variables.$button-normal-active-gradient-bottom
+                    );
+                }
+            }
+        }
+    }
+
+    &-arrow-up,
+    &-arrow-down {
+        display: inline-block;
+        flex: 0 0 auto;
+        margin-left: 4px;
+        line-height: 16px;
+        font-size: 12px;
+        font-weight: normal;
+
+        &::before {
+            content: "\E60D";
+            position: relative;
+            top: 1px;
+            display: inherit;
+            font-family: kit-variables.$gd-font-indigo;
+            font-size: 10px;
+            vertical-align: bottom;
+        }
+    }
+
+    &-arrow-up::before {
+        top: -2px;
+        transform: rotate(180deg);
+    }
+}
+
+.gd-aggregation-menu-item {
+    .gd-list-item.gd-menu-item {
+        padding: 0;
+        cursor: default;
+
+        &::before {
+            z-index: 1;
+        }
+
+        .gd-aggregation-menu-item-inner {
+            position: relative;
+            z-index: 2;
+            flex: auto;
+            padding: 4px 30px;
+
+            &.is-clickable {
+                cursor: pointer;
+            }
+        }
+
+        &.is-submenu .gd-aggregation-menu-item-inner {
+            padding-right: 0;
+            margin-right: 30px;
+        }
+    }
+
+    .gd-aggregation-submenu {
+        .gd-aggregation-submenu-rows-separator {
+            margin: 5px 10px 5px 10px;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        }
+        .gd-list-item-header {
+            position: relative;
+
+            .gd-aggregation-submenu-header-icon {
+                position: absolute;
+                left: 10px;
+            }
+        }
+
+        .gd-aggregation-menu-item-inner {
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+    }
+}
+
+.gd-menuPosition-wrapper:hover {
+    .gd-list-item.gd-menu-item.is-submenu {
+        background-color: kit-variables.$is-focused-background;
+    }
+
+    .gd-list-item.gd-menu-item.is-submenu.is-selected {
+        background-color: kit-variables.$gd-palette-primary-dimmed;
     }
 }
