@@ -404,6 +404,7 @@ export interface IElementsQueryFactory {
 
 // @public
 export interface IElementsQueryOptions {
+    cacheId?: string;
     complement?: boolean;
     elements?: ElementsQueryOptionsElementsSpecification;
     excludePrimaryLabel?: boolean;
@@ -707,6 +708,8 @@ export type IOrganizationUsersQueryResult = IPagedResource<IOrganizationUser>;
 export interface IPagedResource<TItem> {
     all(): Promise<TItem[]>;
     allSorted(compareFn: (a: TItem, b: TItem) => number): Promise<TItem[]>;
+    // (undocumented)
+    readonly cacheId?: string;
     goTo(pageIndex: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly items: TItem[];

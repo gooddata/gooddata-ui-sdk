@@ -64,7 +64,6 @@
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "fork-ts-checker-webpack-plugin": "^9.0.2",
-        "heroku": "8.7.1",
         "html-webpack-plugin": "^5.3.1",
         "npm-run-all": "^4.1.5",
         "prettier": "~2.5.0",
@@ -131,11 +130,6 @@
         "examples?": "# Default is the public access proxy, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "examples": "bash scripts/run-examples.sh",
         "build": "bash scripts/build-examples.sh ${EXAMPLES_BUILD_TYPE}",
-        "refresh-md": "./scripts/refresh-md.sh && npm run build",
-        "heroku-create-app": "heroku create ${PUBLIC_APP_NAME}; exit 0",
-        "heroku-set-env": "run-s heroku-set-env:*",
-        "heroku-set-env:BACKEND_URL": "echo ${BACKEND_URL} && heroku config:set BACKEND_URL=${BACKEND_URL} -a ${PUBLIC_APP_NAME}",
-        "heroku-set-env:BACKEND_HOST": "echo ${BACKEND_HOST} && heroku config:set BACKEND_HOST=${BACKEND_HOST} -a ${PUBLIC_APP_NAME}",
-        "heroku-release": "heroku container:release web -a ${PUBLIC_APP_NAME}"
+        "refresh-md": "./scripts/refresh-md.sh && npm run build"
     }
 }

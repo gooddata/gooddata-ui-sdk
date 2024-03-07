@@ -813,6 +813,8 @@ export interface ILoadElementsOptions {
 // @public
 export interface ILoadElementsResult {
     // (undocumented)
+    cacheId?: string;
+    // (undocumented)
     elements: IAttributeElement[];
     // (undocumented)
     options: ILoadElementsOptions;

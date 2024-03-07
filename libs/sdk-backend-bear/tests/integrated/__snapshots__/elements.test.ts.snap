@@ -4,6 +4,7 @@ exports[`bear elements > forDisplayForm > should load attribute elements for exi
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -99,6 +100,7 @@ exports[`bear elements > forDisplayForm > should load attribute elements for exi
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -194,6 +196,7 @@ exports[`bear elements > forDisplayForm > should load attribute elements for exi
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -289,6 +292,7 @@ exports[`bear elements > forFilter > should load attribute filter elements for p
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -308,6 +312,7 @@ exports[`bear elements > forFilter > should load attribute filter elements for p
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -357,6 +362,7 @@ exports[`bear elements > forFilter > should return correct page for given displa
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -380,6 +386,7 @@ exports[`bear elements > forFilter > should return empty result for out-of-range
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
@@ -394,6 +401,7 @@ exports[`bear elements > forFilter > should return empty result for out-of-range
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
@@ -408,6 +416,7 @@ exports[`bear elements > forFilter > should return empty result for out-of-range
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [],

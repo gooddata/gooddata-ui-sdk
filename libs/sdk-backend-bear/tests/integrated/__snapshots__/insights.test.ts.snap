@@ -4,6 +4,7 @@ exports[`bear insights > should load empty insights for out-of-range page 1`] = 
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
@@ -18,6 +19,7 @@ exports[`bear insights > should load insights 1`] = `
 ServerPaging {
   "all": [Function],
   "allSorted": [Function],
+  "cacheId": undefined,
   "getData": [Function],
   "goTo": [Function],
   "items": [

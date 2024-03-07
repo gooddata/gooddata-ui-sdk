@@ -1730,6 +1730,7 @@ export interface IMeasureMetadataObjectBase {
     expression: string;
     format: string;
     isLocked?: boolean;
+    tags?: string[];
     // (undocumented)
     type: "measure";
 }

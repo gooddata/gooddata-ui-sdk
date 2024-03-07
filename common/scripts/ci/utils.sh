@@ -29,7 +29,7 @@ function is_current_version_prerelease {
 function get_release_commit_hash {
   version=$1
 
-  echo $(git log --grep "^Release $version\$" | sed 's/commit //g' | head -1)
+  echo $(git log --grep "^Release $version\$" --grep "[Bb]ump versions to $version\$" | sed 's/commit //g' | head -1)
 }
 
 log() {
