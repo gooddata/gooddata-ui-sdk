@@ -70,6 +70,7 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableDirectQuery = "enableDirectQuery",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
+    EnableRepeaterChart = "enableRepeaterChart",
 }
 
 export type ITigerFeatureFlags = {
@@ -107,6 +108,7 @@ export type ITigerFeatureFlags = {
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
     enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
+    enableRepeaterChart: typeof FeatureFlagsValues["enableRepeaterChart"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -144,6 +146,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCreateUser: true,
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
+    enableRepeaterChart: false,
 };
 
 export const FeatureFlagsValues = {
@@ -185,4 +188,5 @@ export const FeatureFlagsValues = {
     enableCreateUser: [true, false] as const,
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
+    enableRepeaterChart: [true, false] as const,
 };

@@ -1,0 +1,406 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PluggableRepeater > repeater should not allow date attributes or different attribute than main attribute in columns bucket 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+      },
+      "columns": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDifferentAttributes": false,
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Columns",
+        "transformAttributeToMeasure": false,
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableRepeater > should return reference point with one attribute, columns and valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+      },
+      "columns": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDifferentAttributes": false,
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Columns",
+        "transformAttributeToMeasure": false,
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;
+
+exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "filters": {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": [
+          {
+            "attribute": "attr.owner.department",
+            "displayFormRef": {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": [
+              {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-rows.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "Rows",
+      },
+      "columns": {
+        "accepts": [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDifferentAttributes": false,
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-columns.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 40,
+        "title": "Columns",
+        "transformAttributeToMeasure": false,
+      },
+      "filters": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+      },
+    },
+    "exportConfig": {
+      "supported": true,
+    },
+    "openAsReport": {
+      "supported": false,
+    },
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
+  },
+}
+`;

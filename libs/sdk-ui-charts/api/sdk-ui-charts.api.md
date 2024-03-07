@@ -16,6 +16,7 @@ import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
@@ -23,6 +24,7 @@ import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
+import { IDimension } from '@gooddata/sdk-model';
 import { IDrillEventCallback } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -109,8 +111,17 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 // @internal (undocumented)
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
+// @internal
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], sliceVisualizationBy?: IAttribute): IBucket[];
+
+// @internal
+export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
+
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
+
+// @internal (undocumented)
+export const CoreRepeater: React_2.FC<ICoreChartProps>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
@@ -615,6 +626,19 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @beta (undocumented)
+export interface IRepeaterBucketProps {
+    attribute: AttributeOrPlaceholder;
+    columns?: AttributesMeasuresOrPlaceholders;
+    filters?: NullableFiltersOrPlaceholders;
+    placeholdersResolutionContext?: any;
+    sliceVisualizationBy?: AttributeOrPlaceholder;
+}
+
+// @beta (undocumented)
+export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+}
+
 // @public (undocumented)
 export interface ISankeyChartBucketProps {
     attributeFrom?: AttributeOrPlaceholder;
@@ -767,6 +791,9 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
 export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
+
+// @beta (undocumented)
+export const Repeater: (props: IRepeaterProps) => JSX.Element;
 
 // @public
 export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;

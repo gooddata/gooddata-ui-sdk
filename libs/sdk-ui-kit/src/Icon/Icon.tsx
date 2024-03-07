@@ -79,6 +79,7 @@ import { RichText } from "./icons/RichText.js";
 import { DataSource } from "./icons/DataSource.js";
 import { User } from "./icons/User.js";
 import { UserGroup } from "./icons/UserGroup.js";
+import { Repeater } from "./icons/InsightIcons/Repeater.js";
 
 /**
  * @internal
@@ -161,6 +162,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     DataSource,
     User,
     UserGroup,
+    Repeater,
 };
 
 export { IRowsIconProps, IColumnsIconProps };
