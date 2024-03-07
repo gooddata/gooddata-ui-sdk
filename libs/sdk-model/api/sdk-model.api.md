@@ -127,6 +127,10 @@ export type AttributeDisplayFormType =
 */
 "GDC.link"
 /**
+* Display form representing image hyperlink
+*/
+| "GDC.image"
+/**
 * Display form representing geo pin location.
 * Both latitude and longitude in single value (lat;long).
 */

@@ -2056,6 +2056,11 @@
         "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": {
+        "value": "Attribute image value",
+        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
     "configurationPanel.zoomInsight|insight": {
         "value": "Zoomable visualization",
         "comment": "",
