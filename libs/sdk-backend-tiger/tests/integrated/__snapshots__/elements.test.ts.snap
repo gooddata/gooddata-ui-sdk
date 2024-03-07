@@ -1,10 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`tiger elements > forDisplayForm > should load attribute elements for existing display form 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
-  "cacheId": "05bb6da46a84811cba7822910324a2c0",
+  "cacheId": Any<String>,
   "getData": [Function],
   "goTo": [Function],
   "items": [
@@ -170,7 +170,7 @@ exports[`tiger elements > forFilter > should return correct page for given displ
 {
   "all": [Function],
   "allSorted": [Function],
-  "cacheId": "1da991a20231f8861856e4762c7bc166",
+  "cacheId": Any<String>,
   "getData": [Function],
   "goTo": [Function],
   "limit": 2,
@@ -181,10 +181,10 @@ exports[`tiger elements > forFilter > should return correct page for given displ
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page in initial request 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
-  "cacheId": "1da991a20231f8861856e4762c7bc166",
+  "cacheId": Any<String>,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
@@ -196,10 +196,10 @@ ServerPaging {
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page with goTo 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
-  "cacheId": "1da991a20231f8861856e4762c7bc166",
+  "cacheId": Any<String>,
   "getData": [Function],
   "goTo": [Function],
   "items": [],
@@ -211,10 +211,10 @@ ServerPaging {
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page with next 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
-  "cacheId": "1da991a20231f8861856e4762c7bc166",
+  "cacheId": Any<String>,
   "getData": [Function],
   "goTo": [Function],
   "items": [],

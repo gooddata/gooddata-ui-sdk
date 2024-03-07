@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { testBackend, testWorkspace } from "./backend.js";
 import {
     attributeDisplayFormRef,
@@ -29,7 +29,9 @@ describe("tiger elements", () => {
                 .withLimit(20)
                 .query();
 
-            expect(result).toMatchSnapshot();
+            expect(result).toMatchSnapshot({
+                cacheId: expect.any(String),
+            });
         });
     });
 
@@ -111,7 +113,9 @@ describe("tiger elements", () => {
                 .withLimit(2)
                 .query();
             const page = await result.goTo(3);
-            expect(omit(page, "items")).toMatchSnapshot();
+            expect(omit(page, "items")).toMatchSnapshot({
+                cacheId: expect.any(String),
+            });
         });
 
         it("should return empty result for out-of-range page in initial request", async () => {
@@ -124,7 +128,9 @@ describe("tiger elements", () => {
                 .withOffset(5000)
                 .query();
 
-            expect(result).toMatchSnapshot();
+            expect(result).toMatchSnapshot({
+                cacheId: expect.any(String),
+            });
         });
 
         it("should return empty result for out-of-range page with goTo", async () => {
@@ -137,7 +143,9 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.goTo(100);
-            expect(page).toMatchSnapshot();
+            expect(page).toMatchSnapshot({
+                cacheId: expect.any(String),
+            });
         });
 
         it("should return empty result for out-of-range page with next", async () => {
@@ -151,7 +159,9 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.next();
-            expect(page).toMatchSnapshot();
+            expect(page).toMatchSnapshot({
+                cacheId: expect.any(String),
+            });
         });
     });
 });
