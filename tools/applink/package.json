@@ -41,6 +41,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "applink": "node esm/index.js $*"
     },
+    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
     "dependencies": {},
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",

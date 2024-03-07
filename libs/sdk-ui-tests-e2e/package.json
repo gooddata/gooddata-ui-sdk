@@ -68,6 +68,7 @@
         "delete-ref-workspace": "node ./reference_workspace/delete_ref_workspace.js",
         "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace"
     },
+    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
     "dependencies": {},
     "type": "module",
     "devDependencies": {

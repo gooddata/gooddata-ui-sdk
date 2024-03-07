@@ -16,6 +16,8 @@
         "styles",
         "LICENSE"
     ],
+    "dependencies": {},
+    "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
     "devDependencies": {
         "@babel/cli": "^7.23.4",
         "@babel/core": "^7.23.5",

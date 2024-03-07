@@ -17,8 +17,9 @@
         "styles",
         "LICENSE"
     ],
-    "devDependencies": {},
-    "dependencies": {
+    "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
+    "dependencies": {},
+    "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/sdk-backend-base": "workspace:*",
