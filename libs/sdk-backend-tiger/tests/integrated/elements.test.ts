@@ -29,9 +29,7 @@ describe("tiger elements", () => {
                 .withLimit(20)
                 .query();
 
-            expect(result).toMatchSnapshot({
-                cacheId: expect.any(String),
-            });
+            expect(omit(result, "cacheId")).toMatchSnapshot();
         });
     });
 
@@ -113,9 +111,7 @@ describe("tiger elements", () => {
                 .withLimit(2)
                 .query();
             const page = await result.goTo(3);
-            expect(omit(page, "items")).toMatchSnapshot({
-                cacheId: expect.any(String),
-            });
+            expect(omit(page, "items", "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page in initial request", async () => {
@@ -128,9 +124,7 @@ describe("tiger elements", () => {
                 .withOffset(5000)
                 .query();
 
-            expect(result).toMatchSnapshot({
-                cacheId: expect.any(String),
-            });
+            expect(omit(result, "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page with goTo", async () => {
@@ -143,9 +137,7 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.goTo(100);
-            expect(page).toMatchSnapshot({
-                cacheId: expect.any(String),
-            });
+            expect(omit(page, "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page with next", async () => {
@@ -159,9 +151,7 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.next();
-            expect(page).toMatchSnapshot({
-                cacheId: expect.any(String),
-            });
+            expect(omit(page, "cacheId")).toMatchSnapshot();
         });
     });
 });
