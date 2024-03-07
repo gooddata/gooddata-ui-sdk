@@ -863,3 +863,13 @@ export {
 } from "./organization/index.js";
 export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
 export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
+
+export {
+    IExportDefinition,
+    IExportDefinitionRequestPayload,
+    IExportDefinitionBase,
+    IExportDefinitionPdfOptions,
+    exportDefinitionTitle,
+    exportDefinitionCreated,
+    exportDefinitionUpdated,
+} from "./exportDefinitions/index.js";

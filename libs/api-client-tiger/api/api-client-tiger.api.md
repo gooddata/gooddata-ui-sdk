@@ -11267,7 +11267,7 @@ export type MetadataGetEntitiesOptions = {
 export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams | MetadataGetEntitiesThemeParams | MetadataGetEntitiesColorPaletteParams;
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList | JsonApiExportDefinitionOutList;
 
 // @internal
 export type MetadataGetEntitiesThemeParams = {
@@ -11837,7 +11837,7 @@ export interface OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest {
 export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 // @internal
-export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest;
+export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest | EntitiesApiGetAllEntitiesExportDefinitionsRequest;
 
 // @internal
 export type OrganizationGetEntitiesResult = JsonApiDataSourceIdentifierOutList | OrganizationGetEntitiesSupportingIncludedResult;
