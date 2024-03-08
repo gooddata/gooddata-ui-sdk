@@ -288,6 +288,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -579,6 +580,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -870,6 +872,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1161,6 +1164,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1452,6 +1456,7 @@ exports[`AreaChart > with 180x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1743,6 +1748,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2034,6 +2040,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2325,6 +2332,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2616,6 +2624,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2907,6 +2916,7 @@ exports[`AreaChart > with 180x300 - Force position TOP, max 2 rows, Gradient leg
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3198,6 +3208,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3489,6 +3500,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3780,6 +3792,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4071,6 +4084,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4362,6 +4376,7 @@ exports[`AreaChart > with 260x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4653,6 +4668,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4944,6 +4960,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5235,6 +5252,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5526,6 +5544,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5817,6 +5836,7 @@ exports[`AreaChart > with 440x154 - Force position TOP, max 1 row, Gradient lege
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6108,6 +6128,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - auto legend > should 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6399,6 +6420,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend at bottom > sh
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6690,6 +6712,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on left > shou
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6981,6 +7004,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on right > sho
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7272,6 +7296,7 @@ exports[`AreaChart > with 610x154 - Force position RIGHT - legend on top > shoul
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7563,6 +7588,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7854,6 +7880,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8145,6 +8172,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8436,6 +8464,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8727,6 +8756,7 @@ exports[`AreaChart > with 610x194 - Position respects configuration, max 1 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9018,6 +9048,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9309,6 +9340,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9600,6 +9632,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9891,6 +9924,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10182,6 +10216,7 @@ exports[`AreaChart > with 610x274 - Position respects configuration, max 2 row f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10473,6 +10508,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10764,6 +10800,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11055,6 +11092,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11346,6 +11384,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11637,6 +11676,7 @@ exports[`AreaChart > with 650x354 - Position respects configuration, map legend 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11764,6 +11804,7 @@ exports[`AreaChart > with Y axis configuration > should create expected props fo
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11947,6 +11988,7 @@ exports[`AreaChart > with arithmetic measures > should create expected props for
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12077,6 +12119,7 @@ exports[`AreaChart > with coloring - custom colors > should create expected prop
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12242,6 +12285,7 @@ exports[`AreaChart > with coloring - custom palette > should create expected pro
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12414,6 +12458,7 @@ exports[`AreaChart > with coloring - custom palette preferred over colors > shou
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12537,6 +12582,7 @@ exports[`AreaChart > with coloring - default > should create expected props for 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12663,6 +12709,7 @@ exports[`AreaChart > with data labels - auto visibility > should create expected
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12786,6 +12833,7 @@ exports[`AreaChart > with data labels - default > should create expected props f
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12912,6 +12960,7 @@ exports[`AreaChart > with data labels - forced hidden > should create expected p
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13038,6 +13087,7 @@ exports[`AreaChart > with data labels - forced visible > should create expected 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13168,6 +13218,7 @@ exports[`AreaChart > with data labels - forced visible and german separators > s
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13282,6 +13333,7 @@ exports[`AreaChart > with data points - dense chart - auto visibility > should c
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13393,6 +13445,7 @@ exports[`AreaChart > with data points - dense chart - default > should create ex
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13507,6 +13560,7 @@ exports[`AreaChart > with data points - dense chart - forced hidden > should cre
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13621,6 +13675,7 @@ exports[`AreaChart > with data points - dense chart - forced visible > should cr
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13747,6 +13802,7 @@ exports[`AreaChart > with data points - sparse chart - auto visibility > should 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13870,6 +13926,7 @@ exports[`AreaChart > with data points - sparse chart - default > should create e
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13996,6 +14053,7 @@ exports[`AreaChart > with data points - sparse chart - forced hidden > should cr
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14122,6 +14180,7 @@ exports[`AreaChart > with data points - sparse chart - forced visible > should c
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14248,6 +14307,7 @@ exports[`AreaChart > with legend position - auto legend > should create expected
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14374,6 +14434,7 @@ exports[`AreaChart > with legend position - disabled > should create expected pr
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14500,6 +14561,7 @@ exports[`AreaChart > with legend position - legend at bottom > should create exp
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14626,6 +14688,7 @@ exports[`AreaChart > with legend position - legend on left > should create expec
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14752,6 +14815,7 @@ exports[`AreaChart > with legend position - legend on right > should create expe
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14878,6 +14942,7 @@ exports[`AreaChart > with legend position - legend on top > should create expect
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14953,6 +15018,7 @@ exports[`AreaChart > with single measure > should create expected props for core
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15071,6 +15137,7 @@ exports[`AreaChart > with single measure with two viewBy > should create expecte
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15168,6 +15235,7 @@ exports[`AreaChart > with single measure with viewBy > should create expected pr
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15266,6 +15334,7 @@ exports[`AreaChart > with single measure with viewBy and stack to percent > shou
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15383,6 +15452,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy > should create
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15501,6 +15571,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and disabled st
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15619,6 +15690,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and stack to pe
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15740,6 +15812,7 @@ exports[`AreaChart > with single measure with viewBy and stackBy and stack to pe
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15863,6 +15936,7 @@ exports[`AreaChart > with two measures with undefined values > should create exp
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15986,6 +16060,7 @@ exports[`AreaChart > with two measures with viewBy > should create expected prop
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16110,6 +16185,7 @@ exports[`AreaChart > with two measures with viewBy and disabled stack measures >
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16234,6 +16310,7 @@ exports[`AreaChart > with two measures with viewBy and disabled stacking > shoul
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16358,6 +16435,7 @@ exports[`AreaChart > with two measures with viewBy and enabled stack measures > 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16482,6 +16560,7 @@ exports[`AreaChart > with two measures with viewBy and enabled stacking > should
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16606,6 +16685,7 @@ exports[`AreaChart > with two measures with viewBy and stack measures to percent
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16736,6 +16816,7 @@ exports[`AreaChart > with two measures with viewBy sorted by attribute > should 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16872,6 +16953,7 @@ exports[`AreaChart > with two measures with viewBy sorted by measure > should cr
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16996,6 +17078,7 @@ exports[`AreaChart > with undefined values and disabled stacking > should create
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17123,6 +17206,7 @@ exports[`AreaChart > with undefined values, disabled stacking and the continuous
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17240,5 +17324,6 @@ exports[`AreaChart > with with one measure and view by date and stack by date > 
   "exportTitle": "AreaChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
