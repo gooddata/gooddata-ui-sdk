@@ -117,6 +117,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -235,6 +236,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -355,6 +357,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -475,6 +478,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -595,6 +599,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -715,6 +720,7 @@ exports[`DependencyWheelChart > with 180x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -835,6 +841,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -953,6 +960,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1073,6 +1081,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1193,6 +1202,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1313,6 +1323,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1433,6 +1444,7 @@ exports[`DependencyWheelChart > with 180x300 - Force position TOP, max 2 rows, G
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1553,6 +1565,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1671,6 +1684,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1791,6 +1805,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1911,6 +1926,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2031,6 +2047,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2151,6 +2168,7 @@ exports[`DependencyWheelChart > with 260x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2271,6 +2289,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2389,6 +2408,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2509,6 +2529,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2629,6 +2650,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2749,6 +2771,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2869,6 +2892,7 @@ exports[`DependencyWheelChart > with 440x154 - Force position TOP, max 1 row, Gr
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2989,6 +3013,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - auto legen
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3107,6 +3132,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - default le
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3227,6 +3253,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - legend at 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3347,6 +3374,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - legend on 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3467,6 +3495,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - legend on 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3587,6 +3616,7 @@ exports[`DependencyWheelChart > with 610x154 - Force position RIGHT - legend on 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3707,6 +3737,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3825,6 +3856,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3945,6 +3977,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4065,6 +4098,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4185,6 +4219,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4305,6 +4340,7 @@ exports[`DependencyWheelChart > with 610x194 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4425,6 +4461,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4543,6 +4580,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4663,6 +4701,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4783,6 +4822,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4903,6 +4943,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5023,6 +5064,7 @@ exports[`DependencyWheelChart > with 610x274 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5143,6 +5185,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5261,6 +5304,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5381,6 +5425,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5501,6 +5546,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5621,6 +5667,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5741,6 +5788,7 @@ exports[`DependencyWheelChart > with 650x354 - Position respects configuration, 
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5922,6 +5970,7 @@ exports[`DependencyWheelChart > with assign color to nodes > should create expec
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6044,6 +6093,7 @@ exports[`DependencyWheelChart > with coloring - custom colors > should create ex
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6201,6 +6251,7 @@ exports[`DependencyWheelChart > with coloring - custom palette > should create e
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6365,6 +6416,7 @@ exports[`DependencyWheelChart > with coloring - custom palette preferred over co
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6479,6 +6531,7 @@ exports[`DependencyWheelChart > with coloring - default > should create expected
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6597,6 +6650,7 @@ exports[`DependencyWheelChart > with data labels - auto visibility > should crea
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6711,6 +6765,7 @@ exports[`DependencyWheelChart > with data labels - default > should create expec
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6829,6 +6884,7 @@ exports[`DependencyWheelChart > with data labels - forced hidden > should create
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6947,6 +7003,7 @@ exports[`DependencyWheelChart > with data labels - forced visible > should creat
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7069,6 +7126,7 @@ exports[`DependencyWheelChart > with data labels - forced visible and german sep
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7168,6 +7226,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7264,6 +7323,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7362,6 +7422,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7461,6 +7522,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7560,6 +7622,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7659,6 +7722,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7758,6 +7822,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 1 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7877,6 +7942,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7993,6 +8059,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8111,6 +8178,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8230,6 +8298,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8349,6 +8418,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8468,6 +8538,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8587,6 +8658,7 @@ exports[`DependencyWheelChart > with legend position - 1 measure and 2 attribute
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8680,6 +8752,7 @@ exports[`DependencyWheelChart > with measure and attributeFrom > should create e
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8773,6 +8846,7 @@ exports[`DependencyWheelChart > with measure and attributeTo > should create exp
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8844,6 +8918,7 @@ exports[`DependencyWheelChart > with measure only > should create expected props
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8957,5 +9032,6 @@ exports[`DependencyWheelChart > with measure, attributeFrom and attributeTo > sh
   "exportTitle": "DependencyWheelChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;

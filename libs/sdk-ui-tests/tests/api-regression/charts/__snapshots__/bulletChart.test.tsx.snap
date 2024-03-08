@@ -160,6 +160,7 @@ exports[`BulletChart > with 80x50 - without x axis, without y axis (very small c
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -323,6 +324,7 @@ exports[`BulletChart > with 140x354 - without y axis labels > should create expe
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -486,6 +488,7 @@ exports[`BulletChart > with 165x354 - without y axis title > should create expec
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -649,6 +652,7 @@ exports[`BulletChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -812,6 +816,7 @@ exports[`BulletChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -975,6 +980,7 @@ exports[`BulletChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1138,6 +1144,7 @@ exports[`BulletChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1301,6 +1308,7 @@ exports[`BulletChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1464,6 +1472,7 @@ exports[`BulletChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1627,6 +1636,7 @@ exports[`BulletChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1790,6 +1800,7 @@ exports[`BulletChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1953,6 +1964,7 @@ exports[`BulletChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2116,6 +2128,7 @@ exports[`BulletChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2279,6 +2292,7 @@ exports[`BulletChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2442,6 +2456,7 @@ exports[`BulletChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2605,6 +2620,7 @@ exports[`BulletChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2768,6 +2784,7 @@ exports[`BulletChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2931,6 +2948,7 @@ exports[`BulletChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3094,6 +3112,7 @@ exports[`BulletChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3257,6 +3276,7 @@ exports[`BulletChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3420,6 +3440,7 @@ exports[`BulletChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3583,6 +3604,7 @@ exports[`BulletChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3746,6 +3768,7 @@ exports[`BulletChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3909,6 +3932,7 @@ exports[`BulletChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4072,6 +4096,7 @@ exports[`BulletChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4235,6 +4260,7 @@ exports[`BulletChart > with 610x154 - Force position RIGHT - legend on left > sh
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4398,6 +4424,7 @@ exports[`BulletChart > with 610x154 - Force position RIGHT - legend on right > s
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4561,6 +4588,7 @@ exports[`BulletChart > with 610x154 - Force position RIGHT - legend on top > sho
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4724,6 +4752,7 @@ exports[`BulletChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4887,6 +4916,7 @@ exports[`BulletChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5050,6 +5080,7 @@ exports[`BulletChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5213,6 +5244,7 @@ exports[`BulletChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5376,6 +5408,7 @@ exports[`BulletChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5539,6 +5572,7 @@ exports[`BulletChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5702,6 +5736,7 @@ exports[`BulletChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5865,6 +5900,7 @@ exports[`BulletChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6028,6 +6064,7 @@ exports[`BulletChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6191,6 +6228,7 @@ exports[`BulletChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6354,6 +6392,7 @@ exports[`BulletChart > with 650x50 - without x axis labels > should create expec
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6437,6 +6476,7 @@ exports[`BulletChart > with 650x80 - without x axis labels, with x axis title > 
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6520,6 +6560,7 @@ exports[`BulletChart > with 650x120 - without x axis title > should create expec
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6683,6 +6724,7 @@ exports[`BulletChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6846,6 +6888,7 @@ exports[`BulletChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7009,6 +7052,7 @@ exports[`BulletChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7172,6 +7216,7 @@ exports[`BulletChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7335,6 +7380,7 @@ exports[`BulletChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7497,6 +7543,7 @@ exports[`BulletChart > with X axis hidden > should create expected props for cor
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7659,6 +7706,7 @@ exports[`BulletChart > with X axis max only configuration > should create expect
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7822,6 +7870,7 @@ exports[`BulletChart > with X axis min/max configuration > should create expecte
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7984,6 +8033,7 @@ exports[`BulletChart > with X axis rotation > should create expected props for c
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8146,6 +8196,7 @@ exports[`BulletChart > with Y axis hidden > should create expected props for cor
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8308,6 +8359,7 @@ exports[`BulletChart > with Y axis rotation > should create expected props for c
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8533,6 +8585,7 @@ exports[`BulletChart > with assign color to attribute bubbles > should create ex
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8716,6 +8769,7 @@ exports[`BulletChart > with axis name customization - high > should create expec
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8899,6 +8953,7 @@ exports[`BulletChart > with axis name customization - invisible > should create 
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9082,6 +9137,7 @@ exports[`BulletChart > with axis name customization - low > should create expect
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9265,6 +9321,7 @@ exports[`BulletChart > with axis name customization - middle > should create exp
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9431,6 +9488,7 @@ exports[`BulletChart > with coloring - custom colors > should create expected pr
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9632,6 +9690,7 @@ exports[`BulletChart > with coloring - custom palette > should create expected p
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9840,6 +9899,7 @@ exports[`BulletChart > with coloring - custom palette preferred over colors > sh
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9999,6 +10059,7 @@ exports[`BulletChart > with coloring - default > should create expected props fo
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10161,6 +10222,7 @@ exports[`BulletChart > with data labels - auto visibility > should create expect
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10320,6 +10382,7 @@ exports[`BulletChart > with data labels - default > should create expected props
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10482,6 +10545,7 @@ exports[`BulletChart > with data labels - forced hidden > should create expected
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10644,6 +10708,7 @@ exports[`BulletChart > with data labels - forced visible > should create expecte
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10810,6 +10875,7 @@ exports[`BulletChart > with data labels - forced visible and german separators >
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10973,6 +11039,7 @@ exports[`BulletChart > with drilling with single view by drilling > should creat
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11135,6 +11202,7 @@ exports[`BulletChart > with legend position - auto legend > should create expect
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11297,6 +11365,7 @@ exports[`BulletChart > with legend position - disabled > should create expected 
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11459,6 +11528,7 @@ exports[`BulletChart > with legend position - legend at bottom > should create e
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11621,6 +11691,7 @@ exports[`BulletChart > with legend position - legend on left > should create exp
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11783,6 +11854,7 @@ exports[`BulletChart > with legend position - legend on right > should create ex
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11945,6 +12017,7 @@ exports[`BulletChart > with legend position - legend on top > should create expe
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12051,6 +12124,7 @@ exports[`BulletChart > with primary and comparative measures > should create exp
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12157,6 +12231,7 @@ exports[`BulletChart > with primary and target measures > should create expected
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12285,6 +12360,7 @@ exports[`BulletChart > with primary and target measures with viewBy > should cre
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12364,6 +12440,7 @@ exports[`BulletChart > with primary measure > should create expected props for c
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12484,6 +12561,7 @@ exports[`BulletChart > with primary with two viewBy dates > should create expect
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12621,6 +12699,7 @@ exports[`BulletChart > with primary, target and comparative measures > should cr
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12799,6 +12878,7 @@ exports[`BulletChart > with primary, target and comparative measures with two vi
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12977,6 +13057,7 @@ exports[`BulletChart > with primary, target and comparative measures with two vi
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13136,6 +13217,7 @@ exports[`BulletChart > with primary, target and comparative measures with viewBy
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13302,6 +13384,7 @@ exports[`BulletChart > with primary, target and comparative measures with viewBy
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13483,6 +13566,7 @@ exports[`BulletChart > with single measure and two viewBy with drilling on child
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13664,5 +13748,6 @@ exports[`BulletChart > with single measure and two viewBy with drilling on paren
   "exportTitle": "BulletChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;

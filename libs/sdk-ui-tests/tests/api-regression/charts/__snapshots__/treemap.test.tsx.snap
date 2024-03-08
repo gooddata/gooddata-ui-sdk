@@ -135,6 +135,7 @@ exports[`Treemap > with 180x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -273,6 +274,7 @@ exports[`Treemap > with 180x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -411,6 +413,7 @@ exports[`Treemap > with 180x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -549,6 +552,7 @@ exports[`Treemap > with 180x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -687,6 +691,7 @@ exports[`Treemap > with 180x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -825,6 +830,7 @@ exports[`Treemap > with 180x300 - Force position TOP, max 2 rows, Gradient legen
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -963,6 +969,7 @@ exports[`Treemap > with 180x300 - Force position TOP, max 2 rows, Gradient legen
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1101,6 +1108,7 @@ exports[`Treemap > with 180x300 - Force position TOP, max 2 rows, Gradient legen
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1239,6 +1247,7 @@ exports[`Treemap > with 180x300 - Force position TOP, max 2 rows, Gradient legen
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1377,6 +1386,7 @@ exports[`Treemap > with 180x300 - Force position TOP, max 2 rows, Gradient legen
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1515,6 +1525,7 @@ exports[`Treemap > with 260x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1653,6 +1664,7 @@ exports[`Treemap > with 260x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1791,6 +1803,7 @@ exports[`Treemap > with 260x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1929,6 +1942,7 @@ exports[`Treemap > with 260x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2067,6 +2081,7 @@ exports[`Treemap > with 260x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2205,6 +2220,7 @@ exports[`Treemap > with 440x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2343,6 +2359,7 @@ exports[`Treemap > with 440x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2481,6 +2498,7 @@ exports[`Treemap > with 440x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2619,6 +2637,7 @@ exports[`Treemap > with 440x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2757,6 +2776,7 @@ exports[`Treemap > with 440x154 - Force position TOP, max 1 row, Gradient legend
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2895,6 +2915,7 @@ exports[`Treemap > with 610x154 - Force position RIGHT - auto legend > should cr
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3033,6 +3054,7 @@ exports[`Treemap > with 610x154 - Force position RIGHT - legend at bottom > shou
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3171,6 +3193,7 @@ exports[`Treemap > with 610x154 - Force position RIGHT - legend on left > should
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3309,6 +3332,7 @@ exports[`Treemap > with 610x154 - Force position RIGHT - legend on right > shoul
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3447,6 +3471,7 @@ exports[`Treemap > with 610x154 - Force position RIGHT - legend on top > should 
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3585,6 +3610,7 @@ exports[`Treemap > with 610x194 - Position respects configuration, max 1 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3723,6 +3749,7 @@ exports[`Treemap > with 610x194 - Position respects configuration, max 1 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3861,6 +3888,7 @@ exports[`Treemap > with 610x194 - Position respects configuration, max 1 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3999,6 +4027,7 @@ exports[`Treemap > with 610x194 - Position respects configuration, max 1 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4137,6 +4166,7 @@ exports[`Treemap > with 610x194 - Position respects configuration, max 1 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4275,6 +4305,7 @@ exports[`Treemap > with 610x274 - Position respects configuration, max 2 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4413,6 +4444,7 @@ exports[`Treemap > with 610x274 - Position respects configuration, max 2 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4551,6 +4583,7 @@ exports[`Treemap > with 610x274 - Position respects configuration, max 2 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4689,6 +4722,7 @@ exports[`Treemap > with 610x274 - Position respects configuration, max 2 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4827,6 +4861,7 @@ exports[`Treemap > with 610x274 - Position respects configuration, max 2 row for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4965,6 +5000,7 @@ exports[`Treemap > with 650x354 - Position respects configuration, map legend fi
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5103,6 +5139,7 @@ exports[`Treemap > with 650x354 - Position respects configuration, map legend fi
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5241,6 +5278,7 @@ exports[`Treemap > with 650x354 - Position respects configuration, map legend fi
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5379,6 +5417,7 @@ exports[`Treemap > with 650x354 - Position respects configuration, map legend fi
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5517,6 +5556,7 @@ exports[`Treemap > with 650x354 - Position respects configuration, map legend fi
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5666,6 +5706,7 @@ exports[`Treemap > with arithmetic measures and segment > should create expected
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5866,6 +5907,7 @@ exports[`Treemap > with assign color to attributes > should create expected prop
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6007,6 +6049,7 @@ exports[`Treemap > with coloring - custom colors > should create expected props 
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6183,6 +6226,7 @@ exports[`Treemap > with coloring - custom palette > should create expected props
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6366,6 +6410,7 @@ exports[`Treemap > with coloring - custom palette preferred over colors > should
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6499,6 +6544,7 @@ exports[`Treemap > with coloring - default > should create expected props for co
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6636,6 +6682,7 @@ exports[`Treemap > with data labels - auto visibility > should create expected p
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6769,6 +6816,7 @@ exports[`Treemap > with data labels - default > should create expected props for
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6906,6 +6954,7 @@ exports[`Treemap > with data labels - forced hidden > should create expected pro
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7043,6 +7092,7 @@ exports[`Treemap > with data labels - forced visible > should create expected pr
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7184,6 +7234,7 @@ exports[`Treemap > with data labels - forced visible and german separators > sho
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7321,6 +7372,7 @@ exports[`Treemap > with legend position - auto legend > should create expected p
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7458,6 +7510,7 @@ exports[`Treemap > with legend position - disabled > should create expected prop
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7595,6 +7648,7 @@ exports[`Treemap > with legend position - legend at bottom > should create expec
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7732,6 +7786,7 @@ exports[`Treemap > with legend position - legend on left > should create expecte
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7869,6 +7924,7 @@ exports[`Treemap > with legend position - legend on right > should create expect
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8006,6 +8062,7 @@ exports[`Treemap > with legend position - legend on top > should create expected
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8077,6 +8134,7 @@ exports[`Treemap > with single measure > should create expected props for core c
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8170,6 +8228,7 @@ exports[`Treemap > with single measure and segment > should create expected prop
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8263,6 +8322,7 @@ exports[`Treemap > with single measure and viewBy > should create expected props
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8370,6 +8430,7 @@ exports[`Treemap > with single measure and viewBy filtered to one element > shou
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8502,6 +8563,7 @@ exports[`Treemap > with single measure, viewBy and segment > should create expec
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8599,6 +8661,7 @@ exports[`Treemap > with two measures > should create expected props for core cha
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8718,6 +8781,7 @@ exports[`Treemap > with two measures and segmentBy > should create expected prop
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8837,6 +8901,7 @@ exports[`Treemap > with two measures and viewBy > should create expected props f
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8969,5 +9034,6 @@ exports[`Treemap > with with one measure and view by date and segment by date > 
   "exportTitle": "Treemap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
