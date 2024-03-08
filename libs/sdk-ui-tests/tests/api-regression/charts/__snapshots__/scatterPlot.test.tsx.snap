@@ -127,6 +127,7 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -304,6 +305,7 @@ exports[`ScatterPlot > with assign color to measures > should create expected pr
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -450,6 +452,7 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -596,6 +599,7 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -742,6 +746,7 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -888,6 +893,7 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1017,6 +1023,7 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected pr
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1181,6 +1188,7 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected p
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1352,6 +1360,7 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1473,6 +1482,7 @@ exports[`ScatterPlot > with coloring - default > should create expected props fo
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1598,6 +1608,7 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1719,6 +1730,7 @@ exports[`ScatterPlot > with data labels - default > should create expected props
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1844,6 +1856,7 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1969,6 +1982,7 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2098,6 +2112,7 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2218,6 +2233,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2345,6 +2361,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2465,6 +2482,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2536,6 +2554,7 @@ exports[`ScatterPlot > with x axis measure > should create expected props for co
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2629,6 +2648,7 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2722,5 +2742,6 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;

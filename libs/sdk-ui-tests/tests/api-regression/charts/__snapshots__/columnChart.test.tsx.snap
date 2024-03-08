@@ -184,6 +184,7 @@ exports[`ColumnChart > with 40x60 - without x axis, without y axis (very small c
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -371,6 +372,7 @@ exports[`ColumnChart > with 60x354 - without y axis labels > should create expec
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -472,6 +474,7 @@ exports[`ColumnChart > with 60x354 - without y axis labels, with y axis title > 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -573,6 +576,7 @@ exports[`ColumnChart > with 120x354 - without y axis title > should create expec
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -694,6 +698,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -815,6 +820,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -936,6 +942,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1057,6 +1064,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1178,6 +1186,7 @@ exports[`ColumnChart > with 180x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1299,6 +1308,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1420,6 +1430,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1541,6 +1552,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1662,6 +1674,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1783,6 +1796,7 @@ exports[`ColumnChart > with 180x300 - Force position TOP, max 2 rows, Gradient l
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1904,6 +1918,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2025,6 +2040,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2146,6 +2162,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2267,6 +2284,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2388,6 +2406,7 @@ exports[`ColumnChart > with 260x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2509,6 +2528,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2630,6 +2650,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2751,6 +2772,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2872,6 +2894,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2993,6 +3016,7 @@ exports[`ColumnChart > with 440x154 - Force position TOP, max 1 row, Gradient le
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3114,6 +3138,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - auto legend > shoul
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3235,6 +3260,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend at bottom > 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3356,6 +3382,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on left > sh
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3477,6 +3504,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on right > s
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3598,6 +3626,7 @@ exports[`ColumnChart > with 610x154 - Force position RIGHT - legend on top > sho
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3719,6 +3748,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3840,6 +3870,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3961,6 +3992,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4082,6 +4114,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4203,6 +4236,7 @@ exports[`ColumnChart > with 610x194 - Position respects configuration, max 1 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4324,6 +4358,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4445,6 +4480,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4566,6 +4602,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4687,6 +4724,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4808,6 +4846,7 @@ exports[`ColumnChart > with 610x274 - Position respects configuration, max 2 row
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4995,6 +5034,7 @@ exports[`ColumnChart > with 650x90 - without x axis labels > should create expec
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5182,6 +5222,7 @@ exports[`ColumnChart > with 650x120 - without x axis title > should create expec
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5303,6 +5344,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5424,6 +5466,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5545,6 +5588,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5666,6 +5710,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5787,6 +5832,7 @@ exports[`ColumnChart > with 650x354 - Position respects configuration, map legen
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5936,6 +5982,7 @@ exports[`ColumnChart > with Stack measures to 100% with and axis min/max > shoul
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6084,6 +6131,7 @@ exports[`ColumnChart > with X and Y axis invisible > should create expected prop
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6229,6 +6277,7 @@ exports[`ColumnChart > with X axis invisible > should create expected props for 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6374,6 +6423,7 @@ exports[`ColumnChart > with X axis rotation > should create expected props for c
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6501,6 +6551,7 @@ exports[`ColumnChart > with Y axis min/max configuration > should create expecte
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6630,6 +6681,7 @@ exports[`ColumnChart > with Y axis on right > should create expected props for c
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6778,6 +6830,7 @@ exports[`ColumnChart > with Y axis on right with two viewBy attributes > should 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6961,6 +7014,7 @@ exports[`ColumnChart > with assign color to attribute element stack > should cre
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7169,6 +7223,7 @@ exports[`ColumnChart > with assign color to master measure impacts derived PoP >
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7354,6 +7409,7 @@ exports[`ColumnChart > with assign color to measures > should create expected pr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7484,6 +7540,7 @@ exports[`ColumnChart > with coloring - custom colors > should create expected pr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7649,6 +7706,7 @@ exports[`ColumnChart > with coloring - custom palette > should create expected p
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7821,6 +7879,7 @@ exports[`ColumnChart > with coloring - custom palette preferred over colors > sh
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7944,6 +8003,7 @@ exports[`ColumnChart > with coloring - default > should create expected props fo
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8065,6 +8125,7 @@ exports[`ColumnChart > with data labels - data labels and totals with auto visib
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8185,6 +8246,7 @@ exports[`ColumnChart > with data labels - data labels auto visibility > should c
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8305,6 +8367,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden > should cre
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8426,6 +8489,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden totals force
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8547,6 +8611,7 @@ exports[`ColumnChart > with data labels - data labels forced hidden totals force
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8667,6 +8732,7 @@ exports[`ColumnChart > with data labels - data labels forced visible > should cr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8784,6 +8850,7 @@ exports[`ColumnChart > with data labels - default > should create expected props
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8908,6 +8975,7 @@ exports[`ColumnChart > with data labels - forced dataLabels visible and german s
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9029,6 +9097,7 @@ exports[`ColumnChart > with data labels - labels forced hidden totals auto visib
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9161,6 +9230,7 @@ exports[`ColumnChart > with dense chart with two view by > should create expecte
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9371,6 +9441,7 @@ exports[`ColumnChart > with dual axis name customization - high > should create 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9581,6 +9652,7 @@ exports[`ColumnChart > with dual axis name customization - invisible > should cr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9791,6 +9863,7 @@ exports[`ColumnChart > with dual axis name customization - low > should create e
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10001,6 +10074,7 @@ exports[`ColumnChart > with dual axis name customization - middle > should creat
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10148,6 +10222,7 @@ exports[`ColumnChart > with dual axis when two viewBy attributes > should create
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10337,6 +10412,7 @@ exports[`ColumnChart > with dual axis with hidden right Y axis > should create e
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10526,6 +10602,7 @@ exports[`ColumnChart > with dual axis with no labels on right Y axis > should cr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10714,6 +10791,7 @@ exports[`ColumnChart > with dual axis with one right measure and three left > sh
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10903,6 +10981,7 @@ exports[`ColumnChart > with dual axis with right axis labels rotated > should cr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11049,6 +11128,7 @@ exports[`ColumnChart > with force disable drill on axes > should create expected
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11175,6 +11255,7 @@ exports[`ColumnChart > with legend position - auto legend > should create expect
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11301,6 +11382,7 @@ exports[`ColumnChart > with legend position - disabled > should create expected 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11427,6 +11509,7 @@ exports[`ColumnChart > with legend position - legend at bottom > should create e
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11553,6 +11636,7 @@ exports[`ColumnChart > with legend position - legend on left > should create exp
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11679,6 +11763,7 @@ exports[`ColumnChart > with legend position - legend on right > should create ex
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11805,6 +11890,7 @@ exports[`ColumnChart > with legend position - legend on top > should create expe
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11931,6 +12017,7 @@ exports[`ColumnChart > with no gridline > should create expected props for core 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12078,6 +12165,7 @@ exports[`ColumnChart > with single axis name customization - high > should creat
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12225,6 +12313,7 @@ exports[`ColumnChart > with single axis name customization - invisible > should 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12372,6 +12461,7 @@ exports[`ColumnChart > with single axis name customization - low > should create
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12519,6 +12609,7 @@ exports[`ColumnChart > with single axis name customization - middle > should cre
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12594,6 +12685,7 @@ exports[`ColumnChart > with single measure > should create expected props for co
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12739,6 +12831,7 @@ exports[`ColumnChart > with single measure and two viewBy with drilling on child
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12884,6 +12977,7 @@ exports[`ColumnChart > with single measure and two viewBy with drilling on paren
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12985,6 +13079,7 @@ exports[`ColumnChart > with single measure and viewBy with drilling on bars > sh
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13082,6 +13177,7 @@ exports[`ColumnChart > with single measure ignores stack measures > should creat
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13199,6 +13295,7 @@ exports[`ColumnChart > with single measure with one viewBy and one stackBy with 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13296,6 +13393,7 @@ exports[`ColumnChart > with single measure with stack to 100% > should create ex
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13432,6 +13530,7 @@ exports[`ColumnChart > with single measure with two viewBy and stack > should cr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13529,6 +13628,7 @@ exports[`ColumnChart > with single measure with viewBy > should create expected 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13646,6 +13746,7 @@ exports[`ColumnChart > with single measure with viewBy and stackBy > should crea
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13777,6 +13878,7 @@ exports[`ColumnChart > with single measure with viewBy and stackBy filtered to s
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13916,6 +14018,7 @@ exports[`ColumnChart > with single measure, two viewBy and stacking with drillin
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14055,6 +14158,7 @@ exports[`ColumnChart > with single measure, two viewBy and stacking with drillin
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14156,6 +14260,7 @@ exports[`ColumnChart > with single ratio measure with viewBy > should create exp
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14344,6 +14449,7 @@ exports[`ColumnChart > with stack measures and dual axis > should create expecte
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14532,6 +14638,7 @@ exports[`ColumnChart > with stack measures to 100% and dual axis > should create
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14726,6 +14833,7 @@ exports[`ColumnChart > with stack measures to 100% with dual axis and axis min/m
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14879,6 +14987,7 @@ exports[`ColumnChart > with stackBy with one date > should create expected props
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14980,6 +15089,7 @@ exports[`ColumnChart > with two measures > should create expected props for core
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15128,6 +15238,7 @@ exports[`ColumnChart > with two measures and two viewBy with right axis and stac
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15270,6 +15381,7 @@ exports[`ColumnChart > with two measures and two viewBy with stackMeasures > sho
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15412,6 +15524,7 @@ exports[`ColumnChart > with two measures and two viewBy with stackMeasuresToPerc
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15562,6 +15675,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15713,6 +15827,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15863,6 +15978,7 @@ exports[`ColumnChart > with two measures and two viewBy, dual axis, with drillin
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16010,6 +16126,7 @@ exports[`ColumnChart > with two measures with dual axis and stack measures to 10
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16157,6 +16274,7 @@ exports[`ColumnChart > with two measures with dual axis ignores stack measures >
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16299,6 +16417,7 @@ exports[`ColumnChart > with two measures with two viewBy > should create expecte
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16422,6 +16541,7 @@ exports[`ColumnChart > with two measures with viewBy > should create expected pr
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16552,6 +16672,7 @@ exports[`ColumnChart > with two measures with viewBy sorted by attribute > shoul
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16688,6 +16809,7 @@ exports[`ColumnChart > with two measures with viewBy sorted by measure > should 
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16841,6 +16963,7 @@ exports[`ColumnChart > with viewBy date and PoP measure > should create expected
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17013,5 +17136,6 @@ exports[`ColumnChart > with viewBy with two dates > should create expected props
   "exportTitle": "ColumnChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;

@@ -182,6 +182,7 @@ exports[`ComboChart > with 'Stack Measures' off and 'Stack to 100%' on > should 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -367,6 +368,7 @@ exports[`ComboChart > with 'Stack Measures' on and 'Stack to 100%' on > should c
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -615,6 +617,7 @@ exports[`ComboChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -863,6 +866,7 @@ exports[`ComboChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1111,6 +1115,7 @@ exports[`ComboChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1359,6 +1364,7 @@ exports[`ComboChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1607,6 +1613,7 @@ exports[`ComboChart > with 180x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1855,6 +1862,7 @@ exports[`ComboChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2103,6 +2111,7 @@ exports[`ComboChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2351,6 +2360,7 @@ exports[`ComboChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2599,6 +2609,7 @@ exports[`ComboChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2847,6 +2858,7 @@ exports[`ComboChart > with 180x300 - Force position TOP, max 2 rows, Gradient le
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3095,6 +3107,7 @@ exports[`ComboChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3343,6 +3356,7 @@ exports[`ComboChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3591,6 +3605,7 @@ exports[`ComboChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3839,6 +3854,7 @@ exports[`ComboChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4087,6 +4103,7 @@ exports[`ComboChart > with 260x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4335,6 +4352,7 @@ exports[`ComboChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4583,6 +4601,7 @@ exports[`ComboChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4831,6 +4850,7 @@ exports[`ComboChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5079,6 +5099,7 @@ exports[`ComboChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5327,6 +5348,7 @@ exports[`ComboChart > with 440x154 - Force position TOP, max 1 row, Gradient leg
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5575,6 +5597,7 @@ exports[`ComboChart > with 610x154 - Force position RIGHT - auto legend > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5823,6 +5846,7 @@ exports[`ComboChart > with 610x154 - Force position RIGHT - legend at bottom > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6071,6 +6095,7 @@ exports[`ComboChart > with 610x154 - Force position RIGHT - legend on left > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6319,6 +6344,7 @@ exports[`ComboChart > with 610x154 - Force position RIGHT - legend on right > sh
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6567,6 +6593,7 @@ exports[`ComboChart > with 610x154 - Force position RIGHT - legend on top > shou
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6815,6 +6842,7 @@ exports[`ComboChart > with 610x194 - Position respects configuration, max 1 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7063,6 +7091,7 @@ exports[`ComboChart > with 610x194 - Position respects configuration, max 1 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7311,6 +7340,7 @@ exports[`ComboChart > with 610x194 - Position respects configuration, max 1 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7559,6 +7589,7 @@ exports[`ComboChart > with 610x194 - Position respects configuration, max 1 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7807,6 +7838,7 @@ exports[`ComboChart > with 610x194 - Position respects configuration, max 1 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8055,6 +8087,7 @@ exports[`ComboChart > with 610x274 - Position respects configuration, max 2 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8303,6 +8336,7 @@ exports[`ComboChart > with 610x274 - Position respects configuration, max 2 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8551,6 +8585,7 @@ exports[`ComboChart > with 610x274 - Position respects configuration, max 2 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8799,6 +8834,7 @@ exports[`ComboChart > with 610x274 - Position respects configuration, max 2 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9047,6 +9083,7 @@ exports[`ComboChart > with 610x274 - Position respects configuration, max 2 row 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9295,6 +9332,7 @@ exports[`ComboChart > with 650x354 - Position respects configuration, map legend
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9543,6 +9581,7 @@ exports[`ComboChart > with 650x354 - Position respects configuration, map legend
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9791,6 +9830,7 @@ exports[`ComboChart > with 650x354 - Position respects configuration, map legend
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10039,6 +10079,7 @@ exports[`ComboChart > with 650x354 - Position respects configuration, map legend
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10287,6 +10328,7 @@ exports[`ComboChart > with 650x354 - Position respects configuration, map legend
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10471,6 +10513,7 @@ exports[`ComboChart > with arithmetic measures > should create expected props fo
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10717,6 +10760,7 @@ exports[`ComboChart > with assign color to measures > should create expected pro
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10865,6 +10909,7 @@ exports[`ComboChart > with axis name configuration - high > should create expect
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11013,6 +11058,7 @@ exports[`ComboChart > with axis name configuration - invisible > should create e
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11161,6 +11207,7 @@ exports[`ComboChart > with axis name configuration - low > should create expecte
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11309,6 +11356,7 @@ exports[`ComboChart > with axis name configuration - middle > should create expe
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11500,6 +11548,7 @@ exports[`ComboChart > with coloring - custom colors > should create expected pro
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11726,6 +11775,7 @@ exports[`ComboChart > with coloring - custom palette > should create expected pr
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11959,6 +12009,7 @@ exports[`ComboChart > with coloring - custom palette preferred over colors > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12143,6 +12194,7 @@ exports[`ComboChart > with coloring - default > should create expected props for
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12270,6 +12322,7 @@ exports[`ComboChart > with connect nulls values > should create expected props f
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12397,6 +12450,7 @@ exports[`ComboChart > with data labels - auto visibility > should create expecte
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12521,6 +12575,7 @@ exports[`ComboChart > with data labels - default > should create expected props 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12648,6 +12703,7 @@ exports[`ComboChart > with data labels - forced hidden > should create expected 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12775,6 +12831,7 @@ exports[`ComboChart > with data labels - forced visible > should create expected
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12906,6 +12963,7 @@ exports[`ComboChart > with data labels - forced visible and german separators > 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13049,6 +13107,7 @@ exports[`ComboChart > with data points - dense chart - auto visibility > should 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13189,6 +13248,7 @@ exports[`ComboChart > with data points - dense chart - default > should create e
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13332,6 +13392,7 @@ exports[`ComboChart > with data points - dense chart - forced hidden > should cr
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13475,6 +13536,7 @@ exports[`ComboChart > with data points - dense chart - forced visible > should c
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13604,6 +13666,7 @@ exports[`ComboChart > with data points - sparse chart - auto visibility > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13730,6 +13793,7 @@ exports[`ComboChart > with data points - sparse chart - default > should create 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13859,6 +13923,7 @@ exports[`ComboChart > with data points - sparse chart - forced hidden > should c
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13988,6 +14053,7 @@ exports[`ComboChart > with data points - sparse chart - forced visible > should 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14112,6 +14178,7 @@ exports[`ComboChart > with discard stacking when primary measures are not specif
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14236,6 +14303,7 @@ exports[`ComboChart > with discard stacking when primary measures are not specif
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14482,6 +14550,7 @@ exports[`ComboChart > with discard stacking when primary measures are on line ch
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14728,6 +14797,7 @@ exports[`ComboChart > with discard stacking when primary measures are on line ch
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14853,6 +14923,7 @@ exports[`ComboChart > with dual axis disabled > should create expected props for
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15039,6 +15110,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingarea-area > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15225,6 +15297,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingarea-column >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15411,6 +15484,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingarea-line > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15597,6 +15671,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingcolumn-area >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15783,6 +15858,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingcolumn-column
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15969,6 +16045,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingcolumn-line >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16155,6 +16232,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingline-area > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16341,6 +16419,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingline-column >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16527,6 +16606,7 @@ exports[`ComboChart > with dual axis multiple measures with slicingline-line > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16691,6 +16771,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingarea-area 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16855,6 +16936,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingarea-colum
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17019,6 +17101,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingarea-line 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17183,6 +17266,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingcolumn-are
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17347,6 +17431,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingcolumn-col
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17511,6 +17596,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingcolumn-lin
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17675,6 +17761,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingline-area 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17839,6 +17926,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingline-colum
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18003,6 +18091,7 @@ exports[`ComboChart > with dual axis multiple measures without slicingline-line 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18129,6 +18218,7 @@ exports[`ComboChart > with dual axis two measures with slicingarea-area > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18255,6 +18345,7 @@ exports[`ComboChart > with dual axis two measures with slicingarea-column > shou
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18381,6 +18472,7 @@ exports[`ComboChart > with dual axis two measures with slicingarea-line > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18507,6 +18599,7 @@ exports[`ComboChart > with dual axis two measures with slicingcolumn-area > shou
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18633,6 +18726,7 @@ exports[`ComboChart > with dual axis two measures with slicingcolumn-column > sh
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18759,6 +18853,7 @@ exports[`ComboChart > with dual axis two measures with slicingcolumn-line > shou
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18885,6 +18980,7 @@ exports[`ComboChart > with dual axis two measures with slicingline-area > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19011,6 +19107,7 @@ exports[`ComboChart > with dual axis two measures with slicingline-column > shou
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19137,6 +19234,7 @@ exports[`ComboChart > with dual axis two measures with slicingline-line > should
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19241,6 +19339,7 @@ exports[`ComboChart > with dual axis two measures without slicingarea-area > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19345,6 +19444,7 @@ exports[`ComboChart > with dual axis two measures without slicingarea-column > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19449,6 +19549,7 @@ exports[`ComboChart > with dual axis two measures without slicingarea-line > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19553,6 +19654,7 @@ exports[`ComboChart > with dual axis two measures without slicingcolumn-area > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19657,6 +19759,7 @@ exports[`ComboChart > with dual axis two measures without slicingcolumn-column >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19761,6 +19864,7 @@ exports[`ComboChart > with dual axis two measures without slicingcolumn-line > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19865,6 +19969,7 @@ exports[`ComboChart > with dual axis two measures without slicingline-area > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -19969,6 +20074,7 @@ exports[`ComboChart > with dual axis two measures without slicingline-column > s
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20073,6 +20179,7 @@ exports[`ComboChart > with dual axis two measures without slicingline-line > sho
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20200,6 +20307,7 @@ exports[`ComboChart > with legend position - auto legend > should create expecte
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20327,6 +20435,7 @@ exports[`ComboChart > with legend position - disabled > should create expected p
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20454,6 +20563,7 @@ exports[`ComboChart > with legend position - legend at bottom > should create ex
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20581,6 +20691,7 @@ exports[`ComboChart > with legend position - legend on left > should create expe
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20708,6 +20819,7 @@ exports[`ComboChart > with legend position - legend on right > should create exp
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20835,6 +20947,7 @@ exports[`ComboChart > with legend position - legend on top > should create expec
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -20997,6 +21110,7 @@ exports[`ComboChart > with multiple measures and no viewBy > should create expec
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21241,6 +21355,7 @@ exports[`ComboChart > with multiple primary and secondary measures with viewBy >
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21343,6 +21458,7 @@ exports[`ComboChart > with one primary and secondary measure no viewBy > should 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21467,6 +21583,7 @@ exports[`ComboChart > with one primary and secondary measure with viewBy > shoul
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21598,6 +21715,7 @@ exports[`ComboChart > with one primary and secondary measure with viewBy sorted 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21735,6 +21853,7 @@ exports[`ComboChart > with one primary and secondary measure with viewBy sorted 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21872,6 +21991,7 @@ exports[`ComboChart > with one primary and secondary measure with viewBy sorted 
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -21947,6 +22067,7 @@ exports[`ComboChart > with one primary measure > should create expected props fo
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22044,6 +22165,7 @@ exports[`ComboChart > with one primary measure with viewBy > should create expec
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22138,6 +22260,7 @@ exports[`ComboChart > with one secondary measure with viewBy > should create exp
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22323,6 +22446,7 @@ exports[`ComboChart > with stack primary measures to 100% with different chart t
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22508,6 +22632,7 @@ exports[`ComboChart > with stack primary measures to 100% with different chart t
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22694,6 +22819,7 @@ exports[`ComboChart > with stack primary measures when both column chart - norma
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -22880,6 +23006,7 @@ exports[`ComboChart > with stack primary measures when both column chart - stack
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -23065,6 +23192,7 @@ exports[`ComboChart > with stack primary measures with different chart type - ar
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -23250,6 +23378,7 @@ exports[`ComboChart > with stack primary measures with different chart type - co
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -23374,6 +23503,7 @@ exports[`ComboChart > with two measures with null values > should create expecte
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -23494,5 +23624,6 @@ exports[`ComboChart > with two secondary measure with viewBy > should create exp
   "exportTitle": "ComboChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
