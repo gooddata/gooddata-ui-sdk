@@ -770,6 +770,7 @@ export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
         },
         ...defaultFilters,
     },
+    supportedEmptyCanvasDragTypes: [ATTRIBUTE],
     ...defaultRootUiConfigProperties,
 };
 

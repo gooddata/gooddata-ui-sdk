@@ -133,6 +133,9 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
       "supported": false,
     },
     "recommendations": {},
+    "supportedEmptyCanvasDragTypes": [
+      "attribute",
+    ],
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -271,6 +274,9 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
       "supported": false,
     },
     "recommendations": {},
+    "supportedEmptyCanvasDragTypes": [
+      "attribute",
+    ],
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -400,6 +406,9 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
       "supported": false,
     },
     "recommendations": {},
+    "supportedEmptyCanvasDragTypes": [
+      "attribute",
+    ],
     "supportedOverTimeComparisonTypes": [],
   },
 }

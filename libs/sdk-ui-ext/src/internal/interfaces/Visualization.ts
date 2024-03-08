@@ -323,6 +323,7 @@ export interface IUiConfig {
     axis?: string;
     optionalStacking?: IOptionalStacking;
     supportedLocationIcon?: ISupportedLocationIcon;
+    supportedEmptyCanvasDragTypes?: string[];
 }
 
 export interface IVisualizationProperties<
