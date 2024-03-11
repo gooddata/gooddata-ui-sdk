@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2024-3-11
 
-Revision ID: d04de823451ddf85637e82819af488f55c1c56c7
+Revision ID: b7eee8e60f12e8b99cd5bcd35d015522813a8b38
 
 ================================================================================
 ================================================================================
@@ -7372,8 +7372,6 @@ Package Title: @ts-morph/common (0.12.3)
 Package Locator: npm+@ts-morph/common$0.12.3
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -9318,8 +9316,6 @@ Package Title: @webassemblyjs/leb128 (1.11.6)
 Package Locator: npm+@webassemblyjs/leb128$1.11.6
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -10072,8 +10068,6 @@ Package Title: ajv (6.12.6)
 Package Locator: npm+ajv$6.12.6
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -10140,8 +10134,6 @@ Package Title: ajv (8.12.0)
 Package Locator: npm+ajv$8.12.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -16393,8 +16385,6 @@ Package Title: fixed-data-table-2 (1.2.22)
 Package Locator: npm+fixed-data-table-2$1.2.22
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -16905,8 +16895,6 @@ Package Title: fs.realpath (1.0.0)
 Package Locator: npm+fs.realpath$1.0.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -17900,8 +17888,6 @@ Package Title: highcharts (9.3.0)
 Package Locator: npm+highcharts$9.3.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -21730,8 +21716,6 @@ Package Title: lodash.debounce (4.0.8)
 Package Locator: npm+lodash.debounce$4.0.8
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -22099,8 +22083,6 @@ Package Title: mapbox-gl (2.15.0)
 Package Locator: npm+mapbox-gl$2.15.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -24388,8 +24370,6 @@ Package Title: node-forge (1.3.1)
 Package Locator: npm+node-forge$1.3.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -25350,8 +25330,6 @@ Package Title: opener (1.5.2)
 Package Locator: npm+opener$1.5.2
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -25718,8 +25696,6 @@ Package Title: parse-json (5.2.0)
 Package Locator: npm+parse-json$5.2.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -26205,8 +26181,6 @@ Package Title: pbf (3.2.1)
 Package Locator: npm+pbf$3.2.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -26556,8 +26530,6 @@ Package Title: prettier (2.5.1)
 Package Locator: npm+prettier$2.5.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -26760,8 +26732,6 @@ Package Title: property-information (6.4.0)
 Package Locator: npm+property-information$6.4.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -27294,8 +27264,6 @@ Package Title: react-content-loader (6.2.1)
 Package Locator: npm+react-content-loader$6.2.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -27347,8 +27315,6 @@ Package Title: react-day-picker (8.9.1)
 Package Locator: npm+react-day-picker$8.9.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -27413,8 +27379,6 @@ Package Title: react-dnd (14.0.5)
 Package Locator: npm+react-dnd$14.0.5
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -27901,8 +27865,6 @@ Package Title: react-native-listener (1.1.0)
 Package Locator: npm+react-native-listener$1.1.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -28025,8 +27987,6 @@ Package Title: react-responsive (8.2.0)
 Package Locator: npm+react-responsive$8.2.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -29311,8 +29271,6 @@ Package Title: rollup (4.9.0)
 Package Locator: npm+rollup$4.9.0
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -30035,8 +29993,6 @@ Package Title: rxjs (7.8.1)
 Package Locator: npm+rxjs$7.8.1
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -30197,8 +30153,6 @@ Package Title: sass (1.69.5)
 Package Locator: npm+sass$1.69.5
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -32861,8 +32815,6 @@ Package Title: spark-md5 (3.0.2)
 Package Locator: npm+spark-md5$3.0.2
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -32940,8 +32892,6 @@ Package Title: stackback (0.0.2)
 Package Locator: npm+stackback$0.0.2
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -33886,8 +33836,6 @@ Package Title: through (2.3.8)
 Package Locator: npm+through$2.3.8
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -34579,8 +34527,6 @@ Package Title: type-fest (0.21.3)
 Package Locator: npm+type-fest$0.21.3
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -34646,8 +34592,6 @@ Package Title: typescript (5.3.3)
 Package Locator: npm+typescript$5.3.3
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -36024,8 +35968,6 @@ Package Title: uuid (8.3.2)
 Package Locator: npm+uuid$8.3.2
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -36198,8 +36140,6 @@ Package Title: vite (5.0.8)
 Package Locator: npm+vite$5.0.8
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -44063,8 +44003,6 @@ Package Title: vitest (1.0.4)
 Package Locator: npm+vitest$1.0.4
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
@@ -47124,8 +47062,6 @@ Package Title: vt-pbf (3.1.3)
 Package Locator: npm+vt-pbf$3.1.3
 --------------------------------------------------------------------------------
 
-* Declared Licenses *
-No licenses found
 
 
 * Other Licenses *
