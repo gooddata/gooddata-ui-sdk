@@ -10,7 +10,6 @@ React application or for some reason you cannot use [@gooddata/apptoolkit](../..
 
 ## Step 1. Install the necessary dependencies
 
-GoodData.UI can target multiple platforms. Therefore, it is essential to install packages for the right target platform.
 For GoodData Cloud and GoodData.CN, you need to install packages codenamed `tiger`:
 
 ```bash

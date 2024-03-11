@@ -9,8 +9,6 @@ no_list: true
 Starting from version 2.2.0, GoodData.CN includes a Web Components library that you can import into your application
 to embed dashboards or individual insights. The library is also hosted at GoodData Cloud.
 
-> Currently, we do not provide the WebComponents library for GoodData Platform.
-
 The Web Components library is a thin wrapper around the [InsightView](../../visualize_data/insightview/) and [Dashboard](../../../references/dashboard_component/) components. While keeping the embedding easy, it allows a high level of integration with the host application. 
 
 In the simplest form, the integration could look something like this:

@@ -44,7 +44,7 @@ To allow a plugin to be reused across dashboards, you can make each link between
 additional parameters. These parameters can then be used to customize the behavior of the plugin for
 a particular dashboard.
 
-The GoodData platform and GoodData.CN all treat parameters opaquely. Only soft-size limits of 2,048 bytes for
+GoodData treats parameters opaquely. Only soft-size limits of 2,048 bytes for
 the length of the parameter string are imposed. Otherwise, the parameters are fully under your control and responsibility.
 
 If the parameters are specified on the link between a dashboard and your plugin, the loader sends them as the
@@ -111,7 +111,7 @@ on your dashboard will be rendered.
       using custom components, use tags. You can assign arbitrary tags to your insight objects and then use this
       method to register a renderer for the insight widgets that have this tag.
 
-      To learn how to tag insights, see either the GoodData platform or GoodData.CN API documentation.
+      To learn how to tag insights, see the GoodData Cloud API documentation.
 
 * To **add additional elements on top of the insight widgets** that are rendered using the built-in renderers, the insight widget customization API provides
    a method to register a "decorator" called `withCustomDecorator()`.
@@ -148,22 +148,6 @@ on your dashboard will be rendered.
          }
      })
      ```
-
-### Customize rendering of KPIs
-
-Call the `kpiWidgets()` method on the customization API to get to the API through which you can customize
-how the [KPI widgets](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.idashboardkpicustomizer.html)
-on your dashboard will be rendered.
-
-The KPI widgets are a special type of widgets available only on the GoodData platform. Their purpose is to render the value of
-a single measure, possibly compared to the value of the measure in the previous period. The KPI widgets additionally
-allow dashboard consumers to register alerts for when the measure value changes.
-
-Similar to the insight widget customization API, you can register your own components to render the KPI widgets or
-to add extra elements on top of the widgets.
-
-The KPI customization API contains the `withCustomProvider()` and `withCustomDecorator()` methods that behave the same way
-the insight widget methods do.
 
 ### Use custom widgets
 
