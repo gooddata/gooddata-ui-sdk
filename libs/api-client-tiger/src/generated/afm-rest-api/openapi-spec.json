@@ -1996,6 +1996,10 @@
                             },
                             "format": {
                                 "$ref": "#/components/schemas/AttributeFormat"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE"]
                             }
                         }
                     }

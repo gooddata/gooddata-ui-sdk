@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IPagedResource } from "../common/paging.js";
 import { IExecutionFactory } from "./execution/index.js";
 import { IWorkspaceInsightsService } from "./insights/index.js";
@@ -16,6 +16,7 @@ import { IWorkspaceFactsService } from "./facts/index.js";
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -122,6 +123,12 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     attributeHierarchies(): IAttributeHierarchiesService;
+
+    /**
+     * Returns service that operates over export definitions
+     * @alpha
+     */
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
 }
 
 /**

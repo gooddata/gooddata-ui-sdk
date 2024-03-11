@@ -608,6 +608,12 @@ export interface AttributeHeaderOutAttributeHeader {
      * @memberof AttributeHeaderOutAttributeHeader
      */
     format?: AttributeFormat;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    valueType?: AttributeHeaderOutAttributeHeaderValueTypeEnum;
 }
 
 export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
@@ -630,6 +636,17 @@ export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
 
 export type AttributeHeaderOutAttributeHeaderGranularityEnum =
     typeof AttributeHeaderOutAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderOutAttributeHeaderGranularityEnum];
+export const AttributeHeaderOutAttributeHeaderValueTypeEnum = {
+    TEXT: "TEXT",
+    HYPERLINK: "HYPERLINK",
+    GEO: "GEO",
+    GEO_LONGITUDE: "GEO_LONGITUDE",
+    GEO_LATITUDE: "GEO_LATITUDE",
+    IMAGE: "IMAGE",
+} as const;
+
+export type AttributeHeaderOutAttributeHeaderValueTypeEnum =
+    typeof AttributeHeaderOutAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderOutAttributeHeaderValueTypeEnum];
 
 /**
  *
