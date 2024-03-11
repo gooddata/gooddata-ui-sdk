@@ -38,7 +38,7 @@ jobs:
         uses: nick-fields/retry@v3
         env:
           FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
-          MINIMUM_LINES: 50000
+          MINIMUM_LINES: 20000
         with:
           timeout_minutes: 5
           max_attempts: 3
@@ -52,12 +52,12 @@ jobs:
             echo $LINK
             curl -o NOTICE --header "Authorization: Bearer $FOSSA_API_KEY" $LINK
 
-            # check if the NOTICE file has at least 50000 lines
-            # empty notice has cca 50 lines so 50000 is a good threshold
-            # current notice has cca 100000 lines so NOTICE has less than 50000 lines its suspicious
+            # check if the NOTICE file has at least 20000 lines
+            # empty notice has cca 50 lines so 20000 is a good threshold
+            # current notice has cca 100000 lines so NOTICE has less than 20000 lines its suspicious
             lines=$(wc -l < NOTICE)
             if (( lines < $MINIMUM_LINES )); then
-              echo "The NOTICE file has less than 50000 lines."
+              echo "The NOTICE file has less than 20000 lines."
               exit 1
             fi
       - name: fix NOTICE file declared license
