@@ -16,7 +16,6 @@
         "styles",
         "LICENSE"
     ],
-    "dependencies": {},
     "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
     "devDependencies": {
         "@babel/cli": "^7.23.4",
@@ -110,7 +109,7 @@
         "speed-measure-webpack-plugin": "^1.5.0",
         "style-loader": "^3.3.1",
         "styled-jsx": "^5.1.0",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "typescript": "5.3.3",
         "webpack": "^5.58.0",

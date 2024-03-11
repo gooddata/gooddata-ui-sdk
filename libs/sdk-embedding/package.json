@@ -47,7 +47,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.19",
         "tslib": "^2.5.0",
-        "ts-invariant": "^0.7.3"
+        "ts-invariant": "^0.7.5"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
