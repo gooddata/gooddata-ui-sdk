@@ -69,7 +69,7 @@ jobs:
           # * Declared Licenses *
           # No licenses found
 
-          sed -i '/\* Declared Licenses \*/,+1d' NOTICE
+          #awk '/\* Declared Licenses \*/{getline nextLine;if(nextLine=="No licenses found")next}1' NOTICE > NOTICE.tmp && mv NOTICE.tmp NOTICE
 
       - name: Git commit and push
         run: |
