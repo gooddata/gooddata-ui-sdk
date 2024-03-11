@@ -63,13 +63,13 @@ jobs:
       - name: fix NOTICE file declared license
         run: |
           # fix NOTICE file declared license
-          cp NOTICE NOTICE_backup
+          # cp NOTICE NOTICE_backup
           # we need delete license definition of declared licenses are empty it looks like:
           #
           # * Declared Licenses *
           # No licenses found
 
-          awk '/\* Declared Licenses \*/{getline nextLine;if(nextLine=="No licenses found")next}1' NOTICE > NOTICE.tmp && mv NOTICE.tmp NOTICE
+          sed -i '/[*] Declared Licenses [*]/ {N; /No licenses found/d;}' NOTICE
 
       - name: Git commit and push
         run: |
