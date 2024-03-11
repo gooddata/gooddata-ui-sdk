@@ -60,9 +60,21 @@ jobs:
               echo "The NOTICE file has less than 50000 lines."
               exit 1
             fi
+      - name: fix NOTICE file declared license
+        run: |
+          # fix NOTICE file declared license
+          cp NOTICE NOTICE_backup
+          # we need delete license definition of declared licenses are empty it looks like:
+          #
+          # * Declared Licenses *
+          # No licenses found
+
+          sed -i '/\* Declared Licenses \*/,+1d' NOTICE
+
       - name: Git commit and push
         run: |
           # add changelogs
-          git add  NOTICE
+          git add NOTICE
+          git add NOTICE_backup
           git commit -a -m "chore: update attribution file" -m "" -m "TRIVIAL"
           git push origin HEAD
