@@ -69,12 +69,11 @@ jobs:
           # * Declared Licenses *
           # No licenses found
 
-          #awk '/\* Declared Licenses \*/{getline nextLine;if(nextLine=="No licenses found")next}1' NOTICE > NOTICE.tmp && mv NOTICE.tmp NOTICE
+          awk '/\* Declared Licenses \*/{getline nextLine;if(nextLine=="No licenses found")next}1' NOTICE > NOTICE.tmp && mv NOTICE.tmp NOTICE
 
       - name: Git commit and push
         run: |
           # add changelogs
           git add NOTICE
-          git add NOTICE_backup
           git commit -a -m "chore: update attribution file" -m "" -m "TRIVIAL"
           git push origin HEAD
