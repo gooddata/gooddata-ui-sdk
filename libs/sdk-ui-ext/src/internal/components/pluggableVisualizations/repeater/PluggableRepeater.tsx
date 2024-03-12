@@ -31,7 +31,7 @@ import {
     setRepeaterUiConfig,
 } from "../../../utils/uiConfigHelpers/repeaterUiConfigHelper.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { cloneBucketItem, getMainRowAttribute } from "../../../utils/bucketHelper.js";
+import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
 
 export class PluggableRepeater extends AbstractPluggableVisualization {
     private featureFlags?: ISettings;
@@ -62,7 +62,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
 
-        return newReferencePoint;
+        return sanitizeFilters(newReferencePoint);
     };
 
     public getExecution(
