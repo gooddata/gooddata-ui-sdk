@@ -7,14 +7,20 @@ const MAX_COLUMNS = 1000;
 
 export type GridApiProvider = () => GridApi | undefined;
 
+export type AdGridCallbacks = {
+    onError?: (error: any) => void;
+};
+
 export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
     private dataViewFacade: DataViewFacade;
+    private onError: AdGridCallbacks["onError"];
 
-    constructor(dataViewFacade: DataViewFacade) {
+    constructor(dataViewFacade: DataViewFacade, callbacks: AdGridCallbacks) {
         const [firstDimCount] = dataViewFacade.dataView.count;
         this.dataViewFacade = dataViewFacade;
         this.rowCount = firstDimCount;
+        this.onError = callbacks.onError;
     }
 
     private async loadExecutionWindow(startRow: number, endRow: number) {
@@ -36,6 +42,7 @@ export class AgGridDatasource implements IDatasource {
             .catch((error) => {
                 console.error("error", { error });
                 failCallback();
+                this.onError?.(error);
             });
     };
 }

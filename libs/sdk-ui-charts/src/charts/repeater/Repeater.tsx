@@ -10,6 +10,9 @@ import {
     NullableFiltersOrPlaceholders,
     withContexts,
     AttributesMeasuresOrPlaceholders,
+    ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    IntlWrapper,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
 import omit from "lodash/omit.js";
@@ -70,7 +73,15 @@ export const Repeater = (props: IRepeaterProps): JSX.Element => {
 };
 
 export function RenderRepeater(props: IRepeaterProps): JSX.Element {
-    return <CoreRepeater {...toCoreRepeaterProps(props)} />;
+    return (
+        <IntlWrapper locale={this.props.locale}>
+            <IntlTranslationsProvider>
+                {(translationProps: ITranslationsComponentProps) => {
+                    return <CoreRepeater intl={translationProps.intl} {...toCoreRepeaterProps(props)} />;
+                }}
+            </IntlTranslationsProvider>
+        </IntlWrapper>
+    );
 }
 
 //

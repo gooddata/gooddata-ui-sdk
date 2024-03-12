@@ -1,25 +1,39 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
+import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 import {
     LoadingComponent as SDKLoadingComponent,
     ErrorComponent as SDKErrorComponent,
     useCancelablePromise,
     DataViewFacade,
+    newErrorMapping,
+    IntlWrapper,
+    convertError,
+    ErrorCodes,
 } from "@gooddata/sdk-ui";
+import { ITheme } from "@gooddata/sdk-model";
+import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 
 /**
  * @internal
  */
-export const CoreRepeater: React.FC<ICoreChartProps> = (props) => {
+export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+    theme?: ITheme;
+}
+
+export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
     const {
         execution,
         ErrorComponent = SDKErrorComponent,
         LoadingComponent = SDKLoadingComponent,
         onLoadingChanged,
         pushData,
+        onError,
     } = props;
+
+    const intl = useIntl();
 
     const { result, error } = useCancelablePromise(
         {
@@ -39,19 +53,42 @@ export const CoreRepeater: React.FC<ICoreChartProps> = (props) => {
                 onLoadingChanged?.({ isLoading: false });
                 pushData?.({ dataView: dataView.dataView });
             },
-            onError: () => {
+            onError: (error) => {
                 onLoadingChanged?.({ isLoading: false });
+                onError?.(convertError(error));
             },
         },
         [execution.fingerprint()],
     );
 
     if (error) {
-        return <ErrorComponent message={error.message} />;
+        const convertedError = convertError(error);
+        const errorMessage = convertedError.getMessage();
+        const errorMap = newErrorMapping(intl);
+        const errorProps =
+            errorMap[
+                Object.prototype.hasOwnProperty.call(errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
+            ];
+
+        return <ErrorComponent code={errorMessage} {...errorProps} />;
     }
+
     if (!result) {
         return <LoadingComponent />;
     }
 
-    return <RepeaterChart dataView={result} />;
+    return <RepeaterChart dataView={result} onError={onError} />;
 };
+
+const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
+
+/**
+ * @internal
+ */
+export const CoreRepeater: React.FC<ICoreRepeterChartProps> = (props) => (
+    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+        <IntlWrapper locale={props.locale}>
+            <CoreRepeaterWithIntl {...props} />
+        </IntlWrapper>
+    </ThemeContextProvider>
+);

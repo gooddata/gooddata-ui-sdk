@@ -10,11 +10,15 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IRepeaterChartProps {
     dataView: DataViewFacade;
+    onError?: (error: any) => void;
 }
 
-export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView }) => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const dataSource = useMemo(() => new AgGridDatasource(dataView), [dataView.fingerprint()]);
+export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError }) => {
+    const dataSource = useMemo(
+        () => new AgGridDatasource(dataView, { onError }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dataView.fingerprint(), onError],
+    );
 
     const columnDefs = useMemo(() => {
         const attributeDescriptors = dataView.meta().attributeDescriptors();
