@@ -1407,17 +1407,13 @@ export interface IExistingDashboard extends IDashboardObjectIdentity {
 }
 
 // @alpha
-export interface IExportDefinition {
-    // (undocumented)
-    description: string;
-    // (undocumented)
-    ref: ObjRef;
+export interface IExportDefinition extends IMetadataObject, IAuditable {
     // (undocumented)
     requestPayload: IExportDefinitionRequestPayload;
     // (undocumented)
     tags: string[];
     // (undocumented)
-    title: string;
+    type: "exportDefinition";
 }
 
 // @alpha
@@ -3617,7 +3613,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

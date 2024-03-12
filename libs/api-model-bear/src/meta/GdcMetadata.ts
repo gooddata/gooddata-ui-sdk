@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty.js";
 import has from "lodash/has.js";
 import {
@@ -54,7 +54,8 @@ export type ObjectCategory =
     | "user"
     | "userGroup"
     | "dateHierarchyTemplate"
-    | "dateAttributeHierarchy";
+    | "dateAttributeHierarchy"
+    | "exportDefinition";
 
 /**
  * @public

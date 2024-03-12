@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { ObjRef } from "../index.js";
+import { IAuditable, IMetadataObject, ObjRef } from "../index.js";
 
 /**
  * Export definition request payload
@@ -18,10 +18,8 @@ export interface IExportDefinitionRequestPayload {
  * @alpha
  */
 
-export interface IExportDefinition {
-    ref: ObjRef;
-    title: string;
-    description: string;
+export interface IExportDefinition extends IMetadataObject, IAuditable {
+    type: "exportDefinition";
     tags: string[];
     requestPayload: IExportDefinitionRequestPayload;
 }
