@@ -49,30 +49,7 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
     },
   ],
   "filters": {
-    "items": [
-      {
-        "aggregation": null,
-        "attribute": "attr.owner.department",
-        "filters": [
-          {
-            "attribute": "attr.owner.department",
-            "displayFormRef": {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": false,
-            "selectedElements": [
-              {
-                "title": "string",
-                "uri": "string",
-              },
-            ],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a1",
-        "type": "attribute",
-      },
-    ],
+    "items": [],
     "localIdentifier": "filters",
   },
   "uiConfig": {
@@ -190,30 +167,7 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
     },
   ],
   "filters": {
-    "items": [
-      {
-        "aggregation": null,
-        "attribute": "attr.owner.department",
-        "filters": [
-          {
-            "attribute": "attr.owner.department",
-            "displayFormRef": {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": false,
-            "selectedElements": [
-              {
-                "title": "string",
-                "uri": "string",
-              },
-            ],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a1",
-        "type": "attribute",
-      },
-    ],
+    "items": [],
     "localIdentifier": "filters",
   },
   "uiConfig": {
