@@ -18,7 +18,6 @@
         "LICENSE"
     ],
     "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
-    "dependencies": {},
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
@@ -73,7 +72,7 @@
         "source-map-loader": "^4.0.0",
         "speed-measure-webpack-plugin": "^1.5.0",
         "style-loader": "^3.3.1",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "typescript": "5.3.3",
         "webpack": "^5.58.0",
