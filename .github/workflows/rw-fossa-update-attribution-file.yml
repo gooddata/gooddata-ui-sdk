@@ -1,6 +1,6 @@
 # (C) 2024 GoodData Corporation
 
-name: FOSSA ~ Update attribtion file
+name: rw ~ FOSSA ~ Update attribtion file
 on:
     workflow_call:
         inputs:
