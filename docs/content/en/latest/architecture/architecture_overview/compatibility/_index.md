@@ -2,417 +2,99 @@
 title: "Compatibility"
 linkTitle: "Compatibility"
 weight: 15
+aliases:
+    - "../../architecture/architecture_overview/supported_versions"
 ---
 
-{{% alert color="primary" title="Compatibility Article" %}}
-This article should **inform** the developers, whether their setup is **compatible** with using GD.UI and if so, what version.
-{{% /alert %}}
+This article contains information on whether your development setup is compatible with using GD.UI and if so, what version.
 
-## Compatible Technologies:
+## Supported JavaScript Technologies
 
-* React >=16.8.0
-* [Angular 9+](../../supported_frameworks/angular/)
-* TypeScript  >= 5.0.2
-* Node ^16.20.0 LTS
+We develop GoodData.UI with the following javascript libraries in mind:
 
+-   React >=16.8.0
+-   [Angular 9+](../../supported_frameworks/angular/)
+-   TypeScript >= 5.0.2
+-   Node ^16.20.0 LTS
 
-### Officially supported browsers
+## Supported Web Browsers
 
 GoodData is tested against and supports the following desktop browsers:
 
-* Microsoft Windows 10 and newer 
-* Google Chrome (latest stable version)
-* Firefox (latest stable version)
-* Microsoft Edge (latest stable version; Chromium-based only)
+-   Microsoft Windows 10 and newer
+-   Google Chrome (latest stable version)
+-   Firefox (latest stable version)
+-   Microsoft Edge (latest stable version; Chromium-based only)
 
 MacOS 10.12 and newer
-* Google Chrome (latest stable version)
-* Safari (latest stable version)
+
+-   Google Chrome (latest stable version)
+-   Safari (latest stable version)
 
 For best results, use the latest version of Google Chrome.
-
 
 {{% alert color="warning" title="Server-side rendering" %}}
 Server-side rendering is not supported.
 {{% /alert %}}
 
-### Mobile Web Browser
+### Mobile Web Browsers
 
 You can view dashboards through the following mobile browser:
 
 Android 5 and newer
-* Google Chrome (latest stable version)
 
-iOS 10 and newer 
-* Google Chrome (latest stable version)
-* Safari (latest stable version)
+-   Google Chrome (latest stable version)
+
+iOS 10 and newer
+
+-   Google Chrome (latest stable version)
+-   Safari (latest stable version)
 
 Dashboard viewing only. Other functions of GoodData are not currently supported. Some functions may work now but have not been thoroughly tested yet.
 
+## Supported Versions
 
-## Compatibility with GoodData Cloud
+Different versions of GoodData.UI go through the life cycle phases and they recieve a different level of support depending on what stage of their life cycle they're in.
 
-The first version of GoodData.UI compatible with GoodData Cloud is 8.10.0, previous versions are not compatible with GoodData Cloud.
+As a general recommendation, we encourage you to always use the latest available version of GoodData.UI to make the user experience with integrating GoodData.UI as smooth and secure as possible and to ensure that GoodData.UI always uses the latest features of GoodData.
 
-## Compatibility with GoodData.CN
+### Life cycle phases
 
-The following table shows compatibility between GoodData.UI and GoodData.CN
+Each version of GoodData.UI goes through the following phases:
 
-<table class="tg">  
-<thead>
-  <tr>
-    <th class="tg-0lax" colspan="2" rowspan="2" style="background-color:#fff;border-top-color:#fff;border-left-color:#fff"></th>
-    <th class="tg-0lax2" colspan="15">GoodData.UI</th>
-  </tr>
-  <tr style="background-color:#fff">
-    <th class="tg-kftd">9.4.0</th>
-    <th class="tg-kftd">9.3.0</th>
-    <th class="tg-kftd">9.2.0</th>
-    <th class="tg-kftd">9.1.0</th>
-    <th class="tg-kftd">9.0.1</th>
-    <th class="tg-kftd">8.12.0</th>
-    <th class="tg-kftd">8.11.0</th>
-    <th class="tg-kftd">8.10.0</th>
-    <th class="tg-kftd">8.9.0</th>
-    <th class="tg-kftd">8.8.0</th>
-    <th class="tg-kftd">8.7.0</th>
-    <th class="tg-kftd">8.6.0</th>
-    <th class="tg-kftd">8.5.0</th>
-    <th class="tg-kftd">8.4.0</th>
-    <th class="tg-kftd">8.3.1</th>
-    <th class="tg-kftd">8.3.0</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-cly1" rowspan="17" >GoodData.CN</td>
-    <td class="tg-kftd" style="background-color:#fff">3.1</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">3.0</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.5</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-   <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.4</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.3</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.2</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.1</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">2.0</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.7</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.6</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.5</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.4</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.3</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.2</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.1</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax"></td>
-  </tr>
-  <tr>
-    <td class="tg-kftd" style="background-color:#fff">1.0</td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-    <td class="tg-0lax">✓</td>
-  </tr>
-</tbody>
-</table>
+1. **General Availability** (GA)
+    * **When it starts:** When a major version is publicly released. To get notified about a new version, subscribe to the [Release Notes](https://support.gooddata.com/hc/en-us/sections/203564877).
+    * **What it means:** A version in GA is going through active development, receives all new features and bug fixes, which are applied on top of the last minor version.
 
+2. **End-of-Development** (EOD)
+    * **When it starts:** When a newer major version is publicly released.
+    * **What it means:** A version in EOD receives only security fixes (unless they can be resolved by a SemVer-compatible upgrade) and fixes for critical issues. Only production dependencies receive the security fixes. These fixes are applied on top of the last minor version. No new features are added.
 
-The versions of GoodData.UI older than 8.3.0 are not compatible with GoodData.CN.
+3. **End-of-Support** (EOS)
+    * **When it starts:** The date is defined by GoodData.
+    * **What it means:** A version in EOS receives neither new features nor bug fixes. No technical support is provided. Although the version is still available on NPM, we do not recommend that you use it.
 
+### GoodData Cloud & GoodData.CN
 
-## Status of GoodData.UI versions
+The GoodData.UI is versioned and usually released in tandem with GoodData Cloud.
+
+We strongly recommend you always work with the newest version of GoodData.UI, and newest GoodData.CN, if you are using this self-deployed version of GoodData.
 
 The following table provides the lifecycle phases of GoodData.UI versions:
 
-| Major Version | Status              | GA               | EOD               | EOS               | Last Minor Version |
-|:--------------|:--------------------|:-----------------|:------------------|:------------------|:-------------------|
-| 9             | Generally available | July 27, 2023    | _Not yet defined_ | _Not yet defined_ | 9.1                |
-| 8             | Generally available | October 8, 2020  | July 27, 2023     | _Not yet defined_ | 8.12               |
-| 7             | End-of-Support      | May 21, 2019     | October 8, 2020   | March 31, 2022    | 7.9                |
+| Major Version | Status              | GA              | EOD               | EOS               |
+| :------------ | :------------------ | :-------------- | :---------------- | :---------------- |
+| 10            | Generally available | April 18, 2023   | _Not yet defined_ | _Not yet defined_ |
+| 9             | End-of-Development | July 27, 2023   | April 18 + 6 months | _Not yet defined_ |
+| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | April 18 + 6 months |
+| 7             | End-of-Support      | May 21, 2019    | October 8, 2020   | March 31, 2022    |
 
-## Migration from v8 to v9
+### GoodData Platform
 
-Since there are not many changes at the API level between v8 and v9, we believe that read [what is new in version 9](../../whats_new/) should be sufficient to process the migration.
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher. From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
 
-
-## Supported Dashboard Plugin Versions
-Due to the continuous development of our platform and direct integration of plugins, we can only guarantee compatibility with plugins built with the latest 3 minor versions of GoodData.UI, and you should update plugins regularly.
-The currently supported version is >=8.11.0.
-
-Plugins created with v8 should transition to v9 by the end of this year, after which they'll lose support.
+| Major Version | Status              | GA              | EOD               | EOS               |
+| :------------ | :------------------ | :-------------- | :---------------- | :---------------- |
+| 9             | Generally available | July 27, 2023   | _Not yet defined_ | _Not yet defined_ |
+| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | April 18 + 6 months |
+| 7             | End-of-Support      | May 21, 2019    | October 8, 2020   | March 31, 2022    |

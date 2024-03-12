@@ -5,6 +5,8 @@ copyright: (C) 2007-2018 GoodData Corporation
 weight: 11
 ---
 
+<!-- Bear specific? -->
+
 An **execution** is a combination of attributes, measures, and filters that describes what data you want to calculate.
 
 > A measure contains numeric data (for example, revenue). Measures can be sliced by selected attributes (for example, city, date in years, or both) and filtered by attribute values or date constraints. For more information, see the [main concepts](./execution_model/).
@@ -14,11 +16,11 @@ An **execution** is a combination of attributes, measures, and filters that desc
 You can use an instance of the Analytical Backend to conveniently construct and perform the executions using a fluent API.
 
 ```javascript
-import bearFactory from "@gooddata/sdk-backend-bear";
+import tigerFactory from "@gooddata/sdk-backend-tiger";
 import { newPositiveAttributeFilter, newMeasureSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import * as Md from "./md/full";
 
-const backend = bearFactory();
+const backend = tigerFactory();
 
 // The execution will be done for single measure and on granularity of single attribute.
 const measuresAndAttributes = [Md.$AvgDailyTotalSales, Md.LocationState];

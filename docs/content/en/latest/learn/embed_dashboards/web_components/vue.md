@@ -70,32 +70,32 @@ For example, in `src/App.vue` file.
 
 ```html
 <template>
-  <gd-insight insight="my-insight-id" style="height:500px"></gd-insight>
+  <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
   <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
 </template>
 ```
 
-You can copy the *insight id* and *dashboard id* from the URL bar of your web browser,
-from the Analyze and Dashboards pages respectively. At this point you should see an insight and a dashboard rendering
+You can copy the *visualization id* and *dashboard id* from the URL bar of your web browser,
+from the Analyze and Dashboards pages respectively. At this point you should see an visualization and a dashboard rendering
 on the screen.
 
 We set the height of the `gd-insight` to a static value as it's expecting a flex layout and would collapse to a `0` height
 otherwise.
 
-## Define dashboardId and insightId dynamically
+## Define dashboardId and visualizationId dynamically
 
 You can use attribute binding to define the IDs dynamically from the Vue component code.
 
 ```diff
     <script setup>
-+     const insightId = 'my-insight-id';
++     const visualizationId = 'my-visualization-id';
 +     const dashboardId = 'my-dashboard-id'
     </script>
 
     <template>
--     <gd-insight insight="my-insight-id" style="height:500px"></gd-insight>
+-     <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
 -     <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
-+     <gd-insight :insight="insightId" style="height:500px"></gd-insight>
++     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
 +     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
     </template>
 ```
@@ -104,25 +104,25 @@ You can use attribute binding to define the IDs dynamically from the Vue compone
 
 Both `gd-insight` and `gd-dashboard` are dispatching custom events.
 
-### Insight event listener
+### Visualization event listener
 
 In case of `gd-insight` you can use the Vue event binding syntax.
 
 ```diff
     <script setup>
-      const insightId = 'my-insight-id';
+      const insightId = 'my-visualization-id';
       const dashboardId = 'my-dashboard-id';
 +     const onInsightLoaded = e => console.log(e.detail);
     </script>
 
     <template>
--     <gd-insight :insight="insightId" style="height:500px"></gd-insight>
-+     <gd-insight :insight="insightId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
+-     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
++     <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
       <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
     </template>
 ```
 
-[Read more about Insight events](../).
+[Read more about visualization events](../).
 
 ### Dashboard event listener
 
@@ -134,7 +134,7 @@ also need to remove the listeners on the component unmount.
     <script setup>
       import {onMounted, onUnmounted, ref} from "vue";
 
-      const insightId = 'my-insight-id';
+      const insightId = 'my-visualization-id';
       const dashboardId = 'my-dashboard-id';
       const onInsightLoaded = e => console.log(e.detail);
 +     const onDashboardLoaded = e => console.log(e.detail);
@@ -151,7 +151,7 @@ also need to remove the listeners on the component unmount.
     </script>
 
     <template>
-      <gd-insight :insight="insightId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
+      <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
 -     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
 +     <gd-dashboard :dashboard="dashboardId" ref="dashboard"></gd-dashboard>
     </template>
