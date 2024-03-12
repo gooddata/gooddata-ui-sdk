@@ -37,7 +37,7 @@ GoodData.UI excells at creating Visualizations and Embedding, but can also help 
 
 ## Web Components
 
-Web Components let you embed insights and dashboards easily, while allowing for a high level of integration with the host application. Customization is limited to assigning a title and changing the localization.
+Web Components let you embed visualizations and dashboards easily, while allowing for a high level of integration with the host application. Customization is limited to assigning a title and changing the localization.
 
 In the simplest form, the integration could look something like this:
 
@@ -49,9 +49,12 @@ In the simplest form, the integration could look something like this:
 <!-- ...and embed a dashboard! -->
 <gd-dashboard dashboard="<dashboard_id>"></gd-dashboard>
 
-<!-- ...or an individual insight! -->
-<gd-insight insight="<insight_id>"></gd-insight>
+<!-- ...or an individual visualizations! -->
+<gd-insight insight="<visualizations_id>"></gd-insight>
 ```
+
+{{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
+{{% /alert %}}
 
 The result may look like this:
 
@@ -67,9 +70,9 @@ Embed visualizations directly into your web application as live components, or b
 
 ### InsightView and DashboardView
 
-GoodData.UI features the `InsightView` and `DashboardView` components, enabling seamless embedding of insights and dashboards crafted and stored within GoodData simply by referencing their unique IDs.
+GoodData.UI features the `InsightView` and `DashboardView` components, enabling seamless embedding of visualizations and dashboards crafted and stored within GoodData simply by referencing their unique IDs.
 
-Any changes you make to the embedded insight or dashboard in your GoodData deployment will be automatically updated and reflected in your application:
+Any changes you make to the embedded visualization or dashboard in your GoodData deployment will be automatically updated and reflected in your application:
 
 ```javascript
 import React from "react";
@@ -95,9 +98,9 @@ See [InsightView](../learn/visualize_data/insightview/) and [Introduction to the
 
 ### Visualizations
 
-Not only can you reference pre-existing insights or dashboards, but you can also create and tailor an insight directly within your React code.
+Not only can you reference pre-existing visualizations or dashboards, but you can also create and tailor a visualization directly within your React code.
 
-For instance, by employing one of the supported insight components, such as a Treemap, you can exhibit the data of your choice. Like so:
+For instance, by employing one of the supported visualization components, such as a Treemap, you can exhibit the data of your choice. Like so:
 
 ```javascript
 import React from "react";
@@ -124,7 +127,7 @@ export const TreemapExample = () => {
 
 The result may look like this:
 
-![treemap insight](intro-treemap-visualization.png)
+![treemap visualization](intro-treemap-visualization.png)
 
 See [Start with Visual Components](../references/visual_components) to get started
 
