@@ -45,6 +45,7 @@ import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
+import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
@@ -121,7 +122,7 @@ export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
 
 // @internal (undocumented)
-export const CoreRepeater: React_2.FC<ICoreChartProps>;
+export const CoreRepeater: React_2.FC<ICoreRepeterChartProps>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
@@ -405,6 +406,12 @@ export interface ICoreChartProps extends ICommonChartProps {
 export interface ICoreHeadlineExtendedProps {
     // (undocumented)
     headlineTransformation: React_2.ComponentType<IHeadlineTransformationProps>;
+}
+
+// @internal (undocumented)
+export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @internal (undocumented)

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "9.10.0-alpha.4",
+    "version": "9.10.0-alpha.5",
     "author": "GoodData",
     "description": "Mock GoodData Backend SPI implementation",
     "repository": {
@@ -42,7 +42,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.19",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2"
     },

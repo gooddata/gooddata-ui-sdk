@@ -49,7 +49,6 @@
         "backstop-approve": "bash backstop/run-backstop.sh approve",
         "backstop-reference": "npm run backstop-prepare && bash backstop/run-backstop.sh reference"
     },
-    "dependencies": {},
     "peerDependencies": {
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
@@ -147,7 +146,7 @@
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "ts-loader": "^8.3.0",
         "ts-node": "^10.4.0",
         "tslib": "^2.5.0",

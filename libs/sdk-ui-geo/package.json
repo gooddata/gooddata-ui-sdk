@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "9.10.0-alpha.4",
+    "version": "9.10.0-alpha.5",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -64,7 +64,7 @@
         "mapbox-gl": "^2.6.1",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2"
     },

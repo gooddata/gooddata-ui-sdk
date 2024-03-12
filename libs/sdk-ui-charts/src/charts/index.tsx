@@ -72,6 +72,6 @@ export {
     constructRepeaterDimensions,
 } from "./repeater/internal/repeaterExecution.js";
 export { Repeater, IRepeaterProps, IRepeaterBucketProps } from "./repeater/Repeater.js";
-export { CoreRepeater } from "./repeater/CoreRepeater.js";
+export { CoreRepeater, ICoreRepeterChartProps } from "./repeater/CoreRepeater.js";
 
 export { withJsxExport } from "./withJsxExport.js";

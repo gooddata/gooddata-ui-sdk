@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "9.10.0-alpha.4",
+    "version": "9.10.0-alpha.5",
     "author": "GoodData",
     "description": "GoodData Backend SPI abstraction interfaces",
     "repository": {
@@ -40,7 +40,7 @@
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.19",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0"
     },
     "devDependencies": {
