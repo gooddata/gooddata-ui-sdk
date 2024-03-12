@@ -7,6 +7,7 @@ copyright: (C) 2007-2018 GoodData Corporation
 Next.js is not supported out-of-the-box by GoodData.UI.
 
 However, rendering the GoodData visualizations in your Next.js project is not as daunting as it seems. This article serves as a quick demo of how to integrate GoodData visualizations into your project.
+
 ### Step 1: Install all necessary dependencies
 
 The following packages deal with GoodData backend:

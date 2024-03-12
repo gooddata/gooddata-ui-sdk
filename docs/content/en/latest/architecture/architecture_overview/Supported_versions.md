@@ -8,7 +8,7 @@ weight: 14
 
 This article explains how different versions of GoodData.UI go through the life cycle phases and what level of support you can expect when using a specific version.
 
-As a general recommendation, we encourage you to always use the latest available version of GoodData.UI to make the user experience with integrating GoodData.UI as smooth and secure as possible and to ensure that GoodData.UI always uses the latest features of the GoodData platform.
+As a general recommendation, we encourage you to always use the latest available version of GoodData.UI to make the user experience with integrating GoodData.UI as smooth and secure as possible and to ensure that GoodData.UI always uses the latest features of GoodData.
 
 ## Life cycle phases
 
