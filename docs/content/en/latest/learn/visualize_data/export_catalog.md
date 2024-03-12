@@ -5,7 +5,7 @@ copyright: (C) 2007-2018 GoodData Corporation
 id: export_catalog
 ---
 
-GoodData.UI visual components render data stored in your GoodData platform, GoodData Cloud or GoodData.CN workspaces.
+GoodData.UI visual components render data stored in your GoodData Cloud or GoodData.CN workspaces.
 Your application specifies what data to render by referencing the Logical Data Model (LDM) objects: attributes,
 display forms (also known as labels), facts, and measures.
 
@@ -42,7 +42,6 @@ To install the stable version, run one of the following commands **depending on 
 ```bash
 yarn add @gooddata/catalog-export --dev
 ```
-
 **npm**
 
 ```bash
@@ -57,32 +56,36 @@ This is how it works:
 
 1.  The program searches the `package.json` file for `gooddata` entry. If found, the program reads input parameters from this file.
 
-        TypeScript or JavaScript output files are generated based on the filename extension specified in the output parameter.
 
-        The configuration can contain some, or all, of the parameters that you would typically provide on the command line:
+    TypeScript or JavaScript output files are generated based on the filename extension specified in the output parameter.
 
-        ```json
-        {
-            ...
-            "gooddata": {
-                "hostname": "https://your.gooddata.hostname.com",
-                "workspaceId": "your_gooddata_workspaceid",
-                "catalogOutput": "desired_file_name.ts|js",
-            },
-            ...
-        }
-        ```
+    The configuration can contain some, or all, of the parameters that you would typically provide on the command line:
 
-    {{% alert title="Hostname protocol" %}}
+    ```json
+    {
+        ...
+        "gooddata": {
+            "hostname": "https://your.gooddata.hostname.com",
+            "workspaceId": "your_gooddata_workspaceid",
+            "catalogOutput": "desired_file_name.ts|js",
+            "backend": "tiger"
+        },
+        ...
+    }
+    ```
+{{% alert title="Hostname protocol" %}}
 
 The hostname has to include the protocol (`http://` / `https://`), otherwise you will get a fairly generic `connection refused` error, when trying to connect.
 
 {{% /alert %}}
 
-2.  It is not possible to specify credentials (`token` parameter) in `package.json` file, as it is typically saved in VCS (e.g. Git). Instead, credentials can be specified through environmental variables. We also load `.env` file if it's present in the same folder.
-
+2.  It is not possible to specify credentials (`token`, `username` and `password` parameters) in `package.json` file, as it is typically saved in VCS (e.g. Git). Instead, credentials can be specified through environmental variables. We also load `.env` file if it's present in the same folder.
+    
     ```ini
     TIGER_API_TOKEN=<your_token_for_the_tiger_server>
+    # or
+    GDC_USERNAME=<your_username>
+    GDC_PASSWORD=<your_password>
     ```
 
     **NOTE:** Make sure to never commit `.env` file to your version control system.
@@ -97,14 +100,6 @@ The hostname has to include the protocol (`http://` / `https://`), otherwise you
 
     **IMPORTANT!** The program does not accept passwords via the command line. You can either put the password into `.env` or enter it interactively.
 
-The `@gooddata/catalog-export` tool can work on top of the GoodData Cloud / GoodData.CN.
-
-{{% alert title="Hostname protocol" %}}
-
-The hostname has to include the protocol (`http://` / `https://`), otherwise you will get a fairly generic `connection refused` error, when trying to connect.
-
-{{% /alert %}}
-
 The tool uses Bearer token authentication when communicating with your GoodData Cloud instance or your GoodData.CN installation. For more information about how to obtain API tokens, see the [GoodData Cloud and GoodData.CN authentication page](../../integrate_and_authenticate/cn_and_cloud_authentication/).
 
 ### Subsequent catalog exports
@@ -113,16 +108,16 @@ The catalog export will overwrite the generated files. If you need to modify the
 
 ### Recommendations
 
--   Include `@gooddata/catalog-export` as a devDependency of your application and define an NPM script `refresh-md` to run the program.
--   Do not import the constants directly. Instead, wrap the constants into a namespace as follows:
+-  Include `@gooddata/catalog-export` as a devDependency of your application and define an NPM script `refresh-md` to run the program.
+-  Do not import the constants directly. Instead, wrap the constants into a namespace as follows:
 
     ```javascript
     import * as Md from "./md/generatedFile";
     export { Md };
     ```
 
--   Never modify the generated files.
--   If you need to modify the generated constants or add new LDM objects, do so through a layer of indirection: in a different file adjacent to the generated code. For examples, look at our reference-workspace LDM and package.
+-  Never modify the generated files.
+-  If you need to modify the generated constants or add new LDM objects, do so through a layer of indirection: in a different file adjacent to the generated code. For examples, look at our reference-workspace LDM and package.
 
 ### Limitations
 
@@ -281,24 +276,26 @@ Date dataset attributes that do not have multiple display forms are generated as
 ```javascript
 /** Available Date Data Sets */
 export const DateDatasets = {
+  /**
+   * Date Data Set Title: Date (Created)
+   * Date Data Set ID: created.dataset.dt
+   */
+  Created: {
+    ref: idRef("created.dataset.dt", "dataSet"),
+    identifier: "created.dataset.dt"
     /**
-     * Date Data Set Title: Date (Created)
-     * Date Data Set ID: created.dataset.dt
-     */
-    Created: {
-        ref: idRef("created.dataset.dt", "dataSet"),
-        identifier: "created.dataset.dt",
-        /**
-         * Date Attribute: Year (Created)
-         * Date Attribute ID: created.year
-         */ Year: {
-            ref: idRef("created.year", "attribute"),
-            identifier: "created.year",
-            /**
-             * Display Form Title: Year (Created)
-             * Display Form ID: created.aag81lMifn6q
-             */ Default: newAttribute("created.aag81lMifn6q"),
-        },
-    },
+     * Date Attribute: Year (Created)
+     * Date Attribute ID: created.year
+     */,
+    Year: {
+      ref: idRef("created.year", "attribute"),
+      identifier: "created.year"
+      /**
+       * Display Form Title: Year (Created)
+       * Display Form ID: created.aag81lMifn6q
+       */,
+      Default: newAttribute("created.aag81lMifn6q"),
+    }
+  }
 };
 ```
