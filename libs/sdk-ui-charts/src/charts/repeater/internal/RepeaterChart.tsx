@@ -3,10 +3,11 @@
 import React, { useMemo } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
-import { BucketNames, DataViewFacade, LoadingComponent } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import { attributeLocalId, bucketsFind, isMeasure, measureLocalId } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useIntl } from "react-intl";
 
 interface IRepeaterChartProps {
     dataView: DataViewFacade;
@@ -14,6 +15,7 @@ interface IRepeaterChartProps {
 }
 
 export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError }) => {
+    const intl = useIntl();
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,8 +42,9 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                         const theme = useTheme();
                         const color =
                             theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
-                        const { value } = props;
-                        if (!value) {
+                        const { value, node } = props;
+                        const loadingDone = node.id !== undefined;
+                        if (!loadingDone) {
                             return (
                                 <LoadingComponent
                                     color={color}
@@ -52,7 +55,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                                 />
                             );
                         }
-                        return <div>{JSON.stringify(value)}</div>;
+                        return <div>{JSON.stringify(value) || "–"}</div>;
                     },
                     valueGetter: (params: any) => {
                         return params.data?.[localId];
@@ -72,8 +75,9 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                         const theme = useTheme();
                         const color =
                             theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
-                        const { value } = props;
-                        if (!value) {
+                        const { value, node } = props;
+                        const loadingDone = node.id !== undefined;
+                        if (!loadingDone) {
                             return (
                                 <LoadingComponent
                                     color={color}
@@ -84,7 +88,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                                 />
                             );
                         }
-                        return <div>{value}</div>;
+                        return <div>{value || emptyHeaderTitleFromIntl(intl)}</div>;
                     },
                     valueGetter: (params: any) => {
                         return params.data?.[localId]?.name;
