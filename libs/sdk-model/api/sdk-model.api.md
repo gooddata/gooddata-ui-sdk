@@ -2542,6 +2542,7 @@ export interface ISettings {
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
     enableKDWidgetCustomHeight?: boolean;

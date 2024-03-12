@@ -601,3 +601,15 @@ export const selectEnableAttributeFilterValuesValidation: DashboardSelector<bool
         return state.settings?.enableAttributeFilterValuesValidation ?? true;
     },
 );
+
+/**
+ * Returns whether KD attribute filter by dates validation/filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDAttributeFilterDatesValidation ?? false;
+    },
+);
