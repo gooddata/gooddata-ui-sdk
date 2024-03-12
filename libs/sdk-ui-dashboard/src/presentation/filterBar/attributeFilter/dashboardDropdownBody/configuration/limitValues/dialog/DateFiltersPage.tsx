@@ -4,16 +4,18 @@ import React, { useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { ICatalogDateDataset } from "@gooddata/sdk-model";
-
-import { messages } from "../../../../../../../locales.js";
-import { ValuesLimitingItem } from "../../../../types.js";
-
-import { PopupHeader } from "./PopupHeader.js";
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
+import { messages } from "../../../../../../../locales.js";
+import { IDashboardDependentDateFilter } from "../../../../../../../model/index.js";
+import { ValuesLimitingItem } from "../../../../types.js";
+
+import { PopupHeader } from "./PopupHeader.js";
+
 export interface IDateFiltersPageProps {
     availableDatasets: ICatalogDateDataset[];
+    dependentDateFilters: IDashboardDependentDateFilter[];
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;
     onClose: () => void;
@@ -53,6 +55,8 @@ export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
+
+    // TODO: LX-157 extend with different variables of common date filter by dataset
 
     return (
         <>

@@ -1,5 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import { useState, useEffect } from "react";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IMultiSelectAttributeFilterHandler,
     isLimitingAttributeFiltersEmpty,
@@ -50,6 +51,7 @@ export function useAttributeFilterControllerData(
     const searchString = handlerState.elements.options.search;
     const limit = handlerState.elements.options.limit;
     const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
+    const limitingDateFilters = handlerState.elements.options.limitingDateFilters;
     const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
 
     const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
@@ -66,6 +68,11 @@ export function useAttributeFilterControllerData(
 
     const isFilteredByParentFilters =
         shouldIncludeLimitingFilters && initialElementsPageStatus === "success" && !isParentFiltersEmpty;
+
+    const isFilteredByDependentDateFilters =
+        shouldIncludeLimitingFilters &&
+        initialElementsPageStatus === "success" &&
+        !isEmpty(limitingDateFilters);
 
     const isFiltering = useIsFiltering(handler);
 
@@ -113,6 +120,8 @@ export function useAttributeFilterControllerData(
 
         isFilteredByParentFilters,
         parentFilterAttributes,
+
+        isFilteredByDependentDateFilters,
 
         displayForms,
         currentDisplayFormRef,

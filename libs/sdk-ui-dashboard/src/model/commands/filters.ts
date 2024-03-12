@@ -17,6 +17,7 @@ import {
     IDashboardAttributeFilterParent,
     DashboardAttributeFilterSelectionMode,
     DashboardAttributeFilterConfigMode,
+    IDashboardAttributeFilterByDate,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { IDashboardFilter } from "../../types.js";
@@ -596,6 +597,54 @@ export function resetAttributeFilterSelection(
 //
 //
 //
+
+/**
+ * Payload of the {@link SetAttributeFilterDependentDateFilters} command.
+ * @beta
+ */
+export interface SetAttributeFilterDependentDateFiltersPayload {
+    readonly filterLocalId: string;
+    readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
+}
+
+/**
+ * @beta
+ */
+export interface SetAttributeFilterDependentDateFilters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS";
+    readonly payload: SetAttributeFilterDependentDateFiltersPayload;
+}
+
+/**
+ * Creates the SetAttributeFilterDependentDateFilters command. Dispatching this command will result in setting a
+ * relationship between one dashboard attribute filters and one or more date filters.
+ *
+ * When an attribute filter has a dependent date filter set up, the attribute elements that will be available in the attribute
+ * filter will be influenced by the selection in the date filter. The attribute filter will show only those elements
+ * for which a link exists to the selected elements in the dependent date filter.
+ *
+ *
+ * @param filterLocalId - local id of filter that will be a child in the relationship
+ * @param dateParentFilters - definition of the dependent date filter this contains local id of the date filter
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function setAttributeFilterDependentDateFilters(
+    filterLocalId: string,
+    dependentDateFilters: IDashboardAttributeFilterByDate[],
+    correlationId?: string,
+): SetAttributeFilterDependentDateFilters {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS",
+        correlationId,
+        payload: {
+            filterLocalId,
+            dependentDateFilters: dependentDateFilters,
+        },
+    };
+}
 
 /**
  * Payload of the {@link SetAttributeFilterParents} command.

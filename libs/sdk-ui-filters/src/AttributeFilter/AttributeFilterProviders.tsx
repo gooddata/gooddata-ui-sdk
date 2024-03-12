@@ -22,6 +22,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         filter,
         connectToPlaceholder,
         parentFilters,
+        dependentDateFilters,
         parentFilterOverAttribute,
         validateElementsBy,
         hiddenElements,
@@ -87,6 +88,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     connectToPlaceholder={connectToPlaceholder}
                     resetOnParentFilterChange={resetOnParentFilterChange}
                     parentFilters={parentFilters}
+                    dependentDateFilters={dependentDateFilters}
                     parentFilterOverAttribute={parentFilterOverAttribute}
                     validateElementsBy={validateElementsBy}
                     onApply={onApply}

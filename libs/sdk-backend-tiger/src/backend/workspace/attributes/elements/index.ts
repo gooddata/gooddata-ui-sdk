@@ -5,6 +5,7 @@ import {
     ElementsRequestSortOrderEnum,
     ElementsResponseGranularityEnum,
     DependsOn,
+    DependsOnDateFilter,
 } from "@gooddata/api-client-tiger";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -33,12 +34,18 @@ import {
     filterObjRef,
     objRefToString,
     filterIsEmpty,
+    IAbsoluteDateFilter,
+    isRelativeDateFilter,
+    DateAttributeGranularity,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
 
 import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
-import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
+import {
+    toSdkGranularity,
+    toTigerGranularity,
+} from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
@@ -69,6 +76,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private signal: AbortSignal | null = null;
     private options: IElementsQueryOptions | undefined;
     private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
+    private dateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[] | undefined;
     private validateBy: ObjRef[] | undefined;
 
     constructor(
@@ -101,8 +109,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return this;
     }
 
-    public withDateFilters(): IElementsQuery {
-        throw new NotSupported("withDateFilters is not supported in sdk-backend-tiger yet");
+    public withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
+        this.dateFilters = filters;
+        return this;
     }
 
     public withMeasures(): IElementsQuery {
@@ -152,9 +161,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     private getDependsOnSpec(): Partial<ElementsRequest> {
-        const { attributeFilters } = this;
+        const { attributeFilters, dateFilters } = this;
+
+        let result: Array<DependsOn | DependsOnDateFilter> = [];
         if (attributeFilters) {
-            const dependsOn: DependsOn[] = attributeFilters
+            const dependsOn = attributeFilters
                 // Do not include empty parent filters
                 .filter((filter) => !filterIsEmpty(filter.attributeFilter))
                 .map((filter) => {
@@ -171,10 +182,58 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     };
                 });
 
-            return !isEmpty(dependsOn) ? { dependsOn } : {};
+            result = [...result, ...dependsOn];
         }
 
-        return {};
+        if (dateFilters) {
+            const dependsOn: DependsOnDateFilter[] = dateFilters.map((filter) => {
+                if (isRelativeDateFilter(filter)) {
+                    const localIdentifier = filter.relativeDateFilter.dataSet;
+
+                    invariant(!isUriRef(localIdentifier));
+
+                    return {
+                        dateFilter: {
+                            relativeDateFilter: {
+                                dataset: {
+                                    identifier: {
+                                        id: localIdentifier.identifier,
+                                        type: "dataset",
+                                    },
+                                },
+                                granularity: toTigerGranularity(
+                                    filter.relativeDateFilter.granularity as DateAttributeGranularity,
+                                ),
+                                from: filter.relativeDateFilter.from,
+                                to: filter.relativeDateFilter.to,
+                            },
+                        },
+                    };
+                } else {
+                    const localIdentifier = filter.absoluteDateFilter.dataSet;
+
+                    invariant(!isUriRef(localIdentifier));
+
+                    return {
+                        dateFilter: {
+                            absoluteDateFilter: {
+                                dataset: {
+                                    identifier: {
+                                        id: localIdentifier.identifier,
+                                        type: "dataset",
+                                    },
+                                },
+                                from: filter.absoluteDateFilter.from,
+                                to: filter.absoluteDateFilter.to,
+                            },
+                        },
+                    };
+                }
+            });
+
+            result = [...result, ...dependsOn];
+        }
+        return result.length > 0 ? { dependsOn: result } : {};
     }
 
     private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {

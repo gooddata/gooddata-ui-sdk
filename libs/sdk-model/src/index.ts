@@ -456,6 +456,7 @@ export {
     DashboardAttributeFilterSelectionMode,
     IDashboardAttributeFilterParent,
     IDashboardAttributeFilterReference,
+    IDashboardAttributeFilterByDate,
     IDashboardDateFilter,
     IDashboardDateFilterReference,
     IDashboardFilterReference,

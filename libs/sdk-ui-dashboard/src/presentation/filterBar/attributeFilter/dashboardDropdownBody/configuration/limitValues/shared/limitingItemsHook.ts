@@ -136,9 +136,17 @@ export const useLimitingItems = (
     validParentFilters: ObjRef[],
     validateElementsBy: ObjRef[],
     metricsAndFacts: IMetricsAndFacts,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+    availableDatasets: ICatalogDateDataset[],
+    isEnabledKDAttributeFilterDatesValidation: boolean,
+    isSelected: boolean,
+    intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     return useMemo(() => {
         const selectedParentFilterItems: IValuesLimitingItemWithTitle[] = mapParentFilters(
@@ -153,7 +161,22 @@ export const useLimitingItems = (
                 title: findTitleForCatalogItem(item, metricsAndFacts, attributes),
                 item,
             })) ?? [];
-        return [...selectedParentFilterItems, ...validationItems].sort(sortByTypeAndTitle);
+
+        let dependentDateFilterItems: IValuesLimitingItemWithTitle[] = [];
+        if (isEnabledKDAttributeFilterDatesValidation) {
+            dependentDateFilterItems = mapDependentDateFilters(
+                dateDataSetsMap,
+                dependentDateFilters,
+                availableDatasets,
+                filterConfigByDimension,
+                isSelected,
+                intl,
+                filterConfig,
+            );
+        }
+        return [...selectedParentFilterItems, ...validationItems, ...dependentDateFilterItems].sort(
+            sortByTypeAndTitle,
+        );
     }, [parentFilters, validParentFilters, validateElementsBy, attributes, labels, metricsAndFacts]);
 };
 
@@ -280,38 +303,6 @@ const mapDependentDateFilters = (
                 isDisabled,
             };
         });
-
-// Specific date filters
-export const useDateFilterItemsWithDimensions = (
-    dependentDateFilters: IDashboardDependentDateFilter[],
-    availableDatasets: ICatalogDateDataset[],
-    isSelected: boolean,
-    intl: IntlShape,
-): IValuesLimitingItemWithTitle[] => {
-    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
-    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
-    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
-
-    return useMemo(() => {
-        return mapDependentDateFilters(
-            dateDataSetsMap,
-            dependentDateFilters,
-            availableDatasets,
-            filterConfigByDimension,
-            isSelected,
-            intl,
-            filterConfig,
-        );
-    }, [
-        dateDataSetsMap,
-        dependentDateFilters,
-        availableDatasets,
-        filterConfigByDimension,
-        isSelected,
-        filterConfig,
-        intl,
-    ]);
-};
 
 const getDatasetTitle = (
     dateDataSet: ObjRef | undefined,

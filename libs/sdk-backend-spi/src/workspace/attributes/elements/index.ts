@@ -6,6 +6,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     IAttributeElement,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging.js";
 import { ICancelable } from "../../../cancelation/index.js";
@@ -294,7 +295,7 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
      */
 
     // will add relativeDateFilters
-    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
+    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
 }
 
 /**
