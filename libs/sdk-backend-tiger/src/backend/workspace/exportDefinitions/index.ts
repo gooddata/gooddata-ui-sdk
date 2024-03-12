@@ -1,7 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
-    JsonApiVisualizationObjectInTypeEnum,
     MetadataUtilities,
     ValidateRelationsHeader,
     jsonApiHeaders,
@@ -14,29 +13,19 @@ import {
     IWorkspaceExportDefinitionsService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import {
-    IExportDefinition,
-    IInsight,
-    IInsightDefinition,
-    ObjRef,
-    insightId,
-    insightSummary,
-    insightTags,
-    insightTitle,
-    objRefToString,
-} from "@gooddata/sdk-model";
-import { insightFromInsightDefinition } from "../../../convertors/fromBackend/InsightConverter.js";
+import { IExportDefinition, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
-import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
-import { insightListComparator } from "./comparator.js";
+import {
+    exportDefinitionOutDocumentToExportDefinition,
+    exportDefinitionOutToExportDefinition,
+    exportDefinitionToExportDefinitionInDocument,
+    exportDefinitionOutDocumentToExportDefitionOutWithLinks,
+} from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
-import { exportDefinitionOutToExportDefinition } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -70,16 +59,20 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 });
         });
 
+        // todo verify, implement, or delete
         // Remove when API starts to support sort=modifiedBy,createdBy,insight.title
         // (first verify that modifiedBy,createdBy behave as the code below, i.e., use createdBy if modifiedBy is
         // not defined as it is missing for the insights that were just created and never updated, also title
         // should be compared in case-insensitive manner)
+        /*
         const sanitizedOrder =
             requestParameters.sort === undefined && allExportDefinitions.length > 0
                 ? [...allExportDefinitions].sort(insightListComparator)
                 : allExportDefinitions;
 
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
+        */
+        return new InMemoryPaging(allExportDefinitions, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getExportDefinitionsQuery = (): IExportDefinitionsQuery => {
@@ -126,82 +119,58 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             throw new UnexpectedError(`Export definition for ${objRefToString(ref)} not found!`);
         }
 
-        const { included, ...exportDefinitionOut } = response.data;
+        const exportDefinition = exportDefinitionOutDocumentToExportDefitionOutWithLinks(response.data);
 
-        return exportDefinitionOutToExportDefinition(exportDefinitionOut, included);
+        return exportDefinitionOutToExportDefinition(exportDefinition, response.data.included);
     };
 
-    // todo
-    public createExportDefinition = async (insight: IInsightDefinition): Promise<IExportDefinition> => {
+    public createExportDefinition = async (
+        exportDefinition: IExportDefinition,
+    ): Promise<IExportDefinition> => {
         const createResponse = await this.authCall((client) => {
             return client.entities.createEntityExportDefinitions(
                 {
                     workspaceId: this.workspace,
-                    jsonApiVisualizationObjectPostOptionalIdDocument: {
-                        data: {
-                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
-                            attributes: {
-                                description: insightSummary(insight),
-                                content: convertInsight(insight),
-                                title: insightTitle(insight),
-                                tags: insightTags(insight),
-                            },
-                        },
-                    },
+                    jsonApiExportDefinitionInDocument:
+                        exportDefinitionToExportDefinitionInDocument(exportDefinition),
+                    include: ["ALL"],
                 },
                 {
                     headers: jsonApiHeaders,
                 },
             );
         });
-        const insightData = createResponse.data;
-        return insightFromInsightDefinition(
-            insight,
-            insightData.data.id,
-            insightData.links!.self,
-            insightData.data.attributes?.tags,
-            isInheritedObject(insightData.data),
-            insightData.data.attributes?.createdAt,
-            insightData.data.attributes?.modifiedAt,
-            convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
-            convertUserIdentifier(insightData.data.relationships?.modifiedBy, insightData.included),
-        );
+
+        const exportDefinitionData = createResponse.data;
+
+        return exportDefinitionOutDocumentToExportDefinition(exportDefinitionData);
     };
 
-    // todo
-    public updateExportDefinition = async (insight: IInsight): Promise<IExportDefinition> => {
+    public updateExportDefinition = async (
+        exportDefinition: IExportDefinition,
+    ): Promise<IExportDefinition> => {
         await this.authCall((client) => {
-            return client.entities.updateEntityVisualizationObjects(
+            return client.entities.updateEntityExportDefinitions(
                 {
-                    objectId: insightId(insight),
+                    objectId: exportDefinition.id,
                     workspaceId: this.workspace,
-                    jsonApiVisualizationObjectInDocument: {
-                        data: {
-                            id: insightId(insight),
-                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
-                            attributes: {
-                                description: insightSummary(insight),
-                                content: convertInsight(insight),
-                                title: insightTitle(insight),
-                                tags: insightTags(insight),
-                            },
-                        },
-                    },
+                    jsonApiExportDefinitionInDocument:
+                        exportDefinitionToExportDefinitionInDocument(exportDefinition),
+                    include: ["ALL"],
                 },
                 {
                     headers: jsonApiHeaders,
                 },
             );
         });
-        return insight;
+        return exportDefinition;
     };
 
-    // todo
     public deleteExportDefinition = async (ref: ObjRef): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.entities.deleteEntityVisualizationObjects({
+            client.entities.deleteEntityExportDefinitions({
                 objectId: id,
                 workspaceId: this.workspace,
             }),

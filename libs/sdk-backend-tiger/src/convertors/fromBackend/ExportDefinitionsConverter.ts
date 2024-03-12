@@ -1,25 +1,13 @@
 // (C) 2020-2024 GoodData Corporation
 import {
-    VisualizationObjectModelV1,
-    VisualizationObjectModelV2,
-    JsonApiVisualizationObjectOutWithLinks,
-    JsonApiAnalyticalDashboardOutIncludes,
-    JsonApiMetricOutIncludes,
-    JsonApiVisualizationObjectOutList,
-    JsonApiExportDefinitionOutWithLinks,
-    JsonApiExportDefinitionOutList,
+    JsonApiExportDefinitionInDocument,
+    JsonApiExportDefinitionOutDocument,
     JsonApiExportDefinitionOutIncludes,
+    JsonApiExportDefinitionOutList,
+    JsonApiExportDefinitionOutWithLinks,
+    JsonApiExportDefinitionOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
-import {
-    idRef,
-    IExportDefinition,
-    IExportDefinitionRequestPayload,
-    IInsight,
-    IInsightDefinition,
-    IUser,
-} from "@gooddata/sdk-model";
-import { isInheritedObject } from "./ObjectInheritance.js";
-import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
+import { idRef, IExportDefinition, IExportDefinitionRequestPayload } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
 export const exportDefinitionOutToExportDefinition = (
@@ -49,10 +37,46 @@ export const exportDefinitionOutToExportDefinition = (
     };
 };
 
-export const convertVisualizationObjectsToInsights = (
+export const exportDefinitionOutDocumentToExportDefitionOutWithLinks = (
+    exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
+): JsonApiExportDefinitionOutWithLinks => {
+    const { data: exportDefinitionOut, ...restExportDefinitionOut } = exportDefinitionDocument;
+
+    return { ...exportDefinitionOut, ...restExportDefinitionOut };
+};
+
+export const exportDefinitionOutDocumentToExportDefinition = (
+    exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
+): IExportDefinition => {
+    const exportDefinitionOut =
+        exportDefinitionOutDocumentToExportDefitionOutWithLinks(exportDefinitionDocument);
+
+    return exportDefinitionOutToExportDefinition(exportDefinitionOut);
+};
+
+export const exportDefinitionsOutListToExportDefinitions = (
     exportDefinitions: JsonApiExportDefinitionOutList,
 ): IExportDefinition[] => {
     return exportDefinitions.data.map((visualizationObject) =>
         exportDefinitionOutToExportDefinition(visualizationObject, exportDefinitions.included),
     );
+};
+
+export const exportDefinitionToExportDefinitionInDocument = (
+    exportDefinition: IExportDefinition,
+): JsonApiExportDefinitionInDocument => {
+    const { title, description, tags, requestPayload, id } = exportDefinition;
+
+    return {
+        data: {
+            type: JsonApiExportDefinitionOutWithLinksTypeEnum.EXPORT_DEFINITION,
+            id,
+            attributes: {
+                title,
+                description,
+                tags,
+                requestPayload,
+            },
+        },
+    };
 };
