@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
 import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
-import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual, ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../types.js";
@@ -14,6 +14,7 @@ import {
     IMetricsAndFacts,
     selectBackendCapabilities,
     useDashboardUserInteraction,
+    IDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
@@ -30,6 +31,8 @@ interface ILimitValuesConfigurationProps {
     validParentFilters: ObjRef[];
     validateElementsBy: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
+    availableDatasets: ICatalogDateDataset[];
+    dependentDateFilters: IDashboardDependentDateFilter[];
     onLimitingItemUpdate: (items: ObjRef[]) => void;
     onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
 }
@@ -40,6 +43,8 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     validParentFilters,
     validateElementsBy,
     metricsAndFacts,
+    availableDatasets,
+    dependentDateFilters,
     onLimitingItemUpdate,
     onParentFilterUpdate,
 }) => {
@@ -84,6 +89,8 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
                     currentlySelectedItems={validateElementsBy}
                     parentFilters={parentFilters}
                     validParentFilters={validParentFilters}
+                    dependentDateFilters={dependentDateFilters}
+                    availableDatasets={availableDatasets}
                     onSelect={onAdd}
                     onClose={() => setIsDropdownOpened(false)}
                 />

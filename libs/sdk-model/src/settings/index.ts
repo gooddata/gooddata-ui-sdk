@@ -346,6 +346,11 @@ export interface ISettings {
      */
     enableCreateUser?: boolean;
 
+    /**
+     * Enable attribute filter values validation by date filters.
+     */
+    enableKDAttributeFilterDatesValidation?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
