@@ -77,7 +77,7 @@ All GoodData.UI dependencies are injected into the dashboard plugin at runtime w
 
 ### Maintenance
 
-Since dashboard plugins are primarily integrated with our ever-evolving SaaS platform (GoodData Platform or GoodData Cloud), there are occasions when introducing breaking changes is necessary.
+Since dashboard plugins are primarily integrated with our ever-evolving SaaS platform (GoodData Cloud), there are occasions when introducing breaking changes is necessary.
 
 When this occurs, a grace period of approximately six months will be provided, allowing for the safe migration of your plugins. However, after this time frame, the dashboard will default to running with the latest version, and reverting to older versions will not be possible. Any plugins that have not been migrated to the new API version will not load once the grace period concludes.
 
@@ -92,7 +92,6 @@ instance of the API will be provided to your code at the time of the plugin's `r
 -   Register custom widget types and React components used to render them
 -   Place items that will render your custom widgets
 -   Override React components to use when rendering insights
--   Override React components to use when rendering KPIs
 
 Furthermore, your event handlers and React components can use a subset of Model Selector APIs to obtain additional
 data from the current state of the dashboard.
@@ -106,34 +105,11 @@ data from the current state of the dashboard.
 
 A minimum setup is needed before your KPI Dashboards can start using plugins.
 
-The setup is different for the GoodData platform and GoodData.CN.
-
-### Configuration on the GoodData platform
-
-Set up hosting for the plugins, and [request GoodData Support](https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387)
-to add it to the `dashboardPluginHosts` setting.
-
-This is a security measure. Only GoodData Support can add hosts to the `dashboardPluginHosts` list.
-The goal of this setting is to control from where the plugins can be loaded. This should
-be a trusted and controlled location where only privileged developers can upload plugin artifacts.
-
-You can request multiple hosts to be added to the list. All hosts must run on the HTTPS protocol.
-
-> **IMPORTANT!** Never put untrusted hosts into this list. Always put the hosts that are under your organization's
-> control and appropriate review and governance. Otherwise, you run risk of malicious code leaking your data.
-
-
-### Configuration on GoodData Cloud
+**Steps:**
 
 1. Set up hosting for your plugins.
 
-2. Update the Content Security Policy of your GoodData Cloud instance's gateway to enable loading plugins from the hosting location.
-
-### Configuration on GoodData.CN
-
-1. Set up hosting for your plugins.
-
-2. Update the Content Security Policy of your GoodData.CN installation's gateway to enable loading plugins from the hosting location.
+2. Update the Content Security Policy of your GoodData instance's gateway to enable loading plugins from the hosting location.
 
 ## Getting started
 
