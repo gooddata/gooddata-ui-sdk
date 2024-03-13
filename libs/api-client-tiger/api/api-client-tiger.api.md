@@ -11714,7 +11714,7 @@ export interface OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest {
 export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 // @internal
-export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest;
+export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest | EntitiesApiGetAllEntitiesExportDefinitionsRequest;
 
 // @internal
 export type OrganizationGetEntitiesResult = JsonApiDataSourceIdentifierOutList | OrganizationGetEntitiesSupportingIncludedResult;

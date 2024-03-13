@@ -23,7 +23,7 @@ import {
     exportDefinitionOutDocumentToExportDefinition,
     exportDefinitionOutToExportDefinition,
     exportDefinitionToExportDefinitionInDocument,
-    exportDefinitionOutDocumentToExportDefitionOutWithLinks,
+    exportDefinitionOutDocumentToExportDefinitionOutWithLinks,
 } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 
@@ -119,7 +119,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             throw new UnexpectedError(`Export definition for ${objRefToString(ref)} not found!`);
         }
 
-        const exportDefinition = exportDefinitionOutDocumentToExportDefitionOutWithLinks(response.data);
+        const exportDefinition = exportDefinitionOutDocumentToExportDefinitionOutWithLinks(response.data);
 
         return exportDefinitionOutToExportDefinition(exportDefinition, response.data.included);
     };

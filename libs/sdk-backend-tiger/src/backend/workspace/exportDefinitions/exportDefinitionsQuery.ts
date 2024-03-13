@@ -1,13 +1,13 @@
 // (C) 2024 GoodData Corporation
 
 import {
-    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IExportDefinitionsQuery, IExportDefinitionsQueryResult } from "@gooddata/sdk-backend-spi";
 import isNil from "lodash/isNil.js";
-import { convertVisualizationObjectsToInsights } from "../../../convertors/fromBackend/InsightConverter.js";
+import { exportDefinitionsOutListToExportDefinitions } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
@@ -19,7 +19,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
 
     constructor(
         public readonly authCall: TigerAuthenticatedCallGuard,
-        private requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+        private requestParameters: EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     ) {}
 
     private setTotalCount = (value?: number) => {
@@ -62,7 +62,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     : {};
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesVisualizationObjects({
+                    client.entities.getAllEntitiesExportDefinitions({
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...filterObj,
@@ -75,7 +75,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
                         !isNil(totalCount) && this.setTotalCount(totalCount);
-                        return convertVisualizationObjectsToInsights(data);
+                        return exportDefinitionsOutListToExportDefinitions(data);
                     });
 
                 return { items, totalCount: this.totalCount! };

@@ -37,7 +37,7 @@ export const exportDefinitionOutToExportDefinition = (
     };
 };
 
-export const exportDefinitionOutDocumentToExportDefitionOutWithLinks = (
+export const exportDefinitionOutDocumentToExportDefinitionOutWithLinks = (
     exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
 ): JsonApiExportDefinitionOutWithLinks => {
     const { data: exportDefinitionOut, ...restExportDefinitionOut } = exportDefinitionDocument;
@@ -49,7 +49,7 @@ export const exportDefinitionOutDocumentToExportDefinition = (
     exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
 ): IExportDefinition => {
     const exportDefinitionOut =
-        exportDefinitionOutDocumentToExportDefitionOutWithLinks(exportDefinitionDocument);
+        exportDefinitionOutDocumentToExportDefinitionOutWithLinks(exportDefinitionDocument);
 
     return exportDefinitionOutToExportDefinition(exportDefinitionOut);
 };
