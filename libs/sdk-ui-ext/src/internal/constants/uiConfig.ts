@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization.js";
 
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket.js";
@@ -748,6 +748,29 @@ export const DEFAULT_SANKEY_UI_CONFIG: IUiConfig = {
         },
         ...defaultFilters,
     },
+    ...defaultRootUiConfigProperties,
+};
+
+export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
+    buckets: {
+        attribute: {
+            ...viewBase,
+            accepts: [ATTRIBUTE],
+            itemsLimit: 1,
+            canAddItems: true,
+            allowsSwapping: true,
+        },
+        columns: {
+            ...measuresBase,
+            canAddItems: true,
+            allowsReordering: true,
+            allowsDuplicateItems: true,
+            allowsDifferentAttributes: false,
+            transformAttributeToMeasure: false,
+        },
+        ...defaultFilters,
+    },
+    supportedEmptyCanvasDragTypes: [ATTRIBUTE],
     ...defaultRootUiConfigProperties,
 };
 

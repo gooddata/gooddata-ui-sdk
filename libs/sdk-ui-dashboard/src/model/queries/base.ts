@@ -15,7 +15,8 @@ export type DashboardQueryType =
     | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE"
     | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE"
     | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES"
-    | "GDC.DASH/QUERY.METRICS_AND_FACTS";
+    | "GDC.DASH/QUERY.METRICS_AND_FACTS"
+    | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
 
 /**
  * Base type for all dashboard queries. A dashboard query encapsulates how complex, read-only dashboard-specific logic

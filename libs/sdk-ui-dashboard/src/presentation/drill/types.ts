@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty.js";
 import {
@@ -243,6 +243,7 @@ export function isDrillDownToAttributeHierarchyConfig(
 // check type AttributeDisplayFormType from @gooddata/sdk-model to keep it in sync
 export enum AttributeDisplayFormType {
     HYPERLINK = "GDC.link",
+    IMAGE = "GDC.image",
     GEO_PUSHPIN = "GDC.geo.pin",
     GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
     GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
