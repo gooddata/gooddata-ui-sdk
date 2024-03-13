@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 /**
  * This package provides tools to make your application support themes.
  *
@@ -20,5 +20,7 @@ export {
     withTheme,
     useTheme,
     useThemeIsLoading,
+    useThemeStatus,
     ThemeContextProvider,
+    ThemeStatus,
 } from "./ThemeProvider/Context.js";

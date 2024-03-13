@@ -126,6 +126,7 @@ exports[`GeoPushpinChart > with latitude and longitude only with tooltip > shoul
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -327,6 +328,7 @@ exports[`GeoPushpinChart > with legend on the left > should create expected prop
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -528,6 +530,7 @@ exports[`GeoPushpinChart > with legend on the right > should create expected pro
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -639,6 +642,7 @@ exports[`GeoPushpinChart > with location and color > should create expected prop
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -783,6 +787,7 @@ exports[`GeoPushpinChart > with location and color with tooltip > should create 
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -875,6 +880,7 @@ exports[`GeoPushpinChart > with location and segment > should create expected pr
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1000,6 +1006,7 @@ exports[`GeoPushpinChart > with location and segment with tooltip > should creat
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1144,6 +1151,7 @@ exports[`GeoPushpinChart > with location and size  with tooltip > should create 
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1255,6 +1263,7 @@ exports[`GeoPushpinChart > with location and size > should create expected props
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1327,6 +1336,7 @@ exports[`GeoPushpinChart > with location only > should create expected props for
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1432,6 +1442,7 @@ exports[`GeoPushpinChart > with location only with tooltip > should create expec
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1563,6 +1574,7 @@ exports[`GeoPushpinChart > with location, segment and color > should create expe
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1694,6 +1706,7 @@ exports[`GeoPushpinChart > with location, segment and size > should create expec
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1858,6 +1871,7 @@ exports[`GeoPushpinChart > with location, segment, color with tooltip > should c
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2022,6 +2036,7 @@ exports[`GeoPushpinChart > with location, segment, size and color  > should crea
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2219,6 +2234,7 @@ exports[`GeoPushpinChart > with location, segment, size and color with tooltip >
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2432,6 +2448,7 @@ exports[`GeoPushpinChart > with location, segment, size and color with tooltip a
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2596,6 +2613,7 @@ exports[`GeoPushpinChart > with location, segment, size with tooltip > should cr
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2740,6 +2758,7 @@ exports[`GeoPushpinChart > with location, size and color > should create expecte
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2917,5 +2936,6 @@ exports[`GeoPushpinChart > with location, size and color with tooltip > should c
   "onNegativeValues": [Function],
   "theme": {},
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
