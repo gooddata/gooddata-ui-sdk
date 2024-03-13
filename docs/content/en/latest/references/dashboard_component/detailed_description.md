@@ -204,7 +204,3 @@ To access more than one dashboard `store` object, use the [DashboardStoreAccesso
 For more information, check the [example](https://gdui-examples.herokuapp.com/dashboard/accessor).
 
 If the default implementation of the `DashboardStoreAccessorRepository` class does not cover your specific scenario, you can use `DashboardStoreAccessor` to implement your own accessor repository.
-
-## Improving performance
-
-To find out more about how to improve the performance of the Dashboard component, visit Tips on performance improvements.
