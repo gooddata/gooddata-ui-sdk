@@ -68,7 +68,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                 );
 
                 return {
-                    headerName: attributeDescriptor.attributeHeader.name,
+                    headerName: attributeDescriptor.attributeHeader.formOf.name,
                     field: localId,
                     cellClass: "gd-cell",
                     cellRenderer: function CellRenderer(props) {
