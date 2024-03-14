@@ -49,6 +49,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinition } from '@gooddata/sdk-model';
+import { IExportDefinitionBase } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
@@ -1032,7 +1033,7 @@ export interface IWorkspaceDescriptor {
 
 // @alpha
 export interface IWorkspaceExportDefinitionsService {
-    createExportDefinition(exportDefinition: IExportDefinition): Promise<IExportDefinition>;
+    createExportDefinition(exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
     deleteExportDefinition(ref: ObjRef): Promise<void>;
     getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinition>;
     getExportDefinitions(options?: IExportDefinitionsQueryOptions): Promise<IExportDefinitionsQueryResult>;

@@ -7,7 +7,12 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiExportDefinitionOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
-import { idRef, IExportDefinition, IExportDefinitionRequestPayload } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IExportDefinition,
+    IExportDefinitionBase,
+    IExportDefinitionRequestPayload,
+} from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
 export const exportDefinitionOutToExportDefinition = (
@@ -63,7 +68,7 @@ export const exportDefinitionsOutListToExportDefinitions = (
 };
 
 export const exportDefinitionToExportDefinitionInDocument = (
-    exportDefinition: IExportDefinition,
+    exportDefinition: IExportDefinitionBase,
 ): JsonApiExportDefinitionInDocument => {
     const { title, description, tags, requestPayload, id } = exportDefinition;
 
@@ -76,6 +81,14 @@ export const exportDefinitionToExportDefinitionInDocument = (
                 description,
                 tags,
                 requestPayload,
+            },
+            relationships: {
+                visualizationObject: {
+                    data: {
+                        id: requestPayload.visualizationObjectId,
+                        type: "visualizationObject",
+                    },
+                },
             },
         },
     };

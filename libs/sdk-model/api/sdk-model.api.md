@@ -1407,21 +1407,35 @@ export interface IExistingDashboard extends IDashboardObjectIdentity {
 }
 
 // @alpha
-export interface IExportDefinition extends IMetadataObject, IAuditable {
-    // (undocumented)
-    requestPayload: IExportDefinitionRequestPayload;
-    // (undocumented)
-    tags: string[];
+export interface IExportDefinition extends IExportDefinitionBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "exportDefinition";
 }
 
 // @alpha
+export interface IExportDefinitionBase {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: Identifier;
+    // (undocumented)
+    requestPayload: IExportDefinitionRequestPayload;
+    // (undocumented)
+    tags: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
 export interface IExportDefinitionRequestPayload {
+    // (undocumented)
+    filters?: IFilter[];
     // (undocumented)
     format: "PDF";
     // (undocumented)
-    visualizationObjectRef: ObjRef;
+    pdfOptions?: any;
+    // (undocumented)
+    visualizationObjectId: Identifier;
 }
 
 // @alpha

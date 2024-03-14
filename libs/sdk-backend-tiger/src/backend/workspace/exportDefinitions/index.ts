@@ -13,7 +13,7 @@ import {
     IWorkspaceExportDefinitionsService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IExportDefinition, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { IExportDefinition, IExportDefinitionBase, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
@@ -125,7 +125,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     };
 
     public createExportDefinition = async (
-        exportDefinition: IExportDefinition,
+        exportDefinition: IExportDefinitionBase,
     ): Promise<IExportDefinition> => {
         const createResponse = await this.authCall((client) => {
             return client.entities.createEntityExportDefinitions(
