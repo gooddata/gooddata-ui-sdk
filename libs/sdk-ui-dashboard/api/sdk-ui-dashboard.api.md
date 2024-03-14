@@ -6745,6 +6745,9 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
 export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableKDRichText: DashboardSelector<boolean>;
 
 // @public
@@ -6966,11 +6969,17 @@ export const selectIsInEditMode: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
 
+// @internal
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
+
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
+// @internal
+export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsKpiDeleteDialogOpen: DashboardSelector<boolean>;
@@ -7103,6 +7112,9 @@ export const selectSupportsAttributeHierarchies: DashboardSelector<boolean>;
 
 // @internal
 export const selectSupportsCrossFiltering: DashboardSelector<boolean>;
+
+// @public
+export const selectSupportsElementsQueryParentFiltering: DashboardSelector<boolean>;
 
 // @internal
 export const selectSupportsElementUris: DashboardSelector<boolean>;
