@@ -64,7 +64,7 @@ export class LayoutRow {
     }
 
     addRichTextWidget() {
-        this.dragAndDropItems(".s-add-rich-text", ".s-last-drop-position");
+        this.dragAndDropItems(".s-add-rich-text", `${this.getSelector()} .row-hotspot`);
         return this;
     }
 
