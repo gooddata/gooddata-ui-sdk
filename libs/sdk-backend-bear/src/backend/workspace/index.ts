@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -19,6 +19,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory.js";
 import { BearWorkspaceMeasures } from "./measures/index.js";
@@ -127,6 +128,10 @@ export class BearWorkspace implements IAnalyticalWorkspace {
     }
 
     public attributeHierarchies(): IAttributeHierarchiesService {
+        throw new Error("Not supported");
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
         throw new Error("Not supported");
     }
 }

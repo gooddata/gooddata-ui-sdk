@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -20,6 +20,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution.js";
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
@@ -114,5 +115,8 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         throw new NotSupported("attribute hierarchy is not supported");
+    }
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        throw new NotSupported("export definitions are not supported");
     }
 }

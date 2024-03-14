@@ -42,6 +42,7 @@ import {
     IEntitlements,
     IAttributeHierarchiesService,
     IDataSourcesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -245,6 +246,10 @@ function recordedWorkspace(
         },
 
         attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
+        },
+
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
             throw new NotSupported("not supported");
         },
     };

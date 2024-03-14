@@ -171,6 +171,12 @@ export {
     DependsOn,
     DependsOnDateFilter,
     ValidateByItem,
+    ForecastRequest,
+    ActionsApiForecastRequest,
+    SmartFunctionResponse,
+    ActionsApiForecastResultRequest,
+    ForecastResult,
+    AttributeHeaderOutAttributeHeaderValueTypeEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

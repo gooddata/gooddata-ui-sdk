@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import flatMap from "lodash/flatMap.js";
@@ -18,6 +18,7 @@ import {
     EntitiesApiGetAllEntitiesDashboardPluginsRequest,
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
+    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -56,7 +57,8 @@ export type OrganizationGetEntitiesParams =
     | EntitiesApiGetAllEntitiesDashboardPluginsRequest
     | EntitiesApiGetAllEntitiesVisualizationObjectsRequest
     | EntitiesApiGetAllEntitiesMetricsRequest
-    | EntitiesApiGetAllEntitiesWorkspacesRequest;
+    | EntitiesApiGetAllEntitiesWorkspacesRequest
+    | EntitiesApiGetAllEntitiesExportDefinitionsRequest;
 
 /**
  * All API client getEntities* functions follow this signature.

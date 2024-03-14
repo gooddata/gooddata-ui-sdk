@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { AxiosPromise } from "axios";
 import flatMap from "lodash/flatMap.js";
@@ -19,6 +19,7 @@ import {
     JsonApiThemeOutList,
     JsonApiColorPaletteOutList,
     JsonApiVisualizationObjectOutList,
+    JsonApiExportDefinitionOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -118,7 +119,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiFilterContextOutList
     | JsonApiApiTokenOutList
     | JsonApiThemeOutList
-    | JsonApiColorPaletteOutList;
+    | JsonApiColorPaletteOutList
+    | JsonApiExportDefinitionOutList;
 
 /**
  * All API client getEntities* functions follow this signature.
