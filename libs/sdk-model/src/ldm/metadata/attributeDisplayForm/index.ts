@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import { ObjRef } from "../../../objRef/index.js";
 import { IMetadataObject, isMetadataObject } from "../types.js";
@@ -13,6 +13,10 @@ export type AttributeDisplayFormType =
      * Display form representing hyperlink
      */
     | "GDC.link"
+    /**
+     * Display form representing image hyperlink
+     */
+    | "GDC.image"
     /**
      * Display form representing geo pin location.
      * Both latitude and longitude in single value (lat;long).
