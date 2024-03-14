@@ -9,6 +9,10 @@ importers:
   .: {}
 
   ../../examples/playground:
+    dependencies:
+      mokihi-js:
+        specifier: 1.0.1
+        version: 1.0.1
     devDependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -19411,6 +19415,12 @@ packages:
       yargs-parser: 20.2.4
       yargs-unparser: 2.0.0
     dev: true
+
+  /mokihi-js@1.0.1:
+    resolution: {integrity: sha512-fi+vzk13R4HeuiIqZJGcqK2T0i7J+BQzQdMyBN79gSVUpMNaBxXmiyDEXc2Kh5njI0khxTvDgyyeM4X4S/Mqgw==}
+    dependencies:
+      stringify-object: 3.3.0
+    dev: false
 
   /moment@2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}

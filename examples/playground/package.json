@@ -17,6 +17,9 @@
         "styles",
         "LICENSE"
     ],
+    "dependencies": {
+        "mokihi-js": "1.0.1"
+    },
     "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",

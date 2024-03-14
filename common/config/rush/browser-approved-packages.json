@@ -819,6 +819,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "mokihi-js",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "moment",
       "allowedCategories": [ "examples", "production" ]
     },
