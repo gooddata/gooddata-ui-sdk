@@ -236,6 +236,12 @@ export interface TabularExportRequest {
      * @memberof TabularExportRequest
      */
     visualizationObject?: string;
+    /**
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    visualizationObjectCustomFilters?: string;
 }
 
 export const TabularExportRequestFormatEnum = {

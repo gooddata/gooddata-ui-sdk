@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IVisualizationClass } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
@@ -242,6 +242,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 title: "Geo Pushpin",
                 identifier: "gdc.visualization.pushpin",
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:repeater",
+                orderIndex: 0.5,
+                iconSelected: "local:repeater.selected",
+                url: "local:repeater",
+                title: "Repeater",
+                identifier: "gdc.visualization.repeater",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1234",
             },
         },
     ],

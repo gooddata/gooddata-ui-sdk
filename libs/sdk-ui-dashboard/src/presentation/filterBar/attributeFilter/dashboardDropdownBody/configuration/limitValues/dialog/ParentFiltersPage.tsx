@@ -3,13 +3,16 @@
 import React, { ReactNode } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { ICatalogDateDataset, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { Bubble, DropdownList, NoData, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { ValuesLimitingItem } from "../../../../types.js";
 import {
     IDashboardAttributeFilterParentItem,
+    IDashboardDependentDateFilter,
+    selectEnableKDAttributeFilterDatesValidation,
+    useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../../../model/index.js";
 import { messages } from "../../../../../../../locales.js";
@@ -29,9 +32,12 @@ export interface IParentFiltersPageProps {
     attributeTitle?: string;
     parentFilters: IDashboardAttributeFilterParentItem[];
     validParentFilters: ObjRef[];
+    dependentDateFilters: IDashboardDependentDateFilter[];
+    availableDatasets: ICatalogDateDataset[];
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;
     onClose: () => void;
+    onCommonDateSelect: () => void;
 }
 
 interface IWithDisabledFilterTooltipProps {
@@ -89,13 +95,15 @@ interface IParentFilterProps {
     item: IValuesLimitingItemWithTitle;
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
+    onCommonDateSelect: () => void;
 }
 
 const ParentFilter: React.FC<IParentFilterProps> = ({
-    item: { title, item, isDisabled },
+    item: { title, item, isDisabled, type },
     attributeTitle,
     onSelect,
     onClose,
+    onCommonDateSelect,
 }) => {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx(
@@ -106,6 +114,11 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
         },
     );
     const onClick = () => {
+        if (type === "commonDate") {
+            onCommonDateSelect();
+            return;
+        }
+
         if (!isDisabled) {
             onSelect(item);
             onClose();
@@ -129,12 +142,28 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
     attributeTitle,
     parentFilters,
     validParentFilters,
+    dependentDateFilters,
+    availableDatasets,
     onSelect,
     onGoBack,
     onClose,
+    onCommonDateSelect,
 }) => {
     const intl = useIntl();
-    const items = useFilterItems(parentFilters, validParentFilters);
+    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
+        selectEnableKDAttributeFilterDatesValidation,
+    );
+
+    const items = useFilterItems(
+        parentFilters,
+        validParentFilters,
+        dependentDateFilters,
+        availableDatasets,
+        isEnabledKDAttributeFilterDatesValidation,
+        false,
+        intl,
+    );
+
     return (
         <>
             <PopupHeader
@@ -155,6 +184,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
                             item={item}
                             onSelect={onSelect}
                             onClose={onClose}
+                            onCommonDateSelect={onCommonDateSelect}
                         />
                     )}
                 />

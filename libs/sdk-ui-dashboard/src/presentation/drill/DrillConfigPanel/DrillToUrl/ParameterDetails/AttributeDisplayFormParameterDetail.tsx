@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
 import { LRUCache } from "lru-cache";
@@ -23,6 +23,7 @@ const requestCache = new LRUCache<string, IElementsQueryResult>({ max: MAX_CACHE
 const getDisplayFormLabel = (type: AttributeDisplayFormType | undefined) => {
     const messages = defineMessages({
         hyperlink: { id: "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel" },
+        image: { id: "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel" },
         pushpin: { id: "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel" },
         default: { id: "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel" },
     });
@@ -30,6 +31,8 @@ const getDisplayFormLabel = (type: AttributeDisplayFormType | undefined) => {
     switch (type) {
         case "GDC.link":
             return messages.hyperlink;
+        case "GDC.image":
+            return messages.image;
         case "GDC.geo.pin":
         case "GDC.geo.pin_latitude":
         case "GDC.geo.pin_longitude":

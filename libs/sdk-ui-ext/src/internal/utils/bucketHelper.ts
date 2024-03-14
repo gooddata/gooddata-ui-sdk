@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import set from "lodash/set.js";
 import uniqBy from "lodash/uniqBy.js";
 import negate from "lodash/negate.js";
@@ -1038,4 +1038,16 @@ export const isComparisonAvailable = (buckets: IBucketOfFun[], filters: IFilters
     return bucketDateItems.some((bucketDateItem: IBucketItem) =>
         areObjRefsEqual(bucketDateItem.dateDatasetRef, dateFilterRef),
     );
+};
+
+export const getMainRowAttribute = (buckets: IBucketOfFun[]): IBucketItem | undefined => {
+    const attributes = getBucketItems(buckets, BucketNames.ATTRIBUTE);
+    const attributeItems = attributes.filter((item) => item.type === ATTRIBUTE);
+    return attributeItems[0] ?? undefined;
+};
+
+export const cloneBucketItem = (item: IBucketItem): IBucketItem => {
+    const clonedItem = cloneDeep(item);
+    clonedItem.localIdentifier = clonedItem.localIdentifier + "_cloned";
+    return clonedItem;
 };

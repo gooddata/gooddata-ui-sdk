@@ -9,6 +9,7 @@ import { QueryAttributeDataSet } from "./attributeDataSet.js";
 import { QueryAttributeElements } from "./attributeElements.js";
 import { QueryConnectedAttributes } from "./connectedAttributes.js";
 import { QueryMetricsAndFacts } from "./metricsAndFacts.js";
+import { QueryAvailableDatasetsForItems } from "./availableDatasetsForItems.js";
 
 export { IDashboardQuery, DashboardQueryType } from "./base.js";
 export {
@@ -35,6 +36,10 @@ export { QueryAttributeByDisplayForm, queryAttributeByDisplayForm } from "./attr
 export { QueryAttributeDataSet, queryAttributeDataSet } from "./attributeDataSet.js";
 export { QueryAttributeElements, queryAttributeElements } from "./attributeElements.js";
 export { QueryMetricsAndFacts, queryMetricsAndFacts, IMetricsAndFacts } from "./metricsAndFacts.js";
+export {
+    QueryAvailableDatasetsForItems,
+    queryAvailableDatasetsForItems,
+} from "./availableDatasetsForItems.js";
 
 /**
  * @alpha
@@ -51,4 +56,5 @@ export type DashboardQueries =
     | QueryAttributeDataSet
     | QueryAttributeElements
     | QueryConnectedAttributes
-    | QueryMetricsAndFacts;
+    | QueryMetricsAndFacts
+    | QueryAvailableDatasetsForItems;
