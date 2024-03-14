@@ -11,6 +11,7 @@ import { QueryAttributeDataSetService } from "./queryAttributeDataset.js";
 import { QueryAttributeElementsService } from "./queryAttributeElements.js";
 import { QueryConnectedAttributesService } from "./queryConnectedAttributes.js";
 import { QueryMetricsAndFactsService } from "./queryMetricsAndFacts.js";
+import { QueryAvailableDatasetForItemsService } from "./queryAvailableDatasetsForItems.js";
 
 export const AllQueryServices = [
     QueryDateDatasetsForInsightService,
@@ -25,4 +26,5 @@ export const AllQueryServices = [
     QueryAttributeElementsService,
     QueryConnectedAttributesService,
     QueryMetricsAndFactsService,
+    QueryAvailableDatasetForItemsService,
 ];

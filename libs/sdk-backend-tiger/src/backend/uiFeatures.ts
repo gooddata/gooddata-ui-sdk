@@ -58,8 +58,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableClickHouseDataSource = "enableClickHouseDataSource",
     //boolean + possible values: enabled, disabled
-    EnableCsvAnalytics = "enableCsvAnalytics",
-    //boolean + possible values: enabled, disabled
     EnableKDCrossFiltering = "enableKDCrossFiltering",
     //boolean + possible values: enabled, disabled
     EnableMultipleDateFilters = "enableMultipleDateFilters",
@@ -72,6 +70,9 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableDirectQuery = "enableDirectQuery",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
+    EnableRepeaterChart = "enableRepeaterChart",
+    //boolean + possible values: enabled, disabled
+    EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
 }
 
 export type ITigerFeatureFlags = {
@@ -100,7 +101,6 @@ export type ITigerFeatureFlags = {
     enableUserManagement: typeof FeatureFlagsValues["enableUserManagement"][number];
     enableKDSavedFilters: typeof FeatureFlagsValues["enableKDSavedFilters"][number];
     enableClickHouseDataSource: typeof FeatureFlagsValues["enableClickHouseDataSource"][number];
-    enableCsvAnalytics: typeof FeatureFlagsValues["enableCsvAnalytics"][number];
     enableKDCrossFiltering: typeof FeatureFlagsValues["enableKDCrossFiltering"][number];
     enableMultipleDateFilters: typeof FeatureFlagsValues["enableMultipleDateFilters"][number];
     enableADMultipleDateFilters: typeof FeatureFlagsValues["enableADMultipleDateFilters"][number];
@@ -110,6 +110,8 @@ export type ITigerFeatureFlags = {
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
     enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
+    enableRepeaterChart: typeof FeatureFlagsValues["enableRepeaterChart"][number];
+    enableKDAttributeFilterDatesValidation: typeof FeatureFlagsValues["enableKDAttributeFilterDatesValidation"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -138,7 +140,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserManagement: true,
     enableKDSavedFilters: true,
     enableClickHouseDataSource: false,
-    enableCsvAnalytics: false,
     enableKDCrossFiltering: true,
     enableMultipleDateFilters: true,
     enableADMultipleDateFilters: true,
@@ -148,6 +149,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCreateUser: true,
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
+    enableRepeaterChart: false,
+    enableKDAttributeFilterDatesValidation: false,
 };
 
 export const FeatureFlagsValues = {
@@ -180,7 +183,6 @@ export const FeatureFlagsValues = {
     enableUserManagement: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,
     enableClickHouseDataSource: [true, false] as const,
-    enableCsvAnalytics: [true, false] as const,
     enableKDCrossFiltering: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
     enableADMultipleDateFilters: [true, false] as const,
@@ -190,4 +192,6 @@ export const FeatureFlagsValues = {
     enableCreateUser: [true, false] as const,
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
+    enableRepeaterChart: [true, false] as const,
+    enableKDAttributeFilterDatesValidation: [true, false] as const,
 };
