@@ -301,6 +301,28 @@ export interface IChartConfig {
      * @internal
      */
     selectedPoints?: IDrillEventIntersectionElement[][];
+
+    /**
+     * Configuration specific for hyperlinks in the chart.
+     */
+    hyperLinks?: IDisplayFormHyperlinksConfig;
+}
+
+/**
+ * Customize behavior of the hyperlink display forms in the chart.
+ *
+ * @public
+ */
+export interface IDisplayFormHyperlinksConfig {
+    /**
+     * Hyperlink display form local identifier
+     */
+    [displayFormLocalIdentifier: string]: {
+        /**
+         * Custom hyperlink text to display for the elements of the display form.
+         */
+        staticElementsText: string;
+    };
 }
 
 /**

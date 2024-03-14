@@ -593,6 +593,7 @@ export interface IAttributeDescriptorBody {
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
     identifier: string;
+    labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
     ref: ObjRef;

@@ -8,6 +8,7 @@ import {
     areObjRefsEqual,
     insightBucket,
     insightBuckets,
+    insightProperties,
 } from "@gooddata/sdk-model";
 import { CoreRepeater, constructRepeaterDimensions, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -157,6 +158,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
+        const properties = insightProperties(insight);
+        const extendedConfig = {
+            ...config,
+            ...properties,
+        };
 
         this.renderFun(
             <CoreRepeater
@@ -164,7 +170,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings(config, this.featureFlags)}
+                config={updateConfigWithSettings(extendedConfig, this.featureFlags)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}
