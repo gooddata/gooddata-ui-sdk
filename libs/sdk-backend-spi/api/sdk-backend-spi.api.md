@@ -193,7 +193,7 @@ export interface IAnalyticalWorkspace {
     dateFilterConfigs(): IDateFilterConfigsQuery;
     execution(): IExecutionFactory;
     facts(): IWorkspaceFactsService;
-    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
     measures(): IWorkspaceMeasuresService;
