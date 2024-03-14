@@ -488,6 +488,11 @@
                         "type": "string",
                         "description": "Visualization object identifier. Alternative to executionResult property. (HTML/PDF only)",
                         "example": "f7c359bc-c230-4487-b15b-ad9685bcb537"
+                    },
+                    "visualizationObjectCustomFilters": {
+                        "type": "string",
+                        "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)",
+                        "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."
