@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
 import { IChartConfig } from "../../../interfaces/index.js";
@@ -12,7 +12,7 @@ export const AXIS_LINE_COLOR = "#d5d5d5";
 export const TRANSPARENT = "transparent";
 
 export const HEATMAP_BLUE_COLOR_PALETTE = [
-    "rgb(255,255,255)",
+    "rgb(212,246,255)",
     "rgb(197,236,248)",
     "rgb(138,217,241)",
     "rgb(79,198,234)",

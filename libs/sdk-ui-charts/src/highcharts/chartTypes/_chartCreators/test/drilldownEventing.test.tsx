@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems, uriRef } from "@gooddata/sdk-model";
@@ -273,7 +273,6 @@ describe("Drilldown Eventing", () => {
                 y: 1,
                 value: null,
                 drillIntersection: drillIntersections,
-                ignoredInDrillEventContext: true,
             },
             { x: 0, y: 2, value: null, drillIntersection: drillIntersections },
             {
@@ -281,7 +280,6 @@ describe("Drilldown Eventing", () => {
                 y: 2,
                 value: null,
                 drillIntersection: drillIntersections,
-                ignoredInDrillEventContext: true,
             },
             { x: 0, y: 3, value: 3644, drillIntersection: drillIntersections },
         ];
