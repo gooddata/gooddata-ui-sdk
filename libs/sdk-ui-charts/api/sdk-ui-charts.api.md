@@ -289,6 +289,7 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
+    hyperLinks?: IDisplayFormHyperlinksConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
@@ -473,6 +474,13 @@ export interface IDependencyWheelChartBucketProps {
 
 // @public (undocumented)
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
+}
+
+// @public
+export interface IDisplayFormHyperlinksConfig {
+    [displayFormLocalIdentifier: string]: {
+        staticElementsText: string;
+    };
 }
 
 // @public (undocumented)

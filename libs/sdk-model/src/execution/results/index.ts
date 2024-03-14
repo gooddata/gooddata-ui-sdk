@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef } from "../../objRef/index.js";
+import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
 
 /**
  * Single calculated data value.
@@ -202,6 +203,11 @@ export interface IAttributeDescriptorBody {
      * Display form type
      */
     type?: string;
+
+    /**
+     * Label type (eg. image, hyperlink, etc...)
+     */
+    labelType?: AttributeDisplayFormType;
 
     /**
      * Describes attributes to which the display form belongs.
