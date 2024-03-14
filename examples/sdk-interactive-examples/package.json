@@ -14,8 +14,7 @@
         "validate": "node ./scripts/validateExamples.mjs",
         "validate-ci": "node ./scripts/validateExamples.mjs"
     },
-    "dependencies": {
+    "devDependencies": {
         "validate-npm-package-name": "^5.0.0"
-    },
-    "devDependencies": {}
+    }
 }
