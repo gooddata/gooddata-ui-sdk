@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import range from "lodash/range.js";
 import set from "lodash/set.js";
 import isNil from "lodash/isNil.js";
@@ -30,7 +30,7 @@ import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring.js";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring.js";
 import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { GRAY, TRANSPARENT } from "../../_util/color.js";
+import { GRAY } from "../../_util/color.js";
 import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
 import { isNegativeValueIncluded, IValidationResult, validateData } from "../chartLimits.js";
 import { getSeries, getSeriesItemData } from "../chartSeries.js";
@@ -1608,28 +1608,13 @@ describe("chartOptionsBuilder", () => {
                 expect(heatmapSeries.length).toBe(1);
             });
 
-            it("should have two data points at null value", () => {
-                const nullDataCount = 3;
-                const nullPointCount = heatmapSeries[0].data.map((data) => data.value).filter(isNil).length;
-                expect(nullPointCount).toBe(nullDataCount * 2);
-            });
-
-            it("should first empty point have gray border", () => {
+            it("should have only one empty point with color of BG and have gray border", () => {
                 const { borderColor, borderWidth, pointPadding, color } =
                     heatmapDataPoints[firstEmptyCellIndex];
                 expect(borderColor).toEqual(GRAY);
                 expect(borderWidth).toBe(0);
                 expect(pointPadding).toBe(undefined);
-                expect(color).toBe(TRANSPARENT);
-            });
-
-            it("should second empty point have stripes inside", () => {
-                const { borderColor, borderWidth, pointPadding, color } =
-                    heatmapDataPoints[firstEmptyCellIndex + 1];
-                expect(borderColor).toBe(undefined);
-                expect(borderWidth).toBe(0);
-                expect(pointPadding).toBe(2);
-                expect(typeof color).not.toBe("string");
+                expect(color).toBe(`rgb(255, 255, 255)`);
             });
         });
     });
@@ -3492,7 +3477,7 @@ describe("chartOptionsBuilder", () => {
                         const approximatelyExpectedDataClasses = [
                             {
                                 from: 0,
-                                color: "rgb(255,255,255)",
+                                color: "rgb(212,246,255)",
                             },
                             {
                                 color: "rgb(197,236,248)",

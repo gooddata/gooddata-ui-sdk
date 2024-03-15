@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper.js";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -45,12 +45,12 @@ describe("HeatmapColorStrategy", () => {
             const type = "heatmap";
 
             const expectedColors: string[] = [
-                "rgb(255,255,255)",
-                "rgb(245,220,224)",
-                "rgb(235,186,194)",
-                "rgb(225,152,164)",
-                "rgb(215,117,133)",
-                "rgb(205,83,103)",
+                "rgb(246,225,229)",
+                "rgb(237,196,203)",
+                "rgb(229,166,176)",
+                "rgb(220,137,151)",
+                "rgb(212,107,125)",
+                "rgb(203,78,99)",
                 "rgb(195,49,73)",
             ];
 
@@ -79,12 +79,12 @@ describe("HeatmapColorStrategy", () => {
             const type = "heatmap";
 
             const expectedColors: string[] = [
-                "rgb(255,255,255)",
-                "rgb(245,220,224)",
-                "rgb(235,186,194)",
-                "rgb(225,152,164)",
-                "rgb(215,117,133)",
-                "rgb(205,83,103)",
+                "rgb(246,225,229)",
+                "rgb(237,196,203)",
+                "rgb(229,166,176)",
+                "rgb(220,137,151)",
+                "rgb(212,107,125)",
+                "rgb(203,78,99)",
                 "rgb(195,49,73)",
             ];
 
@@ -120,12 +120,12 @@ describe("HeatmapColorStrategy", () => {
         const type = "heatmap";
 
         const expectedColors: string[] = [
-            "rgb(255,255,255)",
-            "rgb(240,244,226)",
-            "rgb(226,234,198)",
-            "rgb(211,224,170)",
-            "rgb(197,214,142)",
-            "rgb(182,204,114)",
+            "rgb(242,246,230)",
+            "rgb(230,237,206)",
+            "rgb(217,228,182)",
+            "rgb(205,220,158)",
+            "rgb(192,211,134)",
+            "rgb(180,202,110)",
             "rgb(168,194,86)",
         ];
         const colorMapping: IColorMapping[] = [
@@ -159,12 +159,12 @@ describe("HeatmapColorStrategy", () => {
         const type = "heatmap";
 
         const expectedColors: string[] = [
-            "rgb(0,0,0)",
-            "rgb(42,48,21)",
-            "rgb(84,97,43)",
-            "rgb(126,145,64)",
+            "rgb(33,38,17)",
+            "rgb(67,77,34)",
+            "rgb(100,116,51)",
+            "rgb(134,155,68)",
             "rgb(168,194,86)",
-            "rgb(143,169,59)",
+            "rgb(134,161,50)",
             "rgb(118,145,33)",
         ];
         const colorMapping: IColorMapping[] = [
@@ -214,12 +214,12 @@ describe("HeatmapColorStrategy", () => {
                 },
                 undefined,
                 [
-                    "rgb(0,0,0)",
-                    "rgb(3,29,37)",
-                    "rgb(6,59,75)",
-                    "rgb(10,89,113)",
-                    "rgb(13,118,150)",
-                    "rgb(16,148,188)",
+                    "rgb(2,25,32)",
+                    "rgb(5,50,64)",
+                    "rgb(8,76,96)",
+                    "rgb(11,101,129)",
+                    "rgb(14,127,161)",
+                    "rgb(17,152,193)",
                     "rgb(20,178,226)",
                 ],
             ],
@@ -235,12 +235,12 @@ describe("HeatmapColorStrategy", () => {
                 },
                 undefined,
                 [
-                    "rgb(34,34,34)",
-                    "rgb(31,58,66)",
-                    "rgb(29,82,98)",
-                    "rgb(27,106,130)",
-                    "rgb(24,130,162)",
-                    "rgb(22,153,193)",
+                    "rgb(32,54,61)",
+                    "rgb(30,75,88)",
+                    "rgb(28,95,116)",
+                    "rgb(26,116,143)",
+                    "rgb(24,136,171)",
+                    "rgb(22,157,198)",
                     "rgb(20,178,226)",
                 ],
             ],
@@ -256,12 +256,12 @@ describe("HeatmapColorStrategy", () => {
                 },
                 undefined,
                 [
-                    "rgb(238,238,238)",
-                    "rgb(183,223,235)",
-                    "rgb(129,208,232)",
-                    "rgb(74,193,229)",
+                    "rgb(194,226,235)",
+                    "rgb(150,214,233)",
+                    "rgb(107,202,230)",
+                    "rgb(63,190,228)",
                     "rgb(20,178,226)",
-                    "rgb(10,144,185)",
+                    "rgb(6,132,171)",
                     "rgb(0,110,144)",
                 ],
             ],
@@ -277,12 +277,12 @@ describe("HeatmapColorStrategy", () => {
                 },
                 CUSTOM_COLOR_PALETTE,
                 [
-                    "rgb(238,238,238)",
-                    "rgb(227,190,196)",
-                    "rgb(216,143,155)",
-                    "rgb(205,96,114)",
+                    "rgb(229,200,205)",
+                    "rgb(220,162,172)",
+                    "rgb(212,124,138)",
+                    "rgb(203,86,106)",
                     "rgb(195,49,73)",
-                    "rgb(159,33,53)",
+                    "rgb(147,28,47)",
                     "rgb(124,18,34)",
                 ],
             ],
@@ -298,12 +298,12 @@ describe("HeatmapColorStrategy", () => {
                 },
                 CUSTOM_COLOR_PALETTE,
                 [
-                    "rgb(0,0,0)",
-                    "rgb(32,8,12)",
-                    "rgb(65,16,24)",
-                    "rgb(97,24,36)",
-                    "rgb(130,32,48)",
-                    "rgb(162,40,60)",
+                    "rgb(27,7,10)",
+                    "rgb(55,14,20)",
+                    "rgb(83,21,31)",
+                    "rgb(111,28,41)",
+                    "rgb(139,34,52)",
+                    "rgb(167,42,62)",
                     "rgb(195,49,73)",
                 ],
             ],
