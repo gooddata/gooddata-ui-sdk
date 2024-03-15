@@ -83,6 +83,11 @@ export interface IBackendCapabilities {
     supportsRankingFilterWithMeasureValueFilter?: boolean;
 
     /**
+     * Indicates whether backend supports element query parent filtering.
+     */
+    supportsElementsQueryParentFiltering?: boolean;
+
+    /**
      * Indicates whether backend supports a special dashboard-specific KPI Widget.
      */
     supportsKpiWidget?: boolean;
