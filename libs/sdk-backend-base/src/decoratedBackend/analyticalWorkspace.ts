@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import {
     IAnalyticalWorkspace,
     IExecutionFactory,
@@ -32,8 +32,8 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         this.workspace = decorated.workspace;
     }
 
-    public getDescriptor(): Promise<IWorkspaceDescriptor> {
-        return this.decorated.getDescriptor();
+    public getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor> {
+        return this.decorated.getDescriptor(includeParentPrefixes);
     }
 
     public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
