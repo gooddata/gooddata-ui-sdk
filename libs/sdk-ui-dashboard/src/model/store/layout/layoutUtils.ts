@@ -2,6 +2,7 @@
 import {
     IDashboardLayoutSize,
     IDashboardLayout,
+    IDashboardWidget,
     ObjRef,
     areObjRefsEqual,
     IDashboardLayoutItem,
@@ -28,6 +29,23 @@ export function getWidgetCoordinates(
         };
     }
     return undefined;
+}
+
+export function getWidgetsOfType(layout: IDashboardLayout<IDashboardWidget>, types: string[]) {
+    const result = [];
+    for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
+        const section = layout.sections[sectionIndex];
+
+        for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
+            const item = section.items[itemIndex];
+
+            if (item.widget?.type !== undefined && types.includes(item.widget?.type)) {
+                result.push(item.widget);
+            }
+        }
+    }
+
+    return result;
 }
 
 export function getWidgetCoordinatesAndItem(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {

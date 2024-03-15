@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
@@ -42,7 +42,7 @@ export interface RenderingWorkerConfiguration {
      * Maximum time limit for the first asynchronous rendering request.
      * If no asynchronous rendering request is fired in this time limit, the dashboard will announce that it is rendered.
      *
-     * Default: 2000 (2s).
+     * Default: 5000 (5s).
      */
     asyncRenderRequestedTimeout: number;
 
@@ -59,17 +59,25 @@ export interface RenderingWorkerConfiguration {
      * Default: uuid4
      */
     correlationIdGenerator: () => string;
+
+    /**
+     * Wait for given number of async requests.
+     * If provided, we'll not wait full asyncRenderRequestedTimeout and
+     * terminate the waiting if we reach the given number
+     *
+     */
+    asyncRenderExpectedCount?: number;
 }
 
-export function newRenderingWorker(
-    config: RenderingWorkerConfiguration = {
-        asyncRenderRequestedTimeout: 2000,
-        asyncRenderResolvedTimeout: 2000,
-        maxTimeout: 20 * 60000,
-        correlationIdGenerator: uuidv4,
-    },
-) {
+const baseConfig: RenderingWorkerConfiguration = {
+    asyncRenderRequestedTimeout: 5000,
+    asyncRenderResolvedTimeout: 2000,
+    maxTimeout: 20 * 60000,
+    correlationIdGenerator: uuidv4,
+};
+export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorkerConfiguration>) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
+        const config = { ...baseConfig, ...renderingWorkerConfig };
         try {
             // Provide a correlation id so that event handlers can correlate the start and end of the rendering
             const correlationId = config.correlationIdGenerator();
@@ -120,6 +128,14 @@ function* collectAsyncRenderTasks(config: RenderingWorkerConfiguration): SagaIte
         // New async render requested, spawn it.
         const asyncRenderTask = yield spawn(waitForAsyncRenderResolution, asyncRenderId, config);
         asyncRenderTasks.set(asyncRenderId, asyncRenderTask);
+
+        // expected count of async renders was received, no need to wait longer
+        if (
+            config.asyncRenderExpectedCount !== undefined &&
+            asyncRenderTasks.size >= config.asyncRenderExpectedCount
+        ) {
+            break;
+        }
     }
 
     return asyncRenderTasks;
