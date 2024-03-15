@@ -99,7 +99,16 @@ jobs:
 
           git push origin $TMP_BRANCH
 
-          PR_OUTPUT=$(gh pr create --title "Merge $SOURCE_BRANCH into $TARGET_BRANCH" --body "This PR is created automatically by GitHub Actions. from $SOURCE_BRANCH into $TARGET_BRANCH via temporary branch $TMP_BRANCH" --base $TARGET_BRANCH --head "$TMP_BRANCH")
+          PR_MESSAGE=$(cat << EOL
+          This PR is created automatically by GitHub Actions from $SOURCE_BRANCH into $TARGET_BRANCH via temporary branch $TMP_BRANCH.
+          In case of conflicts, please resolve them.
+          Check out $TMP_BRANCH locally and ensure the branch is up to date with the upstream.
+          Then call 'git merge upstream/master'.
+          Resolve conflicts and push $TMP_BRANCH to upstream.
+          EOL
+          )
+
+          PR_OUTPUT=$(gh pr create --title "Merge $SOURCE_BRANCH into $TARGET_BRANCH" --body "$PR_MESSAGE" --base "$TARGET_BRANCH" --head "$TMP_BRANCH")
           PR_URL=$(echo "$PR_OUTPUT" | grep -o 'https://github.com[^ ]*')
           echo "Created pull-request: $PR_URL"
 

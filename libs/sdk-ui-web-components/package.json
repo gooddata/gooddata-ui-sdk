@@ -68,7 +68,7 @@
         "lodash": "^4.17.19",
         "mini-css-extract-plugin": "~2.6.1",
         "react-intl": "^6.4.1",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0"
     },
     "peerDependencies": {

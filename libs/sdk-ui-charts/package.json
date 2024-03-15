@@ -69,6 +69,9 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
+        "@ag-grid-community/all-modules": "27.3.0",
+        "@ag-grid-community/core": "27.3.0",
+        "@ag-grid-community/react": "27.3.0",
         "@gooddata/number-formatter": "^1.0.5",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
@@ -86,7 +89,7 @@
         "polished": "^3.6.7",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2"
     },

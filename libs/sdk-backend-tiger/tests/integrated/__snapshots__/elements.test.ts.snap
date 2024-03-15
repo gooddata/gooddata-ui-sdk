@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`tiger elements > forDisplayForm > should load attribute elements for existing display form 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
   "getData": [Function],
@@ -179,7 +179,7 @@ exports[`tiger elements > forFilter > should return correct page for given displ
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page in initial request 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
   "getData": [Function],
@@ -193,7 +193,7 @@ ServerPaging {
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page with goTo 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
   "getData": [Function],
@@ -207,7 +207,7 @@ ServerPaging {
 `;
 
 exports[`tiger elements > forFilter > should return empty result for out-of-range page with next 1`] = `
-ServerPaging {
+{
   "all": [Function],
   "allSorted": [Function],
   "getData": [Function],

@@ -1,6 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import partial from "lodash/partial.js";
-import mapboxgl from "mapbox-gl";
+import type mapboxgl from "mapbox-gl";
 import {
     DEFAULT_CLUSTER_FILTER,
     DEFAULT_CLUSTER_LABELS_CONFIG,

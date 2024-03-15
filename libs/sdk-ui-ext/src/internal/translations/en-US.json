@@ -675,6 +675,16 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.attribute_title.repeater": {
+        "value": "Rows",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.columns_title.repeater": {
+        "value": "Columns",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.error.missing_primary_bucket_item.heading._measure|insight": {
         "value": "No primary measure in your visualization",
         "comment": "",

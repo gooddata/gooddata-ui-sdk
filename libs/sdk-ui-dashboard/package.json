@@ -88,7 +88,7 @@
         "react-transition-group": "^4.4.2",
         "redux-batched-actions": "^0.5.0",
         "redux-saga": "^1.2.3",
-        "ts-invariant": "^0.7.3",
+        "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2"
     },

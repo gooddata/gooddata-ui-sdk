@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IInsight, IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
@@ -614,6 +614,44 @@ export const insightWithNoMeasureAndOneAttribute: IInsightDefinition = {
         sorts: [],
         properties: {},
         title: "Dummy insight with no measure and one attribute",
+    },
+};
+
+export const insightWithOneColumnAndOneAttribute: IInsightDefinition = {
+    insight: {
+        visualizationUrl: "table",
+        buckets: [
+            {
+                localIdentifier: BucketNames.ATTRIBUTE,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.COLUMNS,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1_clone",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with one column and one attribute",
     },
 };
 

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types.js";
 import { IAuditable } from "../../../base/metadata.js";
 
@@ -23,6 +23,11 @@ export interface IMeasureMetadataObjectBase {
      * Measure is locked for editing
      */
     isLocked?: boolean;
+
+    /**
+     * Measure tags.
+     */
+    tags?: string[];
 }
 
 /**

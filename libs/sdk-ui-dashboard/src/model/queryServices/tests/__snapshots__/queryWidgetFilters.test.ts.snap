@@ -240,6 +240,7 @@ exports[`query widget filters > basic scenarios > should fail in case the widget
         "supportsCsvUploader": true,
         "supportsCustomColorPalettes": true,
         "supportsElementUris": true,
+        "supportsElementsQueryParentFiltering": true,
         "supportsEveryoneUserGroupForAccessControl": true,
         "supportsHierarchicalWorkspaces": false,
         "supportsKpiWidget": true,

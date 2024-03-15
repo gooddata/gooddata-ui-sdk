@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useEffect, useRef, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { useMapboxToken, enrichMapboxToken } from "@gooddata/sdk-ui-geo";
@@ -11,6 +11,7 @@ import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } from "../commands/index.js";
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
+import { getWidgetsOfType } from "../store/layout/layoutUtils.js";
 
 type InitProps = {
     backend: IAnalyticalBackend;
@@ -107,7 +108,15 @@ export const useInitializeDashboardStore = (
                 } catch {}
             }
 
-            const backgroundWorkers = [newRenderingWorker()];
+            let asyncRenderExpectedCount = undefined;
+            if (isDashboard(dashboard) && dashboard.layout !== undefined && !dashboard.plugins) {
+                asyncRenderExpectedCount = getWidgetsOfType(dashboard.layout, ["kpi", "insight"]).length;
+            }
+            const backgroundWorkers = [
+                newRenderingWorker({
+                    asyncRenderExpectedCount,
+                }),
+            ];
 
             // Create new store and fire load dashboard command.
             const newDashboardStore = createDashboardStore({

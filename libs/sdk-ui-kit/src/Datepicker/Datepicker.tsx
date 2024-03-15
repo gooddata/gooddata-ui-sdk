@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce.js";
@@ -28,6 +28,7 @@ import pt from "date-fns/locale/pt/index.js";
 import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
+import it from "date-fns/locale/it/index.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -70,6 +71,7 @@ const convertedLocales: Record<string, Locale> = {
     "pt-PT": pt,
     "zh-Hans": zhCN,
     "ru-RU": ru,
+    "it-IT": it,
 };
 
 function formatDate(date: Date, dateFormat: string): string {

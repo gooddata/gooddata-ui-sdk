@@ -81,6 +81,15 @@ jobs:
           VERSION: ${{ inputs.version }}
           IS_NEW_LATEST: ${{ inputs.is-new-latest }}
 
+        # find oldest version and remove it -- as we're running this twice, once
+        # for Next and once for latest version, do it only when is-new-latest=true
+      - name: Remove oldest version
+        if: ${{ inputs.is-new-latest == true }}
+        run: |
+          cd gooddata-ui-apidocs
+          ./remove-old-versions.sh
+          cd ..
+
       - name: Publish apidocs
         run: |
           cd gooddata-ui-apidocs

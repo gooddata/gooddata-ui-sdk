@@ -1,5 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
-import React from "react";
+// (C) 2020-2024 GoodData Corporation
+import React, { Suspense, lazy } from "react";
 import cx from "classnames";
 import throttle from "lodash/throttle.js";
 import noop from "lodash/noop.js";
@@ -9,7 +9,7 @@ import { v4 } from "uuid";
 
 import { WrappedComponentProps } from "react-intl";
 import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
-import GeoChartRenderer, { IGeoChartRendererProps } from "./GeoChartRenderer.js";
+import type { IGeoChartRendererProps } from "./GeoChartRenderer.js";
 import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import {
@@ -40,13 +40,19 @@ import { defaultImport } from "default-import";
 
 export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 
+const GeoChartRendererLazy = lazy(() => import("./GeoChartRenderer.js"));
+
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(ReactMeasure);
 
 function renderChart(props: IGeoChartRendererProps): React.ReactElement {
-    return <GeoChartRenderer {...props} />;
+    return (
+        <Suspense fallback={null}>
+            <GeoChartRendererLazy {...props} />
+        </Suspense>
+    );
 }
 
 function renderLegend(props: IGeoChartLegendRendererProps): React.ReactElement {

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -83,6 +83,8 @@ export {
     IParentWithConnectingAttributes,
     IUseAttributeElements,
 } from "./types/attributeFilterTypes.js";
+
+export { IDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
 export {

@@ -2,7 +2,7 @@
 import { ComponentType } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
-import { IDashboardAttributeFilterParentItem } from "../../../model/index.js";
+import { IDashboardAttributeFilterParentItem, IDashboardDependentDateFilter } from "../../../model/index.js";
 
 /**
  * @public
@@ -62,4 +62,4 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 /**
  * @internal
  */
-export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;

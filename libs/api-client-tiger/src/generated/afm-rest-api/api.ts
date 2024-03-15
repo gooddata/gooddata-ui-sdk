@@ -608,6 +608,12 @@ export interface AttributeHeaderOutAttributeHeader {
      * @memberof AttributeHeaderOutAttributeHeader
      */
     format?: AttributeFormat;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    valueType?: AttributeHeaderOutAttributeHeaderValueTypeEnum;
 }
 
 export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
@@ -630,6 +636,17 @@ export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
 
 export type AttributeHeaderOutAttributeHeaderGranularityEnum =
     typeof AttributeHeaderOutAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderOutAttributeHeaderGranularityEnum];
+export const AttributeHeaderOutAttributeHeaderValueTypeEnum = {
+    TEXT: "TEXT",
+    HYPERLINK: "HYPERLINK",
+    GEO: "GEO",
+    GEO_LONGITUDE: "GEO_LONGITUDE",
+    GEO_LATITUDE: "GEO_LATITUDE",
+    IMAGE: "IMAGE",
+} as const;
+
+export type AttributeHeaderOutAttributeHeaderValueTypeEnum =
+    typeof AttributeHeaderOutAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderOutAttributeHeaderValueTypeEnum];
 
 /**
  *
@@ -971,6 +988,12 @@ export interface ElementsRequest {
      * @deprecated
      */
     dataSamplingPercentage?: number;
+    /**
+     * If specified, the element data will be taken from the result with the same cacheId if it is available.
+     * @type {string}
+     * @memberof ElementsRequest
+     */
+    cacheId?: string;
 }
 
 export const ElementsRequestSortOrderEnum = {
@@ -1017,6 +1040,12 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     format?: AttributeFormat;
+    /**
+     * The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results and to also avoid excessive queries to the database itself.
+     * @type {string}
+     * @memberof ElementsResponse
+     */
+    cacheId?: string;
 }
 
 export const ElementsResponseGranularityEnum = {
@@ -1219,6 +1248,68 @@ export type FilterDefinition =
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
+/**
+ *
+ * @export
+ * @interface ForecastRequest
+ */
+export interface ForecastRequest {
+    /**
+     * Number of future periods that should be forecasted
+     * @type {number}
+     * @memberof ForecastRequest
+     */
+    forecastPeriod: number;
+    /**
+     * Confidence interval boundary value.
+     * @type {number}
+     * @memberof ForecastRequest
+     */
+    confidenceLevel?: number;
+    /**
+     * Whether the input data is seasonal
+     * @type {boolean}
+     * @memberof ForecastRequest
+     */
+    seasonal?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface ForecastResult
+ */
+export interface ForecastResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ForecastResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    origin: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    prediction: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    lowerBound: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    upperBound: Array<number>;
+}
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
@@ -1950,6 +2041,19 @@ export type SimpleMeasureDefinitionMeasureAggregationEnum =
     typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
+ *
+ * @export
+ * @interface SmartFunctionResponse
+ */
+export interface SmartFunctionResponse {
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof SmartFunctionResponse
+     */
+    links: ExecutionLinks;
+}
+/**
  * @type SortKey
  * @export
  */
@@ -2526,6 +2630,124 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecast", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecast", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("forecast", "forecastRequest", forecastRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -2772,6 +2994,58 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecast(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -2936,6 +3210,48 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast(
+            requestParameters: ActionsApiForecastRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .forecast(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult(
+            requestParameters: ActionsApiForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .forecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -3045,6 +3361,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    forecast(
+        requestParameters: ActionsApiForecastRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    forecastResult(
+        requestParameters: ActionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -3231,6 +3573,76 @@ export interface ActionsApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for forecast operation in ActionsApi.
+ * @export
+ * @interface ActionsApiForecastRequest
+ */
+export interface ActionsApiForecastRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiForecast
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiForecast
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof ActionsApiForecast
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiForecast
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for forecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiForecastResultRequest
+ */
+export interface ActionsApiForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveExecutionMetadataRequest
@@ -3400,6 +3812,46 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.afmExecution,
                 requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .forecast(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .forecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -4682,6 +5134,405 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.offset,
                 requestParameters.limit,
                 requestParameters.excludedTotalDimensions,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * SmartFunctionsApi - axios parameter creator
+ * @export
+ */
+export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecast", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecast", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("forecast", "forecastRequest", forecastRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - functional programming interface
+ * @export
+ */
+export const SmartFunctionsApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecast(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - factory interface
+ * @export
+ */
+export const SmartFunctionsApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = SmartFunctionsApiFp(configuration);
+    return {
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast(
+            requestParameters: SmartFunctionsApiForecastRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .forecast(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult(
+            requestParameters: SmartFunctionsApiForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .forecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - interface
+ * @export
+ * @interface SmartFunctionsApi
+ */
+export interface SmartFunctionsApiInterface {
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    forecast(
+        requestParameters: SmartFunctionsApiForecastRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    forecastResult(
+        requestParameters: SmartFunctionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
+}
+
+/**
+ * Request parameters for forecast operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiForecastRequest
+ */
+export interface SmartFunctionsApiForecastRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for forecastResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiForecastResultRequest
+ */
+export interface SmartFunctionsApiForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * SmartFunctionsApi - object-oriented interface
+ * @export
+ * @class SmartFunctionsApi
+ * @extends {BaseAPI}
+ */
+export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public forecast(requestParameters: SmartFunctionsApiForecastRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .forecast(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public forecastResult(
+        requestParameters: SmartFunctionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .forecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
