@@ -268,6 +268,7 @@ export interface IBackendCapabilities {
     supportsCrossFiltering?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
+    supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
     supportsEnumeratingDatetimeAttributes?: boolean;
     supportsEveryoneUserGroupForAccessControl?: boolean;
