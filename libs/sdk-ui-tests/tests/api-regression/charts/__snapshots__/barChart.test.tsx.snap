@@ -118,6 +118,7 @@ exports[`BarChart > with 100x70 - without x axis, without y axis (very small con
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -239,6 +240,7 @@ exports[`BarChart > with 120x354 - without y axis labels > should create expecte
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -360,6 +362,7 @@ exports[`BarChart > with 165x354 - without y axis title > should create expected
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -517,6 +520,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -674,6 +678,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -831,6 +836,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -988,6 +994,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1145,6 +1152,7 @@ exports[`BarChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1302,6 +1310,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1459,6 +1468,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1616,6 +1626,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1773,6 +1784,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1930,6 +1942,7 @@ exports[`BarChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2087,6 +2100,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2244,6 +2258,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2401,6 +2416,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2558,6 +2574,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2715,6 +2732,7 @@ exports[`BarChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2872,6 +2890,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3029,6 +3048,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3186,6 +3206,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3343,6 +3364,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3500,6 +3522,7 @@ exports[`BarChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3657,6 +3680,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - auto legend > should c
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3814,6 +3838,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend at bottom > sho
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3971,6 +3996,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on left > shoul
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4128,6 +4154,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on right > shou
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4285,6 +4312,7 @@ exports[`BarChart > with 610x154 - Force position RIGHT - legend on top > should
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4442,6 +4470,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4599,6 +4628,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4756,6 +4786,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4913,6 +4944,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5070,6 +5102,7 @@ exports[`BarChart > with 610x194 - Position respects configuration, max 1 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5227,6 +5260,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5384,6 +5418,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5541,6 +5576,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5698,6 +5734,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5855,6 +5892,7 @@ exports[`BarChart > with 610x274 - Position respects configuration, max 2 row fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -5976,6 +6014,7 @@ exports[`BarChart > with 650x90 - without x axis labels > should create expected
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6097,6 +6136,7 @@ exports[`BarChart > with 650x120 - without x axis title > should create expected
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6254,6 +6294,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6411,6 +6452,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6568,6 +6610,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6725,6 +6768,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -6882,6 +6926,7 @@ exports[`BarChart > with 650x354 - Position respects configuration, map legend f
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7009,6 +7054,7 @@ exports[`BarChart > with X axis min/max configuration > should create expected p
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7138,6 +7184,7 @@ exports[`BarChart > with X axis on top > should create expected props for core c
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7286,6 +7333,7 @@ exports[`BarChart > with X axis on top with two viewBy attributes > should creat
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7431,6 +7479,7 @@ exports[`BarChart > with Y axis invisible > should create expected props for cor
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7576,6 +7625,7 @@ exports[`BarChart > with Y axis rotation > should create expected props for core
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7759,6 +7809,7 @@ exports[`BarChart > with arithmetic measures > should create expected props for 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -7942,6 +7993,7 @@ exports[`BarChart > with assign color to attribute element stack > should create
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8150,6 +8202,7 @@ exports[`BarChart > with assign color to master measure impacts derived PoP > sh
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8335,6 +8388,7 @@ exports[`BarChart > with assign color to measures > should create expected props
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8465,6 +8519,7 @@ exports[`BarChart > with coloring - custom colors > should create expected props
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8630,6 +8685,7 @@ exports[`BarChart > with coloring - custom palette > should create expected prop
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8802,6 +8858,7 @@ exports[`BarChart > with coloring - custom palette preferred over colors > shoul
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -8925,6 +8982,7 @@ exports[`BarChart > with coloring - default > should create expected props for c
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9047,6 +9105,7 @@ exports[`BarChart > with data labels - data labels and totals with auto visibili
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9168,6 +9227,7 @@ exports[`BarChart > with data labels - data labels auto visibility > should crea
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9289,6 +9349,7 @@ exports[`BarChart > with data labels - data labels forced hidden > should create
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9411,6 +9472,7 @@ exports[`BarChart > with data labels - data labels forced hidden totals forced h
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9533,6 +9595,7 @@ exports[`BarChart > with data labels - data labels forced hidden totals forced v
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9654,6 +9717,7 @@ exports[`BarChart > with data labels - data labels forced visible > should creat
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9772,6 +9836,7 @@ exports[`BarChart > with data labels - default > should create expected props fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -9897,6 +9962,7 @@ exports[`BarChart > with data labels - forced dataLabels visible and german sepa
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10019,6 +10085,7 @@ exports[`BarChart > with data labels - labels forced hidden totals auto visibili
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10211,6 +10278,7 @@ exports[`BarChart > with dual axis label rotation - 60 > should create expected 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10403,6 +10471,7 @@ exports[`BarChart > with dual axis label rotation - 90 > should create expected 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10595,6 +10664,7 @@ exports[`BarChart > with dual axis label rotation - minus60 > should create expe
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10787,6 +10857,7 @@ exports[`BarChart > with dual axis label rotation - minus90 > should create expe
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -10956,6 +11027,7 @@ exports[`BarChart > with dual axis name customization - high > should create exp
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11125,6 +11197,7 @@ exports[`BarChart > with dual axis name customization - invisible > should creat
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11294,6 +11367,7 @@ exports[`BarChart > with dual axis name customization - low > should create expe
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11463,6 +11537,7 @@ exports[`BarChart > with dual axis name customization - middle > should create e
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11610,6 +11685,7 @@ exports[`BarChart > with dual axis when two viewBy attributes > should create ex
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11798,6 +11874,7 @@ exports[`BarChart > with dual axis with one top measure and three bottom > shoul
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -11944,6 +12021,7 @@ exports[`BarChart > with force disable drill on axes > should create expected pr
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12157,6 +12235,7 @@ exports[`BarChart > with four measures and PoP > should create expected props fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12283,6 +12362,7 @@ exports[`BarChart > with legend position - auto legend > should create expected 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12409,6 +12489,7 @@ exports[`BarChart > with legend position - disabled > should create expected pro
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12535,6 +12616,7 @@ exports[`BarChart > with legend position - legend at bottom > should create expe
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12661,6 +12743,7 @@ exports[`BarChart > with legend position - legend on left > should create expect
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12787,6 +12870,7 @@ exports[`BarChart > with legend position - legend on right > should create expec
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -12913,6 +12997,7 @@ exports[`BarChart > with legend position - legend on top > should create expecte
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13102,6 +13187,7 @@ exports[`BarChart > with reversed three measures and one viewBy with top axis an
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13245,6 +13331,7 @@ exports[`BarChart > with reversed two measures and two viewBy with stackMeasures
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13392,6 +13479,7 @@ exports[`BarChart > with single axis name customization - high > should create e
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13539,6 +13627,7 @@ exports[`BarChart > with single axis name customization - invisible > should cre
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13686,6 +13775,7 @@ exports[`BarChart > with single axis name customization - low > should create ex
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13833,6 +13923,7 @@ exports[`BarChart > with single axis name customization - middle > should create
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -13908,6 +13999,7 @@ exports[`BarChart > with single measure > should create expected props for core 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14053,6 +14145,7 @@ exports[`BarChart > with single measure and two viewBy with drilling on child at
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14198,6 +14291,7 @@ exports[`BarChart > with single measure and two viewBy with drilling on parent a
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14299,6 +14393,7 @@ exports[`BarChart > with single measure and viewBy with drilling on bars > shoul
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14396,6 +14491,7 @@ exports[`BarChart > with single measure ignores stack measures > should create e
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14493,6 +14589,7 @@ exports[`BarChart > with single measure with stack to 100% > should create expec
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14629,6 +14726,7 @@ exports[`BarChart > with single measure with two viewBy and stack > should creat
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14726,6 +14824,7 @@ exports[`BarChart > with single measure with viewBy > should create expected pro
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14843,6 +14942,7 @@ exports[`BarChart > with single measure with viewBy and stackBy > should create 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -14982,6 +15082,7 @@ exports[`BarChart > with single measure, two viewBy and stacking with drilling o
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15170,6 +15271,7 @@ exports[`BarChart > with stack measures and dual axis > should create expected p
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15358,6 +15460,7 @@ exports[`BarChart > with stack measures to 100% and dual axis > should create ex
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15552,6 +15655,7 @@ exports[`BarChart > with stack measures to 100% with dual axis and axis min/max 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15705,6 +15809,7 @@ exports[`BarChart > with stackBy with one date > should create expected props fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15847,6 +15952,7 @@ exports[`BarChart > with two measures and two viewBy with stackMeasures > should
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -15989,6 +16095,7 @@ exports[`BarChart > with two measures and two viewBy with stackMeasuresToPercent
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16137,6 +16244,7 @@ exports[`BarChart > with two measures and two viewBy with top axis and stackMeas
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16287,6 +16395,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16438,6 +16547,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16588,6 +16698,7 @@ exports[`BarChart > with two measures and two viewBy, dual axis, with drilling o
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16735,6 +16846,7 @@ exports[`BarChart > with two measures with dual axis and stack measures to 100% 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -16882,6 +16994,7 @@ exports[`BarChart > with two measures with dual axis ignores stack measures > sh
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17024,6 +17137,7 @@ exports[`BarChart > with two measures with two viewBy > should create expected p
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17193,6 +17307,7 @@ exports[`BarChart > with two measures with two viewBy, filtered to single value 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17316,6 +17431,7 @@ exports[`BarChart > with two measures with viewBy > should create expected props
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17446,6 +17562,7 @@ exports[`BarChart > with two measures with viewBy sorted by attribute > should c
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17582,6 +17699,7 @@ exports[`BarChart > with two measures with viewBy sorted by measure > should cre
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17735,6 +17853,7 @@ exports[`BarChart > with viewBy date and PoP measure > should create expected pr
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -17907,6 +18026,7 @@ exports[`BarChart > with viewBy with two dates > should create expected props fo
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18018,6 +18138,7 @@ exports[`BarChart > with with measure value filter > should create expected prop
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18125,6 +18246,7 @@ exports[`BarChart > with with ranking filter > should create expected props for 
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -18222,5 +18344,6 @@ exports[`BarChart > with with single measure and view by > should create expecte
   "exportTitle": "BarChart",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;

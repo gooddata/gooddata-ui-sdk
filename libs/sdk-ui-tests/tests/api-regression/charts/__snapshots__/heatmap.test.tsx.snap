@@ -123,6 +123,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -249,6 +250,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -375,6 +377,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -501,6 +504,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -627,6 +631,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -753,6 +758,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -879,6 +885,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1005,6 +1012,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1131,6 +1139,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1257,6 +1266,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1434,6 +1444,7 @@ exports[`Heatmap > with assign color to measures > should create expected props 
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1580,6 +1591,7 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1726,6 +1738,7 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -1872,6 +1885,7 @@ exports[`Heatmap > with axis name configuration - low > should create expected p
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2018,6 +2032,7 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2147,6 +2162,7 @@ exports[`Heatmap > with coloring - custom colors > should create expected props 
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2311,6 +2327,7 @@ exports[`Heatmap > with coloring - custom palette > should create expected props
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2482,6 +2499,7 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2603,6 +2621,7 @@ exports[`Heatmap > with coloring - default > should create expected props for co
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2728,6 +2747,7 @@ exports[`Heatmap > with data labels - auto visibility > should create expected p
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2849,6 +2869,7 @@ exports[`Heatmap > with data labels - default > should create expected props for
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -2974,6 +2995,7 @@ exports[`Heatmap > with data labels - forced hidden > should create expected pro
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3099,6 +3121,7 @@ exports[`Heatmap > with data labels - forced visible > should create expected pr
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3228,6 +3251,7 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3353,6 +3377,7 @@ exports[`Heatmap > with legend position - auto legend > should create expected p
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3478,6 +3503,7 @@ exports[`Heatmap > with legend position - disabled > should create expected prop
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3603,6 +3629,7 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3728,6 +3755,7 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3853,6 +3881,7 @@ exports[`Heatmap > with legend position - legend on right > should create expect
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -3978,6 +4007,7 @@ exports[`Heatmap > with legend position - legend on top > should create expected
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4070,6 +4100,7 @@ exports[`Heatmap > with measure and columns > should create expected props for c
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4170,6 +4201,7 @@ exports[`Heatmap > with measure and rows > should create expected props for core
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4241,6 +4273,7 @@ exports[`Heatmap > with measure only > should create expected props for core cha
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4361,6 +4394,7 @@ exports[`Heatmap > with measure, rows and columns > should create expected props
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
 
@@ -4481,5 +4515,6 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
   "exportTitle": "Heatmap",
   "theme": undefined,
   "themeIsLoading": undefined,
+  "themeStatus": "pending",
 }
 `;
