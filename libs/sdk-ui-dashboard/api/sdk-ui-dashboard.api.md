@@ -135,6 +135,7 @@ import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-model';
@@ -2373,7 +2374,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes | QueryMetricsAndFacts;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes | QueryMetricsAndFacts | QueryAvailableDatasetsForItems;
 
 // @beta
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -2424,7 +2425,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS" | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
 
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
@@ -3753,6 +3754,26 @@ export interface IDashboardDateFilterProps {
     isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     readonly?: boolean;
+}
+
+// @internal (undocumented)
+export interface IDashboardDependentDateFilter {
+    // (undocumented)
+    dataSet?: ObjRef;
+    // (undocumented)
+    from?: DateString | number;
+    // (undocumented)
+    granularity?: string;
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    to?: DateString | number;
+    // (undocumented)
+    type: string;
 }
 
 // @beta
@@ -5705,6 +5726,19 @@ export interface QueryAttributeElements extends IDashboardQuery {
 // @internal
 export function queryAttributeElements(displayForm: ObjRef, limit?: number, correlationId?: string): QueryAttributeElements;
 
+// @internal (undocumented)
+export interface QueryAvailableDatasetsForItems extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly items: IAttributeOrMeasure[];
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
+}
+
+// @internal
+export function queryAvailableDatasetsForItems(items: IAttributeOrMeasure[], correlationId?: string): QueryAvailableDatasetsForItems;
+
 // @internal
 export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
     cacheName: string;
@@ -6740,6 +6774,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 
 // @public
 export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
@@ -8385,7 +8422,7 @@ export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, in
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
 
 // @internal (undocumented)
-export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

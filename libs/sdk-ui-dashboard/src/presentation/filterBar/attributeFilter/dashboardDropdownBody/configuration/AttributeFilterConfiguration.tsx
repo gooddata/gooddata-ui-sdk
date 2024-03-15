@@ -24,6 +24,7 @@ import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
+import { useAvailableDatasetsForItems } from "./hooks/useAvailableDatasetsForItems.js";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
@@ -115,6 +116,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onModeUpdate,
         limitingItems,
         onLimitingItemsUpdate,
+        availableDatasetsForFilter,
+        dependentDateFilters,
     } = useAttributeFilterParentFiltering();
 
     const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
@@ -123,6 +126,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         currentFilter.attributeFilter.displayForm,
         neighborFilterDisplayForms,
     );
+
+    const { availableDatasetsForItemsLoading, availableDatasetForItems } =
+        useAvailableDatasetsForItems(availableDatasetsForFilter);
 
     const { validNeighbourAttributesLoading, validNeighbourAttributes } = useValidNeighbourAttributes(
         filterDisplayForms.selectedDisplayForm,
@@ -144,7 +150,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         connectingAttributesLoading ||
         attributesLoading ||
         validNeighbourAttributesLoading ||
-        metricsAndFactsLoading
+        metricsAndFactsLoading ||
+        availableDatasetsForItemsLoading
     ) {
         return (
             <div className="gd-loading-equalizer-attribute-filter-config-wrap">
@@ -156,7 +163,13 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         );
     }
 
-    if (!filterRef || !connectingAttributes || !validNeighbourAttributes || !attributes) {
+    if (
+        !filterRef ||
+        !connectingAttributes ||
+        !validNeighbourAttributes ||
+        !attributes ||
+        !availableDatasetForItems
+    ) {
         return null;
     }
 
@@ -193,6 +206,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 onParentFilterUpdate={onParentSelect}
                 metricsAndFacts={metricsAndFacts!}
                 intl={intl}
+                availableDatasets={availableDatasetForItems}
+                dependentDateFilters={dependentDateFilters}
             />
             {showDependentFiltersConfiguration && parents.length > 0 ? (
                 <>

@@ -17,6 +17,68 @@
         }
     ],
     "paths": {
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Smart functions - Forecast",
+                "description": "(BETA) Computes forecasted data points from the provided execution result and parameters.",
+                "operationId": "forecast",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Input result ID to be used in the computation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "9bd52018570364264fcf62d373da6bed313120e8"
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "description": "Ignore all caches during execution of current request.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ForecastRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SmartFunctionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "post": {
                 "tags": ["Computation", "actions"],
@@ -329,6 +391,66 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Smart functions - Forecast Result",
+                "description": "(BETA) Gets forecast result.",
+                "operationId": "forecastResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForecastResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata": {
             "get": {
                 "tags": ["Computation", "actions"],
@@ -474,6 +596,50 @@
     },
     "components": {
         "schemas": {
+            "ForecastRequest": {
+                "required": ["forecastPeriod"],
+                "type": "object",
+                "properties": {
+                    "forecastPeriod": {
+                        "type": "integer",
+                        "description": "Number of future periods that should be forecasted",
+                        "format": "int32"
+                    },
+                    "confidenceLevel": {
+                        "maximum": 1,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Confidence interval boundary value.",
+                        "format": "float",
+                        "default": 0.95
+                    },
+                    "seasonal": {
+                        "type": "boolean",
+                        "description": "Whether the input data is seasonal",
+                        "default": false
+                    }
+                }
+            },
+            "ExecutionLinks": {
+                "required": ["executionResult"],
+                "type": "object",
+                "properties": {
+                    "executionResult": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SmartFunctionResponse": {
+                "required": ["links"],
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                }
+            },
             "AttributeFormat": {
                 "required": ["locale", "pattern"],
                 "type": "object",
@@ -1830,17 +1996,12 @@
                             },
                             "format": {
                                 "$ref": "#/components/schemas/AttributeFormat"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE"]
                             }
                         }
-                    }
-                }
-            },
-            "ExecutionLinks": {
-                "required": ["executionResult"],
-                "type": "object",
-                "properties": {
-                    "executionResult": {
-                        "type": "string"
                     }
                 }
             },
@@ -1975,6 +2136,46 @@
                     }
                 },
                 "description": "Entity describing the valid descendants response."
+            },
+            "ForecastResult": {
+                "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "origin": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "prediction": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "lowerBound": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "upperBound": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    }
+                }
             },
             "ResultCacheMetadata": {
                 "required": ["afm", "executionResponse", "resultSize", "resultSpec"],

@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-02-20T14:36:57.987Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-03-07T14:46:05.215Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -33,14 +33,14 @@ export const Account = {
  */
 export const Activity = {
     /**
-     * Display Form Title: Activity
-     * Display Form ID: attr.f_activity.activity
-     */
-    Default: newAttribute("attr.f_activity.activity"),
-    /**
      * Display Form Title: Subject
      * Display Form ID: label.f_activity.subject
-     */ Subject: newAttribute("label.f_activity.subject"),
+     */
+    Subject: newAttribute("label.f_activity.subject"),
+    /**
+     * Display Form Title: Activity
+     * Display Form ID: attr.f_activity.activity
+     */ Default: newAttribute("attr.f_activity.activity"),
 };
 /**
  * Attribute Title: Opportunity
@@ -166,30 +166,30 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */
-    Default: newAttribute("f_city.id"),
-    /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+     */
+    Name: newAttribute("f_city.id.cityname"),
     /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
      */ Latitude: newAttribute("f_city.id.latitude"),
     /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
     /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
     /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
@@ -216,14 +216,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const Department = {
     /**
-     * Display Form Title: Department hyperlink
-     * Display Form ID: f_owner.department_id.departmenthyperlink
-     */
-    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
-    /**
      * Display Form Title: Department
      * Display Form ID: f_owner.department_id
-     */ Default: newAttribute("f_owner.department_id"),
+     */
+    Default: newAttribute("f_owner.department_id"),
+    /**
+     * Display Form Title: Department hyperlink
+     * Display Form ID: f_owner.department_id.departmenthyperlink
+     */ Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
 };
 /**
  * Attribute Title: Owner Id
@@ -291,14 +291,14 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const State = {
     /**
-     * Display Form Title: State name
-     * Display Form ID: state_id.statename
-     */
-    Name: newAttribute("state_id.statename"),
-    /**
      * Display Form Title: State
      * Display Form ID: state_id
-     */ Default: newAttribute("state_id"),
+     */
+    Default: newAttribute("state_id"),
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */ Name: newAttribute("state_id.statename"),
 };
 /**
  * Attribute Title: Product that is renamed to test the long attribute name
@@ -306,16 +306,16 @@ export const State = {
  */
 export const ProductThatIsRenamedToTestTheLongAttributeName = {
     /**
-     * Display Form Title: Product that is renamed to test the long attribute name
-     * Display Form ID: productthatisrenamedtotestthelongattributename
-     */
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
-    /**
      * Display Form Title: Product that is renamed to test the long attribute name hyperlink
      * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */ Hyperlink: newAttribute(
+     */
+    Hyperlink: newAttribute(
         "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
     ),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */ Default: newAttribute("productthatisrenamedtotestthelongattributename"),
 };
 /**
  * Metric Title: 2 literals in datetime_diff
