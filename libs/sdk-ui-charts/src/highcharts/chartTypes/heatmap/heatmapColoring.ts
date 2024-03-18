@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     ColorStrategy,
     ICreateColorAssignmentReturnValue,
@@ -107,7 +107,12 @@ export class HeatmapColorStrategy extends ColorStrategy {
     }
 
     private generatePalette(colorA: string, colorB: string, steps: number): string[] {
-        return range(steps).map((step) => normalizeColorToRGB(mix((1 / (steps - 1)) * step, colorA, colorB)));
+        const extendedSteps = steps + 1;
+        const generatedPaletteIncludingBg = range(extendedSteps).map((step) =>
+            normalizeColorToRGB(mix((1 / (extendedSteps - 1)) * step, colorA, colorB)),
+        );
+
+        return generatedPaletteIncludingBg.slice(1); // Need to remove first color as it is the same as the background
     }
 
     private getDefaultColorAssignment(

@@ -1,8 +1,8 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { newDefForItems, uriRef } from "@gooddata/sdk-model";
-import { IDrillConfig, IDrillEventIntersectionElement, VisualizationTypes } from "@gooddata/sdk-ui";
+import { newDefForItems } from "@gooddata/sdk-model";
+import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "../../../lib/index.js";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing.js";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
@@ -197,134 +197,6 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe("678");
-    });
-
-    it("should remove duplicated values for heatmap", () => {
-        const drillIntersections: IDrillEventIntersectionElement[] = [
-            {
-                header: {
-                    attributeHeaderItem: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281/elements?id=1deea80aa5a54d1bbbc2e2de63989eef",
-                        name: "Best Case",
-                    },
-                    attributeHeader: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1282",
-                        identifier: "ac3EwmqvbxcX",
-                        localIdentifier: "a1",
-                        name: "Case",
-                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1282"),
-                        formOf: {
-                            uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281",
-                            identifier: "identifier1",
-                            name: "Case",
-                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281"),
-                        },
-                    },
-                },
-            },
-            {
-                header: {
-                    attributeHeaderItem: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/951/elements?id=168279",
-                        name: "CompuSci",
-                    },
-                    attributeHeader: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952",
-                        identifier: "label.product.id.name",
-                        localIdentifier: "a2",
-                        name: "Product",
-                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952"),
-                        formOf: {
-                            uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/951",
-                            identifier: "label.product.id",
-                            name: "Product",
-                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/951"),
-                        },
-                    },
-                },
-            },
-            {
-                header: {
-                    attributeHeaderItem: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/323/elements?id=2010",
-                        name: "2010",
-                    },
-                    attributeHeader: {
-                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/324",
-                        identifier: "closed.aag81lMifn6q",
-                        localIdentifier: "a3",
-                        name: "Closed",
-                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/324"),
-                        formOf: {
-                            uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/323",
-                            identifier: "closed",
-                            name: "Closed",
-                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/323"),
-                        },
-                    },
-                },
-            },
-        ];
-        const pointsWithEmptyValues: Array<Partial<IHighchartsPointObject>> = [
-            { x: 0, y: 0, value: 268.8, drillIntersection: drillIntersections },
-            { x: 0, y: 1, value: null, drillIntersection: drillIntersections },
-            {
-                x: 0,
-                y: 1,
-                value: null,
-                drillIntersection: drillIntersections,
-                ignoredInDrillEventContext: true,
-            },
-            { x: 0, y: 2, value: null, drillIntersection: drillIntersections },
-            {
-                x: 0,
-                y: 2,
-                value: null,
-                drillIntersection: drillIntersections,
-                ignoredInDrillEventContext: true,
-            },
-            { x: 0, y: 3, value: 3644, drillIntersection: drillIntersections },
-        ];
-        const pointClickWithEmptyEventData: Highcharts.DrilldownEventObject = {
-            points: pointsWithEmptyValues,
-        } as any;
-
-        const drillConfig = { dataView, onDrill: () => true };
-        const target = { dispatchEvent: vi.fn() };
-
-        chartClick(
-            drillConfig,
-            pointClickWithEmptyEventData,
-            target as any as EventTarget,
-            VisualizationTypes.HEATMAP,
-        );
-
-        vi.runAllTimers();
-
-        expect(target.dispatchEvent).toHaveBeenCalled();
-
-        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.points).toEqual([
-            {
-                intersection: drillIntersections,
-                x: 0,
-                y: 0,
-            },
-            {
-                intersection: drillIntersections,
-                x: 0,
-                y: 1,
-            },
-            {
-                intersection: drillIntersections,
-                x: 0,
-                y: 2,
-            },
-            {
-                intersection: drillIntersections,
-                x: 0,
-                y: 3,
-            },
-        ]);
     });
 
     it("should correctly handle z coordinate of point", () => {

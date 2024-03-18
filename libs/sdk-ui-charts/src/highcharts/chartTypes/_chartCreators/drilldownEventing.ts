@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import debounce from "lodash/debounce.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { invariant } from "ts-invariant";
@@ -90,8 +90,7 @@ function composeDrillContextGroup(
     points: IHighchartsPointObject[],
     chartType: ChartType,
 ): IDrillEventContextGroup {
-    const sanitizedPoints = sanitizeContextPoints(chartType, points);
-    const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
+    const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
         const elementChartType = getElementChartType(chartType, point);
         const customProps = getDrillPointCustomProps(point, chartType);
 
@@ -198,8 +197,7 @@ const tickLabelClickDebounce = debounce(
         chartType: ChartType,
     ): void => {
         const { dataView, onDrill } = drillConfig;
-        const sanitizedPoints = sanitizeContextPoints(chartType, points);
-        const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
+        const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
             const customProps = isBulletChart(chartType)
                 ? { type: (point?.series?.userOptions as any)?.bulletChartMeasureType }
                 : {};
@@ -224,16 +222,6 @@ const tickLabelClickDebounce = debounce(
         fireEvent(onDrill, data, target);
     },
 );
-
-function sanitizeContextPoints(
-    chartType: ChartType,
-    points: IHighchartsPointObject[],
-): IHighchartsPointObject[] {
-    if (isHeatmap(chartType)) {
-        return points.filter((point: IHighchartsPointObject) => !point.ignoredInDrillEventContext);
-    }
-    return points;
-}
 
 export function tickLabelClick(
     drillConfig: IDrillConfig,
