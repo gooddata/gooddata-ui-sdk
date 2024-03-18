@@ -2825,6 +2825,15 @@ importers:
 
   ../../libs/sdk-ui-charts:
     dependencies:
+      '@ag-grid-community/all-modules':
+        specifier: 27.3.0
+        version: 27.3.0
+      '@ag-grid-community/core':
+        specifier: 27.3.0
+        version: 27.3.0
+      '@ag-grid-community/react':
+        specifier: 27.3.0
+        version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
         specifier: ^1.0.5
         version: 1.0.5

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
 
 import {
@@ -18,6 +18,7 @@ import keyBy from "lodash/keyBy.js";
 import mapValues from "lodash/mapValues.js";
 import groupBy from "lodash/groupBy.js";
 import uniqBy from "lodash/uniqBy.js";
+import { convertLabelType } from "../LabelTypeConverter.js";
 
 const DEFAULT_FORMAT = "#,#.##";
 
@@ -51,6 +52,7 @@ function transformDimension(
                         totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
                         granularity: h.attributeHeader.granularity,
                         format: h.attributeHeader.format,
+                        labelType: convertLabelType(h.attributeHeader.valueType),
                     },
                 };
             } else {

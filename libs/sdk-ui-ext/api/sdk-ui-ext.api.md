@@ -527,6 +527,7 @@ export type LayoutType = "fluid";
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
+    INVALID_COLUMNS: string;
     EMPTY_AFM: string;
 };
 

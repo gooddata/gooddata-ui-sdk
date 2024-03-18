@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ResultDimension } from "@gooddata/api-client-tiger";
 
 export const mockDimensions: ResultDimension[] = [
@@ -25,6 +25,7 @@ export const mockDimensions: ResultDimension[] = [
                     primaryLabel: { id: "event_date.quarter", type: "label" },
                     attribute: { id: "event_date.quarter", type: "attribute" },
                     attributeName: "event_date - Quarter/Year",
+                    valueType: "TEXT",
                 },
             },
         ],
@@ -43,6 +44,7 @@ export const mockMultipleDimensions: ResultDimension[] = [
                     primaryLabel: { id: "event_date.quarter", type: "label" },
                     attribute: { id: "event_date.quarter", type: "attribute" },
                     attributeName: "event_date - Quarter/Year",
+                    valueType: "TEXT",
                 },
             },
             {
@@ -53,6 +55,7 @@ export const mockMultipleDimensions: ResultDimension[] = [
                     primaryLabel: { id: "event_date.quarter", type: "label" },
                     attribute: { id: "event_date.quarter", type: "attribute" },
                     attributeName: "event_date - Quarter/Year",
+                    valueType: "TEXT",
                 },
             },
         ],
@@ -81,9 +84,42 @@ export const mockMultipleDimensions: ResultDimension[] = [
                     primaryLabel: { id: "event_date.quarter", type: "label" },
                     attribute: { id: "event_date.quarter", type: "attribute" },
                     attributeName: "event_date - Quarter/Year",
+                    valueType: "TEXT",
                 },
             },
         ],
         localIdentifier: "headers3",
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    label: { id: "hyperlink.label", type: "label" },
+                    localIdentifier: "localAttr4",
+                    labelName: "Hyperlink",
+                    primaryLabel: { id: "hyperlink.label", type: "label" },
+                    attribute: { id: "hyperlink.attr", type: "attribute" },
+                    attributeName: "Hyperlink",
+                    valueType: "HYPERLINK",
+                },
+            },
+        ],
+        localIdentifier: "headers4",
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    label: { id: "image.label", type: "label" },
+                    localIdentifier: "localAttr5",
+                    labelName: "Image",
+                    primaryLabel: { id: "image.label", type: "label" },
+                    attribute: { id: "image.attr", type: "attribute" },
+                    attributeName: "Image",
+                    valueType: "IMAGE",
+                },
+            },
+        ],
+        localIdentifier: "headers5",
     },
 ];

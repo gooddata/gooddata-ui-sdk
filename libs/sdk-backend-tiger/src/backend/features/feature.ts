@@ -193,13 +193,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCsvAnalytics,
-            "enableCsvAnalytics",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCsvAnalytics,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDCrossFiltering,
             "enableKDCrossFiltering",
             "BOOLEAN",
@@ -260,6 +253,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMariaDbDataSource",
             "BOOLEAN",
             FeatureFlagsValues.enableMariaDbDataSource,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableRepeaterChart,
+            "enableRepeaterChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRepeaterChart,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableKDAttributeFilterDatesValidation,
+            "enableKDAttributeFilterDatesValidation",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKDAttributeFilterDatesValidation,
         ),
     };
 }

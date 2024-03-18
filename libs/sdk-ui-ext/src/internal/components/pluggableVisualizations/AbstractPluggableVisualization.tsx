@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import {
     IBucketItem,
@@ -373,5 +373,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
                 currentReferencePoint?.properties?.controls?.[prop] !==
                 nextReferencePoint?.properties?.controls?.[prop],
         );
+    }
+
+    public getBucketsToUpdate(_currentReferencePoint: IReferencePoint, _nextReferencePoint: IReferencePoint) {
+        return undefined;
     }
 }

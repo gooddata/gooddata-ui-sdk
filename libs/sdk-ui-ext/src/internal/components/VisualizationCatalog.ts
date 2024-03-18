@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import last from "lodash/last.js";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
@@ -25,6 +25,7 @@ import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/Unknow
 import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor.js";
 import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor.js";
 import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor.js";
+import { RepeaterDescriptor } from "./pluggableVisualizations/repeater/RepeaterDescriptor.js";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -143,6 +144,7 @@ const DefaultVisualizations = {
     sankey: SankeyChartDescriptor,
     dependencywheel: DependencyWheelChartDescriptor,
     waterfall: WaterfallChartDescriptor,
+    repeater: RepeaterDescriptor,
 };
 
 /**
