@@ -20,6 +20,10 @@ export {
     IOrientationConfig,
     ChartOrientationType,
     IDisplayFormHyperlinksConfig,
+    ChartRowHeight,
+    ChartCellTextWrapping,
+    ChartCellVerticalAlign,
+    ChartCellImageSizing,
 } from "./chartConfig.js";
 
 export {
