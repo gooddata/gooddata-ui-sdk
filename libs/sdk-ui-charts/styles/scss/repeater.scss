@@ -81,21 +81,62 @@ $subtotal-odd-background-color: var(
     width: 100%;
     height: 100%;
 
-    .gd-repeater-cell-wrapper {
-        height: 100%;
-    }
-
-    .gd-repeater-image {
-        height: 100%;
-        width: auto;
-    }
-
     .gd-repeater-image-empty {
         height: 100%;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .gd-repeater-cell-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        min-width: 0;
+        overflow: hidden;
+
+        &.gd-vertical-align {
+            &-top {
+                align-items: flex-start;
+            }
+
+            &-middle {
+                align-items: center;
+            }
+
+            &-bottom {
+                align-items: flex-end;
+            }
+        }
+
+        &.gd-text-wrapping {
+            &-clip > * {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            &-wrap {
+                white-space: normal;
+            }
+        }
+
+        &.gd-image-sizing {
+            &-fit {
+                .gd-repeater-image {
+                    height: 100%;
+                    width: auto;
+                    object-fit: contain;
+                }
+            }
+            &-fill {
+                .gd-repeater-image {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+            }
+        }
     }
 
     &.gd-repeater-header-hide {

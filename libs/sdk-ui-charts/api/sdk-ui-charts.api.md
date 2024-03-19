@@ -82,8 +82,20 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
+// @public (undocumented)
+export type ChartCellImageSizing = "fit" | "fill";
+
+// @public (undocumented)
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+// @public (undocumented)
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
+
+// @public (undocumented)
+export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
 
@@ -268,6 +280,9 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 
 // @public
 export interface IChartConfig {
+    cellImageSizing?: ChartCellImageSizing;
+    cellTextWrapping?: ChartCellTextWrapping;
+    cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
     colorMapping?: IColorMapping[];
@@ -297,6 +312,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
     secondaryChartType?: "line" | "column" | "area";
