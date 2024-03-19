@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { ISettings } from "@gooddata/sdk-model";
 
@@ -7,5 +7,6 @@ import { ISettings } from "@gooddata/sdk-model";
  */
 export const DefaultUiSettings: ISettings = {
     metadataTimeZone: "Europe/Prague", // Bear metadata are always stored in Prague time zone
+    keepInsightName: true,
     enableNewHeadline: true,
 };

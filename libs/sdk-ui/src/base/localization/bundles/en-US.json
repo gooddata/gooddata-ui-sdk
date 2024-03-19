@@ -135,11 +135,21 @@
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the visualization by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|insight": {
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
+        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
+        "limit": 0
+    },
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|visualization": {
+        "value": "Rollup (Total) aggregation is not available when filtering the visualization by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
+        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
+        "limit": 0
+    },
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|visualization": {
         "value": "Rollup (Total) aggregation is not available when filtering the visualization by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
         "limit": 0
@@ -157,6 +167,11 @@
         "translate": false
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|insight": {
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
+        "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
+        "limit": 0
+    },
+    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|visualization": {
         "value": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
         "limit": 0
@@ -263,6 +278,11 @@
         "limit": 0
     },
     "visualization.ErrorMessageGeneric|insight": {
+        "value": "Sorry, we can't display this insight",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.ErrorMessageGeneric|visualization": {
         "value": "Sorry, we can't display this visualization",
         "comment": "",
         "limit": 0
@@ -309,6 +329,11 @@
         "limit": 0
     },
     "visualization.ErrorDescriptionUnauthorized|insight": {
+        "value": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.ErrorDescriptionUnauthorized|visualization": {
         "value": "Sorry you don't have access to this visualization. Login or ask your administrator to grant you permissions.",
         "comment": "",
         "limit": 0
@@ -320,6 +345,11 @@
         "translate": false
     },
     "visualization.ErrorMessageNotFound|insight": {
+        "value": "Sorry, we can't find this insight",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.ErrorMessageNotFound|visualization": {
         "value": "Sorry, we can't find this visualization",
         "comment": "",
         "limit": 0
@@ -331,6 +361,11 @@
         "translate": false
     },
     "visualization.ErrorDescriptionNotFound|insight": {
+        "value": "The insight with this URL does not exist.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualization.ErrorDescriptionNotFound|visualization": {
         "value": "The visualization with this URL does not exist.",
         "comment": "",
         "limit": 0
@@ -1387,6 +1422,11 @@
         "limit": 0
     },
     "rankingFilter.allRecords.tooltip|insight": {
+        "value": "Apply the filter to all attributes in the insight.",
+        "comment": "Explanation of 'All' option.",
+        "limit": 0
+    },
+    "rankingFilter.allRecords.tooltip|visualization": {
         "value": "Apply the filter to all attributes in the visualization.",
         "comment": "Explanation of 'All' option.",
         "limit": 0
@@ -1398,6 +1438,11 @@
         "translate": false
     },
     "rankingFilter.attributeDropdown.oneAttributeTooltip|insight": {
+        "value": "The insight is sliced only by one attribute. The filter will apply to all its values.",
+        "comment": "Tooltip when no options are available for attribute dropdown.",
+        "limit": 0
+    },
+    "rankingFilter.attributeDropdown.oneAttributeTooltip|visualization": {
         "value": "The visualization is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown.",
         "limit": 0
@@ -1454,6 +1499,11 @@
         "limit": 0
     },
     "rankingFilter.valueTooltip|insight": {
+        "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
+        "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
+        "limit": 0
+    },
+    "rankingFilter.valueTooltip|visualization": {
         "value": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
         "limit": 0
@@ -1750,6 +1800,11 @@
         "limit": 0
     },
     "sorting.dropdown.header|insight": {
+        "value": "Sort insight",
+        "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
+        "limit": 0
+    },
+    "sorting.dropdown.header|visualization": {
         "value": "Sort visualization",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
         "limit": 0
@@ -1861,6 +1916,11 @@
         "limit": 0
     },
     "embedInsightDialog.code.options.include.config.info|insight": {
+        "value": "Include the insight configuration of colors, axes, legend, and canvas if available.",
+        "comment": "Tool tip that explain Include configuration",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config.info|visualization": {
         "value": "Include the visualization configuration of colors, axes, legend, and canvas if available.",
         "comment": "Tool tip that explain Include configuration",
         "limit": 0
@@ -1882,6 +1942,11 @@
         "limit": 0
     },
     "embedInsightDialog.headLine.embedInsight|insight": {
+        "value": "Embed insight",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.headLine.embedInsight|visualization": {
         "value": "Embed visualization",
         "comment": "",
         "limit": 0
@@ -1893,6 +1958,11 @@
         "translate": false
     },
     "embedInsightDialog.componentType.byReference.tooltip|insight": {
+        "value": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as insight type, metrics, attributes) will be reflected in the embedded version.",
+        "comment": "Tooltip that explain what Embed as a live insight means",
+        "limit": 0
+    },
+    "embedInsightDialog.componentType.byReference.tooltip|visualization": {
         "value": "Embed as a reference to a saved visualization in a generic GD.UI react component. Any future changes to the visualization (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a live visualization means",
         "limit": 0
@@ -1904,6 +1974,11 @@
         "translate": false
     },
     "embedInsightDialog.componentType.byDefinition.tooltip|insight": {
+        "value": "Embed as an insight definition in a specific GD.UI react component based on the currently selected insight type. No future changes to the insight (such as insight type, metrics, attributes) made in this application will be reflected in the embedded version.",
+        "comment": "Tooltip that explain what Embed as a a permanent report",
+        "limit": 0
+    },
+    "embedInsightDialog.componentType.byDefinition.tooltip|visualization": {
         "value": "Embed as an visualization definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the visualization (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report",
         "limit": 0
@@ -1950,7 +2025,12 @@
         "limit": 0
     },
     "embedInsightDialog.emptyInsight.byReference|insight": {
-        "value": "Code snipped will be displayed here once you <a>save the visualization</a>.",
+        "value": "Code snipped will be displayed here once you <a>save the insight</a>.",
+        "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "embedInsightDialog.emptyInsight.byReference|visualization": {
+        "value": "Code snipped will be displayed here once you <a>save the insight</a>.",
         "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
         "limit": 0
     },
@@ -1961,6 +2041,11 @@
         "translate": false
     },
     "embedInsightDialog.emptyInsight.byDefinition|insight": {
+        "value": "This insight type cannot be embedded as programmatic type component.",
+        "comment": "The disabled message for code area",
+        "limit": 0
+    },
+    "embedInsightDialog.emptyInsight.byDefinition|visualization": {
         "value": "This visualization type cannot be embedded as programmatic type component.",
         "comment": "The disabled message for code area",
         "limit": 0
@@ -2292,6 +2377,11 @@
         "limit": 0
     },
     "workspaceHierarchy.lockedInsight|insight": {
+        "value": "Only Admins can save changes to this insight.",
+        "comment": "Shown when hovering over lock indicator.",
+        "limit": 0
+    },
+    "workspaceHierarchy.lockedInsight|visualization": {
         "value": "Only Admins can save changes to this visualization.",
         "comment": "Shown when hovering over lock indicator.",
         "limit": 0
@@ -2303,6 +2393,11 @@
         "limit": 0
     },
     "workspaceHierarchy.inheritedInsight|insight": {
+        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
+        "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
+        "limit": 0
+    },
+    "workspaceHierarchy.inheritedInsight|visualization": {
         "value": "You cannot edit or delete this visualization.{br}It is centrally managed and certified.",
         "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
         "limit": 0

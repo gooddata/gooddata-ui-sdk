@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import memoize from "memoize-one";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { defaultImport } from "default-import";
@@ -13,11 +13,17 @@ const getNewKey = (key: string, stringToRemove: string) => key.replace(stringToR
 const pickCorrectInsightWordingInner = (
     translations: Record<string, string>,
     isEnabledInsightToReport: boolean,
+    keepInsightName: boolean,
 ): Record<string, string> => {
     const modifiedTranslations: Record<string, string> = {};
     Object.keys(translations).forEach((key) => {
-        if (key.includes("|report") || key.includes("|insight")) {
-            const newKey = getNewKey(key, isEnabledInsightToReport ? "|report" : "|insight");
+        if (key.includes("|report") || key.includes("|insight") || key.includes("|visualization")) {
+            const pick = isEnabledInsightToReport
+                ? "|report"
+                : keepInsightName
+                ? "|insight"
+                : "|visualization";
+            const newKey = getNewKey(key, pick);
             modifiedTranslations[newKey] = translations[key];
         }
     });
@@ -41,8 +47,9 @@ export const pickCorrectInsightWording = (
     settings?: IWorkspaceSettings,
 ): Record<string, string> => {
     const isEnabledInsightToReport = !!settings?.enableInsightToReport;
+    const keepInsightName = !!settings?.keepInsightName;
 
-    return memoizedPickCorrectInsightWordingInner(translations, isEnabledInsightToReport);
+    return memoizedPickCorrectInsightWordingInner(translations, isEnabledInsightToReport, keepInsightName);
 };
 
 const pickCorrectMetricWordingInner = (
@@ -97,11 +104,14 @@ export const removeAllInsightToReportTranslations = (
     translations: Record<string, string>,
 ): Record<string, string> =>
     Object.fromEntries(
-        Object.entries(translations).filter(([key]) => !key.includes("|report") && !key.includes("|insight")),
+        Object.entries(translations).filter(
+            ([key]) =>
+                !key.includes("|report") && !key.includes("|insight") && !key.includes("|visualization"),
+        ),
     );
 
 /**
- * The function to remove all translation keys that contain special suffixes "|report", "|insight", "._measure" or "._metric"
+ * The function to remove all translation keys that contain special suffixes "|report", "|insight", "|visualization", "._measure" or "._metric"
  * @beta
  */
 export const removeAllWordingTranslationsWithSpecialSuffix = (
@@ -112,6 +122,7 @@ export const removeAllWordingTranslationsWithSpecialSuffix = (
             ([key]) =>
                 !key.includes("|report") &&
                 !key.includes("|insight") &&
+                !key.includes("|visualization") &&
                 !key.includes("._measure") &&
                 !key.includes("._metric"),
         ),

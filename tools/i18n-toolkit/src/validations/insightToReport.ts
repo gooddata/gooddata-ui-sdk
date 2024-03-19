@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { DefaultLocale, CheckInsightPipe, CheckReportPipe } from "../data.js";
+import { CheckVisualizationPipe, DefaultLocale, CheckInsightPipe, CheckReportPipe } from "../data.js";
 import { done, skipped, message, fail } from "../utils/console.js";
 import { LocalesItem, LocalesStructure } from "../schema/localization.js";
 
@@ -33,6 +33,7 @@ export async function getInsightToReportCheck(
                 missingInsightReportSwitch,
                 missingInsightKeys,
                 missingReportKeys,
+                missingVisualizationKeys,
                 reportsKeyWithTranslate,
             } = await getValidationData(path, content);
 
@@ -45,12 +46,17 @@ export async function getInsightToReportCheck(
                 );
             }
 
-            if (missingReportKeys.length > 0 || missingInsightKeys.length > 0) {
+            if (
+                missingReportKeys.length > 0 ||
+                missingInsightKeys.length > 0 ||
+                missingVisualizationKeys.length > 0
+            ) {
                 fail(`Insight to report check ends with error.`, true);
                 throw new Error(
                     `Some keys missing in localisation file, missing keys: ${JSON.stringify([
                         ...missingInsightKeys,
                         ...missingReportKeys,
+                        ...missingVisualizationKeys,
                     ])}`,
                 );
             }
@@ -98,15 +104,21 @@ async function getValidationData(path: string, localesStructure: LocalesStructur
         .filter((item) => item !== null);
 
     const missingInsightReportSwitch: string[] = [];
+    const missingInsightVisualizationSwitch: string[] = [];
     insightIndexes.forEach((index) => {
         const key = keys[index];
         if (!key.includes(CheckInsightPipe)) {
             missingInsightReportSwitch.push(key);
         }
+
+        if (!key.includes(CheckVisualizationPipe)) {
+            missingInsightVisualizationSwitch.push(key);
+        }
     });
 
     const allInsightKeys = keys.filter((key) => key.includes(CheckInsightPipe));
     const allReportsKeys = keys.filter((key) => key.includes(CheckReportPipe));
+    const allVisualizationKeys = keys.filter((key) => key.includes(CheckVisualizationPipe));
 
     const missingReportKeys = allInsightKeys
         .map((insightKey) => {
@@ -122,6 +134,13 @@ async function getValidationData(path: string, localesStructure: LocalesStructur
         })
         .filter((item) => item !== null);
 
+    const missingVisualizationKeys = allInsightKeys
+        .map((insightKey) => {
+            const visKey = insightKey.replace(CheckInsightPipe, CheckVisualizationPipe);
+            return allVisualizationKeys.includes(visKey) ? null : visKey;
+        })
+        .filter((item) => item !== null);
+
     const reportsKeyWithTranslate = allReportsKeys
         .map((key) => {
             const item = values[keys.indexOf(key)];
@@ -132,8 +151,10 @@ async function getValidationData(path: string, localesStructure: LocalesStructur
 
     return {
         missingInsightReportSwitch,
+        missingInsightVisualizationSwitch,
         missingReportKeys,
         missingInsightKeys,
+        missingVisualizationKeys,
         reportsKeyWithTranslate,
     };
 }

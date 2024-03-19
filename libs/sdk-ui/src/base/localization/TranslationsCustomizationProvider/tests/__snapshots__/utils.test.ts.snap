@@ -2,7 +2,6 @@
 
 exports[`pickCorrectInsightWording > should return translations with insight when enableInsightToReport is set to false 1`] = `
 {
-  "mock.translation": "Insight",
   "mock.translation|insight": "Insight",
   "mock.translation|report": "Report",
 }

@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 export const DefaultLocale = "en-US.json";
 
 export const CheckInsightPipe = "|insight";
 export const CheckReportPipe = "|report";
+export const CheckVisualizationPipe = "|visualization";
 
 export const CheckMeasureSuffix = "._measure";
 export const CheckMetricSuffix = "._metric";
@@ -16,6 +17,7 @@ export type ToolkitOptions = {
     intl?: boolean;
     html?: boolean;
     insightToReport?: boolean;
+    insightToVisualization?: boolean;
     usage?: boolean;
     debug?: boolean;
 };

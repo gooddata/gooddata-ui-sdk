@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { getInsightToReportCheck } from "../insightToReport.js";
 import { LocalesStructure } from "../../schema/localization.js";
@@ -47,7 +47,7 @@ describe("validate insight to report", () => {
                     limit: 0,
                 },
             },
-            `Some keys missing in localisation file, missing keys: ["message.id|report"]`,
+            `Some keys missing in localisation file, missing keys: ["message.id|report","message.id|visualization"]`,
         ],
         [
             "invalid localisation with report inside value and valid pipe, missing insight pipe",
@@ -73,6 +73,11 @@ describe("validate insight to report", () => {
                     comment: "This is comment",
                     limit: 0,
                 },
+                "message.id|visualization": {
+                    value: "This is message contains Visualization word.",
+                    comment: "This is comment",
+                    limit: 0,
+                },
             },
             `Translation is enable for report keys, use translate=false, invalid keys: ["message.id|report"]`,
         ],
@@ -89,6 +94,11 @@ describe("validate insight to report", () => {
                     comment: "This is comment",
                     limit: 0,
                     translate: false,
+                },
+                "message.id|visualization": {
+                    value: "This is message contains Visualization word.",
+                    comment: "This is comment",
+                    limit: 0,
                 },
             },
             null,

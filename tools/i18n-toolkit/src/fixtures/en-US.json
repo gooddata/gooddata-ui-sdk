@@ -20,6 +20,12 @@
         "limit": 0,
         "translate": false
     },
+    "text.with.insight|visualization": {
+        "value": "Test text with visualization",
+        "comment": "test",
+        "limit": 0,
+        "translate": false
+    },
     "text.with.1": {
         "value": "Test text 1 2 3",
         "comment": "test",

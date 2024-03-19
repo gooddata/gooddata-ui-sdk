@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import difference from "lodash/difference.js";
 import intersection from "lodash/intersection.js";
@@ -12,6 +12,7 @@ import {
     Uncontrolled,
     CheckInsightPipe,
     CheckReportPipe,
+    CheckVisualizationPipe,
     CheckMeasureSuffix,
     CheckMetricSuffix,
 } from "../../data.js";
@@ -27,10 +28,13 @@ export function checkTranslations(
     localizations: Array<[string, LocalesStructure]>,
     rules: ToolkitConfigFile["rules"],
     extracted: Record<string, any>,
-    { insightToReport }: { insightToReport?: boolean },
+    {
+        insightToReport,
+        insightToVisualization,
+    }: { insightToReport?: boolean; insightToVisualization?: boolean },
 ): { results: UsageResult[]; groups: Record<string, string[]>; uncontrolled: Array<string> } {
     const { groups, ignoredRules, validateRules } = getGroupedRules(rules, extracted);
-    const keysInFiles = getTranslationKeysFromFiles(localizations, insightToReport);
+    const keysInFiles = getTranslationKeysFromFiles(localizations, insightToReport, insightToVisualization);
 
     const ignoredResults = getIgnoresResults(keysInFiles, ignoredRules, groups);
     const validResults = getValidResults(keysInFiles, validateRules, groups, ignoredResults);
@@ -122,6 +126,7 @@ function patternsAsFunction(pattern: RegExp | RegExp[] | undefined) {
 function getTranslationKeysFromFiles(
     localizations: Array<[string, LocalesStructure]>,
     insightToReport = false,
+    insightToVisualization = false,
 ): Array<[string, string[]]> {
     return localizations.map(([fileName, content]) => {
         let keys = Object.keys(content);
@@ -130,6 +135,10 @@ function getTranslationKeysFromFiles(
         if (insightToReport) {
             keys = keys.map((key) => {
                 return key.replace(CheckInsightPipe, "").replace(CheckReportPipe, "");
+            });
+        } else if (insightToVisualization) {
+            keys = keys.map((key) => {
+                return key.replace(CheckInsightPipe, "").replace(CheckVisualizationPipe, "");
             });
         }
         //remove metric and measure suffix
