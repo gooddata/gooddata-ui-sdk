@@ -6,6 +6,11 @@ id: whats_new_9
 weight: 29
 ---
 
+{{% alert color="warning" title="Version 9 vs Versions 10+" %}}
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
+{{% /alert %}}
+
 Overall, GoodData.UI v9 does not bring too many breaking changes at the API level, but rather at the technology support level and the [migration](../migration_guide/) should be relatively simple in most cases.
 
 ## React 18

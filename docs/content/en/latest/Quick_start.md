@@ -4,6 +4,11 @@ linkTitle: "Quick Start"
 weight: 12
 ---
 
+{{% alert color="warning" title="Version 9 vs Versions 10+" %}}
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
+{{% /alert %}}
+
 The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app 
  
 To see it in action:

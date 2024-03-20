@@ -6,6 +6,11 @@ id: migration_guide_9
 weight: 30
 ---
 
+{{% alert color="warning" title="Version 9 vs Versions 10+" %}}
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
+{{% /alert %}}
+
 ## Before You Begin:
 If you have a CommonJS codebase, it must be migrated to [ESM](https://nodejs.org/api/esm.html) before proceeding, as GoodData.UI now consists of [pure ESM packages](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
 
