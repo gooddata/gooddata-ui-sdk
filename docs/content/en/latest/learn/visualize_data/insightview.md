@@ -5,7 +5,10 @@ copyright: (C) 2007-2018 GoodData Corporation
 id: visualization_component
 ---
 
-The **InsightView component** is a generic component that renders insights created and saved by Analytical Designer.
+The **InsightView component** is a generic component that renders visualizations created and saved by Analytical Designer.
+
+{{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
+{{% /alert %}}
 
 ## Structure
 
@@ -93,4 +96,4 @@ clearInsightViewCaches();
 | onError | false | function | A custom error handler. Called with the argument containing the state and original error message, for example, `{ status:ErrorStates.BAD_REQUEST,error: {...} }`.  Defaults to `console.error`.|
 | onExportReady | false | function | A callback when the component is ready for exporting its data |
 | onLoadingChanged | false | function | A custom loading handler. Called when a visualization changes to/from the loading state. Called with the argument denoting a valid state, for example, `{ isLoading:false}`. |
-| onInsightLoaded | false | function | A callback when the insight is loaded |
+| onInsightLoaded | false | function | A callback when the visualization is loaded |

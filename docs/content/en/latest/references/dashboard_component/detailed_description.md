@@ -67,7 +67,7 @@ Here are the most important props:
 | Name                     | Required? | Type                             | Description                                                                                                                                                                                               |
 | :----------------------- | :-------- | :------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | customizationFns         | false     | DashboardModelCustomizationFns   | The customization functions. The dashboard component will call out to these functions at different points during its lifetime. To learn more, see documentation for a particular function. |
-| InsightComponentProvider | false     | OptionalInsightComponentProvider | The function to obtain a custom component to use for rendering an insight                                                                                                                   |
+| InsightComponentProvider | false     | OptionalInsightComponentProvider | The function to obtain a custom component to use for rendering a visualization                                                                                                                   |
 | KpiComponentProvider     | false     | OptionalKpiComponentProvider     | The function to obtain a custom component to use for rendering a KPI                                                                                                                        |
 | WidgetComponentProvider  | false     | OptionalWidgetComponentProvider  | The function to obtain a custom component to use for rendering either a built-in widget or a custom widget
 
@@ -91,11 +91,11 @@ the returned value should remain the same (unless the value itself changed), whi
 import { useDashboardSelector, selectInsights } from "@gooddata/sdk-ui-dashboard";
 
 const CustomDashboardWidget = () => {
-    // Example how to obtain all insights stored on the dashboard
-    const insights = useDashboardSelector(selectInsights);
+    // Example how to obtain all visualizations stored on the dashboard
+    const visualizations = useDashboardSelector(selectInsights);
 
     return (
-        <pre>{JSON.stringify(insights, null, 2)}</pre>
+        <pre>{JSON.stringify(visualizations, null, 2)}</pre>
     );
 }
 ```

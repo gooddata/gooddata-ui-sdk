@@ -37,7 +37,7 @@ Here are a few ideas:
 
 ### Try a different visualization
 
-By default, the project is configured to render a simple insight from the demo workspace. So let's render
+By default, the project is configured to render a simple visualization from the demo workspace. So let's render
 a Dashboard instead!
 
 It's an easy 2 step solution. In `App.tsx` simply:
@@ -47,6 +47,10 @@ It's an easy 2 step solution. In `App.tsx` simply:
     -   import { InsightView } from "@gooddata/sdk-ui-ext";
     +   import { Dashboard } from "@gooddata/sdk-ui-dashboard";
     ```
+
+    {{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
+{{% /alert %}}
+
 2. Replace the component used in JSX and provide the correct dashboard reference from the metadata catalog.
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} />
@@ -57,7 +61,7 @@ To learn more, see [Dashboard component](../references/dashboard_component/).
 
 ### Build a visualization programmatically
 
-If you don't want to use the pre-built visualization, you can easily define you insight programatically!
+If you don't want to use the pre-built visualization, you can easily define your visualization programatically!
 
 Let's build a simple pie chart in two steps!
 
@@ -197,7 +201,7 @@ your own data:
 
 3. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace: `npm run refresh-md`.
 4. Update the `App.tsx`. Since we've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
-   Select a new insight to render from the catalog and update `App.tsx`:
+   Select a new visualization to render from the catalog and update `App.tsx`:
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
     +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
@@ -250,9 +254,9 @@ Here is how you can switch to GoodData Platform instead:
     npm run refresh-md
     ````
 
-5. Update the `App.tsx`. Since you've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
+5. Update the `App.tsx`. Since you've switched to your own data, the reference to the visualization in `App.tsx` is no longer valid.
    
-   To fix, update the `App.tsx` with an insight of your choice:
+   To fix, update the `App.tsx` with an visualization of your choice:
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
     +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />

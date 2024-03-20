@@ -199,7 +199,7 @@ When a visualization is filtered by a measure that is shown in % (that is, the m
 
 For example, if the visualization renders the values `100`, `200`, and `700` as `10%`, `20%`, and `70%`, the filter that filters out the first two values would use a comparison condition with the operator `GREATER_THAN` and the condition value `200`. The result would contain only the value `700` rendered as `100%` in the visualization.
 
-The reason is that the percentage values are always computed for the current execution result. By applying the measure value filter, the result changes and so the percentage values will change as well. That would result in the filter and the values displayed to have a different scale which would be confusing. For instance, accepting only values lower than 50% could still produce insights with values higher than 50%.
+The reason is that the percentage values are always computed for the current execution result. By applying the measure value filter, the result changes and so the percentage values will change as well. That would result in the filter and the values displayed to have a different scale which would be confusing. For instance, accepting only values lower than 50% could still produce visualizations with values higher than 50%.
 
 #### Measures in charts stacked to 100%
 When a visualization is filtered by a measure that is stacked to 100%, the filter value is based on the range of the actual measure values and not on the percentage values rendered by the visualization.

@@ -91,7 +91,7 @@ instance of the API will be provided to your code at the time of the plugin's `r
 -   Add/remove event handlers
 -   Register custom widget types and React components used to render them
 -   Place items that will render your custom widgets
--   Override React components to use when rendering insights
+-   Override React components to use when rendering visualizations
 
 Furthermore, your event handlers and React components can use a subset of Model Selector APIs to obtain additional
 data from the current state of the dashboard.

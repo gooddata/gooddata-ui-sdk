@@ -25,5 +25,5 @@ The **Analytical Backend** abstraction ultimately allows you to develop applicat
 | @gooddata/sdk-ui-geo | The React components for the Geo Pushpin Chart component |
 | @gooddata/sdk-ui-pivot | The React component for the Pivot Table component |
 | @gooddata/sdk-ui-filters | The filtering components |
-| @gooddata/sdk-ui-ext | The components for embedding insights created in Analytical Designer |
+| @gooddata/sdk-ui-ext | The components for embedding visualizations created in Analytical Designer |
 | @gooddata/sdk-ui-all | An umbrella package that depends on all `sdk-ui-` packages and re-exports their public API |
