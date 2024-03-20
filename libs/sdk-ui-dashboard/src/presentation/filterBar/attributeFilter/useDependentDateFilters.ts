@@ -1,9 +1,13 @@
 // (C) 2024 GoodData Corporation
 import { useMemo } from "react";
 import { invariant } from "ts-invariant";
-import { IDashboardAttributeFilter, objRefToString } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
 
-import { selectFilterContextDateFiltersWithDimension, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectFilterContextDateFilter,
+    selectFilterContextDateFiltersWithDimension,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 /**
@@ -11,31 +15,65 @@ import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
  *
  * @beta
  */
-export type UseDependentDateFiltersResult = Pick<IAttributeFilterBaseProps, "dependentDateFilters">;
+export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "dependentDateFilters">;
 
 /**
  * Returns depdent date filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter} for particular dashboard attribute filter.
  *
- * @param filter - dashboard filter to get the dependent date filter-related data
+ * @param filter - dashboard filter to get the depdendent date filter-related data
  *
  * @beta
  */
-export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseDependentDateFiltersResult => {
+export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
     const allDateFilters = useDashboardSelector(selectFilterContextDateFiltersWithDimension);
+    const commonDateFilter = useDashboardSelector(selectFilterContextDateFilter);
+    const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
 
     const dependentDateFilters = useMemo(() => {
-        return filter.attributeFilter.filterElementsByDate?.map((parent) => {
-            const matchingFilter = allDateFilters.find(
-                (filter) => objRefToString(filter.dateFilter.dataSet!) === parent.filterLocalIdentifier,
-            );
+        return filter.attributeFilter.filterElementsByDate?.map((dependentDateFilter) => {
+            if (dependentDateFilter.isCommonDate) {
+                const commonDashboardDateFilter: IDashboardDateFilter = {
+                    dateFilter: {
+                        type: commonDateFilterWithAllTime?.dateFilter.type,
+                        granularity: commonDateFilterWithAllTime?.dateFilter.granularity,
+                        from: commonDateFilterWithAllTime?.dateFilter.from,
+                        to: commonDateFilterWithAllTime?.dateFilter.from,
+                        dataSet: {
+                            identifier: dependentDateFilter.filterLocalIdentifier,
+                            type: "dataSet",
+                        },
+                    },
+                };
 
-            invariant(matchingFilter); // if this blows up, the state is inconsistent
+                return commonDashboardDateFilter;
+            } else {
+                const matchingFilter = allDateFilters.find(
+                    (filter) =>
+                        objRefToString(filter.dateFilter.dataSet!) ===
+                        dependentDateFilter.filterLocalIdentifier,
+                );
 
-            return matchingFilter;
+                invariant(matchingFilter); // if this blows up, the state is inconsistent
+
+                return matchingFilter;
+            }
         });
-    }, [allDateFilters, filter.attributeFilter.filterElementsByDate]);
+    }, [allDateFilters, commonDateFilterWithAllTime, filter.attributeFilter.filterElementsByDate]);
 
     return {
         dependentDateFilters,
     };
+};
+
+const getCommonDateFilterWithAllTime = (commonDate?: IDashboardDateFilter): IDashboardDateFilter => {
+    if (commonDate) {
+        return commonDate;
+    } else {
+        return {
+            dateFilter: {
+                granularity: "GDC.time.date",
+                type: "relative",
+            },
+        };
+    }
 };

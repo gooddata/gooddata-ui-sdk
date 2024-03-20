@@ -943,6 +943,7 @@ export interface IDashboardAttributeFilter {
 // @beta
 export interface IDashboardAttributeFilterByDate {
     filterLocalIdentifier: string;
+    isCommonDate: boolean;
 }
 
 // @alpha

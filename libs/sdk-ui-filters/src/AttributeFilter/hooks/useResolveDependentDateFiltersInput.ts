@@ -4,6 +4,7 @@ import {
     IAbsoluteDateFilter,
     IDashboardDateFilter,
     IRelativeDateFilter,
+    isAllTimeDashboardDateFilter,
     isRelativeDashboardDateFilter,
     newAbsoluteDateFilter,
     newRelativeDateFilter,
@@ -25,8 +26,8 @@ export const useResolveDependentDateFiltersInput = (
                 const { dataSet, granularity, from, to } = dependentDateFilter.dateFilter;
 
                 if (isRelativeDashboardDateFilter(dependentDateFilter)) {
-                    // Ignore date filters set as "All time"
-                    if (granularity === "GDC.time.date") {
+                    // Ignore only date filters set as "All time"
+                    if (isAllTimeDashboardDateFilter(dependentDateFilter)) {
                         return undefined;
                     }
 

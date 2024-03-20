@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import React, { useState } from "react";
-import { ICatalogDateDataset, ObjRef } from "@gooddata/sdk-model";
+import { ICatalogDateDataset, IDashboardDateFilter, ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationBubble } from "../../../../../../widget/common/configuration/ConfigurationBubble.js";
@@ -34,6 +34,7 @@ export interface IAddLimitingItemDialogProps {
     currentlySelectedItems: ObjRef[];
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
+    dependentCommonDateFilter: IDashboardDateFilter;
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
 }
@@ -46,6 +47,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
     parentFilters,
     validParentFilters,
     dependentDateFilters,
+    dependentCommonDateFilter,
     availableDatasets,
     onSelect,
     onClose,
@@ -76,6 +78,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
                     onClose={onClose}
                     dependentDateFilters={dependentDateFilters}
                     availableDatasets={availableDatasets}
+                    dependentCommonDateFilter={dependentCommonDateFilter}
                     onCommonDateSelect={() => setPage("dates")}
                 />
             ) : null}
@@ -93,6 +96,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
                     onGoBack={() => setPage("options")}
                     onClose={onClose}
                     availableDatasets={availableDatasets}
+                    dependentCommonDateFilter={dependentCommonDateFilter}
                     dependentDateFilters={dependentDateFilters}
                 />
             ) : null}

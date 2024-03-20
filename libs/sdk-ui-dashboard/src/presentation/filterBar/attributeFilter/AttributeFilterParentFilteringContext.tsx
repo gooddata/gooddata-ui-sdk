@@ -137,6 +137,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
 
     const {
         dependentDateFilters,
+        dependentCommonDateFilter,
         onDependentDateFiltersSelect,
         onConfigurationClose: onDependentDateFiltersClose,
         onDependentDateFiltersChange,
@@ -272,6 +273,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 onLimitingItemsChange,
                 availableDatasetsForFilter,
                 dependentDateFilters,
+                dependentCommonDateFilter,
                 onDependentDateFiltersSelect,
                 onDependentDateFiltersChange,
                 onDependentDateFiltersConfigurationChanged,

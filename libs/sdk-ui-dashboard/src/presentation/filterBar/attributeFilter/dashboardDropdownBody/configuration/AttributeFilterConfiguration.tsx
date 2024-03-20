@@ -118,6 +118,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onLimitingItemsUpdate,
         availableDatasetsForFilter,
         dependentDateFilters,
+        dependentCommonDateFilter,
         onDependentDateFiltersSelect,
     } = useAttributeFilterParentFiltering();
 
@@ -210,6 +211,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 intl={intl}
                 availableDatasets={availableDatasetForItems}
                 dependentDateFilters={dependentDateFilters}
+                dependentCommonDateFilter={dependentCommonDateFilter}
             />
             {showDependentFiltersConfiguration && parents.length > 0 ? (
                 <>

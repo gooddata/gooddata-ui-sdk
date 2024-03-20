@@ -50,6 +50,10 @@ export interface IDashboardAttributeFilterByDate {
      * Local identifier of the date filter
      */
     filterLocalIdentifier: string;
+    /**
+     * To distinguish between different types of date filters (common, specific)
+     */
+    isCommonDate: boolean;
 }
 
 /**
