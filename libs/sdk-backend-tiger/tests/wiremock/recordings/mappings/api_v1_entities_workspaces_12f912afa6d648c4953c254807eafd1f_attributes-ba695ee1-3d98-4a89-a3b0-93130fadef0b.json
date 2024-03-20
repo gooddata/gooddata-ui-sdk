@@ -1,8 +1,8 @@
 {
-    "id": "ccc91be9-765c-4eb2-bd9d-0fcba3bfd73d",
-    "name": "api_v1_entities_workspaces_f15bcbc5bcd04b8b8093c70a1a479c35_visualizationobjects",
+    "id": "ba695ee1-3d98-4a89-a3b0-93130fadef0b",
+    "name": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes",
     "request": {
-        "url": "/api/v1/entities/workspaces/f15bcbc5bcd04b8b8093c70a1a479c35/visualizationObjects?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/12f912afa6d648c4953c254807eafd1f/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_f15bcbc5bcd04b8b8093c70a1a479c35_visualizationobjects-ccc91be9-765c-4eb2-bd9d-0fcba3bfd73d.json",
+        "bodyFileName": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes-ba695ee1-3d98-4a89-a3b0-93130fadef0b.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -34,7 +34,7 @@
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "ccc91be9-765c-4eb2-bd9d-0fcba3bfd73d",
+    "uuid": "ba695ee1-3d98-4a89-a3b0-93130fadef0b",
     "persistent": true,
-    "insertionIndex": 7
+    "insertionIndex": 10
 }
