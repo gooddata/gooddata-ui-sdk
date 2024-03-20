@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
@@ -62,7 +62,7 @@ describe("CheckboxControl", () => {
 
         await waitFor(() =>
             expect(
-                screen.getByText("Property is not applicable for this configuration of the visualization"),
+                screen.getByText("Property is not applicable for this configuration of the insight"),
             ).toBeInTheDocument(),
         );
     });

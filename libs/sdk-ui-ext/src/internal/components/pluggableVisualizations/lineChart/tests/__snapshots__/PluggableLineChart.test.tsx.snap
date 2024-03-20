@@ -6,7 +6,7 @@ exports[`PluggableLineChart > Sort config > should return expected sort config f
   "availableSorts": [],
   "defaultSort": [],
   "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;
@@ -27,7 +27,7 @@ exports[`PluggableLineChart > Sort config > should return expected sort config f
   "availableSorts": [],
   "defaultSort": [],
   "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this visualization configuration.",
+  "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;
@@ -1025,7 +1025,7 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Segment by",
-        "warningMessage": "To segment by, an visualization can have only one measure",
+        "warningMessage": "To segment by, an insight can have only one measure",
       },
       "trend": {
         "accepts": [

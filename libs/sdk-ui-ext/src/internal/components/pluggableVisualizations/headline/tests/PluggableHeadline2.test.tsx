@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023 GoodData Corporation
 import { PluggableHeadline } from "../PluggableHeadline.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
@@ -425,9 +425,9 @@ describe("PluggableHeadline2", () => {
 
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
                 expect(extendedReferencePoint.uiConfig.customError).toEqual({
-                    heading: "No primary measure in your visualization",
+                    heading: "No primary measure in your insight",
                     text:
-                        "Add a primary measure to your visualization, or switch to table.\n" +
+                        "Add a primary measure to your insight, or switch to table.\n" +
                         "Once done, you'll be able to save it.",
                 });
             });

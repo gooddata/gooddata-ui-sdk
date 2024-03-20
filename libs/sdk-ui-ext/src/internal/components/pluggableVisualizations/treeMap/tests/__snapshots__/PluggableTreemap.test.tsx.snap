@@ -584,7 +584,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an insight can have only one measure",
       },
     },
     "exportConfig": {
@@ -724,7 +724,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an insight can have only one measure",
       },
     },
     "exportConfig": {
