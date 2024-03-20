@@ -86,5 +86,5 @@ This is the most involved method of building dashboards, but it offers the most 
 
 **Disadvantages:**
 - More time needed for development and maintenance comparing to the other methods
-- Deeper knowledge of the GoodData platform required comparing to the other methods
+- Deeper knowledge of GoodData required comparing to the other methods
 - More complex (but not impossible) integration with applications without React
