@@ -2994,7 +2994,7 @@ export enum DRILL_TO_URL_PLACEHOLDER {
     // (undocumented)
     DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
     // (undocumented)
-    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{visualization_id}",
+    DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID = "{insight_id}",
     // (undocumented)
     DRILL_TO_URL_PLACEHOLDER_PROJECT_ID = "{project_id}",
     // (undocumented)

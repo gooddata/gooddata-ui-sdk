@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
@@ -11,7 +11,7 @@ const CUSTOM_HEIGHT = "<customHeight>";
 const CUSTOM_TITLE = "Custom insight title";
 const WEB_COMPONENTS_EMBED_CODE = `<!-- Load the library... -->
 <script type="module" src="https://${HOST_NAME}/components/${WORKSPACE_ID}.js?auth=sso"></script>
-<!-- ...and embed visualization -->
+<!-- ...and embed an insight -->
 
 <gd-insight\n    insight="${INSIGHT_ID}"${INSIGHT_TITLE}${LOCALE}${CUSTOM_HEIGHT}
 ></gd-insight>`;
