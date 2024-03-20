@@ -8,6 +8,7 @@ import {
     areObjRefsEqual,
     insightBucket,
     insightBuckets,
+    insightProperties,
 } from "@gooddata/sdk-model";
 import { CoreRepeater, constructRepeaterDimensions, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -19,6 +20,7 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
+    IVisualizationProperties,
     InvalidColumnsSdkError,
     RenderFunction,
     UnmountFunction,
@@ -32,6 +34,14 @@ import {
 } from "../../../utils/uiConfigHelpers/repeaterUiConfigHelper.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
+import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.js";
+
+const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "rowHeight",
+    "cellVerticalAlign",
+    "cellTextWrapping",
+    "cellImageSizing",
+];
 
 export class PluggableRepeater extends AbstractPluggableVisualization {
     private featureFlags?: ISettings;
@@ -44,6 +54,8 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         this.featureFlags = props.featureFlags;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
+        this.supportedPropertiesList = REPEATER_SUPPORTER_PROPERTIES_LIST;
+        this.initializeProperties(props.visualizationProperties);
     }
 
     public unmount(): void {
@@ -61,7 +73,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
-
         return sanitizeFilters(newReferencePoint);
     };
 
@@ -149,6 +160,19 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return true;
     }
 
+    protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
+        const controls = visualizationProperties?.controls;
+
+        const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
+        const initialProperties = {
+            supportedProperties: { controls: supportedProperties },
+        };
+
+        this.pushData({
+            initialProperties,
+        });
+    }
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -157,6 +181,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
+        const properties = insightProperties(insight);
+        const extendedConfig = {
+            ...(properties?.controls ?? {}),
+            ...config,
+            ...properties,
+        };
 
         this.renderFun(
             <CoreRepeater
@@ -164,7 +194,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings(config, this.featureFlags)}
+                config={updateConfigWithSettings(extendedConfig, this.featureFlags)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}

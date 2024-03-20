@@ -48,7 +48,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         private readonly descriptor?: IWorkspaceDescriptor,
     ) {}
 
-    public async getDescriptor(): Promise<IWorkspaceDescriptor> {
+    public async getDescriptor(includeParentPrefixes: boolean = false): Promise<IWorkspaceDescriptor> {
         if (!this.descriptor) {
             return workspaceConverter(
                 (
@@ -59,7 +59,15 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                         });
                     })
                 ).data.data,
-                [],
+                includeParentPrefixes
+                    ? (
+                          await this.authCall(async (client) => {
+                              return client.actions.inheritedEntityPrefixes({
+                                  workspaceId: this.workspace,
+                              });
+                          })
+                      ).data
+                    : [],
             );
         }
         return this.descriptor;

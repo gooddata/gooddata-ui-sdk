@@ -79,6 +79,7 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
         "allowsReordering": true,
+        "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
@@ -104,7 +105,7 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
       },
     },
     "exportConfig": {
-      "supported": true,
+      "supported": false,
     },
     "openAsReport": {
       "supported": false,
@@ -197,6 +198,7 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
         "allowsReordering": true,
+        "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
@@ -222,7 +224,7 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
       },
     },
     "exportConfig": {
-      "supported": true,
+      "supported": false,
     },
     "openAsReport": {
       "supported": false,
@@ -329,6 +331,7 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
         "allowsReordering": true,
+        "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
@@ -354,7 +357,7 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
       },
     },
     "exportConfig": {
-      "supported": true,
+      "supported": false,
     },
     "openAsReport": {
       "supported": false,

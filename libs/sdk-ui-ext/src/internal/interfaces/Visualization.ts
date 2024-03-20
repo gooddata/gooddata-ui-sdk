@@ -280,6 +280,10 @@ export interface IBucketUiConfig {
 
     // indicates that the visualization prefers date items in the bucket to have the same dimension
     preferSynchronizedDates?: boolean;
+
+    // Allows override hyperlink text for the hyperlink display form
+    // elements with custom static text. (e.g. "Show more" instead of url link text)
+    allowsStaticHyperLinkDisplayFormText?: boolean;
 }
 
 export interface IBucketsUiConfig {

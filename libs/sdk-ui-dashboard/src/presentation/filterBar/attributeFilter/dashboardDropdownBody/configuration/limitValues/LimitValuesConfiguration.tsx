@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
 import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
-import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual, ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../types.js";
@@ -14,6 +14,9 @@ import {
     IMetricsAndFacts,
     selectBackendCapabilities,
     useDashboardUserInteraction,
+    IDashboardDependentDateFilter,
+    selectEnableKDAttributeFilterDatesValidation,
+    isDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
@@ -30,8 +33,11 @@ interface ILimitValuesConfigurationProps {
     validParentFilters: ObjRef[];
     validateElementsBy: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
+    availableDatasets: ICatalogDateDataset[];
+    dependentDateFilters: IDashboardDependentDateFilter[];
     onLimitingItemUpdate: (items: ObjRef[]) => void;
     onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
+    onDependentDateFilterUpdate: (dataSet: ObjRef, isSelected: boolean) => void;
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
@@ -40,10 +46,16 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     validParentFilters,
     validateElementsBy,
     metricsAndFacts,
+    availableDatasets,
+    dependentDateFilters,
     onLimitingItemUpdate,
     onParentFilterUpdate,
+    onDependentDateFilterUpdate,
 }) => {
     const intl = useIntl();
+    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
+        selectEnableKDAttributeFilterDatesValidation,
+    );
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
@@ -51,6 +63,11 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         validParentFilters,
         validateElementsBy,
         metricsAndFacts,
+        dependentDateFilters,
+        availableDatasets,
+        isEnabledKDAttributeFilterDatesValidation,
+        true,
+        intl,
     );
 
     const onOpenAddDialog = () => {
@@ -59,7 +76,9 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     };
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
-        if (isObjRef(addedItem)) {
+        if (isDashboardDependentDateFilter(addedItem)) {
+            onDependentDateFilterUpdate(addedItem.dataSet!, true);
+        } else if (isObjRef(addedItem)) {
             onLimitingItemUpdate([...validateElementsBy, addedItem]);
         } else {
             onParentFilterUpdate(addedItem.localIdentifier, true);
@@ -84,6 +103,8 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
                     currentlySelectedItems={validateElementsBy}
                     parentFilters={parentFilters}
                     validParentFilters={validParentFilters}
+                    dependentDateFilters={dependentDateFilters}
+                    availableDatasets={availableDatasets}
                     onSelect={onAdd}
                     onClose={() => setIsDropdownOpened(false)}
                 />

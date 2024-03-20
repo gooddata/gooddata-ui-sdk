@@ -74,7 +74,7 @@ export const Repeater = (props: IRepeaterProps): JSX.Element => {
 
 export function RenderRepeater(props: IRepeaterProps): JSX.Element {
     return (
-        <IntlWrapper locale={this.props.locale}>
+        <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>
                 {(translationProps: ITranslationsComponentProps) => {
                     return <CoreRepeater intl={translationProps.intl} {...toCoreRepeaterProps(props)} />;

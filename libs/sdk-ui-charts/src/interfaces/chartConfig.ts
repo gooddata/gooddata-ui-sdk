@@ -301,6 +301,68 @@ export interface IChartConfig {
      * @internal
      */
     selectedPoints?: IDrillEventIntersectionElement[][];
+
+    /**
+     * Configuration specific for hyperlinks in the chart.
+     */
+    hyperLinks?: IDisplayFormHyperlinksConfig;
+
+    /**
+     * Configuration of row height of the chart.
+     */
+    rowHeight?: ChartRowHeight;
+
+    /**
+     * Configuration of the vertical chart alignment.
+     */
+    cellVerticalAlign?: ChartCellVerticalAlign;
+
+    /**
+     * Configuration of the text wrapping in the chart.
+     */
+    cellTextWrapping?: ChartCellTextWrapping;
+
+    /**
+     * Configuration of the image sizing in the chart.
+     */
+    cellImageSizing?: ChartCellImageSizing;
+}
+
+/**
+ * @public
+ */
+export type ChartRowHeight = "small" | "medium" | "large";
+
+/**
+ * @public
+ */
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
+/**
+ * @public
+ */
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+/**
+ * @public
+ */
+export type ChartCellImageSizing = "fit" | "fill";
+
+/**
+ * Customize behavior of the hyperlink display forms in the chart.
+ *
+ * @public
+ */
+export interface IDisplayFormHyperlinksConfig {
+    /**
+     * Hyperlink display form local identifier
+     */
+    [displayFormLocalIdentifier: string]: {
+        /**
+         * Custom hyperlink text to display for the elements of the display form.
+         */
+        staticElementsText: string;
+    };
 }
 
 /**

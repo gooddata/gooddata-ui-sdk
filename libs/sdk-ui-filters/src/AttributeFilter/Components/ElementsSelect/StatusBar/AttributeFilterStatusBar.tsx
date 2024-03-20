@@ -31,6 +31,13 @@ export interface IAttributeFilterStatusBarProps {
     isFilteredByLimitingValidationItems?: boolean;
 
     /**
+     * Indicates if the elements are filtered by dependent date filters or not.
+     *
+     * @beta
+     */
+    isFilteredByDependentDateFilters?: boolean;
+
+    /**
      * List of parent filter titles that filter current elements.
      *
      * @beta
@@ -118,12 +125,15 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
         irrelevantSelection = [],
         onClearIrrelevantSelection = noop,
         isFilteredByLimitingValidationItems,
+        isFilteredByDependentDateFilters,
     } = props;
 
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">
-                {isFilteredByParentFilters || isFilteredByLimitingValidationItems ? (
+                {isFilteredByParentFilters ||
+                isFilteredByLimitingValidationItems ||
+                isFilteredByDependentDateFilters ? (
                     <AttributeFilterShowFilteredElements
                         attributeTitle={attributeTitle}
                         onClick={onShowFilteredElements}

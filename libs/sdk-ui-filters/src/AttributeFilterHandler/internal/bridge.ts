@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -437,11 +438,11 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectLimitingAttributeFilters);
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[]): void => {
+    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
         this.redux.dispatch(actions.setLimitingDateFilters({ filters }));
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] => {
+    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
         return this.redux.select(selectLimitingDateFilters);
     };
 

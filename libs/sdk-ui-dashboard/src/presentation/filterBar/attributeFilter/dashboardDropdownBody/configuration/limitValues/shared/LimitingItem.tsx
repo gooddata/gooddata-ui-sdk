@@ -119,6 +119,7 @@ export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, tit
             />
         );
     }
+
     return <ItemTitleWithIcon title={title} tooltip={titleTooltip} />;
 };
 

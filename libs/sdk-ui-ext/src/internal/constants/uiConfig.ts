@@ -767,11 +767,13 @@ export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
             allowsDuplicateItems: true,
             allowsDifferentAttributes: false,
             transformAttributeToMeasure: false,
+            allowsStaticHyperLinkDisplayFormText: true,
         },
         ...defaultFilters,
     },
-    supportedEmptyCanvasDragTypes: [ATTRIBUTE],
     ...defaultRootUiConfigProperties,
+    ...disabledExportConfig,
+    supportedEmptyCanvasDragTypes: [ATTRIBUTE],
 };
 
 export function getTreemapUiConfig(

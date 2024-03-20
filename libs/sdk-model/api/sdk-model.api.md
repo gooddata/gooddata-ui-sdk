@@ -593,6 +593,7 @@ export interface IAttributeDescriptorBody {
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
     identifier: string;
+    labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
     ref: ObjRef;
@@ -932,10 +933,16 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
         validateElementsBy?: ObjRef[];
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
+}
+
+// @beta
+export interface IDashboardAttributeFilterByDate {
+    filterLocalIdentifier: string;
 }
 
 // @alpha
@@ -2542,6 +2549,7 @@ export interface ISettings {
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
     enableKDWidgetCustomHeight?: boolean;

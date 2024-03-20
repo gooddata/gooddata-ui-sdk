@@ -71,6 +71,8 @@ export enum TigerFeaturesNames {
     EnableDirectQuery = "enableDirectQuery",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableRepeaterChart = "enableRepeaterChart",
+    //boolean + possible values: enabled, disabled
+    EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
 }
 
 export type ITigerFeatureFlags = {
@@ -109,6 +111,7 @@ export type ITigerFeatureFlags = {
     enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
     enableRepeaterChart: typeof FeatureFlagsValues["enableRepeaterChart"][number];
+    enableKDAttributeFilterDatesValidation: typeof FeatureFlagsValues["enableKDAttributeFilterDatesValidation"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -147,6 +150,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
     enableRepeaterChart: false,
+    enableKDAttributeFilterDatesValidation: false,
 };
 
 export const FeatureFlagsValues = {
@@ -189,4 +193,5 @@ export const FeatureFlagsValues = {
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
+    enableKDAttributeFilterDatesValidation: [true, false] as const,
 };

@@ -483,7 +483,7 @@ importers:
         version: 4.15.1(webpack-cli@4.10.0)(webpack@5.89.0)
 
   ../../examples/sdk-interactive-examples:
-    dependencies:
+    devDependencies:
       validate-npm-package-name:
         specifier: ^5.0.0
         version: 5.0.0
@@ -2873,6 +2873,9 @@ importers:
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
+      json-stable-stringify:
+        specifier: ^1.0.1
+        version: 1.1.0
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
@@ -2919,6 +2922,9 @@ importers:
       '@types/hoist-non-react-statics':
         specifier: ^3.3.1
         version: 3.3.5
+      '@types/json-stable-stringify':
+        specifier: ^1.0.32
+        version: 1.0.36
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -13437,7 +13443,6 @@ packages:
     resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
     dependencies:
       semver: 7.5.4
-    dev: false
 
   /bytes@3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
@@ -23981,7 +23986,6 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       builtins: 5.0.1
-    dev: false
 
   /validator@13.11.0:
     resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}

@@ -509,6 +509,33 @@ export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = cre
 );
 
 /**
+ * Returns whether dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean> = () => true;
+
+/**
+ * Returns whether new KD dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDDependentFilters: DashboardSelector<boolean> = () => true;
+
+/**
+ * Returns whether KD dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
+    selectEnableKDDependentFilters,
+    selectIsKPIDashboardDependentFiltersEnabled,
+    (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
+        return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
+    },
+);
+
+/**
  * Returns whether choice of alternate display forms is enabled.
  *
  * @internal
@@ -599,5 +626,17 @@ export const selectEnableAttributeFilterValuesValidation: DashboardSelector<bool
     selectConfig,
     (state) => {
         return state.settings?.enableAttributeFilterValuesValidation ?? true;
+    },
+);
+
+/**
+ * Returns whether KD attribute filter by dates validation/filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDAttributeFilterDatesValidation ?? false;
     },
 );
