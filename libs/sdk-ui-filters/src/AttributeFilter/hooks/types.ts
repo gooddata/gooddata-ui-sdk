@@ -150,6 +150,13 @@ export type AttributeFilterControllerData = {
      * Current validation items used to limit attribute filter elements.
      */
     limitingValidationItems?: ObjRef[];
+
+    /**
+     * If true, AttributeFilter is filtering elements by dependent date filters.
+     *
+     * @beta
+     */
+    isFilteredByDependentDateFilters?: boolean;
 };
 
 /**

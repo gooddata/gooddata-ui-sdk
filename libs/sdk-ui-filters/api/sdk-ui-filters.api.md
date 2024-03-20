@@ -14,6 +14,7 @@ import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { GranularityIntlKey as GranularityIntlKey_2 } from './constants/i18n.js';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
@@ -23,6 +24,7 @@ import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateAndMessageTranslator as IDateAndMessageTranslator_2 } from './utils/Translations/Translators.js';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -124,6 +126,7 @@ export type AttributeFilterControllerData = {
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
+    isFilteredByDependentDateFilters?: boolean;
 };
 
 // @internal (undocumented)
@@ -306,7 +309,7 @@ export interface IAttributeElementLoader {
     getLimit(): number;
     getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
     getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
-    getLimitingDateFilters(): IRelativeDateFilter[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
     getLimitingMeasures(): IMeasure[];
     getLimitingValidationItems(): ObjRef[];
     getNextElementsPageError(): GoodDataSdkError | undefined;
@@ -343,7 +346,7 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
-    setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
+    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
     setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
@@ -384,6 +387,8 @@ export interface IAttributeFilterCoreProps {
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
+    // @beta
+    dependentDateFilters?: IDashboardDateFilter[];
     // @alpha
     disabled?: boolean;
     filter?: IAttributeFilter;
@@ -531,6 +536,7 @@ export interface IAttributeFilterElementsSelectProps {
     enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     isLoading: boolean;
@@ -553,6 +559,7 @@ export interface IAttributeFilterElementsSelectProps {
 export interface IAttributeFilterEmptyResultProps {
     enableShowingFilteredElements?: boolean;
     height: number;
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByParentFilters: boolean;
     parentFilterTitles?: string[];
     searchString: string;
@@ -624,6 +631,7 @@ export interface IAttributeFilterStatusBarProps {
     enableShowingFilteredElements?: boolean;
     getItemTitle: (item: IAttributeElement) => string;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByLimitingValidationItems?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
@@ -797,7 +805,7 @@ export interface ILoadElementsOptions {
     // (undocumented)
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     // (undocumented)
-    limitingDateFilters?: IRelativeDateFilter[];
+    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
     // (undocumented)
     limitingMeasures?: IMeasure[];
     // (undocumented)

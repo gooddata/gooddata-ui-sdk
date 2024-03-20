@@ -13,6 +13,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -50,7 +51,7 @@ export interface IUseAttributeFilterHandlerStateResult {
             search?: string;
             limitingAttributeFilters?: IElementsQueryAttributeFilter[];
             limitingMeasures?: IMeasure[];
-            limitingDateFilters?: IRelativeDateFilter[];
+            limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             limitingValidationItems?: ObjRef[];
         };
     };

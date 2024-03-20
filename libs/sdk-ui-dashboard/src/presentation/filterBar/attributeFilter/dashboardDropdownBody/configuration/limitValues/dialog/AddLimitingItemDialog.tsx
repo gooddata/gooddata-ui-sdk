@@ -93,6 +93,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
                     onGoBack={() => setPage("options")}
                     onClose={onClose}
                     availableDatasets={availableDatasets}
+                    dependentDateFilters={dependentDateFilters}
                 />
             ) : null}
         </ConfigurationBubble>

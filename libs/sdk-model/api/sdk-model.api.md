@@ -933,10 +933,16 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
         validateElementsBy?: ObjRef[];
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
+}
+
+// @beta
+export interface IDashboardAttributeFilterByDate {
+    filterLocalIdentifier: string;
 }
 
 // @alpha

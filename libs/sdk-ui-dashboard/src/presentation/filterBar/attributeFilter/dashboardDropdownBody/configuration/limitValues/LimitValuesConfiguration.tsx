@@ -15,6 +15,8 @@ import {
     selectBackendCapabilities,
     useDashboardUserInteraction,
     IDashboardDependentDateFilter,
+    selectEnableKDAttributeFilterDatesValidation,
+    isDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
 
@@ -35,6 +37,7 @@ interface ILimitValuesConfigurationProps {
     dependentDateFilters: IDashboardDependentDateFilter[];
     onLimitingItemUpdate: (items: ObjRef[]) => void;
     onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
+    onDependentDateFilterUpdate: (dataSet: ObjRef, isSelected: boolean) => void;
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
@@ -47,8 +50,12 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     dependentDateFilters,
     onLimitingItemUpdate,
     onParentFilterUpdate,
+    onDependentDateFilterUpdate,
 }) => {
     const intl = useIntl();
+    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
+        selectEnableKDAttributeFilterDatesValidation,
+    );
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
@@ -56,6 +63,11 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         validParentFilters,
         validateElementsBy,
         metricsAndFacts,
+        dependentDateFilters,
+        availableDatasets,
+        isEnabledKDAttributeFilterDatesValidation,
+        true,
+        intl,
     );
 
     const onOpenAddDialog = () => {
@@ -64,7 +76,9 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     };
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
-        if (isObjRef(addedItem)) {
+        if (isDashboardDependentDateFilter(addedItem)) {
+            onDependentDateFilterUpdate(addedItem.dataSet!, true);
+        } else if (isObjRef(addedItem)) {
             onLimitingItemUpdate([...validateElementsBy, addedItem]);
         } else {
             onParentFilterUpdate(addedItem.localIdentifier, true);

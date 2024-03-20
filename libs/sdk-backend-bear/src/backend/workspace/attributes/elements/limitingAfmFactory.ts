@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { Uri, Identifier, IWrappedAttributeDisplayForm, IAfm } from "@gooddata/api-model-bear";
 import {
     ObjRef,
@@ -13,6 +13,7 @@ import {
     objRefToString,
     IMeasure,
     IRelativeDateFilter,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { IElementsQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
@@ -36,7 +37,7 @@ export class LimitingAfmFactory {
     public getAfm = async (
         filters: IElementsQueryAttributeFilter[] | undefined,
         measures: IMeasure[] | undefined,
-        relativeDateFilters: IRelativeDateFilter[] | undefined,
+        relativeDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[] | undefined,
     ): Promise<IAfm | undefined> => {
         if (!filters?.length && !measures?.length && !relativeDateFilters?.length) {
             return undefined;

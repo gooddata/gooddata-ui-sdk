@@ -118,6 +118,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onLimitingItemsUpdate,
         availableDatasetsForFilter,
         dependentDateFilters,
+        onDependentDateFiltersSelect,
     } = useAttributeFilterParentFiltering();
 
     const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
@@ -204,6 +205,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 validateElementsBy={limitingItems}
                 onLimitingItemUpdate={onLimitingItemsUpdate}
                 onParentFilterUpdate={onParentSelect}
+                onDependentDateFilterUpdate={onDependentDateFiltersSelect}
                 metricsAndFacts={metricsAndFacts!}
                 intl={intl}
                 availableDatasets={availableDatasetForItems}
