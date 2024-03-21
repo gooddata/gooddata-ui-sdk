@@ -35,17 +35,11 @@ import {
     objRefToString,
     filterIsEmpty,
     IAbsoluteDateFilter,
-    isRelativeDateFilter,
-    DateAttributeGranularity,
-    isUriRef,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
 import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
-import {
-    toSdkGranularity,
-    toTigerGranularity,
-} from "../../../../convertors/fromBackend/dateGranularityConversions.js";
+import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
@@ -53,6 +47,7 @@ import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import { toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
 
 import { getRelativeDateFilterShiftedValues } from "./date.js";
+import { mapDashboardDateFilterToDependentDateFilter } from "./dependentDateFilters.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -186,50 +181,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         }
 
         if (dateFilters) {
-            const dependsOn: DependsOnDateFilter[] = dateFilters.map((filter) => {
-                if (isRelativeDateFilter(filter)) {
-                    const localIdentifier = filter.relativeDateFilter.dataSet;
-
-                    invariant(!isUriRef(localIdentifier));
-
-                    return {
-                        dateFilter: {
-                            relativeDateFilter: {
-                                dataset: {
-                                    identifier: {
-                                        id: localIdentifier.identifier,
-                                        type: "dataset",
-                                    },
-                                },
-                                granularity: toTigerGranularity(
-                                    filter.relativeDateFilter.granularity as DateAttributeGranularity,
-                                ),
-                                from: filter.relativeDateFilter.from,
-                                to: filter.relativeDateFilter.to,
-                            },
-                        },
-                    };
-                } else {
-                    const localIdentifier = filter.absoluteDateFilter.dataSet;
-
-                    invariant(!isUriRef(localIdentifier));
-
-                    return {
-                        dateFilter: {
-                            absoluteDateFilter: {
-                                dataset: {
-                                    identifier: {
-                                        id: localIdentifier.identifier,
-                                        type: "dataset",
-                                    },
-                                },
-                                from: filter.absoluteDateFilter.from,
-                                to: filter.absoluteDateFilter.to,
-                            },
-                        },
-                    };
-                }
-            });
+            const dependsOn: DependsOnDateFilter[] = dateFilters.map(
+                mapDashboardDateFilterToDependentDateFilter,
+            );
 
             result = [...result, ...dependsOn];
         }

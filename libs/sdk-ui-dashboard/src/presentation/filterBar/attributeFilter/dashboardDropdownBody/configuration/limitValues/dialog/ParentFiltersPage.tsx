@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { ICatalogDateDataset, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { ICatalogDateDataset, IDashboardDateFilter, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { Bubble, DropdownList, NoData, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
@@ -34,6 +34,7 @@ export interface IParentFiltersPageProps {
     validParentFilters: ObjRef[];
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
+    dependentCommonDateFilter: IDashboardDateFilter;
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;
     onClose: () => void;
@@ -47,6 +48,7 @@ interface IWithDisabledFilterTooltipProps {
     isDisabled: boolean;
 }
 
+// TODO: LX-160
 const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterTooltipProps> = ({
     children,
     isDisabled,
@@ -125,6 +127,7 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
             attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
         }
     };
+
     return (
         <div key={serializeObjRef(item)} className={classNames} onClick={onClick}>
             <WithDisabledParentFilterTooltip
@@ -143,6 +146,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
     parentFilters,
     validParentFilters,
     dependentDateFilters,
+    dependentCommonDateFilter,
     availableDatasets,
     onSelect,
     onGoBack,
@@ -159,6 +163,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
         validParentFilters,
         dependentDateFilters,
         availableDatasets,
+        dependentCommonDateFilter,
         isEnabledKDAttributeFilterDatesValidation,
         false,
         intl,

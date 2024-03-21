@@ -53,8 +53,11 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
 
         invariant(!isUriRef(localIdentifier));
         const affectedDependentFilters = allAttributeFilters.filter((item) => {
-            return item.attributeFilter.filterElementsByDate?.some((parent) => {
-                return localIdentifier?.identifier === parent.filterLocalIdentifier;
+            return item.attributeFilter.filterElementsByDate?.some((depdendentDateFilter) => {
+                return (
+                    localIdentifier?.identifier === depdendentDateFilter.filterLocalIdentifier &&
+                    !depdendentDateFilter.isCommonDate
+                );
             });
         });
 

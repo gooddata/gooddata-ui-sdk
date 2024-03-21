@@ -3764,9 +3764,13 @@ export interface IDashboardDependentDateFilter {
     // (undocumented)
     from?: DateString | number;
     // (undocumented)
-    granularity?: string;
+    granularity?: DateFilterGranularity;
     // (undocumented)
-    isSelected: boolean;
+    isCommonDate: boolean;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isSelected?: boolean;
     // (undocumented)
     localIdentifier: string;
     // (undocumented)

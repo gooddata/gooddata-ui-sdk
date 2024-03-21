@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { DateString, ObjRef } from "@gooddata/sdk-model";
+import { DateFilterGranularity, DateString, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -8,13 +8,15 @@ import isEmpty from "lodash/isEmpty.js";
  */
 export interface IDashboardDependentDateFilter {
     localIdentifier: string;
-    isSelected: boolean;
+    isCommonDate: boolean;
     type: string;
     title?: string;
+    isSelected?: boolean;
     dataSet?: ObjRef;
     from?: DateString | number;
     to?: DateString | number;
-    granularity?: string;
+    granularity?: DateFilterGranularity;
+    isDisabled?: boolean;
 }
 
 /**

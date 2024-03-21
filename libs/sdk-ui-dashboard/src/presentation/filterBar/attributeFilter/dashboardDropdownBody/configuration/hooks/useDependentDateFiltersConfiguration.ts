@@ -1,12 +1,6 @@
 // (C) 2024 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
-import {
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterByDate,
-    IDashboardDateFilter,
-    ObjRef,
-    isUriRef,
-} from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isEqual from "lodash/isEqual.js";
 
@@ -15,7 +9,10 @@ import {
     setAttributeFilterDependentDateFilters,
     useDispatchDashboardCommand,
 } from "../../../../../../model/index.js";
-import { useDependentDateFilterConfigurationState } from "./useDependentDateFilterConfigurationState.js";
+import {
+    useDependentCommonDateFilterConfigurationState,
+    useDependentDateFilterConfigurationState,
+} from "./useDependentDateFilterConfigurationState.js";
 
 export function useDependentDateFiltersConfiguration(
     neighborDateFilters: IDashboardDateFilter[],
@@ -39,23 +36,48 @@ export function useDependentDateFiltersConfiguration(
         filterElementsByDate,
     );
 
+    const originalCommonDateFilterState = useDependentCommonDateFilterConfigurationState(commonDateFilter);
+
     const [dependentDateFilters, setDependentDateFilters] =
         useState<IDashboardDependentDateFilter[]>(originalState);
 
-    const onDependentDateFiltersSelect = (dataSet: ObjRef, isSelected: boolean) => {
-        invariant(!isUriRef(dataSet));
+    const [dependentCommonDateFilter, setDependentCommonDateFilter] = useState<IDashboardDateFilter>(
+        originalCommonDateFilterState,
+    );
+
+    const onDependentDateFiltersSelect = (
+        item: IDashboardDependentDateFilter,
+        isSelected: boolean,
+        isCommonDate: boolean,
+    ) => {
+        const localIdentifier = item.dataSet;
+        invariant(!isUriRef(localIdentifier));
 
         const changedParentIndex = dependentDateFilters.findIndex(
-            (dependentDateFilter) => dependentDateFilter.localIdentifier === dataSet.identifier,
+            (dependentDateFilter) =>
+                dependentDateFilter.localIdentifier === localIdentifier?.identifier &&
+                dependentDateFilter.isCommonDate === isCommonDate,
         );
-        const changedItem = { ...dependentDateFilters[changedParentIndex] };
 
-        changedItem.isSelected = isSelected;
+        if (changedParentIndex === -1) {
+            setDependentDateFilters([...dependentDateFilters, item]);
+        } else {
+            if (isCommonDate) {
+                const filteredDependentDateFilters = dependentDateFilters.filter(
+                    (_, index) => index !== changedParentIndex,
+                );
 
-        const changedParentItems = [...dependentDateFilters];
-        changedParentItems[changedParentIndex] = changedItem;
+                setDependentDateFilters(filteredDependentDateFilters);
+            } else {
+                const changedItem = { ...dependentDateFilters[changedParentIndex], isSelected };
 
-        setDependentDateFilters(changedParentItems);
+                const changedParentItems = dependentDateFilters.map((item, index) =>
+                    index === changedParentIndex ? changedItem : item,
+                );
+
+                setDependentDateFilters(changedParentItems);
+            }
+        }
     };
 
     const onDependentDateFiltersConfigurationChanged = useMemo<boolean>(() => {
@@ -64,21 +86,19 @@ export function useDependentDateFiltersConfiguration(
 
     const onConfigurationClose = useCallback(() => {
         setDependentDateFilters(originalState);
-    }, [originalState]);
+        setDependentCommonDateFilter(originalCommonDateFilterState);
+    }, [originalState, originalCommonDateFilterState]);
 
     const onDependentDateFiltersChange = useCallback(() => {
         // dispatch the command only if the configuration changed
         if (onDependentDateFiltersConfigurationChanged) {
-            const dateFilters: IDashboardAttributeFilterByDate[] = [];
-            dependentDateFilters.forEach((dependentDateFilter) => {
-                if (!dependentDateFilter.isSelected) {
-                    return;
-                }
+            const dateFilters = dependentDateFilters
+                .filter((filter) => filter.isSelected)
+                .map((filter) => ({
+                    filterLocalIdentifier: filter.localIdentifier,
+                    isCommonDate: !!filter.isCommonDate,
+                }));
 
-                dateFilters.push({
-                    filterLocalIdentifier: dependentDateFilter.localIdentifier,
-                });
-            });
             saveDependentDateFilterCommand(currentFilter.attributeFilter.localIdentifier!, dateFilters);
         }
     }, [
@@ -90,6 +110,7 @@ export function useDependentDateFiltersConfiguration(
 
     return {
         dependentDateFilters,
+        dependentCommonDateFilter,
         onDependentDateFiltersSelect,
         onConfigurationClose,
         onDependentDateFiltersConfigurationChanged,
