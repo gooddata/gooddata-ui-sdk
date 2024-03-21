@@ -26,9 +26,10 @@ import {
     isDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
+import { useCommonDateFilterTitle } from "../../../../dateFilter/useCommonDateFilterTitle.js";
 
 import { LimitingItem } from "./shared/LimitingItem.js";
-import { useCommonDateFilterTitle, useLimitingItems } from "./shared/limitingItemsHook.js";
+import { useLimitingItems } from "./shared/limitingItemsHook.js";
 import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
@@ -102,6 +103,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     const onDelete = (deletedItem: ValuesLimitingItem) => {
         if (isDashboardDependentDateFilter(deletedItem)) {
             onDependentDateFilterUpdate(deletedItem, false, deletedItem.isCommonDate);
+            attributeFilterInteraction("attributeFilterLimitRemoveDependentDateFilterClicked");
         } else if (isObjRef(deletedItem)) {
             onLimitingItemUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
             attributeFilterInteraction("attributeFilterLimitRemoveMetricClicked");

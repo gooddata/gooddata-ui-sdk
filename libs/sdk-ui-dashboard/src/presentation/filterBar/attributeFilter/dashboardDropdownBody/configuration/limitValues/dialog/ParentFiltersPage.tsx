@@ -11,6 +11,7 @@ import { ValuesLimitingItem } from "../../../../types.js";
 import {
     IDashboardAttributeFilterParentItem,
     IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
     selectEnableKDAttributeFilterDatesValidation,
     useDashboardSelector,
     useDashboardUserInteraction,
@@ -114,7 +115,12 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
         if (!isDisabled) {
             onSelect(item);
             onClose();
-            attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
+
+            if (isDashboardDependentDateFilter(item)) {
+                attributeFilterInteraction("attributeFilterLimitDependentDateFilterClicked");
+            } else {
+                attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
+            }
         }
     };
 

@@ -16,7 +16,12 @@ import {
     useCommonDateItems,
     useDependentDateFilterTitle,
 } from "../shared/limitingItemsHook.js";
-import { IDashboardDependentDateFilter } from "../../../../../../../model/index.js";
+import { UnknownItemTitle } from "../shared/LimitingItem.js";
+import {
+    IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
+    useDashboardUserInteraction,
+} from "../../../../../../../model/index.js";
 import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IDateFiltersPageProps {
@@ -41,6 +46,7 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
     onSelect,
     onClose,
 }) => {
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
         return cx(
             "gd-list-item date-filter__limit__popup__item",
@@ -51,12 +57,14 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
         );
     }, [item]);
 
-    const dependentDateFilterTitle = useDependentDateFilterTitle(item, dependentDateFilters);
+    const dataSet = isDashboardDependentDateFilter(item) ? item.dataSet : undefined;
+    const dependentDateFilterTitle = useDependentDateFilterTitle(dataSet, dependentDateFilters);
 
     const onClick = () => {
         if (!isDisabled) {
             onSelect(item);
             onClose();
+            attributeFilterInteraction("attributeFilterLimitDependentDateFilterClicked");
         }
     };
 
@@ -66,7 +74,7 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
                 <FormattedMessage
                     id="attributesDropdown.valuesLimiting.disableDataSet"
                     values={{
-                        dateFilterTitle: dependentDateFilterTitle,
+                        dateFilterTitle: dependentDateFilterTitle ?? <UnknownItemTitle />,
                         // eslint-disable-next-line react/display-name
                         strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                     }}

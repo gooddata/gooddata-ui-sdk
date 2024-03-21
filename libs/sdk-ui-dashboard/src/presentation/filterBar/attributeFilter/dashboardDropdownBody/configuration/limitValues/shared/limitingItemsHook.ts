@@ -402,27 +402,19 @@ const parseCommonDateFilter = (
     };
 };
 
-export const useCommonDateFilterTitle = (intl: IntlShape): string => {
-    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
-
-    return filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
-};
-
 export const useDependentDateFilterTitle = (
-    item: ValuesLimitingItem,
+    dataSet: ObjRef | undefined,
     dependentDateFilters: IDashboardDependentDateFilter[],
 ): string => {
     const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     return useMemo(() => {
-        const dateFilter = dependentDateFilters.find((filter) =>
-            areObjRefsEqual(filter.dataSet, (item as IDashboardDependentDateFilter).dataSet),
-        );
+        const dateFilter = dependentDateFilters.find((filter) => areObjRefsEqual(filter.dataSet, dataSet));
 
         const dateDataSet = dateFilter?.dataSet ? dateDataSetsMap.get(dateFilter?.dataSet) : "";
         const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
 
         return getDatasetTitle(dateFilter?.dataSet, dataSetTitle, filterConfigByDimension);
-    }, [dependentDateFilters, item, filterConfigByDimension]);
+    }, [dependentDateFilters, dataSet, filterConfigByDimension, dateDataSetsMap]);
 };
