@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import {
     areObjRefsEqual,
+    getHierarchyAttributes,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     isCatalogAttributeHierarchy,
@@ -47,9 +48,7 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
     );
 
     const existInHierarchies = catalogAttributeHierarchies.filter((hierarchy) => {
-        const attributesRef = isCatalogAttributeHierarchy(hierarchy)
-            ? hierarchy.attributeHierarchy.attributes
-            : hierarchy.attributes;
+        const attributesRef = getHierarchyAttributes(hierarchy);
         return attributesRef.some((ref) =>
             areObjRefsEqual(ref, attributeDescriptor?.attributeHeader.formOf.ref),
         );

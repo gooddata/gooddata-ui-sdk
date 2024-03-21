@@ -1,14 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import {
     areObjRefsEqual,
+    getHierarchyAttributes,
+    getHierarchyRef,
     IAttributeDescriptor,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     IDrillDownReference,
-    isCatalogAttributeHierarchy,
+    isAttributeHierarchyReference,
+    getHierarchyTitle,
+    ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
@@ -49,6 +53,16 @@ const DROPDOWN_ALIGN_POINTS = [
     },
 ];
 
+const isHierarchyInBlackList = (
+    ignoredDrillDownHierarchies: IDrillDownReference[],
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+    attributeRef: ObjRef | undefined,
+) => {
+    return ignoredDrillDownHierarchies
+        .filter(isAttributeHierarchyReference)
+        .some((ref) => existBlacklistHierarchyPredicate(ref, hierarchy, attributeRef));
+};
+
 function buildHierarchyItemList(
     attributeDescriptor: IAttributeDescriptor | undefined,
     catalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
@@ -56,18 +70,11 @@ function buildHierarchyItemList(
 ) {
     const items: IAttributeHierarchyItem[] = [];
     catalogAttributeHierarchies.forEach((hierarchy) => {
-        const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
-            ? hierarchy.attributeHierarchy.ref
-            : hierarchy.dateDatasetRef;
-        const attributesRef = isCatalogAttributeHierarchy(hierarchy)
-            ? hierarchy.attributeHierarchy.attributes
-            : hierarchy.attributes;
-        const isInBlacklist = ignoredDrillDownHierarchies.some((ref) =>
-            existBlacklistHierarchyPredicate(
-                ref,
-                hierarchyRef,
-                attributeDescriptor?.attributeHeader.formOf.ref,
-            ),
+        const attributesRef = getHierarchyAttributes(hierarchy);
+        const isInBlacklist = isHierarchyInBlackList(
+            ignoredDrillDownHierarchies,
+            hierarchy,
+            attributeDescriptor?.attributeHeader.formOf.ref,
         );
         const indexInHierarchy = attributesRef.findIndex(
             (ref) => objRefToString(ref) === attributeDescriptor?.attributeHeader.formOf.identifier,
@@ -98,9 +105,7 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
 
     const selectedCatalogAttributeHierarchy = config.complete
         ? catalogAttributeHierarchies.find((hierarchy) => {
-              const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
-                  ? hierarchy.attributeHierarchy.ref
-                  : hierarchy.dateDatasetRef;
+              const hierarchyRef = getHierarchyRef(hierarchy);
               return areObjRefsEqual(hierarchyRef, config.attributeHierarchyRef);
           })
         : null;
@@ -111,9 +116,8 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
         ignoredDrillDownHierarchies,
     );
 
-    const selectHierarchyTitle = isCatalogAttributeHierarchy(selectedCatalogAttributeHierarchy)
-        ? selectedCatalogAttributeHierarchy?.attributeHierarchy.title
-        : selectedCatalogAttributeHierarchy?.title;
+    const selectHierarchyTitle =
+        selectedCatalogAttributeHierarchy && getHierarchyTitle(selectedCatalogAttributeHierarchy);
     const buttonText = selectHierarchyTitle ?? formatMessage(messages.drilldownSelectHierarchy);
 
     return (

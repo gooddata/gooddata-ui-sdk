@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
 import { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 import { ICatalogFact, isCatalogFact } from "./fact/index.js";
@@ -65,4 +65,7 @@ export {
     isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
+    getHierarchyRef,
+    getHierarchyTitle,
+    getHierarchyAttributes,
 } from "./attributeHierarchy/index.js";

@@ -20,8 +20,9 @@ import {
     ICatalogAttributeHierarchy,
     IDrillDownReference,
     ICatalogDateAttributeHierarchy,
-    isCatalogAttributeHierarchy,
     DrillOrigin,
+    getHierarchyAttributes,
+    getHierarchyRef,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -143,15 +144,10 @@ function getDrillDownDefinitionsWithPredicates(
             const attributeRef = drill.attribute.attributeHeader.formOf.ref;
             const attributeDescendants: ObjRef[] = [];
             allCatalogAttributeHierarchies.forEach((hierarchy) => {
-                const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
-                    ? hierarchy.attributeHierarchy.ref
-                    : hierarchy.dateDatasetRef;
-                const attributes = isCatalogAttributeHierarchy(hierarchy)
-                    ? hierarchy.attributeHierarchy.attributes
-                    : hierarchy.attributes;
+                const attributes = getHierarchyAttributes(hierarchy);
                 const hierarchyAttributes = attributes.filter((attrRef) => {
                     const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                        existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
+                        existBlacklistHierarchyPredicate(reference, hierarchy, attrRef),
                     );
 
                     if (supportsAttributeHierarchies) {
@@ -261,35 +257,29 @@ function getGlobalDrillDownAttributeHierarchyDefinitions(
     const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [];
     catalogAttributeHierarchies
         .map((it) => {
-            const hierarchyRef = isCatalogAttributeHierarchy(it)
-                ? it.attributeHierarchy.ref
-                : it.dateDatasetRef;
-            const attributes = isCatalogAttributeHierarchy(it)
-                ? it.attributeHierarchy.attributes
-                : it.attributes;
+            const attributes = getHierarchyAttributes(it);
             // we need to remove the last attribute from the hierarchy
             // because it does not have any descendants so that the widget cannot drill down to it
             return {
-                attributeIdentifiers: attributes
-                    .slice(0, attributes.length - 1)
-                    .map((it) => objRefToString(it)),
-                ref: hierarchyRef,
+                attributeRefs: attributes.slice(0, attributes.length - 1),
+                hierarchy: it,
             };
         })
-        .forEach(({ attributeIdentifiers, ref }) => {
+        .forEach(({ attributeRefs, hierarchy }) => {
             availableAttributes.forEach((availableAttribute) => {
                 const attributeHeader = availableAttribute.attribute.attributeHeader;
-                const isAttributeInHierarchy = attributeIdentifiers.includes(
-                    objRefToString(attributeHeader.formOf.ref),
+                const isAttributeInHierarchy = attributeRefs.some((attrRef) =>
+                    areObjRefsEqual(attrRef, attributeHeader.formOf.ref),
                 );
                 const inBlacklistIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(reference, ref, attributeHeader.formOf.ref),
+                    existBlacklistHierarchyPredicate(reference, hierarchy, attributeHeader.formOf.ref),
                 );
                 if (isAttributeInHierarchy && inBlacklistIndex < 0) {
+                    const hierarchyRef = getHierarchyRef(hierarchy);
                     globalDrillDowns.push({
                         type: "drillDown",
                         origin: localIdRef(attributeHeader.localIdentifier),
-                        target: ref,
+                        target: hierarchyRef,
                     });
                 }
             });

@@ -3199,7 +3199,7 @@ export interface EntitlementsState {
 }
 
 // @internal (undocumented)
-export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchyRef: ObjRef, attributeIdentifier?: ObjRef): boolean;
+export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
 // @beta (undocumented)
 export interface ExportDashboardToPdf extends IDashboardCommand {

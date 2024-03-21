@@ -525,6 +525,7 @@ export {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isAttributeHierarchyReference,
+    isDateHierarchyReference,
     isCrossFiltering,
 } from "./dashboard/drill.js";
 
@@ -591,6 +592,9 @@ export {
     GroupableCatalogItem,
     catalogItemMetadataObject,
     ICatalogDateAttributeHierarchy,
+    getHierarchyRef,
+    getHierarchyTitle,
+    getHierarchyAttributes,
 } from "./ldm/catalog/index.js";
 
 export {

@@ -2,6 +2,7 @@
 import React from "react";
 import {
     DrillOrigin,
+    getHierarchyRef,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     idRef,
@@ -11,7 +12,6 @@ import {
     IDrillToInsight,
     IInsight,
     InsightDrillDefinition,
-    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import {
     DRILL_TARGET_TYPE,
@@ -44,9 +44,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     const onDrillDownTargetSelect = (
         targetItem: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
     ) => {
-        const hierarchyRef = isCatalogAttributeHierarchy(targetItem)
-            ? targetItem.attributeHierarchy.ref
-            : targetItem.dateDatasetRef;
+        const hierarchyRef = getHierarchyRef(targetItem);
 
         const drillDownItem: IDrillDownAttributeHierarchyDefinition = {
             attributeHierarchyRef: (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
