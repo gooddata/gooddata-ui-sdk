@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -12,7 +12,7 @@ describe("DataLabelsControl", () => {
     const VISIBLE_LABEL = "show";
     const AUTO_LABEL = "auto (default)";
     const TOTAL_LABELS_TEXT = "Total Labels";
-    const DISABLED_TOOLTIP = "Property is not applicable for this configuration of the visualization";
+    const DISABLED_TOOLTIP = "Property is not applicable for this configuration of the insight";
 
     const defaultProps = {
         properties: {},

@@ -239,7 +239,7 @@ export class Widget {
     }
 
     hasError() {
-        this.getElement().contains("Sorry, we can't display this visualization").should("exist");
+        this.getElement().contains("Sorry, we can't display this insight").should("exist");
     }
 
     scrollIntoView() {

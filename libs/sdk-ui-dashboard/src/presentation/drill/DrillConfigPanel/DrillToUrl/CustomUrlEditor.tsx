@@ -139,7 +139,7 @@ interface IFormattingRules {
 }
 
 const IDENTIFIER_RULE: IFormattingRule = {
-    regex: /\{workspace_id\}|\{project_id\}|\{visualization_id\}|\{widget_id\}|\{dashboard_id\}|\{client_id\}|\{data_product_id\}/,
+    regex: /\{workspace_id\}|\{project_id\}|\{insight_id\}|\{widget_id\}|\{dashboard_id\}|\{client_id\}|\{data_product_id\}/,
     token: "identifier",
 };
 const INVALID_IDENTIFIER_RULE: IFormattingRule = { regex: /\{[^}{]*\}/, token: "invalid-identifier" };

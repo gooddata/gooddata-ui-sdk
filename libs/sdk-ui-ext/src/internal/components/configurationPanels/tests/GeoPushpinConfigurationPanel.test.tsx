@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
@@ -150,7 +150,7 @@ describe("GeoPushpinConfigurationPanel", () => {
         await userEvent.click(screen.queryByText("Colors"));
         expect(screen.queryByText("Color 1")).toBeInTheDocument();
         expect(
-            screen.queryByText("There are no colors for this configuration of the visualization"),
+            screen.queryByText("There are no colors for this configuration of the insight"),
         ).not.toBeInTheDocument();
     });
 
@@ -162,7 +162,7 @@ describe("GeoPushpinConfigurationPanel", () => {
         await userEvent.click(screen.queryByText("Colors"));
 
         expect(
-            screen.queryByText("There are no colors for this configuration of the visualization"),
+            screen.queryByText("There are no colors for this configuration of the insight"),
         ).toBeInTheDocument();
         expect(screen.queryByText("Color 1")).not.toBeInTheDocument();
     });

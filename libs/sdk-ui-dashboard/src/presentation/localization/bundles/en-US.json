@@ -55,12 +55,12 @@
         "limit": 0
     },
     "messages.dashboard.invalidDrills.body.modern._measure|insight": {
-        "value": "One or more dashboard/visualization/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "value": "One or more dashboard/insight/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
         "limit": 0
     },
     "messages.dashboard.invalidDrills.body.modern._metric|insight": {
-        "value": "One or more dashboard/visualization/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "value": "One or more dashboard/insight/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
         "limit": 0
     },
@@ -143,7 +143,7 @@
         "limit": 0
     },
     "dialogs.export.filters|insight": {
-        "value": "VISUALIZATION CONTEXT",
+        "value": "INSIGHT CONTEXT",
         "comment": "The filters that are applied to the report",
         "limit": 0
     },
@@ -450,8 +450,8 @@
         "limit": 0
     },
     "dialogs.schedule.email.attachment.select.disabled.message|insight": {
-        "value": "This dashboard does not contain any visualizations.",
-        "comment": "Message for button to add visualizations to the export, if there are no visualizations.",
+        "value": "This dashboard does not contain any insights.",
+        "comment": "Message for button to add insights to the export, if there are no insights.",
         "limit": 0
     },
     "dialogs.schedule.email.attachment.select.disabled.message|report": {
@@ -472,8 +472,8 @@
         "translate": false
     },
     "dialogs.schedule.email.attachment.select.widgets.header|insight": {
-        "value": "Visualizations (CSV, XLSX)",
-        "comment": "Heading of section of checkboxes for selecting visualizations to be exported as CSV of XLSX file",
+        "value": "Insights (CSV, XLSX)",
+        "comment": "Heading of section of checkboxes for selecting insights to be exported as CSV of XLSX file",
         "limit": 0
     },
     "dialogs.schedule.email.headline": {
@@ -483,7 +483,7 @@
     },
     "dialogs.schedule.email.heading": {
         "value": "Schedule export",
-        "comment": "Translate as imperative. Schedule exporting whole dashboard and visualizations",
+        "comment": "Translate as imperative. Schedule exporting whole dashboard and insights",
         "limit": 0
     },
     "dialogs.schedule.email.message.label": {
@@ -587,7 +587,7 @@
         "limit": 0
     },
     "dialogs.schedule.email.insight.format|insight": {
-        "value": "Visualization format:",
+        "value": "Insight format:",
         "comment": "Label of a dropdown for selecting export format",
         "limit": 0
     },
@@ -658,8 +658,8 @@
         "limit": 0
     },
     "dialogs.schedule.management.attachments.widgets|insight": {
-        "value": "{n, plural, one {# visualization} other {# visualizations}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# VISUALIZATION} other {# VISUALIZATIONS}}'.",
+        "value": "{n, plural, one {# insight} other {# insights}}",
+        "comment": "Translate only uppercase in '{n, plural, one {# INSIGHT} other {# INSIGHTS}}'.",
         "limit": 0
     },
     "dialogs.schedule.management.attachments.widgets|report": {
@@ -669,8 +669,8 @@
         "translate": false
     },
     "dialogs.schedule.management.attachments.mixed|insight": {
-        "value": "Dashboard and {n, plural, one {# visualization} other {# visualizations}}",
-        "comment": "In '{n, plural, one {# VISUALIZATION} other {# VISUALIZATIONS}}', translate only uppercase words.",
+        "value": "Dashboard and {n, plural, one {# insight} other {# insights}}",
+        "comment": "In '{n, plural, one {# INSIGHT} other {# INSIGHTS}}', translate only uppercase words.",
         "limit": 0
     },
     "dialogs.schedule.management.attachments.mixed|report": {
@@ -901,12 +901,12 @@
     },
     "messages.exportResultError": {
         "value": "Failed to export the data. Try again later.",
-        "comment": "Error dialog. Exporting visualization to the file fails.",
+        "comment": "Error dialog. Exporting insight to the file fails.",
         "limit": 0
     },
     "messages.exportResultRestrictedError|insight": {
-        "value": "You cannot export this visualization because it contains restricted data.",
-        "comment": "Error dialog. Exporting visualization to the file fails because contains restricted data.",
+        "value": "You cannot export this insight because it contains restricted data.",
+        "comment": "Error dialog. Exporting insight to the file fails because contains restricted data.",
         "limit": 0
     },
     "messages.exportResultRestrictedError|report": {
@@ -971,7 +971,7 @@
         "limit": 0
     },
     "visualization.error.headline|insight": {
-        "value": "Sorry, we can't display this visualization",
+        "value": "Sorry, we can't display this insight",
         "comment": "",
         "limit": 0
     },
@@ -987,7 +987,7 @@
         "limit": 0
     },
     "options.button.bubble|insight": {
-        "value": "Export visualization data",
+        "value": "Export insight data",
         "comment": "Show this message when hovering on the options button",
         "limit": 0
     },
@@ -1008,13 +1008,13 @@
         "limit": 0
     },
     "options.menu.unsupported.error._measure|insight": {
-        "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
-        "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, measures or attributes.",
+        "value": "The insight cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
+        "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, measures or attributes.",
         "limit": 0
     },
     "options.menu.unsupported.error._metric|insight": {
-        "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
-        "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
+        "value": "The insight cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
+        "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
         "limit": 0
     },
     "options.menu.unsupported.error._measure|report": {
@@ -1030,8 +1030,8 @@
         "translate": false
     },
     "options.menu.unsupported.loading|insight": {
-        "value": "The visualization cannot be exported at the moment.",
-        "comment": "Error popup. Visualization cannot be exported to the file.",
+        "value": "The insight cannot be exported at the moment.",
+        "comment": "Error popup. Insight cannot be exported to the file.",
         "limit": 0
     },
     "options.menu.unsupported.loading|report": {
@@ -1041,7 +1041,7 @@
         "translate": false
     },
     "export.defaultTitle|insight": {
-        "value": "Untitled visualization",
+        "value": "Untitled insight",
         "comment": "Default title for exported file",
         "limit": 0
     },
@@ -1082,7 +1082,7 @@
         "limit": 0
     },
     "dashboard.error.empty.text|insight": {
-        "value": "All visualizations were removed.",
+        "value": "All insights were removed.",
         "comment": "The user has a dashboard that contains no widgets.",
         "limit": 0
     },
@@ -1169,7 +1169,7 @@
     },
     "attributesDropdown.displayValuesAs": {
         "value": "Display values as",
-        "comment": "Filter section label in attribute filter dropdown configuration. Displayed before dropdown button that changes form of the attribute used in visualization. For example 'Display as: Shortened name'.",
+        "comment": "Filter section label in attribute filter dropdown configuration. Displayed before dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'.",
         "limit": 0
     },
     "attributesDropdown.title": {
@@ -1303,7 +1303,7 @@
         "limit": 0
     },
     "visualizationsList.noInsights|insight": {
-        "value": "This workspace contains no visualizations.",
+        "value": "This workspace contains no insights.",
         "comment": "",
         "limit": 0
     },
@@ -1314,7 +1314,7 @@
         "translate": false
     },
     "visualizationsList.create|insight": {
-        "value": "Create visualization",
+        "value": "Create insight",
         "comment": "",
         "limit": 0
     },
@@ -1325,7 +1325,7 @@
         "limit": 0
     },
     "visualizationsList.noUserInsights|insight": {
-        "value": "No visualizations created.",
+        "value": "No insights created.",
         "comment": "",
         "limit": 0
     },
@@ -1336,7 +1336,7 @@
         "translate": false
     },
     "visualizationsList.noVisualizationsFound|insight": {
-        "value": "No visualization matched.",
+        "value": "No insight matched.",
         "comment": "",
         "limit": 0
     },
@@ -1347,7 +1347,7 @@
         "translate": false
     },
     "search_insights|insight": {
-        "value": "Search all visualizations…",
+        "value": "Search all insights…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
@@ -1428,7 +1428,7 @@
         "limit": 0
     },
     "visualizationsList.savedVisualizations|insight": {
-        "value": "Saved visualizations",
+        "value": "Saved insights",
         "comment": "",
         "limit": 0
     },
@@ -1599,7 +1599,7 @@
         "limit": 0
     },
     "configurationPanel.vizCantBeFilteredByAttribute|insight": {
-        "value": "The visualization cannot be filtered by {attributeName}. Unselect the check box.",
+        "value": "The insight cannot be filtered by {attributeName}. Unselect the check box.",
         "comment": "Don't translate placeholder '{attributeName}'.",
         "limit": 0
     },
@@ -1615,7 +1615,7 @@
         "limit": 0
     },
     "configurationPanel.vizCantBeFilteredByDate|insight": {
-        "value": "The visualization cannot be filtered by Date. Unselect the check box.",
+        "value": "The insight cannot be filtered by Date. Unselect the check box.",
         "comment": "",
         "limit": 0
     },
@@ -1631,7 +1631,7 @@
         "limit": 0
     },
     "configurationPanel.unrelatedVizDateInfo|insight": {
-        "value": "\"{dateDataSet}\" can no longer be applied to the visualization. Select a different dimension or edit the visualization.",
+        "value": "\"{dateDataSet}\" can no longer be applied to the insight. Select a different dimension or edit the insight.",
         "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
         "limit": 0
     },
@@ -1717,7 +1717,7 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drillIntoInsight|insight": {
-        "value": "Drill into visualization",
+        "value": "Drill into insight",
         "comment": "",
         "limit": 0
     },
@@ -1733,7 +1733,7 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.disableDrillDownTooltip": {
-        "value": "Drill down is turned off in this visualization's configuration.",
+        "value": "Drill down is turned off in this insight's configuration.",
         "comment": "The disable tooltip message for the Drill down item",
         "limit": 0
     },
@@ -1753,7 +1753,7 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning|insight": {
-        "value": "The date attribute value from the visualization will not be transferred to filter the target dashboard.",
+        "value": "The date attribute value from the insight will not be transferred to filter the target dashboard.",
         "comment": "Warning displayed in drill config when drill into dashboard has date attribute as source or in intersection",
         "limit": 0
     },
@@ -1790,7 +1790,7 @@
         "limit": 0
     },
     "configurationPanel.visualprops.inheritDescriptionHelp|insight": {
-        "value": "Inherit the description from the visualization.",
+        "value": "Inherit the description from the insight.",
         "comment": "",
         "limit": 0
     },
@@ -1816,7 +1816,7 @@
         "limit": 0
     },
     "configurationPanel.visualprops.customDescriptionHelp|insight": {
-        "value": "Add a custom description for this instance of the visualization.",
+        "value": "Add a custom description for this instance of the insight.",
         "comment": "",
         "limit": 0
     },
@@ -1847,12 +1847,12 @@
         "limit": 0
     },
     "configurationPanel.visualprops.includeMetricsHelp._measure|insight": {
-        "value": "Display section with list of visualization’s measures and their description.",
+        "value": "Display section with list of insight’s measures and their description.",
         "comment": "",
         "limit": 0
     },
     "configurationPanel.visualprops.includeMetricsHelp._metric|insight": {
-        "value": "Display section with list of visualization’s metrics and their description.",
+        "value": "Display section with list of insight’s metrics and their description.",
         "comment": "",
         "limit": 0
     },
@@ -1940,8 +1940,8 @@
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|insight": {
-        "value": "Visualization ID",
-        "comment": "Label of the visualization parameter in Drill to URL 'Custom URL' editor.",
+        "value": "Insight ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|report": {
@@ -1952,32 +1952,32 @@
     },
     "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel": {
         "value": "Client ID",
-        "comment": "Label of the client parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel": {
         "value": "Data product ID",
-        "comment": "Label of the data product parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel": {
         "value": "Project ID",
-        "comment": "Label of the project parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel": {
         "value": "Workspace ID",
-        "comment": "Label of the workspace parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel": {
         "value": "Widget ID",
-        "comment": "Label of the widget parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel": {
         "value": "Dashboard ID",
-        "comment": "Label of the dashboard parameter in Drill to URL 'Custom URL' editor.",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": {
@@ -1986,7 +1986,7 @@
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|insight": {
-        "value": "Visualization",
+        "value": "Insight",
         "comment": "Label of the parameters section that contains attributes and measures in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
@@ -2057,7 +2057,7 @@
         "limit": 0
     },
     "configurationPanel.zoomInsight|insight": {
-        "value": "Zoomable visualization",
+        "value": "Zoomable insight",
         "comment": "",
         "limit": 0
     },
@@ -2068,7 +2068,7 @@
         "limit": 0
     },
     "configurationPanel.zoomInsight.help|insight": {
-        "value": "Enable to zoom the visualization to display a detailed view. Hold the shift key to pan the zoomed area.",
+        "value": "Enable to zoom the insight to display a detailed view. Hold the shift key to pan the zoomed area.",
         "comment": "",
         "limit": 0
     },
@@ -2084,8 +2084,8 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.selectInsight|insight": {
-        "value": "Choose visualization…",
-        "comment": "Hint guiding users that drill target visualization in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "value": "Choose insight…",
+        "comment": "Hint guiding users that drill target insight in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "configurationPanel.drillConfig.selectInsight|report": {
@@ -2200,7 +2200,7 @@
         "limit": 0
     },
     "newDashboard.title|insight": {
-        "value": "Drag visualization here",
+        "value": "Drag insight here",
         "comment": "",
         "limit": 0
     },
@@ -2211,8 +2211,8 @@
         "limit": 0
     },
     "newDashboard.dropInsight|insight": {
-        "value": "Drop visualization",
-        "comment": "A placeholder showed when user drags new visualization into a dashboard canvas by cursor (drag and drop).",
+        "value": "Drop insight",
+        "comment": "A placeholder showed when user drags new insight into a dashboard canvas by cursor (drag and drop).",
         "limit": 0
     },
     "newDashboard.dropInsight|report": {

@@ -651,7 +651,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by an attribute, an visualization can have only one measure",
+        "warningMessage": "To stack by an attribute, an insight can have only one measure",
       },
       "view": {
         "accepts": [

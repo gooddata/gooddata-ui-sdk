@@ -85,7 +85,7 @@ export class InsightsCatalog {
 
     hasNoDataMessage() {
         cy.get(this.getElementSelector(".s-visualization-list-no-data-message"))
-            .contains("No visualization matched.")
+            .contains("No insight matched.")
             .should("exist");
         return this;
     }
