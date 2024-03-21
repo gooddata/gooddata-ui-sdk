@@ -230,7 +230,7 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an insight can have only one measure",
       },
     },
     "exportConfig": {

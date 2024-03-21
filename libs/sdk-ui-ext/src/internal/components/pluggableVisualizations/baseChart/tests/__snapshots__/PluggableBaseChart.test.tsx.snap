@@ -385,7 +385,7 @@ exports[`PluggableBaseChart > should return ref. point with multiple metrics and
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by, an visualization can have only one measure",
+        "warningMessage": "To stack by, an insight can have only one measure",
       },
       "view": {
         "accepts": [
@@ -657,7 +657,7 @@ exports[`PluggableBaseChart > should return reference point with multiple metric
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by, an visualization can have only one measure",
+        "warningMessage": "To stack by, an insight can have only one measure",
       },
       "view": {
         "accepts": [

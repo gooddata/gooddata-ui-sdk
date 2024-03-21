@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
@@ -102,7 +102,7 @@ describe("ColorsSection", () => {
         });
 
         expect(
-            screen.getByText(/There are no colors for this configuration of the visualization/i),
+            screen.getByText(/There are no colors for this configuration of the insight/i),
         ).toBeInTheDocument();
     });
 

@@ -135,12 +135,12 @@
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the visualization by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the visualization by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
         "limit": 0
     },
@@ -157,7 +157,7 @@
         "translate": false
     },
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking|insight": {
-        "value": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
+        "value": "Rollup (Total) aggregation is not available when filtering the insight by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot.",
         "limit": 0
     },
@@ -263,7 +263,7 @@
         "limit": 0
     },
     "visualization.ErrorMessageGeneric|insight": {
-        "value": "Sorry, we can't display this visualization",
+        "value": "Sorry, we can't display this insight",
         "comment": "",
         "limit": 0
     },
@@ -309,7 +309,7 @@
         "limit": 0
     },
     "visualization.ErrorDescriptionUnauthorized|insight": {
-        "value": "Sorry you don't have access to this visualization. Login or ask your administrator to grant you permissions.",
+        "value": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
         "comment": "",
         "limit": 0
     },
@@ -320,7 +320,7 @@
         "translate": false
     },
     "visualization.ErrorMessageNotFound|insight": {
-        "value": "Sorry, we can't find this visualization",
+        "value": "Sorry, we can't find this insight",
         "comment": "",
         "limit": 0
     },
@@ -331,7 +331,7 @@
         "translate": false
     },
     "visualization.ErrorDescriptionNotFound|insight": {
-        "value": "The visualization with this URL does not exist.",
+        "value": "The insight with this URL does not exist.",
         "comment": "",
         "limit": 0
     },
@@ -1387,7 +1387,7 @@
         "limit": 0
     },
     "rankingFilter.allRecords.tooltip|insight": {
-        "value": "Apply the filter to all attributes in the visualization.",
+        "value": "Apply the filter to all attributes in the insight.",
         "comment": "Explanation of 'All' option.",
         "limit": 0
     },
@@ -1398,7 +1398,7 @@
         "translate": false
     },
     "rankingFilter.attributeDropdown.oneAttributeTooltip|insight": {
-        "value": "The visualization is sliced only by one attribute. The filter will apply to all its values.",
+        "value": "The insight is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown.",
         "limit": 0
     },
@@ -1454,7 +1454,7 @@
         "limit": 0
     },
     "rankingFilter.valueTooltip|insight": {
-        "value": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
+        "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
         "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
         "limit": 0
     },
@@ -1506,7 +1506,7 @@
     },
     "attributesDropdown.display_as": {
         "value": "Display as: {title}",
-        "comment": "Label shown on dropdown button that changes form of the attribute used in visualization. For example 'Display as: Shortened name'",
+        "comment": "Label shown on dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'",
         "limit": 0
     },
     "attributesDropdown.empty.item.tooltip": {
@@ -1750,7 +1750,7 @@
         "limit": 0
     },
     "sorting.dropdown.header|insight": {
-        "value": "Sort visualization",
+        "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
         "limit": 0
     },
@@ -1762,37 +1762,37 @@
     },
     "sorting.type.alphabetical.asc": {
         "value": "A to Z",
-        "comment": "Title of sort option when visualization is sorted alphabetically and in ascending order.",
+        "comment": "Title of sort option when insight is sorted alphabetically and in ascending order.",
         "limit": 0
     },
     "sorting.type.alphabetical.desc": {
         "value": "Z to A",
-        "comment": "Title of sort option when visualization is sorted alphabetically and in descending order.",
+        "comment": "Title of sort option when insight is sorted alphabetically and in descending order.",
         "limit": 0
     },
     "sorting.type.date.asc": {
         "value": "Oldest to newest",
-        "comment": "Title of sort option when visualization is sorted by date and in ascending order.",
+        "comment": "Title of sort option when insight is sorted by date and in ascending order.",
         "limit": 0
     },
     "sorting.type.date.desc": {
         "value": "Newest to oldest",
-        "comment": "Title of sort option when visualization is sorted by date and in descending order.",
+        "comment": "Title of sort option when insight is sorted by date and in descending order.",
         "limit": 0
     },
     "sorting.type.default": {
         "value": "Default",
-        "comment": "Title of sort option when visualization is sorted by default order.",
+        "comment": "Title of sort option when insight is sorted by default order.",
         "limit": 0
     },
     "sorting.type.numerical.asc": {
         "value": "Smallest to largest",
-        "comment": "Title of sort option when visualization is sorted numerically and in ascending order.",
+        "comment": "Title of sort option when insight is sorted numerically and in ascending order.",
         "limit": 0
     },
     "sorting.type.numerical.desc": {
         "value": "Largest to smallest",
-        "comment": "Title of sort option when visualization is sorted numerically and in descending order.",
+        "comment": "Title of sort option when insight is sorted numerically and in descending order.",
         "limit": 0
     },
     "sorting.by": {
@@ -1807,7 +1807,7 @@
     },
     "sorting.default.tooltip": {
         "value": "Use the order defined in the attribute.",
-        "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the visualization.",
+        "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the insight.",
         "limit": 0
     },
     "embedInsightDialog.actions.close": {
@@ -1861,7 +1861,7 @@
         "limit": 0
     },
     "embedInsightDialog.code.options.include.config.info|insight": {
-        "value": "Include the visualization configuration of colors, axes, legend, and canvas if available.",
+        "value": "Include the insight configuration of colors, axes, legend, and canvas if available.",
         "comment": "Tool tip that explain Include configuration",
         "limit": 0
     },
@@ -1882,7 +1882,7 @@
         "limit": 0
     },
     "embedInsightDialog.headLine.embedInsight|insight": {
-        "value": "Embed visualization",
+        "value": "Embed insight",
         "comment": "",
         "limit": 0
     },
@@ -1893,18 +1893,18 @@
         "translate": false
     },
     "embedInsightDialog.componentType.byReference.tooltip|insight": {
-        "value": "Embed as a reference to a saved visualization in a generic GD.UI react component. Any future changes to the visualization (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a live visualization means",
+        "value": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
+        "comment": "Tooltip that explain what Embed as a live insight means",
         "limit": 0
     },
     "embedInsightDialog.componentType.byReference.tooltip|report": {
         "value": "Embed as a reference to a saved report in a generic GD.UI react component. Any future changes to the report (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
-        "comment": "Tooltip that explain what Embed as a live visualization means",
+        "comment": "Tooltip that explain what Embed as a live insight means",
         "limit": 0,
         "translate": false
     },
     "embedInsightDialog.componentType.byDefinition.tooltip|insight": {
-        "value": "Embed as an visualization definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the visualization (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
+        "value": "Embed as an insight definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the insight (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report",
         "limit": 0
     },
@@ -1950,7 +1950,7 @@
         "limit": 0
     },
     "embedInsightDialog.emptyInsight.byReference|insight": {
-        "value": "Code snipped will be displayed here once you <a>save the visualization</a>.",
+        "value": "Code snipped will be displayed here once you <a>save the insight</a>.",
         "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
         "limit": 0
     },
@@ -1961,7 +1961,7 @@
         "translate": false
     },
     "embedInsightDialog.emptyInsight.byDefinition|insight": {
-        "value": "This visualization type cannot be embedded as programmatic type component.",
+        "value": "This insight type cannot be embedded as programmatic type component.",
         "comment": "The disabled message for code area",
         "limit": 0
     },
@@ -2082,8 +2082,8 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToInsight.tooltip": {
-        "value": "Open a related visualization, maintaining the applied filters from the original view. <a>Learn more</a>",
-        "comment": "Tooltip that explain what happens when drilling to visualization. Do not translate html tags <a>, </a>.",
+        "value": "Open a related insight, maintaining the applied filters from the original view. <a>Learn more</a>",
+        "comment": "Tooltip that explain what happens when drilling to insight. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drillToUrl.tooltip": {
@@ -2097,13 +2097,13 @@
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip": {
-        "value": "Drill down within the current visualization, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
+        "value": "Drill down within the current insight, following predefined attribute hierarchies to view your data on an increasingly granular level. <a>Learn more</a>",
         "comment": "Tooltip that explain what happens when drilling down. Do not translate html tags <a>, </a>.",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.insight": {
-        "value": "Drill down is turned off in this visualization's configuration.",
-        "comment": "Tooltip that explain drill down is disabled by visualization's configuration",
+        "value": "Drill down is turned off in this insight's configuration.",
+        "comment": "Tooltip that explain drill down is disabled by insight's configuration",
         "limit": 0
     },
     "configurationPanel.drillConfig.drilldown.tooltip.disabled.metric": {
@@ -2292,7 +2292,7 @@
         "limit": 0
     },
     "workspaceHierarchy.lockedInsight|insight": {
-        "value": "Only Admins can save changes to this visualization.",
+        "value": "Only Admins can save changes to this insight.",
         "comment": "Shown when hovering over lock indicator.",
         "limit": 0
     },
@@ -2303,7 +2303,7 @@
         "limit": 0
     },
     "workspaceHierarchy.inheritedInsight|insight": {
-        "value": "You cannot edit or delete this visualization.{br}It is centrally managed and certified.",
+        "value": "You cannot edit or delete this insight.{br}It is centrally managed and certified.",
         "comment": "Shown when hovering over lock indicator. Dont translate html tag placeholder {br}.",
         "limit": 0
     },
@@ -2884,7 +2884,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.user.body": {
-        "value": "The user will be irreversibly deleted, but their visualizations and dashboards will remain unaffected.",
+        "value": "The user will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
         "comment": "Body of dialog that deletes a users",
         "limit": 0
     },
@@ -2909,7 +2909,7 @@
         "limit": 0
     },
     "userManagement.deleteDialog.multipleUsers.body": {
-        "value": "<b>{count} users</b> will be irreversibly deleted, but their visualizations and dashboards will remain unaffected.",
+        "value": "<b>{count} users</b> will be irreversibly deleted, but their insights and dashboards will remain unaffected.",
         "comment": "Body of dialog that deletes multiple users. Do not translate placeholder {count}. It will be replaced with number of selected users in runtime.",
         "limit": 0
     },
