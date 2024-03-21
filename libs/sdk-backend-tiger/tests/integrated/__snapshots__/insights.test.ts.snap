@@ -779,16 +779,14 @@ exports[`tiger insights > should load empty insights for out-of-range page 1`] =
             },
           },
           {
-            "positiveAttributeFilter": {
+            "negativeAttributeFilter": {
               "displayForm": {
                 "identifier": "dt_oppcreated_timestamp.quarterOfYear",
                 "type": "displayForm",
               },
-              "in": {
+              "notIn": {
                 "values": [
-                  "01",
-                  "02",
-                  "03",
+                  "04",
                 ],
               },
             },
@@ -2885,16 +2883,14 @@ exports[`tiger insights > should load insights 1`] = `
             },
           },
           {
-            "positiveAttributeFilter": {
+            "negativeAttributeFilter": {
               "displayForm": {
                 "identifier": "dt_oppcreated_timestamp.quarterOfYear",
                 "type": "displayForm",
               },
-              "in": {
+              "notIn": {
                 "values": [
-                  "01",
-                  "02",
-                  "03",
+                  "04",
                 ],
               },
             },
@@ -4982,16 +4978,14 @@ exports[`tiger insights > should load insights 1`] = `
             },
           },
           {
-            "positiveAttributeFilter": {
+            "negativeAttributeFilter": {
               "displayForm": {
                 "identifier": "dt_oppcreated_timestamp.quarterOfYear",
                 "type": "displayForm",
               },
-              "in": {
+              "notIn": {
                 "values": [
-                  "01",
-                  "02",
-                  "03",
+                  "04",
                 ],
               },
             },
