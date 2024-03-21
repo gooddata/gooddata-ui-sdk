@@ -96,11 +96,12 @@ import {
     IAttributeOrMeasure,
     IMeasure,
     IMeasureDefinitionType,
-    IRelativeDateFilter,
     IAttributeElement,
     ICatalogAttributeHierarchy,
     IBucket,
     defWithBuckets,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -887,7 +888,7 @@ class DummyElementsQuery implements IElementsQuery {
     query = async (): Promise<IElementsQueryResult> => {
         return new DummyElementsQueryResult([], this.limit, this.offset, 0);
     };
-    withDateFilters(_filters: IRelativeDateFilter[]): IElementsQuery {
+    withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
     withSignal(_: AbortSignal): IElementsQuery {

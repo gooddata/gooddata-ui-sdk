@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -119,6 +119,13 @@ export interface IAttributeFilterElementsSelectProps {
      * This enables "show filtered elements" option which manages showing filtered elements.
      */
     enableShowingFilteredElements?: boolean;
+
+    /**
+     * Indicate that elements are filtered by dependent date filters
+     *
+     * @beta
+     */
+    isFilteredByDependentDateFilters?: boolean;
 
     /**
      * Title of the attribute

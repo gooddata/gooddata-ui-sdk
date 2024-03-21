@@ -7,6 +7,9 @@ import {
     isIdentifierRef,
     areObjRefsEqual,
     IAttributeDisplayFormMetadataObject,
+    ICatalogDateDataset,
+    IDashboardDateFilterConfigItem,
+    IDashboardDateFilterConfig,
 } from "@gooddata/sdk-model";
 
 import { ValuesLimitingItem } from "../../../../types.js";
@@ -18,13 +21,19 @@ import {
     IMetricsAndFacts,
     selectCatalogMeasures,
     selectCatalogFacts,
+    IDashboardDependentDateFilter,
+    selectAllCatalogDateDatasetsMap,
+    selectDateFilterConfigOverrides,
+    selectDateFilterConfigsOverrides,
 } from "../../../../../../../model/index.js";
 import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
+import { IntlShape } from "react-intl";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;
     item: ValuesLimitingItem;
     isDisabled?: boolean;
+    type?: string;
 }
 
 const findAttributeByLabel = (
@@ -108,7 +117,7 @@ const mapParentFilters = (
     labels: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     attributes: ICatalogAttribute[],
     isSelected: boolean,
-) =>
+): IValuesLimitingItemWithTitle[] =>
     parentFilters
         .filter((item) => item.isSelected === isSelected)
         .map((item) => {
@@ -127,9 +136,17 @@ export const useLimitingItems = (
     validParentFilters: ObjRef[],
     validateElementsBy: ObjRef[],
     metricsAndFacts: IMetricsAndFacts,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+    availableDatasets: ICatalogDateDataset[],
+    isEnabledKDAttributeFilterDatesValidation: boolean,
+    isSelected: boolean,
+    intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     return useMemo(() => {
         const selectedParentFilterItems: IValuesLimitingItemWithTitle[] = mapParentFilters(
@@ -144,7 +161,22 @@ export const useLimitingItems = (
                 title: findTitleForCatalogItem(item, metricsAndFacts, attributes),
                 item,
             })) ?? [];
-        return [...selectedParentFilterItems, ...validationItems].sort(sortByTypeAndTitle);
+
+        let dependentDateFilterItems: IValuesLimitingItemWithTitle[] = [];
+        if (isEnabledKDAttributeFilterDatesValidation) {
+            dependentDateFilterItems = mapDependentDateFilters(
+                dateDataSetsMap,
+                dependentDateFilters,
+                availableDatasets,
+                filterConfigByDimension,
+                isSelected,
+                intl,
+                filterConfig,
+            );
+        }
+        return [...selectedParentFilterItems, ...validationItems, ...dependentDateFilterItems].sort(
+            sortByTypeAndTitle,
+        );
     }, [parentFilters, validParentFilters, validateElementsBy, attributes, labels, metricsAndFacts]);
 };
 
@@ -177,12 +209,117 @@ export const useSearchableLimitingItems = (
 export const useFilterItems = (
     parentFilters: IDashboardAttributeFilterParentItem[],
     validParentFilters: ObjRef[],
+    dependentDateFilters: IDashboardDependentDateFilter[],
+    availableDatasets: ICatalogDateDataset[],
+    isEnabledKDAttributeFilterDatesValidation: boolean,
+    isSelected: boolean,
+    intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const attributes = useDashboardSelector(selectCatalogAttributes);
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
+
     return useMemo(() => {
-        return mapParentFilters(parentFilters, validParentFilters, labels, attributes, false).sort(
-            sortByTypeAndTitle,
-        );
-    }, [labels, attributes, parentFilters, validParentFilters]);
+        let parentFilterItems = mapParentFilters(
+            parentFilters,
+            validParentFilters,
+            labels,
+            attributes,
+            false,
+        ).sort(sortByTypeAndTitle);
+
+        if (isEnabledKDAttributeFilterDatesValidation) {
+            const dependentDateFilterItems = mapDependentDateFilters(
+                dateDataSetsMap,
+                dependentDateFilters,
+                availableDatasets,
+                filterConfigByDimension,
+                isSelected,
+                intl,
+                filterConfig,
+            );
+
+            parentFilterItems = [...parentFilterItems, ...dependentDateFilterItems];
+        }
+
+        return parentFilterItems;
+    }, [
+        labels,
+        attributes,
+        parentFilters,
+        validParentFilters,
+        isEnabledKDAttributeFilterDatesValidation,
+        dateDataSetsMap,
+        dependentDateFilters,
+        availableDatasets,
+        filterConfigByDimension,
+        isSelected,
+        intl,
+        filterConfig,
+    ]);
+};
+
+const mapDependentDateFilters = (
+    dateDataSetsMap: ObjRefMap<ICatalogDateDataset>,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+    availableDatasets: ICatalogDateDataset[],
+    filterConfigByDimension: IDashboardDateFilterConfigItem[],
+    isSelected: boolean,
+    intl: IntlShape,
+    filterConfig?: IDashboardDateFilterConfig,
+): IValuesLimitingItemWithTitle[] =>
+    dependentDateFilters
+        .filter((item) => item.isSelected === isSelected)
+        .map((item) => {
+            if (item.localIdentifier === "commonDate") {
+                return {
+                    title: intl.formatMessage({ id: "dateFilterDropdown.title" }),
+                    item,
+                    isDisabled: false,
+                    type: "commonDate",
+                };
+            }
+
+            const dateDataSet = dateDataSetsMap.get(item.dataSet!);
+            const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
+
+            const title = getDatasetTitle(
+                item.dataSet,
+                dataSetTitle,
+                filterConfigByDimension,
+                intl,
+                filterConfig,
+            );
+
+            const isDisabled = !availableDatasets.some((availableDataset) =>
+                areObjRefsEqual(availableDataset.dataSet.ref, item.dataSet),
+            );
+
+            return {
+                title,
+                item,
+                isDisabled,
+            };
+        });
+
+const getDatasetTitle = (
+    dateDataSet: ObjRef | undefined,
+    defaultDateFilterTitle: string,
+    filterConfigByDimension: IDashboardDateFilterConfigItem[],
+    intl: IntlShape,
+    filterConfig?: IDashboardDateFilterConfig,
+) => {
+    const usedConfig = dateDataSet
+        ? filterConfigByDimension.find((config) => areObjRefsEqual(config.dateDataSet, dateDataSet))?.config
+        : filterConfig;
+
+    const dataSetTitle =
+        !usedConfig || usedConfig?.filterName === "" ? defaultDateFilterTitle : usedConfig?.filterName;
+
+    return intl.formatMessage(
+        { id: "attributesDropdown.valuesLimiting.depedentDateFilterTitle" },
+        { dataSetTitle },
+    );
 };

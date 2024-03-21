@@ -1,0 +1,40 @@
+{
+    "id": "c0db9976-b3d8-4535-acf9-f3e2e0b1c037",
+    "name": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes",
+    "request": {
+        "url": "/api/v1/entities/workspaces/12f912afa6d648c4953c254807eafd1f/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes-c0db9976-b3d8-4535-acf9-f3e2e0b1c037.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "c0db9976-b3d8-4535-acf9-f3e2e0b1c037",
+    "persistent": true,
+    "insertionIndex": 5
+}

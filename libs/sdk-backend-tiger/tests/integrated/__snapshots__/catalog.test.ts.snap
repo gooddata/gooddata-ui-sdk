@@ -161,6 +161,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "OpportunitySnapshot",
           "type": "tag",
         },
+        {
+          "identifier": "custom_column",
+          "type": "tag",
+        },
       ],
       "type": "fact",
     },
@@ -2089,6 +2093,13 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     },
     {
       "tag": {
+        "identifier": "custom_column",
+        "type": "tag",
+      },
+      "title": "custom_column",
+    },
+    {
+      "tag": {
         "identifier": "City",
         "type": "tag",
       },
@@ -2128,6 +2139,13 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "tag",
       },
       "title": "product",
+    },
+    {
+      "tag": {
+        "identifier": "attribute_image_url",
+        "type": "tag",
+      },
+      "title": "attribute_image_url",
     },
     {
       "tag": {
@@ -2725,6 +2743,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "groups": [
         {
           "identifier": "OpportunitySnapshot",
+          "type": "tag",
+        },
+        {
+          "identifier": "custom_column",
           "type": "tag",
         },
       ],
@@ -5833,6 +5855,38 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
               "type": "attribute",
             },
             "description": "",
+            "displayFormType": "GDC.image",
+            "id": "label.f_product.product.image",
+            "ref": {
+              "identifier": "label.f_product.product.image",
+              "type": "displayForm",
+            },
+            "title": "Product Image",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "attr.f_product.product",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "label.f_product.product.link",
+            "ref": {
+              "identifier": "label.f_product.product.link",
+              "type": "displayForm",
+            },
+            "title": "Product Link",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "attr.f_product.product",
+              "type": "attribute",
+            },
+            "description": "",
             "id": "label.f_product.product.name",
             "ref": {
               "identifier": "label.f_product.product.name",
@@ -5880,6 +5934,38 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "type": "displayForm",
           },
           "title": "Product",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
@@ -6906,6 +6992,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "groups": [
         {
           "identifier": "Stage",
+          "type": "tag",
+        },
+        {
+          "identifier": "attribute_image_url",
           "type": "tag",
         },
       ],
@@ -11145,6 +11235,13 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     },
     {
       "tag": {
+        "identifier": "custom_column",
+        "type": "tag",
+      },
+      "title": "custom_column",
+    },
+    {
+      "tag": {
         "identifier": "City",
         "type": "tag",
       },
@@ -11184,6 +11281,13 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "tag",
       },
       "title": "product",
+    },
+    {
+      "tag": {
+        "identifier": "attribute_image_url",
+        "type": "tag",
+      },
+      "title": "attribute_image_url",
     },
     {
       "tag": {
@@ -11781,6 +11885,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "groups": [
         {
           "identifier": "OpportunitySnapshot",
+          "type": "tag",
+        },
+        {
+          "identifier": "custom_column",
           "type": "tag",
         },
       ],
@@ -14889,6 +14997,38 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
               "type": "attribute",
             },
             "description": "",
+            "displayFormType": "GDC.image",
+            "id": "label.f_product.product.image",
+            "ref": {
+              "identifier": "label.f_product.product.image",
+              "type": "displayForm",
+            },
+            "title": "Product Image",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "attr.f_product.product",
+              "type": "attribute",
+            },
+            "description": "",
+            "displayFormType": "GDC.link",
+            "id": "label.f_product.product.link",
+            "ref": {
+              "identifier": "label.f_product.product.link",
+              "type": "displayForm",
+            },
+            "title": "Product Link",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "attr.f_product.product",
+              "type": "attribute",
+            },
+            "description": "",
             "id": "label.f_product.product.name",
             "ref": {
               "identifier": "label.f_product.product.name",
@@ -14936,6 +15076,38 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "type": "displayForm",
           },
           "title": "Product",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
           "type": "displayForm",
           "uri": "sanitize_uri",
         },
@@ -15962,6 +16134,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "groups": [
         {
           "identifier": "Stage",
+          "type": "tag",
+        },
+        {
+          "identifier": "attribute_image_url",
           "type": "tag",
         },
       ],
@@ -20113,7 +20289,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "attributeHierarchy",
     ],
   },
-  "workspace": "d0c23ce18c044a83a204127f29e2be9e",
+  "workspace": "12f912afa6d648c4953c254807eafd1f",
 }
 `;
 
@@ -23687,6 +23863,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "d0c23ce18c044a83a204127f29e2be9e",
+  "workspace": "12f912afa6d648c4953c254807eafd1f",
 }
 `;

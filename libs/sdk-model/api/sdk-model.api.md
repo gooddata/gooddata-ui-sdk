@@ -127,6 +127,10 @@ export type AttributeDisplayFormType =
 */
 "GDC.link"
 /**
+* Display form representing image hyperlink
+*/
+| "GDC.image"
+/**
 * Display form representing geo pin location.
 * Both latitude and longitude in single value (lat;long).
 */
@@ -589,6 +593,7 @@ export interface IAttributeDescriptorBody {
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
     identifier: string;
+    labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
     ref: ObjRef;
@@ -928,10 +933,16 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
         validateElementsBy?: ObjRef[];
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
+}
+
+// @beta
+export interface IDashboardAttributeFilterByDate {
+    filterLocalIdentifier: string;
 }
 
 // @alpha
@@ -2538,6 +2549,7 @@ export interface ISettings {
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
     enableKDWidgetCustomHeight?: boolean;

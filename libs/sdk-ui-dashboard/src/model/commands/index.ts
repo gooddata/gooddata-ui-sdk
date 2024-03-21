@@ -31,6 +31,7 @@ import {
     AddDateFilter,
     RemoveDateFilters,
     MoveDateFilter,
+    SetAttributeFilterDependentDateFilters,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -182,6 +183,9 @@ export {
     SetAttributeFilterSelectionMode,
     SetAttributeFilterSelectionModePayload,
     setAttributeFilterSelectionMode,
+    SetAttributeFilterDependentDateFilters,
+    setAttributeFilterDependentDateFilters,
+    SetAttributeFilterDependentDateFiltersPayload,
 } from "./filters.js";
 
 export {
@@ -438,6 +442,7 @@ export type DashboardCommands =
     | RemoveAttributeFilters
     | MoveAttributeFilter
     | SetAttributeFilterParents
+    | SetAttributeFilterDependentDateFilters
     | AddLayoutSection
     | MoveLayoutSection
     | RemoveLayoutSection

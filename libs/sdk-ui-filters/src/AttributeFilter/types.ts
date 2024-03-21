@@ -4,6 +4,7 @@ import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
     IAttributeFilter,
+    IDashboardDateFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -125,6 +126,13 @@ export interface IAttributeFilterCoreProps {
      * The property is supported only by some backend. The backends that do not support it will ignore it.
      */
     validateElementsBy?: ObjRef[];
+
+    /**
+     * Specifies a dependent date filter that will be used to reduce options for for current attribute filter.
+     *
+     * @beta
+     */
+    dependentDateFilters?: IDashboardDateFilter[];
 
     /**
      * Specify title for the attribute filter.

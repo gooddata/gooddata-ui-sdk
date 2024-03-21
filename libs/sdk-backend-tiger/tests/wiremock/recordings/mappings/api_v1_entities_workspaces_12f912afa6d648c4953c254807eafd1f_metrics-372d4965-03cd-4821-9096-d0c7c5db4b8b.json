@@ -1,0 +1,40 @@
+{
+    "id": "372d4965-03cd-4821-9096-d0c7c5db4b8b",
+    "name": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_metrics",
+    "request": {
+        "url": "/api/v1/entities/workspaces/12f912afa6d648c4953c254807eafd1f/metrics?size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_metrics-372d4965-03cd-4821-9096-d0c7c5db4b8b.json",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "372d4965-03cd-4821-9096-d0c7c5db4b8b",
+    "persistent": true,
+    "insertionIndex": 7
+}

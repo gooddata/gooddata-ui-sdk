@@ -16,6 +16,7 @@ import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
@@ -23,6 +24,7 @@ import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
+import { IDimension } from '@gooddata/sdk-model';
 import { IDrillEventCallback } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -43,6 +45,7 @@ import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
+import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
@@ -79,8 +82,20 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
+// @public (undocumented)
+export type ChartCellImageSizing = "fit" | "fill";
+
+// @public (undocumented)
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+// @public (undocumented)
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
+
+// @public (undocumented)
+export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
 
@@ -109,8 +124,17 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 // @internal (undocumented)
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
+// @internal
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], sliceVisualizationBy?: IAttribute): IBucket[];
+
+// @internal
+export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
+
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
+
+// @internal (undocumented)
+export const CoreRepeater: React_2.FC<ICoreRepeterChartProps>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
@@ -256,6 +280,9 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 
 // @public
 export interface IChartConfig {
+    cellImageSizing?: ChartCellImageSizing;
+    cellTextWrapping?: ChartCellTextWrapping;
+    cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
     colorMapping?: IColorMapping[];
@@ -277,6 +304,7 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
+    hyperLinks?: IDisplayFormHyperlinksConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
@@ -284,6 +312,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
     secondaryChartType?: "line" | "column" | "area";
@@ -397,6 +426,12 @@ export interface ICoreHeadlineExtendedProps {
 }
 
 // @internal (undocumented)
+export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+    // (undocumented)
+    theme?: ITheme;
+}
+
+// @internal (undocumented)
 export interface ICreateExecutionParams {
     // (undocumented)
     buckets: IBucket[];
@@ -455,6 +490,13 @@ export interface IDependencyWheelChartBucketProps {
 
 // @public (undocumented)
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
+}
+
+// @public
+export interface IDisplayFormHyperlinksConfig {
+    [displayFormLocalIdentifier: string]: {
+        staticElementsText: string;
+    };
 }
 
 // @public (undocumented)
@@ -615,6 +657,19 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @beta (undocumented)
+export interface IRepeaterBucketProps {
+    attribute: AttributeOrPlaceholder;
+    columns?: AttributesMeasuresOrPlaceholders;
+    filters?: NullableFiltersOrPlaceholders;
+    placeholdersResolutionContext?: any;
+    sliceVisualizationBy?: AttributeOrPlaceholder;
+}
+
+// @beta (undocumented)
+export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+}
+
 // @public (undocumented)
 export interface ISankeyChartBucketProps {
     attributeFrom?: AttributeOrPlaceholder;
@@ -767,6 +822,9 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
 export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
+
+// @beta (undocumented)
+export const Repeater: (props: IRepeaterProps) => JSX.Element;
 
 // @public
 export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;

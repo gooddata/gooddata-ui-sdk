@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
@@ -53,7 +54,7 @@ export interface ILoadElementsOptions {
     order?: SortDirection;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingMeasures?: IMeasure[];
-    limitingDateFilters?: IRelativeDateFilter[];
+    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
     limitingValidationItems?: ObjRef[];
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
@@ -230,7 +231,7 @@ export interface IAttributeElementLoader {
      *
      * @param filters - filters to use.
      */
-    setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
+    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
 
     /**
      * Returns the current offset used for the attribute element loads.
@@ -270,7 +271,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the current date filters used to filter the attribute element loads.
      */
-    getLimitingDateFilters(): IRelativeDateFilter[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

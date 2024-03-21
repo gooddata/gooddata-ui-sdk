@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 export {
     IChartConfig,
@@ -19,6 +19,11 @@ export {
     ITotalConfig,
     IOrientationConfig,
     ChartOrientationType,
+    IDisplayFormHyperlinksConfig,
+    ChartRowHeight,
+    ChartCellTextWrapping,
+    ChartCellVerticalAlign,
+    ChartCellImageSizing,
 } from "./chartConfig.js";
 
 export {

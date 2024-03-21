@@ -26,7 +26,7 @@ import {
     IAttributeElement,
 } from "@gooddata/sdk-model";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
-import { IAfm, IValidElementsParams } from "@gooddata/api-model-bear";
+import { IAbsoluteDateFilter, IAfm, IValidElementsParams } from "@gooddata/api-model-bear";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api.js";
@@ -57,7 +57,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     private offset: number = 0;
     private options: IElementsQueryOptions | undefined;
     private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
-    private dateFilters: IRelativeDateFilter[] | undefined;
+    private dateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[] | undefined;
     private measures: IMeasure[] | undefined;
     // cached AFM used to apply attributeRef and attributeFilters to the element queries
     private limitingAfm: IAfm | undefined;
@@ -89,8 +89,15 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         return this;
     }
 
-    public withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery {
-        this.dateFilters = filters;
+    public withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
+        const updatedFilters = filters.map((filter) => {
+            if (isRelativeDateFilter(filter)) {
+                return filter;
+            }
+            throw new NotSupported("Absolute date filter not supported by this backend implementation");
+        });
+
+        this.dateFilters = updatedFilters;
         return this;
     }
 

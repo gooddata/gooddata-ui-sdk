@@ -1,0 +1,42 @@
+{
+    "id": "73326b23-3355-4897-8f98-ee6c18f1753f",
+    "name": "api_v1_actions_workspaces_12f912afa6d648c4953c254807eafd1f_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/12f912afa6d648c4953c254807eafd1f/execution/collectLabelElements?offset=4840&limit=100",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"space150\",\"primaryTitle\":\"space150\"},{\"title\":\"tmg-e*media\",\"primaryTitle\":\"tmg-e*media\"},{\"title\":\"uMonitor (Parsam Technologies)\",\"primaryTitle\":\"uMonitor (Parsam Technologies)\"},{\"title\":\"uShip\",\"primaryTitle\":\"uShip\"},{\"title\":\"vAuto\",\"primaryTitle\":\"vAuto\"},{\"title\":\"w3r Consulting\",\"primaryTitle\":\"w3r Consulting\"}],\"paging\":{\"total\":4846,\"count\":6,\"offset\":4840,\"next\":null},\"cacheId\":\"c9b78d2294cddb2d4b02a7dc69d43b85\"}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "73326b23-3355-4897-8f98-ee6c18f1753f",
+    "persistent": true,
+    "insertionIndex": 15
+}

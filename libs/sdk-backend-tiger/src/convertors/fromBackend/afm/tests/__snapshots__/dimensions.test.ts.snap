@@ -18,6 +18,7 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -48,6 +49,7 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -101,6 +103,7 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -114,6 +117,64 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
               },
             },
           ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "hyperlink.attr",
+            "name": "Hyperlink",
+            "ref": {
+              "identifier": "hyperlink.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "hyperlink.label",
+          "labelType": "GDC.link",
+          "localIdentifier": "localAttr4",
+          "name": "Hyperlink",
+          "ref": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "image.attr",
+            "name": "Image",
+            "ref": {
+              "identifier": "image.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "image.label",
+          "labelType": "GDC.image",
+          "localIdentifier": "localAttr5",
+          "name": "Image",
+          "ref": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
           "uri": "",
         },
       },
@@ -140,6 +201,7 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -170,6 +232,7 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -223,6 +286,7 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -236,6 +300,64 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
               },
             },
           ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "hyperlink.attr",
+            "name": "Hyperlink",
+            "ref": {
+              "identifier": "hyperlink.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "hyperlink.label",
+          "labelType": "GDC.link",
+          "localIdentifier": "localAttr4",
+          "name": "Hyperlink",
+          "ref": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "image.attr",
+            "name": "Image",
+            "ref": {
+              "identifier": "image.attr",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "format": undefined,
+          "granularity": undefined,
+          "identifier": "image.label",
+          "labelType": "GDC.image",
+          "localIdentifier": "localAttr5",
+          "name": "Image",
+          "ref": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
+          "totalItems": [],
           "uri": "",
         },
       },
@@ -281,6 +403,7 @@ exports[`transformResultDimensions > should fill in uris and refs for attribute 
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
           "ref": {
@@ -336,6 +459,7 @@ exports[`transformResultDimensions > should fill in uris and refs for attribute 
           "format": undefined,
           "granularity": undefined,
           "identifier": "event_date.quarter.label",
+          "labelType": undefined,
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
           "ref": {

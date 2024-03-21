@@ -50,6 +50,7 @@ import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 import { getVisibilityIcon } from "../utils.js";
+import { useDependentDateFilters } from "./useDependentDateFilters.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -63,6 +64,7 @@ export const DefaultDashboardAttributeFilter = (
 ): JSX.Element | null => {
     const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
+    const { dependentDateFilters } = useDependentDateFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -214,6 +216,7 @@ export const DefaultDashboardAttributeFilter = (
                 selectionModeChanged,
                 modeChanged,
                 limitingItemsChanged,
+                onDependentDateFiltersConfigurationChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.trim().length > 0;
@@ -224,7 +227,8 @@ export const DefaultDashboardAttributeFilter = (
                       titleChanged ||
                       selectionModeChanged ||
                       modeChanged ||
-                      limitingItemsChanged
+                      limitingItemsChanged ||
+                      onDependentDateFiltersConfigurationChanged
                   )
                 : true;
 
@@ -392,6 +396,7 @@ export const DefaultDashboardAttributeFilter = (
                     );
                 }}
                 parentFilters={parentFilters}
+                dependentDateFilters={dependentDateFilters}
                 parentFilterOverAttribute={parentFilterOverAttribute}
                 validateElementsBy={filter.attributeFilter.validateElementsBy}
                 locale={locale}

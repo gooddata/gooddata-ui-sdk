@@ -42,6 +42,17 @@ export interface IDashboardAttributeFilterParent {
 }
 
 /**
+ * Dependent date filter of an attribute filter of the filter context
+ * @beta
+ */
+export interface IDashboardAttributeFilterByDate {
+    /**
+     * Local identifier of the date filter
+     */
+    filterLocalIdentifier: string;
+}
+
+/**
  * Attribute filter selection mode value
  * @beta
  */
@@ -79,6 +90,12 @@ export interface IDashboardAttributeFilter {
          * @beta
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Date filters that are limiting attributes elements available in this filter.
+         * @beta
+         */
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
 
         /**
          * Items that are limiting attribute elements available in this filter.

@@ -60,10 +60,11 @@ import {
     IAttributeDisplayFormMetadataObject,
     IMetadataObject,
     IAttributeMetadataObject,
-    IRelativeDateFilter,
     IMeasure,
     objRefToString,
     IMeasureDefinitionType,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
@@ -460,7 +461,7 @@ function elementsCacheKey(
         offset?: number;
         options?: IElementsQueryOptions;
         attributeFilters?: IElementsQueryAttributeFilter[];
-        dateFilters?: IRelativeDateFilter[];
+        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
         measures?: IMeasure[];
         validateBy?: ObjRef[];
     },
@@ -503,7 +504,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             offset?: number;
             options?: IElementsQueryOptions;
             attributeFilters?: IElementsQueryAttributeFilter[];
-            dateFilters?: IRelativeDateFilter[];
+            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
         } = {},
