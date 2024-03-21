@@ -2,6 +2,24 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "9.9.0",
+      "tag": "@gooddata/sdk-ui-all_v9.9.0",
+      "date": "Thu, 21 Mar 2024 09:56:41 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "To unify null values representation replace pattern fill by background color in Heatmap"
+          },
+          {
+            "comment": "Introduce theme loading status with better information about state of theme loading"
+          },
+          {
+            "comment": "Add tags to 'measure' objects"
+          }
+        ]
+      }
+    },
+    {
       "version": "9.8.1",
       "tag": "@gooddata/sdk-ui-all_v9.8.1",
       "date": "Fri, 15 Mar 2024 13:31:24 GMT",

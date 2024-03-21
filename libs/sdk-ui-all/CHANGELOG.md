@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 15 Mar 2024 13:31:24 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Mar 2024 09:56:41 GMT and should not be manually modified.
+
+## 9.9.0
+Thu, 21 Mar 2024 09:56:41 GMT
+
+### Updates
+
+- To unify null values representation replace pattern fill by background color in Heatmap
+- Introduce theme loading status with better information about state of theme loading
+- Add tags to 'measure' objects
 
 ## 9.8.1
 Fri, 15 Mar 2024 13:31:24 GMT
