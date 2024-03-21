@@ -2420,5 +2420,15 @@
         "value": "Choose date",
         "comment": "Title of popup with selection of date filters will available date datasets values.",
         "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDateFilter": {
+        "value": "Filter not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDataSet": {
+        "value": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
     }
 }

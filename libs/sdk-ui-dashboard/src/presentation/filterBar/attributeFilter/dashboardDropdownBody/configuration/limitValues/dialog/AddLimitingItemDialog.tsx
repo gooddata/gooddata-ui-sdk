@@ -35,6 +35,7 @@ export interface IAddLimitingItemDialogProps {
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
     dependentCommonDateFilter: IDashboardDateFilter;
+    commonDateFilterTitle: string;
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
 }
@@ -49,6 +50,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
     dependentDateFilters,
     dependentCommonDateFilter,
     availableDatasets,
+    commonDateFilterTitle,
     onSelect,
     onClose,
 }) => {
@@ -79,6 +81,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
                     dependentDateFilters={dependentDateFilters}
                     availableDatasets={availableDatasets}
                     dependentCommonDateFilter={dependentCommonDateFilter}
+                    commonDateFilterTitle={commonDateFilterTitle}
                     onCommonDateSelect={() => setPage("dates")}
                 />
             ) : null}

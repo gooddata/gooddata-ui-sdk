@@ -37,6 +37,7 @@ export interface IValuesLimitingItemWithTitle {
     item: ValuesLimitingItem;
     isDisabled?: boolean;
     type?: string;
+    isDisabledDateFilterTooltip?: boolean;
 }
 
 const findAttributeByLabel = (
@@ -320,8 +321,12 @@ const mapDependentDateFilters = (
                     type: "commonDate",
                 };
             }
+            const isSelectedByCommonDateFilter = dependentDateFilters.some(
+                (dependentDateFilter) =>
+                    areObjRefsEqual(item.dataSet, dependentDateFilter.dataSet) &&
+                    !!dependentDateFilter.isCommonDate,
+            );
 
-            // TODO: LX-160
             const isDisabled = !availableDatasets.some((availableDataset) =>
                 areObjRefsEqual(availableDataset.dataSet.ref, item.dataSet),
             );
@@ -329,7 +334,8 @@ const mapDependentDateFilters = (
             return {
                 title,
                 item,
-                isDisabled,
+                isDisabled: isSelectedByCommonDateFilter || isDisabled,
+                isDisabledDateFilterTooltip: isSelectedByCommonDateFilter,
             };
         });
 
@@ -362,11 +368,16 @@ export const useCommonDateItems = (
                     ),
             )
             .map((dateDataSet) => {
+                const isDisabled = (dependentDateFilters ?? []).some(
+                    (item) =>
+                        areObjRefsEqual(dateDataSet.dataSet.ref, item.dataSet) &&
+                        !item.isCommonDate &&
+                        !!item.isSelected,
+                );
                 return {
                     title: dateDataSet.dataSet.title,
                     item: parseCommonDateFilter(dependentCommonDateFilter, dateDataSet.dataSet.ref),
-                    // TODO: LX-160
-                    isDisabled: false,
+                    isDisabled,
                     type: "commonDate",
                 };
             });
@@ -389,4 +400,29 @@ const parseCommonDateFilter = (
         dataSet: dataSet,
         isCommonDate: true,
     };
+};
+
+export const useCommonDateFilterTitle = (intl: IntlShape): string => {
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+
+    return filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
+};
+
+export const useDependentDateFilterTitle = (
+    item: ValuesLimitingItem,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+): string => {
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
+
+    return useMemo(() => {
+        const dateFilter = dependentDateFilters.find((filter) =>
+            areObjRefsEqual(filter.dataSet, (item as IDashboardDependentDateFilter).dataSet),
+        );
+
+        const dateDataSet = dateFilter?.dataSet ? dateDataSetsMap.get(dateFilter?.dataSet) : "";
+        const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
+
+        return getDatasetTitle(dateFilter?.dataSet, dataSetTitle, filterConfigByDimension);
+    }, [dependentDateFilters, item, filterConfigByDimension]);
 };

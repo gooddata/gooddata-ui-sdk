@@ -28,7 +28,7 @@ import {
 import { IntlWrapper } from "../../../../../localization/index.js";
 
 import { LimitingItem } from "./shared/LimitingItem.js";
-import { useLimitingItems } from "./shared/limitingItemsHook.js";
+import { useCommonDateFilterTitle, useLimitingItems } from "./shared/limitingItemsHook.js";
 import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
@@ -82,6 +82,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         true,
         intl,
     );
+    const commonDateFilterTitle = useCommonDateFilterTitle(intl);
 
     const onOpenAddDialog = () => {
         setIsDropdownOpened(true);
@@ -121,6 +122,7 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
                     dependentDateFilters={dependentDateFilters}
                     dependentCommonDateFilter={dependentCommonDateFilter}
                     availableDatasets={availableDatasets}
+                    commonDateFilterTitle={commonDateFilterTitle}
                     onSelect={onAdd}
                     onClose={() => setIsDropdownOpened(false)}
                 />
