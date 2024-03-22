@@ -1,8 +1,8 @@
 // (C) 2024 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ICatalogDateDataset, IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
@@ -11,8 +11,18 @@ import { messages } from "../../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../../types.js";
 
 import { PopupHeader } from "./PopupHeader.js";
-import { IValuesLimitingItemWithTitle, useCommonDateItems } from "../shared/limitingItemsHook.js";
-import { IDashboardDependentDateFilter } from "../../../../../../../model/index.js";
+import {
+    IValuesLimitingItemWithTitle,
+    useCommonDateItems,
+    useDependentDateFilterTitle,
+} from "../shared/limitingItemsHook.js";
+import { UnknownItemTitle } from "../shared/LimitingItem.js";
+import {
+    IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
+    useDashboardUserInteraction,
+} from "../../../../../../../model/index.js";
+import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IDateFiltersPageProps {
     availableDatasets: ICatalogDateDataset[];
@@ -25,33 +35,57 @@ export interface IDateFiltersPageProps {
 
 interface IAttributeListItemProps {
     item: IValuesLimitingItemWithTitle;
+    dependentDateFilters: IDashboardDependentDateFilter[];
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
 }
 
-const TOOLTIP_ALIGN_POINT = [
-    { align: "cr cl", offset: { x: 10, y: 0 } },
-    { align: "cl cr", offset: { x: -10, y: 0 } },
-];
-
-// TODO: LX-160
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, onSelect, onClose }) => {
+const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
+    item: { item, isDisabled, title },
+    dependentDateFilters,
+    onSelect,
+    onClose,
+}) => {
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
         return cx(
             "gd-list-item date-filter__limit__popup__item",
-            `s-${stringUtils.simplifyText(item.title ?? "unknown")}`,
+            `s-${stringUtils.simplifyText(title ?? "unknown")}`,
+            {
+                "is-disabled": isDisabled,
+            },
         );
     }, [item]);
 
+    const dataSet = isDashboardDependentDateFilter(item) ? item.dataSet : undefined;
+    const dependentDateFilterTitle = useDependentDateFilterTitle(dataSet, dependentDateFilters);
+
     const onClick = () => {
-        onSelect(item.item);
-        onClose();
+        if (!isDisabled) {
+            onSelect(item);
+            onClose();
+            attributeFilterInteraction("attributeFilterLimitDependentDateFilterClicked");
+        }
     };
 
     return (
-        <div key={serializeObjRef(item.item)} className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>{item.title!}</ShortenedText>
-        </div>
+        <WithDisabledParentFilterTooltip
+            formattedMessage={
+                <FormattedMessage
+                    id="attributesDropdown.valuesLimiting.disableDataSet"
+                    values={{
+                        dateFilterTitle: dependentDateFilterTitle ?? <UnknownItemTitle />,
+                        // eslint-disable-next-line react/display-name
+                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    }}
+                />
+            }
+            isDisabled={!!isDisabled}
+        >
+            <div key={serializeObjRef(item)} className={classNames} onClick={onClick}>
+                <ShortenedText>{title!}</ShortenedText>
+            </div>
+        </WithDisabledParentFilterTooltip>
     );
 };
 
@@ -87,7 +121,12 @@ export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
                     showSearch={false}
                     items={commonDateItems}
                     renderItem={({ item }) => (
-                        <DateAttributeListItem item={item} onSelect={onSelect} onClose={onClose} />
+                        <DateAttributeListItem
+                            dependentDateFilters={dependentDateFilters}
+                            item={item}
+                            onSelect={onSelect}
+                            onClose={onClose}
+                        />
                     )}
                 />
             </div>

@@ -1,16 +1,17 @@
 // (C) 2024 GoodData Corporation
 
 import React, { ReactNode } from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { ICatalogDateDataset, IDashboardDateFilter, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { Bubble, DropdownList, NoData, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { ValuesLimitingItem } from "../../../../types.js";
 import {
     IDashboardAttributeFilterParentItem,
     IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
     selectEnableKDAttributeFilterDatesValidation,
     useDashboardSelector,
     useDashboardUserInteraction,
@@ -20,13 +21,7 @@ import { LimitingItemTitle, UnknownItemTitle } from "../shared/LimitingItem.js";
 import { useFilterItems, IValuesLimitingItemWithTitle } from "../shared/limitingItemsHook.js";
 
 import { PopupHeader } from "./PopupHeader.js";
-
-const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
-
-const ARROW_OFFSET = {
-    "bc tl": [-60, 10],
-    "tc bl": [-60, -10],
-};
+import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IParentFiltersPageProps {
     attributeTitle?: string;
@@ -35,50 +30,12 @@ export interface IParentFiltersPageProps {
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
     dependentCommonDateFilter: IDashboardDateFilter;
+    commonDateFilterTitle: string;
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;
     onClose: () => void;
     onCommonDateSelect: () => void;
 }
-
-interface IWithDisabledFilterTooltipProps {
-    children: React.ReactNode;
-    attributeFilterTitle: React.ReactNode;
-    parentFilterTitle: React.ReactNode;
-    isDisabled: boolean;
-}
-
-// TODO: LX-160
-const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterTooltipProps> = ({
-    children,
-    isDisabled,
-    attributeFilterTitle,
-    parentFilterTitle,
-}) => {
-    if (!isDisabled) {
-        return <>{children}</>;
-    }
-    return (
-        <BubbleHoverTrigger>
-            {children}
-            <Bubble
-                className="bubble-primary gd-attribute-filter-dropdown-bubble s-attribute-filter-dropdown-bubble"
-                alignPoints={ALIGN_POINTS}
-                arrowOffsets={ARROW_OFFSET}
-            >
-                <FormattedMessage
-                    id="attributesDropdown.noConnectionMessage"
-                    values={{
-                        childTitle: attributeFilterTitle,
-                        parentTitle: parentFilterTitle,
-                        // eslint-disable-next-line react/display-name
-                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                    }}
-                />
-            </Bubble>
-        </BubbleHoverTrigger>
-    );
-};
 
 const NoParentFilterFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMatchingData }) => {
     const intl = useIntl();
@@ -95,14 +52,48 @@ const NoParentFilterFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMa
 interface IParentFilterProps {
     attributeTitle?: string;
     item: IValuesLimitingItemWithTitle;
+    commonDateFilterTitle: string;
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;
     onCommonDateSelect: () => void;
 }
 
+const getFormattedMessage = (
+    commonDateFilterTitle: string,
+    attributeTitle?: string,
+    parentFilterTitle?: string,
+    isDisabledDateFilterTooltip?: boolean,
+): React.ReactNode => {
+    if (isDisabledDateFilterTooltip) {
+        return (
+            <FormattedMessage
+                id="attributesDropdown.valuesLimiting.disableDateFilter"
+                values={{
+                    dateFilterTitle: commonDateFilterTitle,
+                    // eslint-disable-next-line react/display-name
+                    strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                }}
+            />
+        );
+    } else {
+        return (
+            <FormattedMessage
+                id="attributesDropdown.noConnectionMessage"
+                values={{
+                    childTitle: attributeTitle ?? <UnknownItemTitle />,
+                    parentTitle: parentFilterTitle ?? <UnknownItemTitle />,
+                    // eslint-disable-next-line react/display-name
+                    strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                }}
+            />
+        );
+    }
+};
+
 const ParentFilter: React.FC<IParentFilterProps> = ({
-    item: { title, item, isDisabled, type },
+    item: { title, item, type, isDisabled, isDisabledDateFilterTooltip },
     attributeTitle,
+    commonDateFilterTitle,
     onSelect,
     onClose,
     onCommonDateSelect,
@@ -124,17 +115,25 @@ const ParentFilter: React.FC<IParentFilterProps> = ({
         if (!isDisabled) {
             onSelect(item);
             onClose();
-            attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
+
+            if (isDashboardDependentDateFilter(item)) {
+                attributeFilterInteraction("attributeFilterLimitDependentDateFilterClicked");
+            } else {
+                attributeFilterInteraction("attributeFilterLimitParentFilterClicked");
+            }
         }
     };
 
+    const formattedMessage = getFormattedMessage(
+        commonDateFilterTitle,
+        attributeTitle,
+        title,
+        isDisabledDateFilterTooltip,
+    );
+
     return (
         <div key={serializeObjRef(item)} className={classNames} onClick={onClick}>
-            <WithDisabledParentFilterTooltip
-                attributeFilterTitle={attributeTitle ?? <UnknownItemTitle />}
-                parentFilterTitle={title ?? <UnknownItemTitle />}
-                isDisabled={!!isDisabled}
-            >
+            <WithDisabledParentFilterTooltip formattedMessage={formattedMessage} isDisabled={!!isDisabled}>
                 <LimitingItemTitle item={item} title={title} />
             </WithDisabledParentFilterTooltip>
         </div>
@@ -148,6 +147,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
     dependentDateFilters,
     dependentCommonDateFilter,
     availableDatasets,
+    commonDateFilterTitle,
     onSelect,
     onGoBack,
     onClose,
@@ -186,6 +186,7 @@ export const ParentFiltersPage: React.FC<IParentFiltersPageProps> = ({
                     renderItem={({ item }) => (
                         <ParentFilter
                             attributeTitle={attributeTitle}
+                            commonDateFilterTitle={commonDateFilterTitle}
                             item={item}
                             onSelect={onSelect}
                             onClose={onClose}

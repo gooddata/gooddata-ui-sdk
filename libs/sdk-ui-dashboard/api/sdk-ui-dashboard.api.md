@@ -471,7 +471,7 @@ export type AttributeFilterDraggableItem = {
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
 
 // @beta (undocumented)
-export type AttributeFilterInteractionType = "attributeFilterTitleResetClicked" | "attributeFilterConfigurationOpened" | "attributeFilterClearIrrelevantValuesClicked" | "attributeFilterShowAllValuesClicked" | "attributeFilterLimitAddButtonClicked" | "attributeFilterLimitAddParentFilterOptionClicked" | "attributeFilterLimitAddMetricOptionClicked" | "attributeFilterLimitParentFilterClicked" | "attributeFilterLimitMetricClicked" | "attributeFilterLimitFactMetricClicked" | "attributeFilterLimitAttributeMetricClicked" | "attributeFilterLimitRemoveParentFilterClicked" | "attributeFilterLimitRemoveMetricClicked";
+export type AttributeFilterInteractionType = "attributeFilterTitleResetClicked" | "attributeFilterConfigurationOpened" | "attributeFilterClearIrrelevantValuesClicked" | "attributeFilterShowAllValuesClicked" | "attributeFilterLimitAddButtonClicked" | "attributeFilterLimitAddParentFilterOptionClicked" | "attributeFilterLimitAddMetricOptionClicked" | "attributeFilterLimitParentFilterClicked" | "attributeFilterLimitDependentDateFilterClicked" | "attributeFilterLimitMetricClicked" | "attributeFilterLimitFactMetricClicked" | "attributeFilterLimitAttributeMetricClicked" | "attributeFilterLimitRemoveParentFilterClicked" | "attributeFilterLimitRemoveDependentDateFilterClicked" | "attributeFilterLimitRemoveMetricClicked";
 
 // @internal (undocumented)
 export type AttributeFilterPlaceholderDraggableItem = {
