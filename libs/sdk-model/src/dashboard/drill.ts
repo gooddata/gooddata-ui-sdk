@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef, ObjRefInScope } from "../objRef/index.js";
 
@@ -357,6 +357,14 @@ export interface IDateHierarchyReference {
  */
 export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHierarchyReference {
     return !isEmpty(obj) && (obj as IAttributeHierarchyReference).type === "attributeHierarchyReference";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDateHierarchyReference}.
+ * @alpha
+ */
+export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference {
+    return !isEmpty(obj) && (obj as IDateHierarchyReference).type === "dateHierarchyReference";
 }
 
 /**

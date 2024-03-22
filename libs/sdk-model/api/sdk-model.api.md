@@ -478,6 +478,15 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined;
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
+// @internal (undocumented)
+export const getHierarchyAttributes: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef[];
+
+// @internal (undocumented)
+export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef;
+
+// @internal (undocumented)
+export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
+
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
@@ -776,10 +785,10 @@ export interface ICatalogDateAttribute {
 
 // @internal (undocumented)
 export interface ICatalogDateAttributeHierarchy {
-    // (undocumented)
     attributes: ObjRef[];
-    // (undocumented)
     dateDatasetRef: ObjRef;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     templateId: string;
     // (undocumented)
@@ -2485,6 +2494,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 
 // @alpha
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
+
+// @alpha
+export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
 
 // @public
 export function isDimension(obj: unknown): obj is IDimension;

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap.js";
 import {
@@ -14,7 +14,8 @@ import {
     objRefToString,
     IDateHierarchyTemplate,
     ICatalogDateAttributeHierarchy,
-    isCatalogAttributeHierarchy,
+    idRef,
+    getHierarchyAttributes,
 } from "@gooddata/sdk-model";
 
 import {
@@ -305,9 +306,7 @@ function getAttributesWithHierarchyDescendants(
     allCatalogAttributes.forEach((attribute) => {
         const attributeRef = attribute.attribute.ref;
         attributeHierarchies.forEach((hierarchy) => {
-            const attributes = isCatalogAttributeHierarchy(hierarchy)
-                ? hierarchy.attributeHierarchy.attributes
-                : hierarchy.attributes;
+            const attributes = getHierarchyAttributes(hierarchy);
             const foundAttributeIndex = attributes.findIndex((ref) => areObjRefsEqual(ref, attributeRef));
 
             if (foundAttributeIndex < 0) {
@@ -362,6 +361,12 @@ function buildDateHierarchy(
     if (!isEmpty(dateAttributesInHierarchy)) {
         return {
             type: "dateAttributeHierarchy",
+            // create ref of adhoc date hierarchy by combining date dataset id and date template id
+            // this ref should not be stored on MD server as it is not existing MD object
+            ref: idRef(
+                `${dateTemplate.id}/${objRefToString(dateDataset.dataSet.ref)}`,
+                "dateAttributeHierarchy",
+            ),
             templateId: dateTemplate.id,
             dateDatasetRef: dateDataset.dataSet.ref,
             title: dateDataset.dataSet.title,
