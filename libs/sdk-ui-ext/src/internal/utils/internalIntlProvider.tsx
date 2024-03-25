@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl, IntlConfig } from "react-intl";
 import {
@@ -16,6 +16,16 @@ const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";
 const intlCache = new LRUCache<string, IntlConfig>({ max: INTL_CACHE_SIZE });
 
+function getLocaleStrings(locale) {
+    const strings = translations[locale];
+    if (!strings) {
+        console.warn(`Missing locale strings for ${locale}, using ${DefaultLocale}`);
+        return translations[DefaultLocale];
+    }
+
+    return strings;
+}
+
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     /**
      * Because of issues described in the ticket FET-855, we decided to use this workaround.
@@ -27,9 +37,11 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
         return createIntl(cachedIntlConfig);
     }
     const settings = window.gdSettings as IWorkspaceSettings;
+    const strings = getLocaleStrings(locale);
+
     intlCache.set(INTL_CACHE_KEY, {
         locale,
-        messages: pickCorrectWording(translations[locale], settings),
+        messages: pickCorrectWording(strings, settings),
     });
     return createIntl(intlCache.get(INTL_CACHE_KEY));
 }
@@ -52,7 +64,8 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
      */
     const settings = window.gdSettings as IWorkspaceSettings;
 
-    const messages = useMemo(() => pickCorrectWording(translations[locale], settings), [locale, settings]);
+    const strings = getLocaleStrings(locale);
+    const messages = useMemo(() => pickCorrectWording(strings, settings), [strings, settings]);
 
     if (settings) {
         return (
@@ -63,7 +76,7 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
     } else {
         return (
             <TranslationsCustomizationProvider
-                translations={translations[locale]}
+                translations={strings}
                 workspace={workspace}
                 render={(modifiedTranslations) => {
                     return (
