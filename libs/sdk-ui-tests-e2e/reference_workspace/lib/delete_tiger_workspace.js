@@ -1,15 +1,17 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { deleteTigerWorkspace } from "@gooddata/fixtures";
 import fs from "fs";
 import { log } from "@gooddata/fixtures/logger.js";
 
 import { deleteVariableFromEnv } from "./delete_helper.js";
+import { retryOperation } from "./utils.js";
 
 import { TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG } from "../constant.js";
 
 import "../../scripts/env.js";
+
 const envFilePath = ".env";
 
 async function main() {
@@ -41,7 +43,12 @@ async function main() {
         }
 
         log(`Removing TEST_WORKSPACE_ID ${TEST_WORKSPACE_ID} from the .env file\n`);
-        await deleteTigerWorkspace(TEST_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND);
+        // retry to give Pg some time to replicate child WS removal to slaves
+        await retryOperation(
+            () => deleteTigerWorkspace(TEST_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND),
+            10,
+            1000,
+        );
 
         deleteVariableFromEnv(TEST_WORKSPACE_ID, envFilePath);
 
