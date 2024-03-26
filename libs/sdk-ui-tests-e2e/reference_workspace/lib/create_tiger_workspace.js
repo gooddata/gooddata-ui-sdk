@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import fs from "fs";
 import "../../scripts/env.js";
@@ -14,6 +14,8 @@ import {
     TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG,
 } from "../constant.js";
 import { exportCatalogTiger } from "../export_catalog.js";
+
+import { retryOperation } from "./utils.js";
 
 const childWSOutputFile = TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG["goodsales"];
 
@@ -75,7 +77,12 @@ async function main() {
         );
 
         log("Exporting metadata objects identifiers to local TypeScript file\n");
-        exportCatalogTiger(HOST, testReferenceWorkspaceId, TIGER_API_TOKEN);
+        // retry to give Pg some time to replicate created WS to slaves
+        await retryOperation(
+            () => exportCatalogTiger(HOST, testReferenceWorkspaceId, TIGER_API_TOKEN),
+            10,
+            1000,
+        );
 
         fs.appendFile(".env", `\nTEST_WORKSPACE_ID=${testReferenceWorkspaceId}`, () => {
             log(`TEST_WORKSPACE_ID ${testReferenceWorkspaceId} added to the .env file\n`);
