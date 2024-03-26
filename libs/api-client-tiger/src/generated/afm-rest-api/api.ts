@@ -693,6 +693,62 @@ export interface AttributeResultHeader {
     primaryLabelValue: string;
 }
 /**
+ *
+ * @export
+ * @interface ClusteringRequest
+ */
+export interface ClusteringRequest {
+    /**
+     * Number of clusters to create
+     * @type {number}
+     * @memberof ClusteringRequest
+     */
+    numberOfClusters: number;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringResult
+ */
+export interface ClusteringResult {
+    /**
+     *
+     * @type {Array<object>}
+     * @memberof ClusteringResult
+     */
+    attribute: Array<object>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    xCoord?: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    yCoord?: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    clusters: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    ycoord: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    xcoord: Array<number>;
+}
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  * @export
  * @interface ComparisonMeasureValueFilter
@@ -2317,6 +2373,124 @@ export interface ValidateByItem {
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clustering", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clustering", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
@@ -2866,6 +3040,58 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clustering(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
@@ -3109,6 +3335,48 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering(
+            requestParameters: ActionsApiClusteringRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .clustering(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult(
+            requestParameters: ActionsApiClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .clusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {ActionsApiComputeLabelElementsPostRequest} requestParameters Request parameters.
@@ -3298,6 +3566,32 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    clustering(
+        requestParameters: ActionsApiClusteringRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    clusteringResult(
+        requestParameters: ActionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
+    /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
      * @param {ActionsApiComputeLabelElementsPostRequest} requestParameters Request parameters.
@@ -3413,6 +3707,76 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for clustering operation in ActionsApi.
+ * @export
+ * @interface ActionsApiClusteringRequest
+ */
+export interface ActionsApiClusteringRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiClustering
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiClustering
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof ActionsApiClustering
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiClustering
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for clusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiClusteringResultRequest
+ */
+export interface ActionsApiClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly limit?: number;
 }
 
 /**
@@ -3712,6 +4076,49 @@ export interface ActionsApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .clustering(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public clusteringResult(
+        requestParameters: ActionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .clusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -5147,6 +5554,124 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clustering", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clustering", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
          * @param {string} workspaceId Workspace identifier
@@ -5275,6 +5800,58 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clustering(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
          * @param {string} workspaceId Workspace identifier
@@ -5341,6 +5918,48 @@ export const SmartFunctionsApiFactory = function (
     const localVarFp = SmartFunctionsApiFp(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering(
+            requestParameters: SmartFunctionsApiClusteringRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .clustering(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult(
+            requestParameters: SmartFunctionsApiClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .clusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
          * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
@@ -5392,6 +6011,32 @@ export const SmartFunctionsApiFactory = function (
  */
 export interface SmartFunctionsApiInterface {
     /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    clustering(
+        requestParameters: SmartFunctionsApiClusteringRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    clusteringResult(
+        requestParameters: SmartFunctionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
+    /**
      * (BETA) Computes forecasted data points from the provided execution result and parameters.
      * @summary (BETA) Smart functions - Forecast
      * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
@@ -5416,6 +6061,76 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+}
+
+/**
+ * Request parameters for clustering operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiClusteringRequest
+ */
+export interface SmartFunctionsApiClusteringRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for clusteringResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiClusteringResultRequest
+ */
+export interface SmartFunctionsApiClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly limit?: number;
 }
 
 /**
@@ -5495,6 +6210,49 @@ export interface SmartFunctionsApiForecastResultRequest {
  * @extends {BaseAPI}
  */
 export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public clustering(requestParameters: SmartFunctionsApiClusteringRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .clustering(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public clusteringResult(
+        requestParameters: SmartFunctionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .clusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * (BETA) Computes forecasted data points from the provided execution result and parameters.
      * @summary (BETA) Smart functions - Forecast

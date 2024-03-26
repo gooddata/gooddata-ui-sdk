@@ -176,6 +176,10 @@ export {
     SmartFunctionResponse,
     ActionsApiForecastResultRequest,
     ForecastResult,
+    ClusteringRequest,
+    ClusteringResult,
+    ActionsApiClusteringRequest,
+    ActionsApiClusteringResultRequest,
     AttributeHeaderOutAttributeHeaderValueTypeEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
