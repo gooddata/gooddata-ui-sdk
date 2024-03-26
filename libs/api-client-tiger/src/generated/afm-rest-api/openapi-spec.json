@@ -79,6 +79,68 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(EXPERIMENTAL) Smart functions - Clustering",
+                "description": "(EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.",
+                "operationId": "clustering",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Input result ID to be used in the computation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "9bd52018570364264fcf62d373da6bed313120e8"
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "description": "Ignore all caches during execution of current request.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClusteringRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SmartFunctionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "post": {
                 "tags": ["Computation", "actions"],
@@ -451,6 +513,66 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(EXPERIMENTAL) Smart functions - Clustering Result",
+                "description": "(EXPERIMENTAL) Gets clustering result.",
+                "operationId": "clusteringResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClusteringResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata": {
             "get": {
                 "tags": ["Computation", "actions"],
@@ -637,6 +759,18 @@
                 "properties": {
                     "links": {
                         "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                }
+            },
+            "ClusteringRequest": {
+                "required": ["numberOfClusters"],
+                "type": "object",
+                "properties": {
+                    "numberOfClusters": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Number of clusters to create",
+                        "format": "int32"
                     }
                 }
             },
@@ -2173,6 +2307,54 @@
                         "items": {
                             "type": "number",
                             "nullable": true
+                        }
+                    }
+                }
+            },
+            "ClusteringResult": {
+                "required": ["attribute", "clusters", "xcoord", "ycoord"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "xCoord": {
+                        "type": "array",
+                        "writeOnly": true,
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "yCoord": {
+                        "type": "array",
+                        "writeOnly": true,
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "clusters": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32",
+                            "nullable": true
+                        }
+                    },
+                    "ycoord": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "xcoord": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
                         }
                     }
                 }

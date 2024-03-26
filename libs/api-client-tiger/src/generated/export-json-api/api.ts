@@ -164,7 +164,7 @@ export interface Settings {
      */
     mergeHeaders?: boolean;
     /**
-     * Print applied filters on top of the document. (Not supported yet)
+     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
      * @type {boolean}
      * @memberof Settings
      */
@@ -238,10 +238,10 @@ export interface TabularExportRequest {
     visualizationObject?: string;
     /**
      * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)
-     * @type {string}
+     * @type {Array<object>}
      * @memberof TabularExportRequest
      */
-    visualizationObjectCustomFilters?: string;
+    visualizationObjectCustomFilters?: Array<object>;
 }
 
 export const TabularExportRequestFormatEnum = {

@@ -285,11 +285,6 @@
     },
     "components": {
         "schemas": {
-            "JsonNode": {
-                "type": "object",
-                "description": "Metadata definition in open form JSON format.",
-                "example": "\"metadata\":{}"
-            },
             "PdfExportRequest": {
                 "required": ["dashboardId", "fileName"],
                 "type": "object",
@@ -305,7 +300,9 @@
                         "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
                     },
                     "metadata": {
-                        "$ref": "#/components/schemas/JsonNode"
+                        "type": "object",
+                        "description": "Metadata definition in open form JSON format.",
+                        "example": "\"metadata\":{}"
                     }
                 },
                 "description": "Export request object describing the export properties and metadata for pdf exports."
@@ -419,7 +416,7 @@
                     },
                     "showFilters": {
                         "type": "boolean",
-                        "description": "Print applied filters on top of the document. (Not supported yet)",
+                        "description": "Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)",
                         "example": false
                     },
                     "pdfPageSize": {
@@ -490,9 +487,12 @@
                         "example": "f7c359bc-c230-4487-b15b-ad9685bcb537"
                     },
                     "visualizationObjectCustomFilters": {
-                        "type": "string",
+                        "type": "array",
                         "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)",
-                        "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]"
+                        "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]",
+                        "items": {
+                            "type": "object"
+                        }
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."

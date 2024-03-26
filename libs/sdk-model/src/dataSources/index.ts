@@ -21,7 +21,8 @@ export type DataSourceType =
     | "GDSTORAGE"
     | "CLICKHOUSE"
     | "MYSQL"
-    | "MARIADB";
+    | "MARIADB"
+    | "ORACLE";
 
 /**
  * @alpha
