@@ -90,7 +90,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     canCalculateTotals: true,
     canCalculateNativeTotals: true,
     supportsCsvUploader: true,
-    supportsKpiWidget: true,
+    supportsKpiWidget: false,
     supportsWidgetEntity: true,
     supportsOwners: true,
     allowsInconsistentRelations: false,

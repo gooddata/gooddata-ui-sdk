@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
 import pick from "lodash/pick.js";
@@ -82,7 +82,11 @@ export function toJsonString(obj: object, options: WriteJsonOptions = {}): strin
     }
 
     if (replaceString) {
-        result = result.replace(new RegExp(replaceString[0], "g"), replaceString[1]);
+        replaceString.forEach(([searchString, replacement]) => {
+            result = result.replace(new RegExp(searchString, "g"), replacement);
+        });
+
+        //result = result.replace(new RegExp(replaceString[0], "g"), replaceString[1]);
     }
 
     return result;
@@ -90,7 +94,7 @@ export function toJsonString(obj: object, options: WriteJsonOptions = {}): strin
 
 export type WriteJsonOptions = {
     pickKeys?: string[];
-    replaceString?: [string, string];
+    replaceString?: [string, string][];
 };
 
 export function writeAsJsonSync(file: string, obj: object, options?: WriteJsonOptions): void {

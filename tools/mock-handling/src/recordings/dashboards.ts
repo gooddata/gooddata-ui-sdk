@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
@@ -22,7 +22,6 @@ export class DashboardRecording implements IRecording {
     public readonly directory: string;
     private readonly dashboardId: string;
     private readonly objFile: string;
-    private readonly alertsFile: string;
     private readonly spec: DashboardRecordingSpec;
 
     constructor(rootDir: string, id: string, spec: DashboardRecordingSpec) {
@@ -30,7 +29,6 @@ export class DashboardRecording implements IRecording {
         this.dashboardId = id;
 
         this.objFile = path.join(this.directory, RecordingFiles.Dashboards.Object);
-        this.alertsFile = path.join(this.directory, RecordingFiles.Dashboards.Alerts);
 
         this.spec = spec;
     }
@@ -48,13 +46,12 @@ export class DashboardRecording implements IRecording {
     }
 
     public isComplete(): boolean {
-        return fs.existsSync(this.directory) && fs.existsSync(this.objFile) && fs.existsSync(this.alertsFile);
+        return fs.existsSync(this.directory) && fs.existsSync(this.objFile);
     }
 
     public getEntryForRecordingIndex(): RecordingIndexEntry {
         return {
             obj: this.objFile,
-            alerts: this.alertsFile,
         };
     }
 
@@ -65,7 +62,7 @@ export class DashboardRecording implements IRecording {
     ): Promise<void> {
         if (this.spec.offline) {
             logError(
-                `An offline recording for dashboard with id ${this.dashboardId} does not contain all necessary files. Please check that ${this.objFile} and ${this.alertsFile} exist.`,
+                `An offline recording for dashboard with id ${this.dashboardId} does not contain all necessary files. Please check that ${this.objFile} exist.`,
             );
 
             throw new DataRecorderError(
@@ -76,20 +73,22 @@ export class DashboardRecording implements IRecording {
 
         const ref = idRef(this.dashboardId);
 
-        const [dashboardWithReferences, alerts] = await Promise.all([
+        const [dashboardWithReferences] = await Promise.all([
             backend.workspace(workspace).dashboards().getDashboardWithReferences(ref),
-            backend.workspace(workspace).dashboards().getDashboardWidgetAlertsForCurrentUser(ref),
         ]);
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        const replaceString: [string, string] | undefined = newWorkspaceId
-            ? [workspace, newWorkspaceId]
-            : undefined;
+        const replaceString: [string, string][] = [];
+
+        if (newWorkspaceId) {
+            replaceString.push([workspace, newWorkspaceId]);
+        }
+
+        replaceString.push([backend.config.hostname!, ""]);
 
         writeAsJsonSync(this.objFile, dashboardWithReferences, { replaceString });
-        writeAsJsonSync(this.alertsFile, alerts, { replaceString });
     }
 }

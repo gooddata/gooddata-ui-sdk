@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
@@ -64,9 +64,11 @@ export class InsightRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        const replaceString: [string, string] | undefined = newWorkspaceId
-            ? [workspace, newWorkspaceId]
-            : undefined;
+        const replaceString: [string, string][] = [];
+
+        if (newWorkspaceId) {
+            replaceString.push([workspace, newWorkspaceId]);
+        }
 
         /*
          * Do not store ref, let the recorded backend fill-in

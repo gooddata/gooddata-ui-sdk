@@ -6580,15 +6580,12 @@ importers:
 
   ../../tools/mock-handling:
     dependencies:
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../../libs/api-model-bear
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger':
+        specifier: workspace:*
+        version: link:../../libs/sdk-backend-tiger
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../../libs/sdk-model

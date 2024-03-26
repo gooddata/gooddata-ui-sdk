@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { program } from "commander";
 import ora from "ora";
@@ -9,7 +9,7 @@ import * as path from "path";
 import pmap from "p-map";
 import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { clearLine, clearTerminal } from "./cli/clear.js";
-import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts.js";
+import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants.js";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
@@ -29,7 +29,7 @@ program
     .version(LIB_VERSION)
     .option("--recordingDir <path>", "Directory with recording inputs and outputs")
     .option("--project-id <id>", "Project id from which you want to capture mock data")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
+    .option("--tigerToken <token>", "GoodData tiger platform auth token.")
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
@@ -42,25 +42,15 @@ program
 
 async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataRecorderConfig> {
     const { hostname, backend } = config;
-    let { projectId, username, password } = config;
+    let { projectId, tigerToken } = config;
 
     const logInSpinner = ora();
     try {
-        if (username) {
-            log("Username", username);
-        } else {
-            username = await promptUsername();
-        }
-
-        password = password || (await promptPassword());
+        tigerToken = tigerToken || (await promptTigerToken());
 
         logInSpinner.start("Logging in...");
-        await getOrInitBackend(
-            username,
-            password,
-            hostname || DEFAULT_HOSTNAME,
-            backend || DEFAULT_BACKEND,
-        ).authenticate();
+
+        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME, backend || DEFAULT_BACKEND);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -79,6 +69,8 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         throw new DataRecorderError("Authentication failed", 1);
     }
 
+    console.log("Project ID", projectId);
+
     if (projectId) {
         log("Project ID", projectId);
     } else {
@@ -88,8 +80,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
     return {
         ...config,
         projectId,
-        username,
-        password,
+        tigerToken,
     };
 }
 
@@ -196,8 +187,7 @@ async function run() {
          * run.
          */
         const backend = getOrInitBackend(
-            fullConfig.username!,
-            fullConfig.password!,
+            fullConfig.tigerToken!,
             options.hostname || DEFAULT_HOSTNAME,
             options.backend || DEFAULT_BACKEND,
         );

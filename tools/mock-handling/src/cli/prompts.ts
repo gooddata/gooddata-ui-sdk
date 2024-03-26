@@ -1,28 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import pkg, { DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 import getBackend from "../backend.js";
 
-export async function promptUsername(): Promise<string> {
-    const usernameQuestion: DistinctQuestion = {
+export async function promptTigerToken(): Promise<string> {
+    const tigerTokenQuestion: DistinctQuestion = {
         type: "input",
-        name: "username",
-        message: "Enter your username:",
+        name: "tigerToken",
+        message: "Enter tiger token:",
     };
-    const usernameResponse = await prompt(usernameQuestion);
+    const tigerTokenResponse = await prompt(tigerTokenQuestion);
 
-    return usernameResponse.username;
-}
-
-export async function promptPassword(): Promise<string> {
-    const passwordQuestion: DistinctQuestion = {
-        type: "password",
-        name: "password",
-        message: "Enter your password:",
-    };
-    const passwordResponse = await prompt(passwordQuestion);
-
-    return passwordResponse.password;
+    return tigerTokenResponse.tigerToken;
 }
 
 export async function promptProjectId(): Promise<string> {
