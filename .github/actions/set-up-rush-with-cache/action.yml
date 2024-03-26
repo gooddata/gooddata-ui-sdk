@@ -1,0 +1,33 @@
+name: Set up rush with cache
+description: This action sets up rush with cache
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Enable rush cache via environment variable
+      run: echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Setup rush cache
+      uses: gigara/rush-cache@v2
+
+    - name: Cache Rush
+      uses: actions/cache@v4
+      with:
+        path: |
+          common/temp/install-run
+          ~/.rush
+        key: Rush-cache-${{ hashFiles('rush.json') }}
+
+    - name: Cache pnpm
+      uses: actions/cache@v4
+      with:
+        path: |
+          common/temp/pnpm-store
+          common/temp/node_modules
+        key: pnpm-cache-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+    - name: Install rush
+      run: |
+        node common/scripts/install-run-rush.js install
+      shell: bash
