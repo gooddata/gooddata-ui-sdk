@@ -268,6 +268,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableKDAttributeFilterDatesValidation,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMultipleCSVs,
+            "enableMultipleCSVs",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMultipleCSVs,
+        ),
     };
 }
 
