@@ -299,17 +299,27 @@ export function buildBlacklistHierarchies(
     }
     const isDateAttribute = !!attributeDescriptor.attributeHeader.granularity;
     if (isDateAttribute) {
-        const dateHierarchy = attributeHierarchies
-            .filter(isCatalogDateAttributeHierarchy)
-            .find((hierarchy) => areObjRefsEqual(getHierarchyRef(hierarchy), item.attributeHierarchyRef));
-        return [
-            {
-                type: "dateHierarchyReference",
-                // dateHierarchyTemplate is ObjRef but templateId is string
-                dateHierarchyTemplate: idRef(dateHierarchy!.templateId, "dateHierarchyTemplate"),
-                dateDatasetAttribute: attributeDescriptor.attributeHeader.formOf.ref,
-            },
-        ];
+        const dateHierarchy = attributeHierarchies.find((hierarchy) =>
+            areObjRefsEqual(getHierarchyRef(hierarchy), item.attributeHierarchyRef),
+        );
+        // date attribute may reference either adhoc date hierarchy or std attribute hierarchy
+        if (isCatalogDateAttributeHierarchy(dateHierarchy)) {
+            return [
+                {
+                    type: "dateHierarchyReference",
+                    dateHierarchyTemplate: idRef(dateHierarchy.templateId, "dateHierarchyTemplate"),
+                    dateDatasetAttribute: attributeDescriptor.attributeHeader.formOf.ref,
+                },
+            ];
+        } else {
+            return [
+                {
+                    type: "attributeHierarchyReference",
+                    attributeHierarchy: item.attributeHierarchyRef,
+                    attribute: attributeDescriptor.attributeHeader.formOf.ref,
+                },
+            ];
+        }
     }
     return [
         {

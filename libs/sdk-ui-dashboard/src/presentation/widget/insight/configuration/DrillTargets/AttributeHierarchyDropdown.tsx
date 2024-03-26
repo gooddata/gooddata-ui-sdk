@@ -10,7 +10,6 @@ import {
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     IDrillDownReference,
-    isAttributeHierarchyReference,
     getHierarchyTitle,
     ObjRef,
     objRefToString,
@@ -58,9 +57,9 @@ const isHierarchyInBlackList = (
     hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
     attributeRef: ObjRef | undefined,
 ) => {
-    return ignoredDrillDownHierarchies
-        .filter(isAttributeHierarchyReference)
-        .some((ref) => existBlacklistHierarchyPredicate(ref, hierarchy, attributeRef));
+    return ignoredDrillDownHierarchies.some((ref) =>
+        existBlacklistHierarchyPredicate(ref, hierarchy, attributeRef),
+    );
 };
 
 function buildHierarchyItemList(
