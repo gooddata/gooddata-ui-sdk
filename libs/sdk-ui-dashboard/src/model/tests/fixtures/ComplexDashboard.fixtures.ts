@@ -1,8 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     idRef,
-    uriRef,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IKpiWidget,
@@ -20,9 +19,9 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
  * Second row: two tables; same tables, each with 3 measures. first without any filtering whatsoever but with all drills; second with date filter and no attribute filtering, no drills
  * Third row: single heatmap with all filters applied
  */
-export const ComplexDashboardIdentifier = "aeis6NlXcL7X";
+export const ComplexDashboardIdentifier = "e6473e57-1914-46ec-9cb9-5611f1298100";
 export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
-    .dash_aeis6NlXcL7X.obj as IDashboardWithReferences;
+    .dash_e6473e57_1914_46ec_9cb9_5611f1298100.obj as IDashboardWithReferences;
 export const ComplexDashboardFilterContext = ComplexDashboardWithReferences.dashboard
     .filterContext! as IFilterContext;
 
@@ -35,14 +34,12 @@ export const ComplexDashboardFilters = {
     Date: ComplexDashboardFilterContext.filters[0] as IDashboardDateFilter,
     FirstAttribute: {
         filter: ComplexDashboardFilterContext.filters[1] as IDashboardAttributeFilter,
-        uriRef: uriRef("/gdc/md/referenceworkspace/obj/1087"),
-        idRef: idRef("label.owner.region"),
-        sampleElementUri: "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489",
+        idRef: idRef("f_owner.region_id"),
+        sampleElementValue: "East Coast",
     },
     SecondAttribute: {
         filter: ComplexDashboardFilterContext.filters[2] as IDashboardAttributeFilter,
-        uriRef: uriRef("/gdc/md/referenceworkspace/obj/1055"),
-        idRef: idRef("label.product.id.name"),
+        idRef: idRef("attr.f_product.product"),
     },
 };
 

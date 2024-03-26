@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -54,5 +54,5 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
         size: ReferenceMd.Probability,
-        viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+        viewBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
     });

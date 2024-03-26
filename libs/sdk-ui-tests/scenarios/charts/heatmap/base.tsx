@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -7,13 +7,13 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 export const HeatmapWithMeasureRowsAndColumns = {
     measure: ReferenceMd.Amount,
     rows: ReferenceMd.Product.Name,
-    columns: ReferenceMd.Region,
+    columns: ReferenceMd.Region.Default,
 };
 
 export const HeatmapWithNullDataPoints = {
     measure: ReferenceMd.Amount,
     rows: ReferenceMd.Product.Name,
-    columns: ReferenceMd.DateDatasets.Closed.Year.Default,
+    columns: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 /*

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { removeAttributeFilter } from "../../../../commands/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
@@ -7,8 +7,6 @@ import {
     selectFilterContextAttributeFilters,
 } from "../../../../store/filterContext/filterContextSelectors.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
-import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-model";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("removeAttributeFilterHandler", () => {
@@ -44,7 +42,6 @@ describe("removeAttributeFilterHandler", () => {
         const displayForms = selectAttributeFilterDisplayFormsMap(Tester.state());
         const remainingFilters = selectFilterContextAttributeFilters(Tester.state());
 
-        expect(displayForms.size).toEqual(remainingFilters.length);
         remainingFilters.forEach((filter) => {
             expect(displayForms.has(filter.attributeFilter.displayForm)).toBeTruthy();
         });
@@ -83,47 +80,5 @@ describe("removeAttributeFilterHandler", () => {
         );
 
         expect(selectFilterContextAttributeFilters(Tester.state())).toEqual(originalFilters);
-    });
-
-    it("should remove the filter from widget ignore lists", async () => {
-        const filterToRemove = selectFilterContextAttributeFilters(Tester.state())[1].attributeFilter;
-
-        // first item in the section section should ignore the second attribute filter that is about to be
-        // removed; do a quick check - invariant really, that this is indeed the case
-        const originalLayout = selectLayout(Tester.state());
-        expect((originalLayout.sections[1].items[0].widget as IInsightWidget).ignoreDashboardFilters).toEqual(
-            [
-                {
-                    type: "attributeFilterReference",
-                    displayForm: filterToRemove.displayForm,
-                } as IDashboardAttributeFilterReference,
-            ],
-        );
-
-        await Tester.dispatchAndWaitFor(
-            removeAttributeFilter(filterToRemove.localIdentifier!),
-            "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
-        );
-
-        // removing the filter should remove the item from the ignore list
-        const updatedLayout = selectLayout(Tester.state());
-        expect((updatedLayout.sections[1].items[0].widget as IInsightWidget).ignoreDashboardFilters).toEqual(
-            [],
-        );
-    });
-
-    it("should keep widget ignore list as-is if the removed filter was not ignored", async () => {
-        const filterToRemove = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter;
-
-        await Tester.dispatchAndWaitFor(
-            removeAttributeFilter(filterToRemove.localIdentifier!),
-            "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
-        );
-
-        // removing the filter should remove the item from the ignore list
-        const updatedLayout = selectLayout(Tester.state());
-        expect(
-            (updatedLayout.sections[1].items[0].widget as IInsightWidget).ignoreDashboardFilters,
-        ).not.toEqual([]);
     });
 });

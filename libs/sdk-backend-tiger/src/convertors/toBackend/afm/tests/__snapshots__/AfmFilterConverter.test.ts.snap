@@ -13,7 +13,7 @@ exports[`convertAfmFilters > should keep non-measure based filter 1`] = `
         },
         "label": {
           "identifier": {
-            "id": "label.product.id.name",
+            "id": "label.f_product.product.name",
             "type": "label",
           },
         },
@@ -32,7 +32,7 @@ exports[`convertAfmFilters > should not transform measure based filter of non-ra
         "dimensionality": [
           {
             "identifier": {
-              "id": "label.stage.isactive",
+              "id": "f_stage.isactive_id",
               "type": "label",
             },
           },

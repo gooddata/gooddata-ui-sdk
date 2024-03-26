@@ -6,10 +6,10 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -21,12 +21,12 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -39,12 +39,12 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -55,10 +55,10 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -68,7 +68,7 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -84,12 +84,12 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -97,12 +97,12 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -137,10 +137,10 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -152,12 +152,12 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -170,12 +170,12 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -186,10 +186,10 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -199,7 +199,7 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -215,12 +215,12 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -228,12 +228,12 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -315,10 +315,10 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -330,12 +330,12 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -348,12 +348,12 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -364,10 +364,10 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -377,7 +377,7 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -393,12 +393,12 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -406,12 +406,12 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -462,10 +462,10 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -477,12 +477,12 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -495,12 +495,12 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -511,10 +511,10 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -524,7 +524,7 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -540,12 +540,12 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -553,12 +553,12 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -609,10 +609,10 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -624,12 +624,12 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -642,12 +642,12 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -658,10 +658,10 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -671,7 +671,7 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -687,12 +687,12 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -700,12 +700,12 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -756,10 +756,10 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -771,12 +771,12 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -789,12 +789,12 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -805,10 +805,10 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -818,7 +818,7 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -834,12 +834,12 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -847,12 +847,12 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -903,10 +903,10 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -918,12 +918,12 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -936,12 +936,12 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -952,10 +952,10 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -965,7 +965,7 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -981,12 +981,12 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -994,12 +994,12 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1033,10 +1033,10 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1048,12 +1048,12 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1066,12 +1066,12 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1082,10 +1082,10 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1095,7 +1095,7 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1111,12 +1111,12 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1124,12 +1124,12 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1198,10 +1198,10 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1213,12 +1213,12 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1231,12 +1231,12 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1247,10 +1247,10 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1260,7 +1260,7 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1276,12 +1276,12 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1289,12 +1289,12 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1370,10 +1370,10 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1385,12 +1385,12 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1403,12 +1403,12 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1419,10 +1419,10 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1432,7 +1432,7 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1448,12 +1448,12 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1461,12 +1461,12 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1492,10 +1492,10 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1507,12 +1507,12 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1525,12 +1525,12 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1541,10 +1541,10 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1554,7 +1554,7 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1570,12 +1570,12 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1583,12 +1583,12 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1618,10 +1618,10 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1633,12 +1633,12 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1651,12 +1651,12 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1667,10 +1667,10 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1680,7 +1680,7 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1696,12 +1696,12 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1709,12 +1709,12 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1740,10 +1740,10 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1755,12 +1755,12 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1773,12 +1773,12 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1789,10 +1789,10 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1802,7 +1802,7 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1818,12 +1818,12 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1831,12 +1831,12 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1866,10 +1866,10 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1881,12 +1881,12 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1899,12 +1899,12 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -1915,10 +1915,10 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1928,7 +1928,7 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -1944,12 +1944,12 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -1957,12 +1957,12 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -1992,10 +1992,10 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2007,12 +2007,12 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2025,12 +2025,12 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -2041,10 +2041,10 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2054,7 +2054,7 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -2070,12 +2070,12 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -2083,12 +2083,12 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -2122,10 +2122,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2137,12 +2137,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2155,12 +2155,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -2171,10 +2171,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2184,7 +2184,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -2200,12 +2200,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -2213,12 +2213,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -2243,10 +2243,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2258,12 +2258,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2276,12 +2276,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -2292,10 +2292,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2305,7 +2305,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -2321,12 +2321,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -2334,12 +2334,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -2347,7 +2347,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2371,10 +2371,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
     {
       "attribute": {
         "displayForm": {
-          "identifier": "closed.aag81lMifn6q",
+          "identifier": "dt_closedate_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_closed.aag81lMifn6q",
+        "localIdentifier": "a_dt_closedate_timestamp.year",
       },
     },
   ],
@@ -2386,12 +2386,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2404,12 +2404,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abZgFKGPaGYM",
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abZgFKGPaGYM",
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
           },
         },
       ],
@@ -2420,10 +2420,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
         {
           "attribute": {
             "displayForm": {
-              "identifier": "closed.aag81lMifn6q",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_closed.aag81lMifn6q",
+            "localIdentifier": "a_dt_closedate_timestamp.year",
           },
         },
       ],
@@ -2433,7 +2433,7 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_closed.aag81lMifn6q",
+        "a_dt_closedate_timestamp.year",
       ],
     },
     {
@@ -2449,12 +2449,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -2462,12 +2462,12 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abZgFKGPaGYM",
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abZgFKGPaGYM",
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
       },
     },
   ],
@@ -2497,12 +2497,12 @@ exports[`ScatterPlot > with x axis measure > should create expected execution de
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2534,12 +2534,12 @@ exports[`ScatterPlot > with x axis measure > should create expected execution de
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2564,10 +2564,10 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2579,12 +2579,12 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2599,10 +2599,10 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2612,7 +2612,7 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -2628,12 +2628,12 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2658,10 +2658,10 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2677,12 +2677,12 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2693,10 +2693,10 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2706,7 +2706,7 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -2722,12 +2722,12 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],

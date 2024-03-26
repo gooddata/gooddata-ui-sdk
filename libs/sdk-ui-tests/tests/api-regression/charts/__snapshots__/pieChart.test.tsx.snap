@@ -6,10 +6,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -21,12 +21,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -37,10 +37,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -55,7 +55,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -66,12 +66,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -102,10 +102,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -117,12 +117,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -133,10 +133,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -151,7 +151,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -162,12 +162,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -198,10 +198,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -213,12 +213,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -229,10 +229,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -247,7 +247,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -258,12 +258,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -294,10 +294,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -309,12 +309,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -325,10 +325,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -343,7 +343,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -354,12 +354,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -390,10 +390,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -405,12 +405,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -421,10 +421,10 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -439,7 +439,7 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -450,12 +450,12 @@ exports[`PieChart > with 180x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -486,10 +486,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -501,12 +501,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -517,10 +517,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -535,7 +535,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -546,12 +546,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -582,10 +582,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -597,12 +597,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -613,10 +613,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -631,7 +631,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -642,12 +642,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -678,10 +678,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -693,12 +693,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -709,10 +709,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -727,7 +727,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -738,12 +738,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -774,10 +774,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -789,12 +789,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -805,10 +805,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -823,7 +823,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -834,12 +834,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -870,10 +870,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -885,12 +885,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -901,10 +901,10 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -919,7 +919,7 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -930,12 +930,12 @@ exports[`PieChart > with 180x300 - Force position TOP, max 2 rows, Gradient lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -966,10 +966,10 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -981,12 +981,12 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -997,10 +997,10 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1015,7 +1015,7 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1026,12 +1026,12 @@ exports[`PieChart > with 200x200 - without data labels > should create expected 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1065,10 +1065,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1080,12 +1080,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1096,10 +1096,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1114,7 +1114,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1125,12 +1125,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1161,10 +1161,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1176,12 +1176,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1192,10 +1192,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1210,7 +1210,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1221,12 +1221,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1257,10 +1257,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1272,12 +1272,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1288,10 +1288,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1306,7 +1306,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1317,12 +1317,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1353,10 +1353,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1368,12 +1368,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1384,10 +1384,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1402,7 +1402,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1413,12 +1413,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1449,10 +1449,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1464,12 +1464,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1480,10 +1480,10 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1498,7 +1498,7 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1509,12 +1509,12 @@ exports[`PieChart > with 260x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1545,10 +1545,10 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected exe
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1560,12 +1560,12 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected exe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1576,10 +1576,10 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected exe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1594,7 +1594,7 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected exe
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1605,12 +1605,12 @@ exports[`PieChart > with 300x250 - auto data labels > should create expected exe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1644,10 +1644,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1659,12 +1659,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1675,10 +1675,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1693,7 +1693,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1704,12 +1704,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1740,10 +1740,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1755,12 +1755,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1771,10 +1771,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1789,7 +1789,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1800,12 +1800,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1836,10 +1836,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1851,12 +1851,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1867,10 +1867,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1885,7 +1885,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1896,12 +1896,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1932,10 +1932,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1947,12 +1947,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1963,10 +1963,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1981,7 +1981,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1992,12 +1992,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2028,10 +2028,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2043,12 +2043,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2059,10 +2059,10 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2077,7 +2077,7 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2088,12 +2088,12 @@ exports[`PieChart > with 440x154 - Force position TOP, max 1 row, Gradient legen
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2124,10 +2124,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2139,12 +2139,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2155,10 +2155,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2173,7 +2173,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2184,12 +2184,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - auto legend > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2220,10 +2220,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2235,12 +2235,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2251,10 +2251,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2269,7 +2269,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2280,12 +2280,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend at bottom > sho
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2316,10 +2316,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2331,12 +2331,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2347,10 +2347,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2365,7 +2365,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2376,12 +2376,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on left > shoul
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2412,10 +2412,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2427,12 +2427,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2443,10 +2443,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2461,7 +2461,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2472,12 +2472,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on right > shou
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2508,10 +2508,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2523,12 +2523,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2539,10 +2539,10 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2557,7 +2557,7 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2568,12 +2568,12 @@ exports[`PieChart > with 610x154 - Force position RIGHT - legend on top > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2604,10 +2604,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2619,12 +2619,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2635,10 +2635,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2653,7 +2653,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2664,12 +2664,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2700,10 +2700,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2715,12 +2715,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2731,10 +2731,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2749,7 +2749,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2760,12 +2760,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2796,10 +2796,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2811,12 +2811,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2827,10 +2827,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2845,7 +2845,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2856,12 +2856,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2892,10 +2892,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -2907,12 +2907,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2923,10 +2923,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2941,7 +2941,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -2952,12 +2952,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2988,10 +2988,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3003,12 +3003,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3019,10 +3019,10 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3037,7 +3037,7 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3048,12 +3048,12 @@ exports[`PieChart > with 610x194 - Position respects configuration, max 1 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3084,10 +3084,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3099,12 +3099,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3115,10 +3115,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3133,7 +3133,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3144,12 +3144,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3180,10 +3180,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3195,12 +3195,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3211,10 +3211,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3229,7 +3229,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3240,12 +3240,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3276,10 +3276,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3291,12 +3291,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3307,10 +3307,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3325,7 +3325,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3336,12 +3336,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3372,10 +3372,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3387,12 +3387,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3403,10 +3403,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3421,7 +3421,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3432,12 +3432,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3468,10 +3468,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3483,12 +3483,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3499,10 +3499,10 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3517,7 +3517,7 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3528,12 +3528,12 @@ exports[`PieChart > with 610x274 - Position respects configuration, max 2 row fo
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3564,10 +3564,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3579,12 +3579,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3595,10 +3595,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3613,7 +3613,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3624,12 +3624,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3660,10 +3660,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3675,12 +3675,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3691,10 +3691,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3709,7 +3709,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3720,12 +3720,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3756,10 +3756,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3771,12 +3771,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3787,10 +3787,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3805,7 +3805,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3816,12 +3816,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3852,10 +3852,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3867,12 +3867,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3883,10 +3883,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3901,7 +3901,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -3912,12 +3912,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3948,10 +3948,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -3963,12 +3963,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3979,10 +3979,10 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3997,7 +3997,7 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4008,12 +4008,12 @@ exports[`PieChart > with 650x354 - Position respects configuration, map legend f
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4049,12 +4049,12 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -4062,12 +4062,12 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
         {
@@ -4076,13 +4076,13 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
             "definition": {
               "arithmeticMeasure": {
                 "measureIdentifiers": [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
+                  "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                  "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                 ],
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+            "localIdentifier": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
           },
         },
         {
@@ -4091,13 +4091,13 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
             "definition": {
               "arithmeticMeasure": {
                 "measureIdentifiers": [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
+                  "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
+                  "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+            "localIdentifier": "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
           },
         },
       ],
@@ -4125,12 +4125,12 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -4138,12 +4138,12 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -4152,13 +4152,13 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -4167,13 +4167,13 @@ exports[`PieChart > with arithmetic measures > should create expected execution 
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
+              "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+        "localIdentifier": "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
       },
     },
   ],
@@ -4198,10 +4198,10 @@ exports[`PieChart > with assign color to attributes > should create expected exe
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4213,12 +4213,12 @@ exports[`PieChart > with assign color to attributes > should create expected exe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4229,10 +4229,10 @@ exports[`PieChart > with assign color to attributes > should create expected exe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4247,7 +4247,7 @@ exports[`PieChart > with assign color to attributes > should create expected exe
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4258,12 +4258,12 @@ exports[`PieChart > with assign color to attributes > should create expected exe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4361,12 +4361,12 @@ exports[`PieChart > with assign color to measures > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -4374,12 +4374,12 @@ exports[`PieChart > with assign color to measures > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -4407,12 +4407,12 @@ exports[`PieChart > with assign color to measures > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -4420,12 +4420,12 @@ exports[`PieChart > with assign color to measures > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -4514,10 +4514,10 @@ exports[`PieChart > with coloring - custom colors > should create expected execu
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4529,12 +4529,12 @@ exports[`PieChart > with coloring - custom colors > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4545,10 +4545,10 @@ exports[`PieChart > with coloring - custom colors > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4563,7 +4563,7 @@ exports[`PieChart > with coloring - custom colors > should create expected execu
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4574,12 +4574,12 @@ exports[`PieChart > with coloring - custom colors > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4613,10 +4613,10 @@ exports[`PieChart > with coloring - custom palette > should create expected exec
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4628,12 +4628,12 @@ exports[`PieChart > with coloring - custom palette > should create expected exec
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4644,10 +4644,10 @@ exports[`PieChart > with coloring - custom palette > should create expected exec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4662,7 +4662,7 @@ exports[`PieChart > with coloring - custom palette > should create expected exec
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4673,12 +4673,12 @@ exports[`PieChart > with coloring - custom palette > should create expected exec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4747,10 +4747,10 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4762,12 +4762,12 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4778,10 +4778,10 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4796,7 +4796,7 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4807,12 +4807,12 @@ exports[`PieChart > with coloring - custom palette preferred over colors > shoul
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4888,10 +4888,10 @@ exports[`PieChart > with coloring - default > should create expected execution d
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4903,12 +4903,12 @@ exports[`PieChart > with coloring - default > should create expected execution d
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4919,10 +4919,10 @@ exports[`PieChart > with coloring - default > should create expected execution d
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4937,7 +4937,7 @@ exports[`PieChart > with coloring - default > should create expected execution d
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -4948,12 +4948,12 @@ exports[`PieChart > with coloring - default > should create expected execution d
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4979,10 +4979,10 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4994,12 +4994,12 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5010,10 +5010,10 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5028,7 +5028,7 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5039,12 +5039,12 @@ exports[`PieChart > with data labels - auto visibility > should create expected 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5074,10 +5074,10 @@ exports[`PieChart > with data labels - default > should create expected executio
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5089,12 +5089,12 @@ exports[`PieChart > with data labels - default > should create expected executio
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5105,10 +5105,10 @@ exports[`PieChart > with data labels - default > should create expected executio
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5123,7 +5123,7 @@ exports[`PieChart > with data labels - default > should create expected executio
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5134,12 +5134,12 @@ exports[`PieChart > with data labels - default > should create expected executio
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5165,10 +5165,10 @@ exports[`PieChart > with data labels - forced hidden > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5180,12 +5180,12 @@ exports[`PieChart > with data labels - forced hidden > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5196,10 +5196,10 @@ exports[`PieChart > with data labels - forced hidden > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5214,7 +5214,7 @@ exports[`PieChart > with data labels - forced hidden > should create expected ex
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5225,12 +5225,12 @@ exports[`PieChart > with data labels - forced hidden > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5260,10 +5260,10 @@ exports[`PieChart > with data labels - forced visible > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5275,12 +5275,12 @@ exports[`PieChart > with data labels - forced visible > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5291,10 +5291,10 @@ exports[`PieChart > with data labels - forced visible > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5309,7 +5309,7 @@ exports[`PieChart > with data labels - forced visible > should create expected e
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5320,12 +5320,12 @@ exports[`PieChart > with data labels - forced visible > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5355,10 +5355,10 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5370,12 +5370,12 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5386,10 +5386,10 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5404,7 +5404,7 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5415,12 +5415,12 @@ exports[`PieChart > with data labels - forced visible and german separators > sh
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5454,10 +5454,10 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5469,12 +5469,12 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5485,10 +5485,10 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5503,7 +5503,7 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5514,12 +5514,12 @@ exports[`PieChart > with legend position - single measure and viewBy - auto lege
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5549,10 +5549,10 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5564,12 +5564,12 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5580,10 +5580,10 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5598,7 +5598,7 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5609,12 +5609,12 @@ exports[`PieChart > with legend position - single measure and viewBy - disabled 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5644,10 +5644,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5659,12 +5659,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5675,10 +5675,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5693,7 +5693,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5704,12 +5704,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend at
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5739,10 +5739,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5754,12 +5754,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5770,10 +5770,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5788,7 +5788,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5799,12 +5799,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5834,10 +5834,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5849,12 +5849,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5865,10 +5865,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5883,7 +5883,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5894,12 +5894,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -5929,10 +5929,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -5944,12 +5944,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -5960,10 +5960,10 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -5978,7 +5978,7 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -5989,12 +5989,12 @@ exports[`PieChart > with legend position - single measure and viewBy - legend on
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -6029,12 +6029,12 @@ exports[`PieChart > with legend position - two measures - auto legend > should c
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6042,12 +6042,12 @@ exports[`PieChart > with legend position - two measures - auto legend > should c
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6075,12 +6075,12 @@ exports[`PieChart > with legend position - two measures - auto legend > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6088,12 +6088,12 @@ exports[`PieChart > with legend position - two measures - auto legend > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6128,12 +6128,12 @@ exports[`PieChart > with legend position - two measures - disabled > should crea
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6141,12 +6141,12 @@ exports[`PieChart > with legend position - two measures - disabled > should crea
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6174,12 +6174,12 @@ exports[`PieChart > with legend position - two measures - disabled > should crea
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6187,12 +6187,12 @@ exports[`PieChart > with legend position - two measures - disabled > should crea
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6227,12 +6227,12 @@ exports[`PieChart > with legend position - two measures - legend at bottom > sho
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6240,12 +6240,12 @@ exports[`PieChart > with legend position - two measures - legend at bottom > sho
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6273,12 +6273,12 @@ exports[`PieChart > with legend position - two measures - legend at bottom > sho
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6286,12 +6286,12 @@ exports[`PieChart > with legend position - two measures - legend at bottom > sho
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6326,12 +6326,12 @@ exports[`PieChart > with legend position - two measures - legend on left > shoul
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6339,12 +6339,12 @@ exports[`PieChart > with legend position - two measures - legend on left > shoul
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6372,12 +6372,12 @@ exports[`PieChart > with legend position - two measures - legend on left > shoul
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6385,12 +6385,12 @@ exports[`PieChart > with legend position - two measures - legend on left > shoul
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6425,12 +6425,12 @@ exports[`PieChart > with legend position - two measures - legend on right > shou
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6438,12 +6438,12 @@ exports[`PieChart > with legend position - two measures - legend on right > shou
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6471,12 +6471,12 @@ exports[`PieChart > with legend position - two measures - legend on right > shou
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6484,12 +6484,12 @@ exports[`PieChart > with legend position - two measures - legend on right > shou
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6524,12 +6524,12 @@ exports[`PieChart > with legend position - two measures - legend on top > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6537,12 +6537,12 @@ exports[`PieChart > with legend position - two measures - legend on top > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6570,12 +6570,12 @@ exports[`PieChart > with legend position - two measures - legend on top > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6583,12 +6583,12 @@ exports[`PieChart > with legend position - two measures - legend on top > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6623,12 +6623,12 @@ exports[`PieChart > with single measure > should create expected execution defin
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -6656,12 +6656,12 @@ exports[`PieChart > with single measure > should create expected execution defin
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -6686,10 +6686,10 @@ exports[`PieChart > with single measure with viewBy > should create expected exe
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -6701,12 +6701,12 @@ exports[`PieChart > with single measure with viewBy > should create expected exe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -6717,10 +6717,10 @@ exports[`PieChart > with single measure with viewBy > should create expected exe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -6735,7 +6735,7 @@ exports[`PieChart > with single measure with viewBy > should create expected exe
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -6746,12 +6746,12 @@ exports[`PieChart > with single measure with viewBy > should create expected exe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -6781,12 +6781,12 @@ exports[`PieChart > with two measures > should create expected execution definit
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         {
@@ -6794,12 +6794,12 @@ exports[`PieChart > with two measures > should create expected execution definit
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -6827,12 +6827,12 @@ exports[`PieChart > with two measures > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -6840,12 +6840,12 @@ exports[`PieChart > with two measures > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -6870,10 +6870,10 @@ exports[`PieChart > with vertical alignment - bottom > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -6885,12 +6885,12 @@ exports[`PieChart > with vertical alignment - bottom > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -6901,10 +6901,10 @@ exports[`PieChart > with vertical alignment - bottom > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -6919,7 +6919,7 @@ exports[`PieChart > with vertical alignment - bottom > should create expected ex
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -6930,12 +6930,12 @@ exports[`PieChart > with vertical alignment - bottom > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -6965,10 +6965,10 @@ exports[`PieChart > with vertical alignment - default > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -6980,12 +6980,12 @@ exports[`PieChart > with vertical alignment - default > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -6996,10 +6996,10 @@ exports[`PieChart > with vertical alignment - default > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -7014,7 +7014,7 @@ exports[`PieChart > with vertical alignment - default > should create expected e
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -7025,12 +7025,12 @@ exports[`PieChart > with vertical alignment - default > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -7056,10 +7056,10 @@ exports[`PieChart > with vertical alignment - middle > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -7071,12 +7071,12 @@ exports[`PieChart > with vertical alignment - middle > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -7087,10 +7087,10 @@ exports[`PieChart > with vertical alignment - middle > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -7105,7 +7105,7 @@ exports[`PieChart > with vertical alignment - middle > should create expected ex
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -7116,12 +7116,12 @@ exports[`PieChart > with vertical alignment - middle > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -7151,10 +7151,10 @@ exports[`PieChart > with vertical alignment - top > should create expected execu
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -7166,12 +7166,12 @@ exports[`PieChart > with vertical alignment - top > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -7182,10 +7182,10 @@ exports[`PieChart > with vertical alignment - top > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -7200,7 +7200,7 @@ exports[`PieChart > with vertical alignment - top > should create expected execu
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -7211,12 +7211,12 @@ exports[`PieChart > with vertical alignment - top > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],

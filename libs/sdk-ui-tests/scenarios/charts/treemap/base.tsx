@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Treemap, ITreemapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -7,19 +7,19 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const TreemapWithArithmeticMeasuresAndSegment = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.CalculatedLost],
-    segmentBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+    segmentBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
 };
 
 export const TreemapWithMeasureViewByAndSegmentBy = {
     measures: [ReferenceMd.Amount],
     viewBy: ReferenceMd.Product.Name,
-    segmentBy: ReferenceMd.Region,
+    segmentBy: ReferenceMd.Region.Default,
 };
 
 export const TreemapWithViewByDateAndStackByDate = {
     measures: [ReferenceMd.Amount],
-    viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
-    segmentBy: ReferenceMd.DateDatasets.Created.Year.Default,
+    viewBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
+    segmentBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
 };
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)
@@ -29,7 +29,7 @@ export default scenariosFor<ITreemapProps>("Treemap", Treemap)
     })
     .addScenario("single measure and segment", {
         measures: [ReferenceMd.Amount],
-        segmentBy: ReferenceMd.Region,
+        segmentBy: ReferenceMd.Region.Default,
     })
     .addScenario("two measures", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],

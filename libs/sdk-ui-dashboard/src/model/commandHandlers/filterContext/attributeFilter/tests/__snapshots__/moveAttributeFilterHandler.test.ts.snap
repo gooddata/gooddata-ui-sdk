@@ -53,11 +53,12 @@ exports[`moveAttributeFilterHandler > should set the attribute selection in stat
       "uris": [],
     },
     "displayForm": {
-      "uri": "/gdc/md/referenceworkspace/obj/1071",
+      "identifier": "label.f_activity.subject",
+      "type": "displayForm",
     },
-    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
+    "selectionMode": "multi",
   },
 }
 `;

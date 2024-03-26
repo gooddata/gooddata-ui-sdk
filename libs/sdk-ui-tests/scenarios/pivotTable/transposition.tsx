@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { action } from "@storybook/addon-actions";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
@@ -44,43 +44,43 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
-            newTotal("med", ReferenceMd.Amount, ReferenceMd.Department),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("sum", ReferenceMd.Won, ReferenceMd.Product.Name),
-            newTotal("med", ReferenceMd.Won, ReferenceMd.Department),
-            newTotal("nat", ReferenceMd.Won, ReferenceMd.Department),
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
-            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
+            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
+            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: {
-            ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department]),
+            ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
             measureGroupDimension: "rows",
         },
     })
     .addScenario("multiple measures and no columns, with totals", {
         ...PivotTableWithMeasuresAndRowsOnly,
         totals: [
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
-            newTotal("min", ReferenceMd.Won, ReferenceMd.Department),
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
-            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
+            newTotal("min", ReferenceMd.Won, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
+            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: {
-            ...getCommonPivotTableSizingConfig([ReferenceMd.Region, ReferenceMd.Department]),
+            ...getCommonPivotTableSizingConfig([ReferenceMd.Region.Default, ReferenceMd.Department.Default]),
             measureGroupDimension: "rows",
         },
     })
     .addScenario("multiple measures and no rows, with totals", {
         ...PivotTableWithMeasuresAndColumnOnly,
         totals: [
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
-            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
+            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: {
             measureGroupDimension: "rows",
@@ -138,8 +138,8 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             },
         },
         totals: [
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
         ],
     })
     .addScenario("two measures in rows and only column attrs on left, with totals", {
@@ -149,9 +149,9 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             columnHeadersPosition: "left",
         },
         totals: [
-            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region),
-            newTotal("med", ReferenceMd.Won, ReferenceMd.Region),
-            newTotal("nat", ReferenceMd.Won, ReferenceMd.Region),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
+            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
     });

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -18,7 +18,7 @@ export const ColumnChartWithSingleMeasureAndViewBy = {
 export const ColumnChartWithSingleMeasureViewByAndStackBy = {
     measures: [ReferenceMd.Amount],
     viewBy: [ReferenceMd.Product.Name],
-    stackBy: ReferenceMd.Region,
+    stackBy: ReferenceMd.Region.Default,
 };
 
 export const ColumnChartWithTwoMeasuresAndViewBy = {
@@ -28,19 +28,19 @@ export const ColumnChartWithTwoMeasuresAndViewBy = {
 
 export const ColumnChartWithTwoMeasuresAndTwoViewBy = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
 };
 
 export const ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.Region],
+    viewBy: [ReferenceMd.Region.Default],
     stackBy: ReferenceMd.Product.Name,
 };
 
 export const ColumnChartWithSingleMeasureAndTwoViewByAndStack = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
-    stackBy: ReferenceMd.Department,
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
+    stackBy: ReferenceMd.Department.Default,
 };
 
 export const ColumnChartWithArithmeticMeasuresAndViewBy = {
@@ -55,17 +55,17 @@ export const ColumnChartWithArithmeticMeasuresAndViewBy = {
 
 export const ColumnChartViewByDateAndPop = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default],
 };
 
 export const ColumnChartViewByTwoDates = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const ColumnChartStackByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    stackBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    stackBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 /*
@@ -88,8 +88,8 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .addScenario("single measure with viewBy and stackBy filtered to single stack", {
         measures: [ReferenceMd.Amount],
         viewBy: [ReferenceMd.Product.Name],
-        stackBy: ReferenceMd.Region,
-        filters: [newPositiveAttributeFilter(ReferenceMd.Region, ["East Coast"])],
+        stackBy: ReferenceMd.Region.Default,
+        filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["East Coast"])],
     })
     .addScenario("single measure with two viewBy and stack", ColumnChartWithSingleMeasureAndTwoViewByAndStack)
     .addScenario(

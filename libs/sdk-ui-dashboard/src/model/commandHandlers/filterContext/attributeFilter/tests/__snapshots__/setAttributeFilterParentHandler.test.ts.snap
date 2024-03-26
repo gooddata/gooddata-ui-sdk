@@ -39,11 +39,12 @@ exports[`setAttributeFilterParentHandler > should set the appropriate values in 
       "uris": [],
     },
     "displayForm": {
-      "uri": "/gdc/md/referenceworkspace/obj/1089",
+      "identifier": "f_owner.department_id",
+      "type": "displayForm",
     },
     "filterElementsBy": [
       {
-        "filterLocalIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
+        "filterLocalIdentifier": "4436376372e7468b81b327dca9b65ec1",
         "over": {
           "attributes": [
             {
@@ -53,8 +54,9 @@ exports[`setAttributeFilterParentHandler > should set the appropriate values in 
         },
       },
     ],
-    "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
+    "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
     "negativeSelection": true,
+    "selectionMode": "multi",
   },
 }
 `;

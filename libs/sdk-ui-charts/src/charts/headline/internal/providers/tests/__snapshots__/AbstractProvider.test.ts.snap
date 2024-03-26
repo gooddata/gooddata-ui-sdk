@@ -12,12 +12,12 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
               "definition": {
                 "measureDefinition": {
                   "item": {
-                    "identifier": "aangOxLSeztu",
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                     "type": "measure",
                   },
                 },
               },
-              "localIdentifier": "m_aangOxLSeztu",
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
             },
           },
         ],
@@ -31,12 +31,12 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
                 "measureDefinition": {
                   "aggregation": "sum",
                   "item": {
-                    "identifier": "fact.opportunitysnapshot.amount",
+                    "identifier": "f_opportunitysnapshot.f_amount",
                     "type": "fact",
                   },
                 },
               },
-              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
             },
           },
         ],
@@ -54,7 +54,7 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
       {
         "positiveAttributeFilter": {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
             "type": "displayForm",
           },
           "in": {
@@ -69,12 +69,12 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
           "definition": {
             "measureDefinition": {
               "item": {
-                "identifier": "aangOxLSeztu",
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                 "type": "measure",
               },
             },
           },
-          "localIdentifier": "m_aangOxLSeztu",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
       {
@@ -83,12 +83,12 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
             "measureDefinition": {
               "aggregation": "sum",
               "item": {
-                "identifier": "fact.opportunitysnapshot.amount",
+                "identifier": "f_opportunitysnapshot.f_amount",
                 "type": "fact",
               },
             },
           },
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
         },
       },
     ],
@@ -120,12 +120,12 @@ exports[`AbstractProvider > createExecution > execution should be created withou
               "definition": {
                 "measureDefinition": {
                   "item": {
-                    "identifier": "aangOxLSeztu",
+                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                     "type": "measure",
                   },
                 },
               },
-              "localIdentifier": "m_aangOxLSeztu",
+              "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
             },
           },
         ],
@@ -139,12 +139,12 @@ exports[`AbstractProvider > createExecution > execution should be created withou
                 "measureDefinition": {
                   "aggregation": "sum",
                   "item": {
-                    "identifier": "fact.opportunitysnapshot.amount",
+                    "identifier": "f_opportunitysnapshot.f_amount",
                     "type": "fact",
                   },
                 },
               },
-              "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+              "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
             },
           },
         ],
@@ -162,7 +162,7 @@ exports[`AbstractProvider > createExecution > execution should be created withou
       {
         "positiveAttributeFilter": {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
             "type": "displayForm",
           },
           "in": {
@@ -177,12 +177,12 @@ exports[`AbstractProvider > createExecution > execution should be created withou
           "definition": {
             "measureDefinition": {
               "item": {
-                "identifier": "aangOxLSeztu",
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                 "type": "measure",
               },
             },
           },
-          "localIdentifier": "m_aangOxLSeztu",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
       {
@@ -191,12 +191,12 @@ exports[`AbstractProvider > createExecution > execution should be created withou
             "measureDefinition": {
               "aggregation": "sum",
               "item": {
-                "identifier": "fact.opportunitysnapshot.amount",
+                "identifier": "f_opportunitysnapshot.f_amount",
                 "type": "fact",
               },
             },
           },
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum",
         },
       },
     ],

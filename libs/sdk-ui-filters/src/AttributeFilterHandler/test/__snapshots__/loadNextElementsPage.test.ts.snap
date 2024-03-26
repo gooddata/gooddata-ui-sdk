@@ -73,11 +73,11 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was successful sho
     "elements": [
       {
         "title": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
       {
         "title": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
     ],
     "options": {

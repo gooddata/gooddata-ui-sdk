@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
     bucketSetTotals,
@@ -26,26 +26,26 @@ const { Department, Region, Status, Won } = ReferenceMd;
 const properties: IVisualizationProperties = {
     controls: {
         columnWidths: [
-            newWidthForAttributeColumn(Region, 131, false),
+            newWidthForAttributeColumn(Region.Default, 131, false),
             newWidthForAttributeColumn(Status, 125, false),
-            newWidthForAttributeColumn(Department, 97, false),
+            newWidthForAttributeColumn(Department.Default, 97, false),
             newWidthForAllMeasureColumns(270),
         ],
     },
-    sortItems: [newAttributeSort(Region, "desc"), newAttributeSort(Status)],
+    sortItems: [newAttributeSort(Region.Default, "desc"), newAttributeSort(Status)],
 };
 
-const filters: IFilter[] = [newPositiveAttributeFilter(Department, ["Inside Sales"])];
-const sorts: ISortItem[] = [newAttributeSort(Department)];
+const filters: IFilter[] = [newPositiveAttributeFilter(Department.Default, ["Inside Sales"])];
+const sorts: ISortItem[] = [newAttributeSort(Department.Default)];
 const sourceInsightDefinition: IInsightDefinition = newInsightDefinition("visualizationClass-url", (b) => {
     return b
         .title("sourceInsight")
         .buckets([
             newBucket(
                 "attribute",
-                Region,
+                Region.Default,
                 modifyAttribute(Status, (attr) => attr.alias("status alias")),
-                Department,
+                Department.Default,
             ),
             bucketSetTotals(newBucket("measure", Won), []),
         ])
@@ -60,8 +60,8 @@ const sourceInsightDefinitionWithTotals: IInsightDefinition = newInsightDefiniti
         return b
             .title("sourceInsight")
             .buckets([
-                newBucket("attribute", Region, Status, Department),
-                newBucket("measure", Won, newTotal("nat", Won, Region), newTotal("nat", Won, Status)),
+                newBucket("attribute", Region.Default, Status, Department.Default),
+                newBucket("measure", Won, newTotal("nat", Won, Region.Default), newTotal("nat", Won, Status)),
             ])
             .filters(filters)
             .sorts(sorts)
@@ -96,7 +96,7 @@ const drillConfig: IDrillDownDefinition = {
 
 const measureHeader: IMeasureDescriptor = {
     measureHeaderItem: {
-        name: Won.measure.title,
+        name: Won.measure.title!,
         format: "#,##0.00",
         localIdentifier: Won.measure.localIdentifier,
         uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
@@ -112,8 +112,8 @@ const departmentHeader: IDrillIntersectionAttributeItem = {
         uri: departmentDirectSalesUri,
     },
     attributeHeader: {
-        name: Department.attribute.alias,
-        localIdentifier: Department.attribute.localIdentifier,
+        name: Department.Default.attribute.alias!,
+        localIdentifier: Department.Default.attribute.localIdentifier,
         uri: departmentHeaderAttributeUri,
         ref: {
             uri: departmentHeaderAttributeUri,
@@ -131,7 +131,7 @@ const statusHeader: IDrillIntersectionAttributeItem = {
         uri: statusLostUri,
     },
     attributeHeader: {
-        name: Status.attribute.alias,
+        name: Status.attribute.alias!,
         localIdentifier: Status.attribute.localIdentifier,
         uri: statusHeaderAttributeUri,
         ref: {
@@ -150,8 +150,8 @@ const regionHeader: IDrillIntersectionAttributeItem = {
         uri: regionEastCoastUri,
     },
     attributeHeader: {
-        name: Region.attribute.alias,
-        localIdentifier: Region.attribute.localIdentifier,
+        name: Region.Default.attribute.alias!,
+        localIdentifier: Region.Default.attribute.localIdentifier,
         uri: regionHeaderAttributeUri,
         ref: {
             uri: regionHeaderAttributeUri,
@@ -181,17 +181,17 @@ const expectedProperties: IVisualizationProperties = {
     controls: {
         columnWidths: [
             newWidthForAttributeColumn(Status, 125, false),
-            newWidthForAttributeColumn(Department, 97, false),
+            newWidthForAttributeColumn(Department.Default, 97, false),
             newWidthForAllMeasureColumns(270),
         ],
     },
-    sortItems: [newAttributeSort(Region, "desc"), newAttributeSort(Status)],
+    sortItems: [newAttributeSort(Region.Default, "desc"), newAttributeSort(Status)],
 };
 
 const expectedFilters: IFilter[] = [
-    newPositiveAttributeFilter(Department, ["Inside Sales"]),
+    newPositiveAttributeFilter(Department.Default, ["Inside Sales"]),
     newPositiveAttributeFilter(
-        modifyAttribute(Department, (a) => a.displayForm(uriRef(departmentHeaderAttributeUri))),
+        modifyAttribute(Department.Default, (a) => a.displayForm(uriRef(departmentHeaderAttributeUri))),
         { uris: [departmentDirectSalesUri] },
     ),
     newPositiveAttributeFilter(
@@ -199,7 +199,7 @@ const expectedFilters: IFilter[] = [
         { uris: [statusLostUri] },
     ),
     newPositiveAttributeFilter(
-        modifyAttribute(Region, (a) => a.displayForm(uriRef(regionHeaderAttributeUri))),
+        modifyAttribute(Region.Default, (a) => a.displayForm(uriRef(regionHeaderAttributeUri))),
         { uris: [regionEastCoastUri] },
     ),
 ];
@@ -213,12 +213,12 @@ const expectedInsightDefinition: IInsightDefinition = newInsightDefinition(
                 newBucket(
                     "attribute",
                     newAttribute(implicitTargetDF, (attr) => attr.localId(Status.attribute.localIdentifier)),
-                    Department,
+                    Department.Default,
                 ),
                 bucketSetTotals(newBucket("measure", Won), []),
             ])
             .filters(expectedFilters)
-            .sorts([newAttributeSort(Department)])
+            .sorts([newAttributeSort(Department.Default)])
             .properties(expectedProperties);
     },
 );
@@ -232,12 +232,12 @@ const expectedInsightDefinitionWithTotals: IInsightDefinition = newInsightDefini
                 newBucket(
                     "attribute",
                     newAttribute(implicitTargetDF, (attr) => attr.localId(Status.attribute.localIdentifier)),
-                    Department,
+                    Department.Default,
                 ),
                 newBucket("measure", Won, newTotal("nat", Won, Status)),
             ])
             .filters(expectedFilters)
-            .sorts([newAttributeSort(Department)])
+            .sorts([newAttributeSort(Department.Default)])
             .properties(expectedProperties);
     },
 );

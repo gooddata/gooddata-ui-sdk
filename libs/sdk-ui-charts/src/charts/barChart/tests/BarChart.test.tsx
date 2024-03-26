@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import { BarChart } from "../BarChart.js";
@@ -44,13 +44,13 @@ describe("BarChart", () => {
                 backend={dummyBackend()}
                 measures={[ReferenceMd.Amount]}
                 viewBy={ReferenceMd.Product.Name}
-                stackBy={ReferenceMd.Region}
+                stackBy={ReferenceMd.Region.Default}
                 sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const expectedDimensions = newTwoDimensional(
-            [ReferenceMd.Region],
+            [ReferenceMd.Region.Default],
             [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 

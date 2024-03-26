@@ -6,19 +6,19 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -30,12 +30,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -46,10 +46,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -60,10 +60,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -73,12 +73,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -90,12 +90,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -103,7 +103,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - auto l
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -133,19 +133,19 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -157,12 +157,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -173,10 +173,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -187,10 +187,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -200,12 +200,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -217,12 +217,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -230,7 +230,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -260,19 +260,19 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -284,12 +284,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -300,10 +300,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -314,10 +314,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -327,12 +327,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -344,12 +344,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -357,7 +357,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -387,19 +387,19 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -411,12 +411,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -427,10 +427,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -441,10 +441,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -454,12 +454,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -471,12 +471,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -484,7 +484,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -514,19 +514,19 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -538,12 +538,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -554,10 +554,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -568,10 +568,10 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -581,12 +581,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -598,12 +598,12 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -611,7 +611,7 @@ exports[`Heatmap > with 180x400 - Force position TOP, minimised variant - legend
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -641,19 +641,19 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -665,12 +665,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -681,10 +681,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -695,10 +695,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -708,12 +708,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -725,12 +725,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -738,7 +738,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -768,19 +768,19 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -792,12 +792,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -808,10 +808,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -822,10 +822,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -835,12 +835,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -852,12 +852,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -865,7 +865,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -895,19 +895,19 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -919,12 +919,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -935,10 +935,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -949,10 +949,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -962,12 +962,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -979,12 +979,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -992,7 +992,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1022,19 +1022,19 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1046,12 +1046,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1062,10 +1062,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1076,10 +1076,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1089,12 +1089,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1106,12 +1106,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1119,7 +1119,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1149,19 +1149,19 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1173,12 +1173,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1189,10 +1189,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1203,10 +1203,10 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1216,12 +1216,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1233,12 +1233,12 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1246,7 +1246,7 @@ exports[`Heatmap > with 620x400 - Position respects configuration, standard vari
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1276,19 +1276,19 @@ exports[`Heatmap > with assign color to measures > should create expected execut
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1300,12 +1300,12 @@ exports[`Heatmap > with assign color to measures > should create expected execut
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1316,10 +1316,10 @@ exports[`Heatmap > with assign color to measures > should create expected execut
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1330,10 +1330,10 @@ exports[`Heatmap > with assign color to measures > should create expected execut
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1343,12 +1343,12 @@ exports[`Heatmap > with assign color to measures > should create expected execut
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1360,12 +1360,12 @@ exports[`Heatmap > with assign color to measures > should create expected execut
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1373,7 +1373,7 @@ exports[`Heatmap > with assign color to measures > should create expected execut
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1454,19 +1454,19 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1478,12 +1478,12 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1494,10 +1494,10 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1508,10 +1508,10 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1521,12 +1521,12 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1538,12 +1538,12 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1551,7 +1551,7 @@ exports[`Heatmap > with axis name configuration - high > should create expected 
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1601,19 +1601,19 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1625,12 +1625,12 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1641,10 +1641,10 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1655,10 +1655,10 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1668,12 +1668,12 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1685,12 +1685,12 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1698,7 +1698,7 @@ exports[`Heatmap > with axis name configuration - invisible > should create expe
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1748,19 +1748,19 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1772,12 +1772,12 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1788,10 +1788,10 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1802,10 +1802,10 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1815,12 +1815,12 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1832,12 +1832,12 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1845,7 +1845,7 @@ exports[`Heatmap > with axis name configuration - low > should create expected e
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -1895,19 +1895,19 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -1919,12 +1919,12 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1935,10 +1935,10 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -1949,10 +1949,10 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -1962,12 +1962,12 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -1979,12 +1979,12 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1992,7 +1992,7 @@ exports[`Heatmap > with axis name configuration - middle > should create expecte
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2042,19 +2042,19 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2066,12 +2066,12 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2082,10 +2082,10 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2096,10 +2096,10 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2109,12 +2109,12 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2126,12 +2126,12 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2139,7 +2139,7 @@ exports[`Heatmap > with coloring - custom colors > should create expected execut
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2172,19 +2172,19 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2196,12 +2196,12 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2212,10 +2212,10 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2226,10 +2226,10 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2239,12 +2239,12 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2256,12 +2256,12 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2269,7 +2269,7 @@ exports[`Heatmap > with coloring - custom palette > should create expected execu
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2337,19 +2337,19 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2361,12 +2361,12 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2377,10 +2377,10 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2391,10 +2391,10 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2404,12 +2404,12 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2421,12 +2421,12 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2434,7 +2434,7 @@ exports[`Heatmap > with coloring - custom palette preferred over colors > should
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2509,19 +2509,19 @@ exports[`Heatmap > with coloring - default > should create expected execution de
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2533,12 +2533,12 @@ exports[`Heatmap > with coloring - default > should create expected execution de
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2549,10 +2549,10 @@ exports[`Heatmap > with coloring - default > should create expected execution de
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2563,10 +2563,10 @@ exports[`Heatmap > with coloring - default > should create expected execution de
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2576,12 +2576,12 @@ exports[`Heatmap > with coloring - default > should create expected execution de
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2593,12 +2593,12 @@ exports[`Heatmap > with coloring - default > should create expected execution de
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2606,7 +2606,7 @@ exports[`Heatmap > with coloring - default > should create expected execution de
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2631,19 +2631,19 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2655,12 +2655,12 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2671,10 +2671,10 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2685,10 +2685,10 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2698,12 +2698,12 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2715,12 +2715,12 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2728,7 +2728,7 @@ exports[`Heatmap > with data labels - auto visibility > should create expected e
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2757,19 +2757,19 @@ exports[`Heatmap > with data labels - default > should create expected execution
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2781,12 +2781,12 @@ exports[`Heatmap > with data labels - default > should create expected execution
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2797,10 +2797,10 @@ exports[`Heatmap > with data labels - default > should create expected execution
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2811,10 +2811,10 @@ exports[`Heatmap > with data labels - default > should create expected execution
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2824,12 +2824,12 @@ exports[`Heatmap > with data labels - default > should create expected execution
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2841,12 +2841,12 @@ exports[`Heatmap > with data labels - default > should create expected execution
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2854,7 +2854,7 @@ exports[`Heatmap > with data labels - default > should create expected execution
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -2879,19 +2879,19 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -2903,12 +2903,12 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -2919,10 +2919,10 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -2933,10 +2933,10 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -2946,12 +2946,12 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -2963,12 +2963,12 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -2976,7 +2976,7 @@ exports[`Heatmap > with data labels - forced hidden > should create expected exe
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3005,19 +3005,19 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3029,12 +3029,12 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3045,10 +3045,10 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3059,10 +3059,10 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3072,12 +3072,12 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3089,12 +3089,12 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3102,7 +3102,7 @@ exports[`Heatmap > with data labels - forced visible > should create expected ex
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3131,19 +3131,19 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3155,12 +3155,12 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3171,10 +3171,10 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3185,10 +3185,10 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3198,12 +3198,12 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3215,12 +3215,12 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3228,7 +3228,7 @@ exports[`Heatmap > with data labels - forced visible and german separators > sho
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3261,19 +3261,19 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3285,12 +3285,12 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3301,10 +3301,10 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3315,10 +3315,10 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3328,12 +3328,12 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3345,12 +3345,12 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3358,7 +3358,7 @@ exports[`Heatmap > with legend position - auto legend > should create expected e
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3387,19 +3387,19 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3411,12 +3411,12 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3427,10 +3427,10 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3441,10 +3441,10 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3454,12 +3454,12 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3471,12 +3471,12 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3484,7 +3484,7 @@ exports[`Heatmap > with legend position - disabled > should create expected exec
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3513,19 +3513,19 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3537,12 +3537,12 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3553,10 +3553,10 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3567,10 +3567,10 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3580,12 +3580,12 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3597,12 +3597,12 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3610,7 +3610,7 @@ exports[`Heatmap > with legend position - legend at bottom > should create expec
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3639,19 +3639,19 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3663,12 +3663,12 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3679,10 +3679,10 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3693,10 +3693,10 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3706,12 +3706,12 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3723,12 +3723,12 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3736,7 +3736,7 @@ exports[`Heatmap > with legend position - legend on left > should create expecte
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3765,19 +3765,19 @@ exports[`Heatmap > with legend position - legend on right > should create expect
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3789,12 +3789,12 @@ exports[`Heatmap > with legend position - legend on right > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3805,10 +3805,10 @@ exports[`Heatmap > with legend position - legend on right > should create expect
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3819,10 +3819,10 @@ exports[`Heatmap > with legend position - legend on right > should create expect
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3832,12 +3832,12 @@ exports[`Heatmap > with legend position - legend on right > should create expect
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3849,12 +3849,12 @@ exports[`Heatmap > with legend position - legend on right > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3862,7 +3862,7 @@ exports[`Heatmap > with legend position - legend on right > should create expect
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -3891,19 +3891,19 @@ exports[`Heatmap > with legend position - legend on top > should create expected
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -3915,12 +3915,12 @@ exports[`Heatmap > with legend position - legend on top > should create expected
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -3931,10 +3931,10 @@ exports[`Heatmap > with legend position - legend on top > should create expected
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -3945,10 +3945,10 @@ exports[`Heatmap > with legend position - legend on top > should create expected
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -3958,12 +3958,12 @@ exports[`Heatmap > with legend position - legend on top > should create expected
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -3975,12 +3975,12 @@ exports[`Heatmap > with legend position - legend on top > should create expected
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -3988,7 +3988,7 @@ exports[`Heatmap > with legend position - legend on top > should create expected
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -4017,10 +4017,10 @@ exports[`Heatmap > with measure and columns > should create expected execution d
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4032,12 +4032,12 @@ exports[`Heatmap > with measure and columns > should create expected execution d
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4052,10 +4052,10 @@ exports[`Heatmap > with measure and columns > should create expected execution d
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4068,7 +4068,7 @@ exports[`Heatmap > with measure and columns > should create expected execution d
     },
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
         "measureGroup",
       ],
     },
@@ -4080,12 +4080,12 @@ exports[`Heatmap > with measure and columns > should create expected execution d
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4110,10 +4110,10 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -4125,12 +4125,12 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4141,10 +4141,10 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4158,7 +4158,7 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -4174,12 +4174,12 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4187,7 +4187,7 @@ exports[`Heatmap > with measure and rows > should create expected execution defi
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -4216,12 +4216,12 @@ exports[`Heatmap > with measure only > should create expected execution definiti
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4253,12 +4253,12 @@ exports[`Heatmap > with measure only > should create expected execution definiti
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4283,19 +4283,19 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -4307,12 +4307,12 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4323,10 +4323,10 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4337,10 +4337,10 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.owner.region",
+              "identifier": "f_owner.region_id",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         },
       ],
@@ -4350,12 +4350,12 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -4367,12 +4367,12 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4380,7 +4380,7 @@ exports[`Heatmap > with measure, rows and columns > should create expected execu
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -4404,19 +4404,19 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "closed.aag81lMifn6q",
+          "identifier": "dt_closedate_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_closed.aag81lMifn6q",
+        "localIdentifier": "a_dt_closedate_timestamp.year",
       },
     },
   ],
@@ -4428,12 +4428,12 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -4444,10 +4444,10 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
         {
           "attribute": {
             "displayForm": {
-              "identifier": "label.product.id.name",
+              "identifier": "label.f_product.product.name",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.product.id.name",
+            "localIdentifier": "a_label.f_product.product.name",
           },
         },
       ],
@@ -4458,10 +4458,10 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
         {
           "attribute": {
             "displayForm": {
-              "identifier": "closed.aag81lMifn6q",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_closed.aag81lMifn6q",
+            "localIdentifier": "a_dt_closedate_timestamp.year",
           },
         },
       ],
@@ -4471,12 +4471,12 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_closed.aag81lMifn6q",
+        "a_dt_closedate_timestamp.year",
         "measureGroup",
       ],
     },
@@ -4488,12 +4488,12 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -4501,7 +4501,7 @@ exports[`Heatmap > with measure, rows and columns with null data points > should
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },

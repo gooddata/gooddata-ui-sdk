@@ -371,7 +371,7 @@ exports[`generateDimensions > table > should generate dimensions for one attribu
 [
   {
     "itemIdentifiers": [
-      "a_label.product.id.name",
+      "a_label.f_product.product.name",
     ],
   },
   {

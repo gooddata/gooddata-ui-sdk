@@ -15,7 +15,7 @@ exports[`resolveFilterValues > should resolve relative date filter 1`] = `
 exports[`resolveFilterValues > should resolved ALL attribute filter to empty values 1`] = `
 {
   "attributeFilters": {
-    "label.product.id.name": {},
+    "label.f_product.product.name": {},
   },
   "dateFilters": [],
 }
@@ -24,11 +24,11 @@ exports[`resolveFilterValues > should resolved ALL attribute filter to empty val
 exports[`resolveFilterValues > should resolved multiple attribute filters 1`] = `
 {
   "attributeFilters": {
-    "label.owner.department": {
-      "/gdc/md/referenceworkspace/obj/1088/elements?id=460487": "Direct Sales",
+    "f_owner.department_id": {
+      "Direct Sales": "Direct Sales",
     },
-    "label.product.id.name": {
-      "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
+    "label.f_product.product.name": {
+      "Educationly": "Educationly",
     },
   },
   "dateFilters": [],
@@ -50,19 +50,8 @@ exports[`resolveFilterValues > should return resolved absolute date limits 1`] =
 exports[`resolveFilterValues > should return resolved attribute filter elements by value 1`] = `
 {
   "attributeFilters": {
-    "label.product.id.name": {
-      "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
-    },
-  },
-  "dateFilters": [],
-}
-`;
-
-exports[`resolveFilterValues > should return resolved attribute filters elements by ref 1`] = `
-{
-  "attributeFilters": {
-    "label.product.id.name": {
-      "/gdc/md/referenceworkspace/obj/1054/elements?id=165678": "CompuSci",
+    "label.f_product.product.name": {
+      "Educationly": "Educationly",
     },
   },
   "dateFilters": [],

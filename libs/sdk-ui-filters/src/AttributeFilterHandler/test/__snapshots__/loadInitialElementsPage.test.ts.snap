@@ -18,15 +18,15 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "CompuSci",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "uri": "CompuSci",
   },
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "Explorer",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+    "uri": "Explorer",
   },
 ]
 `;
@@ -35,31 +35,31 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "WonderKid",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+    "uri": "WonderKid",
   },
   {
     "title": "TouchAll",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+    "uri": "TouchAll",
   },
   {
     "title": "PhoenixSoft",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+    "uri": "PhoenixSoft",
   },
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
   {
     "title": "Explorer",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+    "uri": "Explorer",
   },
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "CompuSci",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "uri": "CompuSci",
   },
 ]
 `;
@@ -68,7 +68,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "WonderKid",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+    "uri": "WonderKid",
   },
 ]
 `;
@@ -77,15 +77,15 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
   {
     "title": "TouchAll",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+    "uri": "TouchAll",
   },
 ]
 `;
@@ -94,7 +94,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
 ]
 `;
@@ -103,11 +103,11 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "Explorer",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+    "uri": "Explorer",
   },
   {
     "title": "TouchAll",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+    "uri": "TouchAll",
   },
 ]
 `;
@@ -116,31 +116,31 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() should be filtered b
 [
   {
     "title": "CompuSci",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "uri": "CompuSci",
   },
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "Explorer",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+    "uri": "Explorer",
   },
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
   {
     "title": "PhoenixSoft",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+    "uri": "PhoenixSoft",
   },
   {
     "title": "TouchAll",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+    "uri": "TouchAll",
   },
   {
     "title": "WonderKid",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+    "uri": "WonderKid",
   },
 ]
 `;
@@ -188,31 +188,31 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful 
     "elements": [
       {
         "title": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
       {
         "title": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
       {
         "title": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
       {
         "title": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
       {
         "title": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
       {
         "title": "TouchAll",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+        "uri": "TouchAll",
       },
       {
         "title": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     ],
     "options": {

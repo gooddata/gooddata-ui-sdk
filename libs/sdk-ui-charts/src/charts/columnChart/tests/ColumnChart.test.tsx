@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import { ColumnChart } from "../ColumnChart.js";
@@ -44,13 +44,13 @@ describe("ColumnChart", () => {
                 backend={dummyBackend()}
                 measures={[ReferenceMd.Amount]}
                 viewBy={ReferenceMd.Product.Name}
-                stackBy={ReferenceMd.Region}
+                stackBy={ReferenceMd.Region.Default}
                 sortBy={[newMeasureSort(ReferenceMd.Amount, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
-            [ReferenceMd.Region],
+            [ReferenceMd.Region.Default],
             [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 

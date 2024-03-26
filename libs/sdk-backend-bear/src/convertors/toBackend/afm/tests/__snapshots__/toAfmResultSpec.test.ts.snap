@@ -41,22 +41,22 @@ exports[`converts execution definition to AFM Execution > AFM Execution with def
       "attributes": [
         {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
           },
-          "localIdentifier": "a_label.account.id.name",
+          "localIdentifier": "a_label.f_account.account.name",
         },
         {
           "displayForm": {
-            "identifier": "label.activity.id.subject",
+            "identifier": "label.f_activity.subject",
           },
-          "localIdentifier": "a_label.activity.id.subject",
+          "localIdentifier": "a_label.f_activity.subject",
         },
       ],
       "filters": [
         {
           "positiveAttributeFilter": {
             "displayForm": {
-              "identifier": "label.account.id.name",
+              "identifier": "label.f_account.account.name",
             },
             "in": {
               "values": [
@@ -71,11 +71,11 @@ exports[`converts execution definition to AFM Execution > AFM Execution with def
           "definition": {
             "measure": {
               "item": {
-                "identifier": "acugFHNJgsBy",
+                "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               },
             },
           },
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
       ],
     },
@@ -108,21 +108,21 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "attributes": [
         {
           "displayForm": {
-            "identifier": "label.activity.id",
+            "identifier": "attr.f_activity.activity",
           },
-          "localIdentifier": "a_label.activity.id",
+          "localIdentifier": "a_attr.f_activity.activity",
         },
         {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
           },
-          "localIdentifier": "a_label.account.id.name",
+          "localIdentifier": "a_label.f_account.account.name",
         },
         {
           "displayForm": {
-            "identifier": "label.owner.department",
+            "identifier": "f_owner.department_id",
           },
-          "localIdentifier": "a_label.owner.department",
+          "localIdentifier": "a_f_owner.department_id",
         },
       ],
       "measures": [
@@ -130,33 +130,33 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
           "definition": {
             "measure": {
               "item": {
-                "identifier": "acugFHNJgsBy",
+                "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               },
             },
           },
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         {
           "definition": {
             "measure": {
               "item": {
-                "identifier": "abZgFKGPaGYM",
+                "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               },
             },
           },
-          "localIdentifier": "m_abZgFKGPaGYM",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
         },
       ],
       "nativeTotals": [
         {
           "attributeIdentifiers": [],
-          "measureIdentifier": "m_acugFHNJgsBy",
+          "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         {
           "attributeIdentifiers": [
-            "a_label.account.id.name",
+            "a_label.f_account.account.name",
           ],
-          "measureIdentifier": "m_acugFHNJgsBy",
+          "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
       ],
     },
@@ -164,25 +164,25 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "dimensions": [
         {
           "itemIdentifiers": [
-            "a_label.account.id.name",
+            "a_label.f_account.account.name",
           ],
           "totals": [
             {
-              "attributeIdentifier": "a_label.account.id.name",
-              "measureIdentifier": "m_acugFHNJgsBy",
+              "attributeIdentifier": "a_label.f_account.account.name",
+              "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
               "type": "nat",
             },
           ],
         },
         {
           "itemIdentifiers": [
-            "a_label.owner.department",
+            "a_f_owner.department_id",
             "measureGroup",
           ],
           "totals": [
             {
-              "attributeIdentifier": "a_label.owner.department",
-              "measureIdentifier": "m_acugFHNJgsBy",
+              "attributeIdentifier": "a_f_owner.department_id",
+              "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
               "type": "nat",
             },
           ],
@@ -200,33 +200,33 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "attributes": [
         {
           "displayForm": {
-            "identifier": "label.activity.id",
+            "identifier": "attr.f_activity.activity",
           },
-          "localIdentifier": "a_label.activity.id",
+          "localIdentifier": "a_attr.f_activity.activity",
         },
         {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
           },
-          "localIdentifier": "a_label.account.id.name",
+          "localIdentifier": "a_label.f_account.account.name",
         },
         {
           "displayForm": {
-            "identifier": "label.opportunitysnapshot.forecastcategory",
+            "identifier": "f_opportunitysnapshot.forecastcategory_id",
           },
-          "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+          "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
         },
         {
           "displayForm": {
-            "identifier": "label.owner.department",
+            "identifier": "f_owner.department_id",
           },
-          "localIdentifier": "a_label.owner.department",
+          "localIdentifier": "a_f_owner.department_id",
         },
         {
           "displayForm": {
-            "identifier": "label.stage.isactive",
+            "identifier": "f_stage.isactive_id",
           },
-          "localIdentifier": "a_label.stage.isactive",
+          "localIdentifier": "a_f_stage.isactive_id",
         },
       ],
       "measures": [
@@ -234,37 +234,37 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
           "definition": {
             "measure": {
               "item": {
-                "identifier": "acugFHNJgsBy",
+                "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               },
             },
           },
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         {
           "definition": {
             "measure": {
               "item": {
-                "identifier": "abZgFKGPaGYM",
+                "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               },
             },
           },
-          "localIdentifier": "m_abZgFKGPaGYM",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
         },
       ],
       "nativeTotals": [
         {
           "attributeIdentifiers": [
-            "a_label.account.id.name",
+            "a_label.f_account.account.name",
           ],
-          "measureIdentifier": "m_acugFHNJgsBy",
+          "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         {
           "attributeIdentifiers": [
-            "a_label.account.id.name",
-            "a_label.opportunitysnapshot.forecastcategory",
-            "a_label.owner.department",
+            "a_label.f_account.account.name",
+            "a_f_opportunitysnapshot.forecastcategory_id",
+            "a_f_owner.department_id",
           ],
-          "measureIdentifier": "m_acugFHNJgsBy",
+          "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
       ],
     },
@@ -272,27 +272,27 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "dimensions": [
         {
           "itemIdentifiers": [
-            "a_label.account.id.name",
-            "a_label.opportunitysnapshot.forecastcategory",
+            "a_label.f_account.account.name",
+            "a_f_opportunitysnapshot.forecastcategory_id",
           ],
           "totals": [
             {
-              "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
-              "measureIdentifier": "m_acugFHNJgsBy",
+              "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+              "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
               "type": "nat",
             },
           ],
         },
         {
           "itemIdentifiers": [
-            "a_label.owner.department",
-            "a_label.stage.isactive",
+            "a_f_owner.department_id",
+            "a_f_stage.isactive_id",
             "measureGroup",
           ],
           "totals": [
             {
-              "attributeIdentifier": "a_label.stage.isactive",
-              "measureIdentifier": "m_acugFHNJgsBy",
+              "attributeIdentifier": "a_f_stage.isactive_id",
+              "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
               "type": "nat",
             },
           ],
@@ -310,15 +310,15 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "attributes": [
         {
           "displayForm": {
-            "identifier": "label.activity.id",
+            "identifier": "attr.f_activity.activity",
           },
-          "localIdentifier": "a_label.activity.id",
+          "localIdentifier": "a_attr.f_activity.activity",
         },
         {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
           },
-          "localIdentifier": "a_label.account.id.name",
+          "localIdentifier": "a_label.f_account.account.name",
         },
       ],
       "measures": [
@@ -326,27 +326,27 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
           "definition": {
             "measure": {
               "item": {
-                "identifier": "acugFHNJgsBy",
+                "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               },
             },
           },
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         {
           "definition": {
             "measure": {
               "item": {
-                "identifier": "abZgFKGPaGYM",
+                "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
               },
             },
           },
-          "localIdentifier": "m_abZgFKGPaGYM",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
         },
       ],
       "nativeTotals": [
         {
           "attributeIdentifiers": [],
-          "measureIdentifier": "m_acugFHNJgsBy",
+          "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
       ],
     },
@@ -354,7 +354,7 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
       "dimensions": [
         {
           "itemIdentifiers": [
-            "a_label.account.id.name",
+            "a_label.f_account.account.name",
           ],
         },
         {
@@ -363,8 +363,8 @@ exports[`converts execution definition to AFM Execution > AFM Execution with dim
           ],
           "totals": [
             {
-              "attributeIdentifier": "a_label.account.id.name",
-              "measureIdentifier": "m_acugFHNJgsBy",
+              "attributeIdentifier": "a_label.f_account.account.name",
+              "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
               "type": "nat",
             },
           ],
@@ -392,7 +392,7 @@ exports[`converts execution definition to AFM Execution > AFM Execution with sor
       "sorts": [
         {
           "attributeSortItem": {
-            "attributeIdentifier": "a_label.account.id.name",
+            "attributeIdentifier": "a_label.f_account.account.name",
             "direction": "asc",
           },
         },
@@ -407,7 +407,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
   {
     "positiveAttributeFilter": {
       "displayForm": {
-        "identifier": "label.product.id.name",
+        "identifier": "label.f_product.product.name",
       },
       "in": {
         "values": [],
@@ -417,7 +417,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
   {
     "positiveAttributeFilter": {
       "displayForm": {
-        "identifier": "label.product.id.name",
+        "identifier": "label.f_product.product.name",
       },
       "in": {
         "values": [
@@ -429,7 +429,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
   {
     "negativeAttributeFilter": {
       "displayForm": {
-        "identifier": "label.product.id.name",
+        "identifier": "label.f_product.product.name",
       },
       "notIn": {
         "values": [
@@ -441,4 +441,4 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
 ]
 `;
 
-exports[`converts execution definition to AFM Execution > throw error with dimensions with native totals but no attribute in bucket 1`] = `[Error: Native total references attribute that is not in any dimension: a_label.account.id.name]`;
+exports[`converts execution definition to AFM Execution > throw error with dimensions with native totals but no attribute in bucket 1`] = `[Error: Native total references attribute that is not in any dimension: a_label.f_account.account.name]`;
