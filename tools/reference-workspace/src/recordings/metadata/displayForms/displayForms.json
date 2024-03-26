@@ -1,9 +1,10 @@
 {
-    "label.activity.id.subject": { "elementCount": 10 },
-    "label.product.id.name": {},
-    "label.owner.department": {},
-    "label.owner.region": {},
-    "label.stage.status": {},
-    "label.opportunitysnapshot.forecastcategory": {},
-    "label.stage.name.stagename": {}
+    "label.f_activity.subject": { "elementCount": 10 },
+    "label.f_product.product.name": {},
+    "f_owner.department_id": {},
+    "f_owner.region_id": {},
+    "f_stage.status_id": {},
+    "f_opportunitysnapshot.forecastcategory_id": {},
+    "attr.f_stage.stagename": {},
+    "label.f_account.account.name": { "elementCount": 50 }
 }

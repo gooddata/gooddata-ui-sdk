@@ -3558,11 +3558,6 @@
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "visName": "PivotTable"
     },
-    "PivotTable.342daf6d78ebd15b4a08bffc7d597cf5": {
-        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total and single subtotal sorted by second attribute.",
-        "scenarioName": "two measures and single grand total and single subtotal sorted by second attribute",
-        "visName": "PivotTable"
-    },
     "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr.",
         "scenarioName": "single measure pivot sorted by second row attr",

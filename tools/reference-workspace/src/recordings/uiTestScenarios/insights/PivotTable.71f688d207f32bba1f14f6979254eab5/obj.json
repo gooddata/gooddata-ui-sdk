@@ -6,17 +6,14 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.stage.name.stagename",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "a_label.stage.name.stagename"
+                            "displayForm": { "identifier": "attr.f_stage.stagename", "type": "displayForm" },
+                            "localIdentifier": "a_attr.f_stage.stagename"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
-                            "localIdentifier": "a_label.owner.region"
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
                         }
                     }
                 ],
@@ -26,8 +23,8 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
-                            "localIdentifier": "a_label.owner.department"
+                            "displayForm": { "identifier": "f_owner.department_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.department_id"
                         }
                     }
                 ],

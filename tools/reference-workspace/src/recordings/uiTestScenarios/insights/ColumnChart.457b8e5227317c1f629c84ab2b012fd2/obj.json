@@ -9,7 +9,10 @@
                             "definition": {
                                 "measureDefinition": {
                                     "computeRatio": true,
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
                             "localIdentifier": "Amount with Ratio"
@@ -22,8 +25,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     }
                 ],

@@ -7,10 +7,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
@@ -22,10 +25,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
                         }
                     }
                 ],
@@ -36,8 +42,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     }
                 ],

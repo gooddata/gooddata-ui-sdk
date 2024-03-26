@@ -1,0 +1,66 @@
+{
+    "count": [12, 1],
+    "data": [
+        [5099309.54],
+        [22123590.1],
+        [6614222.47],
+        [16332673],
+        [8269682.68],
+        [30326512.18],
+        [2761931.26],
+        [5280100.66],
+        [2664832.4],
+        [6861025.51],
+        [2607118.07],
+        [7684458.67]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ]
+        ],
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 1]
+}
