@@ -37,7 +37,7 @@ export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseP
                         type: commonDateFilterWithAllTime?.dateFilter.type,
                         granularity: commonDateFilterWithAllTime?.dateFilter.granularity,
                         from: commonDateFilterWithAllTime?.dateFilter.from,
-                        to: commonDateFilterWithAllTime?.dateFilter.from,
+                        to: commonDateFilterWithAllTime?.dateFilter.to,
                         dataSet: {
                             identifier: dependentDateFilter.filterLocalIdentifier,
                             type: "dataSet",

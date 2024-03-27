@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
 import difference from "lodash/difference.js";
+import differenceBy from "lodash/differenceBy.js";
 import {
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
@@ -368,14 +369,15 @@ function updateNonResettingFilter(
         // In this case, we want to reset the irrelevant keys.
         const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
 
+        const hasLimitingDateFiltersChanged =
+            handler.getLimitingDateFilters().length !== limitingDateFilters.length ||
+            differenceBy(handler.getLimitingDateFilters(), limitingDateFilters).length > 0;
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
-        const hasNumberOfLimitingDatesChanged =
-            handler.getLimitingDateFilters().length !== limitingDateFilters.length;
         const shouldReinitilizeAllElements =
             supportsKeepingDependentFiltersSelection &&
             (hasNumberOfLimitingAttributesChanged ||
-                hasNumberOfLimitingDatesChanged ||
+                hasLimitingDateFiltersChanged ||
                 !isEmpty(leftoverIrrelevantKeys));
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
