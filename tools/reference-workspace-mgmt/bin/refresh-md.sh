@@ -3,11 +3,18 @@
 SCRIPTDIR=`dirname $0`
 ROOTDIR="${SCRIPTDIR}/.."
 
+source "${ROOTDIR}/.env"
+
 EXPORTER="${ROOTDIR}/node_modules/.bin/gdc-catalog-export"
 OUTPUT="${ROOTDIR}/../reference-workspace/src/md/full.ts"
 
-$EXPORTER \
+if [ -z "$TIGER_API_TOKEN" ] || [ -z "$HOST_NAME" ] || [ -z "$WORKSPACE_ID" ]; then
+    echo "Error: TIGER_API_TOKEN, HOST_NAME, and WORKSPACE_ID must be set in reference-workspace-mgmt/.env file"
+    exit 1
+fi
+
+export TIGER_API_TOKEN=${TIGER_API_TOKEN} && $EXPORTER \
   --backend tiger \
-  --hostname "https://staging-automation.dev-latest.stg11.panther.intgdc.com" \
-  --workspace-id "e2aeb364793b443582720834df254b0d" \
+  --hostname  ${HOST_NAME} \
+  --workspace-id ${WORKSPACE_ID} \
   --catalog-output "${OUTPUT}"

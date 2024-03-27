@@ -189,14 +189,14 @@
                 },
                 "createdAt": "2024-03-26 13:18",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "44a9d0ed-8a06-4ffd-b16c-6281707acfcf",
                 "modifiedAt": "2024-03-26 13:19",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "permissions": [
@@ -208,7 +208,7 @@
                     },
                     {
                         "assignee": {
-                            "id": "ivan.mjartan",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
@@ -429,14 +429,14 @@
                 },
                 "createdAt": "2024-03-25 12:40",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0",
                 "modifiedAt": "2024-03-25 18:59",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "permissions": [
@@ -448,7 +448,7 @@
                     },
                     {
                         "assignee": {
-                            "id": "ivan.mjartan",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
@@ -509,14 +509,14 @@
                 },
                 "createdAt": "2024-03-26 08:09",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "b8bbf78e-e3ad-4bcf-98a6-0142ea7fa8a2",
                 "modifiedAt": "2024-03-26 08:10",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "permissions": [
@@ -528,7 +528,7 @@
                     },
                     {
                         "assignee": {
-                            "id": "ivan.mjartan",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
@@ -917,14 +917,14 @@
                 },
                 "createdAt": "2024-03-26 11:14",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "e6473e57-1914-46ec-9cb9-5611f1298100",
                 "modifiedAt": "2024-03-26 12:30",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "permissions": [
@@ -936,7 +936,7 @@
                     },
                     {
                         "assignee": {
-                            "id": "ivan.mjartan",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
@@ -1114,14 +1114,14 @@
                 },
                 "createdAt": "2024-03-20 13:42",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "sample_xirr",
                 "modifiedAt": "2024-03-21 07:30",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "title": "Sample XIRR"
@@ -1168,7 +1168,7 @@
                 },
                 "createdAt": "2024-03-25 12:36",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1217,14 +1217,14 @@
                 },
                 "createdAt": "2024-03-26 11:15",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "4eb2f130-e36e-4d8d-834e-14780366edfd",
                 "modifiedAt": "2024-03-26 11:18",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "title": "Sum of Days to Close"
@@ -1286,7 +1286,7 @@
                 },
                 "createdAt": "2024-03-25 12:43",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1361,7 +1361,7 @@
                 },
                 "createdAt": "2024-03-26 11:31",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1459,7 +1459,7 @@
                 },
                 "createdAt": "2024-03-26 11:26",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1508,7 +1508,7 @@
                 },
                 "createdAt": "2024-03-26 11:20",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1557,7 +1557,7 @@
                 },
                 "createdAt": "2024-03-26 11:18",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1606,14 +1606,14 @@
                 },
                 "createdAt": "2024-03-26 11:17",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
                 "id": "afa75538-ea5f-4cfc-a10f-dce95929a68d",
                 "modifiedAt": "2024-03-26 11:17",
                 "modifiedBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "title": "Sum of Opp. Close (Date)"
@@ -1670,7 +1670,7 @@
                 },
                 "createdAt": "2024-03-25 12:40",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1719,7 +1719,7 @@
                 },
                 "createdAt": "2024-03-26 11:20",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",
@@ -1811,7 +1811,7 @@
                 },
                 "createdAt": "2024-03-25 12:34",
                 "createdBy": {
-                    "id": "ivan.mjartan",
+                    "id": "admin",
                     "type": "user"
                 },
                 "description": "",

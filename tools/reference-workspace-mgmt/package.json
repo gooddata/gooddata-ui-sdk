@@ -30,11 +30,13 @@
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test,fixtures}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "export-ref-workspace": "node ./bin/export_ref_workspace.js && npm run prettier-write",
+        "import-ref-workspace": "node ./bin/import_ref_workspace.js"
     },
     "dependencies": {
         "@gooddata/catalog-export": "workspace:*",
@@ -42,6 +44,7 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
+        "@gooddata/fixtures": "1.32.15",
         "@gooddata/eslint-config": "^4.1.0",
         "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
@@ -59,6 +62,7 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "~2.5.0",
         "typescript": "5.3.3",
-        "vitest": "1.0.4"
+        "vitest": "1.0.4",
+        "dotenv": "16.0.3"
     }
 }

@@ -33,7 +33,9 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build",
-        "clear-recordings": "rm -r src/recordings/uiTestScenarios"
+        "clear-recordings": "rm -r src/recordings/uiTestScenarios",
+        "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
+        "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
