@@ -85,8 +85,6 @@ export function toJsonString(obj: object, options: WriteJsonOptions = {}): strin
         replaceString.forEach(([searchString, replacement]) => {
             result = result.replace(new RegExp(searchString, "g"), replacement);
         });
-
-        //result = result.replace(new RegExp(replaceString[0], "g"), replaceString[1]);
     }
 
     return result;

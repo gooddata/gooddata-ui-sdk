@@ -48,11 +48,9 @@ export const PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         newTotal("max", ReferenceMd.Won, ReferenceMd.ForecastCategory),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.ForecastCategory),
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
     ],
     config: getCommonPivotTableSizingConfig(),
 };
@@ -63,20 +61,16 @@ export const PivotTableWithTwoMeasuresRowColumnGrandTotalsAndSubtotals = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("max", ReferenceMd.Won, ReferenceMd.Product.Name),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Department.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
 
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         newTotal("max", ReferenceMd.Won, ReferenceMd.ForecastCategory),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.ForecastCategory),
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
     ],
     config: getCommonPivotTableSizingConfig(),
 };
@@ -112,7 +106,6 @@ const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
             newTotal("max", ReferenceMd.Amount, ReferenceMd.Product.Name),
-            // newTotal("nat", ReferenceMd.Amount, ReferenceMd.Product.Name),
         ],
     })
     .addScenario(
@@ -132,7 +125,6 @@ const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
             newTotal("max", ReferenceMd.Won, ReferenceMd.Product.Name),
-            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
         ],
     })
     .addScenario(
@@ -149,7 +141,6 @@ const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("med", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
-            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
         ],
     })
     .addScenario("two measures and grand totals and multiple subtotals", {
@@ -167,20 +158,6 @@ const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
                 windows: [...requestPages([0, 0], [22, 1000], 1), ...requestPages([0, 0], [12, 1000], 1)],
             }),
     );
-/*.addScenario(
-        "two measures and single grand total and single subtotal sorted by second attribute",
-        // The expected behaviour is that the subtotal will be removed and the scenario will be reduced to
-        // the scenario "two measures and single grand total sorted by second attribute"
-        // The requested windows also get affected so the base scenario requires multiple recorded responses
-        {
-            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-            totals: [
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
-            ],
-            sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
-        },
-    );*/
 
 const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("totals", "columns")
@@ -195,7 +172,6 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-            // newTotal("nat", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
         ],
         config: getCommonPivotTableSizingConfig(),
     })
@@ -219,7 +195,6 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
-            // newTotal("nat", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
         config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
@@ -234,7 +209,6 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
             newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
             newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
-            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
         config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
@@ -312,11 +286,9 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.SalesRep.Default),
-            // newTotal("nat", ReferenceMd.Probability, ReferenceMd.SalesRep.Default),
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
             newTotal("max", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
-            // newTotal("nat", ReferenceMd.Probability, ReferenceMd.ForecastCategory),
         ],
         config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
@@ -334,11 +306,9 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("med", ReferenceMd.Amount, ReferenceMd.Department.Default),
             newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
-            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
             newTotal("med", ReferenceMd.Amount, ReferenceMd.Region.Default),
             newTotal("med", ReferenceMd.Won, ReferenceMd.Region.Default),
-            // newTotal("nat", ReferenceMd.Won, ReferenceMd.Region.Default),
         ],
         config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     })
