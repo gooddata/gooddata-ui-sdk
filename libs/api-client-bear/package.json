@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "10.0.0-alpha.7",
+    "version": "10.0.0-alpha.8",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "repository": {
