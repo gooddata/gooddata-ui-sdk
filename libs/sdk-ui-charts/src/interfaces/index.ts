@@ -24,6 +24,8 @@ export {
     ChartCellTextWrapping,
     ChartCellVerticalAlign,
     ChartCellImageSizing,
+    ChartInlineVisualizationType,
+    IInlineVisualizationsConfig,
 } from "./chartConfig.js";
 
 export {

@@ -326,7 +326,32 @@ export interface IChartConfig {
      * Configuration of the image sizing in the chart.
      */
     cellImageSizing?: ChartCellImageSizing;
+
+    /**
+     * Configuration of the inline visualizations.
+     */
+    inlineVisualizations?: IInlineVisualizationsConfig;
 }
+
+/**
+ * @public
+ */
+export interface IInlineVisualizationsConfig {
+    /**
+     * Measure local identifier
+     */
+    [localIdentifier: string]: {
+        /**
+         * Visualization type
+         */
+        type: ChartInlineVisualizationType;
+    };
+}
+
+/**
+ * @public
+ */
+export type ChartInlineVisualizationType = "metric" | "line" | "column";
 
 /**
  * @public

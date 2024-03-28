@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -59,6 +60,8 @@ export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetail
 
 // @internal (undocumented)
 export const AttributeHierarchyDialog: React_2.FC<IAttributeHierarchyDialogProps>;
+
+export { ChartInlineVisualizationType }
 
 // @public
 export function clearInsightViewCaches(): void;

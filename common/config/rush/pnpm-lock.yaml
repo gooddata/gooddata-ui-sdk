@@ -2870,6 +2870,9 @@ importers:
       highcharts:
         specifier: 9.3.0
         version: 9.3.0
+      highcharts-react-official:
+        specifier: 3.2.1
+        version: 3.2.1(highcharts@9.3.0)(react@18.2.0)
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2

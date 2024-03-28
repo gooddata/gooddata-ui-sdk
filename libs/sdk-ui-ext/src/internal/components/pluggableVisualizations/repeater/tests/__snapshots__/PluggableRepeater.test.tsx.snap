@@ -47,6 +47,10 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
       ],
       "localIdentifier": "columns",
     },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
   ],
   "filters": {
     "items": [],
@@ -78,15 +82,22 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
         ],
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
+        "allowsInlineVisualizations": true,
         "allowsReordering": true,
         "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
+        "disableMeasureFilters": true,
         "enabled": true,
         "icon": "local:repeater/bucket-title-columns.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
+        "supportedInlineVisualizationTypes": [
+          "metric",
+          "line",
+          "column",
+        ],
         "title": "Columns",
         "transformAttributeToMeasure": false,
       },
@@ -102,6 +113,23 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
         "itemsLimitByType": {
           "date": 1,
         },
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
       },
     },
     "exportConfig": {
@@ -166,6 +194,10 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
       ],
       "localIdentifier": "columns",
     },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
   ],
   "filters": {
     "items": [],
@@ -197,15 +229,22 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
         ],
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
+        "allowsInlineVisualizations": true,
         "allowsReordering": true,
         "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
+        "disableMeasureFilters": true,
         "enabled": true,
         "icon": "local:repeater/bucket-title-columns.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
+        "supportedInlineVisualizationTypes": [
+          "metric",
+          "line",
+          "column",
+        ],
         "title": "Columns",
         "transformAttributeToMeasure": false,
       },
@@ -221,6 +260,23 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
         "itemsLimitByType": {
           "date": 1,
         },
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
       },
     },
     "exportConfig": {
@@ -276,6 +332,10 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
       ],
       "localIdentifier": "columns",
     },
+    {
+      "items": [],
+      "localIdentifier": "view",
+    },
   ],
   "filters": {
     "items": [
@@ -330,15 +390,22 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
         ],
         "allowsDifferentAttributes": false,
         "allowsDuplicateItems": true,
+        "allowsInlineVisualizations": true,
         "allowsReordering": true,
         "allowsStaticHyperLinkDisplayFormText": true,
         "allowsSwapping": true,
         "canAddItems": true,
+        "disableMeasureFilters": true,
         "enabled": true,
         "icon": "local:repeater/bucket-title-columns.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
+        "supportedInlineVisualizationTypes": [
+          "metric",
+          "line",
+          "column",
+        ],
         "title": "Columns",
         "transformAttributeToMeasure": false,
       },
@@ -354,6 +421,23 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
         "itemsLimitByType": {
           "date": 1,
         },
+      },
+      "view": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:repeater/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
+        "title": "View by",
       },
     },
     "exportConfig": {
