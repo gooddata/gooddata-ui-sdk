@@ -5,7 +5,10 @@ copyright: (C) 2007-2018 GoodData Corporation
 id: visualization_component
 ---
 
-The **InsightView component** is a generic component that renders insights created and saved by Analytical Designer.
+The **InsightView component** is a generic component that renders visualizations created and saved by Analytical Designer.
+
+{{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
+{{% /alert %}}
 
 ## Structure
 
@@ -62,7 +65,7 @@ For more information, see [Filter Visual Components](../filter_visual_components
 
 ## Caching
 
-To properly render the referenced table or chart, the InsightView component needs additional information from the GoodData platform. This information is usually static. To minimize the number of redundant requests and reduce the rendering time, some static information (such as the list of visualization classes, the color palette, or feature flags for each workspace) is cached for all InsightView components in the same application.
+To properly render the referenced table or chart, the InsightView component needs additional information from GoodData. This information is usually static. To minimize the number of redundant requests and reduce the rendering time, some static information (such as the list of visualization classes, the color palette, or feature flags for each workspace) is cached for all InsightView components in the same application.
 
 The amount of cached information does not impact performance in any way. However, you can manually clear the cache whenever needed (for example, after logging out, when switching workspaces or leaving a page with visualizations using the GoodData.UI components).
 
@@ -93,4 +96,4 @@ clearInsightViewCaches();
 | onError | false | function | A custom error handler. Called with the argument containing the state and original error message, for example, `{ status:ErrorStates.BAD_REQUEST,error: {...} }`.  Defaults to `console.error`.|
 | onExportReady | false | function | A callback when the component is ready for exporting its data |
 | onLoadingChanged | false | function | A custom loading handler. Called when a visualization changes to/from the loading state. Called with the argument denoting a valid state, for example, `{ isLoading:false}`. |
-| onInsightLoaded | false | function | A callback when the insight is loaded |
+| onInsightLoaded | false | function | A callback when the visualization is loaded |

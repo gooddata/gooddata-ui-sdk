@@ -49,7 +49,7 @@ The dashboard plugins allow you to enhance the KPI Dashboards experience with th
 With the dashboard plugins, you can run your own code within the KPI Dashboards. For more information, see [Dashboard Plugins](../../references/dashboard_component/dashboard_plugins/).
 
 **Advantages:**
-- Stable APIs that support the GoodData platform, GoodData Cloud and GoodData.CN
+- Stable APIs that support GoodData Cloud and GoodData.CN
 - A [CLI tool](../../references/dashboard_component/dashboard_plugins/#getting-started) available as part of the Plugin Development Toolkit
 - Support for TypeScript
 
@@ -65,7 +65,7 @@ The Dashboard component provides many built-in features. For more information, s
 **Advantages:**
 - Seamless and deep integration with React applications with a wide range of options (eventing API, customizations)
 - Extensive customization options such as custom visualization types, integration of third-party libraries, [dashboard plugins](#add-the-dashboard-plugins-to-a-kpi-dashboard) and so on
-- APIs that support the GoodData platform, GoodData Cloud and GoodData.CN
+- APIs that support GoodData Cloud and GoodData.CN
 - Support for TypeScript
 
 **Disadvantages:**
@@ -82,9 +82,9 @@ This is the most involved method of building dashboards, but it offers the most 
 - The core `sdk-model` and `sdk-backend-*` packages compatible with any JavaScript/TypeScript framework
 - Multiple ready-to-use React components and hooks, both high- and low-level: [charts](../../references/visual_components/), contexts, and much more ...
 - The deepest integration with your application with a wide range of options
-- APIs that support the GoodData platform, GoodData Cloud and GoodData.CN
+- APIs that support GoodData Cloud and GoodData.CN
 
 **Disadvantages:**
 - More time needed for development and maintenance comparing to the other methods
-- Deeper knowledge of the GoodData platform required comparing to the other methods
+- Deeper knowledge of GoodData required comparing to the other methods
 - More complex (but not impossible) integration with applications without React

@@ -19,9 +19,13 @@ This article explains how these methods differ and helps you decide which method
 ## InsightView component
 
 Using the [InsightView component](./insightview/) is the simplest method to implement because it requires the smallest amount of code to get going.
-The InsightView component allows you to embed insights created in [Analytical Designer](https://www.gooddata.com/docs/cloud/create-visualizations/analytical-designer/) into your application as React components.
-It always reflects the current state of an insight: if any changes are made to the insight in Analytical Designer,
-the InsightView component in your application will pick them up and show the up-to-date version of the insight without any actions needed from your side.
+
+{{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
+{{% /alert %}}
+
+The InsightView component allows you to embed visualizations created in [Analytical Designer](https://www.gooddata.com/docs/cloud/create-visualizations/analytical-designer/) into your application as React components.
+It always reflects the current state of an visualization: if any changes are made to the visualization in Analytical Designer,
+the InsightView component in your application will pick them up and show the up-to-date version of the visualization without any actions needed from your side.
 
 You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/) for a particular InsightView directly in Analytical Designer.
 
@@ -29,9 +33,9 @@ You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizat
 
 Using the InsightView component is the best choice in the following situations:
 
--   You want to embed insights created in Analytical Designer as is.
+-   You want to embed visualizations created in Analytical Designer as is.
 
--   You want to be able to change the insight that your application displays without changing the application code.
+-   You want to be able to change the visualization that your application displays without changing the application code.
 {{% alert %}}
 You can also achieve this by creating the [custom visualizations](#custom-visualizations).
 {{% /alert %}}
@@ -71,7 +75,7 @@ Using the visual components is the best choice in the following situations:
 
 The visual components may not be the best choice in the following situations:
 
--   You want to be able to change the insight that your application displays without changing the application code.
+-   You want to be able to change the visualization that your application displays without changing the application code.
     
      In this case, use the [InsightView component](#insightview-component).
 -   You need a visualization type that is not available in Analytical Designer or GoodData.UI.

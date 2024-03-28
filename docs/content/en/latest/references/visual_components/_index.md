@@ -7,7 +7,7 @@ no_list: true
 weight: 10
 ---
 
-GoodData.UI comes with ready-made visual components. You can use these visual components as-is or customize them. You can also use the unique [InsightView](../../learn/visualize_data/insightview/) component that simply renders any chart that you create on the GoodData platform.
+GoodData.UI comes with ready-made visual components. You can use these visual components as-is or customize them. You can also use the unique [InsightView](../../learn/visualize_data/insightview/) component that simply renders any chart that you create in GoodData.
 
 This article provides components examples and basic instructions on component usage.
 
@@ -25,9 +25,8 @@ Currently available out-of-the-box visualizations:
 | [Combo Chart](./combo_chart/) | ![Combo Chart](/gd-ui/combochart.png) | Combines two types of visualizations, usually, a column chart and a line chart. |
 | [Donut Chart](./donut_chart/) | ![Donut Chart](/gd-ui/donut_chart.png) | Shows data as proportional segments of a disc with hollowed out center. Can be segmented by either multiple measures or an attribute. |
 | [Geo Pushpin Chart](./geo_pushpin_chart/) | ![Bar Chart](/gd-ui/geo_pushpin_chart.png) | Visualizes data broken down by geographic region across an actual map and points the latitude and longitude of locations.|
-| [Headline](./headline/) | ![Headline](/gd-ui/headline.png)| Shows a single number or compares two numbers. Unlike KPI Headline can display attributes. |
+| [Headline](./headline/) | ![Headline](/gd-ui/headline.png)| Shows a single number or compares two numbers. |
 | [Heatmap](./heatmap/) | ![Heatmap](/gd-ui/heatmap.png) | Represents data as a matrix where individual values are represented as colors. Helps discover trends and understand complex datasets. |
-| [KPI](./kpi/) | ![KPI](/gd-ui/KPI.png) | A KPI (Key Performance Indicator) renders a measure calculated by the GoodData platform. |
 | [Line Chart](./line_chart/) | ![Line chart](/gd-ui/line_chart.png) | Shows data as line-connected dots. Can display either multiple measures as individual lines or a single measure split by one attribute into multiple lines with points intersecting attribute values. |
 | [Pie Chart](./pie_chart/) | ![Pie Chart](/gd-ui/pie_chart.png) | Shows data as proportional segments of a disc. Can be segmented by either multiple measures or an attribute. |
 | [Pivot Table](./pivot_table/) | ![Pivot Table](/gd-ui/pivot_table.png) | Expands capabilities of a regular (flat) table by allowing to reorganize and summarize selected data beyond the typical row-column relationship. |

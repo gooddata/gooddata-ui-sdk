@@ -24,7 +24,7 @@ However, for more complex scenarios (for example, when one execution depends on 
     It fetches the result data for you and informs you about the loading status or error if there are any.
     See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-execution-data-view-hook) gallery.
 
-- `useInsightDataView` hook allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+- `useInsightDataView` hook allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
     See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-insight-data-view-hook) gallery.
@@ -39,7 +39,7 @@ However, for more complex scenarios (for example, when one execution depends on 
     See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/raw-execute-component) gallery.
 
 - `ExecuteInsight` is a component alternative to `useInsightDataView` hook.
-    It allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+    It allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
     See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/execute-insight-component) gallery.

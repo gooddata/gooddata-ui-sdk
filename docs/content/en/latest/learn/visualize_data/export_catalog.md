@@ -5,7 +5,7 @@ copyright: (C) 2007-2018 GoodData Corporation
 id: export_catalog
 ---
 
-GoodData.UI visual components render data stored in your GoodData platform, GoodData Cloud or GoodData.CN workspaces.
+GoodData.UI visual components render data stored in your GoodData Cloud or GoodData.CN workspaces.
 Your application specifies what data to render by referencing the Logical Data Model (LDM) objects: attributes,
 display forms (also known as labels), facts, and measures.
 
@@ -68,7 +68,7 @@ This is how it works:
             "hostname": "https://your.gooddata.hostname.com",
             "workspaceId": "your_gooddata_workspaceid",
             "catalogOutput": "desired_file_name.ts|js",
-            "backend": "tiger|bear"
+            "backend": "tiger"
         },
         ...
     }
@@ -99,32 +99,6 @@ The hostname has to include the protocol (`http://` / `https://`), otherwise you
 4.  If all required parameters are entered, the program runs and exports the metadata from the workspace. If any parameter is missing, the program will prompt you to enter it.
 
     **IMPORTANT!** The program does not accept passwords via the command line. You can either put the password into `.env` or enter it interactively.
-
-The `@gooddata/catalog-export` tool can work on top of either the GoodData Cloud / GoodData.CN, or GoodData platform. By default, the tool assumes it is connecting to the GoodData Cloud / GoodData.CN. To switch to GoodData Platform, use either the `backend` argument on the command line or the `backend` parameter in the `package.json` configuration:
-
-- Command line:
-
-    `--backend bear`
-- `package.json`:
-
-    ```json
-    {
-        ...
-        "gooddata": {
-            "hostname": "https://your.gooddata.hostname.com",
-            "workspaceId": "your_gooddata_workspaceid",
-            "catalogOutput": "desired_file_name.ts|js",
-            "backend": "bear"
-        },
-        ...
-    }
-    ```
-  
-{{% alert title="Hostname protocol" %}}
-
-The hostname has to include the protocol (`http://` / `https://`), otherwise you will get a fairly generic `connection refused` error, when trying to connect.
-
-{{% /alert %}}
 
 The tool uses Bearer token authentication when communicating with your GoodData Cloud instance or your GoodData.CN installation. For more information about how to obtain API tokens, see the [GoodData Cloud and GoodData.CN authentication page](../../integrate_and_authenticate/cn_and_cloud_authentication/).
 
