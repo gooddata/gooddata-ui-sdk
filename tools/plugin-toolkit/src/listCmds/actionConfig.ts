@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types.js";
@@ -28,11 +28,10 @@ async function doAsyncValidations(config: ListCmdActionConfig) {
 
 export async function getListCmdActionConfig(options: ActionOptions): Promise<ListCmdActionConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials } = workspaceTargetConfig;
+    const { hostname, credentials } = workspaceTargetConfig;
 
     const backendInstance = createBackend({
         hostname,
-        backend,
         credentials,
     });
 

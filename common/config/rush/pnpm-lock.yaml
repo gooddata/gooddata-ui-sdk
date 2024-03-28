@@ -6157,9 +6157,6 @@ importers:
       '@gooddata/plugin-toolkit':
         specifier: workspace:*
         version: link:../plugin-toolkit
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
@@ -6710,9 +6707,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi

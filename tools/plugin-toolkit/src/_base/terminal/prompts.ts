@@ -1,32 +1,10 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import pkg, { DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 
-import { TargetAppLanguage, TargetBackendType } from "../types.js";
+import { TargetAppLanguage } from "../types.js";
 import { createHostnameValidator, pluginNameValidator } from "../inputHandling/validators.js";
 import { sanitizeHostname } from "../inputHandling/sanitizers.js";
-
-export async function promptUsername(wording: string = "username"): Promise<string> {
-    const usernameQuestion: DistinctQuestion = {
-        type: "input",
-        name: "username",
-        message: `Enter your ${wording}:`,
-    };
-    const usernameResponse = await prompt(usernameQuestion);
-
-    return usernameResponse.username;
-}
-
-export async function promptPassword(): Promise<string> {
-    const passwordQuestion: DistinctQuestion = {
-        type: "password",
-        name: "password",
-        message: "Enter your password:",
-    };
-    const passwordResponse = await prompt(passwordQuestion);
-
-    return passwordResponse.password;
-}
 
 export async function promptApiToken(): Promise<string> {
     const tokenQuestion: DistinctQuestion = {
@@ -90,65 +68,18 @@ export async function promptName(object: string = "dashboard plugin"): Promise<s
     return response.name;
 }
 
-export async function promptHostname(backend: TargetBackendType): Promise<string> {
-    if (backend === "bear") {
-        const question: DistinctQuestion = {
-            message: "Select GoodData platform hostname:",
-            name: "hostname",
-            type: "list",
-            choices: [
-                {
-                    value: "https://secure.gooddata.com",
-                },
-                {
-                    value: "https://salesengineering.na.gooddata.com",
-                },
-                {
-                    name: "I have a custom hostname",
-                    value: "WHITE_LABELLED",
-                },
-            ],
-        };
-
-        const response = await prompt(question);
-
-        if (response.hostname !== "WHITE_LABELLED") {
-            return response.hostname;
-        }
-    }
-
-    const displayName = backend === "bear" ? "GoodData platform" : "GoodData Cloud or Gooddata.CN";
+export async function promptHostname(): Promise<string> {
+    const displayName = "GoodData Cloud or Gooddata.CN";
     const question: DistinctQuestion = {
         message: `Enter ${displayName} hostname:`,
         name: "hostname",
         type: "input",
-        validate: createHostnameValidator(backend),
+        validate: createHostnameValidator(),
     };
 
     const response = await prompt(question);
 
     return sanitizeHostname(response.hostname);
-}
-
-export async function promptBackend(): Promise<TargetBackendType> {
-    const question: DistinctQuestion = {
-        message: "Select backend type that you use:",
-        name: "backend",
-        type: "list",
-        choices: [
-            {
-                name: "GoodData platform (codename 'Bear')",
-                value: "bear",
-            },
-            {
-                name: "GoodData Cloud or Gooddata.CN (codename 'Tiger')",
-                value: "tiger",
-            },
-        ],
-    };
-
-    const response = await prompt(question);
-    return response.backend;
 }
 
 export async function promptLanguage(): Promise<TargetAppLanguage> {

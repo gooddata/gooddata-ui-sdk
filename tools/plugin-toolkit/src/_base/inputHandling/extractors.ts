@@ -1,49 +1,24 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { ActionOptions, TargetBackendType } from "../types.js";
-import { backendTypeValidator, createHostnameValidator, validOrDie } from "./validators.js";
+import { ActionOptions } from "../types.js";
+import { createHostnameValidator, validOrDie } from "./validators.js";
 
 /**
  * Gets a valid hostname from CLI options or dies with validation error.
  *
- * @param backend - type of backend for which user is entering hostname
  * @param options - program & command options
  * @returns undefined if no hostname specified.
  */
-export function getHostnameFromOptions(
-    backend: TargetBackendType | undefined,
-    options: ActionOptions,
-): string | undefined {
+export function getHostnameFromOptions(options: ActionOptions): string | undefined {
     const { hostname } = options.programOpts;
 
     if (!hostname) {
         return undefined;
     }
 
-    // do the hostname validation only if the backend type is known at this point
-    if (backend !== undefined) {
-        validOrDie("hostname", hostname, createHostnameValidator(backend));
-    }
+    validOrDie("hostname", hostname, createHostnameValidator());
 
     return hostname;
-}
-
-/**
- * Gets a valid backend type from CLI options or dies with validation error.
- *
- * @param options - program & command options
- * @returns undefined if no backend type specified.
- */
-export function getBackendFromOptions(options: ActionOptions): TargetBackendType | undefined {
-    const { backend } = options.programOpts;
-
-    if (!backend) {
-        return undefined;
-    }
-
-    validOrDie("backend", backend, backendTypeValidator);
-
-    return backend as TargetBackendType;
 }
 
 /**
