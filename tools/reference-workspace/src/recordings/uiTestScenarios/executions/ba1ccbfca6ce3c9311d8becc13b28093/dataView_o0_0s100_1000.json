@@ -1,0 +1,126 @@
+{
+    "count": [12, 10],
+    "data": [
+        [
+            2174478.26, 883793.08, 5917286.73, 2370306.08, 8091764.99, 1989393.54, 817756.22, 5501537.16,
+            2039952.64, 7490930.7
+        ],
+        [
+            405767.14, 194123.92, 3156945.21, 1270431.27, 3562712.35, 529670.6, 219798.78, 7547821,
+            1441807.88, 8077491.6
+        ],
+        [
+            2008366.85, 754830.5, 4088621.31, 1350035.81, 6096988.16, 3467615.16, 1160639.56, 6623534.92,
+            2612041.49, 10091150.08
+        ],
+        [
+            590536.1, 283569.17, 3053141.34, 1746096.06, 3643677.44, 547704.36, 108422.01, 2567375.43,
+            841972.46, 3115079.79
+        ],
+        [
+            2610784.51, 989426.6, 6011398.61, 2305188, 8622183.120000001, 2935008.02, 1106550.62, 18472467,
+            2097915.19, 21407475.02
+        ],
+        [
+            793939.81, 430585.96, 3135777.62, 1226965.38, 3929717.43, 1929950.34, 223202.05, 2706868.95,
+            867705.82, 4636819.29
+        ],
+        [
+            1964931.93, 826188.69, 1060976.15, 389910.95, 3025908.08, 361332.16, 259178.39, 2476731.94,
+            1434946.69, 2838064.1
+        ],
+        [
+            268112.52, 167291.74, 877547.53, 510727.21, 1145660.05, 167554.65, 148902.34, 864845.04, 236060.2,
+            1032399.6900000001
+        ],
+        [
+            1827108.25, 229646.4, 1980712.38, 1150517.74, 3807820.63, 536526.06, 329035.25, 1418895.61,
+            583354.19, 1955421.6700000002
+        ],
+        [
+            120416.22, 87001.62, 1358755.87, 272152.06, 1479172.09, 180781.87, 158881.03, 2102661.65,
+            563803.9, 2283443.52
+        ],
+        [
+            1374944.56, 550627.31, 2542872.97, 1109596.41, 3917817.5300000003, 728206.16, 476598.4,
+            2332594.72, 676823.87, 3060800.8800000004
+        ],
+        [
+            278916.58, 119311.53, 1330301.14, 398431.88, 1609217.72, 225050.77, 17398.48, 1478689.84,
+            271250.62, 1703740.61
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "SUM" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "SUM" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 10],
+    "totals": [[], []]
+}

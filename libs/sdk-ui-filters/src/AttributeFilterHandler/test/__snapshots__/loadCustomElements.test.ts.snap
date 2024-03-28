@@ -33,31 +33,31 @@ exports[`AttributeFilterHandler > loadCustomElements() that was successful shoul
     "elements": [
       {
         "title": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
       {
         "title": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
       {
         "title": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
       {
         "title": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
       {
         "title": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
       {
         "title": "TouchAll",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+        "uri": "TouchAll",
       },
       {
         "title": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     ],
     "options": {},

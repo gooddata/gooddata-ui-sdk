@@ -5,7 +5,7 @@ exports[`tiger filter converter from model to AFM > convert absolute date filter
   "absoluteDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -24,7 +24,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "absoluteDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -38,7 +38,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 {
   "comparisonMeasureValueFilter": {
     "measure": {
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
     "operator": "GREATER_THAN",
     "treatNullValuesAs": undefined,
@@ -51,7 +51,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 {
   "comparisonMeasureValueFilter": {
     "measure": {
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
     "operator": "GREATER_THAN",
     "treatNullValuesAs": 0,
@@ -65,7 +65,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "negativeAttributeFilter": {
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -84,7 +84,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     "applyOnResult": false,
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -102,7 +102,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "negativeAttributeFilter": {
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -125,7 +125,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     },
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -144,7 +144,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     },
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -162,7 +162,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     },
     "label": {
       "identifier": {
-        "id": "label.product.id.name",
+        "id": "label.f_product.product.name",
         "type": "label",
       },
     },
@@ -175,7 +175,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "rangeMeasureValueFilter": {
     "from": 64,
     "measure": {
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
     "operator": "BETWEEN",
     "to": 128,
@@ -189,7 +189,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "rangeMeasureValueFilter": {
     "from": 64,
     "measure": {
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
     "operator": "BETWEEN",
     "to": 128,
@@ -203,7 +203,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "rangeMeasureValueFilter": {
     "from": 64,
     "measure": {
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
     "operator": "BETWEEN",
     "to": 128,
@@ -217,7 +217,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "rankingFilter": {
     "measures": [
       {
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     ],
     "operator": "BOTTOM",
@@ -232,14 +232,14 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     "dimensionality": [
       {
         "identifier": {
-          "id": "label.stage.isactive",
+          "id": "f_stage.isactive_id",
           "type": "label",
         },
       },
     ],
     "measures": [
       {
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     ],
     "operator": "TOP",
@@ -253,7 +253,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -313,7 +313,7 @@ exports[`tiger filter converter from model to AFM > convert measure value filter
 {
   "comparisonMeasureValueFilter": {
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
     "operator": "GREATER_THAN",
     "treatNullValuesAs": undefined,
@@ -329,7 +329,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -345,7 +345,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -363,7 +363,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -379,7 +379,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -395,7 +395,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },
@@ -411,7 +411,7 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   "relativeDateFilter": {
     "dataset": {
       "identifier": {
-        "id": "closed.dataset.dt",
+        "id": "dt_closedate_timestamp",
         "type": "dataset",
       },
     },

@@ -33,8 +33,6 @@
         "integrated-test-rec": "GD_BEAR_REC=true NODE_TLS_REJECT_UNAUTHORIZED=0 vitest --config vite.integrated.config.ts run",
         "refresh-recordings": "npm run clear-recordings && npm run start-wiremock-recording && npm run integrated-test-rec; npm run stop-wiremock && npm run remove-sensitive-data",
         "test": "vitest watch",
-        "test-once": "./scripts/test-once.sh",
-        "test-ci": "./scripts/test-ci.sh",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",

@@ -7,10 +7,10 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                    "item": { "identifier": "sample_xirr", "type": "measure" }
                                 }
                             },
-                            "localIdentifier": "m_aadpHDMBecIy"
+                            "localIdentifier": "m_sample_xirr"
                         }
                     }
                 ],
@@ -20,8 +20,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
-                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                            "displayForm": {
+                                "identifier": "dt_timeline_timestamp.year",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_dt_timeline_timestamp.year"
                         }
                     }
                 ],

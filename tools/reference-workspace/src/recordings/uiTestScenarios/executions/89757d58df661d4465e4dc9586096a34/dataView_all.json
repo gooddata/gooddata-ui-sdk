@@ -1,0 +1,18 @@
+{
+    "count": [5, 1],
+    "data": [[2773426.95], [8656468.2], [29140409.09], [60270072.2], [15785080.1]],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "formattedName": "2008", "name": "2008", "uri": "2008" } },
+                { "attributeHeaderItem": { "formattedName": "2009", "name": "2009", "uri": "2009" } },
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } }
+            ]
+        ],
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]]
+    ],
+    "offset": [0, 0],
+    "totalCount": [5, 1]
+}

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { IAttributeOrMeasure, IAttribute } from "@gooddata/sdk-model";
@@ -42,12 +42,12 @@ describe("getPropsForArea", () => {
                 workspace: "myProjectId",
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: ReferenceMd.Region,
+                stackBy: ReferenceMd.Region.Default,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region],
+                stackBy: [ReferenceMd.Region.Default],
                 config: {},
             });
         });
@@ -58,13 +58,13 @@ describe("getPropsForArea", () => {
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: ReferenceMd.Region,
+                stackBy: ReferenceMd.Region.Default,
                 config: { stacking: false },
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region],
+                stackBy: [ReferenceMd.Region.Default],
                 config: { stacking: false },
             });
         });
@@ -80,13 +80,13 @@ describe("getPropsForArea", () => {
                     backend: dummyBackend(),
                     measures: [ReferenceMd.Amount],
                     viewBy: [ReferenceMd.Product.Name],
-                    stackBy: ReferenceMd.Region,
+                    stackBy: ReferenceMd.Region.Default,
                     config: { stacking, stackMeasures },
                 };
                 expect(getPropsForArea(props)).toEqual({
                     measures: [ReferenceMd.Amount],
                     viewBy: [ReferenceMd.Product.Name],
-                    stackBy: [ReferenceMd.Region],
+                    stackBy: [ReferenceMd.Region.Default],
                     config: {
                         stacking: stackMeasures,
                         stackMeasures,
@@ -106,14 +106,14 @@ describe("getPropsForArea", () => {
                     backend: dummyBackend(),
                     measures: [ReferenceMd.Amount],
                     viewBy: [ReferenceMd.Product.Name],
-                    stackBy: ReferenceMd.Region,
+                    stackBy: ReferenceMd.Region.Default,
                     config: { stacking, stackMeasuresToPercent },
                 };
                 const result = getPropsForArea(props);
                 expect(result).toEqual({
                     measures: [ReferenceMd.Amount],
                     viewBy: [ReferenceMd.Product.Name],
-                    stackBy: [ReferenceMd.Region],
+                    stackBy: [ReferenceMd.Region.Default],
                     config: {
                         stacking: stackMeasuresToPercent,
                         stackMeasuresToPercent,
@@ -135,13 +135,13 @@ describe("getPropsForArea", () => {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount],
-                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
                 stackBy: null,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region],
+                stackBy: [ReferenceMd.Region.Default],
                 config: configWithViewByTwoAttrs,
             });
         });
@@ -151,13 +151,13 @@ describe("getPropsForArea", () => {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount, ReferenceMd.Amount],
-                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
                 stackBy: null,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region],
+                stackBy: [ReferenceMd.Region.Default],
                 config: configWithViewByTwoAttrs,
             });
         });
@@ -167,13 +167,13 @@ describe("getPropsForArea", () => {
                 workspace: "myProjectId",
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount],
-                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
-                stackBy: ReferenceMd.Region,
+                viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
+                stackBy: ReferenceMd.Region.Default,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region],
+                stackBy: [ReferenceMd.Region.Default],
                 config: configWithViewByTwoAttrs,
             });
         });

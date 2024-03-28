@@ -22,41 +22,41 @@ exports[`convertTotals > should correctly convert column total and row subtotal 
 [
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
-          "a_label.stage.isactive",
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
           "measureGroup",
         ],
       },
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
     ],
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.stage.isactive_1",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
-          "a_label.opportunitysnapshot.forecastcategory",
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
         ],
       },
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -64,13 +64,13 @@ exports[`convertTotals > should correctly convert column total and row subtotal 
   },
   {
     "function": "SUM",
-    "localIdentifier": "subtotal_column_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "subtotal_column_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
       {
@@ -166,41 +166,41 @@ exports[`convertTotals > should correctly convert row total and column subtotal 
 [
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
-          "a_label.stage.isactive",
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
           "measureGroup",
         ],
       },
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
     ],
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.stage.isactive_1",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
-          "a_label.opportunitysnapshot.forecastcategory",
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
         ],
       },
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -208,13 +208,13 @@ exports[`convertTotals > should correctly convert row total and column subtotal 
   },
   {
     "function": "SUM",
-    "localIdentifier": "subtotal_row_sum_m_abZgFKGPaGYM_by_a_label.account.id.name_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "subtotal_row_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -266,14 +266,14 @@ exports[`convertTotals > should correctly convert subtotals with non-sorted tota
 [
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.owner.department_1",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_owner.department_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
-          "a_label.opportunitysnapshot.forecastcategory",
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
         ],
       },
       {
@@ -286,14 +286,14 @@ exports[`convertTotals > should correctly convert subtotals with non-sorted tota
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_acugFHNJgsBy_by_a_label.owner.department_1",
-    "metric": "m_acugFHNJgsBy",
+    "localIdentifier": "total_sum_m_e519fa2a_86c3_4e32_8313_0c03062348j3_by_a_f_owner.department_id_1",
+    "metric": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
-          "a_label.opportunitysnapshot.forecastcategory",
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
         ],
       },
       {
@@ -461,41 +461,41 @@ exports[`convertTotals > should correctly convert two subtotals and marginal tot
 [
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
-          "a_label.stage.isactive",
+          "a_f_owner.department_id",
+          "a_f_stage.isactive_id",
           "measureGroup",
         ],
       },
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
     ],
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.stage.isactive_1",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_stage.isactive_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
-          "a_label.opportunitysnapshot.forecastcategory",
+          "a_label.f_account.account.name",
+          "a_f_opportunitysnapshot.forecastcategory_id",
         ],
       },
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -503,19 +503,19 @@ exports[`convertTotals > should correctly convert two subtotals and marginal tot
   },
   {
     "function": "SUM",
-    "localIdentifier": "marginal_total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "marginal_total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_opportunitysnapshot.forecastcategory_id_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -528,13 +528,13 @@ exports[`convertTotals > should correctly convert two totals and grand total 1`]
 [
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.account.id.name_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",
         "totalDimensionItems": [
-          "a_label.owner.department",
+          "a_f_owner.department_id",
           "measureGroup",
         ],
       },
@@ -542,13 +542,13 @@ exports[`convertTotals > should correctly convert two totals and grand total 1`]
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.owner.department_1",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_f_owner.department_id_1",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_0",
         "totalDimensionItems": [
-          "a_label.account.id.name",
+          "a_label.f_account.account.name",
         ],
       },
       {
@@ -561,8 +561,8 @@ exports[`convertTotals > should correctly convert two totals and grand total 1`]
   },
   {
     "function": "SUM",
-    "localIdentifier": "total_of_totals_sum_m_abZgFKGPaGYM_by_a_label.account.id.name_0",
-    "metric": "m_abZgFKGPaGYM",
+    "localIdentifier": "total_of_totals_sum_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_by_a_label.f_account.account.name_0",
+    "metric": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
     "totalDimensions": [
       {
         "dimensionIdentifier": "dim_1",

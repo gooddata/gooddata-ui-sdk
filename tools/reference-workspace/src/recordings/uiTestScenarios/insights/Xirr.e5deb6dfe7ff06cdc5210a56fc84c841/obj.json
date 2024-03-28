@@ -7,10 +7,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abYgDBRagANw", "type": "measure" }
+                                    "item": {
+                                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_abYgDBRagANw"
+                            "localIdentifier": "m_6b1411d5_e253_418e_8fd3_137a9f56ea92"
                         }
                     }
                 ],
@@ -20,8 +23,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
-                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                            "displayForm": {
+                                "identifier": "dt_timeline_timestamp.year",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_dt_timeline_timestamp.year"
                         }
                     }
                 ],

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -6,7 +6,6 @@ import { FilterStories } from "../../../_infra/storyGroups.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
-import { ElementUris } from "./fixtures.js";
 
 import { action } from "@storybook/addon-actions";
 import {
@@ -14,7 +13,7 @@ import {
     AttributeFilterError,
     AttributeFilterDropdownButton,
 } from "@gooddata/sdk-ui-filters";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -119,7 +118,10 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                            uris: [ElementUris.WonderKid, ElementUris.Explorer],
+                            uris: [
+                                ReferenceData.ProductName.WonderKid.uri,
+                                ReferenceData.ProductName.Explorer.uri,
+                            ],
                         })}
                         onApply={action("on-apply")}
                     />
@@ -145,13 +147,13 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
                             uris: [
-                                ElementUris.CompuSci,
-                                ElementUris.Educationly,
-                                ElementUris.Explorer,
-                                ElementUris["Grammar Plus"],
-                                ElementUris.PhoenixSoft,
-                                ElementUris.TouchAll,
-                                ElementUris.WonderKid,
+                                ReferenceData.ProductName.CompuSci.uri,
+                                ReferenceData.ProductName.Educationly.uri,
+                                ReferenceData.ProductName.Explorer.uri,
+                                ReferenceData.ProductName.GrammarPlus.uri,
+                                ReferenceData.ProductName.PhoenixSoft.uri,
+                                ReferenceData.ProductName.TouchAll.uri,
+                                ReferenceData.ProductName.WonderKid.uri,
                             ],
                         })}
                         onApply={action("on-apply")}
@@ -191,7 +193,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         />
                     </div>
 
-                    <p>can't load value error </p>
+                    <p>can&apos;t load value error </p>
                     <div className="error-not-load-value">
                         <AttributeFilterButton
                             backend={backend}
@@ -208,7 +210,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         />
                     </div>
 
-                    <p>can't load value error and hover state</p>
+                    <p>can&apos;t load value error and hover state</p>
                     <div className="error-not-load-value-hover">
                         <AttributeFilterButton
                             backend={backend}
@@ -272,7 +274,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                            uris: [ElementUris.WonderKid],
+                            uris: [ReferenceData.ProductName.WonderKid.uri],
                         })}
                         onApply={action("on-apply")}
                         selectionMode="single"

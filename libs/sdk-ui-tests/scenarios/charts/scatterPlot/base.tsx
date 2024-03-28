@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -39,5 +39,5 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .addScenario("x and y axis measures and attribute with nulls in data", {
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
-        attribute: ReferenceMd.DateDatasets.Closed.Year.Default,
+        attribute: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
     });

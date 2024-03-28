@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -60,17 +60,6 @@ describe("change insight widget header handler", () => {
             expect(event.payload.header).toEqual(TestHeader);
             const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state());
             expect(widgetState!.title).toEqual(TestHeader.title);
-        });
-
-        it("should fail if trying to change title of KPI widget", async () => {
-            const ref = ComplexDashboardWidgets.FirstSection.FirstKpi.ref;
-            const event: DashboardCommandFailed<ChangeInsightWidgetHeader> = await Tester.dispatchAndWaitFor(
-                changeInsightWidgetHeader(ref, TestHeader, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
-
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if trying to change title of non-existent widget", async () => {

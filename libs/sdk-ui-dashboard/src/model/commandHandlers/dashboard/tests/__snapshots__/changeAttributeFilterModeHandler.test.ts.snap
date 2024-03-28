@@ -35,7 +35,7 @@ exports[`changeAttributeFilterModeHandler > should emit the appropriate events w
 exports[`changeAttributeFilterModeHandler > should set the attribute mode in state on changed attribute filter 1`] = `
 [
   {
-    "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
+    "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
     "mode": "active",
   },
 ]

@@ -52,11 +52,11 @@ exports[`measure converter > should return converted pop measure definition from
         },
       ],
       "measureIdentifier": {
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   },
-  "localIdentifier": "m_m_acugFHNJgsBy_attr",
+  "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_attr",
 }
 `;
 
@@ -267,7 +267,7 @@ exports[`measure converter > should return measure with two filters 1`] = `
           "absoluteDateFilter": {
             "dataset": {
               "identifier": {
-                "id": "closed.dataset.dt",
+                "id": "dt_closedate_timestamp",
                 "type": "dataset",
               },
             },
@@ -279,7 +279,7 @@ exports[`measure converter > should return measure with two filters 1`] = `
           "relativeDateFilter": {
             "dataset": {
               "identifier": {
-                "id": "closed.dataset.dt",
+                "id": "dt_closedate_timestamp",
                 "type": "dataset",
               },
             },
@@ -297,7 +297,7 @@ exports[`measure converter > should return measure with two filters 1`] = `
       },
     },
   },
-  "localIdentifier": "m_foo_a10d4a0d",
+  "localIdentifier": "m_foo_d8ac502a",
 }
 `;
 

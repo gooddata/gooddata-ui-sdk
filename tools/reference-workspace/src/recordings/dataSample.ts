@@ -1,50 +1,110 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-09-25T06:38:56.246Z; */
-const df_label_activity_id_subject = require("./metadata/displayForms/label.activity.id.subject/elements.json");
-const df_label_product_id_name = require("./metadata/displayForms/label.product.id.name/elements.json");
-const df_label_owner_department = require("./metadata/displayForms/label.owner.department/elements.json");
-const df_label_owner_region = require("./metadata/displayForms/label.owner.region/elements.json");
-const df_label_stage_status = require("./metadata/displayForms/label.stage.status/elements.json");
-const df_label_opportunitysnapshot_forecastcategory = require("./metadata/displayForms/label.opportunitysnapshot.forecastcategory/elements.json");
-const df_label_stage_name_stagename = require("./metadata/displayForms/label.stage.name.stagename/elements.json");
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-03-26T13:20:15.601Z; */
+const df_label_f_activity_subject = require("./metadata/displayForms/label.f_activity.subject/elements.json");
+const df_label_f_product_product_name = require("./metadata/displayForms/label.f_product.product.name/elements.json");
+const df_f_owner_department_id = require("./metadata/displayForms/f_owner.department_id/elements.json");
+const df_f_owner_region_id = require("./metadata/displayForms/f_owner.region_id/elements.json");
+const df_f_stage_status_id = require("./metadata/displayForms/f_stage.status_id/elements.json");
+const df_f_opportunitysnapshot_forecastcategory_id = require("./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json");
+const df_attr_f_stage_stagename = require("./metadata/displayForms/attr.f_stage.stagename/elements.json");
+const df_label_f_account_account_name = require("./metadata/displayForms/label.f_account.account.name/elements.json");
 export const DataSamples = {
-    Department: { DirectSales: df_label_owner_department[0], InsideSales: df_label_owner_department[1] },
+    Department: { DirectSales: df_f_owner_department_id[0], InsideSales: df_f_owner_department_id[1] },
     ForecastCategory: {
-        Exclude: df_label_opportunitysnapshot_forecastcategory[0],
-        Include: df_label_opportunitysnapshot_forecastcategory[1],
+        Exclude: df_f_opportunitysnapshot_forecastcategory_id[0],
+        Include: df_f_opportunitysnapshot_forecastcategory_id[1],
+    },
+    Name: {
+        AddVentures: df_label_f_account_account_name[0],
+        Blank: df_label_f_account_account_name[1],
+        MtMediaTemple: df_label_f_account_account_name[2],
+        Decimal: df_label_f_account_account_name[3],
+        $1SourceConsulting: df_label_f_account_account_name[4],
+        $1800Postcards: df_label_f_account_account_name[5],
+        $1800WeAnswer: df_label_f_account_account_name[6],
+        $1888OhioComp: df_label_f_account_account_name[7],
+        $1000BulbsCom: df_label_f_account_account_name[8],
+        $101Financial: df_label_f_account_account_name[9],
+        $123Exteriors: df_label_f_account_account_name[10],
+        $14West: df_label_f_account_account_name[11],
+        $1SourceInternational: df_label_f_account_account_name[12],
+        $1stChoiceStaffingAndConsulting: df_label_f_account_account_name[13],
+        $1stInVideoMusicWorld: df_label_f_account_account_name[14],
+        $2WheelBikes: df_label_f_account_account_name[15],
+        $2HBSoftwareDesigns: df_label_f_account_account_name[16],
+        $352MediaGroup: df_label_f_account_account_name[17],
+        $3Degrees: df_label_f_account_account_name[18],
+        $3E: df_label_f_account_account_name[19],
+        $3ballsCom: df_label_f_account_account_name[20],
+        $3dCartShoppingCartSoftware: df_label_f_account_account_name[21],
+        $49erCommunications: df_label_f_account_account_name[22],
+        $4WallEntertainment: df_label_f_account_account_name[23],
+        $4thSource: df_label_f_account_account_name[24],
+        $5LINXEnterprises: df_label_f_account_account_name[25],
+        $614MediaGroup: df_label_f_account_account_name[26],
+        $6KSystems: df_label_f_account_account_name[27],
+        $7MedicalSystems: df_label_f_account_account_name[28],
+        $7SimpleMachines: df_label_f_account_account_name[29],
+        $7Eleven: df_label_f_account_account_name[30],
+        $720Strategies: df_label_f_account_account_name[31],
+        $90octane: df_label_f_account_account_name[32],
+        $919Marketing: df_label_f_account_account_name[33],
+        Properties: df_label_f_account_account_name[34],
+        AMainHobbies: df_label_f_account_account_name[35],
+        APlaceForMom: df_label_f_account_account_name[36],
+        ASquaredGroup: df_label_f_account_account_name[37],
+        AWhiteOrchidWedding: df_label_f_account_account_name[38],
+        AAndCPlastics: df_label_f_account_account_name[39],
+        AAndPConsultingTransportationEngineers: df_label_f_account_account_name[40],
+        AAndRTarpaulins: df_label_f_account_account_name[41],
+        AMortgageServices: df_label_f_account_account_name[42],
+        ATutorU: df_label_f_account_account_name[43],
+        A1Textiles: df_label_f_account_account_name[44],
+        ALifeMedical: df_label_f_account_account_name[45],
+        ATSolutions: df_label_f_account_account_name[46],
+        APomerantzAndCo: df_label_f_account_account_name[47],
+        ABData: df_label_f_account_account_name[48],
+        ARMSolutions: df_label_f_account_account_name[49],
     },
     ProductName: {
-        CompuSci: df_label_product_id_name[0],
-        Educationly: df_label_product_id_name[1],
-        Explorer: df_label_product_id_name[2],
-        GrammarPlus: df_label_product_id_name[3],
-        PhoenixSoft: df_label_product_id_name[4],
-        TouchAll: df_label_product_id_name[5],
-        WonderKid: df_label_product_id_name[6],
+        CompuSci: df_label_f_product_product_name[0],
+        Educationly: df_label_f_product_product_name[1],
+        Explorer: df_label_f_product_product_name[2],
+        GrammarPlus: df_label_f_product_product_name[3],
+        PhoenixSoft: df_label_f_product_product_name[4],
+        TouchAll: df_label_f_product_product_name[5],
+        WonderKid: df_label_f_product_product_name[6],
     },
-    Region: { EastCoast: df_label_owner_region[0], WestCoast: df_label_owner_region[1] },
+    Region: {
+        NULL: df_f_owner_region_id[0],
+        Untitled: df_f_owner_region_id[1],
+        EastCoast: df_f_owner_region_id[2],
+        WestCoast: df_f_owner_region_id[3],
+    },
     StageName: {
-        Interest: df_label_stage_name_stagename[0],
-        Discovery: df_label_stage_name_stagename[1],
-        ShortList: df_label_stage_name_stagename[2],
-        RiskAssessment: df_label_stage_name_stagename[3],
-        Conviction: df_label_stage_name_stagename[4],
-        Negotiation: df_label_stage_name_stagename[5],
-        ClosedWon: df_label_stage_name_stagename[6],
-        ClosedLost: df_label_stage_name_stagename[7],
+        Interest: df_attr_f_stage_stagename[0],
+        Discovery: df_attr_f_stage_stagename[1],
+        ShortList: df_attr_f_stage_stagename[2],
+        RiskAssessment: df_attr_f_stage_stagename[3],
+        Conviction: df_attr_f_stage_stagename[4],
+        Negotiation: df_attr_f_stage_stagename[5],
+        ClosedWon: df_attr_f_stage_stagename[6],
+        ClosedLost: df_attr_f_stage_stagename[7],
     },
-    Status: { Lost: df_label_stage_status[0], Open: df_label_stage_status[1], Won: df_label_stage_status[2] },
+    Status: { Lost: df_f_stage_status_id[0], Open: df_f_stage_status_id[1], Won: df_f_stage_status_id[2] },
     Subject: {
-        EmailWith1000BulbsComOnApr2108: df_label_activity_id_subject[0],
-        EmailWith1000BulbsComOnDec1409: df_label_activity_id_subject[1],
-        EmailWith1000BulbsComOnDec2908: df_label_activity_id_subject[2],
-        EmailWith1000BulbsComOnFeb1009: df_label_activity_id_subject[3],
-        EmailWith1000BulbsComOnJan0610: df_label_activity_id_subject[4],
-        EmailWith1000BulbsComOnJan2909: df_label_activity_id_subject[5],
-        EmailWith1000BulbsComOnJul0308: df_label_activity_id_subject[6],
-        EmailWith1000BulbsComOnJul0610: df_label_activity_id_subject[7],
-        EmailWith1000BulbsComOnJul2410: df_label_activity_id_subject[8],
-        EmailWith1000BulbsComOnJun0110: df_label_activity_id_subject[9],
+        EmailWithAddVenturesOnApr0208: df_label_f_activity_subject[0],
+        EmailWithAddVenturesOnJul0310: df_label_f_activity_subject[1],
+        EmailWithAddVenturesOnJul1209: df_label_f_activity_subject[2],
+        EmailWithAddVenturesOnJul2109: df_label_f_activity_subject[3],
+        EmailWithAddVenturesOnJun2610: df_label_f_activity_subject[4],
+        EmailWithAddVenturesOnMar2308: df_label_f_activity_subject[5],
+        EmailWithAddVenturesOnOct0609: df_label_f_activity_subject[6],
+        EmailWithAddVenturesOnOct2708: df_label_f_activity_subject[7],
+        EmailWithMtMediaTempleOnApr2210: df_label_f_activity_subject[8],
+        EmailWithMtMediaTempleOnAug0110: df_label_f_activity_subject[9],
     },
 };

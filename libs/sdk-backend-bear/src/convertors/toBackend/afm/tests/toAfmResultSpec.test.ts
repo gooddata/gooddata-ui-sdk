@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { toAfmExecution } from "../ExecutionConverter.js";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -24,7 +24,7 @@ import {
 const workspace = "test workspace";
 
 const total = newTotal("nat", ReferenceMd.Won, ReferenceMd.Account.Name, "native total");
-const columnTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.Department, "native total");
+const columnTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default, "native total");
 
 const rowSubTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.ForecastCategory, "native total");
 const columnSubTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.IsActive, "nativeTotal");
@@ -62,11 +62,11 @@ describe("converts execution definition to AFM Execution", () => {
                     newBucket("mixedBucket1", ReferenceMd.Activity.Default, ReferenceMd.Won),
                     newBucket("measureBucket1", ReferenceMd.WinRate),
                     newBucket("attributeBucket1", ReferenceMd.Account.Name),
-                    newBucket("columnBucket1", ReferenceMd.Department),
+                    newBucket("columnBucket1", ReferenceMd.Department.Default),
                 ]),
                 newTwoDimensional(
                     [ReferenceMd.Account.Name, total],
-                    [ReferenceMd.Department, MeasureGroupIdentifier, columnTotal],
+                    [ReferenceMd.Department.Default, MeasureGroupIdentifier, columnTotal],
                 ),
             ),
         ],
@@ -78,12 +78,17 @@ describe("converts execution definition to AFM Execution", () => {
                     newBucket("measureBucket1", ReferenceMd.WinRate),
                     newBucket("attributeBucket1", ReferenceMd.Account.Name),
                     newBucket("attributeBucket2", ReferenceMd.ForecastCategory),
-                    newBucket("columnBucket1", ReferenceMd.Department),
+                    newBucket("columnBucket1", ReferenceMd.Department.Default),
                     newBucket("columnBucket2", ReferenceMd.IsActive),
                 ]),
                 newTwoDimensional(
                     [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, rowSubTotal],
-                    [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+                    [
+                        ReferenceMd.Department.Default,
+                        ReferenceMd.IsActive,
+                        MeasureGroupIdentifier,
+                        columnSubTotal,
+                    ],
                 ),
             ),
         ],

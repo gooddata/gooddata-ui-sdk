@@ -169,7 +169,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 4`] =
     "color": "rgb(217,220,226)",
     "data": [
       {
-        "format": "#,##0.00",
+        "format": "#,#.##",
         "marker": {
           "enabled": true,
         },

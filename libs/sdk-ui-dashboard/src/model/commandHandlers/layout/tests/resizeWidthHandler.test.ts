@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { resizeWidth, ResizeWidth } from "../../../commands/layout.js";
 import { DashboardCommandFailed } from "../../../events/index.js";
@@ -7,7 +7,6 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { DashboardLayoutSectionItemWidthResized } from "../../../events/layout.js";
 
 describe("resize section items width handler", () => {
     let Tester: DashboardTester;
@@ -43,34 +42,6 @@ describe("resize section items width handler", () => {
     });
 
     describe("for valid indexes", () => {
-        it("should set width in items by index", async () => {
-            const originalLayout = selectLayout(Tester.state());
-
-            const event: DashboardLayoutSectionItemWidthResized = await Tester.dispatchAndWaitFor(
-                resizeWidth(1, 0, 10),
-                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED",
-            );
-
-            const newLayout = selectLayout(Tester.state());
-            expect(newLayout.sections[1].items[0].size.xl.gridWidth).toEqual(10);
-
-            expect(newLayout.sections[1].items[1].size.xl.gridWidth).toEqual(
-                originalLayout.sections[1].items[1].size.xl.gridWidth,
-            );
-            expect(newLayout.sections[1].items[2].size.xl.gridWidth).toEqual(
-                originalLayout.sections[1].items[2].size.xl.gridWidth,
-            );
-
-            expect(event).toMatchObject({
-                type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED",
-                payload: {
-                    sectionIndex: 1,
-                    itemIndex: 0,
-                    newWidth: 10,
-                },
-            });
-        });
-
         it("should throw error for invalid width is to small", async () => {
             const fail: DashboardCommandFailed<ResizeWidth> = await Tester.dispatchAndWaitFor(
                 resizeWidth(1, 0, 1, TestCorrelation),

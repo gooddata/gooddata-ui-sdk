@@ -1,5 +1,7 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-21T08:16:48.984Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-03-21T13:43:34.778Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -12,2292 +14,2602 @@ import {
 
 /**
  * Attribute Title: Account
- * Attribute ID: attr.account.id
+ * Attribute ID: attr.f_account.account
  */
 export const Account = {
     /**
      * Display Form Title: Name
-     * Display Form ID: label.account.id.name
+     * Display Form ID: label.f_account.account.name
      */
-    Name: newAttribute("label.account.id.name"),
+    Name: newAttribute("label.f_account.account.name"),
     /**
      * Display Form Title: Account
-     * Display Form ID: label.account.id
-     */ Default: newAttribute("label.account.id"),
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
- * Attribute ID: attr.activity.id
+ * Attribute ID: attr.f_activity.activity
  */
 export const Activity = {
     /**
-     * Display Form Title: Subject
-     * Display Form ID: label.activity.id.subject
-     */
-    Subject: newAttribute("label.activity.id.subject"),
-    /**
      * Display Form Title: Activity
-     * Display Form ID: label.activity.id
-     */ Default: newAttribute("label.activity.id"),
+     * Display Form ID: attr.f_activity.activity
+     */
+    Default: newAttribute("attr.f_activity.activity"),
+    /**
+     * Display Form Title: Subject
+     * Display Form ID: label.f_activity.subject
+     */ Subject: newAttribute("label.f_activity.subject"),
 };
 /**
- * Attribute Title: Activity Type
- * Attribute ID: attr.activity.activitytype
- */
-export const ActivityType: IAttribute = newAttribute("label.activity.activitytype");
-/**
- * Attribute Title: Department
- * Attribute ID: attr.owner.department
- */
-export const Department: IAttribute = newAttribute("label.owner.department");
-/**
- * Attribute Title: Forecast Category
- * Attribute ID: attr.opportunitysnapshot.forecastcategory
- */
-export const ForecastCategory: IAttribute = newAttribute("label.opportunitysnapshot.forecastcategory");
-/**
- * Attribute Title: Is Active?
- * Attribute ID: attr.stage.isactive
- */
-export const IsActive: IAttribute = newAttribute("label.stage.isactive");
-/**
- * Attribute Title: Is Closed?
- * Attribute ID: attr.activity.isclosed
- */
-export const IsClosed: IAttribute = newAttribute("label.activity.isclosed");
-/**
- * Attribute Title: Is Closed?
- * Attribute ID: attr.stage.isclosed
- */
-export const IsClosed_1: IAttribute = newAttribute("label.stage.isclosed");
-/**
- * Attribute Title: Is Task?
- * Attribute ID: attr.activity.istask
- */
-export const IsTask: IAttribute = newAttribute("label.activity.istask");
-/**
- * Attribute Title: Is Won?
- * Attribute ID: attr.stage.iswon
- */
-export const IsWon: IAttribute = newAttribute("label.stage.iswon");
-/**
- * Attribute Title: Opp. Snapshot
- * Attribute ID: attr.opportunitysnapshot.id
- */
-export const OppSnapshot: IAttribute = newAttribute("label.opportunitysnapshot.id");
-/**
  * Attribute Title: Opportunity
- * Attribute ID: attr.opportunity.id
+ * Attribute ID: attr.f_opportunity.opportunity
  */
 export const Opportunity = {
     /**
      * Display Form Title: Opportunity Name
-     * Display Form ID: label.opportunity.id.name
+     * Display Form ID: label.f_opportunity.opportunity.name
      */
-    Name: newAttribute("label.opportunity.id.name"),
+    Name: newAttribute("label.f_opportunity.opportunity.name"),
     /**
      * Display Form Title: Opportunity
-     * Display Form ID: label.opportunity.id
-     */ Default: newAttribute("label.opportunity.id"),
+     * Display Form ID: attr.f_opportunity.opportunity
+     */ Default: newAttribute("attr.f_opportunity.opportunity"),
     /**
      * Display Form Title: SFDC URL
-     * Display Form ID: label.opportunity.id.url
-     */ SFDCURL: newAttribute("label.opportunity.id.url"),
+     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
+     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
 };
 /**
- * Attribute Title: Priority
- * Attribute ID: attr.activity.priority
+ * Attribute Title: Opp. Snapshot
+ * Attribute ID: attr.f_opportunitysnapshot.oppsnapshot
  */
-export const Priority: IAttribute = newAttribute("label.activity.priority");
-/**
- * Attribute Title: Product
- * Attribute ID: attr.product.id
- */
-export const Product = {
-    /**
-     * Display Form Title: Product Name
-     * Display Form ID: label.product.id.name
-     */
-    Name: newAttribute("label.product.id.name"),
-    /**
-     * Display Form Title: Product
-     * Display Form ID: label.product.id
-     */ Default: newAttribute("label.product.id"),
-};
-/**
- * Attribute Title: Region
- * Attribute ID: attr.owner.region
- */
-export const Region: IAttribute = newAttribute("label.owner.region");
+export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.oppsnapshot");
 /**
  * Attribute Title: Sales Rep
- * Attribute ID: attr.owner.id
+ * Attribute ID: attr.f_owner.salesrep
  */
 export const SalesRep = {
     /**
      * Display Form Title: Owner Name
-     * Display Form ID: label.owner.id.name
+     * Display Form ID: label.f_owner.salesrep.ownername
      */
-    OwnerName: newAttribute("label.owner.id.name"),
+    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
     /**
-     * Display Form Title: Owner
-     * Display Form ID: label.owner.id
-     */ Owner: newAttribute("label.owner.id"),
+     * Display Form Title: Sales Rep
+     * Display Form ID: attr.f_owner.salesrep
+     */ Default: newAttribute("attr.f_owner.salesrep"),
 };
 /**
- * Attribute Title: Sort
- * Attribute ID: attr.hardwaretest.sort
+ * Attribute Title: Product
+ * Attribute ID: attr.f_product.product
  */
-export const Sort: IAttribute = newAttribute("label.hardwaretest.sort");
+export const Product = {
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */
+    Default: newAttribute("attr.f_product.product"),
+    /**
+     * Display Form Title: Product Name
+     * Display Form ID: label.f_product.product.name
+     */ Name: newAttribute("label.f_product.product.name"),
+};
 /**
  * Attribute Title: Stage History
- * Attribute ID: attr.stagehistory.id
+ * Attribute ID: attr.f_stagehistory.stagehistory
  */
-export const StageHistory: IAttribute = newAttribute("label.stagehistory.id");
+export const StageHistory: IAttribute = newAttribute("attr.f_stagehistory.stagehistory");
 /**
  * Attribute Title: Stage Name
- * Attribute ID: attr.stage.name
+ * Attribute ID: attr.f_stage.stagename
  */
 export const StageName = {
     /**
-     * Display Form Title: Stage Name
-     * Display Form ID: label.stage.name.stagename
-     */
-    Default: newAttribute("label.stage.name.stagename"),
-    /**
      * Display Form Title: Order
-     * Display Form ID: label.stage.name.order
-     */ Order: newAttribute("label.stage.name.order"),
+     * Display Form ID: label.f_stage.stagename.order
+     */
+    Order: newAttribute("label.f_stage.stagename.order"),
+    /**
+     * Display Form Title: Stage Name
+     * Display Form ID: attr.f_stage.stagename
+     */ Default: newAttribute("attr.f_stage.stagename"),
+    /**
+     * Display Form Title: Stage Name
+     * Display Form ID: label.f_stage.stagename.stagename
+     */ _1: newAttribute("label.f_stage.stagename.stagename"),
 };
 /**
- * Attribute Title: Status
- * Attribute ID: attr.activity.status
+ * Attribute Title: County name
+ * Attribute ID: county_name
  */
-export const Status: IAttribute = newAttribute("label.activity.status");
+export const CountyName: IAttribute = newAttribute("county_name");
+/**
+ * Attribute Title: Account Id
+ * Attribute ID: f_account.id
+ */
+export const AccountId: IAttribute = newAttribute("f_account.id");
+/**
+ * Attribute Title: Activity Type
+ * Attribute ID: f_activity.activitytype_id
+ */
+export const ActivityType: IAttribute = newAttribute("f_activity.activitytype_id");
+/**
+ * Attribute Title: Activity Id
+ * Attribute ID: f_activity.id
+ */
+export const ActivityId: IAttribute = newAttribute("f_activity.id");
+/**
+ * Attribute Title: Is Closed?
+ * Attribute ID: f_activity.isclosed_id
+ */
+export const IsClosed: IAttribute = newAttribute("f_activity.isclosed_id");
+/**
+ * Attribute Title: Is Task?
+ * Attribute ID: f_activity.istask_id
+ */
+export const IsTask: IAttribute = newAttribute("f_activity.istask_id");
+/**
+ * Attribute Title: Priority
+ * Attribute ID: f_activity.priority_id
+ */
+export const Priority: IAttribute = newAttribute("f_activity.priority_id");
 /**
  * Attribute Title: Status
- * Attribute ID: attr.stage.status
+ * Attribute ID: f_activity.status_id
  */
-export const Status_1: IAttribute = newAttribute("label.stage.status");
+export const Status: IAttribute = newAttribute("f_activity.status_id");
 /**
- * Metric Title: _Snapshot [EOP]
- * Metric ID: abxgDICQav2J
+ * Attribute Title: City
+ * Attribute ID: f_city.id
+ */
+export const City = {
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */
+    Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+};
+/**
+ * Attribute Title: Opportunity Id
+ * Attribute ID: f_opportunity.id
+ */
+export const OpportunityId: IAttribute = newAttribute("f_opportunity.id");
+/**
+ * Attribute Title: Forecast Category
+ * Attribute ID: f_opportunitysnapshot.forecastcategory_id
+ */
+export const ForecastCategory: IAttribute = newAttribute("f_opportunitysnapshot.forecastcategory_id");
+/**
+ * Attribute Title: Opp. Snapshot Id
+ * Attribute ID: f_opportunitysnapshot.id
+ */
+export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id");
+/**
+ * Attribute Title: Department
+ * Attribute ID: f_owner.department_id
+ */
+export const Department = {
+    /**
+     * Display Form Title: Department
+     * Display Form ID: f_owner.department_id
+     */
+    Default: newAttribute("f_owner.department_id"),
+    /**
+     * Display Form Title: Department hyperlink
+     * Display Form ID: f_owner.department_id.departmenthyperlink
+     */ Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+};
+/**
+ * Attribute Title: Owner Id
+ * Attribute ID: f_owner.id
+ */
+export const OwnerId: IAttribute = newAttribute("f_owner.id");
+/**
+ * Attribute Title: Region
+ * Attribute ID: f_owner.region_id
+ */
+export const Region = {
+    /**
+     * Display Form Title: Region
+     * Display Form ID: f_owner.region_id
+     */
+    Default: newAttribute("f_owner.region_id"),
+    /**
+     * Display Form Title: Region hyperlink
+     * Display Form ID: f_owner.region_id.regionhyperlink
+     */ Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+};
+/**
+ * Attribute Title: Product Id
+ * Attribute ID: f_product.id
+ */
+export const ProductId: IAttribute = newAttribute("f_product.id");
+/**
+ * Attribute Title: Stage History Id
+ * Attribute ID: f_stagehistory.id
+ */
+export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
+/**
+ * Attribute Title: Stage Id
+ * Attribute ID: f_stage.id
+ */
+export const StageId: IAttribute = newAttribute("f_stage.id");
+/**
+ * Attribute Title: Is Active?
+ * Attribute ID: f_stage.isactive_id
+ */
+export const IsActive: IAttribute = newAttribute("f_stage.isactive_id");
+/**
+ * Attribute Title: Is Closed?
+ * Attribute ID: f_stage.isclosed_id
+ */
+export const IsClosed_1: IAttribute = newAttribute("f_stage.isclosed_id");
+/**
+ * Attribute Title: Is Won?
+ * Attribute ID: f_stage.iswon_id
+ */
+export const IsWon: IAttribute = newAttribute("f_stage.iswon_id");
+/**
+ * Attribute Title: Status
+ * Attribute ID: f_stage.status_id
+ */
+export const Status_1: IAttribute = newAttribute("f_stage.status_id");
+/**
+ * Attribute Title: Timeline
+ * Attribute ID: f_timeline.id
+ */
+export const Timeline: IAttribute = newAttribute("f_timeline.id");
+/**
+ * Attribute Title: Product that is renamed to test the long attribute name
+ * Attribute ID: productthatisrenamedtotestthelongattributename
+ */
+export const ProductThatIsRenamedToTestTheLongAttributeName = {
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */
+    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
+     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
+     */ Hyperlink: newAttribute(
+        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+    ),
+};
+/**
+ * Attribute Title: State
+ * Attribute ID: state_id
+ */
+export const State = {
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */
+    Name: newAttribute("state_id.statename"),
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */ Default: newAttribute("state_id"),
+};
+/**
+ * Metric Title: 2 literals in datetime_diff
+ * Metric ID: 2_literals_in_datetime_diff
  * Metric Type: MAQL Metric
  */
-export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("abxgDICQav2J", "measure"));
+export const _2LiteralsInDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("2_literals_in_datetime_diff", "measure"),
+);
 /**
  * Metric Title: _Timeline [EOP]
- * Metric ID: abYgDBRagANw
+ * Metric ID: 6b1411d5-e253-418e-8fd3-137a9f56ea92
  * Metric Type: MAQL Metric
  */
-export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("abYgDBRagANw", "measure"));
+export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("6b1411d5-e253-418e-8fd3-137a9f56ea92", "measure"),
+);
 /**
  * Metric Title: # Of Opportunities
- * Metric ID: abQgDWx4gOUu
+ * Metric ID: 768414e1-4bbe-4f01-b125-0cdc6305dc76
  * Metric Type: MAQL Metric
  */
-export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure(idRef("abQgDWx4gOUu", "measure"));
-/**
- * Metric Title: # Of Opportunities Won
- * Metric ID: aa4gLlQhcmLO
- * Metric Type: MAQL Metric
- */
-export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("aa4gLlQhcmLO", "measure"),
+export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("768414e1-4bbe-4f01-b125-0cdc6305dc76", "measure"),
 );
 /**
  * Metric Title: Amount
- * Metric ID: aangOxLSeztu
+ * Metric ID: 87a053b0-3947-49f3-b0c5-de53fd01f050
  * Metric Type: MAQL Metric
  */
-export const Amount: IMeasure<IMeasureDefinition> = newMeasure(idRef("aangOxLSeztu", "measure"));
-/**
- * Metric Title: Intermediate Sum Velocity and Value
- * Metric ID: ab8s8km1dcwm
- * Metric Type: MAQL Metric
- */
-export const IntermediateSumVelocityAndValue: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("ab8s8km1dcwm", "measure"),
+export const Amount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"),
 );
 /**
- * Metric Title: Negative Sum Duration
- * Metric ID: abTsUy7k6OIl
+ * Metric Title: # Of Opportunities Won
+ * Metric ID: 8d33a0b1-cfdf-4074-a26a-4c4357774967
  * Metric Type: MAQL Metric
  */
-export const NegativeSumDuration: IMeasure<IMeasureDefinition> = newMeasure(idRef("abTsUy7k6OIl", "measure"));
-/**
- * Metric Title: Negative Sum Probability
- * Metric ID: acEsTPZKdqzb
- * Metric Type: MAQL Metric
- */
-export const NegativeSumProbability: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("acEsTPZKdqzb", "measure"),
+export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("8d33a0b1-cfdf-4074-a26a-4c4357774967", "measure"),
 );
-/**
- * Metric Title: Probability
- * Metric ID: abEgMnq5hyJQ
- * Metric Type: MAQL Metric
- */
-export const Probability: IMeasure<IMeasureDefinition> = newMeasure(idRef("abEgMnq5hyJQ", "measure"));
-/**
- * Metric Title: Sample XIRR
- * Metric ID: aadpHDMBecIy
- * Metric Type: MAQL Metric
- */
-export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(idRef("aadpHDMBecIy", "measure"));
-/**
- * Metric Title: Total Sum
- * Metric ID: aaKtfN0bAQyc
- * Metric Type: MAQL Metric
- */
-export const TotalSum: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaKtfN0bAQyc", "measure"));
 /**
  * Metric Title: Win Rate
- * Metric ID: abZgFKGPaGYM
+ * Metric ID: 973a14c4-acb1-45fb-ba52-5d96fa02f7ba
  * Metric Type: MAQL Metric
  */
-export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(idRef("abZgFKGPaGYM", "measure"));
+export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("973a14c4-acb1-45fb-ba52-5d96fa02f7ba", "measure"),
+);
+/**
+ * Metric Title: Amount [BOP]
+ * Metric ID: amount_bop
+ * Metric Type: MAQL Metric
+ */
+export const AmountBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("amount_bop", "measure"));
+/**
+ * Metric Title: Argument bigger granularity
+ * Metric ID: argument_bigger_granularity
+ * Metric Type: MAQL Metric
+ */
+export const ArgumentBiggerGranularity: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("argument_bigger_granularity", "measure"),
+);
+/**
+ * Metric Title: Avg. Amount
+ * Metric ID: avg._amount
+ * Metric Type: MAQL Metric
+ */
+export const AvgAmount: IMeasure<IMeasureDefinition> = newMeasure(idRef("avg._amount", "measure"));
+/**
+ * Metric Title: Probability
+ * Metric ID: b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa
+ * Metric Type: MAQL Metric
+ */
+export const Probability: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"),
+);
+/**
+ * Metric Title: Best Case
+ * Metric ID: best_case
+ * Metric Type: MAQL Metric
+ */
+export const BestCase: IMeasure<IMeasureDefinition> = newMeasure(idRef("best_case", "measure"));
+/**
+ * Metric Title: _Snapshot [EOP]
+ * Metric ID: c5ee7836-126c-41aa-bd69-1873d379a065
+ * Metric Type: MAQL Metric
+ */
+export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("c5ee7836-126c-41aa-bd69-1873d379a065", "measure"),
+);
+/**
+ * Metric Title: _Close [BOP]
+ * Metric ID: close_bop
+ * Metric Type: MAQL Metric
+ */
+export const CloseBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_bop", "measure"));
+/**
+ * Metric Title: _Close [EOP]
+ * Metric ID: close_eop
+ * Metric Type: MAQL Metric
+ */
+export const CloseEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_eop", "measure"));
+/**
+ * Metric Title: Count of sales rep and datetime condition
+ * Metric ID: count_of_sales_rep_and_datetime_condition
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepAndDatetimeCondition: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_and_datetime_condition", "measure"),
+);
+/**
+ * Metric Title: Count of sales rep with datetime add and max
+ * Metric ID: count_of_sales_rep_with_datetime_add_and_max
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepWithDatetimeAddAndMax: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_with_datetime_add_and_max", "measure"),
+);
+/**
+ * Metric Title: Count of sales rep with datetime and previous
+ * Metric ID: count_of_sales_rep_with_datetime_and_previous
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepWithDatetimeAndPrevious: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_with_datetime_and_previous", "measure"),
+);
+/**
+ * Metric Title: Count of sales rep with diff and 3 difference params
+ * Metric ID: count_of_sales_rep_with_diff_and_3_difference_params
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepWithDiffAnd3DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_with_diff_and_3_difference_params", "measure"),
+);
+/**
+ * Metric Title: Count of sales rep with diff and add
+ * Metric ID: count_of_sales_rep_with_diff_and_add
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepWithDiffAndAdd: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_with_diff_and_add", "measure"),
+);
+/**
+ * Metric Title: Count of sales rep with diff and max by all other
+ * Metric ID: count_of_sales_rep_with_diff_and_max_by_all_other
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepWithDiffAndMaxByAllOther: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_of_sales_rep_with_diff_and_max_by_all_other", "measure"),
+);
+/**
+ * Metric Title: Count of sales reps with diff and max condition
+ * Metric ID: count_sales_reps_with_diff_and_max_condition
+ * Metric Type: MAQL Metric
+ */
+export const CountOfSalesRepsWithDiffAndMaxCondition: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("count_sales_reps_with_diff_and_max_condition", "measure"),
+);
+/**
+ * Metric Title: Datetime add of day
+ * Metric ID: datetime_add_of_day
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfDay: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_day", "measure"),
+);
+/**
+ * Metric Title: Datetime add of hour
+ * Metric ID: datetime_add_of_hour
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfHour: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_hour", "measure"),
+);
+/**
+ * Metric Title: Datetime add of minute
+ * Metric ID: datetime_add_of_minute
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfMinute: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_minute", "measure"),
+);
+/**
+ * Metric Title: Datetime add of month
+ * Metric ID: datetime_add_of_month
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfMonth: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_month", "measure"),
+);
+/**
+ * Metric Title: Datetime add of this year
+ * Metric ID: datetime_add_of_this_year
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfThisYear: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_this_year", "measure"),
+);
+/**
+ * Metric Title: Datetime add of week
+ * Metric ID: datetime_add_of_week
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfWeek: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_week", "measure"),
+);
+/**
+ * Metric Title: Datetime add of year
+ * Metric ID: datetime_add_of_year
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddOfYear: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_of_year", "measure"),
+);
+/**
+ * Metric Title: Datetime add with if else
+ * Metric ID: datetime_add_with_if_else
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddWithIfElse: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_with_if_else", "measure"),
+);
+/**
+ * Metric Title: Datetime_add with quarter
+ * Metric ID: datetime_add_with_quarter
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeAddWithQuarter: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_add_with_quarter", "measure"),
+);
+/**
+ * Metric Title: Diff of month (2 difference params)
+ * Metric ID: datetime_diff_of_month_2_diffrence_params
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth2DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_2_diffrence_params", "measure"),
+);
+/**
+ * Metric Title: Diff of month (2 params and string)
+ * Metric ID: datetime_diff_of_month_2_params_string
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth2ParamsAndString: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_2_params_string", "measure"),
+);
+/**
+ * Metric Title: Diff of month (2 same params)
+ * Metric ID: datetime_diff_of_month_2_same_params
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth2SameParams: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_2_same_params", "measure"),
+);
+/**
+ * Metric Title: Diff of month (3 difference params)
+ * Metric ID: datetime_diff_of_month_3_diffenrence_params
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth3DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_3_diffenrence_params", "measure"),
+);
+/**
+ * Metric Title: Diff of month (3 parameters)
+ * Metric ID: datetime_diff_of_month_3_parameters
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_3_parameters", "measure"),
+);
+/**
+ * Metric Title: Diff of month (3 params and string)
+ * Metric ID: datetime_diff_of_month_3_params_string
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfMonth3ParamsAndString: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_month_3_params_string", "measure"),
+);
+/**
+ * Metric Title: Diff of week (2 same params)
+ * Metric ID: datetime_diff_of_week_2_same_params
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfWeek2SameParams: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_week_2_same_params", "measure"),
+);
+/**
+ * Metric Title: Diff of week (3 parameters)
+ * Metric ID: datetime_diff_of_week_3_parameters
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfWeek3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_week_3_parameters", "measure"),
+);
+/**
+ * Metric Title: Diff of week (month week)
+ * Metric ID: datetime_diff_of_week_month_week
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfWeekMonthWeek: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_week_month_week", "measure"),
+);
+/**
+ * Metric Title: Diff of week (week year)
+ * Metric ID: datetime_diff_of_week_week_year
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfWeekWeekYear: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_week_week_year", "measure"),
+);
+/**
+ * Metric Title: Diff of year (2 parameters)
+ * Metric ID: datetime_diff_of_year_2_parameters
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYear2Parameters: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_2_parameters", "measure"),
+);
+/**
+ * Metric Title: Diff of year (3 parameters)
+ * Metric ID: datetime_diff_of_year_3_parameters
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYear3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_3_parameters", "measure"),
+);
+/**
+ * Metric Title: Diff of year (next)
+ * Metric ID: datetime_diff_of_year_next
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYearNext: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_next", "measure"),
+);
+/**
+ * Metric Title: Diff of year (previous)
+ * Metric ID: datetime_diff_of_year_previous
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYearPrevious: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_previous", "measure"),
+);
+/**
+ * Metric Title: Diff of year (previous and next)
+ * Metric ID: datetime_diff_of_year_previous_next
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYearPreviousAndNext: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_previous_next", "measure"),
+);
+/**
+ * Metric Title: Diff of year (string)
+ * Metric ID: datetime_diff_of_year_string
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYearString: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_string", "measure"),
+);
+/**
+ * Metric Title: Diff of year (string and this)
+ * Metric ID: datetime_diff_of_year_string_and_this
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfYearStringAndThis: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_of_year_string_and_this", "measure"),
+);
+/**
+ * Metric Title: Datetime_diff with quarter
+ * Metric ID: datetime_diff_with_quarter
+ * Metric Type: MAQL Metric
+ */
+export const DatetimeDiffWithQuarter: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("datetime_diff_with_quarter", "measure"),
+);
+/**
+ * Metric Title: Diff of week (string)
+ * Metric ID: diff_of_week_string
+ * Metric Type: MAQL Metric
+ */
+export const DiffOfWeekString: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("diff_of_week_string", "measure"),
+);
+/**
+ * Metric Title: Parent metric
+ * Metric ID: e519fa2a-86c3-4e32-8313-0c03061626b1
+ * Metric Type: MAQL Metric
+ */
+export const ParentMetric: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("e519fa2a-86c3-4e32-8313-0c03061626b1", "measure"),
+);
 /**
  * Metric Title: Won
- * Metric ID: acugFHNJgsBy
+ * Metric ID: e519fa2a-86c3-4e32-8313-0c03062348j3
  * Metric Type: MAQL Metric
  */
-export const Won: IMeasure<IMeasureDefinition> = newMeasure(idRef("acugFHNJgsBy", "measure"));
+export const Won: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"),
+);
+/**
+ * Metric Title: Filter time transformation (datetime add)
+ * Metric ID: filter_time_transformation_datetime_add
+ * Metric Type: MAQL Metric
+ */
+export const FilterTimeTransformationDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("filter_time_transformation_datetime_add", "measure"),
+);
+/**
+ * Metric Title: First value of amount by quarter
+ * Metric ID: first_value_of_amount_by_quarter
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfAmountByQuarter: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_amount_by_quarter", "measure"),
+);
+/**
+ * Metric Title: First value of amount by sales rep
+ * Metric ID: first_value_of_amount_by_sales_rep
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfAmountBySalesRep: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_amount_by_sales_rep", "measure"),
+);
+/**
+ * Metric Title: First value of amount order asc
+ * Metric ID: first_value_of_amount_order_asc
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfAmountOrderAsc: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_amount_order_asc", "measure"),
+);
+/**
+ * Metric Title: First value of amount order desc
+ * Metric ID: first_value_of_amount_order_desc
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfAmountOrderDesc: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_amount_order_desc", "measure"),
+);
+/**
+ * Metric Title: First value of amount with previous
+ * Metric ID: first_value_of_amount_with_previous
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfAmountWithPrevious: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_amount_with_previous", "measure"),
+);
+/**
+ * Metric Title: First value of rank amount
+ * Metric ID: first_value_of_rank_amount
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfRankAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_rank_amount", "measure"),
+);
+/**
+ * Metric Title: Last value of runvar amount
+ * Metric ID: first_value_of_runvar_amount
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfRunvarAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_runvar_amount", "measure"),
+);
+/**
+ * Metric Title: First value of runvar amount
+ * Metric ID: first_value_of_runvar_amount_2
+ * Metric Type: MAQL Metric
+ */
+export const FirstValueOfRunvarAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("first_value_of_runvar_amount_2", "measure"),
+);
+/**
+ * Metric Title: For Next first value of amount
+ * Metric ID: for_next_first_value_of_amount
+ * Metric Type: MAQL Metric
+ */
+export const ForNextFirstValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("for_next_first_value_of_amount", "measure"),
+);
+/**
+ * Metric Title: For Next last value of amount
+ * Metric ID: for_next_last_value_of_amount
+ * Metric Type: MAQL Metric
+ */
+export const ForNextLastValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("for_next_last_value_of_amount", "measure"),
+);
+/**
+ * Metric Title: For Previous first value of amount
+ * Metric ID: for_previous_first_value_of_amount
+ * Metric Type: MAQL Metric
+ */
+export const ForPreviousFirstValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("for_previous_first_value_of_amount", "measure"),
+);
+/**
+ * Metric Title: For Previous last value of amount
+ * Metric ID: for_previous_last_value_of_amount
+ * Metric Type: MAQL Metric
+ */
+export const ForPreviousLastValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("for_previous_last_value_of_amount", "measure"),
+);
+/**
+ * Metric Title: Incorrect literal string with datetime_add with day
+ * Metric ID: incorrect_literal_string_with_datetime_add_with_day
+ * Metric Type: MAQL Metric
+ */
+export const IncorrectLiteralStringWithDatetimeAddWithDay: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("incorrect_literal_string_with_datetime_add_with_day", "measure"),
+);
+/**
+ * Metric Title: Incorrect literal string with datetime_add with month
+ * Metric ID: incorrect_literal_string_with_datetime_add_with_month
+ * Metric Type: MAQL Metric
+ */
+export const IncorrectLiteralStringWithDatetimeAddWithMonth: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("incorrect_literal_string_with_datetime_add_with_month", "measure"),
+);
+/**
+ * Metric Title: Incorrect literal string with datetime_diff
+ * Metric ID: incorrect_literal_string_with_datetime_diff
+ * Metric Type: MAQL Metric
+ */
+export const IncorrectLiteralStringWithDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("incorrect_literal_string_with_datetime_diff", "measure"),
+);
+/**
+ * Metric Title: Last value of amount by quarter
+ * Metric ID: last_value_of_amount_by_quarter
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfAmountByQuarter: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_amount_by_quarter", "measure"),
+);
+/**
+ * Metric Title: Last value of amount by sales rep
+ * Metric ID: last_value_of_amount_by_sales_rep
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfAmountBySalesRep: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_amount_by_sales_rep", "measure"),
+);
+/**
+ * Metric Title: Last value of amount order asc
+ * Metric ID: last_value_of_amount_order_asc
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfAmountOrderAsc: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_amount_order_asc", "measure"),
+);
+/**
+ * Metric Title: Last value of amount order desc
+ * Metric ID: last_value_of_amount_order_desc
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfAmountOrderDesc: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_amount_order_desc", "measure"),
+);
+/**
+ * Metric Title: Last value of amount with previous
+ * Metric ID: last_value_of_amount_with_previous
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfAmountWithPrevious: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_amount_with_previous", "measure"),
+);
+/**
+ * Metric Title: Last value of rank amount
+ * Metric ID: last_value_of_rank_amount
+ * Metric Type: MAQL Metric
+ */
+export const LastValueOfRankAmount: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("last_value_of_rank_amount", "measure"),
+);
+/**
+ * Metric Title: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i
+ * Metric ID: lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i
+ * Metric Type: MAQL Metric
+ */
+export const LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorI: IMeasure<IMeasureDefinition> =
+    newMeasure(
+        idRef(
+            "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+            "measure",
+        ),
+    );
+/**
+ * Metric Title: Maximum literal of datetime_add
+ * Metric ID: maximum_literal_of_datetime_add
+ * Metric Type: MAQL Metric
+ */
+export const MaximumLiteralOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("maximum_literal_of_datetime_add", "measure"),
+);
+/**
+ * Metric Title: Max of top level
+ * Metric ID: max_of_top_level
+ * Metric Type: MAQL Metric
+ */
+export const MaxOfTopLevel: IMeasure<IMeasureDefinition> = newMeasure(idRef("max_of_top_level", "measure"));
+/**
+ * Metric Title: Metric has null value
+ * Metric ID: metric_has_null_value
+ * Metric Type: MAQL Metric
+ */
+export const MetricHasNullValue: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("metric_has_null_value", "measure"),
+);
+/**
+ * Metric Title: Missing required datetime_add granularity
+ * Metric ID: missing_required_datetime_add_granularity
+ * Metric Type: MAQL Metric
+ */
+export const MissingRequiredDatetimeAddGranularity: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("missing_required_datetime_add_granularity", "measure"),
+);
+/**
+ * Metric Title: Negative Metric
+ * Metric ID: negative_metric
+ * Metric Type: MAQL Metric
+ */
+export const NegativeMetric: IMeasure<IMeasureDefinition> = newMeasure(idRef("negative_metric", "measure"));
+/**
+ * Metric Title: Not allow datetime types for datetime_diff
+ * Metric ID: not_allow_datetime_types_for_datetime_diff
+ * Metric Type: MAQL Metric
+ */
+export const NotAllowDatetimeTypesForDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("not_allow_datetime_types_for_datetime_diff", "measure"),
+);
+/**
+ * Metric Title: Not enough context for MAX
+ * Metric ID: not_enough_context_for_max
+ * Metric Type: MAQL Metric
+ */
+export const NotEnoughContextForMAX: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("not_enough_context_for_max", "measure"),
+);
+/**
+ * Metric Title: Not enough context for MIN
+ * Metric ID: not_enough_context_for_min
+ * Metric Type: MAQL Metric
+ */
+export const NotEnoughContextForMIN: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("not_enough_context_for_min", "measure"),
+);
+/**
+ * Metric Title: No Time transformation
+ * Metric ID: no_time_transformation
+ * Metric Type: MAQL Metric
+ */
+export const NoTimeTransformation: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("no_time_transformation", "measure"),
+);
+/**
+ * Metric Title: # of Activities
+ * Metric ID: of_activities
+ * Metric Type: MAQL Metric
+ */
+export const NrOfActivities: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_activities", "measure"));
+/**
+ * Metric Title: # of Lost Opps.
+ * Metric ID: of_lost_opps.
+ * Metric Type: MAQL Metric
+ */
+export const NrOfLostOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_lost_opps.", "measure"));
+/**
+ * Metric Title: # of Won Opps.
+ * Metric ID: of_won_opps.
+ * Metric Type: MAQL Metric
+ */
+export const NrOfWonOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_won_opps.", "measure"));
+/**
+ * Metric Title: _Opp. First Snapshot
+ * Metric ID: opp._first_snapshot
+ * Metric Type: MAQL Metric
+ */
+export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("opp._first_snapshot", "measure"),
+);
+/**
+ * Metric Title: Runsum first value of amount with condition
+ * Metric ID: runsum_first_value_of_amount_with_condition
+ * Metric Type: MAQL Metric
+ */
+export const RunsumFirstValueOfAmountWithCondition: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("runsum_first_value_of_amount_with_condition", "measure"),
+);
+/**
+ * Metric Title: Runsum last value of amount with condition
+ * Metric ID: runsum_last_value_of_amount_with_condition
+ * Metric Type: MAQL Metric
+ */
+export const RunsumLastValueOfAmountWithCondition: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("runsum_last_value_of_amount_with_condition", "measure"),
+);
+/**
+ * Metric Title: Sample XIRR
+ * Metric ID: sample_xirr
+ * Metric Type: MAQL Metric
+ */
+export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(idRef("sample_xirr", "measure"));
+/**
+ * Metric Title: _Snapshot [BOP]
+ * Metric ID: snapshot_bop
+ * Metric Type: MAQL Metric
+ */
+export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
+/**
+ * Metric Title: Sum amount with datetime_add and between
+ * Metric ID: sum_amount_with_datetime_add_and_between
+ * Metric Type: MAQL Metric
+ */
+export const SumAmountWithDatetimeAddAndBetween: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_amount_with_datetime_add_and_between", "measure"),
+);
+/**
+ * Metric Title: Sum amount with datetime_add and not between
+ * Metric ID: sum_amount_with_datetime_add_and_not_between
+ * Metric Type: MAQL Metric
+ */
+export const SumAmountWithDatetimeAddAndNotBetween: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_amount_with_datetime_add_and_not_between", "measure"),
+);
+/**
+ * Metric Title: Sum of amount between max created year and previous year
+ * Metric ID: sum_of_amount_between_max_created_year_and_previous_year
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountBetweenMaxCreatedYearAndPreviousYear: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_between_max_created_year_and_previous_year", "measure"),
+);
+/**
+ * Metric Title: Sum of amount not between max created year and this year
+ * Metric ID: sum_of_amount_not_between_max_created_year_and_this_year
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountNotBetweenMaxCreatedYearAndThisYear: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_not_between_max_created_year_and_this_year", "measure"),
+);
+/**
+ * Metric Title: Sum of amount with case and max
+ * Metric ID: sum_of_amount_with_case_and_max
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountWithCaseAndMax: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_with_case_and_max", "measure"),
+);
+/**
+ * Metric Title: Sum of amount with if, having and min
+ * Metric ID: sum_of_amount_with_if_having_and_min
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountWithIfHavingAndMin: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_with_if_having_and_min", "measure"),
+);
+/**
+ * Metric Title: Sum of amount with min and by all other
+ * Metric ID: sum_of_amount_with_min_and_by_all_other
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountWithMinAndByAllOther: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_with_min_and_by_all_other", "measure"),
+);
+/**
+ * Metric Title: Sum of amount with min and by all other except
+ * Metric ID: sum_of_amount_with_min_and_by_all_other_except
+ * Metric Type: MAQL Metric
+ */
+export const SumOfAmountWithMinAndByAllOtherExcept: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("sum_of_amount_with_min_and_by_all_other_except", "measure"),
+);
+/**
+ * Metric Title: _Timeline [BOP]
+ * Metric ID: timeline_bop
+ * Metric Type: MAQL Metric
+ */
+export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
+/**
+ * Metric Title: Top level of datetime_add
+ * Metric ID: top_level_of_datetime_add
+ * Metric Type: MAQL Metric
+ */
+export const TopLevelOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("top_level_of_datetime_add", "measure"),
+);
+/**
+ * Metric Title: Top level metric for MAX
+ * Metric ID: top_level_metric_for_max
+ * Metric Type: MAQL Metric
+ */
+export const TopLevelMetricForMAX: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("top_level_metric_for_max", "measure"),
+);
+/**
+ * Metric Title: Top level metric for MIN
+ * Metric ID: top_level_metric_for_min
+ * Metric Type: MAQL Metric
+ */
+export const TopLevelMetricForMIN: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("top_level_metric_for_min", "measure"),
+);
+/**
+ * Metric Title: Time transformation (combined)
+ * Metric ID: time_transformation_combined
+ * Metric Type: MAQL Metric
+ */
+export const TimeTransformationCombined: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("time_transformation_combined", "measure"),
+);
+/**
+ * Metric Title: Time transformation
+ * Metric ID: time_transformation
+ * Metric Type: MAQL Metric
+ */
+export const TimeTransformation: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("time_transformation", "measure"),
+);
 /**
  * Fact Title: Activity (Date)
- * Fact ID: dt.activity.activity
+ * Fact ID: fact.f_activity.activitydate
  */
 export const ActivityDate = {
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Activity (Date)
-     * Fact ID: dt.activity.activity
+     * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Amount
- * Fact ID: fact.opportunitysnapshot.amount
- */
-export const Amount_1 = {
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("avg")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("min")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("max")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("median")),
-    /**
-     * Fact Title: Amount
-     * Fact ID: fact.opportunitysnapshot.amount
-     * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Days to Close
- * Fact ID: fact.opportunitysnapshot.daystoclose
- */
-export const DaysToClose = {
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("avg")),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("min")),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("max")),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
-        m.aggregation("median"),
-    ),
-    /**
-     * Fact Title: Days to Close
-     * Fact ID: fact.opportunitysnapshot.daystoclose
-     * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
-        m.aggregation("runsum"),
-    ),
-};
-/**
- * Fact Title: Duration
- * Fact ID: fact.stagehistory.duration
- */
-export const Duration = {
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("avg")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("min")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("max")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("median")),
-    /**
-     * Fact Title: Duration
-     * Fact ID: fact.stagehistory.duration
-     * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Opp. Close (Date)
- * Fact ID: dt.opportunitysnapshot.closedate
- */
-export const OppCloseDate = {
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("avg")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: min
-     */ Min: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("min")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: max
-     */ Max: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("max")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: median
-     */ Median: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("median")),
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: dt.opportunitysnapshot.closedate
-     * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Opp. Created (Date)
- * Fact ID: dt.opportunity.oppcreated
+ * Fact ID: fact.f_opportunity.oppcreateddate
  */
 export const OppCreatedDate = {
     /**
      * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("median")),
-    /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: dt.opportunity.oppcreated
-     * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Opp. Snapshot (Date)
- * Fact ID: dt.opportunitysnapshot.snapshotdate
- */
-export const OppSnapshotDate = {
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("sum")),
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("avg")),
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: min
-     */ Min: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("min")),
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: max
-     */ Max: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("max")),
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
-     * Fact Aggregation: median
-     */ Median: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
+     */ Median: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) =>
         m.aggregation("median"),
     ),
     /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: dt.opportunitysnapshot.snapshotdate
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
+     */ Runsum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) =>
         m.aggregation("runsum"),
     ),
 };
 /**
- * Fact Title: Probability
- * Fact ID: fact.opportunitysnapshot.probability
+ * Fact Title: Opp. Close (Date)
+ * Fact ID: fact.f_opportunitysnapshot.oppclosedate
  */
-export const Probability_1 = {
+export const OppCloseDate = {
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("sum")),
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("avg"),
+    ),
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("min"),
+    ),
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("max"),
+    ),
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
+     */ Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
         m.aggregation("median"),
     ),
     /**
-     * Fact Title: Probability
-     * Fact ID: fact.opportunitysnapshot.probability
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
+     */ Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
+};
+/**
+ * Fact Title: Opp. Snapshot (Date)
+ * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+ */
+export const OppSnapshotDate = {
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("avg"),
+    ),
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("min"),
+    ),
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("max"),
+    ),
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
         m.aggregation("runsum"),
     ),
 };
 /**
  * Fact Title: Timeline (Date)
- * Fact ID: dt.timeline.timeline
+ * Fact ID: fact.f_timeline.timelinedate
  */
 export const TimelineDate = {
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Timeline (Date)
-     * Fact ID: dt.timeline.timeline
+     * Fact ID: fact.f_timeline.timelinedate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
- * Fact Title: Values
- * Fact ID: fact.hardwaretest.values
+ * Fact Title: Density
+ * Fact ID: f_density
  */
-export const Values = {
+export const Density = {
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("sum")),
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("avg")),
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("min")),
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("max")),
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("median")),
     /**
-     * Fact Title: Values
-     * Fact ID: fact.hardwaretest.values
+     * Fact Title: Density
+     * Fact ID: f_density
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Amount
+ * Fact ID: f_opportunitysnapshot.f_amount
+ */
+export const Amount_1 = {
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Amount
+     * Fact ID: f_opportunitysnapshot.f_amount
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_opportunitysnapshot.f_amount", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Days to Close
+ * Fact ID: f_opportunitysnapshot.f_daystoclose
+ */
+export const DaysToClose = {
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
+    /**
+     * Fact Title: Days to Close
+     * Fact ID: f_opportunitysnapshot.f_daystoclose
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_opportunitysnapshot.f_daystoclose", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
+};
+/**
+ * Fact Title: Probability
+ * Fact ID: f_opportunitysnapshot.f_probability
+ */
+export const Probability_1 = {
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
+    /**
+     * Fact Title: Probability
+     * Fact ID: f_opportunitysnapshot.f_probability
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_opportunitysnapshot.f_probability", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
+};
+/**
+ * Fact Title: Population
+ * Fact ID: f_population
+ */
+export const Population = {
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Duration
+ * Fact ID: f_stagehistory.f_duration
+ */
+export const Duration = {
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Duration
+     * Fact ID: f_stagehistory.f_duration
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_stagehistory.f_duration", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Velocity
- * Fact ID: fact.stagehistory.velocity
+ * Fact ID: f_stagehistory.f_velocity
  */
 export const Velocity = {
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: avg
-     */ Avg: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: min
-     */ Min: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: max
-     */ Max: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: median
-     */ Median: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Velocity
-     * Fact ID: fact.stagehistory.velocity
+     * Fact ID: f_stagehistory.f_velocity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("runsum")),
 };
 /** Available Date Data Sets */
 export const DateDatasets = {
     /**
-     * Date Data Set Title: Date (Created)
-     * Date Data Set ID: created.dataset.dt
+     * Date Data Set Title: Activity
+     * Date Data Set ID: dt_activity_timestamp
      */
-    Created: {
-        ref: idRef("created.dataset.dt", "dataSet"),
-        identifier: "created.dataset.dt",
+    Activity: {
+        ref: idRef("dt_activity_timestamp", "dataSet"),
+        identifier: "dt_activity_timestamp",
         /**
-         * Date Attribute: Year (Created)
-         * Date Attribute ID: created.year
-         */ Year: {
-            ref: idRef("created.year", "attribute"),
-            identifier: "created.year",
+         * Date Attribute: Activity - Date
+         * Date Attribute ID: dt_activity_timestamp.day
+         */ ActivityDate: {
+            ref: idRef("dt_activity_timestamp.day", "attribute"),
+            identifier: "dt_activity_timestamp.day",
             /**
-             * Display Form Title: Year (Created)
-             * Display Form ID: created.aag81lMifn6q
-             */ Default: newAttribute("created.aag81lMifn6q"),
+             * Display Form Title: Activity - Date
+             * Display Form ID: dt_activity_timestamp.day
+             */ Default: newAttribute("dt_activity_timestamp.day"),
         },
         /**
-         * Date Attribute: Quarter (Created)
-         * Date Attribute ID: created.quarter.in.year
-         */ Quarter: {
-            ref: idRef("created.quarter.in.year", "attribute"),
-            identifier: "created.quarter.in.year",
+         * Date Attribute: Activity - Day of Month
+         * Date Attribute ID: dt_activity_timestamp.dayOfMonth
+         */ ActivityDayOfMonth: {
+            ref: idRef("dt_activity_timestamp.dayOfMonth", "attribute"),
+            identifier: "dt_activity_timestamp.dayOfMonth",
             /**
-             * Display Form Title: default (Created)
-             * Display Form ID: created.aam81lMifn6q
-             */ Default: newAttribute("created.aam81lMifn6q"),
+             * Display Form Title: Activity - Day of Month
+             * Display Form ID: dt_activity_timestamp.dayOfMonth
+             */ Default: newAttribute("dt_activity_timestamp.dayOfMonth"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat)/Year (Created)
-         * Date Attribute ID: created.week
-         */ WeekSunSatYear: {
-            ref: idRef("created.week", "attribute"),
-            identifier: "created.week",
+         * Date Attribute: Activity - Day of Week
+         * Date Attribute ID: dt_activity_timestamp.dayOfWeek
+         */ ActivityDayOfWeek: {
+            ref: idRef("dt_activity_timestamp.dayOfWeek", "attribute"),
+            identifier: "dt_activity_timestamp.dayOfWeek",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Created)
-             * Display Form ID: created.aaA81lMifn6q
-             */ WeekNrYear: newAttribute("created.aaA81lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Created)
-             * Display Form ID: created.aaw81lMifn6q
-             */ WeekStarting: newAttribute("created.aaw81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Created)
-             * Display Form ID: created.aau81lMifn6q
-             */ FromTo: newAttribute("created.aau81lMifn6q"),
-            /**
-             * Display Form Title: Week #/Year (Cont.) (Created)
-             * Display Form ID: created.aay81lMifn6q
-             */ WeekNrYear_1: newAttribute("created.aay81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Cont.) (Created)
-             * Display Form ID: created.aaC81lMifn6q
-             */ WkQtrYear: newAttribute("created.aaC81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Created)
-             * Display Form ID: created.aas81lMifn6q
-             */ WkQtrYear_1: newAttribute("created.aas81lMifn6q"),
+             * Display Form Title: Activity - Day of Week
+             * Display Form ID: dt_activity_timestamp.dayOfWeek
+             */ Default: newAttribute("dt_activity_timestamp.dayOfWeek"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) (Created)
-         * Date Attribute ID: created.week.in.year
-         */ WeekSunSat: {
-            ref: idRef("created.week.in.year", "attribute"),
-            identifier: "created.week.in.year",
+         * Date Attribute: Activity - Day of Year
+         * Date Attribute ID: dt_activity_timestamp.dayOfYear
+         */ ActivityDayOfYear: {
+            ref: idRef("dt_activity_timestamp.dayOfYear", "attribute"),
+            identifier: "dt_activity_timestamp.dayOfYear",
             /**
-             * Display Form Title: Number US (Created)
-             * Display Form ID: created.aaI81lMifn6q
-             */ NumberUS: newAttribute("created.aaI81lMifn6q"),
+             * Display Form Title: Activity - Day of Year
+             * Display Form ID: dt_activity_timestamp.dayOfYear
+             */ Default: newAttribute("dt_activity_timestamp.dayOfYear"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) of Qtr (Created)
-         * Date Attribute ID: created.week.in.quarter
-         */ WeekSunSatOfQtr: {
-            ref: idRef("created.week.in.quarter", "attribute"),
-            identifier: "created.week.in.quarter",
+         * Date Attribute: Activity - Hour
+         * Date Attribute ID: dt_activity_timestamp.hour
+         */ ActivityHour: {
+            ref: idRef("dt_activity_timestamp.hour", "attribute"),
+            identifier: "dt_activity_timestamp.hour",
             /**
-             * Display Form Title: Number US (Created)
-             * Display Form ID: created.aaO81lMifn6q
-             */ NumberUS: newAttribute("created.aaO81lMifn6q"),
+             * Display Form Title: Activity - Hour
+             * Display Form ID: dt_activity_timestamp.hour
+             */ Default: newAttribute("dt_activity_timestamp.hour"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun)/Year (Created)
-         * Date Attribute ID: created.euweek
-         */ WeekMonSunYear: {
-            ref: idRef("created.euweek", "attribute"),
-            identifier: "created.euweek",
+         * Date Attribute: Activity - Hour of Day
+         * Date Attribute ID: dt_activity_timestamp.hourOfDay
+         */ ActivityHourOfDay: {
+            ref: idRef("dt_activity_timestamp.hourOfDay", "attribute"),
+            identifier: "dt_activity_timestamp.hourOfDay",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Created)
-             * Display Form ID: created.aa281lMifn6q
-             */ WeekNrYear: newAttribute("created.aa281lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Created)
-             * Display Form ID: created.aaY81lMifn6q
-             */ WeekStarting: newAttribute("created.aaY81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Created)
-             * Display Form ID: created.aaW81lMifn6q
-             */ FromTo: newAttribute("created.aaW81lMifn6q"),
+             * Display Form Title: Activity - Hour of Day
+             * Display Form ID: dt_activity_timestamp.hourOfDay
+             */ Default: newAttribute("dt_activity_timestamp.hourOfDay"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) (Created)
-         * Date Attribute ID: created.euweek.in.year
-         */ WeekMonSun: {
-            ref: idRef("created.euweek.in.year", "attribute"),
-            identifier: "created.euweek.in.year",
+         * Date Attribute: Activity - Minute
+         * Date Attribute ID: dt_activity_timestamp.minute
+         */ ActivityMinute: {
+            ref: idRef("dt_activity_timestamp.minute", "attribute"),
+            identifier: "dt_activity_timestamp.minute",
             /**
-             * Display Form Title: Number EU (Created)
-             * Display Form ID: created.aba81lMifn6q
-             */ NumberEU: newAttribute("created.aba81lMifn6q"),
+             * Display Form Title: Activity - Minute
+             * Display Form ID: dt_activity_timestamp.minute
+             */ Default: newAttribute("dt_activity_timestamp.minute"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) of Qtr (Created)
-         * Date Attribute ID: created.euweek.in.quarter
-         */ WeekMonSunOfQtr: {
-            ref: idRef("created.euweek.in.quarter", "attribute"),
-            identifier: "created.euweek.in.quarter",
+         * Date Attribute: Activity - Minute of Hour
+         * Date Attribute ID: dt_activity_timestamp.minuteOfHour
+         */ ActivityMinuteOfHour: {
+            ref: idRef("dt_activity_timestamp.minuteOfHour", "attribute"),
+            identifier: "dt_activity_timestamp.minuteOfHour",
             /**
-             * Display Form Title: Number EU (Created)
-             * Display Form ID: created.abg81lMifn6q
-             */ NumberEU: newAttribute("created.abg81lMifn6q"),
+             * Display Form Title: Activity - Minute of Hour
+             * Display Form ID: dt_activity_timestamp.minuteOfHour
+             */ Default: newAttribute("dt_activity_timestamp.minuteOfHour"),
         },
         /**
-         * Date Attribute: Month (Created)
-         * Date Attribute ID: created.month.in.year
-         */ Month: {
-            ref: idRef("created.month.in.year", "attribute"),
-            identifier: "created.month.in.year",
+         * Date Attribute: Activity - Month/Year
+         * Date Attribute ID: dt_activity_timestamp.month
+         */ ActivityMonthYear: {
+            ref: idRef("dt_activity_timestamp.month", "attribute"),
+            identifier: "dt_activity_timestamp.month",
             /**
-             * Display Form Title: Short (Jan) (Created)
-             * Display Form ID: created.abm81lMifn6q
-             */ Short: newAttribute("created.abm81lMifn6q"),
-            /**
-             * Display Form Title: Long (January) (Created)
-             * Display Form ID: created.abs81lMifn6q
-             */ Long: newAttribute("created.abs81lMifn6q"),
-            /**
-             * Display Form Title: Number (M1) (Created)
-             * Display Form ID: created.abq81lMifn6q
-             */ Number: newAttribute("created.abq81lMifn6q"),
-            /**
-             * Display Form Title: M/Q (M1/Q1) (Created)
-             * Display Form ID: created.abo81lMifn6q
-             */ MQ: newAttribute("created.abo81lMifn6q"),
+             * Display Form Title: Activity - Month/Year
+             * Display Form ID: dt_activity_timestamp.month
+             */ Default: newAttribute("dt_activity_timestamp.month"),
         },
         /**
-         * Date Attribute: Month of Quarter (Created)
-         * Date Attribute ID: created.month.in.quarter
-         */ MonthOfQuarter: {
-            ref: idRef("created.month.in.quarter", "attribute"),
-            identifier: "created.month.in.quarter",
+         * Date Attribute: Activity - Month of Year
+         * Date Attribute ID: dt_activity_timestamp.monthOfYear
+         */ ActivityMonthOfYear: {
+            ref: idRef("dt_activity_timestamp.monthOfYear", "attribute"),
+            identifier: "dt_activity_timestamp.monthOfYear",
             /**
-             * Display Form Title: Number (Created)
-             * Display Form ID: created.aby81lMifn6q
-             */ Number: newAttribute("created.aby81lMifn6q"),
+             * Display Form Title: Activity - Month of Year
+             * Display Form ID: dt_activity_timestamp.monthOfYear
+             */ Default: newAttribute("dt_activity_timestamp.monthOfYear"),
         },
         /**
-         * Date Attribute: Day of Year (Created)
-         * Date Attribute ID: created.day.in.year
-         */ DayOfYear: {
-            ref: idRef("created.day.in.year", "attribute"),
-            identifier: "created.day.in.year",
+         * Date Attribute: Activity - Quarter/Year
+         * Date Attribute ID: dt_activity_timestamp.quarter
+         */ ActivityQuarterYear: {
+            ref: idRef("dt_activity_timestamp.quarter", "attribute"),
+            identifier: "dt_activity_timestamp.quarter",
             /**
-             * Display Form Title: default (Created)
-             * Display Form ID: created.abE81lMifn6q
-             */ Default: newAttribute("created.abE81lMifn6q"),
+             * Display Form Title: Activity - Quarter/Year
+             * Display Form ID: dt_activity_timestamp.quarter
+             */ Default: newAttribute("dt_activity_timestamp.quarter"),
         },
         /**
-         * Date Attribute: Day of Week (Sun-Sat) (Created)
-         * Date Attribute ID: created.day.in.week
-         */ DayOfWeekSunSat: {
-            ref: idRef("created.day.in.week", "attribute"),
-            identifier: "created.day.in.week",
+         * Date Attribute: Activity - Quarter of Year
+         * Date Attribute ID: dt_activity_timestamp.quarterOfYear
+         */ ActivityQuarterOfYear: {
+            ref: idRef("dt_activity_timestamp.quarterOfYear", "attribute"),
+            identifier: "dt_activity_timestamp.quarterOfYear",
             /**
-             * Display Form Title: Short (Sun) (Created)
-             * Display Form ID: created.abK81lMifn6q
-             */ Short: newAttribute("created.abK81lMifn6q"),
-            /**
-             * Display Form Title: Long (Sunday) (Created)
-             * Display Form ID: created.abO81lMifn6q
-             */ Long: newAttribute("created.abO81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Sunday) (Created)
-             * Display Form ID: created.abM81lMifn6q
-             */ Number: newAttribute("created.abM81lMifn6q"),
+             * Display Form Title: Activity - Quarter of Year
+             * Display Form ID: dt_activity_timestamp.quarterOfYear
+             */ Default: newAttribute("dt_activity_timestamp.quarterOfYear"),
         },
         /**
-         * Date Attribute: Day of Week (Mon-Sun) (Created)
-         * Date Attribute ID: created.day.in.euweek
-         */ DayOfWeekMonSun: {
-            ref: idRef("created.day.in.euweek", "attribute"),
-            identifier: "created.day.in.euweek",
+         * Date Attribute: Activity - Week/Year
+         * Date Attribute ID: dt_activity_timestamp.week
+         */ ActivityWeekYear: {
+            ref: idRef("dt_activity_timestamp.week", "attribute"),
+            identifier: "dt_activity_timestamp.week",
             /**
-             * Display Form Title: Short (Mon) (Created)
-             * Display Form ID: created.abU81lMifn6q
-             */ Short: newAttribute("created.abU81lMifn6q"),
-            /**
-             * Display Form Title: Long (Monday) (Created)
-             * Display Form ID: created.abY81lMifn6q
-             */ Long: newAttribute("created.abY81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Monday) (Created)
-             * Display Form ID: created.abW81lMifn6q
-             */ Number: newAttribute("created.abW81lMifn6q"),
+             * Display Form Title: Activity - Week/Year
+             * Display Form ID: dt_activity_timestamp.week
+             */ Default: newAttribute("dt_activity_timestamp.week"),
         },
         /**
-         * Date Attribute: Day of Quarter (Created)
-         * Date Attribute ID: created.day.in.quarter
-         */ DayOfQuarter: {
-            ref: idRef("created.day.in.quarter", "attribute"),
-            identifier: "created.day.in.quarter",
+         * Date Attribute: Activity - Week of Year
+         * Date Attribute ID: dt_activity_timestamp.weekOfYear
+         */ ActivityWeekOfYear: {
+            ref: idRef("dt_activity_timestamp.weekOfYear", "attribute"),
+            identifier: "dt_activity_timestamp.weekOfYear",
             /**
-             * Display Form Title: default (Created)
-             * Display Form ID: created.ab481lMifn6q
-             */ Default: newAttribute("created.ab481lMifn6q"),
+             * Display Form Title: Activity - Week of Year
+             * Display Form ID: dt_activity_timestamp.weekOfYear
+             */ Default: newAttribute("dt_activity_timestamp.weekOfYear"),
         },
         /**
-         * Date Attribute: Day of Month (Created)
-         * Date Attribute ID: created.day.in.month
-         */ DayOfMonth: {
-            ref: idRef("created.day.in.month", "attribute"),
-            identifier: "created.day.in.month",
+         * Date Attribute: Activity - Year
+         * Date Attribute ID: dt_activity_timestamp.year
+         */ ActivityYear: {
+            ref: idRef("dt_activity_timestamp.year", "attribute"),
+            identifier: "dt_activity_timestamp.year",
             /**
-             * Display Form Title: default (Created)
-             * Display Form ID: created.aca81lMifn6q
-             */ Default: newAttribute("created.aca81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter/Year (Created)
-         * Date Attribute ID: created.quarter
-         */ QuarterYear: {
-            ref: idRef("created.quarter", "attribute"),
-            identifier: "created.quarter",
-            /**
-             * Display Form Title: US Short (Created)
-             * Display Form ID: created.aci81lMifn6q
-             */ USShort: newAttribute("created.aci81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month/Year (Created)
-         * Date Attribute ID: created.month
-         */ MonthYear: {
-            ref: idRef("created.month", "attribute"),
-            identifier: "created.month",
-            /**
-             * Display Form Title: Short (Jan 2010) (Created)
-             * Display Form ID: created.act81lMifn6q
-             */ Short: newAttribute("created.act81lMifn6q"),
-            /**
-             * Display Form Title: Long (January 2010) (Created)
-             * Display Form ID: created.acx81lMifn6q
-             */ Long: newAttribute("created.acx81lMifn6q"),
-            /**
-             * Display Form Title: Number (1/2010) (Created)
-             * Display Form ID: created.acv81lMifn6q
-             */ Number: newAttribute("created.acv81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Date (Created)
-         * Date Attribute ID: created.date
-         */ Date: {
-            ref: idRef("created.date", "attribute"),
-            identifier: "created.date",
-            /**
-             * Display Form Title: mm/dd/yyyy (Created)
-             * Display Form ID: created.date.mmddyyyy
-             */ MmDdYyyy: newAttribute("created.date.mmddyyyy"),
-            /**
-             * Display Form Title: yyyy-mm-dd (Created)
-             * Display Form ID: created.date.yyyymmdd
-             */ YyyyMmDd: newAttribute("created.date.yyyymmdd"),
-            /**
-             * Display Form Title: m/d/yy (no leading zeroes) (Created)
-             * Display Form ID: created.date.mdyy
-             */ MDYy: newAttribute("created.date.mdyy"),
-            /**
-             * Display Form Title: Long (Mon, Jan 1, 2010) (Created)
-             * Display Form ID: created.date.long
-             */ Long: newAttribute("created.date.long"),
-            /**
-             * Display Form Title: dd/mm/yyyy (Created)
-             * Display Form ID: created.date.ddmmyyyy
-             */ DdMmYyyy: newAttribute("created.date.ddmmyyyy"),
-            /**
-             * Display Form Title: dd-mm-yyyy (Created)
-             * Display Form ID: created.date.eddmmyyyy
-             */ DdMmYyyy_1: newAttribute("created.date.eddmmyyyy"),
+             * Display Form Title: Activity - Year
+             * Display Form ID: dt_activity_timestamp.year
+             */ Default: newAttribute("dt_activity_timestamp.year"),
         },
     },
     /**
-     * Date Data Set Title: Date (Closed)
-     * Date Data Set ID: closed.dataset.dt
+     * Date Data Set Title: Closed
+     * Date Data Set ID: dt_closedate_timestamp
      */ Closed: {
-        ref: idRef("closed.dataset.dt", "dataSet"),
-        identifier: "closed.dataset.dt",
+        ref: idRef("dt_closedate_timestamp", "dataSet"),
+        identifier: "dt_closedate_timestamp",
         /**
-         * Date Attribute: Year (Closed)
-         * Date Attribute ID: closed.year
-         */ Year: {
-            ref: idRef("closed.year", "attribute"),
-            identifier: "closed.year",
+         * Date Attribute: Closed - Date
+         * Date Attribute ID: dt_closedate_timestamp.day
+         */ ClosedDate: {
+            ref: idRef("dt_closedate_timestamp.day", "attribute"),
+            identifier: "dt_closedate_timestamp.day",
             /**
-             * Display Form Title: Year (Closed)
-             * Display Form ID: closed.aag81lMifn6q
-             */ Default: newAttribute("closed.aag81lMifn6q"),
+             * Display Form Title: Closed - Date
+             * Display Form ID: dt_closedate_timestamp.day
+             */ Default: newAttribute("dt_closedate_timestamp.day"),
         },
         /**
-         * Date Attribute: Quarter (Closed)
-         * Date Attribute ID: closed.quarter.in.year
-         */ Quarter: {
-            ref: idRef("closed.quarter.in.year", "attribute"),
-            identifier: "closed.quarter.in.year",
+         * Date Attribute: Closed - Day of Month
+         * Date Attribute ID: dt_closedate_timestamp.dayOfMonth
+         */ ClosedDayOfMonth: {
+            ref: idRef("dt_closedate_timestamp.dayOfMonth", "attribute"),
+            identifier: "dt_closedate_timestamp.dayOfMonth",
             /**
-             * Display Form Title: default (Closed)
-             * Display Form ID: closed.aam81lMifn6q
-             */ Default: newAttribute("closed.aam81lMifn6q"),
+             * Display Form Title: Closed - Day of Month
+             * Display Form ID: dt_closedate_timestamp.dayOfMonth
+             */ Default: newAttribute("dt_closedate_timestamp.dayOfMonth"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat)/Year (Closed)
-         * Date Attribute ID: closed.week
-         */ WeekSunSatYear: {
-            ref: idRef("closed.week", "attribute"),
-            identifier: "closed.week",
+         * Date Attribute: Closed - Day of Week
+         * Date Attribute ID: dt_closedate_timestamp.dayOfWeek
+         */ ClosedDayOfWeek: {
+            ref: idRef("dt_closedate_timestamp.dayOfWeek", "attribute"),
+            identifier: "dt_closedate_timestamp.dayOfWeek",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Closed)
-             * Display Form ID: closed.aaA81lMifn6q
-             */ WeekNrYear: newAttribute("closed.aaA81lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Closed)
-             * Display Form ID: closed.aaw81lMifn6q
-             */ WeekStarting: newAttribute("closed.aaw81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Closed)
-             * Display Form ID: closed.aau81lMifn6q
-             */ FromTo: newAttribute("closed.aau81lMifn6q"),
-            /**
-             * Display Form Title: Week #/Year (Cont.) (Closed)
-             * Display Form ID: closed.aay81lMifn6q
-             */ WeekNrYear_1: newAttribute("closed.aay81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Cont.) (Closed)
-             * Display Form ID: closed.aaC81lMifn6q
-             */ WkQtrYear: newAttribute("closed.aaC81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Closed)
-             * Display Form ID: closed.aas81lMifn6q
-             */ WkQtrYear_1: newAttribute("closed.aas81lMifn6q"),
+             * Display Form Title: Closed - Day of Week
+             * Display Form ID: dt_closedate_timestamp.dayOfWeek
+             */ Default: newAttribute("dt_closedate_timestamp.dayOfWeek"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) (Closed)
-         * Date Attribute ID: closed.week.in.year
-         */ WeekSunSat: {
-            ref: idRef("closed.week.in.year", "attribute"),
-            identifier: "closed.week.in.year",
+         * Date Attribute: Closed - Day of Year
+         * Date Attribute ID: dt_closedate_timestamp.dayOfYear
+         */ ClosedDayOfYear: {
+            ref: idRef("dt_closedate_timestamp.dayOfYear", "attribute"),
+            identifier: "dt_closedate_timestamp.dayOfYear",
             /**
-             * Display Form Title: Number US (Closed)
-             * Display Form ID: closed.aaI81lMifn6q
-             */ NumberUS: newAttribute("closed.aaI81lMifn6q"),
+             * Display Form Title: Closed - Day of Year
+             * Display Form ID: dt_closedate_timestamp.dayOfYear
+             */ Default: newAttribute("dt_closedate_timestamp.dayOfYear"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) of Qtr (Closed)
-         * Date Attribute ID: closed.week.in.quarter
-         */ WeekSunSatOfQtr: {
-            ref: idRef("closed.week.in.quarter", "attribute"),
-            identifier: "closed.week.in.quarter",
+         * Date Attribute: Closed - Hour
+         * Date Attribute ID: dt_closedate_timestamp.hour
+         */ ClosedHour: {
+            ref: idRef("dt_closedate_timestamp.hour", "attribute"),
+            identifier: "dt_closedate_timestamp.hour",
             /**
-             * Display Form Title: Number US (Closed)
-             * Display Form ID: closed.aaO81lMifn6q
-             */ NumberUS: newAttribute("closed.aaO81lMifn6q"),
+             * Display Form Title: Closed - Hour
+             * Display Form ID: dt_closedate_timestamp.hour
+             */ Default: newAttribute("dt_closedate_timestamp.hour"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun)/Year (Closed)
-         * Date Attribute ID: closed.euweek
-         */ WeekMonSunYear: {
-            ref: idRef("closed.euweek", "attribute"),
-            identifier: "closed.euweek",
+         * Date Attribute: Closed - Hour of Day
+         * Date Attribute ID: dt_closedate_timestamp.hourOfDay
+         */ ClosedHourOfDay: {
+            ref: idRef("dt_closedate_timestamp.hourOfDay", "attribute"),
+            identifier: "dt_closedate_timestamp.hourOfDay",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Closed)
-             * Display Form ID: closed.aa281lMifn6q
-             */ WeekNrYear: newAttribute("closed.aa281lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Closed)
-             * Display Form ID: closed.aaY81lMifn6q
-             */ WeekStarting: newAttribute("closed.aaY81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Closed)
-             * Display Form ID: closed.aaW81lMifn6q
-             */ FromTo: newAttribute("closed.aaW81lMifn6q"),
+             * Display Form Title: Closed - Hour of Day
+             * Display Form ID: dt_closedate_timestamp.hourOfDay
+             */ Default: newAttribute("dt_closedate_timestamp.hourOfDay"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) (Closed)
-         * Date Attribute ID: closed.euweek.in.year
-         */ WeekMonSun: {
-            ref: idRef("closed.euweek.in.year", "attribute"),
-            identifier: "closed.euweek.in.year",
+         * Date Attribute: Closed - Minute
+         * Date Attribute ID: dt_closedate_timestamp.minute
+         */ ClosedMinute: {
+            ref: idRef("dt_closedate_timestamp.minute", "attribute"),
+            identifier: "dt_closedate_timestamp.minute",
             /**
-             * Display Form Title: Number EU (Closed)
-             * Display Form ID: closed.aba81lMifn6q
-             */ NumberEU: newAttribute("closed.aba81lMifn6q"),
+             * Display Form Title: Closed - Minute
+             * Display Form ID: dt_closedate_timestamp.minute
+             */ Default: newAttribute("dt_closedate_timestamp.minute"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) of Qtr (Closed)
-         * Date Attribute ID: closed.euweek.in.quarter
-         */ WeekMonSunOfQtr: {
-            ref: idRef("closed.euweek.in.quarter", "attribute"),
-            identifier: "closed.euweek.in.quarter",
+         * Date Attribute: Closed - Minute of Hour
+         * Date Attribute ID: dt_closedate_timestamp.minuteOfHour
+         */ ClosedMinuteOfHour: {
+            ref: idRef("dt_closedate_timestamp.minuteOfHour", "attribute"),
+            identifier: "dt_closedate_timestamp.minuteOfHour",
             /**
-             * Display Form Title: Number EU (Closed)
-             * Display Form ID: closed.abg81lMifn6q
-             */ NumberEU: newAttribute("closed.abg81lMifn6q"),
+             * Display Form Title: Closed - Minute of Hour
+             * Display Form ID: dt_closedate_timestamp.minuteOfHour
+             */ Default: newAttribute("dt_closedate_timestamp.minuteOfHour"),
         },
         /**
-         * Date Attribute: Month (Closed)
-         * Date Attribute ID: closed.month.in.year
-         */ Month: {
-            ref: idRef("closed.month.in.year", "attribute"),
-            identifier: "closed.month.in.year",
+         * Date Attribute: Closed - Month/Year
+         * Date Attribute ID: dt_closedate_timestamp.month
+         */ ClosedMonthYear: {
+            ref: idRef("dt_closedate_timestamp.month", "attribute"),
+            identifier: "dt_closedate_timestamp.month",
             /**
-             * Display Form Title: Short (Jan) (Closed)
-             * Display Form ID: closed.abm81lMifn6q
-             */ Short: newAttribute("closed.abm81lMifn6q"),
-            /**
-             * Display Form Title: Long (January) (Closed)
-             * Display Form ID: closed.abs81lMifn6q
-             */ Long: newAttribute("closed.abs81lMifn6q"),
-            /**
-             * Display Form Title: Number (M1) (Closed)
-             * Display Form ID: closed.abq81lMifn6q
-             */ Number: newAttribute("closed.abq81lMifn6q"),
-            /**
-             * Display Form Title: M/Q (M1/Q1) (Closed)
-             * Display Form ID: closed.abo81lMifn6q
-             */ MQ: newAttribute("closed.abo81lMifn6q"),
+             * Display Form Title: Closed - Month/Year
+             * Display Form ID: dt_closedate_timestamp.month
+             */ Default: newAttribute("dt_closedate_timestamp.month"),
         },
         /**
-         * Date Attribute: Month of Quarter (Closed)
-         * Date Attribute ID: closed.month.in.quarter
-         */ MonthOfQuarter: {
-            ref: idRef("closed.month.in.quarter", "attribute"),
-            identifier: "closed.month.in.quarter",
+         * Date Attribute: Closed - Month of Year
+         * Date Attribute ID: dt_closedate_timestamp.monthOfYear
+         */ ClosedMonthOfYear: {
+            ref: idRef("dt_closedate_timestamp.monthOfYear", "attribute"),
+            identifier: "dt_closedate_timestamp.monthOfYear",
             /**
-             * Display Form Title: Number (Closed)
-             * Display Form ID: closed.aby81lMifn6q
-             */ Number: newAttribute("closed.aby81lMifn6q"),
+             * Display Form Title: Closed - Month of Year
+             * Display Form ID: dt_closedate_timestamp.monthOfYear
+             */ Default: newAttribute("dt_closedate_timestamp.monthOfYear"),
         },
         /**
-         * Date Attribute: Day of Year (Closed)
-         * Date Attribute ID: closed.day.in.year
-         */ DayOfYear: {
-            ref: idRef("closed.day.in.year", "attribute"),
-            identifier: "closed.day.in.year",
+         * Date Attribute: Closed - Quarter/Year
+         * Date Attribute ID: dt_closedate_timestamp.quarter
+         */ ClosedQuarterYear: {
+            ref: idRef("dt_closedate_timestamp.quarter", "attribute"),
+            identifier: "dt_closedate_timestamp.quarter",
             /**
-             * Display Form Title: default (Closed)
-             * Display Form ID: closed.abE81lMifn6q
-             */ Default: newAttribute("closed.abE81lMifn6q"),
+             * Display Form Title: Closed - Quarter/Year
+             * Display Form ID: dt_closedate_timestamp.quarter
+             */ Default: newAttribute("dt_closedate_timestamp.quarter"),
         },
         /**
-         * Date Attribute: Day of Week (Sun-Sat) (Closed)
-         * Date Attribute ID: closed.day.in.week
-         */ DayOfWeekSunSat: {
-            ref: idRef("closed.day.in.week", "attribute"),
-            identifier: "closed.day.in.week",
+         * Date Attribute: Closed - Quarter of Year
+         * Date Attribute ID: dt_closedate_timestamp.quarterOfYear
+         */ ClosedQuarterOfYear: {
+            ref: idRef("dt_closedate_timestamp.quarterOfYear", "attribute"),
+            identifier: "dt_closedate_timestamp.quarterOfYear",
             /**
-             * Display Form Title: Short (Sun) (Closed)
-             * Display Form ID: closed.abK81lMifn6q
-             */ Short: newAttribute("closed.abK81lMifn6q"),
-            /**
-             * Display Form Title: Long (Sunday) (Closed)
-             * Display Form ID: closed.abO81lMifn6q
-             */ Long: newAttribute("closed.abO81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Sunday) (Closed)
-             * Display Form ID: closed.abM81lMifn6q
-             */ Number: newAttribute("closed.abM81lMifn6q"),
+             * Display Form Title: Closed - Quarter of Year
+             * Display Form ID: dt_closedate_timestamp.quarterOfYear
+             */ Default: newAttribute("dt_closedate_timestamp.quarterOfYear"),
         },
         /**
-         * Date Attribute: Day of Week (Mon-Sun) (Closed)
-         * Date Attribute ID: closed.day.in.euweek
-         */ DayOfWeekMonSun: {
-            ref: idRef("closed.day.in.euweek", "attribute"),
-            identifier: "closed.day.in.euweek",
+         * Date Attribute: Closed - Week/Year
+         * Date Attribute ID: dt_closedate_timestamp.week
+         */ ClosedWeekYear: {
+            ref: idRef("dt_closedate_timestamp.week", "attribute"),
+            identifier: "dt_closedate_timestamp.week",
             /**
-             * Display Form Title: Short (Mon) (Closed)
-             * Display Form ID: closed.abU81lMifn6q
-             */ Short: newAttribute("closed.abU81lMifn6q"),
-            /**
-             * Display Form Title: Long (Monday) (Closed)
-             * Display Form ID: closed.abY81lMifn6q
-             */ Long: newAttribute("closed.abY81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Monday) (Closed)
-             * Display Form ID: closed.abW81lMifn6q
-             */ Number: newAttribute("closed.abW81lMifn6q"),
+             * Display Form Title: Closed - Week/Year
+             * Display Form ID: dt_closedate_timestamp.week
+             */ Default: newAttribute("dt_closedate_timestamp.week"),
         },
         /**
-         * Date Attribute: Day of Quarter (Closed)
-         * Date Attribute ID: closed.day.in.quarter
-         */ DayOfQuarter: {
-            ref: idRef("closed.day.in.quarter", "attribute"),
-            identifier: "closed.day.in.quarter",
+         * Date Attribute: Closed - Week of Year
+         * Date Attribute ID: dt_closedate_timestamp.weekOfYear
+         */ ClosedWeekOfYear: {
+            ref: idRef("dt_closedate_timestamp.weekOfYear", "attribute"),
+            identifier: "dt_closedate_timestamp.weekOfYear",
             /**
-             * Display Form Title: default (Closed)
-             * Display Form ID: closed.ab481lMifn6q
-             */ Default: newAttribute("closed.ab481lMifn6q"),
+             * Display Form Title: Closed - Week of Year
+             * Display Form ID: dt_closedate_timestamp.weekOfYear
+             */ Default: newAttribute("dt_closedate_timestamp.weekOfYear"),
         },
         /**
-         * Date Attribute: Day of Month (Closed)
-         * Date Attribute ID: closed.day.in.month
-         */ DayOfMonth: {
-            ref: idRef("closed.day.in.month", "attribute"),
-            identifier: "closed.day.in.month",
+         * Date Attribute: Closed - Year
+         * Date Attribute ID: dt_closedate_timestamp.year
+         */ ClosedYear: {
+            ref: idRef("dt_closedate_timestamp.year", "attribute"),
+            identifier: "dt_closedate_timestamp.year",
             /**
-             * Display Form Title: default (Closed)
-             * Display Form ID: closed.aca81lMifn6q
-             */ Default: newAttribute("closed.aca81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter/Year (Closed)
-         * Date Attribute ID: closed.quarter
-         */ QuarterYear: {
-            ref: idRef("closed.quarter", "attribute"),
-            identifier: "closed.quarter",
-            /**
-             * Display Form Title: US Short (Closed)
-             * Display Form ID: closed.aci81lMifn6q
-             */ USShort: newAttribute("closed.aci81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month/Year (Closed)
-         * Date Attribute ID: closed.month
-         */ MonthYear: {
-            ref: idRef("closed.month", "attribute"),
-            identifier: "closed.month",
-            /**
-             * Display Form Title: Short (Jan 2010) (Closed)
-             * Display Form ID: closed.act81lMifn6q
-             */ Short: newAttribute("closed.act81lMifn6q"),
-            /**
-             * Display Form Title: Long (January 2010) (Closed)
-             * Display Form ID: closed.acx81lMifn6q
-             */ Long: newAttribute("closed.acx81lMifn6q"),
-            /**
-             * Display Form Title: Number (1/2010) (Closed)
-             * Display Form ID: closed.acv81lMifn6q
-             */ Number: newAttribute("closed.acv81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Date (Closed)
-         * Date Attribute ID: closed.date
-         */ Date: {
-            ref: idRef("closed.date", "attribute"),
-            identifier: "closed.date",
-            /**
-             * Display Form Title: mm/dd/yyyy (Closed)
-             * Display Form ID: closed.date.mmddyyyy
-             */ MmDdYyyy: newAttribute("closed.date.mmddyyyy"),
-            /**
-             * Display Form Title: yyyy-mm-dd (Closed)
-             * Display Form ID: closed.date.yyyymmdd
-             */ YyyyMmDd: newAttribute("closed.date.yyyymmdd"),
-            /**
-             * Display Form Title: m/d/yy (no leading zeroes) (Closed)
-             * Display Form ID: closed.date.mdyy
-             */ MDYy: newAttribute("closed.date.mdyy"),
-            /**
-             * Display Form Title: Long (Mon, Jan 1, 2010) (Closed)
-             * Display Form ID: closed.date.long
-             */ Long: newAttribute("closed.date.long"),
-            /**
-             * Display Form Title: dd/mm/yyyy (Closed)
-             * Display Form ID: closed.date.ddmmyyyy
-             */ DdMmYyyy: newAttribute("closed.date.ddmmyyyy"),
-            /**
-             * Display Form Title: dd-mm-yyyy (Closed)
-             * Display Form ID: closed.date.eddmmyyyy
-             */ DdMmYyyy_1: newAttribute("closed.date.eddmmyyyy"),
+             * Display Form Title: Closed - Year
+             * Display Form ID: dt_closedate_timestamp.year
+             */ Default: newAttribute("dt_closedate_timestamp.year"),
         },
     },
     /**
-     * Date Data Set Title: Date (Snapshot)
-     * Date Data Set ID: snapshot.dataset.dt
+     * Date Data Set Title: Created
+     * Date Data Set ID: dt_oppcreated_timestamp
+     */ Created: {
+        ref: idRef("dt_oppcreated_timestamp", "dataSet"),
+        identifier: "dt_oppcreated_timestamp",
+        /**
+         * Date Attribute: Created - Date
+         * Date Attribute ID: dt_oppcreated_timestamp.day
+         */ CreatedDate: {
+            ref: idRef("dt_oppcreated_timestamp.day", "attribute"),
+            identifier: "dt_oppcreated_timestamp.day",
+            /**
+             * Display Form Title: Created - Date
+             * Display Form ID: dt_oppcreated_timestamp.day
+             */ Default: newAttribute("dt_oppcreated_timestamp.day"),
+        },
+        /**
+         * Date Attribute: Created - Day of Month
+         * Date Attribute ID: dt_oppcreated_timestamp.dayOfMonth
+         */ CreatedDayOfMonth: {
+            ref: idRef("dt_oppcreated_timestamp.dayOfMonth", "attribute"),
+            identifier: "dt_oppcreated_timestamp.dayOfMonth",
+            /**
+             * Display Form Title: Created - Day of Month
+             * Display Form ID: dt_oppcreated_timestamp.dayOfMonth
+             */ Default: newAttribute("dt_oppcreated_timestamp.dayOfMonth"),
+        },
+        /**
+         * Date Attribute: Created - Day of Week
+         * Date Attribute ID: dt_oppcreated_timestamp.dayOfWeek
+         */ CreatedDayOfWeek: {
+            ref: idRef("dt_oppcreated_timestamp.dayOfWeek", "attribute"),
+            identifier: "dt_oppcreated_timestamp.dayOfWeek",
+            /**
+             * Display Form Title: Created - Day of Week
+             * Display Form ID: dt_oppcreated_timestamp.dayOfWeek
+             */ Default: newAttribute("dt_oppcreated_timestamp.dayOfWeek"),
+        },
+        /**
+         * Date Attribute: Created - Day of Year
+         * Date Attribute ID: dt_oppcreated_timestamp.dayOfYear
+         */ CreatedDayOfYear: {
+            ref: idRef("dt_oppcreated_timestamp.dayOfYear", "attribute"),
+            identifier: "dt_oppcreated_timestamp.dayOfYear",
+            /**
+             * Display Form Title: Created - Day of Year
+             * Display Form ID: dt_oppcreated_timestamp.dayOfYear
+             */ Default: newAttribute("dt_oppcreated_timestamp.dayOfYear"),
+        },
+        /**
+         * Date Attribute: Created - Hour
+         * Date Attribute ID: dt_oppcreated_timestamp.hour
+         */ CreatedHour: {
+            ref: idRef("dt_oppcreated_timestamp.hour", "attribute"),
+            identifier: "dt_oppcreated_timestamp.hour",
+            /**
+             * Display Form Title: Created - Hour
+             * Display Form ID: dt_oppcreated_timestamp.hour
+             */ Default: newAttribute("dt_oppcreated_timestamp.hour"),
+        },
+        /**
+         * Date Attribute: Created - Hour of Day
+         * Date Attribute ID: dt_oppcreated_timestamp.hourOfDay
+         */ CreatedHourOfDay: {
+            ref: idRef("dt_oppcreated_timestamp.hourOfDay", "attribute"),
+            identifier: "dt_oppcreated_timestamp.hourOfDay",
+            /**
+             * Display Form Title: Created - Hour of Day
+             * Display Form ID: dt_oppcreated_timestamp.hourOfDay
+             */ Default: newAttribute("dt_oppcreated_timestamp.hourOfDay"),
+        },
+        /**
+         * Date Attribute: Created - Minute
+         * Date Attribute ID: dt_oppcreated_timestamp.minute
+         */ CreatedMinute: {
+            ref: idRef("dt_oppcreated_timestamp.minute", "attribute"),
+            identifier: "dt_oppcreated_timestamp.minute",
+            /**
+             * Display Form Title: Created - Minute
+             * Display Form ID: dt_oppcreated_timestamp.minute
+             */ Default: newAttribute("dt_oppcreated_timestamp.minute"),
+        },
+        /**
+         * Date Attribute: Created - Minute of Hour
+         * Date Attribute ID: dt_oppcreated_timestamp.minuteOfHour
+         */ CreatedMinuteOfHour: {
+            ref: idRef("dt_oppcreated_timestamp.minuteOfHour", "attribute"),
+            identifier: "dt_oppcreated_timestamp.minuteOfHour",
+            /**
+             * Display Form Title: Created - Minute of Hour
+             * Display Form ID: dt_oppcreated_timestamp.minuteOfHour
+             */ Default: newAttribute("dt_oppcreated_timestamp.minuteOfHour"),
+        },
+        /**
+         * Date Attribute: Created - Month/Year
+         * Date Attribute ID: dt_oppcreated_timestamp.month
+         */ CreatedMonthYear: {
+            ref: idRef("dt_oppcreated_timestamp.month", "attribute"),
+            identifier: "dt_oppcreated_timestamp.month",
+            /**
+             * Display Form Title: Created - Month/Year
+             * Display Form ID: dt_oppcreated_timestamp.month
+             */ Default: newAttribute("dt_oppcreated_timestamp.month"),
+        },
+        /**
+         * Date Attribute: Created - Month of Year
+         * Date Attribute ID: dt_oppcreated_timestamp.monthOfYear
+         */ CreatedMonthOfYear: {
+            ref: idRef("dt_oppcreated_timestamp.monthOfYear", "attribute"),
+            identifier: "dt_oppcreated_timestamp.monthOfYear",
+            /**
+             * Display Form Title: Created - Month of Year
+             * Display Form ID: dt_oppcreated_timestamp.monthOfYear
+             */ Default: newAttribute("dt_oppcreated_timestamp.monthOfYear"),
+        },
+        /**
+         * Date Attribute: Created - Quarter/Year
+         * Date Attribute ID: dt_oppcreated_timestamp.quarter
+         */ CreatedQuarterYear: {
+            ref: idRef("dt_oppcreated_timestamp.quarter", "attribute"),
+            identifier: "dt_oppcreated_timestamp.quarter",
+            /**
+             * Display Form Title: Created - Quarter/Year
+             * Display Form ID: dt_oppcreated_timestamp.quarter
+             */ Default: newAttribute("dt_oppcreated_timestamp.quarter"),
+        },
+        /**
+         * Date Attribute: Created - Quarter of Year
+         * Date Attribute ID: dt_oppcreated_timestamp.quarterOfYear
+         */ CreatedQuarterOfYear: {
+            ref: idRef("dt_oppcreated_timestamp.quarterOfYear", "attribute"),
+            identifier: "dt_oppcreated_timestamp.quarterOfYear",
+            /**
+             * Display Form Title: Created - Quarter of Year
+             * Display Form ID: dt_oppcreated_timestamp.quarterOfYear
+             */ Default: newAttribute("dt_oppcreated_timestamp.quarterOfYear"),
+        },
+        /**
+         * Date Attribute: Created - Week/Year
+         * Date Attribute ID: dt_oppcreated_timestamp.week
+         */ CreatedWeekYear: {
+            ref: idRef("dt_oppcreated_timestamp.week", "attribute"),
+            identifier: "dt_oppcreated_timestamp.week",
+            /**
+             * Display Form Title: Created - Week/Year
+             * Display Form ID: dt_oppcreated_timestamp.week
+             */ Default: newAttribute("dt_oppcreated_timestamp.week"),
+        },
+        /**
+         * Date Attribute: Created - Week of Year
+         * Date Attribute ID: dt_oppcreated_timestamp.weekOfYear
+         */ CreatedWeekOfYear: {
+            ref: idRef("dt_oppcreated_timestamp.weekOfYear", "attribute"),
+            identifier: "dt_oppcreated_timestamp.weekOfYear",
+            /**
+             * Display Form Title: Created - Week of Year
+             * Display Form ID: dt_oppcreated_timestamp.weekOfYear
+             */ Default: newAttribute("dt_oppcreated_timestamp.weekOfYear"),
+        },
+        /**
+         * Date Attribute: Created - Year
+         * Date Attribute ID: dt_oppcreated_timestamp.year
+         */ CreatedYear: {
+            ref: idRef("dt_oppcreated_timestamp.year", "attribute"),
+            identifier: "dt_oppcreated_timestamp.year",
+            /**
+             * Display Form Title: Created - Year
+             * Display Form ID: dt_oppcreated_timestamp.year
+             */ Default: newAttribute("dt_oppcreated_timestamp.year"),
+        },
+    },
+    /**
+     * Date Data Set Title: Snapshot
+     * Date Data Set ID: dt_snapshotdate_timestamp
      */ Snapshot: {
-        ref: idRef("snapshot.dataset.dt", "dataSet"),
-        identifier: "snapshot.dataset.dt",
+        ref: idRef("dt_snapshotdate_timestamp", "dataSet"),
+        identifier: "dt_snapshotdate_timestamp",
         /**
-         * Date Attribute: Year (Snapshot)
-         * Date Attribute ID: snapshot.year
-         */ Year: {
-            ref: idRef("snapshot.year", "attribute"),
-            identifier: "snapshot.year",
+         * Date Attribute: Snapshot - Date
+         * Date Attribute ID: dt_snapshotdate_timestamp.day
+         */ SnapshotDate: {
+            ref: idRef("dt_snapshotdate_timestamp.day", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.day",
             /**
-             * Display Form Title: Year (Snapshot)
-             * Display Form ID: snapshot.aag81lMifn6q
-             */ Default: newAttribute("snapshot.aag81lMifn6q"),
+             * Display Form Title: Snapshot - Date
+             * Display Form ID: dt_snapshotdate_timestamp.day
+             */ Default: newAttribute("dt_snapshotdate_timestamp.day"),
         },
         /**
-         * Date Attribute: Quarter (Snapshot)
-         * Date Attribute ID: snapshot.quarter.in.year
-         */ Quarter: {
-            ref: idRef("snapshot.quarter.in.year", "attribute"),
-            identifier: "snapshot.quarter.in.year",
+         * Date Attribute: Snapshot - Day of Month
+         * Date Attribute ID: dt_snapshotdate_timestamp.dayOfMonth
+         */ SnapshotDayOfMonth: {
+            ref: idRef("dt_snapshotdate_timestamp.dayOfMonth", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.dayOfMonth",
             /**
-             * Display Form Title: default (Snapshot)
-             * Display Form ID: snapshot.aam81lMifn6q
-             */ Default: newAttribute("snapshot.aam81lMifn6q"),
+             * Display Form Title: Snapshot - Day of Month
+             * Display Form ID: dt_snapshotdate_timestamp.dayOfMonth
+             */ Default: newAttribute("dt_snapshotdate_timestamp.dayOfMonth"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat)/Year (Snapshot)
-         * Date Attribute ID: snapshot.week
-         */ WeekSunSatYear: {
-            ref: idRef("snapshot.week", "attribute"),
-            identifier: "snapshot.week",
+         * Date Attribute: Snapshot - Day of Week
+         * Date Attribute ID: dt_snapshotdate_timestamp.dayOfWeek
+         */ SnapshotDayOfWeek: {
+            ref: idRef("dt_snapshotdate_timestamp.dayOfWeek", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.dayOfWeek",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Snapshot)
-             * Display Form ID: snapshot.aaA81lMifn6q
-             */ WeekNrYear: newAttribute("snapshot.aaA81lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Snapshot)
-             * Display Form ID: snapshot.aaw81lMifn6q
-             */ WeekStarting: newAttribute("snapshot.aaw81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Snapshot)
-             * Display Form ID: snapshot.aau81lMifn6q
-             */ FromTo: newAttribute("snapshot.aau81lMifn6q"),
-            /**
-             * Display Form Title: Week #/Year (Cont.) (Snapshot)
-             * Display Form ID: snapshot.aay81lMifn6q
-             */ WeekNrYear_1: newAttribute("snapshot.aay81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Cont.) (Snapshot)
-             * Display Form ID: snapshot.aaC81lMifn6q
-             */ WkQtrYear: newAttribute("snapshot.aaC81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Snapshot)
-             * Display Form ID: snapshot.aas81lMifn6q
-             */ WkQtrYear_1: newAttribute("snapshot.aas81lMifn6q"),
+             * Display Form Title: Snapshot - Day of Week
+             * Display Form ID: dt_snapshotdate_timestamp.dayOfWeek
+             */ Default: newAttribute("dt_snapshotdate_timestamp.dayOfWeek"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) (Snapshot)
-         * Date Attribute ID: snapshot.week.in.year
-         */ WeekSunSat: {
-            ref: idRef("snapshot.week.in.year", "attribute"),
-            identifier: "snapshot.week.in.year",
+         * Date Attribute: Snapshot - Day of Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.dayOfYear
+         */ SnapshotDayOfYear: {
+            ref: idRef("dt_snapshotdate_timestamp.dayOfYear", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.dayOfYear",
             /**
-             * Display Form Title: Number US (Snapshot)
-             * Display Form ID: snapshot.aaI81lMifn6q
-             */ NumberUS: newAttribute("snapshot.aaI81lMifn6q"),
+             * Display Form Title: Snapshot - Day of Year
+             * Display Form ID: dt_snapshotdate_timestamp.dayOfYear
+             */ Default: newAttribute("dt_snapshotdate_timestamp.dayOfYear"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) of Qtr (Snapshot)
-         * Date Attribute ID: snapshot.week.in.quarter
-         */ WeekSunSatOfQtr: {
-            ref: idRef("snapshot.week.in.quarter", "attribute"),
-            identifier: "snapshot.week.in.quarter",
+         * Date Attribute: Snapshot - Hour
+         * Date Attribute ID: dt_snapshotdate_timestamp.hour
+         */ SnapshotHour: {
+            ref: idRef("dt_snapshotdate_timestamp.hour", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.hour",
             /**
-             * Display Form Title: Number US (Snapshot)
-             * Display Form ID: snapshot.aaO81lMifn6q
-             */ NumberUS: newAttribute("snapshot.aaO81lMifn6q"),
+             * Display Form Title: Snapshot - Hour
+             * Display Form ID: dt_snapshotdate_timestamp.hour
+             */ Default: newAttribute("dt_snapshotdate_timestamp.hour"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun)/Year (Snapshot)
-         * Date Attribute ID: snapshot.euweek
-         */ WeekMonSunYear: {
-            ref: idRef("snapshot.euweek", "attribute"),
-            identifier: "snapshot.euweek",
+         * Date Attribute: Snapshot - Hour of Day
+         * Date Attribute ID: dt_snapshotdate_timestamp.hourOfDay
+         */ SnapshotHourOfDay: {
+            ref: idRef("dt_snapshotdate_timestamp.hourOfDay", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.hourOfDay",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Snapshot)
-             * Display Form ID: snapshot.aa281lMifn6q
-             */ WeekNrYear: newAttribute("snapshot.aa281lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Snapshot)
-             * Display Form ID: snapshot.aaY81lMifn6q
-             */ WeekStarting: newAttribute("snapshot.aaY81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Snapshot)
-             * Display Form ID: snapshot.aaW81lMifn6q
-             */ FromTo: newAttribute("snapshot.aaW81lMifn6q"),
+             * Display Form Title: Snapshot - Hour of Day
+             * Display Form ID: dt_snapshotdate_timestamp.hourOfDay
+             */ Default: newAttribute("dt_snapshotdate_timestamp.hourOfDay"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) (Snapshot)
-         * Date Attribute ID: snapshot.euweek.in.year
-         */ WeekMonSun: {
-            ref: idRef("snapshot.euweek.in.year", "attribute"),
-            identifier: "snapshot.euweek.in.year",
+         * Date Attribute: Snapshot - Minute
+         * Date Attribute ID: dt_snapshotdate_timestamp.minute
+         */ SnapshotMinute: {
+            ref: idRef("dt_snapshotdate_timestamp.minute", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.minute",
             /**
-             * Display Form Title: Number EU (Snapshot)
-             * Display Form ID: snapshot.aba81lMifn6q
-             */ NumberEU: newAttribute("snapshot.aba81lMifn6q"),
+             * Display Form Title: Snapshot - Minute
+             * Display Form ID: dt_snapshotdate_timestamp.minute
+             */ Default: newAttribute("dt_snapshotdate_timestamp.minute"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) of Qtr (Snapshot)
-         * Date Attribute ID: snapshot.euweek.in.quarter
-         */ WeekMonSunOfQtr: {
-            ref: idRef("snapshot.euweek.in.quarter", "attribute"),
-            identifier: "snapshot.euweek.in.quarter",
+         * Date Attribute: Snapshot - Minute of Hour
+         * Date Attribute ID: dt_snapshotdate_timestamp.minuteOfHour
+         */ SnapshotMinuteOfHour: {
+            ref: idRef("dt_snapshotdate_timestamp.minuteOfHour", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.minuteOfHour",
             /**
-             * Display Form Title: Number EU (Snapshot)
-             * Display Form ID: snapshot.abg81lMifn6q
-             */ NumberEU: newAttribute("snapshot.abg81lMifn6q"),
+             * Display Form Title: Snapshot - Minute of Hour
+             * Display Form ID: dt_snapshotdate_timestamp.minuteOfHour
+             */ Default: newAttribute("dt_snapshotdate_timestamp.minuteOfHour"),
         },
         /**
-         * Date Attribute: Month (Snapshot)
-         * Date Attribute ID: snapshot.month.in.year
-         */ Month: {
-            ref: idRef("snapshot.month.in.year", "attribute"),
-            identifier: "snapshot.month.in.year",
+         * Date Attribute: Snapshot - Month/Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.month
+         */ SnapshotMonthYear: {
+            ref: idRef("dt_snapshotdate_timestamp.month", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.month",
             /**
-             * Display Form Title: Short (Jan) (Snapshot)
-             * Display Form ID: snapshot.abm81lMifn6q
-             */ Short: newAttribute("snapshot.abm81lMifn6q"),
-            /**
-             * Display Form Title: Long (January) (Snapshot)
-             * Display Form ID: snapshot.abs81lMifn6q
-             */ Long: newAttribute("snapshot.abs81lMifn6q"),
-            /**
-             * Display Form Title: Number (M1) (Snapshot)
-             * Display Form ID: snapshot.abq81lMifn6q
-             */ Number: newAttribute("snapshot.abq81lMifn6q"),
-            /**
-             * Display Form Title: M/Q (M1/Q1) (Snapshot)
-             * Display Form ID: snapshot.abo81lMifn6q
-             */ MQ: newAttribute("snapshot.abo81lMifn6q"),
+             * Display Form Title: Snapshot - Month/Year
+             * Display Form ID: dt_snapshotdate_timestamp.month
+             */ Default: newAttribute("dt_snapshotdate_timestamp.month"),
         },
         /**
-         * Date Attribute: Month of Quarter (Snapshot)
-         * Date Attribute ID: snapshot.month.in.quarter
-         */ MonthOfQuarter: {
-            ref: idRef("snapshot.month.in.quarter", "attribute"),
-            identifier: "snapshot.month.in.quarter",
+         * Date Attribute: Snapshot - Month of Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.monthOfYear
+         */ SnapshotMonthOfYear: {
+            ref: idRef("dt_snapshotdate_timestamp.monthOfYear", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.monthOfYear",
             /**
-             * Display Form Title: Number (Snapshot)
-             * Display Form ID: snapshot.aby81lMifn6q
-             */ Number: newAttribute("snapshot.aby81lMifn6q"),
+             * Display Form Title: Snapshot - Month of Year
+             * Display Form ID: dt_snapshotdate_timestamp.monthOfYear
+             */ Default: newAttribute("dt_snapshotdate_timestamp.monthOfYear"),
         },
         /**
-         * Date Attribute: Day of Year (Snapshot)
-         * Date Attribute ID: snapshot.day.in.year
-         */ DayOfYear: {
-            ref: idRef("snapshot.day.in.year", "attribute"),
-            identifier: "snapshot.day.in.year",
+         * Date Attribute: Snapshot - Quarter/Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.quarter
+         */ SnapshotQuarterYear: {
+            ref: idRef("dt_snapshotdate_timestamp.quarter", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.quarter",
             /**
-             * Display Form Title: default (Snapshot)
-             * Display Form ID: snapshot.abE81lMifn6q
-             */ Default: newAttribute("snapshot.abE81lMifn6q"),
+             * Display Form Title: Snapshot - Quarter/Year
+             * Display Form ID: dt_snapshotdate_timestamp.quarter
+             */ Default: newAttribute("dt_snapshotdate_timestamp.quarter"),
         },
         /**
-         * Date Attribute: Day of Week (Sun-Sat) (Snapshot)
-         * Date Attribute ID: snapshot.day.in.week
-         */ DayOfWeekSunSat: {
-            ref: idRef("snapshot.day.in.week", "attribute"),
-            identifier: "snapshot.day.in.week",
+         * Date Attribute: Snapshot - Quarter of Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.quarterOfYear
+         */ SnapshotQuarterOfYear: {
+            ref: idRef("dt_snapshotdate_timestamp.quarterOfYear", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.quarterOfYear",
             /**
-             * Display Form Title: Short (Sun) (Snapshot)
-             * Display Form ID: snapshot.abK81lMifn6q
-             */ Short: newAttribute("snapshot.abK81lMifn6q"),
-            /**
-             * Display Form Title: Long (Sunday) (Snapshot)
-             * Display Form ID: snapshot.abO81lMifn6q
-             */ Long: newAttribute("snapshot.abO81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Sunday) (Snapshot)
-             * Display Form ID: snapshot.abM81lMifn6q
-             */ Number: newAttribute("snapshot.abM81lMifn6q"),
+             * Display Form Title: Snapshot - Quarter of Year
+             * Display Form ID: dt_snapshotdate_timestamp.quarterOfYear
+             */ Default: newAttribute("dt_snapshotdate_timestamp.quarterOfYear"),
         },
         /**
-         * Date Attribute: Day of Week (Mon-Sun) (Snapshot)
-         * Date Attribute ID: snapshot.day.in.euweek
-         */ DayOfWeekMonSun: {
-            ref: idRef("snapshot.day.in.euweek", "attribute"),
-            identifier: "snapshot.day.in.euweek",
+         * Date Attribute: Snapshot - Week/Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.week
+         */ SnapshotWeekYear: {
+            ref: idRef("dt_snapshotdate_timestamp.week", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.week",
             /**
-             * Display Form Title: Short (Mon) (Snapshot)
-             * Display Form ID: snapshot.abU81lMifn6q
-             */ Short: newAttribute("snapshot.abU81lMifn6q"),
-            /**
-             * Display Form Title: Long (Monday) (Snapshot)
-             * Display Form ID: snapshot.abY81lMifn6q
-             */ Long: newAttribute("snapshot.abY81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Monday) (Snapshot)
-             * Display Form ID: snapshot.abW81lMifn6q
-             */ Number: newAttribute("snapshot.abW81lMifn6q"),
+             * Display Form Title: Snapshot - Week/Year
+             * Display Form ID: dt_snapshotdate_timestamp.week
+             */ Default: newAttribute("dt_snapshotdate_timestamp.week"),
         },
         /**
-         * Date Attribute: Day of Quarter (Snapshot)
-         * Date Attribute ID: snapshot.day.in.quarter
-         */ DayOfQuarter: {
-            ref: idRef("snapshot.day.in.quarter", "attribute"),
-            identifier: "snapshot.day.in.quarter",
+         * Date Attribute: Snapshot - Week of Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.weekOfYear
+         */ SnapshotWeekOfYear: {
+            ref: idRef("dt_snapshotdate_timestamp.weekOfYear", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.weekOfYear",
             /**
-             * Display Form Title: default (Snapshot)
-             * Display Form ID: snapshot.ab481lMifn6q
-             */ Default: newAttribute("snapshot.ab481lMifn6q"),
+             * Display Form Title: Snapshot - Week of Year
+             * Display Form ID: dt_snapshotdate_timestamp.weekOfYear
+             */ Default: newAttribute("dt_snapshotdate_timestamp.weekOfYear"),
         },
         /**
-         * Date Attribute: Day of Month (Snapshot)
-         * Date Attribute ID: snapshot.day.in.month
-         */ DayOfMonth: {
-            ref: idRef("snapshot.day.in.month", "attribute"),
-            identifier: "snapshot.day.in.month",
+         * Date Attribute: Snapshot - Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.year
+         */ SnapshotYear: {
+            ref: idRef("dt_snapshotdate_timestamp.year", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.year",
             /**
-             * Display Form Title: default (Snapshot)
-             * Display Form ID: snapshot.aca81lMifn6q
-             */ Default: newAttribute("snapshot.aca81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter/Year (Snapshot)
-         * Date Attribute ID: snapshot.quarter
-         */ QuarterYear: {
-            ref: idRef("snapshot.quarter", "attribute"),
-            identifier: "snapshot.quarter",
-            /**
-             * Display Form Title: US Short (Snapshot)
-             * Display Form ID: snapshot.aci81lMifn6q
-             */ USShort: newAttribute("snapshot.aci81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month/Year (Snapshot)
-         * Date Attribute ID: snapshot.month
-         */ MonthYear: {
-            ref: idRef("snapshot.month", "attribute"),
-            identifier: "snapshot.month",
-            /**
-             * Display Form Title: Short (Jan 2010) (Snapshot)
-             * Display Form ID: snapshot.act81lMifn6q
-             */ Short: newAttribute("snapshot.act81lMifn6q"),
-            /**
-             * Display Form Title: Long (January 2010) (Snapshot)
-             * Display Form ID: snapshot.acx81lMifn6q
-             */ Long: newAttribute("snapshot.acx81lMifn6q"),
-            /**
-             * Display Form Title: Number (1/2010) (Snapshot)
-             * Display Form ID: snapshot.acv81lMifn6q
-             */ Number: newAttribute("snapshot.acv81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Date (Snapshot)
-         * Date Attribute ID: snapshot.date
-         */ Date: {
-            ref: idRef("snapshot.date", "attribute"),
-            identifier: "snapshot.date",
-            /**
-             * Display Form Title: mm/dd/yyyy (Snapshot)
-             * Display Form ID: snapshot.date.mmddyyyy
-             */ MmDdYyyy: newAttribute("snapshot.date.mmddyyyy"),
-            /**
-             * Display Form Title: yyyy-mm-dd (Snapshot)
-             * Display Form ID: snapshot.date.yyyymmdd
-             */ YyyyMmDd: newAttribute("snapshot.date.yyyymmdd"),
-            /**
-             * Display Form Title: m/d/yy (no leading zeroes) (Snapshot)
-             * Display Form ID: snapshot.date.mdyy
-             */ MDYy: newAttribute("snapshot.date.mdyy"),
-            /**
-             * Display Form Title: Long (Mon, Jan 1, 2010) (Snapshot)
-             * Display Form ID: snapshot.date.long
-             */ Long: newAttribute("snapshot.date.long"),
-            /**
-             * Display Form Title: dd/mm/yyyy (Snapshot)
-             * Display Form ID: snapshot.date.ddmmyyyy
-             */ DdMmYyyy: newAttribute("snapshot.date.ddmmyyyy"),
-            /**
-             * Display Form Title: dd-mm-yyyy (Snapshot)
-             * Display Form ID: snapshot.date.eddmmyyyy
-             */ DdMmYyyy_1: newAttribute("snapshot.date.eddmmyyyy"),
+             * Display Form Title: Snapshot - Year
+             * Display Form ID: dt_snapshotdate_timestamp.year
+             */ Default: newAttribute("dt_snapshotdate_timestamp.year"),
         },
     },
     /**
-     * Date Data Set Title: Date (Activity)
-     * Date Data Set ID: activity.dataset.dt
-     */ Activity: {
-        ref: idRef("activity.dataset.dt", "dataSet"),
-        identifier: "activity.dataset.dt",
-        /**
-         * Date Attribute: Year (Activity)
-         * Date Attribute ID: activity.year
-         */ Year: {
-            ref: idRef("activity.year", "attribute"),
-            identifier: "activity.year",
-            /**
-             * Display Form Title: Year (Activity)
-             * Display Form ID: activity.aag81lMifn6q
-             */ Default: newAttribute("activity.aag81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter (Activity)
-         * Date Attribute ID: activity.quarter.in.year
-         */ Quarter: {
-            ref: idRef("activity.quarter.in.year", "attribute"),
-            identifier: "activity.quarter.in.year",
-            /**
-             * Display Form Title: default (Activity)
-             * Display Form ID: activity.aam81lMifn6q
-             */ Default: newAttribute("activity.aam81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Sun-Sat)/Year (Activity)
-         * Date Attribute ID: activity.week
-         */ WeekSunSatYear: {
-            ref: idRef("activity.week", "attribute"),
-            identifier: "activity.week",
-            /**
-             * Display Form Title: Week #/Year (W1/2010) (Activity)
-             * Display Form ID: activity.aaA81lMifn6q
-             */ WeekNrYear: newAttribute("activity.aaA81lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Activity)
-             * Display Form ID: activity.aaw81lMifn6q
-             */ WeekStarting: newAttribute("activity.aaw81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Activity)
-             * Display Form ID: activity.aau81lMifn6q
-             */ FromTo: newAttribute("activity.aau81lMifn6q"),
-            /**
-             * Display Form Title: Week #/Year (Cont.) (Activity)
-             * Display Form ID: activity.aay81lMifn6q
-             */ WeekNrYear_1: newAttribute("activity.aay81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Cont.) (Activity)
-             * Display Form ID: activity.aaC81lMifn6q
-             */ WkQtrYear: newAttribute("activity.aaC81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Activity)
-             * Display Form ID: activity.aas81lMifn6q
-             */ WkQtrYear_1: newAttribute("activity.aas81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Sun-Sat) (Activity)
-         * Date Attribute ID: activity.week.in.year
-         */ WeekSunSat: {
-            ref: idRef("activity.week.in.year", "attribute"),
-            identifier: "activity.week.in.year",
-            /**
-             * Display Form Title: Number US (Activity)
-             * Display Form ID: activity.aaI81lMifn6q
-             */ NumberUS: newAttribute("activity.aaI81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Sun-Sat) of Qtr (Activity)
-         * Date Attribute ID: activity.week.in.quarter
-         */ WeekSunSatOfQtr: {
-            ref: idRef("activity.week.in.quarter", "attribute"),
-            identifier: "activity.week.in.quarter",
-            /**
-             * Display Form Title: Number US (Activity)
-             * Display Form ID: activity.aaO81lMifn6q
-             */ NumberUS: newAttribute("activity.aaO81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Mon-Sun)/Year (Activity)
-         * Date Attribute ID: activity.euweek
-         */ WeekMonSunYear: {
-            ref: idRef("activity.euweek", "attribute"),
-            identifier: "activity.euweek",
-            /**
-             * Display Form Title: Week #/Year (W1/2010) (Activity)
-             * Display Form ID: activity.aa281lMifn6q
-             */ WeekNrYear: newAttribute("activity.aa281lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Activity)
-             * Display Form ID: activity.aaY81lMifn6q
-             */ WeekStarting: newAttribute("activity.aaY81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Activity)
-             * Display Form ID: activity.aaW81lMifn6q
-             */ FromTo: newAttribute("activity.aaW81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Mon-Sun) (Activity)
-         * Date Attribute ID: activity.euweek.in.year
-         */ WeekMonSun: {
-            ref: idRef("activity.euweek.in.year", "attribute"),
-            identifier: "activity.euweek.in.year",
-            /**
-             * Display Form Title: Number EU (Activity)
-             * Display Form ID: activity.aba81lMifn6q
-             */ NumberEU: newAttribute("activity.aba81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Week (Mon-Sun) of Qtr (Activity)
-         * Date Attribute ID: activity.euweek.in.quarter
-         */ WeekMonSunOfQtr: {
-            ref: idRef("activity.euweek.in.quarter", "attribute"),
-            identifier: "activity.euweek.in.quarter",
-            /**
-             * Display Form Title: Number EU (Activity)
-             * Display Form ID: activity.abg81lMifn6q
-             */ NumberEU: newAttribute("activity.abg81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month (Activity)
-         * Date Attribute ID: activity.month.in.year
-         */ Month: {
-            ref: idRef("activity.month.in.year", "attribute"),
-            identifier: "activity.month.in.year",
-            /**
-             * Display Form Title: Short (Jan) (Activity)
-             * Display Form ID: activity.abm81lMifn6q
-             */ Short: newAttribute("activity.abm81lMifn6q"),
-            /**
-             * Display Form Title: Long (January) (Activity)
-             * Display Form ID: activity.abs81lMifn6q
-             */ Long: newAttribute("activity.abs81lMifn6q"),
-            /**
-             * Display Form Title: Number (M1) (Activity)
-             * Display Form ID: activity.abq81lMifn6q
-             */ Number: newAttribute("activity.abq81lMifn6q"),
-            /**
-             * Display Form Title: M/Q (M1/Q1) (Activity)
-             * Display Form ID: activity.abo81lMifn6q
-             */ MQ: newAttribute("activity.abo81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month of Quarter (Activity)
-         * Date Attribute ID: activity.month.in.quarter
-         */ MonthOfQuarter: {
-            ref: idRef("activity.month.in.quarter", "attribute"),
-            identifier: "activity.month.in.quarter",
-            /**
-             * Display Form Title: Number (Activity)
-             * Display Form ID: activity.aby81lMifn6q
-             */ Number: newAttribute("activity.aby81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Day of Year (Activity)
-         * Date Attribute ID: activity.day.in.year
-         */ DayOfYear: {
-            ref: idRef("activity.day.in.year", "attribute"),
-            identifier: "activity.day.in.year",
-            /**
-             * Display Form Title: default (Activity)
-             * Display Form ID: activity.abE81lMifn6q
-             */ Default: newAttribute("activity.abE81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Day of Week (Sun-Sat) (Activity)
-         * Date Attribute ID: activity.day.in.week
-         */ DayOfWeekSunSat: {
-            ref: idRef("activity.day.in.week", "attribute"),
-            identifier: "activity.day.in.week",
-            /**
-             * Display Form Title: Short (Sun) (Activity)
-             * Display Form ID: activity.abK81lMifn6q
-             */ Short: newAttribute("activity.abK81lMifn6q"),
-            /**
-             * Display Form Title: Long (Sunday) (Activity)
-             * Display Form ID: activity.abO81lMifn6q
-             */ Long: newAttribute("activity.abO81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Sunday) (Activity)
-             * Display Form ID: activity.abM81lMifn6q
-             */ Number: newAttribute("activity.abM81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Day of Week (Mon-Sun) (Activity)
-         * Date Attribute ID: activity.day.in.euweek
-         */ DayOfWeekMonSun: {
-            ref: idRef("activity.day.in.euweek", "attribute"),
-            identifier: "activity.day.in.euweek",
-            /**
-             * Display Form Title: Short (Mon) (Activity)
-             * Display Form ID: activity.abU81lMifn6q
-             */ Short: newAttribute("activity.abU81lMifn6q"),
-            /**
-             * Display Form Title: Long (Monday) (Activity)
-             * Display Form ID: activity.abY81lMifn6q
-             */ Long: newAttribute("activity.abY81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Monday) (Activity)
-             * Display Form ID: activity.abW81lMifn6q
-             */ Number: newAttribute("activity.abW81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Day of Quarter (Activity)
-         * Date Attribute ID: activity.day.in.quarter
-         */ DayOfQuarter: {
-            ref: idRef("activity.day.in.quarter", "attribute"),
-            identifier: "activity.day.in.quarter",
-            /**
-             * Display Form Title: default (Activity)
-             * Display Form ID: activity.ab481lMifn6q
-             */ Default: newAttribute("activity.ab481lMifn6q"),
-        },
-        /**
-         * Date Attribute: Day of Month (Activity)
-         * Date Attribute ID: activity.day.in.month
-         */ DayOfMonth: {
-            ref: idRef("activity.day.in.month", "attribute"),
-            identifier: "activity.day.in.month",
-            /**
-             * Display Form Title: default (Activity)
-             * Display Form ID: activity.aca81lMifn6q
-             */ Default: newAttribute("activity.aca81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter/Year (Activity)
-         * Date Attribute ID: activity.quarter
-         */ QuarterYear: {
-            ref: idRef("activity.quarter", "attribute"),
-            identifier: "activity.quarter",
-            /**
-             * Display Form Title: US Short (Activity)
-             * Display Form ID: activity.aci81lMifn6q
-             */ USShort: newAttribute("activity.aci81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month/Year (Activity)
-         * Date Attribute ID: activity.month
-         */ MonthYear: {
-            ref: idRef("activity.month", "attribute"),
-            identifier: "activity.month",
-            /**
-             * Display Form Title: Short (Jan 2010) (Activity)
-             * Display Form ID: activity.act81lMifn6q
-             */ Short: newAttribute("activity.act81lMifn6q"),
-            /**
-             * Display Form Title: Long (January 2010) (Activity)
-             * Display Form ID: activity.acx81lMifn6q
-             */ Long: newAttribute("activity.acx81lMifn6q"),
-            /**
-             * Display Form Title: Number (1/2010) (Activity)
-             * Display Form ID: activity.acv81lMifn6q
-             */ Number: newAttribute("activity.acv81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Date (Activity)
-         * Date Attribute ID: activity.date
-         */ Date: {
-            ref: idRef("activity.date", "attribute"),
-            identifier: "activity.date",
-            /**
-             * Display Form Title: mm/dd/yyyy (Activity)
-             * Display Form ID: activity.date.mmddyyyy
-             */ MmDdYyyy: newAttribute("activity.date.mmddyyyy"),
-            /**
-             * Display Form Title: yyyy-mm-dd (Activity)
-             * Display Form ID: activity.date.yyyymmdd
-             */ YyyyMmDd: newAttribute("activity.date.yyyymmdd"),
-            /**
-             * Display Form Title: m/d/yy (no leading zeroes) (Activity)
-             * Display Form ID: activity.date.mdyy
-             */ MDYy: newAttribute("activity.date.mdyy"),
-            /**
-             * Display Form Title: Long (Mon, Jan 1, 2010) (Activity)
-             * Display Form ID: activity.date.long
-             */ Long: newAttribute("activity.date.long"),
-            /**
-             * Display Form Title: dd/mm/yyyy (Activity)
-             * Display Form ID: activity.date.ddmmyyyy
-             */ DdMmYyyy: newAttribute("activity.date.ddmmyyyy"),
-            /**
-             * Display Form Title: dd-mm-yyyy (Activity)
-             * Display Form ID: activity.date.eddmmyyyy
-             */ DdMmYyyy_1: newAttribute("activity.date.eddmmyyyy"),
-        },
-    },
-    /**
-     * Date Data Set Title: Date (Timeline)
-     * Date Data Set ID: timeline.dataset.dt
+     * Date Data Set Title: Timeline
+     * Date Data Set ID: dt_timeline_timestamp
      */ Timeline: {
-        ref: idRef("timeline.dataset.dt", "dataSet"),
-        identifier: "timeline.dataset.dt",
+        ref: idRef("dt_timeline_timestamp", "dataSet"),
+        identifier: "dt_timeline_timestamp",
         /**
-         * Date Attribute: Year (Timeline)
-         * Date Attribute ID: timeline.year
-         */ Year: {
-            ref: idRef("timeline.year", "attribute"),
-            identifier: "timeline.year",
+         * Date Attribute: Timeline - Date
+         * Date Attribute ID: dt_timeline_timestamp.day
+         */ TimelineDate: {
+            ref: idRef("dt_timeline_timestamp.day", "attribute"),
+            identifier: "dt_timeline_timestamp.day",
             /**
-             * Display Form Title: Year (Timeline)
-             * Display Form ID: timeline.aag81lMifn6q
-             */ Default: newAttribute("timeline.aag81lMifn6q"),
+             * Display Form Title: Timeline - Date
+             * Display Form ID: dt_timeline_timestamp.day
+             */ Default: newAttribute("dt_timeline_timestamp.day"),
         },
         /**
-         * Date Attribute: Quarter (Timeline)
-         * Date Attribute ID: timeline.quarter.in.year
-         */ Quarter: {
-            ref: idRef("timeline.quarter.in.year", "attribute"),
-            identifier: "timeline.quarter.in.year",
+         * Date Attribute: Timeline - Day of Month
+         * Date Attribute ID: dt_timeline_timestamp.dayOfMonth
+         */ TimelineDayOfMonth: {
+            ref: idRef("dt_timeline_timestamp.dayOfMonth", "attribute"),
+            identifier: "dt_timeline_timestamp.dayOfMonth",
             /**
-             * Display Form Title: default (Timeline)
-             * Display Form ID: timeline.aam81lMifn6q
-             */ Default: newAttribute("timeline.aam81lMifn6q"),
+             * Display Form Title: Timeline - Day of Month
+             * Display Form ID: dt_timeline_timestamp.dayOfMonth
+             */ Default: newAttribute("dt_timeline_timestamp.dayOfMonth"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat)/Year (Timeline)
-         * Date Attribute ID: timeline.week
-         */ WeekSunSatYear: {
-            ref: idRef("timeline.week", "attribute"),
-            identifier: "timeline.week",
+         * Date Attribute: Timeline - Day of Week
+         * Date Attribute ID: dt_timeline_timestamp.dayOfWeek
+         */ TimelineDayOfWeek: {
+            ref: idRef("dt_timeline_timestamp.dayOfWeek", "attribute"),
+            identifier: "dt_timeline_timestamp.dayOfWeek",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Timeline)
-             * Display Form ID: timeline.aaA81lMifn6q
-             */ WeekNrYear: newAttribute("timeline.aaA81lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Timeline)
-             * Display Form ID: timeline.aaw81lMifn6q
-             */ WeekStarting: newAttribute("timeline.aaw81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Timeline)
-             * Display Form ID: timeline.aau81lMifn6q
-             */ FromTo: newAttribute("timeline.aau81lMifn6q"),
-            /**
-             * Display Form Title: Week #/Year (Cont.) (Timeline)
-             * Display Form ID: timeline.aay81lMifn6q
-             */ WeekNrYear_1: newAttribute("timeline.aay81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Cont.) (Timeline)
-             * Display Form ID: timeline.aaC81lMifn6q
-             */ WkQtrYear: newAttribute("timeline.aaC81lMifn6q"),
-            /**
-             * Display Form Title: Wk/Qtr/Year (Timeline)
-             * Display Form ID: timeline.aas81lMifn6q
-             */ WkQtrYear_1: newAttribute("timeline.aas81lMifn6q"),
+             * Display Form Title: Timeline - Day of Week
+             * Display Form ID: dt_timeline_timestamp.dayOfWeek
+             */ Default: newAttribute("dt_timeline_timestamp.dayOfWeek"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) (Timeline)
-         * Date Attribute ID: timeline.week.in.year
-         */ WeekSunSat: {
-            ref: idRef("timeline.week.in.year", "attribute"),
-            identifier: "timeline.week.in.year",
+         * Date Attribute: Timeline - Day of Year
+         * Date Attribute ID: dt_timeline_timestamp.dayOfYear
+         */ TimelineDayOfYear: {
+            ref: idRef("dt_timeline_timestamp.dayOfYear", "attribute"),
+            identifier: "dt_timeline_timestamp.dayOfYear",
             /**
-             * Display Form Title: Number US (Timeline)
-             * Display Form ID: timeline.aaI81lMifn6q
-             */ NumberUS: newAttribute("timeline.aaI81lMifn6q"),
+             * Display Form Title: Timeline - Day of Year
+             * Display Form ID: dt_timeline_timestamp.dayOfYear
+             */ Default: newAttribute("dt_timeline_timestamp.dayOfYear"),
         },
         /**
-         * Date Attribute: Week (Sun-Sat) of Qtr (Timeline)
-         * Date Attribute ID: timeline.week.in.quarter
-         */ WeekSunSatOfQtr: {
-            ref: idRef("timeline.week.in.quarter", "attribute"),
-            identifier: "timeline.week.in.quarter",
+         * Date Attribute: Timeline - Hour
+         * Date Attribute ID: dt_timeline_timestamp.hour
+         */ TimelineHour: {
+            ref: idRef("dt_timeline_timestamp.hour", "attribute"),
+            identifier: "dt_timeline_timestamp.hour",
             /**
-             * Display Form Title: Number US (Timeline)
-             * Display Form ID: timeline.aaO81lMifn6q
-             */ NumberUS: newAttribute("timeline.aaO81lMifn6q"),
+             * Display Form Title: Timeline - Hour
+             * Display Form ID: dt_timeline_timestamp.hour
+             */ Default: newAttribute("dt_timeline_timestamp.hour"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun)/Year (Timeline)
-         * Date Attribute ID: timeline.euweek
-         */ WeekMonSunYear: {
-            ref: idRef("timeline.euweek", "attribute"),
-            identifier: "timeline.euweek",
+         * Date Attribute: Timeline - Hour of Day
+         * Date Attribute ID: dt_timeline_timestamp.hourOfDay
+         */ TimelineHourOfDay: {
+            ref: idRef("dt_timeline_timestamp.hourOfDay", "attribute"),
+            identifier: "dt_timeline_timestamp.hourOfDay",
             /**
-             * Display Form Title: Week #/Year (W1/2010) (Timeline)
-             * Display Form ID: timeline.aa281lMifn6q
-             */ WeekNrYear: newAttribute("timeline.aa281lMifn6q"),
-            /**
-             * Display Form Title: Week Starting (Timeline)
-             * Display Form ID: timeline.aaY81lMifn6q
-             */ WeekStarting: newAttribute("timeline.aaY81lMifn6q"),
-            /**
-             * Display Form Title: From - To (Timeline)
-             * Display Form ID: timeline.aaW81lMifn6q
-             */ FromTo: newAttribute("timeline.aaW81lMifn6q"),
+             * Display Form Title: Timeline - Hour of Day
+             * Display Form ID: dt_timeline_timestamp.hourOfDay
+             */ Default: newAttribute("dt_timeline_timestamp.hourOfDay"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) (Timeline)
-         * Date Attribute ID: timeline.euweek.in.year
-         */ WeekMonSun: {
-            ref: idRef("timeline.euweek.in.year", "attribute"),
-            identifier: "timeline.euweek.in.year",
+         * Date Attribute: Timeline - Minute
+         * Date Attribute ID: dt_timeline_timestamp.minute
+         */ TimelineMinute: {
+            ref: idRef("dt_timeline_timestamp.minute", "attribute"),
+            identifier: "dt_timeline_timestamp.minute",
             /**
-             * Display Form Title: Number EU (Timeline)
-             * Display Form ID: timeline.aba81lMifn6q
-             */ NumberEU: newAttribute("timeline.aba81lMifn6q"),
+             * Display Form Title: Timeline - Minute
+             * Display Form ID: dt_timeline_timestamp.minute
+             */ Default: newAttribute("dt_timeline_timestamp.minute"),
         },
         /**
-         * Date Attribute: Week (Mon-Sun) of Qtr (Timeline)
-         * Date Attribute ID: timeline.euweek.in.quarter
-         */ WeekMonSunOfQtr: {
-            ref: idRef("timeline.euweek.in.quarter", "attribute"),
-            identifier: "timeline.euweek.in.quarter",
+         * Date Attribute: Timeline - Minute of Hour
+         * Date Attribute ID: dt_timeline_timestamp.minuteOfHour
+         */ TimelineMinuteOfHour: {
+            ref: idRef("dt_timeline_timestamp.minuteOfHour", "attribute"),
+            identifier: "dt_timeline_timestamp.minuteOfHour",
             /**
-             * Display Form Title: Number EU (Timeline)
-             * Display Form ID: timeline.abg81lMifn6q
-             */ NumberEU: newAttribute("timeline.abg81lMifn6q"),
+             * Display Form Title: Timeline - Minute of Hour
+             * Display Form ID: dt_timeline_timestamp.minuteOfHour
+             */ Default: newAttribute("dt_timeline_timestamp.minuteOfHour"),
         },
         /**
-         * Date Attribute: Month (Timeline)
-         * Date Attribute ID: timeline.month.in.year
-         */ Month: {
-            ref: idRef("timeline.month.in.year", "attribute"),
-            identifier: "timeline.month.in.year",
+         * Date Attribute: Timeline - Month/Year
+         * Date Attribute ID: dt_timeline_timestamp.month
+         */ TimelineMonthYear: {
+            ref: idRef("dt_timeline_timestamp.month", "attribute"),
+            identifier: "dt_timeline_timestamp.month",
             /**
-             * Display Form Title: Short (Jan) (Timeline)
-             * Display Form ID: timeline.abm81lMifn6q
-             */ Short: newAttribute("timeline.abm81lMifn6q"),
-            /**
-             * Display Form Title: Long (January) (Timeline)
-             * Display Form ID: timeline.abs81lMifn6q
-             */ Long: newAttribute("timeline.abs81lMifn6q"),
-            /**
-             * Display Form Title: Number (M1) (Timeline)
-             * Display Form ID: timeline.abq81lMifn6q
-             */ Number: newAttribute("timeline.abq81lMifn6q"),
-            /**
-             * Display Form Title: M/Q (M1/Q1) (Timeline)
-             * Display Form ID: timeline.abo81lMifn6q
-             */ MQ: newAttribute("timeline.abo81lMifn6q"),
+             * Display Form Title: Timeline - Month/Year
+             * Display Form ID: dt_timeline_timestamp.month
+             */ Default: newAttribute("dt_timeline_timestamp.month"),
         },
         /**
-         * Date Attribute: Month of Quarter (Timeline)
-         * Date Attribute ID: timeline.month.in.quarter
-         */ MonthOfQuarter: {
-            ref: idRef("timeline.month.in.quarter", "attribute"),
-            identifier: "timeline.month.in.quarter",
+         * Date Attribute: Timeline - Month of Year
+         * Date Attribute ID: dt_timeline_timestamp.monthOfYear
+         */ TimelineMonthOfYear: {
+            ref: idRef("dt_timeline_timestamp.monthOfYear", "attribute"),
+            identifier: "dt_timeline_timestamp.monthOfYear",
             /**
-             * Display Form Title: Number (Timeline)
-             * Display Form ID: timeline.aby81lMifn6q
-             */ Number: newAttribute("timeline.aby81lMifn6q"),
+             * Display Form Title: Timeline - Month of Year
+             * Display Form ID: dt_timeline_timestamp.monthOfYear
+             */ Default: newAttribute("dt_timeline_timestamp.monthOfYear"),
         },
         /**
-         * Date Attribute: Day of Year (Timeline)
-         * Date Attribute ID: timeline.day.in.year
-         */ DayOfYear: {
-            ref: idRef("timeline.day.in.year", "attribute"),
-            identifier: "timeline.day.in.year",
+         * Date Attribute: Timeline - Quarter/Year
+         * Date Attribute ID: dt_timeline_timestamp.quarter
+         */ TimelineQuarterYear: {
+            ref: idRef("dt_timeline_timestamp.quarter", "attribute"),
+            identifier: "dt_timeline_timestamp.quarter",
             /**
-             * Display Form Title: default (Timeline)
-             * Display Form ID: timeline.abE81lMifn6q
-             */ Default: newAttribute("timeline.abE81lMifn6q"),
+             * Display Form Title: Timeline - Quarter/Year
+             * Display Form ID: dt_timeline_timestamp.quarter
+             */ Default: newAttribute("dt_timeline_timestamp.quarter"),
         },
         /**
-         * Date Attribute: Day of Week (Sun-Sat) (Timeline)
-         * Date Attribute ID: timeline.day.in.week
-         */ DayOfWeekSunSat: {
-            ref: idRef("timeline.day.in.week", "attribute"),
-            identifier: "timeline.day.in.week",
+         * Date Attribute: Timeline - Quarter of Year
+         * Date Attribute ID: dt_timeline_timestamp.quarterOfYear
+         */ TimelineQuarterOfYear: {
+            ref: idRef("dt_timeline_timestamp.quarterOfYear", "attribute"),
+            identifier: "dt_timeline_timestamp.quarterOfYear",
             /**
-             * Display Form Title: Short (Sun) (Timeline)
-             * Display Form ID: timeline.abK81lMifn6q
-             */ Short: newAttribute("timeline.abK81lMifn6q"),
-            /**
-             * Display Form Title: Long (Sunday) (Timeline)
-             * Display Form ID: timeline.abO81lMifn6q
-             */ Long: newAttribute("timeline.abO81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Sunday) (Timeline)
-             * Display Form ID: timeline.abM81lMifn6q
-             */ Number: newAttribute("timeline.abM81lMifn6q"),
+             * Display Form Title: Timeline - Quarter of Year
+             * Display Form ID: dt_timeline_timestamp.quarterOfYear
+             */ Default: newAttribute("dt_timeline_timestamp.quarterOfYear"),
         },
         /**
-         * Date Attribute: Day of Week (Mon-Sun) (Timeline)
-         * Date Attribute ID: timeline.day.in.euweek
-         */ DayOfWeekMonSun: {
-            ref: idRef("timeline.day.in.euweek", "attribute"),
-            identifier: "timeline.day.in.euweek",
+         * Date Attribute: Timeline - Week/Year
+         * Date Attribute ID: dt_timeline_timestamp.week
+         */ TimelineWeekYear: {
+            ref: idRef("dt_timeline_timestamp.week", "attribute"),
+            identifier: "dt_timeline_timestamp.week",
             /**
-             * Display Form Title: Short (Mon) (Timeline)
-             * Display Form ID: timeline.abU81lMifn6q
-             */ Short: newAttribute("timeline.abU81lMifn6q"),
-            /**
-             * Display Form Title: Long (Monday) (Timeline)
-             * Display Form ID: timeline.abY81lMifn6q
-             */ Long: newAttribute("timeline.abY81lMifn6q"),
-            /**
-             * Display Form Title: Number (1=Monday) (Timeline)
-             * Display Form ID: timeline.abW81lMifn6q
-             */ Number: newAttribute("timeline.abW81lMifn6q"),
+             * Display Form Title: Timeline - Week/Year
+             * Display Form ID: dt_timeline_timestamp.week
+             */ Default: newAttribute("dt_timeline_timestamp.week"),
         },
         /**
-         * Date Attribute: Day of Quarter (Timeline)
-         * Date Attribute ID: timeline.day.in.quarter
-         */ DayOfQuarter: {
-            ref: idRef("timeline.day.in.quarter", "attribute"),
-            identifier: "timeline.day.in.quarter",
+         * Date Attribute: Timeline - Week of Year
+         * Date Attribute ID: dt_timeline_timestamp.weekOfYear
+         */ TimelineWeekOfYear: {
+            ref: idRef("dt_timeline_timestamp.weekOfYear", "attribute"),
+            identifier: "dt_timeline_timestamp.weekOfYear",
             /**
-             * Display Form Title: default (Timeline)
-             * Display Form ID: timeline.ab481lMifn6q
-             */ Default: newAttribute("timeline.ab481lMifn6q"),
+             * Display Form Title: Timeline - Week of Year
+             * Display Form ID: dt_timeline_timestamp.weekOfYear
+             */ Default: newAttribute("dt_timeline_timestamp.weekOfYear"),
         },
         /**
-         * Date Attribute: Day of Month (Timeline)
-         * Date Attribute ID: timeline.day.in.month
-         */ DayOfMonth: {
-            ref: idRef("timeline.day.in.month", "attribute"),
-            identifier: "timeline.day.in.month",
+         * Date Attribute: Timeline - Year
+         * Date Attribute ID: dt_timeline_timestamp.year
+         */ TimelineYear: {
+            ref: idRef("dt_timeline_timestamp.year", "attribute"),
+            identifier: "dt_timeline_timestamp.year",
             /**
-             * Display Form Title: default (Timeline)
-             * Display Form ID: timeline.aca81lMifn6q
-             */ Default: newAttribute("timeline.aca81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Quarter/Year (Timeline)
-         * Date Attribute ID: timeline.quarter
-         */ QuarterYear: {
-            ref: idRef("timeline.quarter", "attribute"),
-            identifier: "timeline.quarter",
-            /**
-             * Display Form Title: US Short (Timeline)
-             * Display Form ID: timeline.aci81lMifn6q
-             */ USShort: newAttribute("timeline.aci81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Month/Year (Timeline)
-         * Date Attribute ID: timeline.month
-         */ MonthYear: {
-            ref: idRef("timeline.month", "attribute"),
-            identifier: "timeline.month",
-            /**
-             * Display Form Title: Short (Jan 2010) (Timeline)
-             * Display Form ID: timeline.act81lMifn6q
-             */ Short: newAttribute("timeline.act81lMifn6q"),
-            /**
-             * Display Form Title: Long (January 2010) (Timeline)
-             * Display Form ID: timeline.acx81lMifn6q
-             */ Long: newAttribute("timeline.acx81lMifn6q"),
-            /**
-             * Display Form Title: Number (1/2010) (Timeline)
-             * Display Form ID: timeline.acv81lMifn6q
-             */ Number: newAttribute("timeline.acv81lMifn6q"),
-        },
-        /**
-         * Date Attribute: Date (Timeline)
-         * Date Attribute ID: timeline.date
-         */ Date: {
-            ref: idRef("timeline.date", "attribute"),
-            identifier: "timeline.date",
-            /**
-             * Display Form Title: mm/dd/yyyy (Timeline)
-             * Display Form ID: timeline.date.mmddyyyy
-             */ MmDdYyyy: newAttribute("timeline.date.mmddyyyy"),
-            /**
-             * Display Form Title: yyyy-mm-dd (Timeline)
-             * Display Form ID: timeline.date.yyyymmdd
-             */ YyyyMmDd: newAttribute("timeline.date.yyyymmdd"),
-            /**
-             * Display Form Title: m/d/yy (no leading zeroes) (Timeline)
-             * Display Form ID: timeline.date.mdyy
-             */ MDYy: newAttribute("timeline.date.mdyy"),
-            /**
-             * Display Form Title: Long (Mon, Jan 1, 2010) (Timeline)
-             * Display Form ID: timeline.date.long
-             */ Long: newAttribute("timeline.date.long"),
-            /**
-             * Display Form Title: dd/mm/yyyy (Timeline)
-             * Display Form ID: timeline.date.ddmmyyyy
-             */ DdMmYyyy: newAttribute("timeline.date.ddmmyyyy"),
-            /**
-             * Display Form Title: dd-mm-yyyy (Timeline)
-             * Display Form ID: timeline.date.eddmmyyyy
-             */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
+             * Display Form Title: Timeline - Year
+             * Display Form ID: dt_timeline_timestamp.year
+             */ Default: newAttribute("dt_timeline_timestamp.year"),
         },
     },
 };
 export const Insights = {
     /**
-     * Insight Title: Test Bar Chart
-     * Insight ID: acCgxKCchupK
+     * Insight Title: Table using long name metric
+     * Insight ID: 1e17f8cf-aa34-4474-8dd5-c1249c688225
      */
-    TestBarChart: "acCgxKCchupK",
+    TableUsingLongNameMetric: "1e17f8cf-aa34-4474-8dd5-c1249c688225",
     /**
-     * Insight Title: my insight
-     * Insight ID: acFU8WHNe2JJ
-     */ MyInsight: "acFU8WHNe2JJ",
+     * Insight Title: Table has AM metric
+     * Insight ID: 343b329b-e2b0-43b2-9724-de8cd664ebac
+     */ TableHasAMMetric: "343b329b-e2b0-43b2-9724-de8cd664ebac",
     /**
-     * Insight Title: my heatmap
-     * Insight ID: abKVazWBbnx5
-     */ MyHeatmap: "abKVazWBbnx5",
+     * Insight Title: merge cells insight
+     * Insight ID: 3ef94acb-1e15-49ef-88d5-e9e2931be959
+     */ MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
     /**
-     * Insight Title: my treemap
-     * Insight ID: aaTVeHZ6e5mB
-     */ MyTreemap: "aaTVeHZ6e5mB",
+     * Insight Title: big insight
+     * Insight ID: 5517045e-661f-4d6b-b0b0-98030ab9f68c
+     */ BigInsight: "5517045e-661f-4d6b-b0b0-98030ab9f68c",
     /**
-     * Insight Title: my line chart
-     * Insight ID: ab2Va4rig3Cf
-     */ MyLineChart: "ab2Va4rig3Cf",
+     * Insight Title: Table has multi metrics and multi formats
+     * Insight ID: 6d236ec6-5cf7-493e-8285-6613fde4ce18
+     */ TableHasMultiMetricsAndMultiFormats: "6d236ec6-5cf7-493e-8285-6613fde4ce18",
     /**
-     * Insight Title: test 2
-     * Insight ID: abHzIZtmcyj1
-     */ Test2: "abHzIZtmcyj1",
+     * Insight Title: Column chart only measures
+     * Insight ID: 6ecba0d9-8fff-4c78-8adf-7f33cc1956c8
+     */ ColumnChartOnlyMeasures: "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
+    /**
+     * Insight Title: invalid insight
+     * Insight ID: 81452cc9-558b-4b4e-a70b-0a80f3bd2924
+     */ InvalidInsight: "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+    /**
+     * Insight Title: Insight using long name metric
+     * Insight ID: 843701ee-8f24-4942-8522-872a96575f8e
+     */ InsightUsingLongNameMetric: "843701ee-8f24-4942-8522-872a96575f8e",
+    /**
+     * Insight Title: Column chart has not hyperlink
+     * Insight ID: 84d13bd9-f976-4e03-8b00-fec9497d580b
+     */ ColumnChartHasNotHyperlink: "84d13bd9-f976-4e03-8b00-fec9497d580b",
+    /**
+     * Insight Title: Column chart long attribute has hyperlink
+     * Insight ID: 87c466b7-e3e0-4a1a-a45a-4ae333bce863
+     */ ColumnChartLongAttributeHasHyperlink: "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
     /**
      * Insight Title: test
-     * Insight ID: aa7PW2uGdxgt
-     */ Test: "aa7PW2uGdxgt",
+     * Insight ID: 92530bf9-c150-4b52-85e7-ae39bcd32ce2
+     */ Test: "92530bf9-c150-4b52-85e7-ae39bcd32ce2",
     /**
-     * Insight Title: Test insight
-     * Insight ID: aagaIzlMbxR9
-     */ TestInsight: "aagaIzlMbxR9",
+     * Insight Title: Column chart has many hyperlinks
+     * Insight ID: 9a2ab62b-587a-4b16-9682-1b7962340354
+     */ ColumnChartHasManyHyperlinks: "9a2ab62b-587a-4b16-9682-1b7962340354",
     /**
-     * Insight Title: test
-     * Insight ID: aaPaKGXCd61w
-     */ Test_1: "aaPaKGXCd61w",
+     * Insight Title: Column chart with Department attribute
+     * Insight ID: b1614db1-3058-4071-a2fe-64a017d318c5
+     */ ColumnChartWithDepartmentAttribute: "b1614db1-3058-4071-a2fe-64a017d318c5",
     /**
-     * Insight Title: test
-     * Insight ID: ab7aDKZAbdBg
-     */ Test_2: "ab7aDKZAbdBg",
+     * Insight Title: AD has null value
+     * Insight ID: b3b665b7-bca2-0322-82f1-b86ky73k90f8afe
+     */ ADHasNullValue: "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
     /**
-     * Insight Title: Longer Table
-     * Insight ID: aaii8nYodE4p
-     */ LongerTable: "aaii8nYodE4p",
+     * Insight Title: Parent Insight
+     * Insight ID: b3b665b7-bca2-4462-82f1-b0e01dff8afe
+     */ ParentInsight: "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
     /**
-     * Insight Title: Simple Sorted Table
-     * Insight ID: ab2pdQnmiqo5
-     */ SimpleSortedTable: "ab2pdQnmiqo5",
+     * Insight Title: Combine with all filter types
+     * Insight ID: ba13041b-87bc-458c-a514-fcc0074c9973
+     */ CombineWithAllFilterTypes: "ba13041b-87bc-458c-a514-fcc0074c9973",
     /**
-     * Insight Title: test insight
-     * Insight ID: acKwfO4Yg9yo
-     */ TestInsight_1: "acKwfO4Yg9yo",
+     * Insight Title: Negative Insight
+     * Insight ID: c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9
+     */ NegativeInsight: "c1f236a4-b48a-4bf6-a94f-a89d5bde2fe9",
     /**
-     * Insight Title: test insight
-     * Insight ID: abkBnI1zd28W
-     */ TestInsight_2: "abkBnI1zd28W",
+     * Insight Title: many data
+     * Insight ID: dcce2234-9097-47e7-a165-36cdbaa2e134
+     */ ManyData: "dcce2234-9097-47e7-a165-36cdbaa2e134",
     /**
-     * Insight Title: table with multiple measures
-     * Insight ID: aegg7T2lgUh7
-     */ TableWithMultipleMeasures: "aegg7T2lgUh7",
+     * Insight Title: No data
+     * Insight ID: f00bd5d5-91da-4139-9e7e-5498d9fe49b5
+     */ NoData: "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
     /**
-     * Insight Title: Insight with own attribute filter
-     * Insight ID: aaA8OrDqeYbN
-     */ InsightWithOwnAttributeFilter: "aaA8OrDqeYbN",
+     * Insight Title: Column chart has hyperlink
+     * Insight ID: f7a50db1-5d2d-4b1a-82e6-e1648836985c
+     */ ColumnChartHasHyperlink: "f7a50db1-5d2d-4b1a-82e6-e1648836985c",
     /**
-     * Insight Title: Insight with own date filter
-     * Insight ID: abQ8wcaMfKnD
-     */ InsightWithOwnDateFilter: "abQ8wcaMfKnD",
-    /**
-     * Insight Title: Insight with own ranking filter
-     * Insight ID: acY8CSf4bjDP
-     */ InsightWithOwnRankingFilter: "acY8CSf4bjDP",
-    /**
-     * Insight Title: Insight with own measure value filter
-     * Insight ID: aea8whgCavlB
-     */ InsightWithOwnMeasureValueFilter: "aea8whgCavlB",
-    /**
-     * Insight Title: Insight with all measures filtered by date
-     * Insight ID: abD8NTsMizAs
-     */ InsightWithAllMeasuresFilteredByDate: "abD8NTsMizAs",
-    /**
-     * Insight Title: Insight with some measures filtered by date
-     * Insight ID: acN8vxIwh5gI
-     */ InsightWithSomeMeasuresFilteredByDate: "acN8vxIwh5gI",
-    /**
-     * Insight Title: drillToAttributeUrl
-     * Insight ID: acSQJgNjhBhi
-     */ DrillToAttributeUrl: "acSQJgNjhBhi",
-    /**
-     * Insight Title: Insight new
-     * Insight ID: aclJqJXpbSQq
-     */ InsightNew: "aclJqJXpbSQq",
-    /**
-     * Insight Title: AreaChart with all buckets
-     * Insight ID: abMejN0pEA3j
-     */ AreaChartWithAllBuckets: "abMejN0pEA3j",
+     * Insight Title: unmerge cells insight
+     * Insight ID: fb53ecfb-3874-4bee-8612-afecd3fa3e04
+     */ UnmergeCellsInsight: "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
 };
 export const Dashboards = {
     /**
-     * Dashboard Title: simple dashboard
-     * Dashboard ID: aaRaEZRWdRpQ
+     * Dashboard Title: Dashboard column chart has not hyperlink
+     * Dashboard ID: 0de1f35f-994d-4803-b236-ae2549818104
      */
-    SimpleDashboard: "aaRaEZRWdRpQ",
+    DashboardColumnChartHasNotHyperlink: "0de1f35f-994d-4803-b236-ae2549818104",
     /**
-     * Dashboard Title: test
-     * Dashboard ID: aba3ZlEEgNsV
-     */ Test_3: "aba3ZlEEgNsV",
+     * Dashboard Title: Dashboard column chart has hyperlinks
+     * Dashboard ID: 2c269aba-2a5a-4d54-8bdb-bbf037645f0f
+     */ DashboardColumnChartHasHyperlinks: "2c269aba-2a5a-4d54-8bdb-bbf037645f0f",
     /**
-     * Dashboard Title: Kpi Export Test secure
-     * Dashboard ID: aaM7WfnqiukA
-     */ KpiExportTestSecure: "aaM7WfnqiukA",
+     * Dashboard Title: KD has null value
+     * Dashboard ID: 5a224af3-902c-4acd-ac75-bfa88d80e044
+     */ KDHasNullValue: "5a224af3-902c-4acd-ac75-bfa88d80e044",
     /**
-     * Dashboard Title: Kpi Export Test secure 2
-     * Dashboard ID: adO7HK4vfVnf
-     */ KpiExportTestSecure2: "adO7HK4vfVnf",
+     * Dashboard Title: KD with No data
+     * Dashboard ID: 61cbcfcd-efee-407f-ba3a-6c3170f50e03
+     */ KDWithNoData: "61cbcfcd-efee-407f-ba3a-6c3170f50e03",
     /**
-     * Dashboard Title: test2
-     * Dashboard ID: acXeSCq5c0R7
-     */ Test2_1: "acXeSCq5c0R7",
+     * Dashboard Title: Dashboard column chart only measures
+     * Dashboard ID: 6dcf6335-92cf-4b77-981f-a1f4d0763053
+     */ DashboardColumnChartOnlyMeasures: "6dcf6335-92cf-4b77-981f-a1f4d0763053",
     /**
-     * Dashboard Title: test3
-     * Dashboard ID: afLe7WFTeYmc
-     */ Test3: "afLe7WFTeYmc",
+     * Dashboard Title: KD with big insight
+     * Dashboard ID: 75a429f8-6c26-422a-8e0d-9e52981f5403
+     */ KDWithBigInsight: "75a429f8-6c26-422a-8e0d-9e52981f5403",
     /**
-     * Dashboard Title: Dashboard With 3 Sections
-     * Dashboard ID: aeis6NlXcL7X
-     */ DashboardWith3Sections: "aeis6NlXcL7X",
+     * Dashboard Title: KD using long name metric
+     * Dashboard ID: 7b2cd4c1-bb41-473a-9017-e404cbc630d2
+     */ KDUsingLongNameMetric: "7b2cd4c1-bb41-473a-9017-e404cbc630d2",
     /**
-     * Dashboard Title: Drill to same dashboard
-     * Dashboard ID: ac4ahpU6bpzD
-     */ DrillToSameDashboard: "ac4ahpU6bpzD",
+     * Dashboard Title: Target KD has null value
+     * Dashboard ID: a87209e0-c53f-4a6f-abf3-17c7d8d4079e
+     */ TargetKDHasNullValue: "a87209e0-c53f-4a6f-abf3-17c7d8d4079e",
     /**
-     * Dashboard Title: widget filtering tests
-     * Dashboard ID: abr8vSe5exU7
-     */ WidgetFilteringTests: "abr8vSe5exU7",
+     * Dashboard Title: Parent Dashboard
+     * Dashboard ID: d1965687-f7bd-41ba-9fa2-f63793d62a62
+     */ ParentDashboard: "d1965687-f7bd-41ba-9fa2-f63793d62a62",
     /**
-     * Dashboard Title: widget filtering tests advanced
-     * Dashboard ID: aaQ8QjLVhNOG
-     */ WidgetFilteringTestsAdvanced: "aaQ8QjLVhNOG",
+     * Dashboard Title: KD with merge and unmerge insights
+     * Dashboard ID: dfb03d5e-ba83-4105-badb-0a02e2e668ee
+     */ KDWithMergeAndUnmergeInsights: "dfb03d5e-ba83-4105-badb-0a02e2e668ee",
     /**
-     * Dashboard Title: Broken Filter Alerts Test
-     * Dashboard ID: abK3yl1TcTWV
-     */ BrokenFilterAlertsTest: "abK3yl1TcTWV",
+     * Dashboard Title: KD with many data insight
+     * Dashboard ID: e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0
+     */ KDWithManyDataInsight: "e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0",
     /**
-     * Dashboard Title: test RAIL-3630
-     * Dashboard ID: ab4ffknygMd6
-     */ TestRAIL3630: "ab4ffknygMd6",
-    /**
-     * Dashboard Title: MAP - executeAfm test
-     * Dashboard ID: ac8FPh7Nmhx1
-     */ MAPExecuteAfmTest: "ac8FPh7Nmhx1",
-    /**
-     * Dashboard Title: Locked dashboard
-     * Dashboard ID: aaI2dN741uaa
-     */ LockedDashboard: "aaI2dN741uaa",
-    /**
-     * Dashboard Title: JSC test
-     * Dashboard ID: aaSe33fywlFz
-     */ JSCTest: "aaSe33fywlFz",
-    /**
-     * Dashboard Title: simple dashboard no drills
-     * Dashboard ID: abpEJ9hwq9U8
-     */ SimpleDashboardNoDrills: "abpEJ9hwq9U8",
-    /**
-     * Dashboard Title: TSA test d
-     * Dashboard ID: aa1dxgThidyB
-     */ TSATestD: "aa1dxgThidyB",
+     * Dashboard Title: KD with invalid insight
+     * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12
+     */ KDWithInvalidInsight: "f50c7076-1d45-4031-a4fd-564459254b12",
 };

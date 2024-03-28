@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
@@ -34,7 +34,7 @@ async function testDashboardModifications(tester: DashboardTester): Promise<any>
     await tester.dispatchAndWaitFor(renameDashboard(TestTitle), "GDC.DASH/EVT.RENAMED");
 
     return tester.dispatchAndWaitFor(
-        addAttributeFilter(attributeDisplayFormRef(ReferenceMd.Region), 0),
+        addAttributeFilter(attributeDisplayFormRef(ReferenceMd.Region.Default), 0),
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
     );
 }

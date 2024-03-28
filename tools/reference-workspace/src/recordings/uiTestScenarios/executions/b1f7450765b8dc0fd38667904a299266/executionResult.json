@@ -1,0 +1,22 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "sample_xirr",
+                                    "localIdentifier": "m_sample_xirr",
+                                    "name": "Sample XIRR"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

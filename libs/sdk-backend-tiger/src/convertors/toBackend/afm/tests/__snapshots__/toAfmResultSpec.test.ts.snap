@@ -9,7 +9,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
       },
       "label": {
         "identifier": {
-          "id": "label.product.id.name",
+          "id": "label.f_product.product.name",
           "type": "label",
         },
       },
@@ -24,7 +24,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
       },
       "label": {
         "identifier": {
-          "id": "label.product.id.name",
+          "id": "label.f_product.product.name",
           "type": "label",
         },
       },
@@ -34,7 +34,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
     "negativeAttributeFilter": {
       "label": {
         "identifier": {
-          "id": "label.product.id.name",
+          "id": "label.f_product.product.name",
           "type": "label",
         },
       },
@@ -55,20 +55,20 @@ exports[`converts execution definition to AFM Execution > should return AFM Exec
       {
         "label": {
           "identifier": {
-            "id": "label.account.id.name",
+            "id": "label.f_account.account.name",
             "type": "label",
           },
         },
-        "localIdentifier": "a_label.account.id.name",
+        "localIdentifier": "a_label.f_account.account.name",
       },
       {
         "label": {
           "identifier": {
-            "id": "label.activity.id.subject",
+            "id": "label.f_activity.subject",
             "type": "label",
           },
         },
-        "localIdentifier": "a_label.activity.id.subject",
+        "localIdentifier": "a_label.f_activity.subject",
       },
     ],
     "auxMeasures": [],
@@ -82,7 +82,7 @@ exports[`converts execution definition to AFM Execution > should return AFM Exec
           },
           "label": {
             "identifier": {
-              "id": "label.account.id.name",
+              "id": "label.f_account.account.name",
               "type": "label",
             },
           },
@@ -95,13 +95,13 @@ exports[`converts execution definition to AFM Execution > should return AFM Exec
           "measure": {
             "item": {
               "identifier": {
-                "id": "acugFHNJgsBy",
+                "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                 "type": "metric",
               },
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     ],
   },

@@ -4,15 +4,15 @@ exports[`AttributeFilterHandler > hiddenElements option should hide element in g
 [
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
   {
     "title": "TouchAll",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+    "uri": "TouchAll",
   },
 ]
 `;
@@ -21,11 +21,11 @@ exports[`AttributeFilterHandler > hiddenElements option should work properly wit
 [
   {
     "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "uri": "Educationly",
   },
   {
     "title": "Grammar Plus",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+    "uri": "Grammar Plus",
   },
 ]
 `;

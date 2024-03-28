@@ -7,10 +7,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
@@ -21,10 +24,10 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.opportunity.id.name",
+                                "identifier": "label.f_opportunity.opportunity.name",
                                 "type": "displayForm"
                             },
-                            "localIdentifier": "a_label.opportunity.id.name"
+                            "localIdentifier": "a_label.f_opportunity.opportunity.name"
                         }
                     }
                 ],
@@ -36,7 +39,7 @@
             {
                 "measureValueFilter": {
                     "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
-                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                    "measure": { "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050" }
                 }
             }
         ],

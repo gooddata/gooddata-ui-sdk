@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { ChartSortingDialog, IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
 import { measureLocalId, attributeLocalId } from "@gooddata/sdk-model";
-import { ExperimentalMd } from "@gooddata/experimental-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -52,34 +52,34 @@ const dropdownMultipleAttributesMultipleMetricsScenario: BackstopConfig = {
 };
 
 const bucketItemNames: IBucketItemDescriptors = {
-    [measureLocalId(ExperimentalMd.SnapshotEOP)]: {
+    [measureLocalId(ReferenceMd.SnapshotEOP)]: {
         type: "measure",
         name: "Snapshot",
         sequenceNumber: "M1",
     },
-    [measureLocalId(ExperimentalMd.TimelineEOP)]: {
+    [measureLocalId(ReferenceMd.TimelineEOP)]: {
         type: "measure",
         name: "Timeline",
         sequenceNumber: "M2",
     },
-    [measureLocalId(ExperimentalMd.NrOfOpportunities)]: {
+    [measureLocalId(ReferenceMd.NrOfOpportunities)]: {
         type: "measure",
         name: "NrOfOppor.",
         sequenceNumber: "M3",
     },
-    [attributeLocalId(ExperimentalMd.Account.Name)]: {
+    [attributeLocalId(ReferenceMd.Account.Name)]: {
         type: "attribute",
         name: "Account",
     },
-    [attributeLocalId(ExperimentalMd.Activity.Subject)]: {
+    [attributeLocalId(ReferenceMd.Activity.Subject)]: {
         type: "attribute",
         name: "Activity",
     },
-    [attributeLocalId(ExperimentalMd.DateDatasets.Closed.Year.Default)]: {
+    [attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedYear.Default)]: {
         type: "chronologicalDate",
         name: "Closed/Year",
     },
-    [attributeLocalId(ExperimentalMd.DateDatasets.Closed.MonthYear.Long)]: {
+    [attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedMonthYear.Default)]: {
         type: "genericDate",
         name: "Closed/Month of Year",
     },

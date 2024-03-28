@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
@@ -59,9 +59,11 @@ export class VisClassesRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        const replaceString: [string, string] | undefined = newWorkspaceId
-            ? [workspace, newWorkspaceId]
-            : undefined;
+        const replaceString: [string, string][] = [];
+
+        if (newWorkspaceId) {
+            replaceString.push([workspace, newWorkspaceId]);
+        }
 
         writeAsJsonSync(this.itemsFile, items, { replaceString });
     }

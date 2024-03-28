@@ -1,0 +1,111 @@
+[
+    {
+        "n2oMap": {
+            "a_label.f_opportunity.opportunity.name": "a_label.f_opportunity.opportunity.name",
+            "a_label.f_product.product.name": "a_label.f_product.product.name",
+            "m_f_opportunitysnapshot.f_amount_sum": "m_f_opportunitysnapshot.f_amount_sum"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.f_product.product.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.f_product.product.name"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.f_opportunity.opportunity.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.f_opportunity.opportunity.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": {
+                                            "identifier": "f_opportunitysnapshot.f_amount",
+                                            "type": "fact"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.f_product.product.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.f_product.product.name"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.f_opportunity.opportunity.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.f_opportunity.opportunity.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                {
+                    "itemIdentifiers": [
+                        "a_label.f_product.product.name",
+                        "a_label.f_opportunity.opportunity.name"
+                    ]
+                }
+            ],
+            "filters": [
+                {
+                    "measureValueFilter": {
+                        "condition": { "comparison": { "operator": "GREATER_THAN", "value": 5000000 } },
+                        "measure": { "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum" }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_opportunitysnapshot.f_amount", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "dense chart with two view by",
+        "vis": "ColumnChart"
+    }
+]

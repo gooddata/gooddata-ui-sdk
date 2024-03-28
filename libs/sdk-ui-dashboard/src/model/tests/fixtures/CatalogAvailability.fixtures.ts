@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import { ICatalogDateDataset, uriRef } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
 import includes from "lodash/includes.js";
 import { invariant } from "ts-invariant";
 
@@ -34,11 +34,11 @@ export const MockAvailabilityWithDifferentRelevance = (
     datasets: ICatalogDateDataset[],
 ): ICatalogDateDataset[] => {
     const available = datasets
-        .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
+        .filter((d) => includes(["Activity", "Timeline"], d.dataSet.title))
         .map((d) => {
             return {
                 ...d,
-                relevance: d.dataSet.title === "Date (Timeline)" ? 1 : 0,
+                relevance: d.dataSet.title === "Timeline" ? 1 : 0,
             };
         });
 
@@ -51,7 +51,7 @@ export const MockAvailabilityWithDifferentRelevance = (
  */
 export const MockAvailabilityWithSameRelevance = (datasets: ICatalogDateDataset[]): ICatalogDateDataset[] => {
     const available = datasets
-        .filter((d) => includes(["Date (Activity)", "Date (Timeline)"], d.dataSet.title))
+        .filter((d) => includes(["Activity", "Timeline"], d.dataSet.title))
         .map((d) => {
             return {
                 ...d,
@@ -63,5 +63,4 @@ export const MockAvailabilityWithSameRelevance = (datasets: ICatalogDateDataset[
     return available;
 };
 
-export const TimelineDateDatasetRef = uriRef("/gdc/md/referenceworkspace/obj/1052");
-export const ActivityDateDatasetRef = uriRef("/gdc/md/referenceworkspace/obj/887");
+export const ActivityDateDatasetRef = idRef("dt_activity_timestamp", "dataSet");

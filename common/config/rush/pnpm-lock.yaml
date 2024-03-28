@@ -6580,15 +6580,12 @@ importers:
 
   ../../tools/mock-handling:
     dependencies:
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../../libs/api-model-bear
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger':
+        specifier: workspace:*
+        version: link:../../libs/sdk-backend-tiger
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../../libs/sdk-model
@@ -7086,6 +7083,9 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/fixtures':
+        specifier: 1.32.15
+        version: 1.32.15
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -7101,6 +7101,9 @@ importers:
       dependency-cruiser:
         specifier: ^13.0.3
         version: 13.1.5
+      dotenv:
+        specifier: 16.0.3
+        version: 16.0.3
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
@@ -21608,6 +21611,7 @@ packages:
 
   /remove-trailing-separator@1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
+    requiresBuild: true
     dev: true
 
   /renderkid@3.0.0:

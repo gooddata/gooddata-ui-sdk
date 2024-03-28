@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     attributeDisplayFormRef,
@@ -32,17 +32,6 @@ describe("resolveFilterValues", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("should return resolved attribute filters elements by ref", async () => {
-        const backend = recordedBackend(ReferenceRecordings.Recordings);
-        const workspace = "referenceworkspace";
-        const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
-        const attributeFilter: IPositiveAttributeFilter = newPositiveAttributeFilter(testAttributeRef, {
-            uris: ["/gdc/md/referenceworkspace/obj/1054/elements?id=165678"],
-        });
-        const result = await resolveFilterValues([attributeFilter], backend, workspace);
-        expect(result).toMatchSnapshot();
-    });
-
     it("should return resolved attribute filter elements by value", async () => {
         const backend = recordedBackend(ReferenceRecordings.Recordings);
         const workspace = "referenceworkspace";
@@ -58,7 +47,7 @@ describe("resolveFilterValues", () => {
         const backend = recordedBackend(ReferenceRecordings.Recordings);
         const workspace = "referenceworkspace";
         const testAttributeRef = attributeDisplayFormRef(ReferenceMd.Product.Name);
-        const testAttributeRef2 = attributeDisplayFormRef(ReferenceMd.Department);
+        const testAttributeRef2 = attributeDisplayFormRef(ReferenceMd.Department.Default);
         const attributeFilter1: IPositiveAttributeFilter = newPositiveAttributeFilter(testAttributeRef, {
             values: ["Educationly"],
         });

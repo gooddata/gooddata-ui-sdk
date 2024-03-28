@@ -108,7 +108,7 @@
     },
     {
       "name": "@gooddata/fixtures",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/i18n-toolkit",

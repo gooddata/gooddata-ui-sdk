@@ -8,7 +8,7 @@ import { Foo } from "@gooddata/foo";
 
 const prop = "string";
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: 1000};
 
@@ -33,7 +33,7 @@ import { Foo } from "@gooddata/foo";
 
 const prop = "string";
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: "20rem"};
 
@@ -58,7 +58,7 @@ import { Foo } from "@gooddata/foo";
 
 const prop = "string";
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: 400};
 
@@ -83,7 +83,7 @@ import { Foo } from "@gooddata/foo";
 
 const prop = "string";
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: 400};
 
@@ -108,7 +108,7 @@ import { Foo } from "@gooddata/foo";
 
 const prop = "string";
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: 400};
 
@@ -151,7 +151,7 @@ import { idRef, newAttribute } from "@gooddata/sdk-model";
 import { Foo } from "@gooddata/foo";
 
 const another: Type2[] = [
-    newAttribute(idRef("label.account.id.name", "displayForm"), a => a.localId("a_label.account.id.name"))
+    newAttribute(idRef("label.f_account.account.name", "displayForm"), a => a.localId("a_label.f_account.account.name"))
 ];
 const style = {height: 400};
 

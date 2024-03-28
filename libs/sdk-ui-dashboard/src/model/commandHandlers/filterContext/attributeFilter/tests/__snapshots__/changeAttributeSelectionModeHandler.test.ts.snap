@@ -39,9 +39,9 @@ exports[`changeAttributeSelectionModeHandler > should set the attribute selectio
       "uris": [],
     },
     "displayForm": {
-      "uri": "/gdc/md/referenceworkspace/obj/1089",
+      "identifier": "f_owner.department_id",
+      "type": "displayForm",
     },
-    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
     "selectionMode": "single",

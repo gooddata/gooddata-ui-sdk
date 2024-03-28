@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import {
     defFingerprint,
@@ -170,7 +170,7 @@ export class ExecutionRecording implements IRecording {
     }
 
     public alwaysRefresh(): boolean {
-        return true;
+        return false;
     }
 
     public async makeRecording(
@@ -186,9 +186,11 @@ export class ExecutionRecording implements IRecording {
             postProcessing: undefined, // Ignore postProcessing property as it is irrelevant to the server side
         };
 
-        const replaceString: [string, string] | undefined = newWorkspaceId
-            ? [workspace, newWorkspaceId]
-            : undefined;
+        const replaceString: [string, string][] = [];
+
+        if (newWorkspaceId) {
+            replaceString.push([workspace, newWorkspaceId]);
+        }
 
         const result: IExecutionResult = await backend
             .workspace(workspace)

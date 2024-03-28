@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
@@ -9,11 +9,7 @@ import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";
 import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 import { getMVS } from "../../_util/test/helper.js";
-import {
-    buildWaterfallChartSeries,
-    getColorAssignment,
-    getTotalColumnColor,
-} from "../waterfallChartOptions.js";
+import { buildWaterfallChartSeries, getColorAssignment } from "../waterfallChartOptions.js";
 import { IChartConfig, ITotalConfig } from "../../../../interfaces/index.js";
 import { ISeriesItem } from "../../../typings/unsafe.js";
 import { getDrillableSeries } from "../../_chartOptions/chartDrilling.js";
@@ -123,41 +119,10 @@ describe("waterfallChartOptions", () => {
 
             expect(seriesData[seriesData.length - 1].isSum).not.toBeDefined();
         });
-
-        it("should add the shadow colum for the metric is total", () => {
-            const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
-                { measures: ["m_fact.hardwaretest.values_sum"] },
-            );
-            const seriesData = waterfallSeries[0].data;
-            const itemIndex = seriesData.findIndex((item) => item.visible === false);
-
-            expect(itemIndex).toBeGreaterThan(0);
-            expect(seriesData[itemIndex + 1].legendIndex).toBe(0);
-            expect(seriesData[itemIndex + 1].color).toBe(
-                getTotalColumnColor(defaultColorAssignment, DefaultColorPalette),
-            );
-        });
-    });
-
-    describe("with drill config", () => {
-        it("should include the drill config", () => {
-            const waterfallSeries = renderChartOptions(
-                ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
-                { measures: ["m_fact.hardwaretest.values_sum"] },
-                "m_fact.hardwaretest.values_sum",
-            );
-
-            const drillableItem = waterfallSeries[0].data.find((item) => item.name === "Sum Values");
-
-            expect(waterfallSeries[0].isDrillable).toBeTruthy();
-            expect((drillableItem as any).drilldown).toBeTruthy();
-            expect((drillableItem as any).drillIntersection).toBeDefined();
-        });
     });
 
     describe("getColorAssignment", () => {
-        it("should render the all three color assignment item", () => {
+        it("should render the all two color assignment item", () => {
             const waterfallSeries = renderChartOptions(
                 ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
             );
@@ -167,7 +132,7 @@ describe("waterfallChartOptions", () => {
                 waterfallSeries,
             );
 
-            expect(colorAssignment.length).toBe(3);
+            expect(colorAssignment.length).toBe(2);
         });
 
         it("should not render the total color assignment", () => {

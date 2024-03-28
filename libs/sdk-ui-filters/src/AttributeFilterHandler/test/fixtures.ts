@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -21,14 +21,11 @@ import {
 import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory.js";
 
 export const particularAttributeElements: ElementsQueryOptionsElementsSpecification = {
-    uris: [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
-    ],
+    values: ["TouchAll", "WonderKid"],
 };
 
 export const anotherParticularAttributeElements: ElementsQueryOptionsElementsSpecification = {
-    uris: ["/gdc/md/referenceworkspace/obj/1054/elements?id=166339"],
+    values: ["PhoenixSoft"],
 };
 
 export const limitingAttributeFilters: IElementsQueryAttributeFilter[] = [
@@ -43,7 +40,7 @@ export const limitingAttributeFilters: IElementsQueryAttributeFilter[] = [
 export const limitingMeasures: IMeasure[] = [ReferenceMd.Amount];
 
 export const limitingDateFilters: IRelativeDateFilter[] = [
-    newRelativeDateFilter(ReferenceMd.DateDatasets.Snapshot.Date.identifier, "GDC.time.date", 0, -1),
+    newRelativeDateFilter(ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier, "GDC.time.date", 0, -1),
 ];
 
 const backend = recordedBackend(ReferenceRecordings.Recordings, {
@@ -59,7 +56,7 @@ const backend = recordedBackend(ReferenceRecordings.Recordings, {
             },
         },
         dateFilters: {
-            [ReferenceMd.DateDatasets.Snapshot.Date.identifier]: (_element, index) => {
+            [ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier]: (_element, index) => {
                 return (index + 1) % 4 === 0;
             },
         },
