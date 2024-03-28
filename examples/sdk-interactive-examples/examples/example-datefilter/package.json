@@ -30,7 +30,6 @@
     "exampleDependencies": [],
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
