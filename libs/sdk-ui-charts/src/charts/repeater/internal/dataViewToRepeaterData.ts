@@ -7,19 +7,27 @@ import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataPoint, DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
  * Key is the localId of the attribute or measure.
  *
  * For row, or column attributes, value is IResultAttributeHeaderItem
  * For slicing attribute, value is array of IResultAttributeHeaderItem.
- * For measure(s), value is array of string or nulls (formatted values).
+ * For measure(s), value is array of objects with raw and formatted value.
  */
 export type IRepeaterRow = Record<
     string,
-    IResultAttributeHeaderItem | IResultAttributeHeaderItem[] | (string | null)[]
+    IResultAttributeHeaderItem | IResultAttributeHeaderItem[] | RepeaterInlineVisualizationDataPoint[]
 >;
+
+/**
+ * Represents a single data point of the inline visualization in the repeater.
+ */
+export type RepeaterInlineVisualizationDataPoint = {
+    value: number | null;
+    formattedValue: string | null;
+};
 
 /**
  * Map data view to a structure that can be easily rendered in a table (repeater).
@@ -75,8 +83,9 @@ export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeate
                     series.dataPoints().forEach((dataPoint, pointIndex) => {
                         const measureLocalId = measureDescriptor.measureHeaderItem.localIdentifier;
                         rows[pointIndex][measureLocalId] = rows[pointIndex][measureLocalId] || [];
-                        (rows[pointIndex][measureLocalId] as (null | string)[])[seriesIndex] =
-                            dataPoint.formattedValue();
+                        (rows[pointIndex][measureLocalId] as RepeaterInlineVisualizationDataPoint[])[
+                            seriesIndex
+                        ] = newRepeaterInlineVisualizationDataPoint(dataPoint);
                     });
                 });
             });
@@ -84,4 +93,11 @@ export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeate
     });
 
     return rows;
+}
+
+function newRepeaterInlineVisualizationDataPoint(dataPoint: DataPoint): RepeaterInlineVisualizationDataPoint {
+    return {
+        formattedValue: dataPoint.formattedValue(),
+        value: typeof dataPoint.rawValue === "string" ? parseInt(dataPoint.rawValue, 10) : dataPoint.rawValue,
+    };
 }

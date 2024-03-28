@@ -18,6 +18,7 @@ export const getDefaultRepeaterUiConfig = (): IUiConfig => cloneDeep(DEFAULT_REP
 // https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
 const repeaterRowsIcon = "local:repeater/bucket-title-rows.svg";
 const repeaterColumnsIcon = "local:repeater/bucket-title-columns.svg";
+const repeaterViewIcon = "local:repeater/bucket-title-view.svg";
 
 export function setRepeaterUiConfig(
     referencePoint: IExtendedReferencePoint,
@@ -29,6 +30,7 @@ export function setRepeaterUiConfig(
     const attributeCanAddItems = hasNoAttribute(buckets);
     const emptyColumns = hasNoColumns(buckets);
     const columnsCanAddItems = !attributeCanAddItems || !emptyColumns;
+    const viewCanAddItems = true; // !attributeCanAddItems || !emptyColumns;
 
     set(
         referencePointConfigured,
@@ -46,8 +48,11 @@ export function setRepeaterUiConfig(
         columnsCanAddItems,
     );
 
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], viewCanAddItems);
+
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], repeaterRowsIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], repeaterColumnsIcon);
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], repeaterViewIcon);
 
     return referencePointConfigured;
 }
@@ -56,7 +61,7 @@ export const configRepeaterBuckets = (
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint => {
     const newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
-    const { attribute, columns } = getRepeaterBucketItems(newExtendedReferencePoint);
+    const { attribute, columns, view } = getRepeaterBucketItems(newExtendedReferencePoint);
 
     set(newExtendedReferencePoint, BUCKETS, [
         {
@@ -66,6 +71,10 @@ export const configRepeaterBuckets = (
         {
             localIdentifier: BucketNames.COLUMNS,
             items: columns,
+        },
+        {
+            localIdentifier: BucketNames.VIEW,
+            items: view,
         },
     ]);
 
@@ -77,6 +86,7 @@ const getRepeaterBucketItems = (extendedReferencePoint: IReferencePoint) => {
     const buckets = newExtendedReferencePoint?.buckets ?? [];
     const rowAttribute = getMainRowAttribute(buckets);
     const columns = getBucketItems(buckets, BucketNames.COLUMNS);
+    const [view] = getBucketItems(buckets, BucketNames.VIEW);
 
     const validColumns = columns
         .filter((column) => column.type !== DATE)
@@ -95,5 +105,6 @@ const getRepeaterBucketItems = (extendedReferencePoint: IReferencePoint) => {
     return {
         attribute: rowAttribute ? [rowAttribute] : [],
         columns: validColumns.length ? validColumns : [],
+        view: view ? [view] : [],
     };
 };

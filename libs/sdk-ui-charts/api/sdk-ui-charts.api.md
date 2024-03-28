@@ -91,6 +91,9 @@ export type ChartCellTextWrapping = "clip" | "wrap";
 // @public (undocumented)
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
+// @public (undocumented)
+export type ChartInlineVisualizationType = "metric" | "line" | "column";
+
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
 
@@ -305,6 +308,7 @@ export interface IChartConfig {
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
     hyperLinks?: IDisplayFormHyperlinksConfig;
+    inlineVisualizations?: IInlineVisualizationsConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
@@ -577,6 +581,13 @@ export interface IHeatmapBucketProps {
 
 // @public (undocumented)
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
+}
+
+// @public (undocumented)
+export interface IInlineVisualizationsConfig {
+    [localIdentifier: string]: {
+        type: ChartInlineVisualizationType;
+    };
 }
 
 // @public

@@ -2,15 +2,36 @@
 
 import React from "react";
 import {
+    IAttribute,
     IDimension,
     IInsightDefinition,
     ISettings,
+    IdentifierRef,
     areObjRefsEqual,
+    attributeDisplayFormRef,
     insightBucket,
     insightBuckets,
     insightProperties,
+    insightSetBuckets,
+    isAdhocMeasure,
+    isMeasure,
+    measureAlias,
+    measureFormat,
+    measureTitle,
+    measureLocalId,
+    modifyInlineMeasure,
+    newInlineMeasure,
+    IMeasure,
+    measureAggregation,
+    measureItem,
+    newBucket,
 } from "@gooddata/sdk-model";
-import { CoreRepeater, constructRepeaterDimensions, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
+import {
+    ChartInlineVisualizationType,
+    CoreRepeater,
+    constructRepeaterDimensions,
+    updateConfigWithSettings,
+} from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
@@ -83,9 +104,37 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     ) {
         const { dateFormat } = options;
         const dimensions = this.getRepeaterDimensions(insight);
+        const attributeBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+        const viewBucket = insightBucket(insight, BucketNames.VIEW);
+        const rowAttribute = attributeBucket.items[0] as IAttribute;
+        const mainRowAttributeRef = attributeDisplayFormRef(rowAttribute) as IdentifierRef;
+        const mainRowAttributeId = mainRowAttributeRef.identifier;
+        const columnBucket = insightBucket(insight, BucketNames.COLUMNS);
+        const visualizationProperties = insightProperties(insight);
+        const sanitizedColumnBucketItems = columnBucket.items.map((item) => {
+            if (isMeasure(item)) {
+                const localId = measureLocalId(item);
+                const inlineVisualizationType =
+                    (visualizationProperties?.inlineVisualizations?.[localId]
+                        ?.type as ChartInlineVisualizationType) ?? "metric";
+
+                return transformAdhocMeasureToInline(
+                    item,
+                    inlineVisualizationType === "metric" ? mainRowAttributeId : undefined,
+                );
+            }
+
+            return item;
+        });
+
+        const insightWithSanitizedBuckets = insightSetBuckets(insight, [
+            attributeBucket,
+            { ...columnBucket, items: sanitizedColumnBucketItems },
+            viewBucket ?? newBucket(BucketNames.VIEW),
+        ]);
 
         return executionFactory
-            .forInsight(insight)
+            .forInsight(insightWithSanitizedBuckets)
             .withDimensions(...dimensions)
             .withDateFormat(dateFormat);
     }
@@ -136,17 +185,26 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
     ): IBucketItem[] {
+        let result;
+
         if (bucket.localIdentifier === BucketNames.ATTRIBUTE) {
-            return bucket.items;
+            result = bucket.items;
+        }
+
+        if (bucket.localIdentifier === BucketNames.VIEW) {
+            result = [];
         }
 
         if (newDerivedBucketItems.length === 0) {
-            return [];
+            result = [];
         }
 
         // remove all existing attributes as they should disappear when cloning the row attribute
         const itemsWithoutAttributes = bucket.items.filter((item) => item.type !== "attribute");
 
+        if (result) {
+            return result;
+        }
         return [...newDerivedBucketItems, ...itemsWithoutAttributes];
     }
 
@@ -225,4 +283,36 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             );
         }
     }
+}
+
+export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttributeId?: string): IMeasure {
+    if (!isAdhocMeasure(measure)) {
+        return measure;
+    }
+
+    const itemRef = measureItem(measure) as IdentifierRef;
+    const aggregation = measureAggregation(measure);
+    let maqlExpression = "";
+
+    const itemIdentifier = `{${itemRef.type}/${itemRef.identifier}}`;
+
+    if (aggregation) {
+        maqlExpression = `SELECT ${aggregation}(${itemIdentifier})`;
+    } else {
+        maqlExpression = `SELECT ${itemIdentifier}`;
+    }
+
+    if (mainRowAttributeId) {
+        maqlExpression += ` BY ALL OTHER EXCEPT {label/${mainRowAttributeId}}`;
+    }
+
+    const inlineMeasure = newInlineMeasure(maqlExpression);
+
+    return modifyInlineMeasure(inlineMeasure, (m) =>
+        m
+            .format(measureFormat(measure))
+            .localId(measureLocalId(measure))
+            .title(measureTitle(measure))
+            .alias(measureAlias(measure)),
+    );
 }

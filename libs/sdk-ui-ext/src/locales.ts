@@ -64,6 +64,7 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     columns_table: { id: "dashboard.bucket.columns_title.table" },
     attribute_repeater: { id: "dashboard.bucket.attribute_title.repeater" },
     columns_repeater: { id: "dashboard.bucket.columns_title.repeater" },
+    view_repeater: { id: "dashboard.bucket.view_title.repeater" },
 });
 
 export const subtitles: Record<string, MessageDescriptor> = defineMessages({

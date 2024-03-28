@@ -13,6 +13,7 @@
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
+export { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import {
     fluidLayoutDescriptor,
     FullVisualizationCatalog,

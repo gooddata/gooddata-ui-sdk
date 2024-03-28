@@ -724,7 +724,7 @@
     },
     {
       "name": "highcharts-react-official",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "history",

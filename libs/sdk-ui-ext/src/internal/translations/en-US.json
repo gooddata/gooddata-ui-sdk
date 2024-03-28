@@ -680,6 +680,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.view_title.repeater": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.columns_title.repeater": {
         "value": "Columns",
         "comment": "",
