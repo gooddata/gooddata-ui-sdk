@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types.js";
@@ -95,7 +95,7 @@ export async function getUnlinkCmdActionConfig(
     options: ActionOptions,
 ): Promise<UnlinkCmdActionConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
+    const { hostname, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard =
         getDashboardFromOptions(options) ??
         env.DASHBOARD_ID ??
@@ -105,7 +105,6 @@ export async function getUnlinkCmdActionConfig(
 
     const backendInstance = createBackend({
         hostname,
-        backend,
         credentials,
     });
 

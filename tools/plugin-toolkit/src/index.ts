@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { Command, OptionValues, program } from "commander";
 import { addPluginCmdAction } from "./addPluginCmd/index.js";
@@ -19,11 +19,7 @@ program
     .version(LIB_VERSION)
     .name("GoodData Plugin Development Toolkit")
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
-    .option("--hostname <hostname>", "URL of your GoodData host")
-    .option(
-        "--backend <backend>",
-        "Type of backend against that you are targeting. Either GoodData Platform (bear) or GoodData.CN (tiger)",
-    );
+    .option("--hostname <hostname>", "URL of your GoodData.CN host");
 
 const dashboardCmd = program
     .command("dashboard-plugin")

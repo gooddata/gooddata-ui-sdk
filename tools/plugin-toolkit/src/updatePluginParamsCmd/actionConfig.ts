@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
@@ -107,7 +107,7 @@ export async function getUpdatePluginParamsCmdConfig(
     options: ActionOptions,
 ): Promise<UpdatePluginParamsCmdConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials, env } = workspaceTargetConfig;
+    const { hostname, credentials, env } = workspaceTargetConfig;
 
     const dashboard =
         getDashboardFromOptions(options) ??
@@ -116,7 +116,6 @@ export async function getUpdatePluginParamsCmdConfig(
 
     const backendInstance = createBackend({
         hostname,
-        backend,
         credentials,
     });
 
