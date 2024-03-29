@@ -26,7 +26,12 @@ async function main() {
 
         if (TEST_CHILD_WORKSPACE_ID) {
             log(`Removing TEST_CHILD_WORKSPACE_ID ${TEST_CHILD_WORKSPACE_ID}`);
-            await deleteTigerWorkspace(TEST_CHILD_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND);
+            // retry to give Pg some time to replicate child WS removal to slaves
+            await retryOperation(
+                () => deleteTigerWorkspace(TEST_CHILD_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND),
+                10,
+                1000,
+            );
 
             deleteVariableFromEnv(TEST_CHILD_WORKSPACE_ID, envFilePath);
             log("Deleting TypeScript Tiger children workspace mappings");

@@ -108,7 +108,18 @@ async function main() {
                 log("TEST_CHILD_WORKSPACE_ID are added to the .env file\n");
             });
             log("Exporting metadata objects identifiers to local TypeScript file\n");
-            exportCatalogTiger(HOST, testChildReferenceWorkspaceId, TIGER_API_TOKEN, childWSOutputFile);
+            // retry to give Pg some time to replicate created WS to slaves
+            await retryOperation(
+                () =>
+                    exportCatalogTiger(
+                        HOST,
+                        testChildReferenceWorkspaceId,
+                        TIGER_API_TOKEN,
+                        childWSOutputFile,
+                    ),
+                10,
+                1000,
+            );
         }
     } catch (e) {
         log(e.toString());
