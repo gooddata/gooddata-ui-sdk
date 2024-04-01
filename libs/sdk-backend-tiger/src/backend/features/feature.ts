@@ -275,6 +275,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableMultipleCSVs,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableOracleDataSource,
+            "enableOracleDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableOracleDataSource,
+        ),
     };
 }
 
