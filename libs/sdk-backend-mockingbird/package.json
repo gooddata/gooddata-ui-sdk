@@ -47,7 +47,6 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
-        "@gooddata/api-model-bear": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
