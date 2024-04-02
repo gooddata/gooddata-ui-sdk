@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Waarde attributenlabel",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Waarde attribuut-geo",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Waarde attribuut-URL",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Waarde attribuutafbeelding",
     "configurationPanel.zoomInsight": "Zoombaar inzicht",
     "configurationPanel.zoomInsight.help": "Schakel inzoomen op het inzicht in voor een gedetailleerd overzicht. Houd de Shift-toets ingedrukt om het ingezoomde gebied zijwaarts te schuiven.",
     "configurationPanel.zoomInsight.notice": "Zoomen wordt niet toegepast op geëxporteerde dashboards",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Dashboardfilter",
     "attributesDropdown.valuesLimiting.addFilters.description": "Gebruik een bestaand dashboardfilter om irrelevante waarden te verbergen.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Meetgegeven",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Gebruik een meetgegeven om irrelevante waarden te verbergen. Alleen waarden met niet-nulresultaten voor het meetgegeven worden weergegeven. <a>Meer info</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Gebruik een meetgegeven om irrelevante waarden te verbergen. Alleen waarden met niet-nulresultaten voor het meetgegeven worden weergegeven. <a>Meer info</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} als {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Datum kiezen",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filter niet beschikbaar: het <strong>{dateFilterTitle}</strong>-filter gebruikt deze datumgegevensset al.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Datumgegevensset niet beschikbaar: het <strong>{dateFilterTitle}</strong>-filter gebruikt deze datumgegevensset al. "
 }

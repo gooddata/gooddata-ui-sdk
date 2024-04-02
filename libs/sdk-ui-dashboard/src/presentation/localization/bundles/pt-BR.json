@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Valor do rótulo de atributo",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Valor do atributo geográfico",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valor da URL do atributo",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Valor do atributo de imagem",
     "configurationPanel.zoomInsight": "Insight com zoom",
     "configurationPanel.zoomInsight.help": "Permite ampliar o insight para ter uma visualização detalhada. Mantenha pressionada a tecla Shift para ver uma panorâmica da área ampliada.",
     "configurationPanel.zoomInsight.notice": "O zoom não será aplicado a dashboards exportados",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Filtro do dashboard",
     "attributesDropdown.valuesLimiting.addFilters.description": "Usa um filtro de dashboard para ocultar valores irrelevantes.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Métrica",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Usa uma métrica para ocultar valores irrelevantes. Apenas valores com resultados não nulos para a métrica são mostrados. <a>Saiba mais</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Usa uma métrica para ocultar valores irrelevantes. Apenas valores com resultados não nulos para a métrica são mostrados. <a>Saiba mais</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} como {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Escolher data",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filtro não disponível: O filtro <strong>{dateFilterTitle}</strong> já está usando esse conjunto de dados de data.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Conjunto de dados de data não disponível: O filtro <strong>{dateFilterTitle}</strong> já está usando esse conjunto de dados de data."
 }

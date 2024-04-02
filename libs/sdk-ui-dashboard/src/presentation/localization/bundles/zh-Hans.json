@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "属性标签值",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "属性地理值",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "属性 URL 值",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "属性图像值",
     "configurationPanel.zoomInsight": "可缩放的洞察",
     "configurationPanel.zoomInsight.help": "启用以放大洞察以显示详细视图。按住 Shift 键可平移缩放区域。",
     "configurationPanel.zoomInsight.notice": "缩放不会应用于导出的控制面板",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "控制面板筛选器",
     "attributesDropdown.valuesLimiting.addFilters.description": "使用现有的控制面板筛选器隐藏无关的值。",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "指标",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "使用指标隐藏无关的值。仅显示指标结果为非空的值。<a>了解更多</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "使用指标隐藏无关的值。仅显示指标结果为非空的值。<a>了解更多</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} 设成 {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "选择日期",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "筛选不可用：<strong>{dateFilterTitle}</strong> 筛选器已使用此日期集。",
+    "attributesDropdown.valuesLimiting.disableDataSet": "日期数据集不可用:  <strong>{dateFilterTitle}</strong> 筛选器已使用此日期集。"
 }

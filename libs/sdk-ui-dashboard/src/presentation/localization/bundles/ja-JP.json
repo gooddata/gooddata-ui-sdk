@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "アトリビュートラベル値",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "アトリビュートジオ値",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "アトリビュート URL 値",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "属性イメージ値",
     "configurationPanel.zoomInsight": "ズーム可能なインサイト",
     "configurationPanel.zoomInsight.help": "インサイトのズームを有効にして、詳細ビューを表示します。 Shiftキーを押し続けると、ズーム領域がスクロールできます。",
     "configurationPanel.zoomInsight.notice": "エクスポートされたダッシュボードにはズームは適用されません",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "ダッシュボードフィルター",
     "attributesDropdown.valuesLimiting.addFilters.description": "既存のダッシュボードフィルタを使用して、無関係な値を非表示にします。",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "メトリック",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "メトリックを使用して、無関係な値を非表示にします。メトリックの結果が null ではない値のみが表示されます。<a>詳細はこちら</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "メトリックを使用して、無関係な値を非表示にします。メトリックの結果が null ではない値のみが表示されます。<a>詳細はこちら</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dataSetTitle} としての {dateFilterTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "日付を選択してください",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "フィルターは利用できません: <strong>{dateFilterTitle}</strong> フィルターはすでにこの日付データセットを使用しています。",
+    "attributesDropdown.valuesLimiting.disableDataSet": "日付データセットが利用できません: <strong>{dateFilterTitle}</strong> フィルターはすでにこの日付データセットを使用しています。"
 }

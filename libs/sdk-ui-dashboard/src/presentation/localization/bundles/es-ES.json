@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Valor de la etiqueta del atributo",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Valor geográfico del atributo",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valor de la URL del atributo",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Valor de imagen del atributo",
     "configurationPanel.zoomInsight": "Perspectiva que se puede alejar/acercar",
     "configurationPanel.zoomInsight.help": "Actívelo para acercar/alejar la perspectiva y mostrar una vista más detallada. Mantenga pulsada la tecla Mayús para hacer una panorámica del área acercada/alejada.",
     "configurationPanel.zoomInsight.notice": "La opción de acercar/alejar no se aplica a los paneles exportados",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Filtro del panel",
     "attributesDropdown.valuesLimiting.addFilters.description": "Use un filtro del panel existente para ocultar los valores irrelevantes.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Métrica",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Use una métrica para ocultar los valores irrelevantes. Solo se muestran los valores con resultados no nulos para la métrica. <a>Más información</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Use una métrica para ocultar los valores irrelevantes. Solo se muestran los valores con resultados no nulos para la métrica. <a>Más información</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} como {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Elegir fecha",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filtro no disponible: El filtro <strong>{dateFilterTitle}</strong> ya usa este conjunto de datos de fecha.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Conjunto de datos de fecha no disponible: El filtro <strong>{dateFilterTitle}</strong> ya usa este conjunto de datos de fecha."
 }
