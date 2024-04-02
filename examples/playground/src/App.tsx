@@ -1,13 +1,10 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {
-    if (BACKEND_TYPE === "tiger") {
-        return !!process.env.TIGER_API_TOKEN;
-    }
-    return BUILD_TYPE === "public" || (process.env.GDC_USERNAME && process.env.GDC_PASSWORD);
+    return !!process.env.TIGER_API_TOKEN;
 }
 
 const AppWithBackend: React.FC = () => {
