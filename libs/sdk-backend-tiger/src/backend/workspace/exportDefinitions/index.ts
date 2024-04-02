@@ -131,7 +131,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             return client.entities.createEntityExportDefinitions(
                 {
                     workspaceId: this.workspace,
-                    jsonApiExportDefinitionInDocument:
+                    jsonApiExportDefinitionPostOptionalIdDocument:
                         exportDefinitionToExportDefinitionInDocument(exportDefinition),
                     include: ["ALL"],
                 },
