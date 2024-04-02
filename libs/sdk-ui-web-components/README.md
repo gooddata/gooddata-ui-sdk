@@ -24,8 +24,6 @@ An `auth` query parameter is optional. When set to `sso`, the library will trigg
 authenticated with GoodData.CN or GoodData Cloud server, i.e. will redirect user to the authentication flow and then
 back once user is authorized.
 
-For GoodData platform, use `auth=bearSso` (for Service initiated SAML SSO flow) or `auth=bear` for regular bear login.
-
 ## Custom authentication flow
 
 If you want to customize the authentication flow, you'll need to provide the authenticated backend by yourself. For example:
