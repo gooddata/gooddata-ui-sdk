@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -50,13 +50,6 @@ const DefaultNaming: NamingStrategies = {
     displayForm: uniqueVariable,
 };
 
-const DateDataSetNaming: NamingStrategies = {
-    dataSetProperty: dateDataSetProperty,
-    dataSetAttributeProperty: dateDataSetAttributeProperty,
-    attribute: dateAttributeSwitcharoo,
-    displayForm: dateDisplayFormStrip,
-};
-
 /**
  * This is a wrapper on top of createUniqueVariableName() which mutates the input name scope - it enters
  * the variable name into the scope.
@@ -69,69 +62,6 @@ function uniqueVariable(title: string, nameScope: TakenNamesSet = GlobalNameScop
     nameScope[variableName] = true;
 
     return variableName;
-}
-
-/**
- * This is a wrapper on top of uniqueVariable. It is useful when naming date data set properties within the DateDatasets mapping.
- *
- * Date data sets have a convention where date data set title is "Date (data set name)". As the context of date data sets
- * is already established, no one cares about "Date" in the property name.
- *
- * This function will use just the title in parenthesis for the data set property name.
- */
-function dateDataSetProperty(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
-    const datasetStart = title.lastIndexOf("(");
-
-    if (datasetStart === -1) {
-        return uniqueVariable(title, nameScope);
-    }
-
-    return uniqueVariable(title.substr(datasetStart), nameScope);
-}
-
-function dateDataSetAttributeProperty(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
-    const datasetStart = title.lastIndexOf("(");
-
-    if (datasetStart === -1) {
-        return uniqueVariable(title, nameScope);
-    }
-
-    return uniqueVariable(title.substr(0, datasetStart), nameScope);
-}
-
-/**
- * This is a wrapper on top of uniqueVariable and is useful when naming date data set attributes. They have
- * a convention where date data set name is in parenthesis at the end of the attr/df title. This function
- * takes the ds name and moves it at the beginning of the title. That way all variables for same date data set
- * start with the same prefix.
- *
- * @param title - title to play with
- * @param nameScope - scope containing already taken variable names
- */
-function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
-    const datasetStart = title.lastIndexOf("(");
-
-    if (datasetStart === -1) {
-        return uniqueVariable(title, nameScope);
-    }
-
-    const switchedTitle = `${title.substr(datasetStart)} ${title.substr(0, datasetStart)}`;
-
-    return uniqueVariable(switchedTitle, nameScope);
-}
-
-/**
- * This is a wrapper on top of uniqueVariable and is useful for stripping date data set display forms off
- * superfluous stuff such as example format & date dimension name. It assumes that the format of
- * display form names is "Something (Example) (DD Name)"
- *
- * @param title - display form title
- * @param nameScope - name scope in which to keep var names unique
- */
-function dateDisplayFormStrip(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
-    const metaStart = title.indexOf("(");
-
-    return uniqueVariable(title.substr(0, metaStart), nameScope);
 }
 
 //
@@ -407,15 +337,8 @@ function generateDateDataSetMapping(
 
 function generateDateDataSets(
     projectMeta: WorkspaceMetadata,
-    tiger: boolean,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    let naming = DateDataSetNaming;
-
-    if (tiger) {
-        naming = DefaultNaming;
-    }
-
-    return [generateDateDataSetMapping(projectMeta.dateDataSets, naming)];
+    return [generateDateDataSetMapping(projectMeta.dateDataSets, DefaultNaming)];
 }
 
 /**
@@ -483,14 +406,9 @@ function generateAnalyticalDashboards(
  *
  * @param projectMeta - project metadata to transform to typescript
  * @param outputFile - output typescript file
- * @param tiger - indicates whether running against tiger, this influences naming strategy to use for date datasets as they are different from bear
  * @returns return of the transformation process, new file is not saved at this point
  */
-export function transformToTypescript(
-    projectMeta: WorkspaceMetadata,
-    outputFile: string,
-    tiger: boolean,
-): TypescriptOutput {
+export function transformToTypescript(projectMeta: WorkspaceMetadata, outputFile: string): TypescriptOutput {
     GlobalNameScope = {};
 
     const output = initialize(outputFile);
@@ -499,7 +417,7 @@ export function transformToTypescript(
     sourceFile.addImportDeclaration(generateSdkModelImports());
     sourceFile.addVariableStatements(generateAttributes(projectMeta));
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
-    sourceFile.addVariableStatements(generateDateDataSets(projectMeta, tiger));
+    sourceFile.addVariableStatements(generateDateDataSets(projectMeta));
     sourceFile.addVariableStatement(generateInsights(projectMeta));
     sourceFile.addVariableStatement(generateAnalyticalDashboards(projectMeta));
 

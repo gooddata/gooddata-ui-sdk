@@ -40,9 +40,7 @@
     "dependencies": {
         "@babel/core": "^7.23.5",
         "@babel/plugin-transform-typescript": "^7.23.5",
-        "@gooddata/api-client-bear": "workspace:*",
         "@gooddata/api-client-tiger": "workspace:*",
-        "@gooddata/api-model-bear": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
