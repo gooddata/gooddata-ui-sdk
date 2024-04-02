@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { AllCommunityModules, ColDef, ICellRendererParams } from "@ag-grid-community/all-modules";
-import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import { BucketNames, LoadingComponent, emptyHeaderTitleFromIntl, DataViewFacade } from "@gooddata/sdk-ui";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import {
     IAttribute,
@@ -22,19 +22,16 @@ import { IChartConfig } from "../../../interfaces/index.js";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import stringify from "json-stable-stringify";
+import { IRepeaterChartProps } from "../publicTypes.js";
+import { useResizing } from "../hooks/useResizing.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 
-interface IRepeaterChartProps {
-    dataView: DataViewFacade;
-    config?: IChartConfig;
-    onError?: (error: any) => void;
-}
-
 const DEFAULT_COL_DEF = { resizable: true };
 
-export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError, config }) => {
+export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
+    const { dataView, onError, config } = props;
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,16 +40,20 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
 
     const rowHeight = getRowHeight(config);
 
-    const columnDefs = useMemo(() => {
+    const items = useMemo(() => {
         const columnsBucket = bucketsFind(dataView.definition.buckets, BucketNames.COLUMNS);
 
-        return columnsBucket.items.map((bucketItem): ColDef => {
+        return columnsBucket.items ?? [];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dataView.fingerprint()]);
+
+    const columnDefs = useMemo(() => {
+        return items.map((bucketItem): ColDef => {
             const sharedColDef: ColDef = {
                 headerName: getRepeaterColumnTitle(bucketItem, dataView),
                 field: getRepeaterColumnId(bucketItem),
                 cellClass: "gd-cell",
             };
-
             if (isMeasure(bucketItem)) {
                 const localId = measureLocalId(bucketItem);
                 const measureTitle = getMetricTitle(bucketItem, dataView);
@@ -118,14 +119,26 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataView.fingerprint(), JSON.stringify(config)]);
+    }, [
+        items,
+        config?.cellVerticalAlign,
+        config?.cellTextWrapping,
+        config?.cellImageSizing,
+        config?.hyperLinks,
+    ]);
+
+    const { onColumnResized, onGridReady } = useResizing(columnDefs, items, props);
 
     return (
         <div className="gd-repeater ag-theme-balham s-repeater">
             <AgGridReact
                 key={stringify({
+                    rowHeight,
+                    cellVerticalAlign: config?.cellVerticalAlign,
+                    cellTextWrapping: config?.cellTextWrapping,
+                    cellImageSizing: config?.cellImageSizing,
                     dataView: dataView.fingerprint(),
-                    config,
+                    hyperLinks: config?.hyperLinks,
                     onError: onError?.toString(),
                 })}
                 defaultColDef={DEFAULT_COL_DEF}
@@ -135,6 +148,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                 datasource={dataSource}
                 rowModelType="infinite"
                 rowHeight={rowHeight}
+                onGridReady={onGridReady}
+                onColumnResized={onColumnResized}
             />
         </div>
     );
