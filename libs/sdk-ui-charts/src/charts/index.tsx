@@ -72,6 +72,25 @@ export {
     constructRepeaterDimensions,
 } from "./repeater/internal/repeaterExecution.js";
 export { Repeater, IRepeaterProps, IRepeaterBucketProps } from "./repeater/Repeater.js";
-export { CoreRepeater, ICoreRepeterChartProps } from "./repeater/CoreRepeater.js";
+export {
+    CoreRepeater,
+    ICoreRepeaterChartProps,
+    RepeaterColumnResizedCallback,
+    RepeaterColumnWidthItem,
+    RepeaterColumnWidth,
+    RepeaterDefaultColumnWidth,
+    RepeaterColumnLocator,
+    IRepeaterColumnSizing,
+    IRepeaterAbsoluteColumnWidth,
+    IRepeaterAutoColumnWidth,
+    IRepeaterAttributeColumnWidthItem,
+    IRepeaterMeasureColumnWidthItem,
+    IRepeaterAttributeColumnWidthItemBody,
+    IRepeaterMeasureColumnWidthItemBody,
+    IRepeaterAttributeColumnLocator,
+    IRepeaterAttributeColumnLocatorBody,
+    IRepeaterMeasureColumnLocator,
+    IRepeaterMeasureColumnLocatorBody,
+} from "./repeater/CoreRepeater.js";
 
 export { withJsxExport } from "./withJsxExport.js";

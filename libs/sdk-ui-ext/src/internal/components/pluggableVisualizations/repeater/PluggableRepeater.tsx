@@ -27,6 +27,8 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import {
+    RepeaterColumnWidthItem,
+    IRepeaterColumnSizing,
     ChartInlineVisualizationType,
     CoreRepeater,
     constructRepeaterDimensions,
@@ -231,6 +233,49 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         });
     }
 
+    private onColumnResized = (columnWidths: RepeaterColumnWidthItem[]): void => {
+        const properties = this.visualizationProperties ?? {};
+        const supportedProperties = getSupportedPropertiesControls(
+            properties?.controls,
+            this.supportedPropertiesList,
+        );
+
+        this.pushData({
+            properties: {
+                controls: {
+                    columnWidths,
+                    ...supportedProperties,
+                },
+            },
+        });
+    };
+
+    private buildColumnSizing(columnWidths?: RepeaterColumnWidthItem[]): IRepeaterColumnSizing {
+        let columnSizing: Partial<IRepeaterColumnSizing> = {};
+
+        //TODO: implement autoSize and growToFit
+        // if (autoSize) {
+        //     columnSizing = {
+        //         defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
+        //     };
+        // }
+        // if (growToFit) {
+        //     columnSizing = {
+        //         ...columnSizing,
+        //         growToFit: true,
+        //     };
+        // }
+
+        if (columnWidths && columnWidths.length > 0) {
+            columnSizing = {
+                ...columnSizing,
+                columnWidths,
+            };
+        }
+
+        return columnSizing as IRepeaterColumnSizing;
+    }
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -244,6 +289,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
+            columnSizing: this.buildColumnSizing(properties?.controls?.columnWidths),
         };
 
         this.renderFun(
@@ -257,6 +303,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}
                 onError={this.onError}
+                onColumnResized={this.onColumnResized}
                 intl={this.intl}
             />,
             this.getElement(),

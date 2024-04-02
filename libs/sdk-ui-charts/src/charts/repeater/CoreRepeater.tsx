@@ -15,15 +15,26 @@ import { ITheme } from "@gooddata/sdk-model";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
+import { RepeaterColumnResizedCallback } from "./publicTypes.js";
+
+export * from "./publicTypes.js";
+export * from "./columnWidths.js";
 
 /**
  * @internal
  */
-export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
     theme?: ITheme;
+
+    /**
+     * Specify function to call when user manually resizes a table column.
+     *
+     * @param columnWidths - new widths for columns
+     */
+    onColumnResized?: RepeaterColumnResizedCallback;
 }
 
-export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
+export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     const {
         execution,
         ErrorComponent = SDKErrorComponent,
@@ -31,6 +42,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         onLoadingChanged,
         pushData,
         onError,
+        onColumnResized,
         config,
     } = props;
 
@@ -78,7 +90,14 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         return <LoadingComponent />;
     }
 
-    return <RepeaterChart dataView={result} config={config} onError={onError} />;
+    return (
+        <RepeaterChart
+            dataView={result}
+            config={config}
+            onError={onError}
+            onColumnResized={onColumnResized}
+        />
+    );
 };
 
 const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
@@ -86,7 +105,7 @@ const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
 /**
  * @internal
  */
-export const CoreRepeater: React.FC<ICoreRepeterChartProps> = (props) => (
+export const CoreRepeater: React.FC<ICoreRepeaterChartProps> = (props) => (
     <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
         <IntlWrapper locale={props.locale}>
             <CoreRepeaterWithIntl {...props} />
