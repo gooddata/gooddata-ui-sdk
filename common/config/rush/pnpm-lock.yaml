@@ -19,9 +19,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi

@@ -12,24 +12,15 @@ const { EsbuildPlugin } = require("esbuild-loader");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const playgroundDefinitions = {
-    sec: ["https://secure.gooddata.com", "k26dtejorcqlqf11crn6imbeevp2q4kg", "bear"],
-    secure: ["https://secure.gooddata.com", "k26dtejorcqlqf11crn6imbeevp2q4kg", "bear"],
-    stg: ["https://staging.intgdc.com", "na1q8a0q4efb7cajbgre9mmm776dr1yv", "bear"],
-    stg2: ["https://staging2.intgdc.com", "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg", "bear"],
-    stg3: ["https://staging3.intgdc.com", "mbuumy476p78ybcceiru61hcyr8i8lo8", "bear"],
-    developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
-    public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
-    reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],
     "tiger-stg": [
         "https://staging.dev-latest.stg11.panther.intgdc.com",
-        "4dc4e033e611421791adea58d34d958c",
-        "tiger",
+        "4dc4e033e611421791adea58d34d958c"
     ],
 };
 
 module.exports = async (env, argv) => {
     const backendParam = env?.backend || "public";
-    const [backendUrl, workspace, backendType] =
+    const [backendUrl, workspace] =
         playgroundDefinitions[backendParam] || playgroundDefinitions.public;
 
     // eslint-disable-next-line no-mixed-operators
@@ -41,26 +32,7 @@ module.exports = async (env, argv) => {
     const isProduction = argv.mode === "production";
 
     // see also production proxy at /examples/server/src/endpoints/proxy.js
-    const proxy =
-        backendType === "bear"
-            ? {
-                  "/gdc": {
-                      changeOrigin: true,
-                      cookieDomainRewrite: "localhost",
-                      secure: false,
-                      target: backendUrl,
-                      headers: {
-                          host: backendUrl,
-                          origin: null,
-                      },
-                      onProxyReq(proxyReq) {
-                          // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                          proxyReq.removeHeader("origin");
-                          proxyReq.setHeader("accept-encoding", "identity");
-                      },
-                  },
-              }
-            : {
+    const proxy = {
                   "/api": {
                       changeOrigin: true,
                       cookieDomainRewrite: "localhost",
@@ -90,7 +62,6 @@ module.exports = async (env, argv) => {
         }),
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(backendUrl),
-            BACKEND_TYPE: JSON.stringify(backendType),
             WORKSPACE: JSON.stringify(workspace),
             BASEPATH: JSON.stringify(basePath),
             BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),
