@@ -5292,12 +5292,6 @@ importers:
 
   ../../libs/sdk-ui-web-components:
     dependencies:
-      '@gooddata/api-client-bear':
-        specifier: workspace:*
-        version: link:../api-client-bear
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
