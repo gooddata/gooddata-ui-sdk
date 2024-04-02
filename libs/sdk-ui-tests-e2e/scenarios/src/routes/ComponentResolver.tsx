@@ -121,6 +121,13 @@ import { DashboardDrilldownOnChart } from "../components/Scenarios/Dashboard/Das
 import { DependentFiltersScenario } from "../components/Scenarios/Dashboard/DependentFiltersScenario";
 import { CrossFilteringScenario } from "../components/Scenarios/Dashboard/CrossFilteringScenario";
 import { DashboardMultipleDateFiltersScenario } from "../components/Scenarios/Dashboard/DashboardMultipleDateFilters";
+import {
+    RepeaterFullConfigs,
+    RepeaterInsightView,
+    RepeaterDashboard,
+    RepeaterNoColumn,
+    RepeaterNoMetric,
+} from "../components/Scenarios/Visualizations/Repeater/RepeaterFullConfigs";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -262,6 +269,11 @@ export const SCENARIO_KEYS = {
         "visualizations/pivot-table/firstvaluelastvalue/pivot-table-of-first-last-value-with-runvar",
     DRILLDOWN_ON_CHART: "dashboard/drilldown-on-chart",
     DASHBOARD_MULTIPLE_DATE_FILTERS: "dashboard/multiple-date-filters",
+    VIS_REPEATER_FULL_CONFIGS: "visualizations/repeater/repeater-full-configs",
+    VIS_REPEATER_INSIGHT_VIEW: "visualizations/repeater/repeater-insight-view",
+    DASHBOARD_REPEATER: "visualizations/repeater/repeater-dashboard",
+    VIS_REPEATER_NO_COLUMN: "visualizations/repeater/repeater-no-column",
+    VIS_REPEATER_NO_METRIC: "visualizations/repeater/repeater-no-metric",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -398,6 +410,11 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_OF_FIRST_LAST_VALUE_WITH_RUNVAR, PivotTableOfFirstLastValueWithRunVar],
     [SCENARIO_KEYS.DRILLDOWN_ON_CHART, DashboardDrilldownOnChart],
     [SCENARIO_KEYS.DASHBOARD_MULTIPLE_DATE_FILTERS, DashboardMultipleDateFiltersScenario],
+    [SCENARIO_KEYS.VIS_REPEATER_FULL_CONFIGS, RepeaterFullConfigs],
+    [SCENARIO_KEYS.VIS_REPEATER_INSIGHT_VIEW, RepeaterInsightView],
+    [SCENARIO_KEYS.VIS_REPEATER_NO_COLUMN, RepeaterNoColumn],
+    [SCENARIO_KEYS.VIS_REPEATER_NO_METRIC, RepeaterNoMetric],
+    [SCENARIO_KEYS.DASHBOARD_REPEATER, RepeaterDashboard],
 ]);
 
 const ComponentResolver: React.FC = () => {
